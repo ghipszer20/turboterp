@@ -123,11 +123,15 @@
   border-radius: 14px;
   background: var(--surface);
   box-shadow: 0 12px 40px rgb(0 0 0 / 0.18);
+  /* Long result lists scroll inside the box instead of being cut to the first few. */
+  max-height: min(60vh, 420px);
+  overflow-y: auto;
 }
 
 .results button {
   display: grid;
-  grid-template-columns: 76px 1fr auto;
+  /* The code column grows for 8-character codes (ENPM818E) so it never runs into the title. */
+  grid-template-columns: minmax(76px, max-content) minmax(0, 1fr) auto;
   align-items: baseline;
   gap: 8px;
   width: 100%;
