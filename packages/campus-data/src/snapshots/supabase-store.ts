@@ -1,20 +1,11 @@
-// Snapshots in a private Supabase Storage bucket, via the Storage REST API (plain fetch).
-// Server-only: it holds the service-role key. Never import this from a "use client" file.
+// Snapshots in a private Supabase Storage bucket, through the Storage REST API (plain fetch, no
+// client library). Server-only: it holds the service-role key, so never import this from a
+// "use client" file.
 
-import {
-  defaultSnapshotDir,
-  FileSnapshotStore,
-  SNAPSHOT_SCHEMA,
-  type Snapshot,
-  type SnapshotStore,
-} from "./store.ts";
+import { checkKey, defaultSnapshotDir, FileSnapshotStore, SNAPSHOT_SCHEMA, type Snapshot, type SnapshotStore } from "./store.ts";
 
-const KEY = /^[a-z0-9][a-z0-9_-]*(?:\/[a-z0-9][a-z0-9_-]*)*$/i;
+/** The most entries one Storage list request returns. */
 const PAGE = 1000;
-
-function checkKey(key: string): void {
-  if (!KEY.test(key)) throw new Error(`Invalid snapshot key: ${JSON.stringify(key)}`);
-}
 
 export type SupabaseSnapshotStoreOptions = {
   url: string;
@@ -23,92 +14,88 @@ export type SupabaseSnapshotStoreOptions = {
   fetch?: typeof globalThis.fetch;
 };
 
+/** Key "dining/2026-09-25/19" → object <bucket>/dining/2026-09-25/19.json, wrapped like the file store's files. */
 export class SupabaseSnapshotStore implements SnapshotStore {
-  private readonly url: string;
+  private readonly base: string;
   private readonly serviceKey: string;
   private readonly bucket: string;
   private readonly fetchFn: typeof globalThis.fetch;
 
   constructor(opts: SupabaseSnapshotStoreOptions) {
-    this.url = opts.url.replace(/\/+$/, "");
+    this.base = `${opts.url.replace(/\/+$/, "")}/storage/v1/object`;
     this.serviceKey = opts.serviceKey;
     this.bucket = opts.bucket ?? "snapshots";
     this.fetchFn = opts.fetch ?? globalThis.fetch;
   }
 
-  private request(method: string, path: string, extra: Record<string, string> = {}, body?: string): Promise<Response> {
-    const headers = { Authorization: `Bearer ${this.serviceKey}`, apikey: this.serviceKey, ...extra };
-    return this.fetchFn(`${this.url}/storage/v1/object/${path}`, { method, headers, body });
+  private send(method: string, path: string, json?: string, headers: Record<string, string> = {}): Promise<Response> {
+    return this.fetchFn(`${this.base}/${path}`, {
+      method,
+      headers: {
+        Authorization: `Bearer ${this.serviceKey}`,
+        apikey: this.serviceKey,
+        ...(json === undefined ? {} : { "content-type": "application/json" }),
+        ...headers,
+      },
+      body: json,
+    });
   }
 
-  private objectPath(key: string): string {
+  private object(key: string): string {
     checkKey(key);
     return `${this.bucket}/${key}.json`;
   }
 
-  private fail(op: string, key: string, res: Response): Error {
-    return new Error(`Supabase ${op} failed for "${key}": HTTP ${res.status}`);
-  }
-
   async get<T>(key: string): Promise<Snapshot<T> | null> {
-    const res = await this.request("GET", this.objectPath(key));
-    if (res.status === 404 || res.status === 400) return null;
-    if (!res.ok) throw this.fail("get", key, res);
-    let env: { schema?: number; updatedAt?: unknown; data: T };
+    const res = await this.send("GET", this.object(key));
+    if (res.status === 404 || res.status === 400) return null; // Storage answers 400 for a missing object
+    if (!res.ok) throw failure("get", key, res);
+    let env: Partial<Snapshot<T>> & { schema?: number };
     try {
       env = JSON.parse(await res.text());
     } catch {
-      return null; // corrupt: callers treat it as "no snapshot"
+      return null; // corrupt: callers treat it as "no snapshot", like the file store
     }
     if (env?.schema !== SNAPSHOT_SCHEMA || typeof env.updatedAt !== "string") return null;
-    return { updatedAt: env.updatedAt, data: env.data };
+    return { updatedAt: env.updatedAt, data: env.data as T };
   }
 
   async put<T>(key: string, snapshot: Snapshot<T>): Promise<void> {
-    const path = this.objectPath(key);
     const body = JSON.stringify({ schema: SNAPSHOT_SCHEMA, key, updatedAt: snapshot.updatedAt, data: snapshot.data });
-    const res = await this.request("POST", path, { "x-upsert": "true", "content-type": "application/json" }, body);
-    if (!res.ok) throw this.fail("put", key, res);
+    const res = await this.send("POST", this.object(key), body, { "x-upsert": "true" });
+    if (!res.ok) throw failure("put", key, res);
   }
 
+  /** Storage lists one folder level per request, so folders (entries with no id) are walked in turn. */
   async list(prefix: string): Promise<string[]> {
     checkKey(prefix);
     const keys: string[] = [];
-    const walk = async (folder: string): Promise<void> => {
-      for (let offset = 0; ; offset += PAGE) {
-        const res = await this.request(
-          "POST",
-          `list/${this.bucket}`,
-          { "content-type": "application/json" },
-          JSON.stringify({ prefix: folder, limit: PAGE, offset }),
-        );
-        if (!res.ok) throw this.fail("list", folder, res);
+    const folders = [prefix];
+    for (let folder = folders.shift(); folder !== undefined; folder = folders.shift()) {
+      for (let offset = 0, full = true; full; offset += PAGE) {
+        const res = await this.send("POST", `list/${this.bucket}`, JSON.stringify({ prefix: folder, limit: PAGE, offset }));
+        if (!res.ok) throw failure("list", folder, res);
         const entries = (await res.json()) as { name: string; id: string | null }[];
-        for (const entry of entries) {
-          const entryKey = `${folder}/${entry.name}`;
-          if (entry.id === null) await walk(entryKey);
-          else if (entry.name.endsWith(".json")) keys.push(entryKey.slice(0, -".json".length));
+        for (const { name, id } of entries) {
+          if (id === null) folders.push(`${folder}/${name}`);
+          else if (name.endsWith(".json")) keys.push(`${folder}/${name.slice(0, -".json".length)}`);
         }
-        if (entries.length < PAGE) return;
+        full = entries.length === PAGE;
       }
-    };
-    await walk(prefix);
+    }
     return keys;
   }
 
   async delete(key: string): Promise<void> {
     checkKey(key);
-    const res = await this.request(
-      "DELETE",
-      this.bucket,
-      { "content-type": "application/json" },
-      JSON.stringify({ prefixes: [`${key}.json`] }),
-    );
-    if (!res.ok) throw this.fail("delete", key, res);
+    const res = await this.send("DELETE", this.bucket, JSON.stringify({ prefixes: [`${key}.json`] }));
+    if (!res.ok) throw failure("delete", key, res);
   }
 }
 
-/** Supabase when the service key and URL are set, else the file store. */
+const failure = (op: string, key: string, res: Response) => new Error(`Supabase ${op} failed for "${key}": HTTP ${res.status}`);
+
+/** The Supabase store when the service key and the project URL are set, else the local file store. */
 export function openSnapshotStore(
   env: Record<string, string | undefined> = process.env,
   cwd: string = process.cwd(),
