@@ -1,6 +1,6 @@
 <!doctype html>
 <meta charset="utf-8">
-<title>TurboTerp logo options, round 6</title>
+<title>TurboTerp logo options, round 7</title>
 <style>
   body { font: 15px/1.4 -apple-system, system-ui, "Segoe UI", sans-serif; margin: 0; background: #f5f5f7; color: #1d1d1f; }
   h1 { font-size: 22px; margin: 20px 24px 4px; }
@@ -15,8 +15,8 @@
   .word { font: 700 20px/1 ui-rounded, "SF Pro Rounded", system-ui, sans-serif; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; margin-left: auto; }
   .word span { color: #BA0C2F; } .dark .word span { color: #ff4d6a; }
 </style>
-<h1>TurboTerp logo options, round 6</h1>
-<p>Option L with the rim band removed: the ringed plates now run out to the edge of the shell, with only a thin white outline around them. Shown with a simpler version for tiny sizes.</p>
+<h1>TurboTerp logo options, round 7</h1>
+<p>Option L, both sizes: no white border, so the legs, head and tail join the plated shell directly. The head has a neck and eyes; the legs are tapered with a broad foot.</p>
 <div class="grid" id="grid"></div>
 <script>
 const R = '#BA0C2F';
@@ -33,40 +33,41 @@ function plates(list, rings, seam, ringW, dot) {
   const seams = list.map((p) => plate(p, 1)).join("");
   const inner = rings.map((r) => list.map((p) => plate(p, r)).join("")).join("");
   const dots = dot ? list.map((p) => plate(p, dot)).join("") : "";
-  return `<path d="${seams}" fill="none" stroke="${R}" stroke-width="${seam}" stroke-linejoin="round"/>` +
+  return `<path d="${seams}" fill="#fff" stroke="${R}" stroke-width="${seam}" stroke-linejoin="round"/>` +
     (inner ? `<path d="${inner}" fill="none" stroke="${R}" stroke-width="${ringW}" stroke-linejoin="round"/>` : "") +
     (dots ? `<path d="${dots}" fill="${R}"/>` : "");
 }
 
 // ---- From above ----
 const SHELL = "M64 34c17 0 31 15 32 35 1 20-13 35-32 35S31 89 32 69c1-20 15-35 32-35z";
+const LEG = "M-3-4.800 15-6.800c6-1 10.500 2.500 10.500 6.800s-4.500 7.800-10.500 6.800L-3 4.800z";
 const body = `<g fill="#fff">
-  <ellipse cx="33" cy="43" rx="11.500" ry="6.800" transform="rotate(40 33 43)"/>
-  <ellipse cx="95" cy="43" rx="11.500" ry="6.800" transform="rotate(-40 95 43)"/>
-  <ellipse cx="34" cy="96" rx="10.500" ry="6.400" transform="rotate(-40 34 96)"/>
-  <ellipse cx="94" cy="96" rx="10.500" ry="6.400" transform="rotate(40 94 96)"/>
-  <path d="M60.500 101 64 115 67.500 101z" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
-  <ellipse cx="64" cy="25.500" rx="8.500" ry="11"/>
-  <path d="${SHELL}"/>
-</g>`;
+  <path d="${LEG}" transform="translate(45 50) rotate(222)"/>
+  <path d="${LEG}" transform="translate(83 50) rotate(-42)"/>
+  <path d="${LEG}" transform="translate(44 90) rotate(140) scale(1.050)"/>
+  <path d="${LEG}" transform="translate(84 90) rotate(40) scale(1.050)"/>
+  <path d="M61 101 64 116 67 101z" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M58.500 38c0-6-3-10-3-15.500C55.500 16.500 59.200 13 64 13s8.500 3.500 8.500 9.500c0 5.500-3 9.500-3 15.500z"/>
+</g>
+<g fill="${R}"><circle cx="59.300" cy="21.500" r="1.500"/><circle cx="68.700" cy="21.500" r="1.500"/></g>`;
 const V = [
-  [[59,37.5],[69,37.5],[75,46],[70.5,52],[57.5,52],[53,46]],
+  [[59,34.3],[69,34.3],[75,46],[70.5,52],[57.5,52],[53,46]],
   [[57.5,52],[70.5,52],[75.5,58],[70.5,64],[57.5,64],[52.5,58]],
   [[57.5,64],[70.5,64],[75.5,70],[70.5,76],[57.5,76],[52.5,70]],
   [[57.5,76],[70.5,76],[75.5,82],[70.5,88],[57.5,88],[52.5,82]],
-  [[57.5,88],[70.5,88],[74,93],[67,100.5],[61,100.5],[54,93]],
+  [[57.5,88],[70.5,88],[74,93],[67,103.8],[61,103.8],[54,93]],
 ];
 const CL = [
-  [[59,37.5],[53,46],[57.5,52],[52.5,58],[38.5,55],[47.5,42]],
-  [[52.5,58],[57.5,64],[52.5,70],[35,70],[38.5,55]],
-  [[52.5,70],[57.5,76],[52.5,82],[37.5,85],[35,70]],
-  [[52.5,82],[57.5,88],[54,93],[61,100.5],[48,96.5],[37.5,85]],
+  [[59,34.3],[53,46],[57.5,52],[52.5,58],[35,55.1],[42,44],[52,36.7]],
+  [[52.5,58],[57.5,64],[52.5,70],[32,69],[33,62],[35,55.1]],
+  [[52.5,70],[57.5,76],[52.5,82],[33.9,82.9],[32.3,76],[32,69]],
+  [[52.5,82],[57.5,88],[54,93],[61,103.8],[50.8,101.4],[40.5,94],[33.9,82.9]],
 ];
 const flip = (p) => p.map(([x, y]) => [128 - x, y]);
 const C = [...CL, ...CL.map(flip)];
 const rimTicks = `<path d="${mirror('').length ? '' : ''}M64 40V33M64 98.500V105" fill="none" stroke="${R}" stroke-width="1.500"/>` +
   `<g fill="none" stroke="${R}" stroke-width="1.500">${mirror(`<path d="M46 45.500 41 40M39.500 57 33 55M37.500 70 31 70.500M40 83 34 86.500M47.500 93.500 43.500 99M52 42.300 49.500 36.500M42.300 51 36.500 47.500M38.200 63.500 31.500 62.500M38.300 76.500 32 78.500M43.300 88.500 38.500 93M54 96.300 52 102.500"/>`)}</g>`;
-const above = (rings, dot) => body + clipped(plates(V, rings, 1.700, 1.100, dot) + plates(C, rings, 1.700, 1.100, dot), SHELL);
+const above = (rings, dot) => body + plates([...V, ...C], rings, 1.700, 1.100, dot);
 
 // ---- Side view, striding ----
 const S_SHELL = "M18 76C22 58 44 46 68 47c22 1 38 13 38 27-26 9-62 10-88 2z";
