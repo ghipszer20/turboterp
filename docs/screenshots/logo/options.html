@@ -1,93 +1,52 @@
 <!doctype html>
 <meta charset="utf-8">
-<title>TurboTerp logo options, round 8</title>
+<title>TurboTerp logo concepts</title>
 <style>
   body { font: 14px/1.35 -apple-system, system-ui, "Segoe UI", sans-serif; margin: 0; background: #f5f5f7; color: #1d1d1f; }
   h1 { font-size: 21px; margin: 16px 20px 2px; }
   p { margin: 0 20px 12px; color: #6e6e73; }
-  .grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; padding: 0 20px 20px; }
-  .opt { border-radius: 16px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.08); padding: 12px 12px 10px; }
+  .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; padding: 0 20px 20px; }
+  .opt { border-radius: 16px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.08); padding: 12px 14px 12px; }
   .opt h2 { font-size: 15px; margin: 0; }
-  .opt small { display: block; color: #6e6e73; min-height: 36px; margin-bottom: 6px; }
+  .opt small { display: block; color: #6e6e73; min-height: 36px; margin-bottom: 8px; }
   .big { display: flex; justify-content: center; }
-  .row { display: flex; align-items: center; justify-content: center; gap: 12px; padding-top: 8px; }
+  .big img { filter: drop-shadow(0 6px 14px rgba(120, 8, 30, .28)); }
+  .row { display: flex; align-items: center; justify-content: center; gap: 12px; padding-top: 12px; }
 </style>
-<h1>TurboTerp logo options, round 8</h1>
-<p>Fifteen versions of L, none with eyes. Each is shown large, then at 48, 32 and 16 px. Mix and match is fine: "head from 4, legs from 2, rings from 6".</p>
+<h1>TurboTerp logo concepts (fresh start)</h1>
+<p>Eight ideas, each built from a few simple shapes on the original red. Shown large, then at 48, 32 and 16 px.</p>
 <div class="grid" id="grid"></div>
 <script>
-const R = '#BA0C2F';
-const box = (inner) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><rect width="128" height="128" rx="28" fill="${R}"/>${inner}</svg>`;
-const V = [
-  [[59,34.3],[69,34.3],[75,46],[70.5,52],[57.5,52],[53,46]],
-  [[57.5,52],[70.5,52],[75.5,58],[70.5,64],[57.5,64],[52.5,58]],
-  [[57.5,64],[70.5,64],[75.5,70],[70.5,76],[57.5,76],[52.5,70]],
-  [[57.5,76],[70.5,76],[75.5,82],[70.5,88],[57.5,88],[52.5,82]],
-  [[57.5,88],[70.5,88],[74,93],[67,103.8],[61,103.8],[54,93]],
-];
-const CL = [
-  [[59,34.3],[53,46],[57.5,52],[52.5,58],[35,55.1],[42,44],[52,36.7]],
-  [[52.5,58],[57.5,64],[52.5,70],[32,69],[33,62],[35,55.1]],
-  [[52.5,70],[57.5,76],[52.5,82],[33.9,82.9],[32.3,76],[32,69]],
-  [[52.5,82],[57.5,88],[54,93],[61,103.8],[50.8,101.4],[40.5,94],[33.9,82.9]],
-];
-const PLATES = [...V, ...CL, ...CL.map((p) => p.map(([x, y]) => [128 - x, y]))];
-function plate(pts, scale) {
-  const cx = pts.reduce((n, p) => n + p[0], 0) / pts.length, cy = pts.reduce((n, p) => n + p[1], 0) / pts.length;
-  return "M" + pts.map(([x, y]) => `${(cx + (x - cx) * scale).toFixed(2)} ${(cy + (y - cy) * scale).toFixed(2)}`).join("L") + "z";
-}
-const HEADS = {
-  neck: "M58.500 38c0-6-3-10-3-15.500C55.500 16.500 59.200 13 64 13s8.500 3.500 8.500 9.500c0 5.500-3 9.500-3 15.500z",
-  round: "M64 14.500c4.700 0 8.300 4.700 8.300 10.500 0 5-2 9.500-3.300 13H59c-1.300-3.500-3.300-8-3.300-13 0-5.800 3.600-10.500 8.300-10.500z",
-  pointed: "M57.500 38C56 30 58.500 20.500 64 13c5.500 7.500 8 17 6.500 25z",
-  wide: "M56.500 38c-1-6-3.500-10.500-2.500-16 1-5.500 5.500-8 10-8s9 2.500 10 8c1 5.500-1.500 10-2.500 16z",
-};
-const LEGS = {
-  paddle: "M-3-4.800 15-6.800c6-1 10.500 2.500 10.500 6.800s-4.500 7.800-10.500 6.800L-3 4.800z",
-  oval: "M-3-5.500C6-8 22-7.500 23 0 22 7.500 6 8-3 5.500z",
-  stub: "M-3-6H9a6 6 0 0 1 0 12H-3z",
-  flipper: "M-3-5.500C8-9.500 20-8 28-1 20 4.500 8 6.500-3 5.500z",
-};
-const POSES = { splay: [222, -42, 140, 40], swim: [246, -66, 122, 58], walk: [240, -30, 150, 62] };
-function turtle(o) {
-  const sx = o.sx ?? 1, sy = o.sy ?? 1, pear = o.pear ?? 0;
-  const T = ([x, y]) => [64 + (x - 64) * sx * (1 + (pear * (y - 69)) / 35), 69 + (y - 69) * sy];
-  const list = PLATES.map((p) => p.map(T));
-  const top = T([64, 34.3])[1] - 34.3, bottom = T([64, 103.8])[1] - 103.8;
-  const [a1, a2, a3, a4] = POSES[o.pose ?? "splay"];
-  const leg = LEGS[o.leg ?? "paddle"], ls = o.legScale ?? 1;
-  const at = (p, a, s) => { const [x, y] = T(p); return `<path d="${leg}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${a}) scale(${s})"/>`; };
-  const tailLen = o.tail ?? 14;
-  const tail = tailLen ? `<path d="M61 ${101 + bottom} 64 ${102 + bottom + tailLen} 67 ${101 + bottom}z" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>` : "";
-  const seam = o.seam ?? 1.700, ringW = o.ringW ?? 1.100;
-  const rings = (o.rings ?? [0.62]).map((r) => list.map((p) => plate(p, r)).join("")).join("");
-  const dots = o.dot ? list.map((p) => plate(p, o.dot)).join("") : "";
-  return `<g fill="#fff">${at([45, 50], a1, ls)}${at([83, 50], a2, ls)}${at([44, 90], a3, ls * 1.05)}${at([84, 90], a4, ls * 1.05)}${tail}
-    <path d="${HEADS[o.head ?? "neck"]}" transform="translate(0 ${top.toFixed(1)})"/></g>
-    <path d="${list.map((p) => plate(p, 1)).join("")}" fill="#fff" stroke="${R}" stroke-width="${seam}" stroke-linejoin="round"/>` +
-    (rings ? `<path d="${rings}" fill="none" stroke="${R}" stroke-width="${ringW}" stroke-linejoin="round"/>` : "") +
-    (dots ? `<path d="${dots}" fill="${R}"/>` : "");
-}
+let n = 0;
+const box = (inner) => { const g = `g${n++}`; return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D0183C"/><stop offset="1" stop-color="#A80A29"/></linearGradient></defs><rect width="128" height="128" rx="29" fill="url(#${g})"/>${inner}</svg>`; };
+const W = '#fff', R = '#BA0C2F';
+const line = (d, w = 7) => `<path d="${d}" fill="none" stroke="${W}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+const cut = (d, w = 5) => `<path d="${d}" fill="none" stroke="${R}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+
+// A solid side-view terrapin made of a dome, a head and two feet.
+const solid = (fill) => `<g fill="${fill}">
+  <path d="M25 78a37 33 0 0 1 74 0z"/>
+  <rect x="25" y="74" width="74" height="10" rx="5"/>
+  <path d="M92 76c2-9 7-15 14-15a9 9 0 0 1 0 18c-3 0-5 2-7 5H92z"/>
+  <rect x="37" y="80" width="13" height="15" rx="6.500"/>
+  <rect x="74" y="80" width="13" height="15" rx="6.500"/>
+</g>`;
+
+const hex = (cx, cy, r) => "M" + [0, 1, 2, 3, 4, 5].map((i) => { const a = (Math.PI / 3) * i - Math.PI / 2; return `${(cx + r * Math.cos(a)).toFixed(2)} ${(cy + r * Math.sin(a)).toFixed(2)}`; }).join("L") + "z";
+
 const options = [
-  ["Last round, minus the eyes", { dot: 0.26 }],
-  ["Rounded head, oval legs", { head: "round", leg: "oval", dot: 0.26 }],
-  ["Pointed head, flippers, swimming", { head: "pointed", leg: "flipper", pose: "swim", dot: 0.26 }],
-  ["Broad head, short stubby legs", { head: "wide", leg: "stub", dot: 0.26 }],
-  ["Swimming pose, double rings", { pose: "swim", rings: [0.74, 0.46], ringW: 1 }],
-  ["Centre marks only, no rings", { rings: [], dot: 0.34 }],
-  ["Single ring, no centre mark", { rings: [0.58] }],
-  ["Wider at the back, walking", { head: "wide", pose: "walk", pear: 0.1, dot: 0.26 }],
-  ["Longer shell, long tail, swimming", { head: "pointed", pose: "swim", sx: 0.9, sy: 1.04, tail: 19, dot: 0.26 }],
-  ["Rounder shell, stubby legs, double rings", { head: "round", leg: "stub", sx: 1.08, sy: 0.95, rings: [0.74, 0.46], ringW: 1 }],
-  ["Bold lines, single ring", { seam: 2.500, rings: [0.56], ringW: 1.700 }],
-  ["Bold lines, plates only", { seam: 2.500, rings: [] }],
-  ["Triple rings", { rings: [0.78, 0.56, 0.34], ringW: 0.900 }],
-  ["Broad head, flippers, no tail", { head: "wide", leg: "flipper", tail: 0, dot: 0.26 }],
-  ["Rounded head, big oval feet, walking", { head: "round", leg: "oval", legScale: 1.150, pose: "walk", rings: [0.58] }],
+  ["Silhouette", "A solid terrapin in profile. Nothing else.", solid(W)],
+  ["Silhouette with shell seams", "The same profile with three plate lines cut into the shell.", solid(W) + cut("M44 78 50 60H74L80 78M50 60 45 50M74 60 79 50", 4)],
+  ["Single line", "One even line: shell, head and two steps.", line("M18 82H98M24 82a35 31 0 0 1 70 0M42 82v11M76 82v11", 6.500) + `<circle cx="106.500" cy="73" r="8.500" fill="none" stroke="${W}" stroke-width="6.500"/>`],
+  ["Shell only", "Just the domed shell with its plates, sitting on a line.", `<path d="M24 82a40 38 0 0 1 80 0z" fill="${W}"/><rect x="18" y="88" width="92" height="7" rx="3.500" fill="${W}"/>` + cut("M45 82 52 62H76L83 82M52 62 46 49M76 62 82 49", 4.500)],
+  ["Turbo", "The profile leaning forward with speed lines: the 'Turbo' in the name.", `<g transform="translate(22 0) skewX(-12)">${solid(W)}</g>` + line("M10 62H26M6 74H22M12 86H24", 5)],
+  ["Cut-out", "A white disc with the terrapin cut out of it.", `<circle cx="64" cy="64" r="43" fill="${W}"/><g transform="translate(13.500 14) scale(.78)">${solid(R)}</g>`],
+  ["M in the shell", "A domed shell whose seams are an M.", `<path d="M22 88a42 42 0 0 1 84 0z" fill="${W}"/><rect x="16" y="93" width="96" height="7" rx="3.500" fill="${W}"/>` + cut("M42 88V62L64 80 86 62V88", 6)],
+  ["Inverted", "The plain silhouette in red on a white tile, for places where a white icon suits better.", "__INV__"],
 ];
 const img = (svg, px) => `<img width="${px}" height="${px}" alt="" src="data:image/svg+xml;utf8,${encodeURIComponent(svg)}">`;
-document.getElementById('grid').innerHTML = options.map(([note, o], i) => {
-  const svg = box(turtle(o));
-  return `<div class="opt"><h2>${i + 1}</h2><small>${note}</small><div class="big">${img(svg, 200)}</div><div class="row">${[48, 32, 16].map((s) => img(svg, s)).join('')}</div></div>`;
+document.getElementById('grid').innerHTML = options.map(([name, note, inner], i) => {
+  const svg = inner === "__INV__" ? `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><rect x=".5" y=".5" width="127" height="127" rx="29" fill="#fff" stroke="#e5e5ea"/>${solid(R)}</svg>` : box(inner);
+  return `<div class="opt"><h2>${i + 1}. ${name}</h2><small>${note}</small><div class="big">${img(svg, 190)}</div><div class="row">${[48, 32, 16].map((s) => img(svg, s)).join('')}</div></div>`;
 }).join('');
 </script>
