@@ -6,6 +6,7 @@ import { LiveStatus } from "@/components/LiveStatus";
 import { Card, Notice, Page, Row, Section, SkeletonCard, SourceError, SubHeading } from "@/components/ui";
 import { getRecWellAreas, safe } from "@/lib/campus";
 import { EPPLEY_SUBSECTION_FALLBACK, regroupEppleyAreas, type RegroupedArea } from "@/lib/gyms";
+import { hoursLabel } from "@/lib/status";
 
 export const metadata: Metadata = { title: "Gyms & Rec" };
 
@@ -81,8 +82,8 @@ function areaRow(a: RecWellAreaToday, group: string, minutes: number) {
     <Row
       key={`${a.group}-${a.name}`}
       title={a.name === group ? "Building" : a.name}
-      subtitle={<LiveStatus hours={a.hours} initialMinutes={minutes} inline />}
-      trailing={a.hours.kind === "ranges" ? a.hours.label : undefined}
+      subtitle={<LiveStatus hours={a.hours} tomorrow={a.tomorrow} initialMinutes={minutes} inline />}
+      trailing={hoursLabel(a.hours, a.tomorrow)}
       href={a.url ?? undefined}
       external
     />

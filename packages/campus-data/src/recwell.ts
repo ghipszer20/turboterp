@@ -26,7 +26,8 @@ export type RecWellArea = {
   hoursByDate: Record<string, string>;
 };
 
-export type RecWellAreaToday = Omit<RecWellArea, "hoursByDate"> & { hours: DayHours };
+/** `tomorrow`: the next day's hours when the sheet has them, for a day that runs past midnight. */
+export type RecWellAreaToday = Omit<RecWellArea, "hoursByDate"> & { hours: DayHours; tomorrow?: DayHours };
 
 // RecWell's sheet tags some areas' names with an "informal rec" marker
 // (open-use time, as opposed to a reserved league/class) -- e.g.
@@ -106,7 +107,9 @@ export async function fetchRecWellAreas(): Promise<RecWellArea[]> {
 export function recWellOnDate(areas: RecWellArea[], isoDate: string): RecWellAreaToday[] {
   return areas.flatMap(({ hoursByDate, ...area }) => {
     const raw = hoursByDate[isoDate];
-    return raw === undefined ? [] : [{ ...area, hours: parseHours(raw) }];
+    if (raw === undefined) return [];
+    const next = hoursByDate[addDays(isoDate, 1)];
+    return [{ ...area, hours: parseHours(raw), ...(next === undefined ? {} : { tomorrow: parseHours(next) }) }];
   });
 }
 

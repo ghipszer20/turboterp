@@ -163,7 +163,7 @@ async function Gyms({ today, minutes }: { today: string; minutes: number }) {
               </IconTile>
             }
             title={gymRowTitle(b.group, b.name)}
-            subtitle={<LiveStatus hours={b.hours} initialMinutes={minutes} inline />}
+            subtitle={<LiveStatus hours={b.hours} tomorrow={b.tomorrow} initialMinutes={minutes} inline />}
           />
         ))
       )}
