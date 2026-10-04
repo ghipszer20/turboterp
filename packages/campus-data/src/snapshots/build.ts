@@ -15,6 +15,7 @@ import { parseGtfs, SHUTTLE_UM_GTFS_URL, unzipGtfs } from "../buses.ts";
 import { fetchAcademicCalendar, type AcademicEvent } from "../calendar.ts";
 import { fetchBytes } from "../http.ts";
 import { fetchLibraryHours, type LibraryHours } from "../libraries.ts";
+import { fetchStampVenues, stampWindow, type StampVenue } from "../stamp-dining.ts";
 import { fetchRecWellAreas, recWellWindow, type RecWellArea } from "../recwell.ts";
 import {
   fetchCategoryAvailability,
@@ -34,6 +35,7 @@ export type CampusSources = {
   roomAvailability(rooms: Room[], locationId: number, categoryId: number, isoDate: string): Promise<RoomAvailability[]>;
   diningMenu(hallId: number, isoDate: string): Promise<DiningMenu>;
   libraryHours(): Promise<LibraryHours[]>;
+  stampVenues(): Promise<StampVenue[]>;
   recWellAreas(): Promise<RecWellArea[]>;
   /** The unzipped GTFS text files (file name → contents). */
   shuttleGtfs(): Promise<Record<string, string>>;
@@ -49,6 +51,7 @@ export const liveSources: CampusSources = {
     fetchCategoryAvailability(rooms, locationId, categoryId, isoDate, addDays(isoDate, 1)),
   diningMenu: fetchDiningMenu,
   libraryHours: () => fetchLibraryHours(2),
+  stampVenues: fetchStampVenues,
   recWellAreas: fetchRecWellAreas,
   shuttleGtfs: async () => unzipGtfs(await fetchBytes("buses", SHUTTLE_UM_GTFS_URL)),
   buildings: fetchBuildings,
@@ -61,6 +64,7 @@ export const snapshotKeys = {
     `rooms/${isoDate}/${locationId}-${categoryId}`,
   diningMenu: (isoDate: string, hallId: number) => `dining/${isoDate}/${hallId}`,
   libraryHours: "libraries/hours",
+  stampVenues: "dining/stamp",
   recWellAreas: "recwell/areas",
   shuttleGtfs: "buses/gtfs",
   buildings: "buildings",
@@ -71,6 +75,7 @@ export const snapshotKeys = {
 
 /** How many days of RecWell hours a snapshot keeps (the sheet covers a whole year). */
 export const RECWELL_DAYS = 14;
+export const STAMP_DAYS = 14;
 /** Menus are re-checked once their snapshot is this old. */
 export const MENU_RECHECK_MS = 30 * 60_000;
 
@@ -157,6 +162,7 @@ export async function buildSnapshots(
     catalogJob,
     refreshMenus(store, now, sources, DINING_HALLS.map((h) => h.id)),
     refresh(store, now, snapshotKeys.libraryHours, () => sources.libraryHours()),
+    refresh(store, now, snapshotKeys.stampVenues, async () => stampWindow(await sources.stampVenues(), today, STAMP_DAYS)),
     refresh(store, now, snapshotKeys.recWellAreas, async () =>
       recWellWindow(await sources.recWellAreas(), today, RECWELL_DAYS),
     ),

@@ -5,7 +5,8 @@ import { BusIcon, DiningIcon, GymIcon, LibraryIcon, RoomIcon } from "@/component
 import { RegistrationCountdown } from "@/app/RegistrationCountdown";
 import { LiveStatus } from "@/components/LiveStatus";
 import { Card, IconTile, Page, Row, Section, SkeletonCard } from "@/components/ui";
-import { getAcademicCalendar, getAllDiningMenus, getLibraryHours, getRecWellAreas, getRoutesOn, safe } from "@/lib/campus";
+import { getAcademicCalendar, getAllDiningMenus, getLibraryHours, getRecWellAreas, getRoutesOn, getStampVenues, safe } from "@/lib/campus";
+import { stampSummary } from "@/lib/stamp";
 import { eventTitle, formatEventDate, upcomingDates } from "@/lib/calendar";
 import { gymRowTitle, MAIN_GYMS } from "@/lib/gyms";
 import { compactLibraryName } from "@/lib/libraries";
@@ -73,7 +74,7 @@ async function Today() {
 }
 
 async function Dining({ today, minutes }: { today: string; minutes: number }) {
-  const menus = await getAllDiningMenus(today);
+  const [menus, stamp] = await Promise.all([getAllDiningMenus(today), safe(getStampVenues)]);
   const meal = currentMealName(minutes);
   return (
     <Card>
@@ -94,6 +95,18 @@ async function Dining({ today, minutes }: { today: string; minutes: number }) {
           />
         );
       })}
+      {stamp.ok && (
+        <Row
+          href="/campus/dining"
+          leading={
+            <IconTile>
+              <DiningIcon />
+            </IconTile>
+          }
+          title="Stamp"
+          subtitle={stampSummary(stamp.data, today, minutes)}
+        />
+      )}
     </Card>
   );
 }

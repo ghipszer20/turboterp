@@ -8,6 +8,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { parseAcademicCalendar } from "../src/calendar.ts";
 import { parseDiningMenu, type DiningMenu } from "../src/dining.ts";
 import { parseLibCalHours, type LibCalHoursFeed } from "../src/libraries.ts";
+import { parseStampVenues } from "../src/stamp-dining.ts";
 import { parseRecWellTab } from "../src/recwell.ts";
 import { applyAvailability, parseRoomLocations, parseRooms, type Room } from "../src/rooms.ts";
 import {
@@ -41,6 +42,7 @@ function fakeSources(fail: Partial<Record<keyof CampusSources, boolean>> = {}) {
     roomAvailability: 0,
     diningMenu: 0,
     libraryHours: 0,
+    stampVenues: 0,
     recWellAreas: 0,
     shuttleGtfs: 0,
     buildings: 0,
@@ -63,6 +65,7 @@ function fakeSources(fail: Partial<Record<keyof CampusSources, boolean>> = {}) {
     diningMenu: (hallId: number, date: string) =>
       run("diningMenu", () => parseDiningMenu(fixture("dining-yahentamitsi.html"), hallId, date)),
     libraryHours: () => run("libraryHours", () => parseLibCalHours(JSON.parse(fixture("libcal-hours.json")) as LibCalHoursFeed)),
+    stampVenues: () => run("stampVenues", () => parseStampVenues(fixture("stamp-dining-gviz.txt"))),
     recWellAreas: () => run("recWellAreas", () => parseRecWellTab(fixture("recwell-eppley.csv"), "indoor")),
     shuttleGtfs: () => run("shuttleGtfs", () => ({ ...GTFS })),
     academicCalendar: () => run("academicCalendar", () => parseAcademicCalendar(fixture("academic-calendar-447.html"), "Spring 2027")),
@@ -97,6 +100,7 @@ describe("buildSnapshots", () => {
       "dining/2026-09-25/16",
       "dining/2026-09-25/51",
       "libraries/hours",
+      "dining/stamp",
       "recwell/areas",
       "buses/gtfs",
       "buildings",
@@ -120,6 +124,14 @@ describe("buildSnapshots", () => {
     const areas = await store.get<{ hoursByDate: Record<string, string> }[]>("recwell/areas");
     // The fixture sheet covers 2026-01-01..07; the window drops the earlier days.
     expect(Object.keys(areas!.data[0]!.hoursByDate)).toEqual(["2026-01-05", "2026-01-06", "2026-01-07"]);
+  });
+
+  it("stores two weeks of Stamp hours, starting today", async () => {
+    await buildSnapshots(store, new Date("2026-01-05T15:00:00.000Z"), fakeSources().sources);
+    const venues = await store.get<{ days: Record<string, unknown> }[]>("dining/stamp");
+    const dates = Object.keys(venues!.data[0]!.days);
+    expect(dates).toHaveLength(14);
+    expect(dates[0]).toBe("2026-01-05");
   });
 
   it("keeps the last good snapshot when a source fails, and records the error", async () => {
