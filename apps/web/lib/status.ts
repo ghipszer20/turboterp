@@ -6,7 +6,32 @@ import type { Status } from "@/components/ui";
 
 export type HoursStatus = { status: Status; text: string };
 
-export function hoursStatus(hours: DayHours | undefined, minutes: number): HoursStatus {
+const MIDNIGHT = 24 * 60;
+
+/**
+ * A range that ends exactly at midnight doesn't close then if tomorrow picks up at midnight:
+ * "all" when tomorrow is open 24 hours, tomorrow's closing time (minutes after tomorrow's
+ * midnight) when tomorrow has a range starting at 12am, null when the place really closes.
+ * UMD Libraries lists McKeldin's Sunday as "11am - 12am" with a 24-hour Monday after it.
+ */
+function pastMidnight(end: number, tomorrow: DayHours | undefined): "all" | number | null {
+  if (end !== MIDNIGHT || !tomorrow) return null;
+  if (tomorrow.kind === "24h") return "all";
+  if (tomorrow.kind !== "ranges") return null;
+  return tomorrow.ranges.find((r) => r.start === 0)?.end ?? null;
+}
+
+/** The day's hours as text for a row ("8am - 10pm"), following a day that runs past midnight into tomorrow. */
+export function hoursLabel(hours: DayHours | undefined, tomorrow: DayHours | undefined): string | undefined {
+  if (hours?.kind !== "ranges") return undefined;
+  const [only, ...rest] = hours.ranges;
+  const on = only && rest.length === 0 ? pastMidnight(only.end, tomorrow) : null;
+  if (on === null) return hours.label;
+  return `${formatMinutes(only!.start)} - ${on === "all" ? "24 hours" : formatMinutes(on)}`;
+}
+
+/** `tomorrow`: the next day's hours, so a place open through midnight isn't reported as closing at midnight. */
+export function hoursStatus(hours: DayHours | undefined, minutes: number, tomorrow?: DayHours): HoursStatus {
   if (!hours) return { status: "unknown", text: "Hours unavailable" };
   switch (hours.kind) {
     case "24h":
@@ -17,8 +42,10 @@ export function hoursStatus(hours: DayHours | undefined, minutes: number): Hours
       return { status: "unknown", text: hours.label };
     case "ranges": {
       if (isOpenAt(hours, minutes)) {
-        const left = minutesUntilClose(hours, minutes)!;
-        const closes = formatMinutes(minutes + left);
+        const on = pastMidnight(minutes + minutesUntilClose(hours, minutes)!, tomorrow);
+        if (on === "all") return { status: "open", text: "Open 24 hours" };
+        const left = minutesUntilClose(hours, minutes)! + (on ?? 0);
+        const closes = `${formatMinutes(minutes + left)}${on === null ? "" : " tomorrow"}`;
         return left <= 60
           ? { status: "soon", text: `Closes in ${left} min` }
           : { status: "open", text: `Open until ${closes}` };

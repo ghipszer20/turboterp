@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { connection } from "next/server";
-import { campusDate, campusMinutes, DINING_HALLS, orderLibraries, recWellOnDate } from "@turboterp/campus-data";
+import { addDays, campusDate, campusMinutes, DINING_HALLS, orderLibraries, recWellOnDate } from "@turboterp/campus-data";
 import { BusIcon, DiningIcon, GymIcon, LibraryIcon, RoomIcon } from "@/components/icons";
 import { RegistrationCountdown } from "@/app/RegistrationCountdown";
 import { LiveStatus } from "@/components/LiveStatus";
@@ -113,7 +113,7 @@ async function Libraries({ today, minutes }: { today: string; minutes: number })
             </IconTile>
           }
           title={compactLibraryName(lib.name)}
-          subtitle={<LiveStatus hours={lib.days[today]} initialMinutes={minutes} inline />}
+          subtitle={<LiveStatus hours={lib.days[today]} tomorrow={lib.days[addDays(today, 1)]} initialMinutes={minutes} inline />}
         />
       ))}
       <Row
