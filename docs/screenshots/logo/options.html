@@ -1,0 +1,73 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>TurboTerp logo options</title>
+<style>
+  body { font: 15px/1.4 -apple-system, system-ui, "Segoe UI", sans-serif; margin: 0; background: #f5f5f7; color: #1d1d1f; }
+  h1 { font-size: 22px; margin: 24px 24px 4px; }
+  p { margin: 0 24px 16px; color: #6e6e73; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 0 24px 24px; }
+  .opt { border-radius: 18px; overflow: hidden; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .opt h2 { font-size: 16px; margin: 0; padding: 14px 18px 0; }
+  .opt small { display: block; padding: 2px 18px 12px; color: #6e6e73; }
+  .row { display: flex; align-items: center; gap: 18px; padding: 16px 18px; }
+  .dark { background: #1c1c1e; color: #f5f5f7; }
+  .word { font: 700 22px/1 ui-rounded, "SF Pro Rounded", system-ui, sans-serif; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; margin-left: auto; }
+  .word span { color: #BA0C2F; } .dark .word span { color: #ff4d6a; }
+</style>
+<h1>TurboTerp logo options</h1>
+<p>White terrapin on the original red square (#BA0C2F). Each is shown at 128, 64, 32 and 16 px (16 is the browser-tab size), then beside the wordmark.</p>
+<div class="grid" id="grid"></div>
+<script>
+const R = '#BA0C2F';
+const box = (inner) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="${R}"/>${inner}</svg>`;
+const options = [
+  ["A. Top-down, solid", "Solid white terrapin seen from above; the diamond on the shell is the 'diamondback'.",
+   `<g fill="#fff">
+      <ellipse cx="16.5" cy="23" rx="6" ry="3.4" transform="rotate(-38 16.5 23)"/>
+      <ellipse cx="47.5" cy="23" rx="6" ry="3.4" transform="rotate(38 47.5 23)"/>
+      <ellipse cx="18" cy="47" rx="5.2" ry="3.2" transform="rotate(38 18 47)"/>
+      <ellipse cx="46" cy="47" rx="5.2" ry="3.2" transform="rotate(-38 46 47)"/>
+      <path d="M29.6 50 32 57.5 34.4 50z"/>
+      <ellipse cx="32" cy="13.5" rx="5" ry="6"/>
+      <ellipse cx="32" cy="35" rx="14" ry="17"/>
+    </g>
+    <path d="M32 23.5 40 35 32 46.5 24 35z" fill="none" stroke="${R}" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M32 30.5 35.2 35 32 39.5 28.8 35z" fill="${R}"/>`],
+  ["B. Top-down, outline", "Same pose drawn as a thin line, closest in feel to the old hexagon outline.",
+   `<g fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="32" cy="35" rx="13" ry="16"/>
+      <path d="M27.6 19.5a4.6 5.4 0 1 1 8.8 0"/>
+      <path d="M21.5 25.5 14.5 19.5M42.5 25.5 49.500 19.5M22.5 45.5 16 51M41.5 45.5 48 51"/>
+      <path d="M32 26 38 35 32 44 26 35z"/>
+    </g>`],
+  ["C. Hexagon shell", "Keeps the old logo's hexagon as the shell, with a head, four feet and a diamond.",
+   `<g fill="#fff">
+      <circle cx="32" cy="11.5" r="5"/>
+      <circle cx="15" cy="21.5" r="4"/><circle cx="49" cy="21.5" r="4"/>
+      <circle cx="15" cy="46.5" r="4"/><circle cx="49" cy="46.5" r="4"/>
+      <path d="M32 16 47 24.5v19L32 52 17 43.500v-19z" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+    </g>
+    <path d="M32 24.500 39.500 34 32 43.500 24.500 34z" fill="none" stroke="${R}" stroke-width="2.4" stroke-linejoin="round"/>`],
+  ["D. Side profile", "A walking terrapin from the side: domed shell with three diamonds.",
+   `<g fill="#fff">
+      <path d="M9 41a19.500 17 0 0 1 39 0z"/>
+      <path d="M46 36c2-5 5.500-7.500 9-7.500 3 0 5 2 5 4.600 0 2.900-2.600 4.900-6 4.900h-6z"/>
+      <rect x="14" y="40" width="7" height="9" rx="3"/>
+      <rect x="36" y="40" width="7" height="9" rx="3"/>
+      <path d="M9.500 41 4.500 43.500 10 38z"/>
+    </g>
+    <g fill="${R}">
+      <path d="M28.500 26.500 32 32 28.500 37.500 25 32z"/>
+      <path d="M18.500 30 21.300 34 18.500 38 15.700 34z"/>
+      <path d="M38.500 30 41.300 34 38.500 38 35.700 34z"/>
+      <circle cx="55.500" cy="32.200" r="1.100"/>
+    </g>`],
+];
+const img = (svg, px) => `<img width="${px}" height="${px}" alt="" src="data:image/svg+xml;utf8,${encodeURIComponent(svg)}">`;
+document.getElementById('grid').innerHTML = options.map(([name, note, inner]) => {
+  const svg = box(inner);
+  const sizes = [128, 64, 32, 16].map((s) => img(svg, s)).join('');
+  const word = `<div class="word">${img(svg, 28)}<div>Turbo<span>Terp</span></div></div>`;
+  return `<div class="opt"><h2>${name}</h2><small>${note}</small><div class="row">${sizes}${word}</div><div class="row dark">${sizes}${word}</div></div>`;
+}).join('');
+</script>

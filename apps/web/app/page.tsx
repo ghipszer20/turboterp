@@ -56,12 +56,12 @@ async function Today() {
           <Libraries today={today} minutes={minutes} />
         </Suspense>
       </Section>
-      <Section title="Work out">
+      <Section title="Fitness">
         <Suspense fallback={<SkeletonCard rows={2} />}>
           <Gyms today={today} minutes={minutes} />
         </Suspense>
       </Section>
-      <Section title="Get around">
+      <Section title="Transport">
         <Suspense fallback={<SkeletonCard rows={1} />}>
           <Buses today={today} />
         </Suspense>
