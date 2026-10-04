@@ -61,7 +61,7 @@ export function SignInGate() {
               type="email"
               inputMode="email"
               autoComplete="email"
-              placeholder="you@terpmail.umd.edu"
+              placeholder="jdoe@terpmail.umd.edu"
               value={email}
               onChange={(e) => (setEmail(e.target.value), setError(null))}
             />
