@@ -1,8 +1,8 @@
 "use client";
 
 import { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import type { Building } from "@superterp/campus-data/buildings";
-import type { Section } from "@superterp/course-data/schedules";
+import type { Building } from "@turboterp/campus-data/buildings";
+import type { Section } from "@turboterp/course-data/schedules";
 import { sectionBlocks } from "@/lib/schedule/block-items";
 import type { TimeScale } from "@/lib/schedule/calendar";
 import { courseColor } from "@/lib/schedule/colors";

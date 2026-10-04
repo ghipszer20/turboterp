@@ -1,7 +1,7 @@
 // Checks a Plan term by term. Pure and synchronous: it runs in the student's browser on every
 // edit, so all text parsing happens once, in buildCatalog.
 
-import { checkRequirement, type CourseRecord, type Requirement } from "@superterp/course-data/prereqs";
+import { checkRequirement, type CourseRecord, type Requirement } from "@turboterp/course-data/prereqs";
 import type { PlanCatalog } from "./catalog.ts";
 import { collegeName, creditCap, type College } from "./credit-caps.ts";
 import {
@@ -30,7 +30,7 @@ export type PlanTerm = { name: string; courses: PlanCourse[] };
 
 /**
  * Credit the student has before the first term: AP/IB exams or dual enrollment. `CreditCourse`
- * records from @superterp/credit fit this shape.
+ * records from @turboterp/credit fit this shape.
  */
 export type PriorCredit = { id: string; credits: number; grade?: string; genEd?: string[]; source?: string };
 
@@ -59,7 +59,7 @@ export type IssueKind =
 export type PlanIssue = {
   kind: IssueKind;
   /**
-   * error: the plan has to change. warning: probably a mistake. confirm: something SuperTerp
+   * error: the plan has to change. warning: probably a mistake. confirm: something TurboTerp
    * can't check (a Manual Item), so the student checks it. info: worth knowing, nothing wrong.
    */
   severity: "error" | "warning" | "confirm" | "info";
@@ -212,7 +212,7 @@ export function checkPlan(plan: Plan, catalog: PlanCatalog, options: CheckOption
       const where = `${course.id} (${term.name})`;
 
       // Grad courses as an undergrad (owner ruling): checked from the course id alone, so this
-      // runs even for a course SuperTerp's catalog doesn't have, and for a completed course.
+      // runs even for a course TurboTerp's catalog doesn't have, and for a completed course.
       if (isBlockedGraduateCourse(course.id)) {
         issues.push({
           kind: "grad-restricted",
@@ -251,7 +251,7 @@ export function checkPlan(plan: Plan, catalog: PlanCatalog, options: CheckOption
           kind: "unknown-course",
           severity: "warning",
           ...at,
-          message: `${course.id} isn't in the course data SuperTerp has. Check the course number; if it's right, SuperTerp can't check its prerequisites or credits yet.`,
+          message: `${course.id} isn't in the course data TurboTerp has. Check the course number; if it's right, TurboTerp can't check its prerequisites or credits yet.`,
         });
         continue;
       }
@@ -273,7 +273,7 @@ export function checkPlan(plan: Plan, catalog: PlanCatalog, options: CheckOption
             kind: "prerequisite",
             severity: "confirm",
             ...at,
-            message: `${where} also needs something SuperTerp can't check. Confirm it yourself: ${confirmTexts(info.prerequisite, prereqHistory).join("; ")}.`,
+            message: `${where} also needs something TurboTerp can't check. Confirm it yourself: ${confirmTexts(info.prerequisite, prereqHistory).join("; ")}.`,
           });
         }
       }
@@ -294,7 +294,7 @@ export function checkPlan(plan: Plan, catalog: PlanCatalog, options: CheckOption
             kind: "corequisite",
             severity: "confirm",
             ...at,
-            message: `${where} also has a corequisite SuperTerp can't check. Confirm it yourself: ${confirmTexts(info.corequisite, coreqHistory).join("; ")}.`,
+            message: `${where} also has a corequisite TurboTerp can't check. Confirm it yourself: ${confirmTexts(info.corequisite, coreqHistory).join("; ")}.`,
           });
         }
       }

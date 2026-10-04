@@ -13,7 +13,7 @@ const entry = (over: Partial<Parameters<typeof orderEntries>[0][number]> & { id:
   major: undefined,
   track: undefined,
   sources: {},
-  importPath: `@superterp/audit/programs/${over.id}.ts`,
+  importPath: `@turboterp/audit/programs/${over.id}.ts`,
   exportName: over.id,
   ...over,
 });

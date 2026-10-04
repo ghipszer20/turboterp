@@ -2,7 +2,7 @@
 // course it names exists (test/fixtures/umd-courses.json, taken from UMD's Schedule of Classes).
 
 import { readFileSync } from "node:fs";
-import { auditProgram, type Requirement, type SetMember } from "@superterp/audit";
+import { auditProgram, type Requirement, type SetMember } from "@turboterp/audit";
 import { describe, expect, it } from "vitest";
 import { HPAO_DISCLAIMER, TRACKS, trackProgram, type Track } from "../src/index.ts";
 import known from "./fixtures/umd-courses.json" with { type: "json" };

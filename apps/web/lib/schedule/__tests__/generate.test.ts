@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import type { Section } from "@superterp/course-data/schedules";
+import type { Section } from "@turboterp/course-data/schedules";
 import { decodeLayout } from "../gallery";
 import { runGeneration } from "../generate";
 

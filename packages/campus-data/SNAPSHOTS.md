@@ -45,7 +45,7 @@ interface SnapshotStore {
 
 `FileSnapshotStore` stores each key as a JSON file: `dining/2026-09-25/19` is saved as `<dir>/dining/2026-09-25/19.json`. Each file is wrapped in `{ schema, key, updatedAt, data }`. Writes go to a temp file first and are then renamed into place. A file with a different `schema` number, or one that won't parse, reads as missing. Bump `SNAPSHOT_SCHEMA` whenever a data shape changes.
 
-The directory is `$SUPERTERP_SNAPSHOT_DIR`, or `<repo root>/.cache/snapshots` by default. That folder is gitignored, and the CLI and `next dev`/`next start` both resolve to it. A durable store (Supabase, or the host's data cache) will implement the same two methods when we deploy.
+The directory is `$TURBOTERP_SNAPSHOT_DIR`, or `<repo root>/.cache/snapshots` by default. That folder is gitignored, and the CLI and `next dev`/`next start` both resolve to it. A durable store (Supabase, or the host's data cache) will implement the same two methods when we deploy.
 
 Keys:
 

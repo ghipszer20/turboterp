@@ -4,7 +4,7 @@
 // or section batch still fails, nothing is saved (the old file stays) and
 // the script exits non-zero. Run by hand:
 //
-//   npm run snapshot -w @superterp/course-data -- 202701
+//   npm run snapshot -w @turboterp/course-data -- 202701
 
 import { mkdirSync, writeFileSync } from "node:fs";
 import { fetchEach } from "../src/fetch-each.ts";

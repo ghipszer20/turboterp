@@ -3,7 +3,7 @@
 // tested in isolation from the real HPAO data.
 
 import { describe, expect, it } from "vitest";
-import type { Plan } from "@superterp/plan";
+import type { Plan } from "@turboterp/plan";
 import { checkTrack } from "../src/check.ts";
 import type { Track } from "../src/types.ts";
 

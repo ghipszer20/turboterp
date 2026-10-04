@@ -1,13 +1,13 @@
 // Shapes for pre-professional Tracks (CONTEXT.md: a Track lists what professional schools expect;
 // it is never a UMD graduation requirement). SOURCES.md says where each track's data comes from.
 
-import type { Requirement } from "@superterp/audit";
+import type { Requirement } from "@turboterp/audit";
 
 /** One prerequisite category a professional school expects, such as HPAO's "8 Credits of Organic Chemistry with labs". */
 export type TrackCategory = {
   /**
    * The UMD courses that satisfy it, in the audit's requirement format. The requirement's `id`
-   * and `name` identify the category. Absent when SuperTerp can't name a UMD course yet (a
+   * and `name` identify the category. Absent when TurboTerp can't name a UMD course yet (a
    * Manual Item the student confirms), e.g. medical terminology.
    */
   requirement?: Requirement;

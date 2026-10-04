@@ -53,7 +53,7 @@ describe("buildPlanExport", () => {
 
 describe("exportFileName", () => {
   it("names the download by kind and date, never 'takeout'", () => {
-    expect(exportFileName("xlsx", "2026-09-29")).toBe("superterp-4-year-plan-2026-09-29.xlsx");
-    expect(exportFileName("pdf", "2026-09-29")).toBe("superterp-4-year-plan-2026-09-29.pdf");
+    expect(exportFileName("xlsx", "2026-09-29")).toBe("turboterp-4-year-plan-2026-09-29.xlsx");
+    expect(exportFileName("pdf", "2026-09-29")).toBe("turboterp-4-year-plan-2026-09-29.pdf");
   });
 });

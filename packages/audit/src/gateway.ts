@@ -34,7 +34,7 @@ const GATEWAY_COURSES = [
 /**
  * RULING (owner, 2026-09-26, verbatim: "it absolutely counts towards the gateway - this is true
  * for gateway courses for all programs"): a gateway course completed without a letter grade
- * (AP/IB exam or transfer credit, which @superterp/credit records with no grade) meets the
+ * (AP/IB exam or transfer credit, which @turboterp/credit records with no grade) meets the
  * gateway, for every program's gateway, not only CS.
  */
 const NO_GRADE_CREDIT_MEETS_GATEWAY = true;

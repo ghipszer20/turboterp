@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import type { Route } from "@superterp/campus-data";
-import { formatMinutes } from "@superterp/campus-data/hours";
+import type { Route } from "@turboterp/campus-data";
+import { formatMinutes } from "@turboterp/campus-data/hours";
 import { LocationIcon } from "@/components/icons";
 import { Card, EmptyState, Section } from "@/components/ui";
 import { useCampusMinutes } from "@/lib/useCampusMinutes";

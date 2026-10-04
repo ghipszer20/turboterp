@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { AcademicEvent } from "@superterp/campus-data";
+import type { AcademicEvent } from "@turboterp/campus-data";
 import { formatKeyDates, termKeyDates, upcomingDates } from "../calendar";
 
 const ev = (kind: AcademicEvent["kind"], start: string, end?: string, term = "Spring 2027"): AcademicEvent => ({

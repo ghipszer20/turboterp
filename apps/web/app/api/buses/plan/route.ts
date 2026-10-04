@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { connection } from "next/server";
-import { campusDate, campusMinutes } from "@superterp/campus-data";
+import { campusDate, campusMinutes } from "@turboterp/campus-data";
 import { planArriveByBetween, planTripBetween } from "@/lib/campus";
 
 function place(params: URLSearchParams, prefix: "from" | "to") {

@@ -1,4 +1,4 @@
-import type { Program } from "@superterp/audit";
+import type { Program } from "@turboterp/audit";
 import { describe, expect, it } from "vitest";
 import { planCourses, validateSamplePlan, type SamplePlan } from "../src/harness.ts";
 

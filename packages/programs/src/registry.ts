@@ -4,12 +4,12 @@
 // file's own metadata (registry.generated.ts, scripts/build-registry.ts); this file keeps the
 // types and the lookups built on top. Adding a program = one program file (packages/audit/programs
 // or packages/catalog/special-programs) with a ProgramMeta next to its Program, then
-// `npm run build:registry -w @superterp/programs`; see docs/project/program-batches.md.
+// `npm run build:registry -w @turboterp/programs`; see docs/project/program-batches.md.
 //
-// Lives in its own package because it sits above both @superterp/audit (the majors) and
-// @superterp/catalog (the special programs), which depends on audit.
+// Lives in its own package because it sits above both @turboterp/audit (the majors) and
+// @turboterp/catalog (the special programs), which depends on audit.
 
-import type { Program } from "@superterp/audit";
+import type { Program } from "@turboterp/audit";
 
 export type { ProgramEntry, ProgramKind } from "./registry-types.ts";
 import type { ProgramEntry } from "./registry-types.ts";

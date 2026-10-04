@@ -1,4 +1,4 @@
-import { distributionFromCounts, type CourseGrades } from "@superterp/ratings";
+import { distributionFromCounts, type CourseGrades } from "@turboterp/ratings";
 import { describe, expect, it } from "vitest";
 import { planDifficulty, statsFromDistribution } from "../advisor/difficulty";
 import type { AdvisorPlan } from "../advisor/plan-state";

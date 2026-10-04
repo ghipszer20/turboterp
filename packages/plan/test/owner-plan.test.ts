@@ -18,7 +18,7 @@ describe("the owner's Math (Applied) + CS plan", () => {
     const confirms = checkPlan(ownerPlan(), catalog).filter((i) => i.severity === "confirm");
     expect(confirms.map((i) => i.course)).toEqual(expect.arrayContaining(["CMSC420", "MATH410", "ENGL394"]));
     expect(confirms.find((i) => i.course === "ENGL394")?.message).toBe(
-      "ENGL394 (Spring 2029) also needs something SuperTerp can't check. Confirm it yourself: must have fulfilled the Academic Writing (FSAW) requirement.",
+      "ENGL394 (Spring 2029) also needs something TurboTerp can't check. Confirm it yourself: must have fulfilled the Academic Writing (FSAW) requirement.",
     );
   });
 

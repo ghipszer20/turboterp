@@ -3,7 +3,7 @@
 // CDNs cache the responses far longer (see app/api/schedule/[...path]/route.ts).
 
 import { cacheLife } from "next/cache";
-import { defaultSnapshotDir, FileSnapshotStore } from "@superterp/campus-data/snapshots";
+import { defaultSnapshotDir, FileSnapshotStore } from "@turboterp/campus-data/snapshots";
 
 let store: FileSnapshotStore | null = null;
 

@@ -3,7 +3,7 @@ import { buildReportMailto, isPlaceholder, resolveAbout, type AboutConfig } from
 
 const FILLED: AboutConfig = {
   creatorBio: "I'm a UMD student who built this.",
-  githubUrl: "https://github.com/example/superterp",
+  githubUrl: "https://github.com/example/turboterp",
   donationUrl: "https://buymeacoffee.com/example",
   contactEmail: "hello@example.com",
 };
@@ -46,13 +46,13 @@ describe("resolveAbout", () => {
 
   it("derives the GitHub issues URL from a real GitHub URL", () => {
     const resolved = resolveAbout(FILLED);
-    expect(resolved.githubUrl).toBe("https://github.com/example/superterp");
-    expect(resolved.issuesUrl).toBe("https://github.com/example/superterp/issues/new");
+    expect(resolved.githubUrl).toBe("https://github.com/example/turboterp");
+    expect(resolved.issuesUrl).toBe("https://github.com/example/turboterp/issues/new");
   });
 
   it("strips a trailing slash from the GitHub URL before deriving the issues URL", () => {
-    const resolved = resolveAbout({ ...FILLED, githubUrl: "https://github.com/example/superterp/" });
-    expect(resolved.issuesUrl).toBe("https://github.com/example/superterp/issues/new");
+    const resolved = resolveAbout({ ...FILLED, githubUrl: "https://github.com/example/turboterp/" });
+    expect(resolved.issuesUrl).toBe("https://github.com/example/turboterp/issues/new");
   });
 
   it("never lets the placeholder sentinel escape as a resolved value", () => {

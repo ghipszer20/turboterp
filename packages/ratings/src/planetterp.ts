@@ -11,7 +11,7 @@
 // The documented base https://api.planetterp.com/v1 301-redirects to the one used here.
 // `courses` and `professors` repeat entries (apparently one per semester taught); we dedupe.
 
-import { fetchJson, SourceError } from "@superterp/campus-data/http";
+import { fetchJson, SourceError } from "@turboterp/campus-data/http";
 
 const API = "https://planetterp.com/api/v1";
 const SOURCE = "planetterp";

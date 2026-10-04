@@ -1,7 +1,7 @@
-import type { Requirement, RequirementResult, StudentCourse } from "@superterp/audit";
-import { cmscMajor } from "@superterp/audit/programs/cmsc-major-2026-27.ts";
-import { genEd } from "@superterp/audit/programs/gen-ed-2026-27.ts";
-import { mathMajorApplied } from "@superterp/audit/programs/math-major-applied-2026-27.ts";
+import type { Requirement, RequirementResult, StudentCourse } from "@turboterp/audit";
+import { cmscMajor } from "@turboterp/audit/programs/cmsc-major-2026-27.ts";
+import { genEd } from "@turboterp/audit/programs/gen-ed-2026-27.ts";
+import { mathMajorApplied } from "@turboterp/audit/programs/math-major-applied-2026-27.ts";
 import { describe, expect, it } from "vitest";
 import { describeGap, filterText, genEdName, prerequisiteText } from "../advisor/requirements";
 

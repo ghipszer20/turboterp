@@ -20,7 +20,7 @@ export type BuiltEntry = {
   notOpenTo?: { programs?: string[]; colleges?: string[]; reason: string };
   onlyOpenTo?: { programs?: string[]; colleges?: string[]; reason: string };
   /** The literal specifier the generated file's `import()` must use, so the bundler can still
-   * split this program into its own chunk -- e.g. "@superterp/audit/programs/foo-2026-27.ts". */
+   * split this program into its own chunk -- e.g. "@turboterp/audit/programs/foo-2026-27.ts". */
   importPath: string;
   /** The Program's export name in that module, e.g. "fooMajor". */
   exportName: string;
@@ -29,8 +29,8 @@ export type BuiltEntry = {
 const repoRoot = fileURLToPath(new URL("../../..", import.meta.url));
 
 const SOURCES = [
-  { dir: repoRoot + "packages/audit/programs", importPrefix: "@superterp/audit/programs/" },
-  { dir: repoRoot + "packages/catalog/special-programs", importPrefix: "@superterp/catalog/special-programs/" },
+  { dir: repoRoot + "packages/audit/programs", importPrefix: "@turboterp/audit/programs/" },
+  { dir: repoRoot + "packages/catalog/special-programs", importPrefix: "@turboterp/catalog/special-programs/" },
 ];
 
 const KIND_RANK: Record<BuiltEntry["kind"], number> = { major: 0, minor: 1, certificate: 2, special: 3 };

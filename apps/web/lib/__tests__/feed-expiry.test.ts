@@ -9,7 +9,7 @@ describe("feedExpiryNotice", () => {
 
   it("gives a heads-up in the last 30 days, through the end date itself", () => {
     expect(feedExpiryNotice("2026-12-24", "2026-11-24")).toBe(
-      "Shuttle-UM's published schedule runs through Dec 24, 2026. SuperTerp switches to the next one once it's out.",
+      "Shuttle-UM's published schedule runs through Dec 24, 2026. TurboTerp switches to the next one once it's out.",
     );
     expect(feedExpiryNotice("2026-12-24", "2026-12-24")).toMatch(/^Shuttle-UM's published schedule runs through Dec 24, 2026\./);
   });

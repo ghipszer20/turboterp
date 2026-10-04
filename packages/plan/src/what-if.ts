@@ -1,9 +1,9 @@
 // What-if program changes (switch major, add or drop a program): compares a plan's courses,
 // missing requirements, freed credits, the CS gateway and a graduation-term estimate under the
-// student's current declared majors vs a proposed set. Async and solver-backed (@superterp/audit),
+// student's current declared majors vs a proposed set. Async and solver-backed (@turboterp/audit),
 // like notices.ts -- run it after edits settle, not on every keystroke.
 
-import { auditPrograms, checkCsGateway, PROGRAM_GPA_ID, earnsCredit, type AuditResult, type GatewayResult, type Program, type StudentCourse } from "@superterp/audit";
+import { auditPrograms, checkCsGateway, PROGRAM_GPA_ID, earnsCredit, type AuditResult, type GatewayResult, type Program, type StudentCourse } from "@turboterp/audit";
 import type { PlanCatalog } from "./catalog.ts";
 import type { Plan } from "./check.ts";
 import { planCourses, shortfall } from "./notices.ts";
@@ -25,9 +25,9 @@ export type CourseWhatIf = {
   currentPrograms: string[];
   /** Ids of the proposed majors (only -- never layers) this course is assigned to. */
   proposedPrograms: string[];
-  /** Whether this occurrence earns credit (@superterp/audit's earnsCredit): false only for a
+  /** Whether this occurrence earns credit (@turboterp/audit's earnsCredit): false only for a
    * completed course graded F or W. A pure-display consumer (what-if-display.ts) can't value-import
-   * @superterp/audit itself (it would pull in HiGHS), so this is computed here instead. */
+   * @turboterp/audit itself (it would pull in HiGHS), so this is computed here instead. */
   earnsCredit: boolean;
 };
 
@@ -47,11 +47,11 @@ export type GraduationEstimate = {
 };
 
 export type WhatIfOptions = {
-  /** Testudo term id the student started at UMD (see @superterp/audit's checkCsGateway). Required
+  /** Testudo term id the student started at UMD (see @turboterp/audit's checkCsGateway). Required
    * for a gateway result when the Computer Science major is involved. */
   matriculationTerm?: string;
   cumulativeGpa?: number;
-  /** Open Slots the student confirmed, as "<programId>/<requirementId>" (@superterp/audit AuditOptions). */
+  /** Open Slots the student confirmed, as "<programId>/<requirementId>" (@turboterp/audit AuditOptions). */
   confirmed?: string[];
 };
 
@@ -88,11 +88,11 @@ function splitLayer(program: Program): { audited: Program | null; floors: number
   return { audited: audited.length > 0 ? { ...program, requirements: audited } : null, floors };
 }
 
-// UMD letter grades, lowest to highest (same order as @superterp/audit, which doesn't export it).
+// UMD letter grades, lowest to highest (same order as @turboterp/audit, which doesn't export it).
 const GRADE_ORDER = ["F", "D-", "D", "D+", "C-", "C", "C+", "B-", "B", "B+", "A-", "A", "A+"];
 const gradeRank = (g: string) => GRADE_ORDER.indexOf(g.trim().toUpperCase());
 
-/** Mirrors @superterp/audit's own (unexported) course/program grade filter: a course below a
+/** Mirrors @turboterp/audit's own (unexported) course/program grade filter: a course below a
  * program's minimum grade never receives a pair from the solver for any of that program's
  * requirements, so it can never be "assigned". */
 function meetsProgramGrade(course: StudentCourse, minGrade: string | undefined): boolean {

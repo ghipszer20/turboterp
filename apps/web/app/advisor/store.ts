@@ -35,7 +35,7 @@ function write(key: string, value: string | null) {
 function load(): AdvisorSnapshot {
   const seed = seedFromUrl(location.search, {
     NODE_ENV: process.env.NODE_ENV,
-    NEXT_PUBLIC_SUPERTERP_SEED: process.env.NEXT_PUBLIC_SUPERTERP_SEED,
+    NEXT_PUBLIC_TURBOTERP_SEED: process.env.NEXT_PUBLIC_TURBOTERP_SEED,
   });
   if (seed) {
     write(CONSENT_STORAGE_KEY, JSON.stringify(seed.consent));

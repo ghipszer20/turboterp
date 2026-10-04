@@ -84,7 +84,7 @@ describe("prerequisites", () => {
     );
   });
 
-  it("turns a requirement SuperTerp can't check (permission, placement) into a confirm item", () => {
+  it("turns a requirement TurboTerp can't check (permission, placement) into a confirm item", () => {
     // CMSC420: C- in CMSC351 and CMSC330; and permission of CMNS-Computer Science department. Or …program.
     const p = plan({ "Fall 2026": ["CMSC351", "CMSC330"], "Spring 2027": ["CMSC420"] });
     const issues = of(checkPlan({ ...p, terms: p.terms.map((t) => ({ ...t })) }, catalog), "prerequisite").filter(
@@ -97,7 +97,7 @@ describe("prerequisites", () => {
         term: "Spring 2027",
         course: "CMSC420",
         message:
-          "CMSC420 (Spring 2027) also needs something SuperTerp can't check. Confirm it yourself: permission of CMNS-Computer Science department.",
+          "CMSC420 (Spring 2027) also needs something TurboTerp can't check. Confirm it yourself: permission of CMNS-Computer Science department.",
       },
     ]);
   });
@@ -322,7 +322,7 @@ describe("unknown courses", () => {
         term: "Fall 2026",
         course: "CMSC999",
         message:
-          "CMSC999 isn't in the course data SuperTerp has. Check the course number; if it's right, SuperTerp can't check its prerequisites or credits yet.",
+          "CMSC999 isn't in the course data TurboTerp has. Check the course number; if it's right, TurboTerp can't check its prerequisites or credits yet.",
       },
     ]);
   });

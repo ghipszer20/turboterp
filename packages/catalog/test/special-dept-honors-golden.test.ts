@@ -4,7 +4,7 @@
 // purpose that must fail a named requirement.
 
 import { describe, expect, it } from "vitest";
-import { auditProgram, type Program, type StudentCourse } from "@superterp/audit";
+import { auditProgram, type Program, type StudentCourse } from "@turboterp/audit";
 import { deptHist } from "../special-programs/dept-hist-2026-27.ts";
 import { deptMath } from "../special-programs/dept-math-2026-27.ts";
 import { deptCcjs } from "../special-programs/dept-ccjs-2026-27.ts";

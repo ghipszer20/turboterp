@@ -1,9 +1,9 @@
 // Good news about a Plan, never warnings: it completes a second major (a double major), it
 // qualifies for a dual degree, or it comes within a course or two of another major.
-// Runs the degree audit (@superterp/audit, an integer program), so it's async and slower than
+// Runs the degree audit (@turboterp/audit, an integer program), so it's async and slower than
 // checkPlan; run it after edits settle, not on every keystroke.
 
-import { auditPrograms, earnsCredit, matchesFilter, type AuditResult, type Program, type StudentCourse } from "@superterp/audit";
+import { auditPrograms, earnsCredit, matchesFilter, type AuditResult, type Program, type StudentCourse } from "@turboterp/audit";
 import { allowsRetake } from "./check.ts";
 import type { PlanCatalog } from "./catalog.ts";
 import type { Plan } from "./check.ts";

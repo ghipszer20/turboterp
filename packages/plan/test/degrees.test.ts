@@ -3,7 +3,7 @@
 // dropped programs, and the declaration-deadline warning. The owner's verification target:
 // Math (Applied) + CS, as both a double major and a double degree.
 
-import type { Program } from "@superterp/audit";
+import type { Program } from "@turboterp/audit";
 import { describe, expect, it } from "vitest";
 import { cmscMajor } from "../../audit/programs/cmsc-major-2026-27.ts";
 import { genEd, university } from "../../audit/programs/gen-ed-2026-27.ts";

@@ -1,5 +1,5 @@
 {
-  "name": "@superterp/plan",
+  "name": "@turboterp/plan",
   "version": "0.1.0",
   "private": true,
   "description": "Checks a student's four-year Plan term by term: prerequisites, corequisites, repeats, credit load, unknown courses, and double-major or dual-degree notices. Framework-free; runs in the browser.",
@@ -22,13 +22,13 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@superterp/credit": "*",
+    "@turboterp/credit": "*",
     "@types/node": "^22.20.4",
     "typescript": "^5.9.3",
     "vitest": "^5.0.1"
   },
   "dependencies": {
-    "@superterp/audit": "*",
-    "@superterp/course-data": "*"
+    "@turboterp/audit": "*",
+    "@turboterp/course-data": "*"
   }
 }

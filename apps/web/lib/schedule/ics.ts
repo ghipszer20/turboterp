@@ -1,6 +1,6 @@
 // iCalendar (RFC 5545) export of a set of sections. Pure: (term, sections) -> string.
 
-import type { Meeting, Section } from "@superterp/course-data/schedules";
+import type { Meeting, Section } from "@turboterp/course-data/schedules";
 import { termDates } from "./term-dates";
 
 const DAY_INDEX: Record<string, number> = { Su: 0, M: 1, Tu: 2, W: 3, Th: 4, F: 5, Sa: 6 };
@@ -92,7 +92,7 @@ function eventLines(term: string, s: Section, m: Meeting, i: number, stamp: stri
   const desc = [`Section ${s.id}`, s.instructors.length ? `Instructors: ${s.instructors.join(", ")}` : ""].filter(Boolean).join("\n");
   return [
     "BEGIN:VEVENT",
-    `UID:${term}-${s.courseId}-${s.id}-${i}@superterp`,
+    `UID:${term}-${s.courseId}-${s.id}-${i}@turboterp`,
     `DTSTAMP:${stamp}`,
     `DTSTART;TZID=${TZID}:${ymd(start)}T${hms(m.start)}`,
     `DTEND;TZID=${TZID}:${ymd(start)}T${hms(end)}`,
@@ -110,6 +110,6 @@ export function buildIcs(term: string, sections: Section[], now: Date = new Date
   const dates = termDates(term);
   const stamp = stampOf(now);
   const events = dates ? sections.flatMap((s) => s.meetings.flatMap((m, i) => eventLines(term, s, m, i, stamp, dates))) : [];
-  const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//SuperTerp//Schedule Builder//EN", "CALSCALE:GREGORIAN", ...VTIMEZONE, ...events, "END:VCALENDAR"];
+  const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//TurboTerp//Schedule Builder//EN", "CALSCALE:GREGORIAN", ...VTIMEZONE, ...events, "END:VCALENDAR"];
   return lines.map(foldLine).join("\r\n") + "\r\n";
 }

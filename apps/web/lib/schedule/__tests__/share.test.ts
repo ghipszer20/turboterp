@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { Section } from "@superterp/course-data/schedules";
+import type { Section } from "@turboterp/course-data/schedules";
 import { resolveShared, saveShared } from "../share";
 import { emptySaved, savePlan, serializeSaved, parseSaved } from "../saved";
 

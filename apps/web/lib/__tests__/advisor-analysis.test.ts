@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
-import type { Course } from "@superterp/course-data";
-import { buildCatalog } from "@superterp/plan/catalog";
-import { checkPlan } from "@superterp/plan/check";
+import type { Course } from "@turboterp/course-data";
+import { buildCatalog } from "@turboterp/plan/catalog";
+import { checkPlan } from "@turboterp/plan/check";
 import { describe, expect, it } from "vitest";
 import { runAnalysis } from "../advisor/analysis";
 import { checkerPlan } from "../advisor/checker";

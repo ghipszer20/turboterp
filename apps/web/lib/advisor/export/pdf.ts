@@ -21,7 +21,7 @@ export async function buildPdf(t: PlanExport) {
   };
 
   // Header
-  doc.setFont("helvetica", "bold").setFontSize(18).setTextColor(20).text("SuperTerp 4-year plan", margin, y + 6);
+  doc.setFont("helvetica", "bold").setFontSize(18).setTextColor(20).text("TurboTerp 4-year plan", margin, y + 6);
   y += 26;
   line(`${t.header.name ? `Name: ${t.header.name}    ` : ""}Date: ${t.header.date}`);
   line(t.header.disclaimer, true);

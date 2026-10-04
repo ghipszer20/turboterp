@@ -49,7 +49,7 @@ export const preNaturopathic: Track = {
   verified: false,
   reviewNotes: [
     "(S) All figures (baccalaureate; 24 credit hours of life and physical sciences, lecture plus lab; C or higher in every course; GPA 3.00, alternative 2.75-2.99) come from a search-result summary. AANMC's page returned 403 and the CNME handbook PDF was unparseable. Verify against AANMC by hand before setting verified: true.",
-    "The research doc lists BSCI170/171, BSCI180, CHEM131/132, CHEM231/232 and BCHM461, which total only 16 credits, less than the 24 required. The pool is widened with courses other tracks already use (BSCI160/161, BSCI201/202, BSCI223, CHEM241/242, CHEM271/272, BCHM463, PHYS121/122/131/132); this widening is SuperTerp's reading, not the source's.",
+    "The research doc lists BSCI170/171, BSCI180, CHEM131/132, CHEM231/232 and BCHM461, which total only 16 credits, less than the 24 required. The pool is widened with courses other tracks already use (BSCI160/161, BSCI201/202, BSCI223, CHEM241/242, CHEM271/272, BCHM463, PHYS121/122/131/132); this widening is TurboTerp's reading, not the source's.",
     "The 3.00 GPA is listed as a milestone, not audited. Lecture plus lab pairing is not checked.",
     "PSYC100 is listed in the research doc as \"verify whether required\"; it is not encoded.",
   ],

@@ -6,7 +6,7 @@
 // with no text layer (Testudo's own download button produces those). Nothing is applied until the
 // student reviews the parsed rows and confirms.
 
-import { apExamNames } from "@superterp/credit";
+import { apExamNames } from "@turboterp/credit";
 import { useMemo, useState } from "react";
 import { selectApLines } from "@/lib/advisor/transcript-ap-select";
 import { applyTranscriptImport, type SelectedAp, type SelectedCourse } from "@/lib/advisor/transcript-apply";
@@ -75,7 +75,7 @@ export function ImportTranscriptView({ plan, onDone, onCancel }: { plan: Advisor
       <section className={styles.panel}>
         <h2 className={styles.panelTitle}>Why import?</h2>
         <p className={styles.panelNote}>
-          Optional. Your past courses and grades let SuperTerp personalize its feedback on your 4-year plan and class schedule --
+          Optional. Your past courses and grades let TurboTerp personalize its feedback on your 4-year plan and class schedule --
           for example, how hard each upcoming semester is likely to feel for you -- and they fill in what you&apos;ve already
           taken, so your audit starts out accurate.
         </p>

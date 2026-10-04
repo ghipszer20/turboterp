@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { AnalysisState } from "./AdvisorApp";
-import type { PlanCatalog } from "@superterp/plan/catalog";
+import type { PlanCatalog } from "@turboterp/plan/catalog";
 import type { AdvisorPlan } from "@/lib/advisor/plan-state";
 import { PROGRAM_OPTIONS } from "@/lib/advisor/programs";
 import styles from "./advisor.module.css";

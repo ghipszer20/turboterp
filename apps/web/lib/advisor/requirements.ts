@@ -1,7 +1,7 @@
 // What would satisfy an unmet Requirement (a Gap), in words, with example courses. Used by the
-// audit view, which loads with the solver, so importing @superterp/audit here is fine.
+// audit view, which loads with the solver, so importing @turboterp/audit here is fine.
 
-import { earnsCredit, inArea, matchesFilter, type Area, type Requirement, type RequirementResult, type SetMember, type StudentCourse } from "@superterp/audit";
+import { earnsCredit, inArea, matchesFilter, type Area, type Requirement, type RequirementResult, type SetMember, type StudentCourse } from "@turboterp/audit";
 import { filterText, listing } from "./words";
 
 export { filterText, genEdName, prerequisiteText } from "./words";

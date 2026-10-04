@@ -2,7 +2,7 @@
 // Source: https://umdphysics.umd.edu/academics/undergraduate/ugrad-phys-honors.html (fetched 2026-09-26).
 // Hand-transcribed. UNVERIFIED.
 
-import type { Program, ProgramMeta } from "@superterp/audit";
+import type { Program, ProgramMeta } from "@turboterp/audit";
 import { CATALOG_YEAR } from "./common.ts";
 
 export const SOURCE = "https://umdphysics.umd.edu/academics/undergraduate/ugrad-phys-honors.html";

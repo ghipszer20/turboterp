@@ -2,7 +2,7 @@
 // layouts scroll as smoothly as 10), and a compact transfer format for layouts coming
 // back from the Web Worker (each interchangeable-section group once, layouts as numbers).
 
-import type { Layout, Section } from "@superterp/course-data/schedules";
+import type { Layout, Section } from "@turboterp/course-data/schedules";
 
 export function columnsFor(width: number, minCard: number, gap: number): number {
   return Math.max(1, Math.floor((width + gap) / (minCard + gap)));

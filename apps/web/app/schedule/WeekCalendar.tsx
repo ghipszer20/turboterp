@@ -1,6 +1,6 @@
 "use client";
 
-import type { Weekday } from "@superterp/course-data/schedules";
+import type { Weekday } from "@turboterp/course-data/schedules";
 import { blockLines, DAY_SHORT, dayBlocks, hourLabel, pct, WEEKDAYS, type BlockInput, type TimeScale } from "@/lib/schedule/calendar";
 import type { BlockLabel } from "@/lib/schedule/block-items";
 import type { FilterState } from "@/lib/schedule/filters";

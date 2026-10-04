@@ -4,8 +4,8 @@
 // and college. Reads registry metadata only; no Program's requirements load here.
 
 import { useState } from "react";
-import type { ProgramKind } from "@superterp/programs";
-import { collegeName } from "@superterp/plan/credit-caps";
+import type { ProgramKind } from "@turboterp/programs";
+import { collegeName } from "@turboterp/plan/credit-caps";
 import { Segmented } from "@/components/Segmented";
 import { kindTabs, optionState, pickerGroups } from "@/lib/advisor/program-picker";
 import { PROGRAM_OPTIONS, type ProgramOption } from "@/lib/advisor/programs";

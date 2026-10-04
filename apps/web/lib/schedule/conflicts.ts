@@ -2,8 +2,8 @@
 // blocks never look different for a conflict; instead a note names the overlap and saving a
 // schedule as a Plan is blocked until it is fixed. Cards in Browse layouts show a walk warning.
 
-import type { Building } from "@superterp/campus-data/buildings";
-import type { Section } from "@superterp/course-data/schedules";
+import type { Building } from "@turboterp/campus-data/buildings";
+import type { Section } from "@turboterp/course-data/schedules";
 import { conflictPairs } from "./sections";
 import { dayWalks } from "./walks";
 

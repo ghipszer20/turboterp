@@ -7,7 +7,7 @@
 // term isn't a first-year fall, or whose first fall would go over the college's credit cap, is
 // left alone and listed.
 
-import { creditCap } from "@superterp/plan/credit-caps";
+import { creditCap } from "@turboterp/plan/credit-caps";
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { PROGRAMS } from "../src/registry.ts";

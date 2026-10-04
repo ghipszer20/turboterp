@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { connection } from "next/server";
-import { campusDate, campusMinutes, DINING_HALLS } from "@superterp/campus-data";
+import { campusDate, campusMinutes, DINING_HALLS } from "@turboterp/campus-data";
 import { Notice, Page, SkeletonCard } from "@/components/ui";
 import { getAllDiningMenus } from "@/lib/campus";
 import { diningSlice } from "@/lib/dining";

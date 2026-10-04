@@ -8,25 +8,25 @@ export type LegalSection = { heading: string; paragraphs: string[] };
 
 /** Every localStorage key the app writes. The privacy text must name each one. */
 export const STORAGE_KEYS = [
-  "superterp-advisor-plan",
-  "superterp-advisor-consent",
-  "superterp-schedule",
-  "superterp-leave-origin",
-  "superterp-theme",
+  "turboterp-advisor-plan",
+  "turboterp-advisor-consent",
+  "turboterp-schedule",
+  "turboterp-leave-origin",
+  "turboterp-theme",
 ] as const;
 
 export const TERMS: LegalSection[] = [
   {
-    heading: "What SuperTerp is",
+    heading: "What TurboTerp is",
     paragraphs: [
-      "SuperTerp is a free, open-source app made by a UMD student. It brings campus info, a schedule builder, a four-year plan and a degree audit into one place.",
+      "TurboTerp is a free, open-source app made by a UMD student. It brings campus info, a schedule builder, a four-year plan and a degree audit into one place.",
       "The code is released under the Apache-2.0 license. These terms cover using the app and website, not the code.",
     ],
   },
   {
     heading: "Unofficial and not affiliated",
     paragraphs: [
-      "SuperTerp is not affiliated with, endorsed by or run by the University of Maryland. It never asks for your Testudo credentials, and it never registers you for anything.",
+      "TurboTerp is not affiliated with, endorsed by or run by the University of Maryland. It never asks for your Testudo credentials, and it never registers you for anything.",
     ],
   },
   {
@@ -39,7 +39,7 @@ export const TERMS: LegalSection[] = [
   {
     heading: "Data may be wrong or out of date",
     paragraphs: [
-      "Catalog rules, courses, times, grades and campus info change, and we can get things wrong. Where it matters, SuperTerp shows the catalog year it used.",
+      "Catalog rules, courses, times, grades and campus info change, and we can get things wrong. Where it matters, TurboTerp shows the catalog year it used.",
     ],
   },
   {
@@ -51,13 +51,13 @@ export const TERMS: LegalSection[] = [
   {
     heading: "No warranty",
     paragraphs: [
-      "SuperTerp is provided as is and as available, with no promises about accuracy, completeness or uptime, and no warranty of any kind.",
+      "TurboTerp is provided as is and as available, with no promises about accuracy, completeness or uptime, and no warranty of any kind.",
     ],
   },
   {
     heading: "Limitation of liability",
     paragraphs: [
-      "To the fullest extent the law allows, the people who make SuperTerp are not liable for any loss that comes from using it or relying on it. That includes extra semesters, tuition, fees, missed deadlines or other costs.",
+      "To the fullest extent the law allows, the people who make TurboTerp are not liable for any loss that comes from using it or relying on it. That includes extra semesters, tuition, fees, missed deadlines or other costs.",
     ],
   },
   {
@@ -69,7 +69,7 @@ export const TERMS: LegalSection[] = [
   {
     heading: "Third-party data",
     paragraphs: [
-      "SuperTerp shows data from other sources: UMD's Schedule of Classes, PlanetTerp, campus dining, LibCal, RecWell and Shuttle-UM GTFS. Each stays the property of its owner.",
+      "TurboTerp shows data from other sources: UMD's Schedule of Classes, PlanetTerp, campus dining, LibCal, RecWell and Shuttle-UM GTFS. Each stays the property of its owner.",
       "Shuttle-UM GTFS data is used under the Interline license, for non-commercial educational use.",
     ],
   },
@@ -91,12 +91,12 @@ export const PRIVACY: LegalSection[] = [
   {
     heading: "What is stored in your browser",
     paragraphs: [
-      "SuperTerp saves a few things on your device using your browser's local storage. None of it is sent to us.",
-      "superterp-advisor-plan: your four-year plan.",
-      "superterp-advisor-consent: your signed Advisor agreement (version, date and typed name).",
-      "superterp-schedule: your saved schedule.",
-      "superterp-leave-origin: the building you chose as your starting point for leave-by times.",
-      "superterp-theme: your light or dark choice.",
+      "TurboTerp saves a few things on your device using your browser's local storage. None of it is sent to us.",
+      "turboterp-advisor-plan: your four-year plan.",
+      "turboterp-advisor-consent: your signed Advisor agreement (version, date and typed name).",
+      "turboterp-schedule: your saved schedule.",
+      "turboterp-leave-origin: the building you chose as your starting point for leave-by times.",
+      "turboterp-theme: your light or dark choice.",
       "Clearing your site data in the browser deletes all of it.",
     ],
   },

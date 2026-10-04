@@ -1,5 +1,5 @@
 {
-  "name": "@superterp/catalog",
+  "name": "@turboterp/catalog",
   "version": "0.1.0",
   "private": true,
   "description": "UMD Academic Catalog program requirements (majors, minors, programs), extracted from academiccatalog.umd.edu. Framework-free.",
@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "@napi-rs/canvas": "^1.0.9",
-    "@superterp/audit": "*",
-    "@superterp/campus-data": "*",
+    "@turboterp/audit": "*",
+    "@turboterp/campus-data": "*",
     "@tesseract.js-data/eng": "^1.0.0",
     "cheerio": "1.2.0",
     "domhandler": "^5.0.3",

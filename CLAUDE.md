@@ -1,4 +1,4 @@
-# SuperTerp
+# TurboTerp
 
 All-in-one UMD student app (iOS + web).
 

@@ -48,7 +48,7 @@ import {
   type RoomAvailability,
   type RouteWithMap,
   type Stop,
-} from "@superterp/campus-data";
+} from "@turboterp/campus-data";
 import {
   defaultSnapshotDir,
   FileSnapshotStore,
@@ -56,7 +56,7 @@ import {
   snapshotOrLive,
   type RoomCatalog,
   type Snapshot,
-} from "@superterp/campus-data/snapshots";
+} from "@turboterp/campus-data/snapshots";
 
 export type Result<T> = { ok: true; data: T } | { ok: false; error: string };
 

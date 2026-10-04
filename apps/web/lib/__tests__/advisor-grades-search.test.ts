@@ -1,4 +1,4 @@
-import { distributionFromCounts } from "@superterp/ratings";
+import { distributionFromCounts } from "@turboterp/ratings";
 import { describe, expect, it } from "vitest";
 import { gradeBars, gradeSummary, termSpan } from "../advisor/grades";
 import { searchCourses } from "../advisor/search";

@@ -2,9 +2,9 @@
 // sorted, plus the shared time scale and (when empty) the explanation. Runs in a Web Worker
 // (generate.worker.ts) so the page never freezes; plain function so it's testable.
 
-import { explainNoLayouts, type EmptyExplanation } from "@superterp/course-data/explain";
-import { generateLayouts, sectionPasses, type ScheduleFilters, type Section } from "@superterp/course-data/schedules";
-import { sortLayouts, type SortKey } from "@superterp/course-data/sort";
+import { explainNoLayouts, type EmptyExplanation } from "@turboterp/course-data/explain";
+import { generateLayouts, sectionPasses, type ScheduleFilters, type Section } from "@turboterp/course-data/schedules";
+import { sortLayouts, type SortKey } from "@turboterp/course-data/sort";
 import { timeScale, type TimeScale } from "./calendar";
 import { encodeLayouts, type EncodedLayouts } from "./gallery";
 

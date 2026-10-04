@@ -10,7 +10,7 @@ export const CONSENT_TITLE = "Before you plan";
 export const CONSENT_POINTS: { title: string; body: string }[] = [
   {
     title: "Unofficial",
-    body: "SuperTerp is a student project. It isn't affiliated with, or endorsed by, the University of Maryland.",
+    body: "TurboTerp is a student project. It isn't affiliated with, or endorsed by, the University of Maryland.",
   },
   {
     title: "Not advising",
@@ -22,7 +22,7 @@ export const CONSENT_POINTS: { title: string; body: string }[] = [
   },
   {
     title: "No warranty",
-    body: "SuperTerp is provided as is, with no warranty. Its makers aren't liable for anything that follows from relying on it, such as an extra semester, extra costs or a missed deadline.",
+    body: "TurboTerp is provided as is, with no warranty. Its makers aren't liable for anything that follows from relying on it, such as an extra semester, extra costs or a missed deadline.",
   },
   {
     title: "Applies to all of Advisor",
@@ -34,11 +34,11 @@ export const CONSENT_POINTS: { title: string; body: string }[] = [
   },
 ];
 
-export const CONSENT_CHECKBOX = "I've read this and understand SuperTerp is not official advising.";
+export const CONSENT_CHECKBOX = "I've read this and understand TurboTerp is not official advising.";
 
 export type ConsentRecord = { name: string; acceptedAt: string; version: string };
 
-export const CONSENT_STORAGE_KEY = "superterp-advisor-consent";
+export const CONSENT_STORAGE_KEY = "turboterp-advisor-consent";
 
 export function acceptConsent(
   typedName: string,

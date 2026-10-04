@@ -1,11 +1,11 @@
-// resolvedPlan: checkTrack (@superterp/tracks) sums credits for GPA protection using each term
+// resolvedPlan: checkTrack (@turboterp/tracks) sums credits for GPA protection using each term
 // course's own `credits`, defaulting a missing one to 0 (see check.ts's studentCourses). Advisor
 // plan courses usually have no explicit `credits` override, so without resolving them from the
 // catalog first, every course would count as 0 credits and the GPA math would always divide by 0.
 
 import { describe, expect, it } from "vitest";
-import type { PlanCatalog } from "@superterp/plan/catalog";
-import type { Plan } from "@superterp/plan/check";
+import type { PlanCatalog } from "@turboterp/plan/catalog";
+import type { Plan } from "@turboterp/plan/check";
 import { resolvedPlan } from "../advisor/track-plan";
 
 const catalog: PlanCatalog = new Map([

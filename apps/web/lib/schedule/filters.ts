@@ -1,9 +1,9 @@
 // The gallery's workday filters and sort: editing, the URL form (?c=…&off=F&win=M:480-780&sort=…)
 // and the relax buttons of the empty state.
 
-import type { DayRule, ScheduleFilters, Weekday } from "@superterp/course-data/schedules";
-import type { EmptyExplanation, FilterConstraint } from "@superterp/course-data/explain";
-import type { SortKey } from "@superterp/course-data/sort";
+import type { DayRule, ScheduleFilters, Weekday } from "@turboterp/course-data/schedules";
+import type { EmptyExplanation, FilterConstraint } from "@turboterp/course-data/explain";
+import type { SortKey } from "@turboterp/course-data/sort";
 import { DAY_NAME, WEEKDAYS } from "./calendar";
 import type { SharedSchedule } from "./share";
 

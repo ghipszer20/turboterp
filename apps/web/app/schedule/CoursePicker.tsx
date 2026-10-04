@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useMemo, useState } from "react";
-import type { IndexedCourse } from "@superterp/course-data/schedule-files";
+import type { IndexedCourse } from "@turboterp/course-data/schedule-files";
 import { courseColor } from "@/lib/schedule/colors";
 import { searchCourses } from "@/lib/schedule/search";
 import cal from "./calendar.module.css";

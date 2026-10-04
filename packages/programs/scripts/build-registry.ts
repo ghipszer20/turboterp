@@ -1,6 +1,6 @@
 // Regenerates src/registry.generated.ts from every program file's own ProgramMeta (see
 // registry-builder.ts and packages/audit/src/audit.ts). Run `npm run build:registry
-// -w @superterp/programs` after adding, removing or renaming a program (or its ProgramMeta);
+// -w @turboterp/programs` after adding, removing or renaming a program (or its ProgramMeta);
 // test/registry-generated.test.ts fails if this drifts.
 import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -54,7 +54,7 @@ async function main() {
 // together, the ProgramMeta.defaultTrack one first. Each \`load\` is a literal \`import()\` path, so
 // a page listing every program never bundles their requirements -- each becomes its own chunk.
 //
-// Regenerate with \`npm run build:registry -w @superterp/programs\` after adding, removing or
+// Regenerate with \`npm run build:registry -w @turboterp/programs\` after adding, removing or
 // renaming a program (or its ProgramMeta); test/registry-generated.test.ts fails if this drifts.
 // See docs/project/program-batches.md.
 

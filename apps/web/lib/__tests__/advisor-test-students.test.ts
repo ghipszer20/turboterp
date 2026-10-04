@@ -1,10 +1,10 @@
 // The owner's test students (first-draft item 12): Advisor plan fixtures that the real analysis
 // (runAnalysis / checkDegrees / checkPlan / whatIf) must accept as described.
 import { readFileSync } from "node:fs";
-import type { Course } from "@superterp/course-data";
-import { buildCatalog } from "@superterp/plan/catalog";
-import { checkPlan } from "@superterp/plan/check";
-import { checkDegrees } from "@superterp/plan/degrees";
+import type { Course } from "@turboterp/course-data";
+import { buildCatalog } from "@turboterp/plan/catalog";
+import { checkPlan } from "@turboterp/plan/check";
+import { checkDegrees } from "@turboterp/plan/degrees";
 import { describe, expect, it } from "vitest";
 import { runAnalysis } from "../advisor/analysis";
 import { checkerPlan } from "../advisor/checker";

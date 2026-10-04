@@ -2,7 +2,7 @@
 // requirement of each track, and dropping one category's courses shows exactly that requirement
 // missing. Same shape as new-tracks.test.ts.
 
-import type { Plan, PlanCourse } from "@superterp/plan";
+import type { Plan, PlanCourse } from "@turboterp/plan";
 import { describe, expect, it } from "vitest";
 import { checkTrack } from "../src/check.ts";
 import { TRACKS } from "../src/list.ts";

@@ -1,19 +1,19 @@
 {
-  "name": "superterp",
+  "name": "turboterp",
   "private": true,
-  "description": "SuperTerp: the all-in-one app for UMD students (unofficial, not affiliated with the University of Maryland)",
+  "description": "TurboTerp: the all-in-one app for UMD students (unofficial, not affiliated with the University of Maryland)",
   "license": "Apache-2.0",
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run dev -w @superterp/web",
-    "build": "npm run build -w @superterp/web",
+    "dev": "npm run dev -w @turboterp/web",
+    "build": "npm run build -w @turboterp/web",
     "test": "npm run test --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
-    "smoke": "npm run smoke -w @superterp/campus-data"
+    "smoke": "npm run smoke -w @turboterp/campus-data"
   },
   "engines": {
     "node": ">=22"

@@ -1,6 +1,6 @@
 // Course search for the picker: by code ("cmsc 35") or title words ("business writ").
 
-import type { IndexedCourse } from "@superterp/course-data/schedule-files";
+import type { IndexedCourse } from "@turboterp/course-data/schedule-files";
 
 const words = (s: string) => s.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
 

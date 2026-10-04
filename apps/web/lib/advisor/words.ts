@@ -1,8 +1,8 @@
 // Requirement pieces in plain words. Kept free of the audit solver so the plan grid and course
 // sheet can use it without loading HiGHS.
 
-import type { CourseFilter } from "@superterp/audit";
-import type { Requirement as Prerequisite } from "@superterp/course-data/prereqs";
+import type { CourseFilter } from "@turboterp/audit";
+import type { Requirement as Prerequisite } from "@turboterp/course-data/prereqs";
 
 const GEN_ED: Record<string, string> = {
   FSAW: "Academic Writing",

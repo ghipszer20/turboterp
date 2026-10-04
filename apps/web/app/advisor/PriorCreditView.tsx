@@ -4,7 +4,7 @@
 // double-count ("overkill") shown with its reason. Owner ruling: no source "wins"; overlapping
 // credit counts once, and a second source for the same course is overkill, never an error.
 
-import { apExamNames, ibExamNames, type IbLevel } from "@superterp/credit";
+import { apExamNames, ibExamNames, type IbLevel } from "@turboterp/credit";
 import type { ReactNode } from "react";
 import { useState } from "react";
 import type { AdvisorPlan, PriorInputs } from "@/lib/advisor/plan-state";

@@ -128,13 +128,13 @@ export type SharingLimit = { programs?: string[]; courses?: number; credits?: nu
 
 /**
  * Picker metadata a program file declares next to each exported Program: everything ProgramEntry
- * (@superterp/programs) needs beyond the Program itself (id/name/catalogYear/verified come from
+ * (@turboterp/programs) needs beyond the Program itself (id/name/catalogYear/verified come from
  * the Program). The registry generator (packages/programs/scripts/build-registry.ts) pairs a
  * `<name>Meta` export with the `<name>` Program export in the same module.
  *
- * Lives here (not in @superterp/programs, which depends on @superterp/audit and @superterp/catalog)
+ * Lives here (not in @turboterp/programs, which depends on @turboterp/audit and @turboterp/catalog)
  * so program files in both packages can import it without a circular package dependency. `college`
- * repeats @superterp/plan's `College` union rather than importing it, for the same reason (plan
+ * repeats @turboterp/plan's `College` union rather than importing it, for the same reason (plan
  * depends on audit).
  */
 export type ProgramMeta = {
@@ -190,7 +190,7 @@ function requirementCourseIds(req: RequirementRule): string[] {
 }
 
 /** Every literal course id a Program's requirements mention, deduped, in requirement order. Used
- * to build a per-program course set (@superterp/programs) cheaply, without running the audit --
+ * to build a per-program course set (@turboterp/programs) cheaply, without running the audit --
  * e.g. to pre-filter which undeclared majors are even worth auditing for a double-major notice. */
 export function programCourseIds(program: Program): string[] {
   return [...new Set(program.requirements.flatMap(requirementCourseIds))];

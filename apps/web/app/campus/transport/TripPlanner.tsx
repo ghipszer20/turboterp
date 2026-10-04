@@ -7,8 +7,8 @@
 // on the bus. Selecting an itinerary is reported up to TransportMap, which draws it on the map.
 
 import { useId, useMemo, useState } from "react";
-import { formatMinutes } from "@superterp/campus-data/hours";
-import type { Itinerary, Place } from "@superterp/campus-data";
+import { formatMinutes } from "@turboterp/campus-data/hours";
+import type { Itinerary, Place } from "@turboterp/campus-data";
 import { LocationIcon, MapPinIcon, SwapIcon } from "@/components/icons";
 import { Card, EmptyState } from "@/components/ui";
 import styles from "./trip.module.css";

@@ -1,6 +1,6 @@
 // A section's meetings as calendar blocks (labels per calendar size).
 
-import type { Section } from "@superterp/course-data/schedules";
+import type { Section } from "@turboterp/course-data/schedules";
 import type { BlockInput } from "./calendar";
 
 export type BlockLabel = { courseId: string; sectionId: string; color: number; label: string; sub?: string };

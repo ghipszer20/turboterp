@@ -1,7 +1,7 @@
 // Transport's "leave by" card: which class is next today, from this device's saved schedule.
 // Pure logic; the card fetches the sections and the trip and calls these.
 
-import type { Section, Weekday } from "@superterp/course-data/schedules";
+import type { Section, Weekday } from "@turboterp/course-data/schedules";
 import type { SavedSchedule, SectionPicks } from "./saved";
 
 /** The picks the card follows: Plan A's, else Build my own. */

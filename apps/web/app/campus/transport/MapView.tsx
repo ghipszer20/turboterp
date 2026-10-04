@@ -8,8 +8,8 @@ import { useEffect, useRef, useState } from "react";
 import { Map as MapLibreMap, Marker, NavigationControl, setWorkerUrl } from "maplibre-gl";
 import type { GeoJSONSource, MapGeoJSONFeature, MapMouseEvent } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { formatMinutes } from "@superterp/campus-data/hours";
-import type { Itinerary, Place } from "@superterp/campus-data";
+import { formatMinutes } from "@turboterp/campus-data/hours";
+import type { Itinerary, Place } from "@turboterp/campus-data";
 import { LocationIcon } from "@/components/icons";
 import { Card, EmptyState } from "@/components/ui";
 import {

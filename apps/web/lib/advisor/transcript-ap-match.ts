@@ -1,5 +1,5 @@
 // Matches a transcript's abbreviated AP exam name (Testudo prints things like "HUMAN GEOG",
-// "CALC BC/AB SUB", "PHYSICS C-ELM") to one of @superterp/credit's official exam names
+// "CALC BC/AB SUB", "PHYSICS C-ELM") to one of @turboterp/credit's official exam names
 // (apExamNames()), so the imported AP line can become an ApInput UMD's credit chart actually knows
 // how to look up. Unmatched names are surfaced to the student rather than guessed at or dropped.
 

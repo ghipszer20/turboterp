@@ -7,10 +7,10 @@ const dev = { NODE_ENV: "development" };
 const prod = { NODE_ENV: "production" };
 
 describe("seedAllowed", () => {
-  it("is on under next dev, or with NEXT_PUBLIC_SUPERTERP_SEED=1 for a local production check", () => {
+  it("is on under next dev, or with NEXT_PUBLIC_TURBOTERP_SEED=1 for a local production check", () => {
     expect(seedAllowed(dev)).toBe(true);
     expect(seedAllowed(prod)).toBe(false);
-    expect(seedAllowed({ NODE_ENV: "production", NEXT_PUBLIC_SUPERTERP_SEED: "1" })).toBe(true);
+    expect(seedAllowed({ NODE_ENV: "production", NEXT_PUBLIC_TURBOTERP_SEED: "1" })).toBe(true);
   });
 });
 

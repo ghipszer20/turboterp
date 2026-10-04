@@ -1,10 +1,10 @@
 "use client";
 
 // "Get ready to register": the checklist for the next registration term. Appointments are typed
-// in by hand and holds are a manual check-off; SuperTerp never asks for Testudo credentials.
+// in by hand and holds are a manual check-off; TurboTerp never asks for Testudo credentials.
 
 import { useMemo, useSyncExternalStore } from "react";
-import type { Section } from "@superterp/course-data/schedules";
+import type { Section } from "@turboterp/course-data/schedules";
 import { Card } from "@/components/ui";
 import { eventTitle, formatEventDate } from "@/lib/calendar";
 import { meetingSummary } from "@/lib/schedule/sections";
@@ -34,7 +34,7 @@ export function RegistrationPanel(props: Props) {
     const url = URL.createObjectURL(new Blob([appointmentIcs(termName, appointment)], { type: "text/calendar;charset=utf-8" }));
     const a = document.createElement("a");
     a.href = url;
-    a.download = `superterp-registration-${term}.ics`;
+    a.download = `turboterp-registration-${term}.ics`;
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   };

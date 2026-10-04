@@ -2,8 +2,8 @@
 // registry.generated.ts (which needs ProgramEntry) and registry.ts (which re-exports it) don't
 // import each other's values, only this file's types.
 
-import type { NotOpenTo, Program } from "@superterp/audit";
-import type { College } from "@superterp/plan/credit-caps";
+import type { NotOpenTo, Program } from "@turboterp/audit";
+import type { College } from "@turboterp/plan/credit-caps";
 
 export type ProgramKind = "major" | "minor" | "certificate" | "special";
 

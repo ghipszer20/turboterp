@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { AcademicEvent } from "@superterp/campus-data";
-import type { Section } from "@superterp/course-data/schedules";
+import type { AcademicEvent } from "@turboterp/campus-data";
+import type { Section } from "@turboterp/course-data/schedules";
 import { emptySaved, savePlan, setOwnSection, withCourses } from "../saved";
 import {
   appointmentIcs,

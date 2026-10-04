@@ -14,7 +14,7 @@ import {
   toggleProgram,
 } from "../advisor/programs";
 import type { ProgramOption } from "../advisor/programs";
-import { PROGRAMS } from "@superterp/programs";
+import { PROGRAMS } from "@turboterp/programs";
 
 const ids = (list: { id: string }[]) => list.map((p) => p.id);
 

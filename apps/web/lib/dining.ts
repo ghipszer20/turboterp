@@ -2,7 +2,7 @@
 // tabs) but only the viewed meal's stations. Shared by the page's first
 // render and /api/dining, so taps render exactly like the first view.
 
-import type { DiningMenu, Station } from "@superterp/campus-data";
+import type { DiningMenu, Station } from "@turboterp/campus-data";
 
 export type DiningSlice = {
   /** Meal names the hall serves today; null when its menu couldn't be loaded. */

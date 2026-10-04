@@ -6,8 +6,8 @@ import { Segmented } from "@/components/Segmented";
 import { AUTOMATIC_PROGRAMS, CATALOG_YEARS, collegeOf, degreeModeOf, toggleProgram } from "@/lib/advisor/programs";
 import { defaultTerms, startTermOptions } from "@/lib/advisor/terms";
 import { examMilestone, toggleTrack, TRACKS, type Track } from "@/lib/advisor/tracks";
-import { COLLEGES, type College } from "@superterp/plan/credit-caps";
-import type { Milestone } from "@superterp/tracks/list";
+import { COLLEGES, type College } from "@turboterp/plan/credit-caps";
+import type { Milestone } from "@turboterp/tracks/list";
 import styles from "./advisor.module.css";
 import { ProgramPicker } from "./ProgramPicker";
 

@@ -44,8 +44,8 @@ export const BS_MS_DOUBLE_COUNT_RATE = 0.35;
 /** BS/MS double-counting needs at least this grade. */
 export const BS_MS_MIN_GRADE = "B-";
 
-// UMD letter grades, lowest to highest -- duplicated from @superterp/audit and
-// @superterp/course-data/prereqs rather than shared, matching how each of those already keeps its
+// UMD letter grades, lowest to highest -- duplicated from @turboterp/audit and
+// @turboterp/course-data/prereqs rather than shared, matching how each of those already keeps its
 // own copy.
 const GRADE_ORDER = ["F", "D-", "D", "D+", "C-", "C", "C+", "B-", "B", "B+", "A-", "A", "A+"];
 const gradeRank = (g: string) => GRADE_ORDER.indexOf(g.trim().toUpperCase());

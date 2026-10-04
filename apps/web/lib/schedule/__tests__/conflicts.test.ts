@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { Section } from "@superterp/course-data/schedules";
+import type { Section } from "@turboterp/course-data/schedules";
 import { overlapNote, saveBlockedBy, tightWalkLine } from "../conflicts";
 
 const sec = (courseId: string, days: string[], start: number, end: number, building = "ARM"): Section => ({

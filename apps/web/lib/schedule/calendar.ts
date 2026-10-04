@@ -2,7 +2,7 @@
 // editor: one time scale with hour labels, blocks per weekday (with side-by-side lanes when
 // classes overlap), and label fitting so text is hidden rather than clipped.
 
-import type { Meeting, Weekday } from "@superterp/course-data/schedules";
+import type { Meeting, Weekday } from "@turboterp/course-data/schedules";
 
 export const WEEKDAYS: readonly Weekday[] = ["M", "Tu", "W", "Th", "F"];
 export const DAY_SHORT: Record<Weekday, string> = { M: "MON", Tu: "TUE", W: "WED", Th: "THU", F: "FRI" };

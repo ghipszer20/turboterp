@@ -18,7 +18,7 @@
 //     member with a filter part, e.g. ["AOSC200", "AOSC201", { count: 2, from: {...} }]
 // A group is the course rows after the rule, up to the next header or text row.
 
-import type { Area, CourseFilter, Program, Requirement, SetMember } from "@superterp/audit";
+import type { Area, CourseFilter, Program, Requirement, SetMember } from "@turboterp/audit";
 import type { CatalogRow, CourseList, ProgramPage } from "./program.ts";
 
 export type DraftMeta = {

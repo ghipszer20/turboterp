@@ -1,9 +1,9 @@
 // The catalog of encoded Tracks, and the pure, framework-free helpers a UI needs to list and pick
-// them. Deliberately free of @superterp/audit's solver (only its types): a picker screen can
-// import this entry ("@superterp/tracks/list") without pulling HiGHS into its bundle. checkTrack
+// them. Deliberately free of @turboterp/audit's solver (only its types): a picker screen can
+// import this entry ("@turboterp/tracks/list") without pulling HiGHS into its bundle. checkTrack
 // itself (src/check.ts), which does call the solver, imports trackProgram from here too.
 
-import type { Program } from "@superterp/audit";
+import type { Program } from "@turboterp/audit";
 import { actuarialVee } from "../tracks/actuarial-vee.ts";
 import { cpaMaryland } from "../tracks/cpa-maryland.ts";
 import { preMedicalPhysics } from "../tracks/pre-medical-physics.ts";

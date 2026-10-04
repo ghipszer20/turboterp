@@ -10,7 +10,7 @@
 
 import * as cheerio from "cheerio";
 import type { Element } from "domhandler";
-import { fetchText, SourceError } from "@superterp/campus-data/http";
+import { fetchText, SourceError } from "@turboterp/campus-data/http";
 
 const SOC = "https://app.testudo.umd.edu/soc";
 

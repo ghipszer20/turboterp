@@ -3,7 +3,7 @@
 
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { SourceError } from "@superterp/campus-data/http";
+import { SourceError } from "@turboterp/campus-data/http";
 import { GRADE_COLUMNS, parseGrades } from "../src/planetterp.ts";
 import { summarizeCourseGrades } from "../src/course-grades.ts";
 import { coursesOffered, decodeDepartment, encodeDepartment } from "../src/grade-files.ts";

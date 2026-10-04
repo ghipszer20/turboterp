@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { connection } from "next/server";
-import { campusDate, campusMinutes, roomBookingUrl } from "@superterp/campus-data";
+import { campusDate, campusMinutes, roomBookingUrl } from "@turboterp/campus-data";
 import { Notice, Page, SkeletonCard, SourceError } from "@/components/ui";
 import { dataAge } from "@/lib/age";
 import { getStudyRooms, safe } from "@/lib/campus";
@@ -22,7 +22,7 @@ export default function RoomsPage() {
           <UpdatedAge />
         </Suspense>
         . You book on the Libraries&apos;
-        site with your UMD email; SuperTerp never books for you.
+        site with your UMD email; TurboTerp never books for you.
       </Notice>
     </Page>
   );

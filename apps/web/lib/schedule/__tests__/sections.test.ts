@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { Section } from "@superterp/course-data/schedules";
-import { distributionFromCounts, GRADE_COLUMNS, type CourseGrades } from "@superterp/ratings";
+import type { Section } from "@turboterp/course-data/schedules";
+import { distributionFromCounts, GRADE_COLUMNS, type CourseGrades } from "@turboterp/ratings";
 import { bestRating, conflictPairs, gpasFor, gradeSummary, recommendReason, instructorLabel, meetingSummary, overlapsWith, pickSection, ratingTone, sectionChoices, sectionKey } from "../sections";
 
 const sec = (

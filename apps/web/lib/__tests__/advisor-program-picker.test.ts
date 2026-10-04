@@ -1,6 +1,6 @@
-import type { ProgramEntry } from "@superterp/programs";
+import type { ProgramEntry } from "@turboterp/programs";
 import { describe, expect, it } from "vitest";
-import { findProgram } from "@superterp/programs";
+import { findProgram } from "@turboterp/programs";
 import { kindTabs, optionState, pickerGroups } from "../advisor/program-picker";
 
 const entry = (id: string, name: string, kind: ProgramEntry["kind"], college: ProgramEntry["college"], track?: string): ProgramEntry => ({

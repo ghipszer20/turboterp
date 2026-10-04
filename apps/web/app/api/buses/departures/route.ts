@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { connection } from "next/server";
-import { campusDate, campusMinutes } from "@superterp/campus-data";
+import { campusDate, campusMinutes } from "@turboterp/campus-data";
 import { getDepartures } from "@/lib/campus";
 
 // GET /api/buses/departures?stops=A,B,C → next scheduled departures per stop.

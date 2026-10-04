@@ -2,7 +2,7 @@
 // read-only; saving is an explicit choice of Plan A/B/C and touches nothing else (owner ruling:
 // the builder never changes the 4-year plan or the student's saved schedule on its own).
 
-import type { Section } from "@superterp/course-data/schedules";
+import type { Section } from "@turboterp/course-data/schedules";
 import { savePlan, withCourses, type PlanId, type SavedSchedule, type SectionPicks } from "./saved";
 
 export type SharedSchedule = { term: string; picks: SectionPicks };

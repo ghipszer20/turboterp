@@ -1,9 +1,9 @@
-// Adapter for the semester-difficulty scorer (@superterp/plan/difficulty): turns PlanetTerp grade
+// Adapter for the semester-difficulty scorer (@turboterp/plan/difficulty): turns PlanetTerp grade
 // distributions and the plan's completed grades into the scorer's plain inputs.
 
-import { gradePoints } from "@superterp/audit";
-import { termDifficulty, type DifficultyCourse, type DifficultyHistory, type DifficultyStats, type TermDifficulty } from "@superterp/plan/difficulty";
-import type { CourseGrades, Distribution } from "@superterp/ratings";
+import { gradePoints } from "@turboterp/audit";
+import { termDifficulty, type DifficultyCourse, type DifficultyHistory, type DifficultyStats, type TermDifficulty } from "@turboterp/plan/difficulty";
+import type { CourseGrades, Distribution } from "@turboterp/ratings";
 import type { AdvisorPlan } from "./plan-state";
 
 export const NO_TRANSCRIPT_NOTE = "Import your transcript for a personal estimate.";

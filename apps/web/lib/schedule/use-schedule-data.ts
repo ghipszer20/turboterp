@@ -12,9 +12,9 @@ import {
   decodeDepartmentSections,
   type CourseIndex,
   type DepartmentSections,
-} from "@superterp/course-data/schedule-files";
-import type { Section } from "@superterp/course-data/schedules";
-import { decodeDepartment, type CourseGrades } from "@superterp/ratings";
+} from "@turboterp/course-data/schedule-files";
+import type { Section } from "@turboterp/course-data/schedules";
+import { decodeDepartment, type CourseGrades } from "@turboterp/ratings";
 
 export type IndexState = { status: "loading" } | { status: "missing" } | { status: "error" } | { status: "ready"; index: CourseIndex };
 

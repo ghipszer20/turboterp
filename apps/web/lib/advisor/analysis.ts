@@ -1,17 +1,17 @@
 // The slower half of the Advisor: the degree audit (HiGHS), double-major / dual-degree notices
 // and the CS gateway. Loaded with import() and run after edits settle, never on every keystroke.
 
-import { auditPrograms, checkCsGateway, PROGRAM_GPA_ID, type GatewayResult, type Program, type Requirement, type RequirementResult } from "@superterp/audit";
-import type { CreditCourse } from "@superterp/credit";
-import type { PlanCatalog } from "@superterp/plan/catalog";
-import type { Plan } from "@superterp/plan/check";
-import { checkDegrees, type DegreeCheck } from "@superterp/plan/degrees";
-import { planCourses, programNotices, type ProgramNotice } from "@superterp/plan/notices";
-// The heavy, solver-backed half of @superterp/tracks (checkTrack calls auditProgram); this file is
+import { auditPrograms, checkCsGateway, PROGRAM_GPA_ID, type GatewayResult, type Program, type Requirement, type RequirementResult } from "@turboterp/audit";
+import type { CreditCourse } from "@turboterp/credit";
+import type { PlanCatalog } from "@turboterp/plan/catalog";
+import type { Plan } from "@turboterp/plan/check";
+import { checkDegrees, type DegreeCheck } from "@turboterp/plan/degrees";
+import { planCourses, programNotices, type ProgramNotice } from "@turboterp/plan/notices";
+// The heavy, solver-backed half of @turboterp/tracks (checkTrack calls auditProgram); this file is
 // already loaded with import() (see AdvisorApp.tsx), so it's fine for it to pull in HiGHS, the way
-// it already pulls in @superterp/audit's auditPrograms/checkCsGateway above. Never import this
-// module, or "@superterp/tracks" itself, from a file in the main bundle -- use
-// "@superterp/tracks/list" (lib/advisor/tracks.ts) there instead.
+// it already pulls in @turboterp/audit's auditPrograms/checkCsGateway above. Never import this
+// module, or "@turboterp/tracks" itself, from a file in the main bundle -- use
+// "@turboterp/tracks/list" (lib/advisor/tracks.ts) there instead.
 import {
   checkTrack,
   scienceGpa,
@@ -23,7 +23,7 @@ import {
   type ScienceGpa,
   type Track,
   type TrackCheckResult,
-} from "@superterp/tracks";
+} from "@turboterp/tracks";
 import { checkerPlan } from "./checker";
 import type { AdvisorPlan } from "./plan-state";
 import { AUTOMATIC_PROGRAMS, auditedPrograms, collegeLayers, degreeModeOf, noticeCandidates, studentDegrees } from "./programs";
@@ -70,7 +70,7 @@ export type Analysis = {
 };
 
 /** Every graded course, prior credit and term courses, keeping every attempt of a repeat (AMCAS
- * and LSAC count each one; @superterp/plan/notices' planCourses counts a course once, so it can't
+ * and LSAC count each one; @turboterp/plan/notices' planCourses counts a course once, so it can't
  * be reused here). */
 function gradedCourses(plan: Plan): GradedCourse[] {
   const prior = (plan.priorCredit ?? []).filter((c) => c.grade).map((c) => ({ id: c.id, credits: c.credits, grade: c.grade }));

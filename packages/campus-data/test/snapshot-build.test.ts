@@ -78,7 +78,7 @@ function fakeSources(fail: Partial<Record<keyof CampusSources, boolean>> = {}) {
 let dir: string;
 let store: FileSnapshotStore;
 beforeEach(() => {
-  dir = mkdtempSync(join(tmpdir(), "superterp-build-"));
+  dir = mkdtempSync(join(tmpdir(), "turboterp-build-"));
   store = new FileSnapshotStore(dir);
 });
 afterEach(() => {

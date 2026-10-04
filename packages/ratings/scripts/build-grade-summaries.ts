@@ -5,7 +5,7 @@
 // cached courses, so it resumes), then writes one <DEPT>.json per department
 // plus index.json into the output directory. Run once per term:
 //
-//   npm run grades -w @superterp/ratings [-- <outDir>] [--soc <soc-YYYYMM.json>]
+//   npm run grades -w @turboterp/ratings [-- <outDir>] [--soc <soc-YYYYMM.json>]
 //
 // Default outDir: packages/ratings/.cache/grades-out/
 

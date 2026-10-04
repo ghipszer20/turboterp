@@ -24,13 +24,13 @@ export function Nav() {
       {/* Phones: small wordmark at the top that goes to Today. */}
       <header className={styles.topBar}>
         <Link href="/" className={styles.wordmark} aria-current={pathname === "/" ? "page" : undefined}>
-          Super<span>Terp</span>
+          Turbo<span>Terp</span>
         </Link>
         <div className={styles.topBarControls}>
           <Link
             href="/about"
             className={styles.aboutIconLink}
-            aria-label="About SuperTerp"
+            aria-label="About TurboTerp"
             aria-current={pathname === "/about" ? "page" : undefined}
           >
             <InfoIcon size={22} />
@@ -40,7 +40,7 @@ export function Nav() {
       </header>
       <nav className={styles.nav} aria-label="Main">
         <Link href="/" className={styles.brand} aria-current={pathname === "/" ? "page" : undefined}>
-          Super<span>Terp</span>
+          Turbo<span>Terp</span>
         </Link>
         <Link href="/" className={`${styles.tab} ${styles.todayLink}`} data-active={pathname === "/"}>
           <TodayIcon size={24} />

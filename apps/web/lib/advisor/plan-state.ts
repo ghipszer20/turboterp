@@ -2,8 +2,8 @@
 // course-level entries (never sections, so the schedule builder can sync by course only), and the
 // prior-credit form inputs (derived credit is recomputed, never stored).
 
-import type { College } from "@superterp/plan/credit-caps";
-import type { GradCreditTag } from "@superterp/plan/grad-courses";
+import type { College } from "@turboterp/plan/credit-caps";
+import type { GradCreditTag } from "@turboterp/plan/grad-courses";
 import { defaultTerms, parseTerm, sortTerms } from "./terms";
 
 export type PlannedCourse = {
@@ -12,7 +12,7 @@ export type PlannedCourse = {
   credits?: number;
   status?: "planned" | "completed";
   grade?: string;
-  /** How a graduate course's credits count (@superterp/plan/grad-courses); omitted (the default)
+  /** How a graduate course's credits count (@turboterp/plan/grad-courses); omitted (the default)
    * is "undergrad credit". Ignored by the checker for a non-graduate course. */
   gradTag?: GradCreditTag;
 };
@@ -67,7 +67,7 @@ export type AdvisorPlan = {
   degreeMode?: DegreeChoice;
   /** Cumulative UMD GPA, for the CS gateway check. */
   gpa?: number;
-  /** Chosen pre-professional track ids (@superterp/tracks), never degree requirements. Omitted when empty. */
+  /** Chosen pre-professional track ids (@turboterp/tracks), never degree requirements. Omitted when empty. */
   tracks?: string[];
   /**
    * Planned term for an exam-content milestone, by the milestone's id (e.g. "mcat"): shared by
@@ -83,13 +83,13 @@ export type AdvisorPlan = {
   expectedGrades?: Record<string, Record<string, string>>;
   /**
    * The combined BS/MS program's total master's credits, for the double-count cap
-   * (@superterp/plan/grad-courses: 35% of this number). Optional; omitted shows an info note
+   * (@turboterp/plan/grad-courses: 35% of this number). Optional; omitted shows an info note
    * instead of checking the cap.
    */
   mastersCredits?: number;
   /**
    * Open Slots ("from an approved list" that isn't published) the student ticked as confirmed with
-   * their advisor, as "<programId>/<requirementId>" (@superterp/audit slotKey). Omitted when empty.
+   * their advisor, as "<programId>/<requirementId>" (@turboterp/audit slotKey). Omitted when empty.
    */
   confirmedSlots?: string[];
 };

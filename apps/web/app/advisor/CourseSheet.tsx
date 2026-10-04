@@ -4,15 +4,15 @@
 // and (when the course is actually in the plan) the actions HTML5 drag-and-drop can't reach on a
 // phone: move to another term, mark completed with a grade, or remove it.
 
-import type { PlanIssue } from "@superterp/plan/check";
-import { GRAD_CREDIT_TAGS, isGraduateCourse, type GradCreditTag } from "@superterp/plan/grad-courses";
+import type { PlanIssue } from "@turboterp/plan/check";
+import { GRAD_CREDIT_TAGS, isGraduateCourse, type GradCreditTag } from "@turboterp/plan/grad-courses";
 import { useEffect, useState } from "react";
 import type { CourseDetails } from "@/lib/advisor/course-details";
 import { gradeBars, gradeSummary, termSpan } from "@/lib/advisor/grades";
 import { SEVERITY } from "@/lib/advisor/issues";
 import type { AdvisorPlan } from "@/lib/advisor/plan-state";
 import { genEdName } from "@/lib/advisor/words";
-import type { CourseGrades } from "@superterp/ratings";
+import type { CourseGrades } from "@turboterp/ratings";
 import type { OpenCourse } from "./AdvisorApp";
 import { loadCourseDetails, loadCourseGrades, type CatalogState } from "./data";
 import { dispatchPlan } from "./store";
@@ -86,7 +86,7 @@ export function CourseSheet({
         <div className={styles.sheetHead}>
           <div>
             <p className={styles.sheetId}>{course.id}</p>
-            <h2 className={styles.sheetTitle}>{info?.title ?? (ready ? "Not in SuperTerp's course data" : "Loading…")}</h2>
+            <h2 className={styles.sheetTitle}>{info?.title ?? (ready ? "Not in TurboTerp's course data" : "Loading…")}</h2>
           </div>
           <button type="button" className={styles.iconButton} aria-label="Close" onClick={onClose}>
             ×

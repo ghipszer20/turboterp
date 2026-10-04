@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { EmptyExplanation } from "@superterp/course-data/explain";
+import type { EmptyExplanation } from "@turboterp/course-data/explain";
 import {
   applySameHours,
   DEFAULT_FILTERS,

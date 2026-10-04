@@ -1,4 +1,4 @@
-import type { Section } from "@superterp/course-data/schedules";
+import type { Section } from "@turboterp/course-data/schedules";
 import { courseColor } from "@/lib/schedule/colors";
 import { bestRating, instructorLabel, recommendReason } from "@/lib/schedule/sections";
 import { RatingBadge } from "./RatingBadge";

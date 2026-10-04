@@ -10,7 +10,7 @@
 
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useState } from "react";
-import type { Itinerary, Place } from "@superterp/campus-data";
+import type { Itinerary, Place } from "@turboterp/campus-data";
 import { Card } from "@/components/ui";
 import styles from "./map.module.css";
 import { emptyField, TripPlanner, type Building, type PickMode } from "./TripPlanner";

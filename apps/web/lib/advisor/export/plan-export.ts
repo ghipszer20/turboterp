@@ -84,4 +84,4 @@ export function buildPlanExport(input: PlanExportInput) {
 export type PlanExport = ReturnType<typeof buildPlanExport>;
 
 /** The download's file name, dated by the export's header date. */
-export const exportFileName = (kind: "xlsx" | "pdf", date: string) => `superterp-4-year-plan-${date}.${kind}`;
+export const exportFileName = (kind: "xlsx" | "pdf", date: string) => `turboterp-4-year-plan-${date}.${kind}`;

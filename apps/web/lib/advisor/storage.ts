@@ -1,15 +1,15 @@
 // The Plan in this device's localStorage. Loading validates everything and drops what it can't
 // read, so a corrupt or older save never breaks the page.
 
-// TRACKS comes from "@superterp/tracks/list", which has no runtime @superterp/audit import (no
+// TRACKS comes from "@turboterp/tracks/list", which has no runtime @turboterp/audit import (no
 // HiGHS), so validating a saved track id here doesn't pull the solver into the main bundle.
-import { COLLEGES, type College } from "@superterp/plan/credit-caps";
-import { GRAD_CREDIT_TAGS, type GradCreditTag } from "@superterp/plan/grad-courses";
-import { TRACKS } from "@superterp/tracks/list";
+import { COLLEGES, type College } from "@turboterp/plan/credit-caps";
+import { GRAD_CREDIT_TAGS, type GradCreditTag } from "@turboterp/plan/grad-courses";
+import { TRACKS } from "@turboterp/tracks/list";
 import { DEGREE_CHOICES, type AdvisorPlan, type ApInput, type DegreeChoice, type DualInput, type IbInput, type PlannedCourse, type PlanTermState, type PriorInputs } from "./plan-state";
 import { parseTerm } from "./terms";
 
-export const PLAN_STORAGE_KEY = "superterp-advisor-plan";
+export const PLAN_STORAGE_KEY = "turboterp-advisor-plan";
 
 export const serializePlan = (plan: AdvisorPlan) => JSON.stringify(plan);
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { campusMinutes } from "@superterp/campus-data/dates";
+import { campusMinutes } from "@turboterp/campus-data/dates";
 
 /**
  * Minutes after midnight in campus time, ticking every 30 seconds.

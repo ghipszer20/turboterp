@@ -1,7 +1,7 @@
 // Departmental Honors: Criminology & Criminal Justice.
 // Source: https://ccjs.umd.edu/undergraduate/undergraduate-honors-program (fetched 2026-09-27). Hand-transcribed. UNVERIFIED.
 
-import type { Program } from "@superterp/audit";
+import type { Program } from "@turboterp/audit";
 import { CATALOG_YEAR } from "./common.ts";
 
 export const SOURCE = "https://ccjs.umd.edu/undergraduate/undergraduate-honors-program";

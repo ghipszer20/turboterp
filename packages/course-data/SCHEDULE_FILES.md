@@ -7,10 +7,10 @@ pre-built, CDN-cacheable files; no page view ever scrapes Testudo or calls Plane
 ## Build (once per Schedule of Classes snapshot)
 
 ```sh
-npm run snapshot -w @superterp/course-data -- 202701     # Testudo → packages/course-data/.cache/soc-202701.json
-npm run professor-ratings -w @superterp/ratings          # PlanetTerp /professors → packages/ratings/.cache/professor-ratings.json
-npm run grades -w @superterp/ratings                     # PlanetTerp /grades → packages/ratings/.cache/grades-out/ (see ../ratings/GRADES.md)
-npm run schedule-data -w @superterp/course-data          # everything above → the snapshot store
+npm run snapshot -w @turboterp/course-data -- 202701     # Testudo → packages/course-data/.cache/soc-202701.json
+npm run professor-ratings -w @turboterp/ratings          # PlanetTerp /professors → packages/ratings/.cache/professor-ratings.json
+npm run grades -w @turboterp/ratings                     # PlanetTerp /grades → packages/ratings/.cache/grades-out/ (see ../ratings/GRADES.md)
+npm run schedule-data -w @turboterp/course-data          # everything above → the snapshot store
 ```
 
 `schedule-data` flags: `--soc <file>`, `--ratings <file>`, `--grades <dir>`, `--dir <snapshot dir>`.
@@ -25,7 +25,7 @@ panel says "No grade data". Nothing here is committed; all inputs and outputs ar
   first-and-last-name match; ambiguous names are left unrated.
 - `schedule-data` writes into the same snapshot store as the campus data
   (`packages/campus-data/SNAPSHOTS.md`; `<repo>/.cache/snapshots` by default, or
-  `$SUPERTERP_SNAPSHOT_DIR`). `schedule/current` is written last, so the app never points
+  `$TURBOTERP_SNAPSHOT_DIR`). `schedule/current` is written last, so the app never points
   at a half-written term.
 
 ## Keys and URLs

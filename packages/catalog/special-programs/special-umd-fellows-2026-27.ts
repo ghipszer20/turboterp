@@ -3,7 +3,7 @@
 // (the program site fellowsprogram.umd.edu renders its content with JavaScript only).
 // Hand-transcribed. UNVERIFIED.
 
-import type { Program, ProgramMeta } from "@superterp/audit";
+import type { Program, ProgramMeta } from "@turboterp/audit";
 import { CATALOG_YEAR } from "./common.ts";
 
 export const SOURCE = "https://academiccatalog.umd.edu/undergraduate/colleges-schools/undergraduate-studies/";

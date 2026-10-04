@@ -2,7 +2,7 @@
 
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { SourceError } from "@superterp/campus-data/http";
+import { SourceError } from "@turboterp/campus-data/http";
 import { parseClock, parseCourses, parseDays, parseDepartments, parseSections, parseTerms } from "../src/soc.ts";
 
 const fixture = (name: string) => readFileSync(new URL(`./fixtures/${name}`, import.meta.url), "utf8");

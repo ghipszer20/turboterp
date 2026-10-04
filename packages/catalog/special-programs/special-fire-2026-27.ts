@@ -1,7 +1,7 @@
 // FIRE: The First-Year Innovation & Research Experience (Office of Undergraduate Research).
 // Source: https://www.fire.umd.edu/about (fetched 2026-09-25). Hand-transcribed. UNVERIFIED.
 
-import type { Program, ProgramMeta } from "@superterp/audit";
+import type { Program, ProgramMeta } from "@turboterp/audit";
 import { CATALOG_YEAR } from "./common.ts";
 
 export const SOURCE = "https://www.fire.umd.edu/about";

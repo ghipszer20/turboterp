@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { Meeting } from "@superterp/course-data/schedules";
+import type { Meeting } from "@turboterp/course-data/schedules";
 import { blockLines, clock, dayBlocks, hourLabel, labelFit, pct, timeScale, untimed } from "../calendar";
 
 const m = (days: string[], start: number | null, end: number | null, type = "Lecture"): Meeting => ({

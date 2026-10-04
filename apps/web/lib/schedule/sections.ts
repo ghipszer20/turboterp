@@ -1,9 +1,9 @@
 // Section-level helpers for the editor's side panel: the choices for one class, which
 // section stands in for a group of interchangeable ones, ratings and grade summaries.
 
-import { sectionsConflict, type Section } from "@superterp/course-data/schedules";
-import { gpaKey, NEUTRAL_RATING } from "@superterp/course-data/sort";
-import type { CourseGrades, Distribution } from "@superterp/ratings";
+import { sectionsConflict, type Section } from "@turboterp/course-data/schedules";
+import { gpaKey, NEUTRAL_RATING } from "@turboterp/course-data/sort";
+import type { CourseGrades, Distribution } from "@turboterp/ratings";
 import { clock } from "./calendar";
 
 export const sectionKey = (s: Pick<Section, "courseId" | "id">) => `${s.courseId}/${s.id}`;

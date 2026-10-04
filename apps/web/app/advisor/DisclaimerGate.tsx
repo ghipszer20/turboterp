@@ -29,7 +29,7 @@ export function DisclaimerGate() {
       </header>
       <form className={styles.gate} onSubmit={submit} aria-labelledby="gate-intro">
         <p id="gate-intro" className={styles.gateIntro}>
-          SuperTerp can check a four-year plan against your requirements. Please read this and sign before you start.
+          TurboTerp can check a four-year plan against your requirements. Please read this and sign before you start.
         </p>
         <ol className={styles.gatePoints}>
           {CONSENT_POINTS.map((p) => (

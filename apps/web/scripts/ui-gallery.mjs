@@ -1,7 +1,7 @@
 // Screenshots every page of the app (phone light, phone dark, desktop) into <repo>/ui-review/
 // with an index.html gallery, so the owner can look over the whole UI in one place.
 // Needs `npm run dev` running (seed deep links only work in development) and, for real
-// campus data, `npm run snapshots -w @superterp/campus-data -- daily` first.
+// campus data, `npm run snapshots -w @turboterp/campus-data -- daily` first.
 //
 //   node scripts/ui-gallery.mjs [http://localhost:3000]
 //
@@ -69,7 +69,7 @@ const edge = spawn(EDGE, [
   "--disable-gpu",
   "--hide-scrollbars",
   `--remote-debugging-port=${PORT}`,
-  `--user-data-dir=${join(tmpdir(), `superterp-ui-gallery-${Date.now()}`)}`,
+  `--user-data-dir=${join(tmpdir(), `turboterp-ui-gallery-${Date.now()}`)}`,
   "about:blank",
 ]);
 
@@ -151,7 +151,7 @@ const groups = [...new Set(SHOTS.map((s) => s[0]))];
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 const img = (file, label) => `<figure><a href="${file}" target="_blank"><img loading="lazy" src="${file}" alt="${esc(label)}"></a><figcaption>${esc(label)}</figcaption></figure>`;
 const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SuperTerp UI review</title>
+<title>TurboTerp UI review</title>
 <style>
 :root{--bg:#f5f5f7;--card:#fff;--text:#1d1d1f;--muted:#6e6e73;--accent:#BA0C2F}
 @media (prefers-color-scheme:dark){:root{--bg:#000;--card:#1c1c1e;--text:#f5f5f7;--muted:#98989d;--accent:#ff4d6d}}
@@ -167,7 +167,7 @@ figure:nth-child(-n+2) img{width:200px;max-height:none;height:auto;object-fit:co
 figure:nth-child(3) img{width:640px;max-height:none}figcaption{color:var(--muted);font-size:13px;margin-top:4px}
 .closeups{display:flex;gap:14px;flex-wrap:wrap}.closeups img{width:300px}
 </style></head><body>
-<header><h1>SuperTerp UI review</h1><p>Captured ${new Date().toLocaleString("en-US")} from ${esc(BASE)}. Click any image for full size. Files are in <code>pages/</code>.</p></header>
+<header><h1>TurboTerp UI review</h1><p>Captured ${new Date().toLocaleString("en-US")} from ${esc(BASE)}. Click any image for full size. Files are in <code>pages/</code>.</p></header>
 <nav>${groups.map((g) => `<a href="#${slug(g)}">${esc(g)}</a>`).join("")}${features.length ? `<a href="#closeups">Feature close-ups</a>` : ""}</nav>
 <main>
 ${groups

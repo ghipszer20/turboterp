@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import type { Weekday } from "@superterp/course-data/schedules";
-import type { SortKey } from "@superterp/course-data/sort";
+import type { Weekday } from "@turboterp/course-data/schedules";
+import type { SortKey } from "@turboterp/course-data/sort";
 import { clock, DAY_NAME, WEEKDAYS } from "@/lib/schedule/calendar";
 import {
   applySameHours,

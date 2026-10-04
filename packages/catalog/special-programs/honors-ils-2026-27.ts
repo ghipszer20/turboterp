@@ -1,7 +1,7 @@
 // Honors College: Integrated Life Sciences (ILS).
 // Source: https://www.ils.umd.edu/courses ("ILS Course Sequence & Citation Completion"; fetched 2026-09-25). Hand-transcribed. UNVERIFIED.
 
-import type { Program, ProgramMeta } from "@superterp/audit";
+import type { Program, ProgramMeta } from "@turboterp/audit";
 import { CATALOG_YEAR, HONORS_CITATION_NOTES } from "./common.ts";
 
 export const SOURCE = "https://www.ils.umd.edu/courses";

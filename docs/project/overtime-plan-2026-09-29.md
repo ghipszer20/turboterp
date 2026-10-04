@@ -67,7 +67,7 @@ Still not started: eligibility gates (old S2), registration prep (old S5), test 
    - Run the full suite and merge. Checks: the plan doc resilient-whistling-sprout.md Task 1 and the legal.md footer/citation lines.
 3. **`feat/registration-prep`** (Sonnet), per resilient-whistling-sprout.md Task 3:
    - Pure `registrationChecklist` in `lib/schedule/registration.ts`, test-first.
-   - `superterp-registration` localStorage key with a round-trip test.
+   - `turboterp-registration` localStorage key with a round-trip test.
    - `RegistrationPanel.tsx` in the Schedule builder, with small edits to `ScheduleBuilder.tsx`.
    - Appointment reminder as an `.ics` with alarms, reusing `lib/schedule/ics.ts`, plus a countdown card on Today.
    - Screenshot; add to the approval list.

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { connection } from "next/server";
-import { campusDate, campusMinutes, orderLibraries } from "@superterp/campus-data";
+import { campusDate, campusMinutes, orderLibraries } from "@turboterp/campus-data";
 import { LiveStatus } from "@/components/LiveStatus";
 import { RoomIcon } from "@/components/icons";
 import { Card, IconTile, Notice, Page, Row, Section, SkeletonCard, SourceError } from "@/components/ui";

@@ -1,8 +1,8 @@
 // Category → UMD course mappings shared by several tracks. HPAO publishes categories, not UMD
-// course numbers, so every mapping here is SuperTerp's reading of UMD's own pages (SOURCES.md);
+// course numbers, so every mapping here is TurboTerp's reading of UMD's own pages (SOURCES.md);
 // MAPPING_NOTES lists each choice for the owner to verify.
 
-import type { Requirement, SetMember } from "@superterp/audit";
+import type { Requirement, SetMember } from "@turboterp/audit";
 import type { Milestone, TrackCategory } from "../src/types.ts";
 
 /** One course by number, with any suffix (honors "H", "S" sections…), e.g. CHEM232 matches CHEM232S. */
@@ -302,7 +302,7 @@ export const CPR_MILESTONE: Milestone = {
 // what these pages say; each note below records what was checked and cites the page. Where a page
 // names no UMD course number for a category (most of them -- HPAO deliberately names categories,
 // not course numbers, and points students to 4yearplans.umd.edu / their advisor instead), the
-// existing course choice is kept and flagged as SuperTerp's own reading, not HPAO's. (CHEM146/177
+// existing course choice is kept and flagged as TurboTerp's own reading, not HPAO's. (CHEM146/177
 // and CHEM237/247 are the one exception already resolved above, confirmed by the main session
 // against the Chemistry major catalog page, not by this fetch pass.)
 export const MAPPING_NOTES = {
@@ -319,7 +319,7 @@ export const MAPPING_NOTES = {
   physics:
     "Physics with labs = PHYS131 & 132 (life sciences), PHYS121 & 122, PHYS141 & 142, or engineering PHYS161 + PHYS261 lab and PHYS260 + PHYS271 lab (BIOE sample plan). PHYS141/142 aren't in the Spring 2027 schedule, but the Biological Sciences catalog page names them directly (\"PHYS131 or 141, PHYS132 or 142\"), so they're kept rather than dropped for not being in one term's schedule; majors' PHYS171/272/273 sequence is not included. Re-checked 2026-09-27: HPAO's AP/IB page (https://prehealth.umd.edu/prospective-students/ap-ib-credit) names PHYS121/122 specifically (\"even if two semesters of AP credit are awarded\"); the NEUR pre-med benchmark plan (https://neur.umd.edu/sites/neur.umd.edu/files/Four-Year%20Plans/NEUR%20Pre-Med%20Sample%204%20Year%20Plan%2011_06_20_0.pdf) uses PHYS131/132; the BIOE sample pre-med plan (https://bioe.umd.edu/sites/bioe.umd.edu/files/resource_documents/PreHealth%20Sample%20Plan%20(New%20Curric)%20-%20Update060216.pdf) uses PHYS161, then PHYS260/261, then PHYS271 -- all three already-encoded options are independently confirmed by a source.",
   calculus:
-    "Calculus = MATH120, MATH136 or MATH140. MATH135 (Discrete Mathematics for Life Sciences) is not calculus. MATH120 is closed to science majors but is calculus. HPAO's AP/IB page (https://prehealth.umd.edu/prospective-students/ap-ib-credit, fetched 2026-09-27) only says schools accepting math generally accept AP/IB credit for it; it names no specific UMD calculus course, so this list stays SuperTerp's own reading of \"calculus\" at UMD.",
+    "Calculus = MATH120, MATH136 or MATH140. MATH135 (Discrete Mathematics for Life Sciences) is not calculus. MATH120 is closed to science majors but is calculus. HPAO's AP/IB page (https://prehealth.umd.edu/prospective-students/ap-ib-credit, fetched 2026-09-27) only says schools accepting math generally accept AP/IB credit for it; it names no specific UMD calculus course, so this list stays TurboTerp's own reading of \"calculus\" at UMD.",
   statistics:
     "Statistics = BIOM301, EPIB315, PSYC200, STAT400 or STAT464 (the NEUR pre-med plan's approved list) plus STAT100, which is on no UMD pre-health list (assumed acceptable). Re-checked directly against the NEUR pre-med benchmark plan (https://neur.umd.edu/sites/neur.umd.edu/files/Four-Year%20Plans/NEUR%20Pre-Med%20Sample%204%20Year%20Plan%2011_06_20_0.pdf, fetched 2026-09-27): its \"Approved Statistics Courses\" note reads verbatim \"BIOM301 or EPIB315 or PSYC200 or STAT400 or STAT464\", an exact match; HPAO's own career pages list \"Statistics\" as a category but name no course.",
   english:
@@ -331,9 +331,9 @@ export const MAPPING_NOTES = {
   collegeAlgebra:
     "\"College Algebra\" (Dental Hygiene) = MATH113 (College Algebra and Trigonometry), UMD's actual college-algebra course, or MATH115 (Precalculus), a more advanced course that assumedly covers the same ground and more. Unlike dentistry's and PT's \"College Algebra or Calculus\", HPAO's Dental Hygiene page offers no calculus alternative, so the CALCULUS courses aren't included here. Re-checked directly against that page (https://prehealth.umd.edu/explore-careers/dental-hygiene, fetched 2026-09-27): the math requirement reads exactly \"College Algebra\", with no calculus alternative offered and no UMD course number named.",
   advancedGenetics:
-    "\"Advanced Genetics\" (Genetic Counseling) = BSCI410 (Molecular Genetics), whose own catalog description calls it \"An advanced genetics course emphasizing the molecular basis of gene structure and function\" — the clearest match for HPAO's wording. BSCI416 (Human Genetics), which requires BSCI410 first (a minimum grade of C- in it, or concurrent enrollment), is kept as a further alternative. BSCI222 (Principles of Genetics), the introductory course both of these build on, is NOT used here: it's the prerequisite for \"advanced\" genetics, not the advanced course itself, and it's already used elsewhere in this package (upperBioLab). Re-checked directly against HPAO's Genetic Counseling page (https://prehealth.umd.edu/explore-careers/genetic-counseling, fetched 2026-09-27): it lists \"Advanced Genetics\" as its own category but names no UMD course, so BSCI410/416 stays SuperTerp's own reading.",
+    "\"Advanced Genetics\" (Genetic Counseling) = BSCI410 (Molecular Genetics), whose own catalog description calls it \"An advanced genetics course emphasizing the molecular basis of gene structure and function\" — the clearest match for HPAO's wording. BSCI416 (Human Genetics), which requires BSCI410 first (a minimum grade of C- in it, or concurrent enrollment), is kept as a further alternative. BSCI222 (Principles of Genetics), the introductory course both of these build on, is NOT used here: it's the prerequisite for \"advanced\" genetics, not the advanced course itself, and it's already used elsewhere in this package (upperBioLab). Re-checked directly against HPAO's Genetic Counseling page (https://prehealth.umd.edu/explore-careers/genetic-counseling, fetched 2026-09-27): it lists \"Advanced Genetics\" as its own category but names no UMD course, so BSCI410/416 stays TurboTerp's own reading.",
   socialScience:
-    "Sociology (SOCY100 or SOCY105), human growth and development (EDHD320 or PSYC355) and nutrition (NFSC100) each map to UMD's most general course in the area. Checked directly against HPAO's Occupational Therapy page (https://prehealth.umd.edu/explore-careers/occupational-therapy: \"Sociology\", \"Human Growth and Development\") and Nursing page (https://prehealth.umd.edu/explore-careers/nursing: \"Nutrition\", \"Human Growth and Development\"), both fetched 2026-09-27: both name the category but no UMD course number for any of the three, so these three mappings stay SuperTerp's own reading, same as microeconomics/communications above.",
+    "Sociology (SOCY100 or SOCY105), human growth and development (EDHD320 or PSYC355) and nutrition (NFSC100) each map to UMD's most general course in the area. Checked directly against HPAO's Occupational Therapy page (https://prehealth.umd.edu/explore-careers/occupational-therapy: \"Sociology\", \"Human Growth and Development\") and Nursing page (https://prehealth.umd.edu/explore-careers/nursing: \"Nutrition\", \"Human Growth and Development\"), both fetched 2026-09-27: both name the category but no UMD course number for any of the three, so these three mappings stay TurboTerp's own reading, same as microeconomics/communications above.",
 };
 
 /** N credits from a list of courses (a credit-minimum category, e.g. "24 credits of life and physical science"). */

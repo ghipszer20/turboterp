@@ -63,6 +63,6 @@ export const preMls: Track = {
     "(S) The 16 semester hours of biology (including 1 semester of microbiology) and 16 of chemistry (including 1 semester of organic chemistry or biochemistry) come from a search-result summary; the ASCP page returned 403 and the NAACLS 2024 Standards PDF was unparseable. Verify before setting verified: true.",
     "NAACLS's own standards only require \"appropriate prerequisite coursework\", so 16 + 16 is the ASCP eligibility route, common to nearly every post-baccalaureate MLS program.",
     "The microbiology and organic-or-biochemistry categories are overlays: their courses also count toward the 16-credit pools.",
-    "The research doc names BSCI170/171, BSCI180, BSCI223, CHEM131/132, CHEM231/232 and BCHM461. Pools also accept courses other tracks already use (BSCI160/161, BSCI201/202, BSCI283, CHEM241/242, CHEM271/272, BCHM463); this widening is SuperTerp's reading.",
+    "The research doc names BSCI170/171, BSCI180, BSCI223, CHEM131/132, CHEM231/232 and BCHM461. Pools also accept courses other tracks already use (BSCI160/161, BSCI201/202, BSCI283, CHEM241/242, CHEM271/272, BCHM463); this widening is TurboTerp's reading.",
   ],
 };

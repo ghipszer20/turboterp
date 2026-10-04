@@ -8,15 +8,15 @@ One batch = one college, 10–15 programs. For each program:
    `reviewNotes`, citing both. The department page wins where they disagree (owner ruling).
 2. **Registry metadata**: next to your `Program` export (say it's `export const fooMajor: Program = ...`),
    add a sibling `export const fooMajorMeta: ProgramMeta = { ... }` (the `Meta` suffix on the Program's own
-   export name is how the generator pairs them; `ProgramMeta` is exported from `@superterp/audit`, imported
+   export name is how the generator pairs them; `ProgramMeta` is exported from `@turboterp/audit`, imported
    the same way you import `Program`). Fill `kind`, `college` (from the catalog URL's `colleges-schools/<slug>/`),
    `short` if the name is long, `major` + `track` only for tracks of one major, `defaultTrack: true` on
    exactly one track when the major has more than one (the registry lists it first for that major -- e.g.
    which track an undeclared-major notice offers), and `sources.catalog` / `sources.department`. `id`,
    `name`, `catalogYear` and `verified` aren't repeated here -- the generator reads them off the Program.
-   Then run `npm run build:registry -w @superterp/programs` to regenerate
+   Then run `npm run build:registry -w @turboterp/programs` to regenerate
    `packages/programs/src/registry.generated.ts`; `packages/programs/test/registry-generated.test.ts` fails
-   if you forget. **Majors only**: also run `npm run build:course-sets -w @superterp/programs` to regenerate
+   if you forget. **Majors only**: also run `npm run build:course-sets -w @turboterp/programs` to regenerate
    `packages/programs/src/course-sets.generated.ts` (the double-major notice pre-filter's per-major course
    list) after adding or changing a major's requirements; `packages/programs/test/course-sets.test.ts` fails
    if you forget that one.
@@ -47,7 +47,7 @@ Rules:
   named programs only is `[{ programs: ["cmsc-major"], courses: 0 }]`. Omitted `programs` means every
   other program; Gen Ed, university and college layers never count. The audit enforces it across all
   programs at once. Put nothing there when the catalog is silent (sharing is then unlimited).
-- Run `npm test -w @superterp/programs -- --reporter=dot` while working; the package must stay green.
+- Run `npm test -w @turboterp/programs -- --reporter=dot` while working; the package must stay green.
 
 ## Encode what the source says, never narrower (main session, 2026-09-28)
 - Never narrow a requirement (split number bands, one area's course numbers, a single example course) to make the sample plan or the mutation tests work. A narrower rule wrongly fails real students. Example: "12 PHIL courses, 4 at 3xx+, 2 at 4xx+" is one 12-course PHIL `choose` plus `overlay: true` chooses for each minimum (see `phil-major-2026-27.ts`); overlapping filters are fine.

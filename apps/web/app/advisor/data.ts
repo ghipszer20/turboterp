@@ -4,9 +4,9 @@
 // keeps it in memory: the plan catalog up front, course details and grade files one department
 // at a time.
 
-import { decodeCatalogFile } from "@superterp/plan/catalog-file";
-import type { PlanCatalog } from "@superterp/plan/catalog";
-import { decodeDepartment, type CourseGrades } from "@superterp/ratings";
+import { decodeCatalogFile } from "@turboterp/plan/catalog-file";
+import type { PlanCatalog } from "@turboterp/plan/catalog";
+import { decodeDepartment, type CourseGrades } from "@turboterp/ratings";
 import { useEffect, useState } from "react";
 import { decodeCourseDetails, type CourseDetails } from "@/lib/advisor/course-details";
 

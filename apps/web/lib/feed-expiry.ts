@@ -15,7 +15,7 @@ export function feedExpiryNotice(validUntil: string | null, today: string): stri
     return `Shuttle-UM's published schedule ended ${formatDate(validUntil)}, so these times may be wrong or missing. Check Transit for live buses.`;
   }
   if (daysLeft <= WARN_DAYS) {
-    return `Shuttle-UM's published schedule runs through ${formatDate(validUntil)}. SuperTerp switches to the next one once it's out.`;
+    return `Shuttle-UM's published schedule runs through ${formatDate(validUntil)}. TurboTerp switches to the next one once it's out.`;
   }
   return null;
 }

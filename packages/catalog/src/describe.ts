@@ -1,7 +1,7 @@
 // A Requirement in plain language: "One of: CMSC131, CMSC133", "Choose 2 of: …,
 // at most one of CMSC460 / CMSC466". Framework-free.
 
-import type { CourseFilter, Requirement, SetMember } from "@superterp/audit";
+import type { CourseFilter, Requirement, SetMember } from "@turboterp/audit";
 
 export type Described = {
   /** The rule in one line. */

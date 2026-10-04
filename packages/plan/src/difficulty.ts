@@ -3,7 +3,7 @@
 // averages in each subject. Pure and framework-free; the caller maps its own data to these inputs.
 // It never predicts a grade for a course, only how hard a term is likely to feel.
 
-import { gradePoints } from "@superterp/audit";
+import { gradePoints } from "@turboterp/audit";
 
 export type DifficultyStats = { averageGpa: number | null; wRate: number; fRate: number };
 export type DifficultyCourse = { id: string; credits: number; stats: DifficultyStats | null };

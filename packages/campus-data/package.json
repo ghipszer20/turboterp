@@ -1,5 +1,5 @@
 {
-  "name": "@superterp/campus-data",
+  "name": "@turboterp/campus-data",
   "version": "0.1.0",
   "private": true,
   "description": "Fetchers and parsers for UMD campus data (dining, libraries, RecWell, Shuttle-UM). Framework-free so the web app and a future iOS app can share it.",

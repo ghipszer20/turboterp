@@ -1,6 +1,6 @@
 "use client";
 
-import { checkPlan } from "@superterp/plan/check";
+import { checkPlan } from "@turboterp/plan/check";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Segmented } from "@/components/Segmented";
 import type { Analysis } from "@/lib/advisor/analysis";
@@ -17,7 +17,7 @@ import { useCatalog, type CatalogState } from "./data";
 import { DisclaimerGate } from "./DisclaimerGate";
 import { ExportMenu } from "./ExportMenu";
 import { ImportTranscriptView } from "./ImportTranscriptView";
-import type { AcademicEvent } from "@superterp/campus-data";
+import type { AcademicEvent } from "@turboterp/campus-data";
 import { PlanView } from "./PlanView";
 import { PriorCreditView } from "./PriorCreditView";
 import { SetupView } from "./SetupView";
@@ -105,7 +105,7 @@ function Planner({ plan, catalog, signedBy, signedAt, calendar }: { plan: Adviso
 
       {catalog.status === "missing" ? (
         <p className={styles.banner} data-tone="warning">
-          Course data isn&apos;t built on this server yet, so SuperTerp can&apos;t search courses or check prerequisites. Run{" "}
+          Course data isn&apos;t built on this server yet, so TurboTerp can&apos;t search courses or check prerequisites. Run{" "}
           <code>npm run advisor-data</code>.
         </p>
       ) : null}

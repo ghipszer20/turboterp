@@ -3,7 +3,7 @@
 // requirement table: they are hand-transcribed from prose pages and PDFs, or
 // not drafted, with the reason.
 
-import type { Program } from "@superterp/audit";
+import type { Program } from "@turboterp/audit";
 import { honorsAces } from "./honors-aces-2026-27.ts";
 import { honorsDcc } from "./honors-dcc-2026-27.ts";
 import { honorsGemstone } from "./honors-gemstone-2026-27.ts";

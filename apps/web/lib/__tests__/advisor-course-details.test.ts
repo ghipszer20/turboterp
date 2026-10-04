@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import type { Course } from "@superterp/course-data";
+import type { Course } from "@turboterp/course-data";
 import { describe, expect, it } from "vitest";
 import { courseDetailFiles, decodeCourseDetails } from "../advisor/course-details";
 

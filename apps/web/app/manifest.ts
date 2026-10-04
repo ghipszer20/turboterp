@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "SuperTerp",
-    short_name: "SuperTerp",
+    name: "TurboTerp",
+    short_name: "TurboTerp",
     description: "The all-in-one app for UMD students. Unofficial; not affiliated with the University of Maryland.",
     start_url: "/",
     display: "standalone",

@@ -16,7 +16,7 @@ import { createRequire } from "node:module";
 import { setTimeout as sleep } from "node:timers/promises";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { createCanvas, type SKRSContext2D } from "@napi-rs/canvas";
-import { fetchBytes, fetchText } from "@superterp/campus-data/http";
+import { fetchBytes, fetchText } from "@turboterp/campus-data/http";
 import { PROGRAM_INDEX_URL, parseProgramIndex } from "../src/programs-index.ts";
 import {
   buildMissingReport,

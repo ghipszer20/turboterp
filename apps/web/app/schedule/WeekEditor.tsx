@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from "react";
-import type { Section } from "@superterp/course-data/schedules";
-import type { CourseGrades } from "@superterp/ratings";
+import type { Section } from "@turboterp/course-data/schedules";
+import type { CourseGrades } from "@turboterp/ratings";
 import { sectionBlocks } from "@/lib/schedule/block-items";
 import { untimed, type TimeScale } from "@/lib/schedule/calendar";
 import { courseColor } from "@/lib/schedule/colors";

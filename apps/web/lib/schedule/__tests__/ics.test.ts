@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { Section } from "@superterp/course-data/schedules";
+import type { Section } from "@turboterp/course-data/schedules";
 import { buildIcs, escapeText, foldLine } from "../ics";
 import { termDates } from "../term-dates";
 
@@ -54,7 +54,7 @@ describe("buildIcs", () => {
     expect(out).toContain("SUMMARY:CMSC351 Lecture");
     expect(out).toContain("LOCATION:IRB 0324");
     expect(out).toContain("DESCRIPTION:Section 0101\\nInstructors: Ada Lovelace\\, Alan Turing");
-    expect(out).toContain("UID:202608-CMSC351-0101-0@superterp");
+    expect(out).toContain("UID:202608-CMSC351-0101-0@turboterp");
     expect(out).toContain("DTSTAMP:20260928T120000Z");
     expect(out).toContain(`DTSTART;TZID=${TZ}:20260901T093000`);
     expect(out).toContain(`DTEND;TZID=${TZ}:20260901T104500`);
@@ -95,7 +95,7 @@ describe("buildIcs", () => {
   it("makes one event per meeting, with a stable index in the uid", () => {
     const out = ics([sec({}, [mtg(), mtg({ type: "Discussion", days: ["F"], building: null, room: null })])]);
     expect(out.match(/BEGIN:VEVENT/g)).toHaveLength(2);
-    expect(out).toContain("UID:202608-CMSC351-0101-1@superterp");
+    expect(out).toContain("UID:202608-CMSC351-0101-1@turboterp");
     expect(out).toContain("SUMMARY:CMSC351 Discussion");
     expect(out.split("SUMMARY:CMSC351 Discussion")[1]!.split("END:VEVENT")[0]).not.toContain("LOCATION");
   });

@@ -1,13 +1,13 @@
 "use client";
 
 // The degree audit, per program, the CS gateway, and pre-professional Tracks. Reads the debounced
-// Analysis; never imports @superterp/audit or @superterp/tracks as a value (only types), so HiGHS
+// Analysis; never imports @turboterp/audit or @turboterp/tracks as a value (only types), so HiGHS
 // stays out of this file's bundle — it's already loaded by lib/advisor/analysis.ts, which the app
 // code-splits with import(). A Track's own data (name, categories, disclaimer, milestones) comes
 // through as a value on analysis.result.tracks[].track, which isn't an import and so is fine.
 
-import type { GatewayCourseStatus, GatewayOverallStatus, Requirement, RequirementResult } from "@superterp/audit";
-import type { MilestoneTiming } from "@superterp/tracks";
+import type { GatewayCourseStatus, GatewayOverallStatus, Requirement, RequirementResult } from "@turboterp/audit";
+import type { MilestoneTiming } from "@turboterp/tracks";
 import type { AdvisorPlan } from "@/lib/advisor/plan-state";
 import { blockedNotice } from "@/lib/advisor/programs";
 import { showsScienceGpa } from "@/lib/advisor/tracks";
@@ -21,7 +21,7 @@ const REQ_STATUS: Record<RequirementResult["status"], string> = { satisfied: "Sa
 type OpenSlot = Extract<Requirement, { kind: "openSlot" }>;
 
 /** An Open Slot ("from an approved list" that isn't published): the student ticks it once their
- * advisor confirms it; the program isn't complete until then. The key matches @superterp/audit's slotKey. */
+ * advisor confirms it; the program isn't complete until then. The key matches @turboterp/audit's slotKey. */
 function OpenSlotRow({ programId, slot, confirmed }: { programId: string; slot: OpenSlot; confirmed: boolean }) {
   const key = `${programId}/${slot.id}`;
   return (

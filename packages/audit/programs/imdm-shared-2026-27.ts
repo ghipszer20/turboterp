@@ -59,6 +59,6 @@ export const imdmCommonReviewNotes: string[] = [
   "The official College of Arts and Humanities four-year plan PDF for this major converts to garbled, " +
     "unreadable text (no legible course codes or term structure survive conversion); both tracks' sample " +
     "plans are constructed from the catalog's own course table instead (`official: false`), term " +
-    "placement is SuperTerp's own reasonable ordering (not read off any plan), and Gen Ed/general-elective " +
+    "placement is TurboTerp's own reasonable ordering (not read off any plan), and Gen Ed/general-elective " +
     "slots are left out entirely (only the major is audited). Flagged in docs/project/owner-review.md.",
 ];

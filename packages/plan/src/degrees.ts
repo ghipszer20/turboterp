@@ -8,7 +8,7 @@
 //   Double degree: 2 degrees, 150 credits, and 18 credits in each degree not used for the other.
 //   Either one must be declared at least one full academic year before graduation.
 
-import { auditStudent, earnsCredit, type AuditResult, type Program } from "@superterp/audit";
+import { auditStudent, earnsCredit, type AuditResult, type Program } from "@turboterp/audit";
 import type { PlanCatalog } from "./catalog.ts";
 import type { Plan } from "./check.ts";
 import { DUAL_DEGREE_CREDITS, DUAL_DEGREE_UNIQUE_CREDITS, planCourses } from "./notices.ts";

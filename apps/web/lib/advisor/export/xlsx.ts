@@ -10,11 +10,11 @@ const fillOf = (hex: string) => ({ type: "pattern" as const, pattern: "solid" as
 export async function buildXlsx(t: PlanExport): Promise<ArrayBuffer> {
   const ExcelJS = (await import("exceljs")).default;
   const wb = new ExcelJS.Workbook();
-  wb.creator = "SuperTerp";
+  wb.creator = "TurboTerp";
   const ws = wb.addWorksheet("Plan");
 
   const bold = { bold: true };
-  ws.addRow(["SuperTerp 4-year plan"]).font = { bold: true, size: 14 };
+  ws.addRow(["TurboTerp 4-year plan"]).font = { bold: true, size: 14 };
   if (t.header.name) ws.addRow(["Name", t.header.name]);
   ws.addRow(["Date", t.header.date]);
   ws.addRow([t.header.disclaimer]).font = { italic: true };

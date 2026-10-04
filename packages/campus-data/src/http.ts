@@ -2,7 +2,7 @@
 // honestly and fail loudly instead of silently caching an error page.
 
 export const USER_AGENT =
-  "SuperTerp/0.1 (unofficial UMD student project; +https://github.com/ghipszer20/superterp)";
+  "TurboTerp/0.1 (unofficial UMD student project; +https://github.com/ghipszer20/turboterp)";
 
 export class SourceError extends Error {
   readonly source: string;

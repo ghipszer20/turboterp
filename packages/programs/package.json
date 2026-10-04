@@ -1,5 +1,5 @@
 {
-  "name": "@superterp/programs",
+  "name": "@turboterp/programs",
   "version": "0.1.0",
   "private": true,
   "description": "Registry of every encoded UMD program (majors, minors, certificates, special programs) with lazy loaders, plus the sample-plan validation harness. Framework-free.",
@@ -17,9 +17,9 @@
     "build:registry": "tsx scripts/build-registry.ts"
   },
   "dependencies": {
-    "@superterp/audit": "*",
-    "@superterp/catalog": "*",
-    "@superterp/plan": "*"
+    "@turboterp/audit": "*",
+    "@turboterp/catalog": "*",
+    "@turboterp/plan": "*"
   },
   "devDependencies": {
     "@types/node": "^22.20.4",

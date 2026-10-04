@@ -5,7 +5,7 @@
 // that need it simply show nothing (unknown buildings mean "no walk time", never an error).
 
 import { useEffect, useState } from "react";
-import type { Building } from "@superterp/campus-data/buildings";
+import type { Building } from "@turboterp/campus-data/buildings";
 
 let cached: Promise<Building[]> | null = null;
 

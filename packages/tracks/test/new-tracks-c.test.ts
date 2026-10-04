@@ -1,7 +1,7 @@
 // Batch C pre-professional tracks (CPA in Maryland, actuarial VEE, pre-medical physics): a
 // realistic plan satisfies every requirement, and shortening one category fails exactly it.
 
-import type { Plan, PlanCourse } from "@superterp/plan";
+import type { Plan, PlanCourse } from "@turboterp/plan";
 import { describe, expect, it } from "vitest";
 import { checkTrack } from "../src/check.ts";
 import { TRACKS } from "../src/list.ts";

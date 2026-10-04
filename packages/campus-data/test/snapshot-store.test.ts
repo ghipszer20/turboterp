@@ -8,7 +8,7 @@ import { defaultSnapshotDir, FileSnapshotStore, SNAPSHOT_SCHEMA, snapshotOrLive 
 
 let dir: string;
 beforeEach(() => {
-  dir = mkdtempSync(join(tmpdir(), "superterp-store-"));
+  dir = mkdtempSync(join(tmpdir(), "turboterp-store-"));
 });
 afterEach(() => {
   rmSync(dir, { recursive: true, force: true });
@@ -93,8 +93,8 @@ describe("FileSnapshotStore", () => {
 });
 
 describe("defaultSnapshotDir", () => {
-  it("uses SUPERTERP_SNAPSHOT_DIR when set", () => {
-    expect(defaultSnapshotDir("/anywhere", { SUPERTERP_SNAPSHOT_DIR: "/data/snaps" })).toBe("/data/snaps");
+  it("uses TURBOTERP_SNAPSHOT_DIR when set", () => {
+    expect(defaultSnapshotDir("/anywhere", { TURBOTERP_SNAPSHOT_DIR: "/data/snaps" })).toBe("/data/snaps");
   });
 
   it("resolves to <repo root>/.cache/snapshots from any workspace folder", () => {

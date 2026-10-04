@@ -1,9 +1,9 @@
-// checkTrack: the audit (@superterp/audit) plus plain-language issues a Track's data alone can't
+// checkTrack: the audit (@turboterp/audit) plus plain-language issues a Track's data alone can't
 // express as a Requirement — exam timing, AP/IB and pass/fail credit, low grades, milestone
 // timing, and pre-law's GPA protection. Pure and synchronous apart from the audit's solver call.
 
-import { auditProgram, inArea, matchesFilter, type AuditResult, type Requirement } from "@superterp/audit";
-import type { Plan, PlanCourse, PriorCredit } from "@superterp/plan";
+import { auditProgram, inArea, matchesFilter, type AuditResult, type Requirement } from "@turboterp/audit";
+import type { Plan, PlanCourse, PriorCredit } from "@turboterp/plan";
 import { amcasGpa, gpaOf, type GradedCourse } from "./gpa.ts";
 import { trackProgram } from "./list.ts";
 import type { Milestone, Track } from "./types.ts";
@@ -39,7 +39,7 @@ export type CheckTrackOptions = {
   examTerms?: Record<string, string>;
   /**
    * Predicted grades for not-yet-completed courses, by term name then course id, used only for
-   * `gpaProtection` tracks. Kept separate from `PlanCourse.grade`, which @superterp/plan treats as
+   * `gpaProtection` tracks. Kept separate from `PlanCourse.grade`, which @turboterp/plan treats as
    * a transcript grade for a completed course.
    */
   expectedGrades?: Record<string, Record<string, string>>;
@@ -51,7 +51,7 @@ const MONTHS = [
   "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December",
 ];
 
-// UMD letter grades, lowest to highest (matches @superterp/audit's own, unexported, table).
+// UMD letter grades, lowest to highest (matches @turboterp/audit's own, unexported, table).
 const GRADE_ORDER = ["F", "D-", "D", "D+", "C-", "C", "C+", "B-", "B", "B+", "A-", "A", "A+"];
 const gradeRank = (g: string) => GRADE_ORDER.indexOf(g.trim().toUpperCase());
 const PASS_FAIL = new Set(["P", "S", "PASS", "NC", "U", "SAT"]);

@@ -36,8 +36,8 @@ describe("matchApExamName", () => {
 });
 
 describe("matchApExamName: against the real UMD AP chart", () => {
-  it("matches against @superterp/credit's actual exam names", async () => {
-    const { apExamNames } = await import("@superterp/credit");
+  it("matches against @turboterp/credit's actual exam names", async () => {
+    const { apExamNames } = await import("@turboterp/credit");
     const names = apExamNames();
     expect(matchApExamName("CHEMISTRY", names)).toBe("Chemistry");
     expect(matchApExamName("HUMAN GEOG", names)).toBe("Human Geography");

@@ -8,7 +8,7 @@ import type { Season } from "./check.ts";
 
 export type College = "AGNR" | "ARCH" | "ARHU" | "BSOS" | "BMGT" | "CMNS" | "EDUC" | "ENGR" | "INFO" | "JOUR" | "PLCY" | "SPHL" | "UGST" | "USG";
 
-/** Full names, for picker UI and issue messages. "UGST" (Undergraduate Studies) is SuperTerp's
+/** Full names, for picker UI and issue messages. "UGST" (Undergraduate Studies) is TurboTerp's
  * own short code -- UMD's own catalog just calls it "Office of Undergraduate Studies". */
 export const COLLEGES: { code: College; name: string }[] = [
   { code: "AGNR", name: "Agriculture and Natural Resources" },

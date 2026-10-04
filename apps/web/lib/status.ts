@@ -1,7 +1,7 @@
 // Turns an hours model + the current time into a short, human status line.
 // Pure and shared by server and client components.
 
-import { formatMinutes, isOpenAt, minutesUntilClose, type DayHours } from "@superterp/campus-data/hours";
+import { formatMinutes, isOpenAt, minutesUntilClose, type DayHours } from "@turboterp/campus-data/hours";
 import type { Status } from "@/components/ui";
 
 export type HoursStatus = { status: Status; text: string };

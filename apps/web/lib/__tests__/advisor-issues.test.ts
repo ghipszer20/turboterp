@@ -1,4 +1,4 @@
-import type { PlanIssue } from "@superterp/plan/check";
+import type { PlanIssue } from "@turboterp/plan/check";
 import { describe, expect, it } from "vitest";
 import { courseKey, groupIssues, SEVERITY } from "../advisor/issues";
 

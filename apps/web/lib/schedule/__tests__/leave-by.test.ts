@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { Section } from "@superterp/course-data/schedules";
+import type { Section } from "@turboterp/course-data/schedules";
 import { emptySaved } from "../saved";
 import { nextClassToday, pickedForToday, weekdayOf } from "../leave-by";
 

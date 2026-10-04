@@ -1,7 +1,7 @@
 // Departmental Honors: Neuroscience.
 // Source: https://neur.umd.edu/opportunities/honors-requirements (fetched 2026-09-27). Hand-transcribed. UNVERIFIED.
 
-import type { Program } from "@superterp/audit";
+import type { Program } from "@turboterp/audit";
 import { CATALOG_YEAR } from "./common.ts";
 
 export const SOURCE = "https://neur.umd.edu/opportunities/honors-requirements";

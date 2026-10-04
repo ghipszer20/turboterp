@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { showsScienceGpa, toggleTrack } from "../advisor/tracks";
-import type { Track } from "@superterp/tracks/list";
+import type { Track } from "@turboterp/tracks/list";
 
 describe("toggleTrack", () => {
   it("adds a track id that isn't picked yet", () => {

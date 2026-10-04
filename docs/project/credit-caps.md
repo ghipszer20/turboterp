@@ -67,10 +67,10 @@ default for those two terms.
 ## Conditional limits noted but not modeled (owner ruling: list as assumptions, don't encode)
 
 - **First-semester students** cannot get a high-credit-load exception at all (CMNS, ENGR, AGNR
-  all say this explicitly) — SuperTerp doesn't model "which semester is this," so this isn't
+  all say this explicitly) — TurboTerp doesn't model "which semester is this," so this isn't
   encoded; the checker just reports the flat cap for that college.
 - **GPA thresholds for a CMNS/ENGR overload exception** (2.70/3.00 for CMNS by major grouping,
-  3.00 for ENGR) are not modeled — SuperTerp doesn't know the student's live GPA reliably enough
+  3.00 for ENGR) are not modeled — TurboTerp doesn't know the student's live GPA reliably enough
   (the plan only optionally has `gpa`), and the point of `checkPlan`'s message is to tell the
   student an overage needs approval, not to pre-judge whether they'd get it.
 - **Registration-period-only ceilings** (16/17-credit Testudo pre-registration limits at BSOS,

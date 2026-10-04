@@ -1,15 +1,15 @@
 // "Get ready to register": the checklist for the next registration term, the per-term prep state
 // kept on this device, and the appointment reminder (.ics with alarms). All pure.
 //
-// Legal rule: SuperTerp never touches or asks for Testudo credentials, so holds are a manual
+// Legal rule: TurboTerp never touches or asks for Testudo credentials, so holds are a manual
 // "Check Testudo for holds" check-off only. Registration appointments are typed in by hand.
 
-import type { AcademicEvent } from "@superterp/campus-data";
-import { sectionsConflict, type Section } from "@superterp/course-data/schedules";
+import type { AcademicEvent } from "@turboterp/campus-data";
+import { sectionsConflict, type Section } from "@turboterp/course-data/schedules";
 import { escapeText, foldLine, p2, stampOf, VTIMEZONE, ymd } from "./ics";
 import { PLAN_IDS, type SavedSchedule } from "./saved";
 
-export const PREP_KEY = "superterp-registration";
+export const PREP_KEY = "turboterp-registration";
 
 const REG_KINDS: readonly AcademicEvent["kind"][] = ["registration-appointments", "early-registration", "priority-registration"];
 
@@ -178,11 +178,11 @@ export function appointmentIcs(termName: string, appointment: string, now: Date 
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//SuperTerp//Registration//EN",
+    "PRODID:-//TurboTerp//Registration//EN",
     "CALSCALE:GREGORIAN",
     ...VTIMEZONE,
     "BEGIN:VEVENT",
-    `UID:registration-${start}@superterp`,
+    `UID:registration-${start}@turboterp`,
     `DTSTAMP:${stampOf(now)}`,
     `DTSTART;TZID=America/New_York:${start}`,
     `DTEND;TZID=America/New_York:${endStamp}`,

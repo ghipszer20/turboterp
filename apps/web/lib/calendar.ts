@@ -1,6 +1,6 @@
 // Pure helpers over the registrar's academic-calendar events (Today, plan grid).
 
-import type { AcademicEvent, AcademicEventKind } from "@superterp/campus-data";
+import type { AcademicEvent, AcademicEventKind } from "@turboterp/campus-data";
 
 const SHORT: Partial<Record<AcademicEventKind, string>> = {
   "registration-appointments": "Registration appointments",

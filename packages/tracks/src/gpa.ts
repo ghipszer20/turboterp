@@ -2,7 +2,7 @@
 // Conversion Guide). AACOMAS, AADSAS and most other health application services use the same
 // BCPM idea, so one science GPA serves every health track.
 //
-// AMCAS classifies each course by its primary content; SuperTerp approximates that by UMD
+// AMCAS classifies each course by its primary content; TurboTerp approximates that by UMD
 // department, with a few per-course exceptions. The owner should confirm both tables.
 
 export type GradedCourse = { id: string; credits: number; grade?: string };

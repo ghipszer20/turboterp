@@ -1,23 +1,23 @@
 // Development-only example data for screenshots and local checks: /advisor?seed=owner loads a
 // Math (Applied) + CS plan (the terms of packages/plan/test/fixtures/owner-plan.ts) with AP
 // Calculus BC 5 entered, and signs the agreement as "UI Check". Inert in production builds unless
-// NEXT_PUBLIC_SUPERTERP_SEED=1, so a student can never skip the agreement.
+// NEXT_PUBLIC_TURBOTERP_SEED=1, so a student can never skip the agreement.
 // &tracks=pre-med,pre-law adds those tracks to the owner seed's plan (unknown ids dropped), for
 // screenshotting the Tracks checks and audit section without hand-editing the owner plan above.
 // ?seed=student&id=<id> loads a test student (test-students.ts).
 // &degree=double-degree checks the owner plan as two degrees (the double-degree checks).
 
-// TRACKS comes from "@superterp/tracks/list" (no runtime @superterp/audit import), so this stays
+// TRACKS comes from "@turboterp/tracks/list" (no runtime @turboterp/audit import), so this stays
 // out of the main bundle's solver code -- store.ts, which calls seedFromUrl, is part of it.
-import { TRACKS } from "@superterp/tracks/list";
+import { TRACKS } from "@turboterp/tracks/list";
 import { CONSENT_VERSION, type ConsentRecord } from "./consent";
 import { OWNER_TERMS, TEST_STUDENTS } from "./test-students";
 import { DEGREE_CHOICES, emptyPrior, type AdvisorPlan, type DegreeChoice } from "./plan-state";
 
-type Env = { NODE_ENV?: string; NEXT_PUBLIC_SUPERTERP_SEED?: string };
+type Env = { NODE_ENV?: string; NEXT_PUBLIC_TURBOTERP_SEED?: string };
 
 export function seedAllowed(env: Env): boolean {
-  return env.NODE_ENV === "development" || env.NEXT_PUBLIC_SUPERTERP_SEED === "1";
+  return env.NODE_ENV === "development" || env.NEXT_PUBLIC_TURBOTERP_SEED === "1";
 }
 
 function ownerPlan(): AdvisorPlan {

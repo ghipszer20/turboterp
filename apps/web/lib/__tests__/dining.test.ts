@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { DiningMenu } from "@superterp/campus-data";
+import type { DiningMenu } from "@turboterp/campus-data";
 import { diningSlice, resolveMeal, stationDisplayName } from "../dining";
 
 const item = (name: string) => ({ name, labelUrl: null, diets: [], contains: [] });

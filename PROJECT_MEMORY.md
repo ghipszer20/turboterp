@@ -1,7 +1,7 @@
-# SuperTerp — Project Memory
+# TurboTerp — Project Memory
 
 > Single source of truth for project context. Update this file whenever a decision changes.
-> Last updated: 2026-10-04 (advisor-approval flags applied, schedule screenshots).
+> Last updated: 2026-10-04 (renamed SuperTerp to TurboTerp; schedule screenshots).
 > Read by the main session at the start of every session (builders don't read it; CLAUDE.md), so keep it under ~20 KB (section 18).
 
 ## 1. Vision
@@ -15,8 +15,8 @@ An all-in-one iOS app + website for UMD students. It combines:
 What sets it apart from Jupiterp, Coursicle and PlanetTerp is the **degree audit + 4-year planner + advising**, all in one app.
 
 ## 2. Owner decisions and preferences (do not re-litigate)
-- **Open source, no LLC** (owner, 2026-09-24): SuperTerp is open source, with no LLC unless it is absolutely necessary. The code license (MIT or Apache-2.0, not yet chosen) disclaims warranty on the code. The hosted app relies on the clickwrap terms. Secrets (API keys, LibCal/DOTS credentials) stay out of the repo.
-- **Name:** "SuperTerp" is decided (owner, 2026-09-24). It's free, open-source and a student project, the same pattern as PlanetTerp and Jupiterp, so trademark risk is low. Backup: "Scute". **The project will never make money** (owner, 2026-09-24): no ads and no paid tier (donations allowed, only to cover running costs: owner 2026-09-26), so the Trademarks email is optional, and Reddit, PlanetTerp and Libraries/DOTS data requests stay non-commercial.
+- **Open source, no LLC** (owner, 2026-09-24): TurboTerp is open source, with no LLC unless it is absolutely necessary. The code license (MIT or Apache-2.0, not yet chosen) disclaims warranty on the code. The hosted app relies on the clickwrap terms. Secrets (API keys, LibCal/DOTS credentials) stay out of the repo.
+- **Name:** "TurboTerp" (owner, 2026-10-04; renamed from "SuperTerp", decided 2026-09-24). The code, docs and GitHub repo use the new name; the local folder is still `C:\Users\24GHi\Code\SuperTerp` (renaming it would break the worktrees, the code graph paths and Claude's memory folder; do it only between sessions, on purpose). It's free, open-source and a student project, the same pattern as PlanetTerp and Jupiterp, so trademark risk is low. Backup: "Scute". **The project will never make money** (owner, 2026-09-24): no ads and no paid tier (donations allowed, only to cover running costs: owner 2026-09-26), so the Trademarks email is optional, and Reddit, PlanetTerp and Libraries/DOTS data requests stay non-commercial.
 - **No lawyer review** (owner, 2026-09-24): a disclaimer is enough; Claude drafts plain-language disclaimer, terms and privacy text. Team: solo owner + Claude.
 - **Every major must work**, not only CS. Every minor, specialization and special program with course requirements must also be included: Honors College LLPs, Gemstone, College Park Scholars, CIVICUS, other LLPs, citations, certificates, notations, departmental honors, combined BS/MS, ROTC, and **every pre-professional track with its requirements** (pre-med, pre-law, pre-dental, pre-PA, pre-vet, pre-pharmacy, pre-nursing, and others; see module 1).
 - **No student-correction button or review queue.** Requirement data is verified before launch by comparing each program with its department's requirements page (owner, 2026-09-26: the owner decides only flagged items; the review tool was dropped). No 🧪 labels in production. After launch, a support email is fine.
@@ -59,7 +59,7 @@ See the package.json files: Next.js web app (apps/web), TypeScript packages, HiG
   - **Campus** has a sub-nav: Dining · Transit (Shuttle-UM) · Libraries (hours + study rooms) · Gyms.
   - **Schedule**: the schedule builder, plus course and professor info (replaces the old Explore idea).
   - **Advisor**: the 4-year plan / degree audit plus LLM advising.
-  - **Today** summary is the home page (`/`), reached from the SuperTerp logo; it's not a tab.
+  - **Today** summary is the home page (`/`), reached from the TurboTerp logo; it's not a tab.
 - **Onboarding** in under 60 seconds: major and year → transcript → audit.
 - Don't use Testudo or UMD logos. Logo idea: abstract hexagon or shell plates.
 - The website gets a desktop layout, not a stretched phone app.
@@ -74,7 +74,7 @@ Moved to `docs/project/roadmap.md` (phases 0–6, MVP recommendation, estimates,
 - [ ] Optional: a courtesy email to UMD Trademarks & Licensing (required only if the project makes money).
 - [ ] Email UMD Libraries requesting LibCal API credentials.
 - [ ] Email UMD DOTS requesting Shuttle-UM real-time data access (a Swiftly GTFS-RT key).
-- [ ] Claim a domain (superterp.app or getsuperterp.com looked free on 2026-09-24; superterp.com is taken but dead), the App Store name and social handles.
+- [ ] Claim a domain (turboterp.com was unregistered on 2026-10-04, per Verisign RDAP), the App Store name and social handles.
 - [ ] Decide whether to reuse or partner with Jupiterp (open source; check license).
 - [ ] Confirm Expo's native-component support (for the later iOS app).
 - [ ] Decide: launch everything at once, or in waves by college.
@@ -85,7 +85,7 @@ Moved to `docs/project/legal.md`. Read it before building the disclaimer, accoun
 
 ## 13. Build decisions (owner, 2026-09-24): locked for the start
 - **Platform:** website first. Next.js installable web app (PWA). The rules engine, scrapers and data are separate packages, so an iOS app can reuse them later.
-- **Repo:** github.com/ghipszer20/superterp, private until launch, then public. License **Apache-2.0**. Local: C:\Users\24GHi\Code\SuperTerp. Git uses HTTPS with the gh credential helper (no SSH host key in this shell).
+- **Repo:** github.com/ghipszer20/turboterp (renamed from `superterp` 2026-10-04; GitHub redirects the old URL). The plan was private until launch, but the repo was found PUBLIC on 2026-10-04 (owner to confirm). License **Apache-2.0**. Local: C:\Users\24GHi\Code\SuperTerp. Git uses HTTPS with the gh credential helper (no SSH host key in this shell).
 - **Hosting:** free tiers only. Vercel (web), Supabase (DB and auth). The owner creates the accounts when deployment needs them. **No GitHub Actions** (owner, 2026-09-28): it stopped running jobs because of billing, and the owner doesn't need it, so the CI workflow is disabled. Where the scheduled scrapers run is decided at deployment (Vercel Cron, Supabase scheduled functions, or Actions once the repo is public).
 - **Workflow (updated 2026-09-24):** NO PR reviews. Claude works autonomously on long-running branches with draft PRs; the owner merges whenever they like, without reviewing (Claude can never push or merge to main). Check in with the owner ONLY for: (1) any **major UI change**, which the owner must approve (show screenshots or a local preview first); (2) design or functionality changes the owner wants; (3) problems or blockers; (4) something turning out infeasible; (5) a good new idea. Everything else: decide, note the assumption, keep going. PRs still explain web-specific choices, since the owner knows Python and less web.
 - **Design:** Apple-style design system, approved visually by the owner. Accent **`#BA0C2F`** ((PRODUCT)RED, owner approved 2026-09-24): full strength only on buttons, active tabs and highlights; pale tints for backgrounds; brighter in dark mode. Soft whites and grays, light and dark mode.
@@ -96,7 +96,7 @@ Moved to `docs/project/legal.md`. Read it before building the disclaimer, accoun
 ## 14. Current state (replace in place, never append; dated narrative goes in `docs/project/status-log.md`)
 - **Branches:** PRs #1 and #2 were merged into main on 2026-09-25; `feat/course-data` is the working branch (420+ commits ahead of main, no open PR). No CI; the full local suite was green at the owner-notes merge on 2026-09-29.
 - **Built** (full list in `docs/project/built.md`; all unverified by the owner unless noted): About page; Campus tab (dining, libraries, study rooms, gyms, Transport map + trip planner); Schedule builder linked to the 4-year plan; Advisor tab (disclaimer, setup, credit caps, What-if, AP/IB credit, plan grid, checks, audit, transcript import, grad courses, 22 pre-professional tracks, college intro layer, 4-year plan export PDF/Excel); ~417 programs in the registry. Logged skips: AI major (unpublished), Individual Studies, Global Studies (umbrella).
-- **Done 2026-09-29 (owner-notes session; detail in the status log):** UI review folder (`npm run ui-gallery -w @superterp/web` → gitignored `ui-review/`); workload-based semester difficulty; takeout replaced by a plain plan export; overlaps block saving (no conflict styling); color-only gallery blocks + gallery walk line; phone Advisor header; "Why import?" note; college intro courses (audit layer for CMNS/ARHU/SPHL, first fall of major plans, `entry` + transfer checkbox); new-tracks research (`docs/project/new-tracks-research.md`).
+- **Done 2026-09-29 (owner-notes session; detail in the status log):** UI review folder (`npm run ui-gallery -w @turboterp/web` → gitignored `ui-review/`); workload-based semester difficulty; takeout replaced by a plain plan export; overlaps block saving (no conflict styling); color-only gallery blocks + gallery walk line; phone Advisor header; "Why import?" note; college intro courses (audit layer for CMNS/ARHU/SPHL, first fall of major plans, `entry` + transfer checkbox); new-tracks research (`docs/project/new-tracks-research.md`).
 - **Done 2026-10-02 (main session):** snapshot script retries and refuses to save a partial term; `Requirement.advisorMayApprove` shows "other courses may count with advisor approval" on unmet audit rows (45 requirements in 30 program files); stale roadmap to-dos removed.
 - **Next:** Wave 4 (deployment) once the owner creates Vercel and Supabase accounts. Nothing else is queued that does not need the owner. 22 tracks now (8 added 2026-09-29, all unverified; owner-review lists the numbers to confirm). Reuse `.claude/worktrees/merge-s1` for merges.
 - **Waiting on the owner:** see `docs/project/owner-review.md` (include it in every progress report; add new items there).

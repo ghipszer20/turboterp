@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { connection } from "next/server";
-import { campusDate, campusMinutes } from "@superterp/campus-data";
+import { campusDate, campusMinutes } from "@turboterp/campus-data";
 import { Notice, Page, Section, SkeletonCard, SourceError } from "@/components/ui";
 import { getBuildings, getBusStops, getCampusMap, getRoutesOn, safe } from "@/lib/campus";
 import { feedExpiryNotice } from "@/lib/feed-expiry";

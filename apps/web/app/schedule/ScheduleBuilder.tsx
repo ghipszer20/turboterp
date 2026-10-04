@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { useSearchParams } from "next/navigation";
-import type { AcademicEvent } from "@superterp/campus-data";
-import type { Section } from "@superterp/course-data/schedules";
+import type { AcademicEvent } from "@turboterp/campus-data";
+import type { Section } from "@turboterp/course-data/schedules";
 import { dispatchPlan, useAdvisorStore } from "@/app/advisor/store";
 import { Segmented } from "@/components/Segmented";
 import { EmptyState, SkeletonCard } from "@/components/ui";
@@ -245,7 +245,7 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
     const url = URL.createObjectURL(new Blob([buildIcs(term, chosen)], { type: "text/calendar;charset=utf-8" }));
     const a = document.createElement("a");
     a.href = url;
-    a.download = `superterp-${term}.ics`;
+    a.download = `turboterp-${term}.ics`;
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
@@ -446,7 +446,7 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
       {courses.length === 0 && view.kind !== "editor" ? (
         <div className={styles.panel}>
           <EmptyState title="Add your courses">
-            Search above, e.g. CMSC351, STAT400 and ENGL394. SuperTerp lays out every way they fit, best first.
+            Search above, e.g. CMSC351, STAT400 and ENGL394. TurboTerp lays out every way they fit, best first.
           </EmptyState>
         </div>
       ) : !ready ? (

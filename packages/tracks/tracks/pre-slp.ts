@@ -64,7 +64,7 @@ export const preSlp: Track = {
     "ASHA's Standard IV-A names four prerequisite areas (biological sciences; chemistry or physics; social/behavioral sciences; statistics) and states no credit minimums, so each is encoded as one course (or one lecture and lab pair for biology).",
     "Chemistry or physics: encoded as one course each (CHEM131, PHYS121 or PHYS131). ASHA states no credit count; the research doc lists CHEM131 (+132), PHYS121/122 and PHYS131/132.",
     "Statistics = STAT100 or STAT400 (the research doc's UMD mapping). ASHA says research methodology can't count, so the broader shared statistics list (which includes PSYC200 and BIOM301) is deliberately not used.",
-    "Social/behavioral sciences = PSYC100 or SOCY100. ASHA asks for coursework in \"analysis and investigation of human and animal behavior\"; the UMD course choice is SuperTerp's reading.",
+    "Social/behavioral sciences = PSYC100 or SOCY100. ASHA asks for coursework in \"analysis and investigation of human and animal behavior\"; the UMD course choice is TurboTerp's reading.",
     "The HESP/LING communication-sciences courses are shown as suggested only: the research doc says ASHA doesn't require them but most programs expect them. HESP305 (Anatomy and Physiology of the Speech Mechanism) and HESP306 (Anatomy and Physiology of Speech & Hearing) are both current catalog courses (checked 2026-09-29).",
     "No minimum grade is encoded: the research doc states none for ASHA, and programs set their own.",
     "The GRE is marked optional: ASHA states no test, and programs set GRE and GPA requirements.",

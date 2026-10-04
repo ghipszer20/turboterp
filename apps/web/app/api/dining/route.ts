@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { connection } from "next/server";
-import { addDays, campusDate, DINING_HALLS } from "@superterp/campus-data";
+import { addDays, campusDate, DINING_HALLS } from "@turboterp/campus-data";
 import { getDiningMenu } from "@/lib/campus";
 import { diningSlice } from "@/lib/dining";
 

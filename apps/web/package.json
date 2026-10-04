@@ -1,5 +1,5 @@
 {
-  "name": "@superterp/web",
+  "name": "@turboterp/web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,14 +15,14 @@
     "advisor-data": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/advisor-data.mts"
   },
   "dependencies": {
-    "@superterp/audit": "*",
-    "@superterp/campus-data": "*",
-    "@superterp/course-data": "*",
-    "@superterp/credit": "*",
-    "@superterp/plan": "*",
-    "@superterp/programs": "*",
-    "@superterp/ratings": "*",
-    "@superterp/tracks": "*",
+    "@turboterp/audit": "*",
+    "@turboterp/campus-data": "*",
+    "@turboterp/course-data": "*",
+    "@turboterp/credit": "*",
+    "@turboterp/plan": "*",
+    "@turboterp/programs": "*",
+    "@turboterp/ratings": "*",
+    "@turboterp/tracks": "*",
     "exceljs": "^4.4.0",
     "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.8",

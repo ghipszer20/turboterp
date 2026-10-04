@@ -2,7 +2,7 @@
 // source says it isn't open to certain majors is blocked for students who have declared one.
 // The gate itself lives in the program file's ProgramMeta.notOpenTo (packages/audit/src/audit.ts).
 
-import type { NotOpenTo } from "@superterp/audit";
+import type { NotOpenTo } from "@turboterp/audit";
 import type { ProgramEntry } from "./registry-types.ts";
 import { PROGRAMS } from "./registry.generated.ts";
 

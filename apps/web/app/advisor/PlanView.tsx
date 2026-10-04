@@ -1,9 +1,9 @@
 "use client";
 
-import type { AcademicEvent } from "@superterp/campus-data";
-import type { PlanIssue } from "@superterp/plan/check";
-import { isGraduateCourse } from "@superterp/plan/grad-courses";
-import type { TermDifficulty } from "@superterp/plan/difficulty";
+import type { AcademicEvent } from "@turboterp/campus-data";
+import type { PlanIssue } from "@turboterp/plan/check";
+import { isGraduateCourse } from "@turboterp/plan/grad-courses";
+import type { TermDifficulty } from "@turboterp/plan/difficulty";
 import { useEffect, useMemo, useState } from "react";
 import { planDifficulty } from "@/lib/advisor/difficulty";
 import { courseKey, type IssueGroups, type Severity } from "@/lib/advisor/issues";
@@ -132,7 +132,7 @@ function OptionalTerms({ yearTerms }: { yearTerms: string[] }) {
   );
 }
 
-const DRAG_TYPE = "application/x-superterp-course";
+const DRAG_TYPE = "application/x-turboterp-course";
 
 function TermColumn({
   term,
@@ -246,7 +246,7 @@ function TermColumn({
                   </span>
                   <span className={styles.courseCredits}>{cr === null ? "?" : cr} cr</span>
                 </span>
-                <span className={styles.courseTitle}>{info?.title ?? (ready ? "Not in SuperTerp's course data" : " ")}</span>
+                <span className={styles.courseTitle}>{info?.title ?? (ready ? "Not in TurboTerp's course data" : " ")}</span>
                 {issues.length > 0 ? (
                   <span className={styles.courseIssue} data-severity={worst}>
                     {issues[0]!.message}

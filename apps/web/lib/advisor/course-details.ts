@@ -2,7 +2,7 @@
 // text as printed). Loaded one department at a time when a student opens a course, so the plan
 // catalog itself stays small.
 
-import type { Course } from "@superterp/course-data";
+import type { Course } from "@turboterp/course-data";
 
 const COURSE_DETAILS_VERSION = 1;
 

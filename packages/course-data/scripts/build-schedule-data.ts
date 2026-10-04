@@ -2,19 +2,19 @@
 // store the web app serves from (packages/campus-data/SNAPSHOTS.md). Run once per Schedule
 // of Classes snapshot, after the optional ratings and grade builds:
 //
-//   npm run schedule-data -w @superterp/course-data
+//   npm run schedule-data -w @turboterp/course-data
 //     [-- --soc <soc-YYYYMM.json>] [--ratings <professor-ratings.json>] [--grades <grades-out dir>] [--dir <snapshot dir>]
 //
 // Writes (keys in the snapshot store):
 //   schedule/current                    { term }  (which term the app shows)
 //   schedule/<term>/index               course index for search
 //   schedule/<term>/sections/<DEPT>     sections + instructor ratings, one department
-//   schedule/<term>/grades/<DEPT>       grade distributions (copied from @superterp/ratings' build)
+//   schedule/<term>/grades/<DEPT>       grade distributions (copied from @turboterp/ratings' build)
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { defaultSnapshotDir, FileSnapshotStore } from "@superterp/campus-data/snapshots";
+import { defaultSnapshotDir, FileSnapshotStore } from "@turboterp/campus-data/snapshots";
 import { buildScheduleFiles } from "../src/schedule-files.ts";
 
 const pkg = fileURLToPath(new URL("..", import.meta.url));

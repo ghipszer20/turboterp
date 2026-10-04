@@ -1,8 +1,8 @@
 // The program picker's search and grouping (SetupView, WhatIfView): pure, over registry metadata
 // only, so it scales to every UMD program without loading any requirements.
 
-import { blockedReason, type ProgramEntry, type ProgramKind } from "@superterp/programs";
-import { COLLEGES, collegeName } from "@superterp/plan/credit-caps";
+import { blockedReason, type ProgramEntry, type ProgramKind } from "@turboterp/programs";
+import { COLLEGES, collegeName } from "@turboterp/plan/credit-caps";
 
 const KINDS: { kind: ProgramKind; label: string }[] = [
   { kind: "major", label: "Majors" },

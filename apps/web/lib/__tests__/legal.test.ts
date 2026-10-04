@@ -13,7 +13,7 @@ describe("legal pages", () => {
   it("terms cover every required topic", () => {
     const h = headings(TERMS).join("|");
     for (const t of [
-      "what superterp is", "unofficial", "not academic advising", "wrong or out of date", "responsibility",
+      "what turboterp is", "unofficial", "not academic advising", "wrong or out of date", "responsibility",
       "no warranty", "limitation of liability", "acceptable use", "third-party data", "changes",
     ]) expect(h).toContain(t);
     expect(text(TERMS)).toMatch(/Apache-2\.0/);

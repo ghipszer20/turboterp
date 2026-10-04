@@ -1,14 +1,14 @@
 // Builds the Advisor tab's static data into public/data/ (gitignored; derived from scraped data):
 //
 //   public/data/advisor/index.json                  { v, term, terms, generatedAt, catalog, details, grades }
-//   public/data/advisor/<term>/catalog.json         the plan catalog (@superterp/plan catalog-file, v1)
+//   public/data/advisor/<term>/catalog.json         the plan catalog (@turboterp/plan catalog-file, v1)
 //   public/data/advisor/<term>/courses/<DEPT>.json  descriptions and printed prerequisite texts
 //   public/data/grades/<DEPT>.json                  PlanetTerp grade files, copied as-is (GRADES.md)
 //
 // Everything is served as CDN-cacheable static files; pages never scrape. The term-versioned
 // paths never change content, so they can be cached for a long time; only index.json is short-lived.
 //
-//   npm run advisor-data -w @superterp/web [-- --soc <path/to/soc-YYYYMM.json>]
+//   npm run advisor-data -w @turboterp/web [-- --soc <path/to/soc-YYYYMM.json>]
 //
 // Inputs: every packages/course-data/.cache/soc-*.json (or the one --soc file) and
 // packages/ratings/.cache/grades-out/. The catalog and course details span ALL cached terms merged
@@ -24,9 +24,9 @@ import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync,
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gzipSync } from "node:zlib";
-import { mergeSnapshots, type Course } from "@superterp/course-data";
-import { buildCatalog } from "@superterp/plan/catalog";
-import { encodeCatalogFile } from "@superterp/plan/catalog-file";
+import { mergeSnapshots, type Course } from "@turboterp/course-data";
+import { buildCatalog } from "@turboterp/plan/catalog";
+import { encodeCatalogFile } from "@turboterp/plan/catalog-file";
 import { courseDetailFiles } from "../lib/advisor/course-details.ts";
 
 const web = resolve(dirname(fileURLToPath(import.meta.url)), "..");

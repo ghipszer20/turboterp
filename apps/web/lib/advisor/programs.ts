@@ -1,17 +1,17 @@
-// The Programs a student can pick -- every entry in the program registry (@superterp/programs;
+// The Programs a student can pick -- every entry in the program registry (@turboterp/programs;
 // only Verified Programs will ship) -- plus the Requirement Layers every student gets: Gen Ed and
 // the university rules. The options carry metadata only; a Program's requirements load with
 // import() when it's audited (runAnalysis, runWhatIf), so the picker never bundles them.
 
-import type { Program } from "@superterp/audit";
-import { collegeIntro } from "@superterp/audit/programs/college-intro.ts";
-import { genEd, university } from "@superterp/audit/programs/gen-ed-2026-27.ts";
-import type { College } from "@superterp/plan/credit-caps";
-import type { Degree } from "@superterp/plan/degrees";
-import type { ProgramCandidate } from "@superterp/plan/notices";
-import { MAJOR_COURSE_SETS } from "@superterp/programs/course-sets";
+import type { Program } from "@turboterp/audit";
+import { collegeIntro } from "@turboterp/audit/programs/college-intro.ts";
+import { genEd, university } from "@turboterp/audit/programs/gen-ed-2026-27.ts";
+import type { College } from "@turboterp/plan/credit-caps";
+import type { Degree } from "@turboterp/plan/degrees";
+import type { ProgramCandidate } from "@turboterp/plan/notices";
+import { MAJOR_COURSE_SETS } from "@turboterp/programs/course-sets";
 import type { DegreeChoice } from "./plan-state";
-import { blockedReason, findProgram, loadPrograms, majorKey, PROGRAMS, type ProgramEntry } from "@superterp/programs";
+import { blockedReason, findProgram, loadPrograms, majorKey, PROGRAMS, type ProgramEntry } from "@turboterp/programs";
 
 export type ProgramOption = ProgramEntry;
 
@@ -143,7 +143,7 @@ export function degreeModeOf(selected: string[], stored: DegreeChoice | undefine
 }
 
 /**
- * The student's Degrees for checkDegrees (@superterp/plan/degrees): one degree holding every
+ * The student's Degrees for checkDegrees (@turboterp/plan/degrees): one degree holding every
  * chosen program for a double major (or a single major), or one degree per major for a double
  * degree, with minors and special programs in the first. The Advisor doesn't know which programs
  * are officially declared yet, so every one is "planned" (the declaration-deadline note shows).

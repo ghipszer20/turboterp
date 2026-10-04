@@ -1,4 +1,4 @@
-# SuperTerp next steps: 5 parallel sessions (owner-approved 2026-09-28)
+# TurboTerp next steps: 5 parallel sessions (owner-approved 2026-09-28)
 
 > **Superseded for remaining work (2026-09-29):** the unfinished items now run as 3 sessions in `docs/project/overtime-plan-2026-09-29.md`. This file's "Shared rules" still apply.
 

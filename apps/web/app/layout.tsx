@@ -4,11 +4,11 @@ import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: { default: "SuperTerp", template: "%s · SuperTerp" },
+  title: { default: "TurboTerp", template: "%s · TurboTerp" },
   description:
     "Dining menus, library and gym hours, study rooms and Shuttle-UM buses for UMD students. Unofficial; not affiliated with the University of Maryland.",
-  applicationName: "SuperTerp",
-  appleWebApp: { capable: true, title: "SuperTerp", statusBarStyle: "default" },
+  applicationName: "TurboTerp",
+  appleWebApp: { capable: true, title: "TurboTerp", statusBarStyle: "default" },
   formatDetection: { telephone: false },
 };
 

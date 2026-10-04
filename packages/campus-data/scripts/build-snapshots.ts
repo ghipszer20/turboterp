@@ -3,7 +3,7 @@
 //   node scripts/build-snapshots.ts daily   # ~5am: everything (also prunes old dated snapshots)
 //   node scripts/build-snapshots.ts fast    # every 5 min: rooms; menus once 30 min old
 //   node scripts/build-snapshots.ts prune   # remove dated snapshots outside the keep window
-//   ... [--dir <path>]                       # default: $SUPERTERP_SNAPSHOT_DIR or <repo>/.cache/snapshots
+//   ... [--dir <path>]                       # default: $TURBOTERP_SNAPSHOT_DIR or <repo>/.cache/snapshots
 //
 // Exits 1 if any source failed (its last good snapshot is kept), so a
 // scheduler marks the run as failed and someone notices.

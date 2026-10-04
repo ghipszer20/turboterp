@@ -4,10 +4,10 @@
 // under its name, and the program notices. checkPlan's issues are synchronous and run on every
 // edit; track issues and notices come from the debounced audit (AnalysisState).
 
-import type { PlanIssue } from "@superterp/plan/check";
+import type { PlanIssue } from "@turboterp/plan/check";
 // TrackIssue only exists on check.ts, but this is a type-only import (erased at compile time, so
-// it never pulls @superterp/tracks' solver-backed runtime code into this bundle).
-import type { TrackIssue } from "@superterp/tracks";
+// it never pulls @turboterp/tracks' solver-backed runtime code into this bundle).
+import type { TrackIssue } from "@turboterp/tracks";
 import type { AnalysisState, OpenCourse } from "./AdvisorApp";
 import type { CatalogState } from "./data";
 import { SEVERITY, SEVERITY_ORDER, type IssueGroups, type Severity } from "@/lib/advisor/issues";
@@ -42,7 +42,7 @@ export function ChecksPanel({
       ) : (
         <>
           {noPlanIssues && tracks.length === 0 && degreeIssues.length === 0 && !loadingTracks ? (
-            <p className={styles.cardNote}>No issues found. SuperTerp checks prerequisites, corequisites, repeats and credit loads on every edit.</p>
+            <p className={styles.cardNote}>No issues found. TurboTerp checks prerequisites, corequisites, repeats and credit loads on every edit.</p>
           ) : null}
           {!noPlanIssues ? (
             <>

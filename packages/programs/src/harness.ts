@@ -3,7 +3,7 @@
 // Each program with a sample plan (sample-plans/<program-id>.json) gets both checks from
 // test/sample-plans.test.ts; nothing else to write per program.
 
-import { auditProgram, inArea, PROGRAM_GPA_ID, slotKey, type AuditOptions, type Program, type StudentCourse } from "@superterp/audit";
+import { auditProgram, inArea, PROGRAM_GPA_ID, slotKey, type AuditOptions, type Program, type StudentCourse } from "@turboterp/audit";
 
 /** A program's sample plan, as published (placeholders like "Math 4**" filled in `notes`). */
 export type SamplePlan = {

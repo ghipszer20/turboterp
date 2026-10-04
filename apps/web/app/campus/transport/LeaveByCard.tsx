@@ -6,12 +6,12 @@
 // estimates are labeled; Shuttle-UM only. With no saved schedule or no class left today, nothing shows.
 
 import { useEffect, useMemo, useState } from "react";
-import { buildingByCode, type Building } from "@superterp/campus-data/buildings";
-import { campusDate, campusMinutes } from "@superterp/campus-data/dates";
-import { formatMinutes } from "@superterp/campus-data/hours";
-import type { ArriveByOption } from "@superterp/campus-data/trip";
-import { decodeDepartmentSections } from "@superterp/course-data/schedule-files";
-import type { Section } from "@superterp/course-data/schedules";
+import { buildingByCode, type Building } from "@turboterp/campus-data/buildings";
+import { campusDate, campusMinutes } from "@turboterp/campus-data/dates";
+import { formatMinutes } from "@turboterp/campus-data/hours";
+import type { ArriveByOption } from "@turboterp/campus-data/trip";
+import { decodeDepartmentSections } from "@turboterp/course-data/schedule-files";
+import type { Section } from "@turboterp/course-data/schedules";
 import { LocationIcon } from "@/components/icons";
 import { Card } from "@/components/ui";
 import { nextClassToday, pickedForToday, weekdayOf } from "@/lib/schedule/leave-by";
@@ -20,7 +20,7 @@ import { useBuildings } from "@/lib/schedule/use-buildings";
 import { searchBuildings } from "./TripPlanner";
 import styles from "./trip.module.css";
 
-const ORIGIN_KEY = "superterp-leave-origin";
+const ORIGIN_KEY = "turboterp-leave-origin";
 
 type Origin = { label: string; lat: number; lon: number };
 
