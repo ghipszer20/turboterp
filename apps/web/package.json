@@ -15,6 +15,7 @@
     "advisor-data": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/advisor-data.mts"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.117.2",
     "@turboterp/audit": "*",
     "@turboterp/campus-data": "*",
     "@turboterp/course-data": "*",

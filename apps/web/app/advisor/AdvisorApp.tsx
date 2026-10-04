@@ -6,6 +6,9 @@ import { Segmented } from "@/components/Segmented";
 import type { Analysis } from "@/lib/advisor/analysis";
 import { checkerPlan } from "@/lib/advisor/checker";
 import { hasConsent } from "@/lib/advisor/consent";
+import { authConfigured } from "@/lib/auth/client";
+import { useSession } from "@/lib/auth/use-session";
+import { AccountLine, SignInGate } from "./SignInGate";
 import { groupIssues } from "@/lib/advisor/issues";
 import type { AdvisorPlan } from "@/lib/advisor/plan-state";
 import { computePriorCredit } from "@/lib/advisor/prior-credit";
@@ -40,8 +43,12 @@ export type OpenCourse = { id: string; term: string | null };
 export function AdvisorApp({ calendar }: { calendar: AcademicEvent[] }) {
   const store = useAdvisorStore();
   const catalog = useCatalog();
+  const session = useSession();
+  const gated = authConfigured();
 
   if (store === null) return <Shell />;
+  if (gated && session.status === "loading") return <Shell />;
+  if (gated && session.status === "signed-out") return <SignInGate />;
   if (!store.consent || !hasConsent(store.consent)) return <DisclaimerGate />;
   if (!store.plan) return <SetupView plan={null} onDone={(plan) => savePlan(plan)} />;
   return <Planner plan={store.plan} catalog={catalog} signedBy={store.consent.name} signedAt={store.consent.acceptedAt} calendar={calendar} />;
@@ -89,6 +96,7 @@ function Planner({ plan, catalog, signedBy, signedAt, calendar }: { plan: Adviso
             {programsLabel(plan.programs)} · Catalog {plan.catalogYear.replace("-", "–")}
           </p>
           <h1 className={styles.title}>Advisor</h1>
+          {authConfigured() ? <AccountLine /> : null}
         </div>
         <button type="button" className={styles.ghostButton} onClick={() => setImporting(true)}>
           Import transcript
