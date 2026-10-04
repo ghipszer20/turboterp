@@ -1,0 +1,16 @@
+# What `vercel deploy` uploads from this checkout. With this file present the CLI no longer reads
+# .gitignore, so everything is listed here: only the app, the shared packages and the lockfile go up.
+# apps/web/public/data (the pre-built Advisor catalog and grade files, gitignored) is uploaded on purpose.
+/*
+!/apps
+!/packages
+!/package.json
+!/package-lock.json
+**/node_modules
+**/.next
+**/.cache
+**/.ui-check
+**/.vercel
+**/.env*
+**/*.tsbuildinfo
+apps/web/public/vendor

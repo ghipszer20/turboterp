@@ -85,7 +85,7 @@ export const PRIVACY: LegalSection[] = [
   {
     heading: "The short version",
     paragraphs: [
-      "There are no accounts today. What you enter stays in your browser. No analytics, no ads, no tracking cookies, and nothing is sold.",
+      "Only the Advisor uses an account, and it holds just your UMD email address. What you enter stays in your browser. No analytics, no ads, no tracking cookies, and nothing is sold.",
     ],
   },
   {
@@ -127,9 +127,9 @@ export const PRIVACY: LegalSection[] = [
     ],
   },
   {
-    heading: "Coming with accounts (planned)",
+    heading: "Coming next: your plan on every device (planned)",
     paragraphs: [
-      "We plan to add sign-in with a umd.edu account. When that arrives, your plan and your signed agreement (version, time, account and a hash of the typed name) will be stored on our server so they follow you between devices.",
+      "We plan to store your plan and your signed agreement (version, time, account and a hash of the typed name) on our server, tied to your account, so they follow you between devices.",
       "You will be able to delete it all with one tap. This page will be updated before that starts.",
     ],
   },

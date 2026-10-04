@@ -53,7 +53,7 @@ export function SignInGate() {
         </div>
       ) : (
         <form className={styles.gate} onSubmit={submit} noValidate>
-          <p className={styles.gateIntro}>Your plan is tied to your UMD account so it can follow you between devices.</p>
+          <p className={styles.gateIntro}>Your plan is tied to your UMD account.</p>
           <label className={styles.field}>
             <span className={styles.fieldLabel}>UMD email</span>
             <input
