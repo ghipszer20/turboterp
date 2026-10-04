@@ -45,7 +45,7 @@ async function Today() {
   return (
     <Page title="Today" subtitle={dateLabel}>
       <RegistrationCountdown />
-      <Section title="Eat">
+      <Section title="Dining">
         <Suspense fallback={<SkeletonCard rows={3} />}>
           <Dining today={today} minutes={minutes} />
         </Suspense>
