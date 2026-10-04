@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { connection } from "next/server";
-import { campusDate, campusMinutes, DINING_HALLS } from "@turboterp/campus-data";
-import { Notice, Page, SkeletonCard } from "@/components/ui";
-import { getAllDiningMenus } from "@/lib/campus";
+import { addDays, campusDate, campusMinutes, DINING_HALLS } from "@turboterp/campus-data";
+import { LiveStatus } from "@/components/LiveStatus";
+import { Card, Notice, Page, Row, Section, SkeletonCard } from "@/components/ui";
+import { getAllDiningMenus, getStampVenues, safe } from "@/lib/campus";
 import { diningSlice } from "@/lib/dining";
-import { currentMealName } from "@/lib/status";
+import { OTHER_STAMP_VENUES } from "@/lib/stamp";
+import { currentMealName, hoursLabel } from "@/lib/status";
 import { DiningView } from "./DiningView";
 
 export const metadata: Metadata = { title: "Dining" };
@@ -16,11 +18,41 @@ export default function DiningPage() {
       <Suspense fallback={<SkeletonCard rows={8} />}>
         <Menus />
       </Suspense>
+      <Suspense fallback={<SkeletonCard rows={4} />}>
+        <Stamp />
+      </Suspense>
       <Notice>
         Menus from UMD Dining (nutrition.umd.edu) and can change. Always check allergen labels at the station if you
         have an allergy. Tap an item for its full nutrition label.
       </Notice>
     </Page>
+  );
+}
+
+// Food places in the Stamp Student Union, with today's hours from UMD Dining Services.
+async function Stamp() {
+  await connection();
+  const today = campusDate();
+  const tomorrow = addDays(today, 1);
+  const minutes = campusMinutes();
+  const res = await safe(getStampVenues);
+  if (!res.ok) return null;
+  return (
+    <Section title="Stamp Student Union">
+      <Card>
+        {res.data.map((v) => (
+          <Row
+            key={v.id}
+            title={v.name}
+            subtitle={<LiveStatus hours={v.days[today]} tomorrow={v.days[tomorrow]} initialMinutes={minutes} inline />}
+            trailing={hoursLabel(v.days[today], v.days[tomorrow])}
+          />
+        ))}
+        {OTHER_STAMP_VENUES.map((name) => (
+          <Row key={name} title={name} subtitle="Hours not published by UMD Dining" />
+        ))}
+      </Card>
+    </Section>
   );
 }
 
