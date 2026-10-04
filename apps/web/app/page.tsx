@@ -84,7 +84,7 @@ async function Dining({ today, minutes }: { today: string; minutes: number }) {
         return (
           <Row
             key={hall.id}
-            href="/campus/dining"
+            href={`/campus/dining?hall=${hall.id}`}
             leading={
               <IconTile>
                 <DiningIcon />

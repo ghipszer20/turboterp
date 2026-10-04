@@ -408,6 +408,11 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
 
   return (
     <div className={styles.builder}>
+      {termName ? (
+        <p className={styles.termLine}>
+          <b>{termName}</b> classes, from UMD&apos;s Schedule of Classes. Sections and instructors change by term.
+        </p>
+      ) : null}
       <div className={styles.modeRow}>
         <Segmented<"browse" | "own">
           label="How to build"

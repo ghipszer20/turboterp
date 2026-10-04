@@ -94,6 +94,8 @@ export type ManualItem = { id: string; label: string; done: boolean };
 export type Checklist =
   | { status: "wrong-term"; message: string }
   | { status: "not-published" }
+  /** Nothing to prepare yet: the student hasn't added a course. */
+  | { status: "no-courses" }
   | {
       status: "ready";
       courses: CourseItem[];
@@ -125,6 +127,7 @@ const MANUAL: { id: string; label: string }[] = [
 export function registrationChecklist(i: ChecklistInput): Checklist {
   const next = nextRegistrationTerm(i.events, i.now);
   if (next !== null && next !== i.termName) return { status: "wrong-term", message: `Switch to ${next} to prepare` };
+  if (i.courses.length === 0) return { status: "no-courses" };
   if (i.sections.length === 0) return { status: "not-published" };
 
   const byId = (courseId: string, id: string | undefined) => (id ? i.sections.find((s) => s.courseId === courseId && s.id === id) ?? null : null);

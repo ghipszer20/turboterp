@@ -830,3 +830,14 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* Which term the builder is showing: instructors and sections differ between terms. */
+.termLine {
+  margin: 0;
+  color: var(--text-2);
+  font: var(--t-sub);
+}
+
+.termLine b {
+  color: var(--text);
+}

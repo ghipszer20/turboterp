@@ -37,3 +37,9 @@ const STATION_DISPLAY_NAMES: Record<string, string> = {
 export function stationDisplayName(name: string): string {
   return STATION_DISPLAY_NAMES[name.trim().toLowerCase()] ?? name;
 }
+
+/** The hall a link asked for (`/campus/dining?hall=16`, from Today's rows), or null if absent or unknown. */
+export function hallFromQuery(raw: string | string[] | undefined, hallIds: readonly number[]): number | null {
+  const id = typeof raw === "string" && raw !== "" ? Number(raw) : NaN;
+  return hallIds.includes(id) ? id : null;
+}
