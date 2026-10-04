@@ -120,6 +120,13 @@ export const PRIVACY: LegalSection[] = [
     ],
   },
   {
+    heading: "Signing in",
+    paragraphs: [
+      "Only the Advisor needs an account. Campus, Schedule and Today work without one.",
+      "When you sign in, your UMD email address is stored with our sign-in provider, Supabase, so we can send you a sign-in link. We never ask for or store your Testudo password.",
+    ],
+  },
+  {
     heading: "Coming with accounts (planned)",
     paragraphs: [
       "We plan to add sign-in with a umd.edu account. When that arrives, your plan and your signed agreement (version, time, account and a hash of the typed name) will be stored on our server so they follow you between devices.",
