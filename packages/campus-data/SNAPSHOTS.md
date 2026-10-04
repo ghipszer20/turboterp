@@ -45,7 +45,9 @@ interface SnapshotStore {
 
 `FileSnapshotStore` stores each key as a JSON file: `dining/2026-09-25/19` is saved as `<dir>/dining/2026-09-25/19.json`. Each file is wrapped in `{ schema, key, updatedAt, data }`. Writes go to a temp file first and are then renamed into place. A file with a different `schema` number, or one that won't parse, reads as missing. Bump `SNAPSHOT_SCHEMA` whenever a data shape changes.
 
-The directory is `$TURBOTERP_SNAPSHOT_DIR`, or `<repo root>/.cache/snapshots` by default. That folder is gitignored, and the CLI and `next dev`/`next start` both resolve to it. A durable store (Supabase, or the host's data cache) will implement the same two methods when we deploy.
+The directory is `$TURBOTERP_SNAPSHOT_DIR`, or `<repo root>/.cache/snapshots` by default. That folder is gitignored, and the CLI and `next dev`/`next start` both resolve to it. `SupabaseSnapshotStore` keeps the same `{ schema, key, updatedAt, data }` wrapper as `<key>.json` objects in a Supabase Storage bucket (default name `snapshots`), through the Storage REST API with plain `fetch`. `openSnapshotStore()` picks the store from the environment: Supabase when `SUPABASE_SERVICE_ROLE_KEY` and `SUPABASE_URL` (or `NEXT_PUBLIC_SUPABASE_URL`) are both set, otherwise the file store above.
+
+The bucket must be private. Only server code and the build scripts hold the service-role key; never import the Supabase store or `openSnapshotStore` from a `"use client"` file, and never give the key a `NEXT_PUBLIC_` name. An explicit `--dir` on a build script still means the file store.
 
 Keys:
 

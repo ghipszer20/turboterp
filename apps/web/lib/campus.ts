@@ -50,12 +50,12 @@ import {
   type Stop,
 } from "@turboterp/campus-data";
 import {
-  defaultSnapshotDir,
-  FileSnapshotStore,
+  openSnapshotStore,
   snapshotKeys,
   snapshotOrLive,
   type RoomCatalog,
   type Snapshot,
+  type SnapshotStore,
 } from "@turboterp/campus-data/snapshots";
 
 export type Result<T> = { ok: true; data: T } | { ok: false; error: string };
@@ -72,9 +72,9 @@ export async function safe<T>(load: () => Promise<T>): Promise<Result<T>> {
 
 // ---- snapshots ----
 
-let store: FileSnapshotStore | null = null;
-function snapshotStore(): FileSnapshotStore {
-  return (store ??= new FileSnapshotStore(defaultSnapshotDir()));
+let store: SnapshotStore | null = null;
+function snapshotStore(): SnapshotStore {
+  return (store ??= openSnapshotStore());
 }
 
 /** One snapshot, held in memory for `seconds` so concurrent requests share a single read. */
