@@ -189,7 +189,7 @@ async function liveRoomCatalog() {
 
 async function liveRoomAvailability(locationId: number, categoryId: number, isoDate: string) {
   "use cache";
-  cacheLife({ stale: 60, revalidate: 300, expire: 3600 });
+  cacheLife({ stale: 60, revalidate: 120, expire: 3600 });
   const { rooms } = await liveRoomCatalog();
   return fetchCategoryAvailability(rooms, locationId, categoryId, isoDate, addDays(isoDate, 1));
 }
