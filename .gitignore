@@ -172,3 +172,6 @@ graphify-out/
 
 # UI review gallery (npm run ui-gallery -w @turboterp/web; regenerated screenshots)
 /ui-review/
+
+.vercel
+.env*
