@@ -3,6 +3,7 @@
 // Google Sheet ("dining hours db"); we read that same sheet through its gviz feed.
 
 import { parseHours, type DayHours } from "./hours.ts";
+import { addDays } from "./dates.ts";
 import { fetchText, SourceError } from "./http.ts";
 
 const SHEET_URL =
@@ -73,4 +74,16 @@ export function parseStampVenues(raw: string): StampVenue[] {
 
 export async function fetchStampVenues(): Promise<StampVenue[]> {
   return parseStampVenues(await fetchText("stamp-dining", SHEET_URL));
+}
+
+/** Keep only `count` days of hours starting at `from` (the sheet covers a whole year). */
+export function stampWindow(venues: StampVenue[], from: string, count: number): StampVenue[] {
+  return venues.map((v) => {
+    const days: Record<string, DayHours> = {};
+    for (let i = 0; i < count; i++) {
+      const date = addDays(from, i);
+      if (v.days[date]) days[date] = v.days[date];
+    }
+    return { ...v, days };
+  });
 }
