@@ -28,7 +28,7 @@ function fakeStorage(opts: { fail?: number } = {}) {
       const seen = new Map<string, { name: string; id: string | null }>();
       for (const k of [...objects.keys()].sort()) {
         if (!k.startsWith(dir)) continue;
-        const [head, ...tail] = k.slice(dir.length).split("/");
+        const [head = "", ...tail] = k.slice(dir.length).split("/");
         seen.set(head, { name: head, id: tail.length ? null : "id-" + head });
       }
       return Response.json([...seen.values()].slice(offset, offset + limit));
@@ -64,7 +64,7 @@ describe("SupabaseSnapshotStore", () => {
       updatedAt: "2026-09-25T09:00:00.000Z",
       data: { meals: ["Lunch"] },
     });
-    const put = f.requests[0];
+    const put = f.requests[0]!;
     expect(put.method).toBe("POST");
     expect(put.url).toBe(`${URL_}/storage/v1/object/snapshots/dining/2026-09-25/19.json`);
     expect(put.headers["x-upsert"]).toBe("true");
@@ -136,10 +136,10 @@ describe("SupabaseSnapshotStore", () => {
 
   it("throws with status and key on other failures", async () => {
     const { store } = make(fakeStorage({ fail: 500 }));
-    await expect(store.get("a/b")).rejects.toThrow(/500.*a\/b/);
-    await expect(store.put("a/b", { updatedAt: "x", data: 1 })).rejects.toThrow(/500.*a\/b/);
+    await expect(store.get("a/b")).rejects.toThrow(/a\/b.*500/);
+    await expect(store.put("a/b", { updatedAt: "x", data: 1 })).rejects.toThrow(/a\/b.*500/);
     await expect(store.list("a")).rejects.toThrow(/500/);
-    await expect(store.delete("a/b")).rejects.toThrow(/500.*a\/b/);
+    await expect(store.delete("a/b")).rejects.toThrow(/a\/b.*500/);
   });
 });
 

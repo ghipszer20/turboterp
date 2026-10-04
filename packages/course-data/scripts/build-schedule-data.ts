@@ -14,7 +14,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { defaultSnapshotDir, FileSnapshotStore } from "@turboterp/campus-data/snapshots";
+import { FileSnapshotStore, openSnapshotStore, type SnapshotStore } from "@turboterp/campus-data/snapshots";
 import { buildScheduleFiles } from "../src/schedule-files.ts";
 
 const pkg = fileURLToPath(new URL("..", import.meta.url));
@@ -34,7 +34,8 @@ function newestSoc(): string {
 const socPath = resolve(flag("--soc") ?? newestSoc());
 const ratingsPath = resolve(flag("--ratings") ?? join(pkg, "..", "ratings", ".cache", "professor-ratings.json"));
 const gradesDir = resolve(flag("--grades") ?? join(pkg, "..", "ratings", ".cache", "grades-out"));
-const store = new FileSnapshotStore(flag("--dir") ?? defaultSnapshotDir());
+const dirArg = flag("--dir");
+const store: SnapshotStore = dirArg ? new FileSnapshotStore(dirArg) : openSnapshotStore();
 
 const snapshot = JSON.parse(readFileSync(socPath, "utf8"));
 const ratings = existsSync(ratingsPath)
@@ -67,7 +68,7 @@ if (existsSync(gradesDir)) {
 await store.put("schedule/current", { updatedAt, data: { term } });
 
 const kb = (n: number) => `${(n / 1024).toFixed(0)} KB`;
-console.log(`Term ${term} → ${store.dir}`);
+console.log(`Term ${term} → ${store instanceof FileSnapshotStore ? store.dir : "Supabase Storage"}`);
 console.log(`  index: ${index.courses.length} courses, ${kb(size(index))}`);
 console.log(`  sections: ${Object.keys(departments).length} departments, ${kb(bytes)} total, largest ${
   Object.entries(departments).map(([d, f]) => [d, size(f)] as const).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([d, n]) => `${d} ${kb(n)}`).join(", ")
