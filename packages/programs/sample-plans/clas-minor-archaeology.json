@@ -1,0 +1,15 @@
+{
+  "programId": "clas-minor-archaeology",
+  "source": "https://classics.umd.edu/academicprograms/archaeology",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the department page: prerequisite CLAS180 (outside the 15 credits), CLAS305 (required), CLAS380 (fieldwork, Corinth), supporting ARTH303 and CLAS330 (both on the department's list), and CLAS331 for the remaining 3 credits. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["CLAS180"] },
+    { "term": "Term 2", "courses": ["CLAS305", "ARTH303"] },
+    { "term": "Term 3", "courses": ["CLAS330", "CLAS331"] },
+    { "term": "Term 4", "courses": ["CLAS380"] }
+  ]
+}

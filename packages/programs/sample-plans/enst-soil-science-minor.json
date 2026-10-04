@@ -1,0 +1,15 @@
+{
+  "programId": "enst-soil-science-minor",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/agriculture-natural-resources/environmental-science-technology/soil-science-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog: ENST200, four Group A courses and one Group B course. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["ENST200"] },
+    { "term": "Term 2", "courses": ["ENST411", "ENST414"] },
+    { "term": "Term 3", "courses": ["ENST417", "ENST421"] },
+    { "term": "Term 4", "courses": ["ENST430"] }
+  ]
+}

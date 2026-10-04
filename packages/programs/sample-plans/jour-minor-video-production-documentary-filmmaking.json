@@ -1,0 +1,14 @@
+{
+  "programId": "jour-minor-video-production-documentary-filmmaking",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/journalism/video-production-documentary-filmmaking-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "Constructed from the owner-pasted requirements table (the catalog lists none): JOUR347, JOUR281, JOUR368L, and two electives (JOUR370, JOUR383)."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["JOUR347", "JOUR281"] },
+    { "term": "Term 2", "courses": ["JOUR368L", "JOUR370"] },
+    { "term": "Term 3", "courses": ["JOUR383"] }
+  ]
+}

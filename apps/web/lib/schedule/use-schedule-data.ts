@@ -5,15 +5,16 @@
 // courses is picked, and each department's grades when the section panel needs them.
 // Everything is kept for the session; the CDN caches the files for everyone else.
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { gpasFor } from "./sections";
 import {
   decodeCourseIndex,
   decodeDepartmentSections,
   type CourseIndex,
   type DepartmentSections,
-} from "@superterp/course-data/schedule-files";
-import type { Section } from "@superterp/course-data/schedules";
-import { decodeDepartment, type CourseGrades } from "@superterp/ratings";
+} from "@turboterp/course-data/schedule-files";
+import type { Section } from "@turboterp/course-data/schedules";
+import { decodeDepartment, type CourseGrades } from "@turboterp/ratings";
 
 export type IndexState = { status: "loading" } | { status: "missing" } | { status: "error" } | { status: "ready"; index: CourseIndex };
 
@@ -26,7 +27,7 @@ async function getJson(url: string): Promise<unknown | null> {
   return res.json();
 }
 
-export function useScheduleData(courseIds: string[]) {
+export function useScheduleData(courseIds: string[], wantGrades = false) {
   const [indexState, setIndexState] = useState<IndexState>({ status: "loading" });
   const [depts, setDepts] = useState<Record<string, DepartmentSections | "missing">>({});
   const [grades, setGrades] = useState<Record<string, Record<string, CourseGrades> | "missing">>({});
@@ -66,17 +67,35 @@ export function useScheduleData(courseIds: string[]) {
     }
   }, [term, wanted]);
 
-  const loadGrades = useCallback(
-    (courseId: string) => {
-      const dept = deptOf(courseId);
-      if (!term || grades[dept]) return;
+  const fetchGrades = useCallback(
+    (dept: string) => {
       getJson(`/api/schedule/${term}/grades/${dept}`)
         .then((data) => (data ? decodeDepartment(data) : ("missing" as const)))
         .catch(() => "missing" as const)
         .then((g) => setGrades((prev) => (prev[dept] ? prev : { ...prev, [dept]: g })));
     },
-    [term, grades],
+    [term],
   );
+  const loadGrades = useCallback(
+    (courseId: string) => {
+      const dept = deptOf(courseId);
+      if (term && !grades[dept]) fetchGrades(dept);
+    },
+    [term, grades, fetchGrades],
+  );
+
+  // "Recommended" needs the chosen courses' grades before it can rank.
+  const requested = useRef(new Set<string>());
+  useEffect(() => {
+    if (!term || !wantGrades || !wanted) return;
+    for (const dept of wanted.split(",")) {
+      if (requested.current.has(dept)) continue;
+      requested.current.add(dept);
+      fetchGrades(dept);
+    }
+  }, [term, wantGrades, wanted, fetchGrades]);
+  const gradesLoaded = !wantGrades || (wanted ? wanted.split(",") : []).every((d) => grades[d] !== undefined);
+  const gpas = useMemo(() => (wantGrades ? gpasFor(grades, courseIds) : {}), [wantGrades, grades, courseIds]);
 
   const derived = useMemo(() => {
     const sections: Section[] = [];
@@ -109,5 +128,5 @@ export function useScheduleData(courseIds: string[]) {
     [grades],
   );
 
-  return { indexState, term, ...derived, loadGrades, gradesFor };
+  return { indexState, term, ...derived, loaded: derived.loaded && gradesLoaded, gpas, loadGrades, gradesFor };
 }

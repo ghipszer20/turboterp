@@ -18,7 +18,7 @@ export const econMinor: Program = {
     "Department page not checked (none provided); encoded from the catalog alone.",
     "'No more than 6 credits (or two courses) may count toward major requirements' -> maxSharedWith: [{ courses: 2 }]. The catalog's substitution rule (replace extra overlap with non-overlapping 300/400-level courses from an approved list) is what the sharing cap already forces; not separately encoded.",
     "Slot 2, '(1) 300 or 400-level ECON course OR a second intermediate theory course (ECON305/306/325/326)', is one 1-course choose over ECON 300-499 (the intermediate courses are ECON3xx, so the whole range covers the 'or').",
-    "Eligibility gate (AREC, PHPE, SDSC-ECON, ENSP-Environmental Economics majors are not eligible) is not enforced (no declared-major concept).",
+    "Eligibility gate (AREC, PHPE, SDSC-ECON, ENSP-Environmental Economics majors are not eligible) is enforced via notOpenTo for AREC, SDSC-ECON and Environmental Economics; PHPE is not a registered major, so it is left out.",
     "Prerequisites (Calculus I and Statistics: ECON230, BMGT230, ECON321, STAT401 or equivalent; Calculus III for ECON325/326) are prerequisites, not minor requirements; not encoded.",
   ],
   requirements: [
@@ -48,4 +48,4 @@ export const econMinor: Program = {
   ],
 };
 
-export const econMinorMeta: ProgramMeta = { kind: "minor", college: "BSOS", sources: { catalog: "https://academiccatalog.umd.edu/undergraduate/colleges-schools/behavioral-social-sciences/economics/economics-minor/" } };
+export const econMinorMeta: ProgramMeta = { kind: "minor", notOpenTo: { programs: ["arec", "sds-major-econ", "ensp-major-environmental-economics"], reason: "Not open to Agricultural and Resource Economics, Social Data Science Economics or Environmental Economics majors." }, college: "BSOS", sources: { catalog: "https://academiccatalog.umd.edu/undergraduate/colleges-schools/behavioral-social-sciences/economics/economics-minor/" } };

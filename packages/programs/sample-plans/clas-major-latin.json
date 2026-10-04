@@ -10,7 +10,7 @@
     "'CLAS 271 or Supporting Area #2' is named directly in the department plan; used as-is (CLAS271 is not on the Academic Catalog's approved CLAS course-number list -- flagged in docs/project/owner-review.md). The remaining supporting credits are filled with CLAS170 (named directly in the plan) and CLAS308 (Academic Catalog's approved list)."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["LATN101", "CLAS170"] },
+    { "term": "Year 1 Fall", "courses": ["LATN101", "CLAS170", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["LATN102"] },
     { "term": "Year 2 Fall", "courses": ["LATN201", "CLAS271"] },
     { "term": "Year 2 Spring", "courses": ["LATN203", "LATN301"] },

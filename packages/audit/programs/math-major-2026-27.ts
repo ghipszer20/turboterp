@@ -35,6 +35,7 @@ export const mathMajorTraditional: Program = {
     "Department of Mathematics, https://www-math.umd.edu/course-requirements.html (fetched 2026-09-26)",
   // Owner-confirmed 2026-09-25: C- minimum; CMSC131 may count for programming and Sequence Four.
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Honors sequence (footnote 1): 'MATH340 satisfies MATH241; MATH340–MATH341 satisfies MATH240–MATH241–MATH246.' Approximated: MATH340 counts for MATH240 (overlay) and MATH241; MATH341 counts for the MATH246/436/462 slot. MATH340 alone would wrongly satisfy MATH240 too.",
@@ -46,7 +47,7 @@ export const mathMajorTraditional: Program = {
     "Department-vs-catalog difference (owner ruling: follow the department page): the department page says 'the MATH 240 requirement may be fulfilled by MATH461'; the catalog's footnote 1 doesn't mention it. Added to math240 (overlay); MATH461 stays excluded from the eight electives (footnote 4).",
     "Department-vs-catalog difference (owner ruling: follow the department page): the department page's programming list, item (4), is 'CMSC 106, 131, 132, AOSC247, BIOE 241, ENAE 202, ENME202, ENME 351, ENME489I, ENEE150, PHYS 165, PHYS265, AOSC358L' — wider than the catalog's 'CMSC106, 131, 132, ENAE202, ENEE150, PHYS265'. The wider list is encoded (plus CMSC141/142, owner ruling above).",
     "Department-vs-catalog difference (owner ruling: follow the department page): the department page's supporting-sequence list, item 5, adds Sequences Nine (BSCI/CHEM), Ten (ASTR), Eleven (GEOL) and Twelve (AOSC) beyond the catalog's eight sequences. Sequences Nine and Ten are encoded with current course codes (BSCI170/160/180/171/161, ASTR130/131/232) taken from the Applied track's own catalog table (this Traditional catalog table has no equivalent row to check against), not the department page's stale ones (BSCI105/106, ASTR120/121, and a parenthetical 'becomes ASTR130, 131, and 132' that looks like a typo for ASTR232, and possibly for a past year). Flagged for the owner to confirm ASTR232 (not ASTR132) and the BSCI170/160/180/171/161 codes are still current; Eleven and Twelve match the Applied track's encoding exactly.",
-    "Both sources state 'students must earn an overall 2.000 average in these major courses to meet graduation requirements' (department page item, unnumbered; catalog: 'with an overall major GPA of 2.0'). The audit engine has no major-GPA concept (only per-course grade minimums via minGrade); not encoded, and not a department-vs-catalog difference since both agree. Needs a manual check until the engine gains a major-GPA concept.",
+    "Both sources state 'students must earn an overall 2.000 average in these major courses to meet graduation requirements' (department page item, unnumbered; catalog: 'with an overall major GPA of 2.0'). Not a department-vs-catalog difference since both agree. Program GPA 2.0 encoded as minGpa.",
     "Footnote 2 (at least four of the 400-level courses taken at College Park) and footnote 3 (outside substitutions with Undergraduate Office approval) are not enforced.",
   ],
   requirements: [

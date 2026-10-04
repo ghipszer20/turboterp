@@ -18,6 +18,7 @@ export const biocompMajor: Program = {
     "Biocomputational Engineering admissions page, https://biocomp.umd.edu/admissions (fetched 2026-09-28); " +
     "official Fall 2026 graduation plan, " +
     "https://eng.umd.edu/sites/clark.umd.edu/files/resource_documents/biocomp_fall_2026_gradplan.pdf (fetched 2026-09-28)",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Program structure: the catalog splits requirements into 'Prior Study' (60 credits, admission prerequisites) and 'Required Courses' (60 credits, the ENBC curriculum after transitioning to the Shady Grove campus), summing to the program's 120 credits. Both are encoded as this Program's requirements (the prerequisite courses are still real courses this degree needs), except ENGL101 (Academic Writing) and the Prior Study's generic 25 gen-ed credits, which are left to the Gen Ed layer -- the official graduation plan's own two-column layout places ENGL101 and the generic 'General Ed Requirement' slots under its 'GENERAL EDUCATION REQUIREMENTS' column, separate from its 'Major Requirements @ USG' column, and every gen-ed slot is already covered by gen-ed-2026-27.ts.",
@@ -31,7 +32,8 @@ export const biocompMajor: Program = {
     "Not encoded (owner-review.md): 'the program will arrange for opportunities for electives outside the program, including USG programs offered by other universities' -- no enumerable list of eligible outside courses exists in any source.",
     "Not encoded (owner-review.md): the official graduation plan's printed term-by-term grid shows only two 'Elective' slots (Year 4 Spring, 6 credits) even though the same document's own overview page lists four Technical Elective slots (12 credits) and the grid's own term totals sum to 113 credits -- 7 short of the plan's stated 'minimum of 120 credits'. The sample plan fixture fills all four elective slots (see sample-plans/biocomp-major.json notes) rather than reproducing the grid's apparent 2-slot shortfall verbatim.",
     "Not encoded (engine gap): the department admissions page's 2.5 minimum GPA and 60-credit/associate's-degree gate for admission to the major -- these are pre-major admission conditions, not post-admission degree requirements, and the audit has no admission-gate concept.",
-    "Not encoded (engine gap, matches aero precedent): the 2.00 cumulative UMD GPA and 2.0 minimum GPA for all degree/major requirements; residency rules (final 30 credits at UMD, 15 of the final 30 at the 300-400 level, 12 upper-level major credits at UMD); and the 120-credit total-credit minimum. The audit checks individual requirements and per-course minGrade only.",
+    "Program GPA 2.0 encoded as minGpa.",
+    "Not encoded (engine gap, matches aero precedent): the 2.00 cumulative UMD GPA; residency rules (final 30 credits at UMD, 15 of the final 30 at the 300-400 level, 12 upper-level major credits at UMD); and the 120-credit total-credit minimum. The audit checks individual requirements and per-course minGrade only.",
     "Informational only, not encoded: the department admissions page's transfer-equivalency table shows PHYS260/261 as one combined 3-credit row, while the catalog and graduation plan both separate them (PHYS260 3cr + PHYS261 1cr, 4cr total); the catalog/graduation-plan figures are used since they're the ones that matter for a current UMD student's own requirements.",
   ],
   requirements: [

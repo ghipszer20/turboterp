@@ -1,0 +1,15 @@
+{
+  "programId": "wgss-cert",
+  "source": "https://wgss.umd.edu/academic-programs/undergraduate/WGSS-certificate",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this certificate. Constructed from the requirements: WGSS200 (introductory), WGSS302, four thematic-concentration courses (WGSS211, WGSS301, WGSS325, WGSS370: the department lists none, so real WGSS courses from the WGSS major plan are used) and WGSS488 as the capstone. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["WGSS200", "WGSS211"] },
+    { "term": "Term 2", "courses": ["WGSS302", "WGSS301"] },
+    { "term": "Term 3", "courses": ["WGSS325", "WGSS370"] },
+    { "term": "Term 4", "courses": ["WGSS488"] }
+  ]
+}

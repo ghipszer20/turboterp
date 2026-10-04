@@ -19,6 +19,7 @@ export const russMajor: Program = {
     "College of Arts and Humanities official four-year academic plan for Russian, " +
     "fetched 2026-09-28 (https://drive.google.com/uc?export=download&id=1Z_eMIfEE0R2R1ipjzgVF7pQcOaxzJ2vb#Russian)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Department page vs. catalog: no disagreement found. The ARHU world-language-placement page has " +
@@ -61,7 +62,7 @@ export const russMajor: Program = {
     "Not encoded: 'Once credit has been received in a higher level language-acquisition or grammar " +
       "course, a lower level course may not be taken for credit' -- a backward-credit/sequencing policy, " +
       "not a requirement structure the engine represents.",
-    "Not encoded (engine gaps): the 2.0 GPA-in-the-major requirement, residency rules (30 credits at UMD, " +
+    "Not encoded (engine gaps): residency rules (30 credits at UMD, " +
       "15 of the final 30 at the 300-400 level, 12 upper-level major credits at UMD), ARHU's 39 upper-" +
       "level-credit graduation requirement, and the 120-credit graduation minimum.",
   ],

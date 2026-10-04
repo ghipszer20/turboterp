@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { connection } from "next/server";
-import { campusDate, campusMinutes } from "@superterp/campus-data";
-import { planTripBetween } from "@/lib/campus";
+import { campusDate, campusMinutes } from "@turboterp/campus-data";
+import { planArriveByBetween, planTripBetween } from "@/lib/campus";
 
 function place(params: URLSearchParams, prefix: "from" | "to") {
   const lat = Number(params.get(`${prefix}Lat`));
@@ -29,6 +29,12 @@ export async function GET(request: NextRequest) {
   const at = atParam !== null && Number.isFinite(Number(atParam)) ? Number(atParam) : campusMinutes(now);
 
   try {
+    // ?arriveBy=<minutes>: arrive-by mode (the "leave by" card) instead of depart-at.
+    const arriveByParam = params.get("arriveBy");
+    if (arriveByParam !== null && Number.isFinite(Number(arriveByParam))) {
+      const result = await planArriveByBetween(campusDate(now), Number(arriveByParam), from, to);
+      return Response.json({ arriveBy: Number(arriveByParam), ...result }, { headers: { "Cache-Control": "private, max-age=30" } });
+    }
     const result = await planTripBetween(campusDate(now), at, from, to);
     return Response.json({ at, ...result }, { headers: { "Cache-Control": "private, max-age=30" } });
   } catch (err) {

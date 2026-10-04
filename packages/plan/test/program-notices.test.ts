@@ -1,7 +1,7 @@
 // Positive, info-only notices: the plan completes (or nearly completes) another major, or
 // qualifies for a dual degree. Uses the real 2026–27 Math (Applied) and CS program encodings.
 
-import type { Program } from "@superterp/audit";
+import type { Program } from "@turboterp/audit";
 import { describe, expect, it } from "vitest";
 import { cmscMajor } from "../../audit/programs/cmsc-major-2026-27.ts";
 import { mathMajorApplied } from "../../audit/programs/math-major-applied-2026-27.ts";

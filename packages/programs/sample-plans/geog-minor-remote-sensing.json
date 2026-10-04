@@ -1,0 +1,14 @@
+{
+  "programId": "geog-minor-remote-sensing",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/behavioral-social-sciences/geographical-sciences/remote-sensing-environmental-change-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: GEOG172 for the foundation course, GEOG272 core, GEOG371, GEOG417 and GEOG472 for the three advanced technical courses. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["GEOG172", "GEOG272"] },
+    { "term": "Term 2", "courses": ["GEOG371", "GEOG472"] },
+    { "term": "Term 3", "courses": ["GEOG417"] }
+  ]
+}

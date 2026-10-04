@@ -1,0 +1,15 @@
+{
+  "programId": "lead-cert",
+  "source": "https://education.umd.edu/leadershipstudies",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this certificate. Constructed from the requirements: LEAD217, LEAD315, LEAD320, LEAD321, LEAD417, LEAD305 as the leadership elective, and BMGT364 and PSYC221 as the two general electives (both on the department's list). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["LEAD217", "PSYC221"] },
+    { "term": "Term 2", "courses": ["LEAD315", "LEAD305"] },
+    { "term": "Term 3", "courses": ["LEAD320", "BMGT364"] },
+    { "term": "Term 4", "courses": ["LEAD321", "LEAD417"] }
+  ]
+}

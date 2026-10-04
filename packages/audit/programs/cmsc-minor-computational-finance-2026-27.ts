@@ -18,11 +18,12 @@ export const cmscMinorComputationalFinance: Program = {
   source:
     "UMD Academic Catalog 2026–27, Computational Finance Minor (CMSC); " +
     "https://sites.google.com/umd.edu/compfinminor/home (fetched 2026-09-27)",
+  minGrade: "C-",
   verified: false,
   reviewNotes: [
     "The program's own site (sites.google.com/umd.edu/compfinminor) confirms BUFN400-403 and a 15-credit, five-course minor but its 'Requirements' page content wasn't retrievable in full; the catalog's specific breakdown (BUFN400 + CMSC320 + BUFN403 required, one of BUFN401/402, one of CMSC421/422/470/471/472/474) is used since nothing found contradicts it. Flagged in docs/project/owner-review.md for the owner to confirm against the site directly.",
-    "'Only open to Computer Science majors' (catalog) and '60 credits completed' (web search summary of the program site) are eligibility gates, not enforced (no declared-major or credits-earned concept for this check).",
-    "The catalog page doesn't state a minimum grade for this minor (most CMNS minors state C-); not encoded here rather than guessed -- flagged in docs/project/owner-review.md.",
+    "'Only open to Computer Science majors' (catalog) is enforced via onlyOpenTo (the CS major and its four specializations). '60 credits completed' (web search summary of the program site) is an eligibility gate, not enforced (no credits-earned concept for this check).",
+    "C- per owner ruling (rulings.md).",
     "'Complete CMSC320 (or equivalent) before or during the first semester' is a sequencing rule, not encoded.",
     "Neither source states a sharing cap with another program; none is set (expected to overlap heavily with the CS major, which the minor is restricted to).",
   ],
@@ -41,4 +42,4 @@ export const cmscMinorComputationalFinance: Program = {
   ],
 };
 
-export const cmscMinorComputationalFinanceMeta: ProgramMeta = { kind: "minor", college: "CMNS", sources: { catalog: "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/computer-science/computational-finance-minor/", department: "https://sites.google.com/umd.edu/compfinminor/home" } };
+export const cmscMinorComputationalFinanceMeta: ProgramMeta = { kind: "minor", college: "CMNS", sources: { catalog: "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/computer-science/computational-finance-minor/", department: "https://sites.google.com/umd.edu/compfinminor/home" }, onlyOpenTo: { programs: ["cmsc-major", "cmsc-major-cybersecurity", "cmsc-major-data-science", "cmsc-major-machine-learning", "cmsc-major-quantum-information"], reason: "Only open to Computer Science majors." } };

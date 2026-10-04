@@ -12,7 +12,7 @@
     "Supporting Area (9 credits, single department other than Spanish, approval of advisor) filled with HIST304, HIST306, HIST307 (a real, plausible non-Spanish department sequence; the source names no specific supporting-area courses)."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["SPAN103"] },
+    { "term": "Year 1 Fall", "courses": ["SPAN103", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["SPAN203"] },
     { "term": "Year 2 Fall", "courses": ["SPAN301", "SPAN204"] },
     { "term": "Year 2 Spring", "courses": ["SPAN207", "HIST304"] },

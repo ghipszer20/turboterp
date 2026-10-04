@@ -11,7 +11,10 @@ import { PROGRAMS } from "../src/registry.ts";
 const file = (id: string) => new URL(`../sample-plans/${id}.json`, import.meta.url);
 
 /** Program id -> requirement ids its sample plan is known to leave unsatisfied (flagged). */
-const KNOWN_FAILURES: Record<string, string[]> = {};
+const KNOWN_FAILURES: Record<string, string[]> = {
+  // Catalog lists BSCI348 (cell biology special topics) in the math-education professional block; stale-looking, flagged.
+  "mathed-major": ["mathed-bsci348"],
+};
 
 describe("sample plans", () => {
   it("every major, minor and certificate has one (official, or built from an official page)", () => {
@@ -32,7 +35,10 @@ describe("sample plans", () => {
       const v = await validateSamplePlan(await entry.load(), plan);
       expect(v.unsatisfied).toEqual(KNOWN_FAILURES[id] ?? []);
       expect(v.mutants.filter((m) => !m.broke || m.fillerCounted)).toEqual([]);
-      expect(v.mutants.length).toBeGreaterThan(0);
+      // A program whose source names no courses (every slot an OPEN SLOT reviewNote) has no
+      // requirements to mutate.
+      const openSlotsOnly = (await entry.load()).requirements.every((r) => r.kind === "openSlot");
+      if (!openSlotsOnly) expect(v.mutants.length).toBeGreaterThan(0);
     });
   });
 });

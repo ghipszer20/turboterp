@@ -10,7 +10,7 @@
     "Track II Electives (6 credits) filled with CCJS340 and CCJS405, real named list courses."
   ],
   "terms": [
-    { "term": "Freshman Fall", "courses": ["SDSB123", "STAT100"] },
+    { "term": "Freshman Fall", "courses": ["SDSB123", "STAT100", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["MATH115", "CCJS100"] },
     { "term": "Sophomore Fall", "courses": ["SDSB233", "CCJS105"] },
     { "term": "Sophomore Spring", "courses": ["SDSB326", "INST327"] },
@@ -18,5 +18,6 @@
     { "term": "Junior Spring", "courses": ["INST414", "CCJS300"] },
     { "term": "Senior Fall", "courses": ["INST462", "SDSB340", "CCJS340"] },
     { "term": "Senior Spring", "courses": ["INST447", "SDSI492", "CCJS405"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

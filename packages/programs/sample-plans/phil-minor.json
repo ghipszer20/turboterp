@@ -1,0 +1,14 @@
+{
+  "programId": "phil-minor",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/philosophy/philosophy-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog: PHIL201, PHIL204 and PHIL209 (2xx courses for the history, value theory and metaphysics/epistemology areas; topic fit not verified) plus three 3xx/4xx courses (PHIL308, PHIL320, PHIL408). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["PHIL201", "PHIL204"] },
+    { "term": "Term 2", "courses": ["PHIL209", "PHIL308"] },
+    { "term": "Term 3", "courses": ["PHIL320", "PHIL408"] }
+  ]
+}

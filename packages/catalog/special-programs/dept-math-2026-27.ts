@@ -2,7 +2,7 @@
 // Source: https://www-math.umd.edu/undergraduate/opportunities.html?id=101 ("The Departmental Honors Program in
 // Mathematics"; fetched 2026-09-26). Hand-transcribed. UNVERIFIED.
 
-import type { Program, ProgramMeta } from "@superterp/audit";
+import type { Program, ProgramMeta } from "@turboterp/audit";
 import { CATALOG_YEAR } from "./common.ts";
 
 export const SOURCE = "https://www-math.umd.edu/undergraduate/opportunities.html?id=101";

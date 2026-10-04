@@ -1,0 +1,77 @@
+{
+  "programId": "omba-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/business/decision-operations-information-technologies/operations-management-business-analytics-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No major-specific 4-year plan was reachable from the fetched source (the catalog's 'Catalog four-year plan' section only links to the Smith School's general roadmaps page and 4yearplans.umd.edu; the college's own general BS 'Typical Program' table stops after the sophomore year with no major-specific courses placed). This plan is CONSTRUCTED from the catalog's own College Requirements and major requirement tables; flagged in docs/project/owner-review.md. Gen Ed slots are left out: only the major is audited.",
+    "Calculus gateway filled with MATH140 (Calculus I); Business Statistics gateway filled with BMGT230 (Business Statistics); Oral Communication filled with COMM107 (Oral Communication: Principles and Practices) -- all named directly in the catalog's own option lists, not invented.",
+    "The two-course elective slot is filled with BMGT434 (List A) and BMGT400 (List B), both named in the catalog's lists. Course placement (year/term) is constructed."
+  ],
+  "credits": {
+    "BMGT367": 1
+  },
+  "terms": [
+    {
+      "term": "Freshman Fall",
+      "courses": [
+        "BMGT110",
+        "MATH140"
+      ]
+    },
+    {
+      "term": "Freshman Spring",
+      "courses": [
+        "ECON200",
+        "COMM107"
+      ]
+    },
+    {
+      "term": "Sophomore Fall",
+      "courses": [
+        "BMGT220",
+        "ECON201"
+      ]
+    },
+    {
+      "term": "Sophomore Spring",
+      "courses": [
+        "BMGT221",
+        "BMGT230"
+      ]
+    },
+    {
+      "term": "Junior Fall",
+      "courses": [
+        "BMGT301",
+        "BMGT340",
+        "BMGT332"
+      ]
+    },
+    {
+      "term": "Junior Spring",
+      "courses": [
+        "BMGT350",
+        "BMGT364",
+        "BMGT385"
+      ]
+    },
+    {
+      "term": "Senior Fall",
+      "courses": [
+        "BMGT367",
+        "BMGT380",
+        "BMGT430",
+        "BMGT434"
+      ]
+    },
+    {
+      "term": "Senior Spring",
+      "courses": [
+        "BMGT495",
+        "BMGT431",
+        "BMGT400"
+      ]
+    }
+  ]
+}

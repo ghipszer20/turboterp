@@ -4,21 +4,15 @@
   "fetched": "2026-09-28",
   "official": false,
   "notes": [
-    "CONSTRUCTED from the catalog's own requirement list. The department's official four-year plan PDF converted to unreadable font-remapped text (no legible course codes or term headers at all); see docs/project/owner-review.md.",
+    "CONSTRUCTED from the catalog's own requirement list. The department's single official four-year plan (OCR text) is generic across tracks and its course codes and term placement are too garbled to read; see docs/project/owner-review.md.",
     "Dance Forms (4 credits) filled with DANC138 and DANC228, each assumed at 2 credits (no per-course credit value is given in the source's Dance Forms list); flagged in the Program's reviewNotes.",
     "TDPS479 (Production Practicum) assumed at 1 credit per enrollment; enrolled twice here (once for the shared 1-credit requirement, once for the Education area's additional 1 credit).",
     "Capstone filled with DANC485 (Seminar in Dance).",
     "Education area is fully prescribed (DANC405, DANC371, DANC466, DANC338, plus the additional TDPS479 credit); DANC466 fills the Laban Movement Analysis-or-DANC489F choice."
   ],
-  "credits": {
-    "DANC179": 2,
-    "TDPS479": 1,
-    "DANC138": 2,
-    "DANC228": 2,
-    "DANC338": 2
-  },
+  "credits": { "DANC179": 2, "TDPS479": 1, "DANC138": 2, "DANC228": 2, "DANC338": 2 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["DANC109", "DANC218", "TDPS201"] },
+    { "term": "Year 1 Fall", "courses": ["DANC109", "DANC218", "TDPS201", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["DANC179", "DANC219", "DANC138"] },
     { "term": "Year 2 Fall", "courses": ["DANC207", "DANC318", "DANC228", "TDPS479"] },
     { "term": "Year 2 Spring", "courses": ["DANC304", "DANC319", "TDPS479"] },

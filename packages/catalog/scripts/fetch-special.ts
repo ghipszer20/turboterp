@@ -9,7 +9,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { setTimeout as sleep } from "node:timers/promises";
 import * as cheerio from "cheerio";
-import { fetchBytes, fetchText } from "@superterp/campus-data/http";
+import { fetchBytes, fetchText } from "@turboterp/campus-data/http";
 
 const CACHE = new URL("../.cache/special/", import.meta.url);
 const PAUSE_MS = 500;

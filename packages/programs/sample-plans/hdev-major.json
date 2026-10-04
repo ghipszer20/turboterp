@@ -1,0 +1,21 @@
+{
+  "programId": "hdev-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/human-development-quantitative-methodology/human-development-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "The College of Education four-year-plans page only links to plans; no Human Development plan text is in the source, so this plan is CONSTRUCTED from the catalog requirements (flagged in docs/project/owner-review.md). Gen Ed slots are left out: only the major is audited.",
+    "Core picks EDHD411, EDHD413 and EDHD460; electives are EDHD221, EDHD230, EDHD310 and EDHD420. These are catalog-plausible fills, not sourced choices.",
+    "Placement follows the catalog's 'gateway courses first' ordering and 'internship in the final year'; otherwise term placement is constructed."
+  ],
+  "credits": { "EDHD390": 1, "EDHD398": 6, "UNIV100": 1 },
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["EDHD200", "EDHD201", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["QMMS251", "EDHD221"] },
+    { "term": "Sophomore Fall", "courses": ["EDHD320", "EDHD230"] },
+    { "term": "Sophomore Spring", "courses": ["EDHD306", "EDHD310"] },
+    { "term": "Junior Fall", "courses": ["EDHD411", "EDHD413"] },
+    { "term": "Junior Spring", "courses": ["EDHD460", "EDHD420", "EDHD390"] },
+    { "term": "Senior Fall", "courses": ["EDHD398"] }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "programId": "agnr-cert",
+  "source": "https://agnr.umd.edu/undergraduate/programs-pathways/international-agriculture-and-natural-resources",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this certificate. Constructed from the requirements: SPAN103 and SPAN203 (4 credits each; SPAN101/102 don't exist, main session 2026-09-28) for the language credits and AREC365, AREC433, AREC445 for the 9 international credits. Travel study and the seminar are not encoded (no course codes named). Flagged in docs/project/owner-review.md."
+  ],
+  "credits": {
+    "SPAN103": 4,
+    "SPAN203": 4
+  },
+  "terms": [
+    {
+      "term": "Term 1",
+      "courses": [
+        "SPAN103",
+        "AREC365"
+      ]
+    },
+    {
+      "term": "Term 2",
+      "courses": [
+        "SPAN203",
+        "AREC433"
+      ]
+    },
+    {
+      "term": "Term 3",
+      "courses": [
+        "AREC445"
+      ]
+    }
+  ]
+}

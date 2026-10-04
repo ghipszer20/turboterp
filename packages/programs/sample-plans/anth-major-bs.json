@@ -9,9 +9,9 @@
     "Anthropology Electives (12 credits) are filled with ANTH323, ANTH441, ANTH415 and ANTH440 -- real ANTH courses (checked against the Academic Catalog, 2026-09-28), chosen because every ANTH number the fetched source names is already used by another requirement above; flagged in docs/project/owner-review.md.",
     "Quantitative Skills Requirement (B.S., select two): MATH140 and MATH141. Supporting Course Work (B.S., select three sets): CMSC131, GEOG330, HIST204."
   ],
-  "credits": { "MATH140": 4, "MATH141": 4, "CMSC131": 4 },
+  "credits": { "MATH140": 4, "MATH141": 4, "CMSC131": 4, "UNIV100": 1 },
   "terms": [
-    { "term": "Freshman Fall", "courses": ["ANTH210", "MATH140"] },
+    { "term": "Freshman Fall", "courses": ["ANTH210", "MATH140", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["ANTH240", "MATH141"] },
     { "term": "Sophomore Fall", "courses": ["ANTH260", "CMSC131"] },
     { "term": "Sophomore Spring", "courses": ["ANTH340"] },

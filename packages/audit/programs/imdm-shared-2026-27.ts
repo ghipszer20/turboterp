@@ -52,14 +52,13 @@ export const imdmCommonReviewNotes: string[] = [
     "below a 2.00 major GPA after admission) are not encoded -- no admission-gate concept in the " +
     "engine, and the fetched lep.umd.edu page is a generic cross-program overview with no IMDM-specific " +
     "gateway course list to encode from. Flagged in docs/project/owner-review.md.",
-  "Not encoded (engine gap, matches other ARHU majors' precedent): the 2.0 GPA-in-the-major " +
-    "requirement, residency rules, and the 120-credit graduation minimum.",
+  "Not encoded (engine gap, matches other ARHU majors' precedent): residency rules, and the 120-credit graduation minimum.",
   "Track 1 (Computing) footnote: 'the Computer Science Department offers exemption exams for CMSC131, " +
     "CMSC132, CMSC216 and CMSC250' for transferring students -- not encoded (no proficiency-exam/exemption " +
     "concept in the engine, matches cmsc-major-2026-27.ts's own precedent for the same four courses).",
   "The official College of Arts and Humanities four-year plan PDF for this major converts to garbled, " +
     "unreadable text (no legible course codes or term structure survive conversion); both tracks' sample " +
     "plans are constructed from the catalog's own course table instead (`official: false`), term " +
-    "placement is SuperTerp's own reasonable ordering (not read off any plan), and Gen Ed/general-elective " +
+    "placement is TurboTerp's own reasonable ordering (not read off any plan), and Gen Ed/general-elective " +
     "slots are left out entirely (only the major is audited). Flagged in docs/project/owner-review.md.",
 ];

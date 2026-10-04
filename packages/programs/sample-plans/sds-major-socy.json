@@ -9,9 +9,9 @@
     "SOCY201 and SOCY202 are each 4 credits (catalog table); noted in the credits map below.",
     "Track II Electives (9 credits, 300-400 SOCY) filled with SOCY310, SOCY320 and SOCY335, real SOCY courses not otherwise required by this track."
   ],
-  "credits": { "SOCY201": 4, "SOCY202": 4 },
+  "credits": { "SOCY201": 4, "SOCY202": 4, "UNIV100": 1 },
   "terms": [
-    { "term": "Freshman Fall", "courses": ["SDSB123", "STAT100"] },
+    { "term": "Freshman Fall", "courses": ["SDSB123", "STAT100", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["MATH115", "SOCY100"] },
     { "term": "Sophomore Fall", "courses": ["SDSB233", "SOCY201"] },
     { "term": "Sophomore Spring", "courses": ["SDSB326", "INST327"] },

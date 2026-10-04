@@ -200,12 +200,62 @@ describe("CS major 2026–27", () => {
     expect((await statusOf(plan)).concentration).toBe("satisfied");
   });
 
+  // ULC GPA (department page: "cumulative GPA of 1.7 or higher"), computed over the completed
+  // letter-graded courses the audit assigns to the concentration.
+  const ulc = (grades: Record<string, string>, extra: StudentCourse[] = []) => [
+    ...completePlan.map((x) => (grades[x.id] ? { ...x, grade: grades[x.id] } : x)),
+    ...extra,
+  ];
+  const concentrationOf = async (courses: StudentCourse[]) =>
+    (await auditProgram(cmscMajor, courses)).requirements.find((r) => r.id === "concentration")!;
+
+  it("passes a D in the ULC when the ULC GPA is at least 1.7", async () => {
+    const r = await concentrationOf(ulc({ MATH403: "D" }));
+    expect(r.status).toBe("satisfied");
+    expect(r.gpa).toEqual({ value: 2.5, min: 1.7 });
+  });
+
+  it("fails a completed ULC whose GPA is below 1.7", async () => {
+    const r = await concentrationOf(ulc({ MATH310: "D", MATH401: "D", MATH403: "D", MATH410: "D" }));
+    expect(r.status).toBe("partial");
+    expect(r.gpa).toEqual({ value: 1, min: 1.7 });
+  });
+
+  it("picks the best-graded ULC courses when more are eligible than needed", async () => {
+    const plan = ulc({ MATH310: "D", MATH401: "D", MATH403: "D", MATH410: "D" }, [
+      { id: "MATH411", credits: 3, status: "completed", grade: "A" },
+      { id: "MATH404", credits: 3, status: "completed", grade: "A" },
+    ]);
+    const r = await concentrationOf(plan);
+    expect(r.status).toBe("satisfied");
+    expect(r.assigned).toEqual(expect.arrayContaining(["MATH411", "MATH404"]));
+    expect(r.gpa!.value).toBe(2.5);
+  });
+
+  it("marks the ULC GPA at risk when it is below 1.7 but courses are planned for it", async () => {
+    const plan = ulc({ MATH310: "D", MATH401: "D", MATH403: "D" }).filter((x) => x.id !== "MATH410");
+    plan.push({ id: "MATH410", credits: 3, status: "planned" });
+    const r = await concentrationOf(plan);
+    expect(r.status).toBe("satisfied");
+    expect(r.gpa).toEqual({ value: 1, min: 1.7, atRisk: true });
+  });
+
+  it("lists completed courses that miss a requirement's minimum grade", async () => {
+    const plan = completePlan.map((x) => (x.id === "CMSC351" ? { ...x, grade: "D+" } : x));
+    const r = (await auditProgram(cmscMajor, plan)).requirements.find((q) => q.id === "cmsc351")!;
+    expect(r.status).toBe("missing");
+    expect(r.belowMinimum).toEqual([{ course: "CMSC351", grade: "D+", minGrade: "C-" }]);
+  });
+
   // Every other requirement keeps the catalog's blanket "C- or better" (only the concentration is
   // looser, per the department page above); a requirement missing this would silently let D
   // grades through everywhere, not just the concentration.
   it("requires C- on every requirement except the concentration", () => {
     for (const r of cmscMajor.requirements) {
-      if (r.id === "concentration") expect(r.minGrade).toBe("D-");
+      if (r.id === "concentration") {
+        expect(r.minGrade).toBe("D-");
+        expect(r.minGpa).toBe(1.7);
+      }
       else expect(r.minGrade).toBe("C-");
     }
   });

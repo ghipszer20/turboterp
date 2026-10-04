@@ -4,14 +4,14 @@
   "fetched": "2026-09-28",
   "official": false,
   "notes": [
-    "CONSTRUCTED, not read from the College of Arts and Humanities' official four-year plan for Chinese: that plan's PDF-to-text conversion produced no legible text at all (unlike the other ARHU plans already encoded), so no term-by-term placement could be read from it. Built instead directly from the catalog's own requirement list (17 Language + 6 History/Culture + 3 Linguistics + 6 Literature + 6 Electives = 38 credits), in the sequence the catalog itself presents. Flagged in docs/project/owner-review.md.",
+    "CONSTRUCTED, not read from the College of Arts and Humanities' official four-year plan for Chinese: the plan's first text conversion was unreadable and the later OCR text was also illegible for the term grid (no CHIN course codes or term placement survive), so no term-by-term placement could be read. Built instead from the catalog's own requirement list (17 Language + 6 History/Culture + 3 Linguistics + 6 Literature + 6 Electives = 38 credits), in the sequence the catalog itself presents. Flagged in docs/project/owner-review.md.",
     "Gen Ed and general-elective slots are left out entirely, per the pattern used by other programs' sample plans: only the major is audited.",
     "'elective-upper' (3 credits, 300/400-level CHIN) filled with CHIN331 (Chinese Calligraphy: Theory and Practice), named directly in the catalog's own Electives footnote as an example.",
     "'elective-remaining' (3 more elective credits) filled with CHIN418 (Special Topics in Contemporary Chinese Fiction and Film), also named directly in the catalog's own Electives footnote."
   ],
   "credits": { "CHIN206": 4, "CHIN207": 4 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["CHIN206"] },
+    { "term": "Year 1 Fall", "courses": ["CHIN206", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["CHIN207"] },
     { "term": "Year 2 Fall", "courses": ["CHIN301", "EALL284"] },
     { "term": "Year 2 Spring", "courses": ["CHIN302", "EALL285"] },

@@ -13,7 +13,7 @@
   ],
   "credits": { "TDPS479": 1 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["TDPS201", "THET222"] },
+    { "term": "Year 1 Fall", "courses": ["TDPS201", "THET222", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["THET116", "THET223"] },
     { "term": "Year 2 Fall", "courses": ["TDPS479", "THET285"] },
     { "term": "Year 2 Spring", "courses": ["TDPS479", "THET390"] },

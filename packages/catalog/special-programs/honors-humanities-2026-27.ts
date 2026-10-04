@@ -3,7 +3,7 @@
 // (linked from https://honors.umd.edu/academics/honors-citation/; page fetched 2026-09-25).
 // Hand-transcribed (prose page). UNVERIFIED.
 
-import type { Program, ProgramMeta } from "@superterp/audit";
+import type { Program, ProgramMeta } from "@turboterp/audit";
 import { CATALOG_YEAR, HONORS_CITATION_NOTES } from "./common.ts";
 
 export const SOURCE =

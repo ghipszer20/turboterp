@@ -16,11 +16,12 @@ export const clasMajorLatin: Program = {
     "College of Arts and Humanities, official Classics - Latin Four Year Academic Plan (department source), " +
     "https://drive.google.com/uc?export=download&id=1XOy6bx6sHIZ2Hkse1JrH1PCCMuFAFiKi (fetched 2026-09-28)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "The department's own plan names 'CLAS 271 or Supporting Area #2' as a specific supporting-area course; CLAS271 is not on the Academic Catalog's approved CLAS course-number list, but it is named directly in the source (department plans win per the owner ruling), so it is kept as-is in the sample plan and flagged in docs/project/owner-review.md for the owner to confirm the number is current.",
     "Only three real LATN 4xx-or-higher course numbers exist on the Academic Catalog's approved list (LATN405, LATN415, LATN472); to reach the required 12 credits (four 3-credit courses) the sample plan enrolls in LATN472 twice, as a repeatable directed-study/topics course -- flagged in the sample plan's own notes.",
-    "Known engine gaps (one note): the major's 2.0 GPA-in-the-major requirement, the College of Arts and Humanities' overall 39 3xx-or-4xx-level-credit requirement (spans the whole degree, not just this major), residency rules (30 credits at UMD, 15 of the final 30 at the 300-400 level, 12 upper-level major credits at UMD), and the 120-credit graduation minimum are not encoded.",
+    "Known engine gaps (one note): the College of Arts and Humanities' overall 39 3xx-or-4xx-level-credit requirement (spans the whole degree, not just this major), residency rules (30 credits at UMD, 15 of the final 30 at the 300-400 level, 12 upper-level major credits at UMD), and the 120-credit graduation minimum are not encoded. Program GPA 2.0 encoded as minGpa.",
   ],
   requirements: [
     {

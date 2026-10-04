@@ -1,9 +1,9 @@
 // Good news about a Plan, never warnings: it completes a second major (a double major), it
 // qualifies for a dual degree, or it comes within a course or two of another major.
-// Runs the degree audit (@superterp/audit, an integer program), so it's async and slower than
+// Runs the degree audit (@turboterp/audit, an integer program), so it's async and slower than
 // checkPlan; run it after edits settle, not on every keystroke.
 
-import { auditPrograms, earnsCredit, matchesFilter, type AuditResult, type Program, type StudentCourse } from "@superterp/audit";
+import { auditPrograms, earnsCredit, matchesFilter, type AuditResult, type Program, type StudentCourse } from "@turboterp/audit";
 import { allowsRetake } from "./check.ts";
 import type { PlanCatalog } from "./catalog.ts";
 import type { Plan } from "./check.ts";
@@ -141,6 +141,7 @@ export function shortfall(program: Program, result: AuditResult, courses: Studen
       n = req.count !== undefined ? req.count - r.assigned.length : Math.ceil(((req.credits ?? 0) - assignedCredits) / 3);
     } else if (req.kind === "distribution") n = req.count - r.assigned.length;
     else if (req.kind === "concentration") n = Math.ceil((req.credits - assignedCredits) / 3);
+    else if (req.kind === "openSlot") names = [`${req.name} (confirm with your advisor)`];
     else {
       // Each set's gap: its fixed courses not yet taken, plus what each "any N from a filter"
       // member still needs after the student's other matching courses. The requirement needs its

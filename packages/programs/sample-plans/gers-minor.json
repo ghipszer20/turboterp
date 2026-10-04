@@ -1,0 +1,15 @@
+{
+  "programId": "gers-minor",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/languages-literatures-cultures/germanic-studies/german-studies-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: five GERS courses beyond GERS203, three at 3xx/4xx (one language GERS301, one literature GERS320, one culture GERS356) plus GERS204 and GERS255. Flagged in docs/project/owner-review.md."
+  ],
+  "credits": {},
+  "terms": [
+    { "term": "Term 1", "courses": ["GERS204", "GERS255"] },
+    { "term": "Term 2", "courses": ["GERS301", "GERS320"] },
+    { "term": "Term 3", "courses": ["GERS356"] }
+  ]
+}

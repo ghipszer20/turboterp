@@ -10,7 +10,7 @@
     "Exact term placement (which year/semester) for the Foundation and Elective courses is reconstructed rather than read verbatim, because the source's term-grid OCR is garbled beyond a reliable column-by-column parse; the requirement-satisfying set of 12 courses and their identities are read directly from the source's own labels ('(Foundation Requirement)' tags and bare course numbers), only their exact term slotting is estimated from surrounding benchmark-sidebar text ('must be completed by the end of N semesters'). Flagged in docs/project/owner-review.md."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["PERS103"] },
+    { "term": "Year 1 Fall", "courses": ["PERS103", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["PERS104", "PERS251"] },
     { "term": "Year 2 Fall", "courses": ["PERS201"] },
     { "term": "Year 2 Spring", "courses": ["PERS202", "PERS283"] },

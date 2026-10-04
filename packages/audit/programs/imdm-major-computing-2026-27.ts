@@ -16,6 +16,7 @@ export const imdmMajorComputing: Program = {
   source:
     "UMD Academic Catalog 2026-27, Immersive Media Design Major, Computing Track " +
     "(https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/art/immersive-media-design-major/)",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "'Major Elective: CMSC 4xx (Graphics Programming)' and 'CMSC Elective: CMSC 4xx (Graphics " +

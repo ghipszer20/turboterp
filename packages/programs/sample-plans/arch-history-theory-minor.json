@@ -1,0 +1,14 @@
+{
+  "programId": "arch-history-theory-minor",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/architecture-planning-preservation/history-theory-architecture-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: ARCH225, ARCH226; topical ARCH420, ARCH423, ARCH435; seminars ARCH481, ARCH482. Capstone paper not modelled. Flagged in docs/project/owner-review.md."
+  ],
+  "credits": {},
+  "terms": [
+    { "term": "Term 1", "courses": ["ARCH225", "ARCH226", "ARCH420"] },
+    { "term": "Term 2", "courses": ["ARCH423", "ARCH435", "ARCH481", "ARCH482"] }
+  ]
+}

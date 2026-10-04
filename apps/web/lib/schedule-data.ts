@@ -3,14 +3,14 @@
 // CDNs cache the responses far longer (see app/api/schedule/[...path]/route.ts).
 
 import { cacheLife } from "next/cache";
-import { defaultSnapshotDir, FileSnapshotStore } from "@superterp/campus-data/snapshots";
+import { openSnapshotStore, type SnapshotStore } from "@turboterp/campus-data/snapshots";
 
-let store: FileSnapshotStore | null = null;
+let store: SnapshotStore | null = null;
 
 /** The file's data, or null when it hasn't been built (fresh checkout, CI). */
 export async function readScheduleFile(key: string): Promise<unknown | null> {
   "use cache";
   cacheLife({ stale: 60, revalidate: 300, expire: 86400 });
-  const snap = await (store ??= new FileSnapshotStore(defaultSnapshotDir())).get<unknown>(key);
+  const snap = await (store ??= openSnapshotStore()).get<unknown>(key);
   return snap?.data ?? null;
 }

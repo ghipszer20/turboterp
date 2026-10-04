@@ -108,18 +108,62 @@ the Student Academic Success-Degree Completion Policy section of this catalog
 
 ## Sample plan (https://drive.google.com/uc?export=download&id=1W2lqXy4Ra_wafe8_uFEihlgakWSZOBZK#Theatre)
 
-!"#$
-%% !"#$
-&& !"#$
-'
-()** +,-./01234567891:;177< ;=>?767@ABCDEFGHI>9JKLMNOP =JQR9JS4TGLHTLU@=4CDD1:;1555 FJQV@FACD AHJSWXTYLJU8HGHZ@AYC1:;155[ AY:\7]^ :R_JHGXLU@:\CDD`HL1234abcOO7T9LKGQ 1:;1555 1:;155[1234567 1:;177<1234abcOO7T9LKGQ1234567JHK1:;177< :R_JHGXLU@:\CDD `9JSN8__RHGTJX8H@`NC1d8JKKGX8HJS1234abcOO7T9LKGQLJTV >S8eJS;HZJZL_LHQf7 4TV8SJ9UVGgGH39JTXTL@43Cf7DDh8R9A9LJJHK4Rgg89XHZT8R9ULU 1:;1[c6 >S8eJS;HZJZL_LHQf51:;13L9i89_JHTL@5jjC 1:;12LUGZH@5jjO[jjC1234abcOO7T9LKGQ 4Rgg89XHZA9LJf7@7jjOajjC;SLTXkL7jjOajj 1234abcOO7T9LKGQ`HLJKKGX8HJS1234abcOO7T9LKGQ =JQR9JS4TGLHTL?Je@=?CDD :GUQ89Wl48TGJS4TGLHTLU@:4CDDhGkLJKKGX8HJSA9LJJHK 4Rgg89XHZA9LJf5@[jjOajjC :GUQ89Wl48TGJS4TGLHTLU@:4CDD4Rgg89XHZT8R9ULU 1:;12LUGZH@[jjC 4Rgg89XHZA9LJf[@[jjajjC1:;1a6^ma^^m89a^c 1:;1[c7;SLTXkL7jjOajj 1234abcOO7T9LKGQ;SLTXkL7jjOajj398iLUUG8HJSB9GXHZ@3BC 4Rgg89XHZA9LJf]@[jjajjC4TV8SJ9UVGgGH39JTXTL@43Cf5DD ;SLTXkL[jjOajj4Rgg89XHZA9LJfa@[jjajjC ;SLTXkL7jjOajj;SLTXkL[jjOajj ;SLTXkL7jjOajj;SLTXkL[jjOajj18QJSN9LKGQUi892LZ9LLM756n[cT9LKGQU_RUQeL[jjOajjSLkLS
-opqrstuvwxytrtzs{r|tt}zv~rvqtwtqrtq
-opqrstuvwxytrtzs{r|tt}zv~~vpqtwtqrtq
-opqrstuvwxytrtzs{r|tt}zv~qqtwtqrtq
-
-¡¢£¤£¥£¦§¨£©¢ª§£¦«©£¬§®§¯¯°¦¦©§±¦¨²®®³¬´©®¢£££±±´©¡μ®¶·¬§¸¹¢º§©£§©®§¶»¦£¦®¬£§©¼¦£¦¼±§£¥£¦¡¦½¦¦²®®³¬´©®£¶®¸
-!    "!   #$%  &!   ' (  )*+ ,$ -#$%#%,.% //0-#$% 1 )* 23/  4 )!/.% //0-  12   5"6/ )7
-89:;<=9>9?@ABCDE=9F<@AGDEH;=A9A IH;=A9 I=9F<@A J=KF989:;<=9>9?@ABLDE=9F<@AGMEH;=A9A IH;=A9 I=9F<@A J=KF9 89:;<=9>9?@A I=9F<@A J=KF989:;<=9>9?@ABNE=9F<@AGLEH;=A9A IH;=A9 I=9F<@A J=KF989:;<=9>9?@ABOPNE=9F<@AGLEH;=A9A IH;=A9 I=9F<@A J=KF9 QRS9=TH=>K?E9Q=9KUVE=9F<@AWXYRZ9A<[?Q=9KUNE=9F<@A\VE=9F<@A>;A@]9V^^PO^^WXX89:;<=9>9?@AB_PVE=9F<@A IH;=A9 I=9F<@A J=KF9 IR`<A@H=aGbc9H=aQ=9KUdE=9F<@AWXX
-efghijklmenoekkpqrstuvwrxmwyz{|qx} enoeiiisztenoeii~gmluwlzsxmwyz{|gx} zuefghkrmutwmslvv|}s|q} efghijksztenoekkpqzsyruslzwz{|q} elsttwylzsefghkrmutwusrlmqmusszthlmyz{lmusmshrwuzrus|} zusttwylzsefghkrmutwsmshrwuzru|h} wusttwylzsqmusszthlmyz{lmunwlmhlrwshrwuzru|nh}nwlmhlrwshrwuzru|nh}nvszwyu|n}nvszwyu|n}hrlsmwwzgmsryru|hg}hrlsmwwzgmsryru|hg}zlzvslm efghijkenoekkpenoeiiienoeii~w{uylz|h} efghkrmw{uylz|h} efghkrmefghkrmefghkrmztumsztwz{gmshlr|g}ztumsztwz{gmshlr|g} enoeimslvuuzr|} enoeienoe~enoe~jenoe~kenoe|enoejlm}fogekfoge~foge~foge~foge~
- ¡¢£¤¥¦§¨©ª«¬ ®¤¯°±° ²³´³μ¶·¸¹¶¸¹º¶»¹¼½´¶¾¼ºº¹¿³Àº¹´¹ÁÂÃ´³ÃÂÄ¹¶Âμ¹¶ÃÂ¶ÅÆÇÈÉÊËÌÍÎÏÐËÍÑÒÓÔÒÕÖ×ØÙÓÒÎÔÚÕÛ
-ÈÈÉÜÓÒÏÝÒÍÌÕÖ×ÞÙÓÒÎÔÚÕÛËÓ ÈÈÈÉÑÌßßËÓÐÍàáËÌÓÕÒÕÖ×âÙÓÒÎÔÚÕã×äÙÓÉåÌÕÚæÒçèèéêèèÛëìíîïðñíòóôïõöíðï÷ïìòñøùðúðöùìôëôïõöíðï÷ïìòñøùðúðöùì        !" #$%% #  &  '%% # ()*+# ,%% -. /00  12344567849:;;84<6=>?5@AB:CDEFFGHFFI4J856586KJ?86:J=?L4C:C=;689?55?4CA112344567849:;;84<6=>?5@AM496I4J8565748@369:N489:D:>54I4JC@@4O:8=P6C68:>Q=JI:L4C86KJ?8696C@5A
+(OCR text; may contain recognition errors)
+Theatre Four Year Academic Plan
+[ BenchmarkiReuirememts | |
+I 7 UTS
+IE CE
+Yaz 0 |
+| BenchmorkzRequrements | [|
+CC fowesicen [swovsenmesm |
+I LY Ts
+Yas |
+ET
+I 7 SE i =
+or [eectvenoaw
+I
+EE 7 Cr LE
+fsclchonpaccesnir frevesn |
+Toweonmawmbuan  [eawedotm |
+Jeeves [electvelods
+I 7 SE A
+rr
+rrr]
+L  [mraicredisforDegreei 120; 39 credits must be xcdoclevel |
+Societies and Cultural Competence courses may also fulfill Distributive Studies categories.
+[Academic Writing (AW) (Min. Grade: | enaiaon | [|
+[Professional wring ew) | || |
+[omiCommeto0 [| [|
+Mahal [| [|
+[AnalyticReasoning (AR) |] [|]
+[Nawrsi Science abv) | [|
+[Nawralsciencesvs) [| 1 |
+[History/Social Sciences ts) [1 [|]
+[FistorySociaSeences (v5) | | | |
+[Fumanites Go) [| |
+[Fumanites (0) [||
+[scholarship inPrectice(sp) [1 [|]
+[Scholarship n Practice (Pl monmajor | | | forsar [|
+Big Question fore
+EE —
+riers |
+Boquestongs | | | foeapae | |
+gusto | | | fomapia | | |
+overs ops aoe |||
+(overlap permitted with Distributive Studies and/or Big Question) WTOPS479-1c. [| |
+[UnderstandngPloraisoc fo | | ||
+Er
+Cultural competency (cc)
+Experiential Learming- optional fieroodo [|
+Ee
+TT fesse TT |
+1 fem | |
+[rer aoc (rer acs, domorae |||
+[rem soasmmveameao | [] Foroode TT |
+[501 ro cots mone somes sso | [] Poeersoche ||
+[2 oper ove mgr cea ms vecomessomo | [J Woeerseche ||
+CE NE
+wos [[] forerseme | | |
+[RU 58 or cute (rappicabiel | [| [Croom avoreveai. any oc ccrse require audion ond person.
+ES Bw I
+I

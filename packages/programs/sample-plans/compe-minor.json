@@ -1,0 +1,16 @@
+{
+  "programId": "compe-minor",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/engineering/electrical-and-computer/computer-engineering-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog: prerequisites ENEE150 and MATH141, ENEE244, ENEE245, ENEE350, ENEE351, and ENEE436 and ENEE440 as the two electives. Flagged in docs/project/owner-review.md."
+  ],
+  "credits": { "MATH141": 4, "ENEE245": 2, "ENEE351": 4 },
+  "terms": [
+    { "term": "Term 1", "courses": ["ENEE150", "MATH141"] },
+    { "term": "Term 2", "courses": ["ENEE244", "ENEE245"] },
+    { "term": "Term 3", "courses": ["ENEE350", "ENEE351"] },
+    { "term": "Term 4", "courses": ["ENEE436", "ENEE440"] }
+  ]
+}

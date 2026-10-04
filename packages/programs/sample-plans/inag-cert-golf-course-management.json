@@ -1,0 +1,55 @@
+{
+  "programId": "inag-cert-golf-course-management",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/agriculture-natural-resources/applied-agriculture/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "The IAA's two-year plans (go.umd.edu/program-plans) were not captured. Constructed from the catalog requirements; advisor-approved electives omitted (no list). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    {
+      "term": "Term 1",
+      "courses": [
+        "ENGL101",
+        "INAG100",
+        "INAG105",
+        "PLSC205"
+      ]
+    },
+    {
+      "term": "Term 2",
+      "courses": [
+        "INAG110",
+        "MATH113",
+        "INAG106",
+        "INAG207"
+      ]
+    },
+    {
+      "term": "Term 3",
+      "courses": [
+        "INAG214",
+        "INAG226",
+        "INAG231",
+        "INAG288"
+      ]
+    },
+    {
+      "term": "Term 4",
+      "courses": [
+        "INAG235",
+        "INAG250",
+        "INAG242",
+        "INAG201"
+      ]
+    },
+    {
+      "term": "Term 5",
+      "courses": [
+        "INAG206",
+        "INAG215",
+        "INAG289"
+      ]
+    }
+  ]
+}

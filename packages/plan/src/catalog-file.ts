@@ -5,7 +5,7 @@
 // Shape (v1): { v: 1, term: "202701", generatedAt, courses: CompactCourse[] }, one entry per
 // course with short keys and empty fields left out.
 
-import type { Requirement } from "@superterp/course-data/prereqs";
+import type { Requirement } from "@turboterp/course-data/prereqs";
 import type { CatalogCourse, PlanCatalog } from "./catalog.ts";
 
 export const CATALOG_FILE_VERSION = 1;

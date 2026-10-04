@@ -1,0 +1,20 @@
+{
+  "programId": "mathed-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/mathematics-education-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no readable Secondary Math Education 4-year plan in the fetched sources. Constructed from the catalog table: TLPL101/102 first (Terrapin Teachers), pre-professional courses next, TLPL403/479/478 in senior fall (per the catalog) and the TLPL489 internship last. Gen Ed and the mathematics content courses (not in the source) are left out. BSCI348 (a stale-looking catalog row) is left out; see KNOWN_FAILURES. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["TLPL101", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["TLPL102"] },
+    { "term": "Sophomore Fall", "courses": ["MATH274", "TLPL250"] },
+    { "term": "Sophomore Spring", "courses": ["EDHD426"] },
+    { "term": "Junior Fall", "courses": ["MATH470", "TLPL488"] },
+    { "term": "Junior Spring", "courses": ["TLPL401"] },
+    { "term": "Senior Fall", "courses": ["TLPL403", "TLPL479", "TLPL478", "TLPL488"] },
+    { "term": "Senior Spring", "courses": ["TLPL489"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}

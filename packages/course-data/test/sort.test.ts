@@ -3,7 +3,7 @@
 
 import { describe, expect, it } from "vitest";
 import type { Layout } from "../src/schedules.ts";
-import { layoutMetrics, sortLayouts } from "../src/sort.ts";
+import { gpaKey, groupScore, layoutMetrics, RECOMMEND_WEIGHTS, sectionScore, sortLayouts } from "../src/sort.ts";
 import type { Meeting, Section } from "../src/soc.ts";
 
 const mins = (t: string) => Number(t.split(":")[0]) * 60 + Number(t.split(":")[1]);
@@ -157,5 +157,56 @@ describe("sortLayouts: simple keys", () => {
     const rated = layout("rated", [sec("A", ["Ada Good"], 5, at(["M"], "08:00", "08:50"))]);
     const plain = layout("plain", [sec("A", [], 5, at(["W"], "08:00", "08:50"))]);
     expect(names(sortLayouts([plain, rated], "fewestDays", { ratings }))).toEqual(["rated", "plain"]);
+  });
+});
+
+describe("sortLayouts: recommended", () => {
+  const t = at(["M"], "11:00", "11:50");
+  const gpas = { [gpaKey("A", "Ada Good")]: 3.8, [gpaKey("A", "Di Bad")]: 2.0 };
+
+  it("weights sum to 1, rating and GPA count double the seats", () => {
+    const { rating, gpa, seats } = RECOMMEND_WEIGHTS;
+    expect(rating + gpa + seats).toBeCloseTo(1);
+    expect(rating).toBeGreaterThan(seats);
+    expect(gpa).toBeGreaterThan(seats);
+  });
+
+  it("counts missing rating and GPA as neutral (0.5)", () => {
+    const s = sec("A", ["Nobody"], 0, t);
+    expect(sectionScore(s, { ratings, gpas })).toBeCloseTo(0.4 * 0.5 + 0.4 * 0.5);
+  });
+
+  it("scores missing grade data like a typical 3.0 GPA, not a 2.0", () => {
+    const typical = { [gpaKey("A", "Mid")]: 3.0 };
+    expect(sectionScore(sec("A", ["Nobody"], 0, t))).toBeCloseTo(sectionScore(sec("A", ["Mid"], 0, t), { gpas: typical }));
+  });
+
+  it("saturates open seats at 10", () => {
+    const ten = sec("A", ["Nobody"], 10, t);
+    const fifty = sec("A", ["Nobody"], 50, t);
+    const five = sec("A", ["Nobody"], 5, t);
+    expect(sectionScore(ten)).toBeCloseTo(sectionScore(fifty));
+    expect(sectionScore(ten)).toBeGreaterThan(sectionScore(five));
+  });
+
+  it("uses a group's best section", () => {
+    const g = [sec("A", ["Di Bad"], 5, t), sec("A", ["Ada Good"], 5, t)];
+    expect(groupScore(g, { ratings, gpas })).toBeCloseTo(sectionScore(g[1]!, { ratings, gpas }));
+  });
+
+  it("ranks by rating + GPA + seats, and leaves 'best' alone", () => {
+    const easy = layout("easy", [sec("A", ["Di Bad"], 30, t)]);
+    const loved = layout("loved", [sec("A", ["Ada Good"], 4, t)]);
+    expect(names(sortLayouts([easy, loved], "recommended", { ratings, gpas }))).toEqual(["loved", "easy"]);
+    // seats separate otherwise equal layouts; "best" ignores seats and keeps input order
+    const roomy = layout("roomy", [sec("A", ["Ada Good"], 12, t)]);
+    expect(names(sortLayouts([loved, roomy], "recommended", { ratings, gpas }))).toEqual(["roomy", "loved"]);
+    expect(names(sortLayouts([loved, roomy], "best", { ratings, gpas }))).toEqual(["loved", "roomy"]);
+  });
+
+  it("ties fall back to the best-first order", () => {
+    const gappy = layout("gappy", [sec("A", ["X"], 5, at(["M"], "08:00", "08:50"), at(["M"], "15:00", "15:50"))]);
+    const tight = layout("tight", [sec("A", ["X"], 5, t)]);
+    expect(names(sortLayouts([gappy, tight], "recommended"))).toEqual(["tight", "gappy"]);
   });
 });

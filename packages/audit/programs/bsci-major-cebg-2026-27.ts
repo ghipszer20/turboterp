@@ -28,6 +28,7 @@ export const bsciMajorCebg: Program = {
     "Biological Sciences Undergraduate Program, Cell Biology and Genetics CEBG (0404A) degree sheet, " +
     "https://bsci.umd.edu/s/CEBG-Curriculum-2026.pdf (fetched 2026-09-27)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Basic Program and Supporting Courses are identical across every Biological Sciences specialization (see bsci-major-genb-2026-27.ts's review notes for the biology-lab, math-sequence and freshman-seminar encodings, which repeat here).",
@@ -35,7 +36,7 @@ export const bsciMajorCebg: Program = {
     "'Enrichment: 3 credits, from any 300- or 400-level BSCI, CHEM, or BCHM course' is encoded as a `choose` credit pool over that department/number-range filter directly (the department page's own wording is already filter-shaped, unlike the Area courses above).",
     "'Two courses designated as Lab' is not encoded -- no lab-designation field on StudentCourse.",
     "Special Topics, honors seminars, and research/internship/teaching-practicum credit toward Enrichment (BSCI328/338/339/348/439, BSCI378H/398H, BSCI349/359/379/389/399) are not encoded -- variable section codes and/or advisor-gated, credit-count-limited in ways the engine can't track.",
-    "Not encoded (engine gap, both sources agree): the 2.0 cumulative GPA and 2.0 major-average-GPA requirements.",
+    "Not encoded (engine gap, both sources agree): the 2.0 cumulative (university) GPA requirement. Program GPA 2.0 encoded as minGpa.",
   ],
   requirements: [
     { kind: "course", id: "bsci160", name: "Ecology and Evolution 1", options: ["BSCI160"] },

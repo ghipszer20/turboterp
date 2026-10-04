@@ -3,7 +3,7 @@
 
 export type Theme = "light" | "dark";
 
-export const THEME_STORAGE_KEY = "superterp-theme";
+export const THEME_STORAGE_KEY = "turboterp-theme";
 
 export function resolveTheme(saved: string | null, systemPrefersDark: boolean): Theme {
   if (saved === "light" || saved === "dark") return saved;

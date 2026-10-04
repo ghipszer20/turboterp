@@ -9,9 +9,9 @@
     "Intermediate theory slot filled with ECON305 (4 credits, noted in the credits map).",
     "Track II Electives (6 credits, 300-400 ECON) filled with ECON310 and ECON311, real ECON courses not otherwise required by this track."
   ],
-  "credits": { "ECON305": 4 },
+  "credits": { "ECON305": 4, "UNIV100": 1 },
   "terms": [
-    { "term": "Freshman Fall", "courses": ["SDSB123", "STAT100"] },
+    { "term": "Freshman Fall", "courses": ["SDSB123", "STAT100", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["MATH120", "ECON200"] },
     { "term": "Sophomore Fall", "courses": ["SDSB233", "ECON201"] },
     { "term": "Sophomore Spring", "courses": ["SDSB326", "INST327"] },

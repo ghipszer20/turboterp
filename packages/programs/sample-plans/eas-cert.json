@@ -1,0 +1,15 @@
+{
+  "programId": "eas-cert",
+  "source": "https://sllc.umd.edu/fields/east-asian/certificate",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this certificate. Constructed from the department page: HIST284, HIST285, CHIN121 and CHIN122 (language), and 12 elective credits (CHIN207 lower level; CHIN315, CHIN331, JAPN315 upper level). The CEAS approved-course lists are not published, so these electives are real East Asia courses chosen by the builder. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["HIST284", "CHIN121"] },
+    { "term": "Term 2", "courses": ["HIST285", "CHIN122"] },
+    { "term": "Term 3", "courses": ["CHIN207", "CHIN315"] },
+    { "term": "Term 4", "courses": ["CHIN331", "JAPN315"] }
+  ]
+}

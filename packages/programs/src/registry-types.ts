@@ -2,8 +2,8 @@
 // registry.generated.ts (which needs ProgramEntry) and registry.ts (which re-exports it) don't
 // import each other's values, only this file's types.
 
-import type { Program } from "@superterp/audit";
-import type { College } from "@superterp/plan/credit-caps";
+import type { NotOpenTo, Program } from "@turboterp/audit";
+import type { College } from "@turboterp/plan/credit-caps";
 
 export type ProgramKind = "major" | "minor" | "certificate" | "special";
 
@@ -28,5 +28,9 @@ export type ProgramEntry = {
   track?: string;
   /** The catalog page and the department's own page (the department page wins where they differ). */
   sources: { catalog?: string; department?: string };
+  /** Majors this program is closed to (ProgramMeta.notOpenTo); see src/eligibility.ts. */
+  notOpenTo?: NotOpenTo;
+  /** Majors this program is open only to (ProgramMeta.onlyOpenTo); see src/eligibility.ts. */
+  onlyOpenTo?: NotOpenTo;
   load: () => Promise<Program>;
 };

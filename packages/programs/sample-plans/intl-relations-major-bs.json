@@ -12,7 +12,7 @@
     "Math/Statistics Benchmark: STAT100."
   ],
   "terms": [
-    { "term": "Freshman Fall", "courses": ["GVPT170"] },
+    { "term": "Freshman Fall", "courses": ["GVPT170", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["STAT100", "GVPT201"] },
     { "term": "Sophomore Fall", "courses": ["GVPT200", "GVPT320"] },
     { "term": "Sophomore Spring", "courses": ["GVPT280", "ECON200"] },
@@ -20,5 +20,6 @@
     { "term": "Junior Spring", "courses": ["GVPT354", "GVPT356"] },
     { "term": "Senior Fall", "courses": ["GVPT357", "GVPT377"] },
     { "term": "Senior Spring", "courses": ["GVPT388"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

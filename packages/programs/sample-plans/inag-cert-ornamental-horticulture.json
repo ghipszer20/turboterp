@@ -1,0 +1,48 @@
+{
+  "programId": "inag-cert-ornamental-horticulture",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/agriculture-natural-resources/applied-agriculture/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "The IAA's two-year plans (go.umd.edu/program-plans) were not captured. Constructed from the catalog requirements; advisor-approved electives omitted (no list). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    {
+      "term": "Term 1",
+      "courses": [
+        "ENGL101",
+        "INAG100",
+        "INAG105",
+        "INAG102"
+      ]
+    },
+    {
+      "term": "Term 2",
+      "courses": [
+        "INAG110",
+        "MATH113",
+        "INAG106",
+        "INAG224"
+      ]
+    },
+    {
+      "term": "Term 3",
+      "courses": [
+        "INAG226",
+        "INAG231",
+        "PLSC253",
+        "INAG288"
+      ]
+    },
+    {
+      "term": "Term 4",
+      "courses": [
+        "INAG250",
+        "INAG201",
+        "INAG204",
+        "INAG206",
+        "INAG289"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "programId": "aaas-cert",
+  "source": "https://aaas.umd.edu/undergraduate/certificate-african-american-studies",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this certificate. Constructed from the requirements: AAAS100, AAAS101, AAAS200, three upper-level AAAS courses (AAAS302, AAAS306, AAAS310: the department names none, so real courses from the AAAS major plan are used) and AAAS400 as the seminar. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["AAAS100", "AAAS101"] },
+    { "term": "Term 2", "courses": ["AAAS200", "AAAS302"] },
+    { "term": "Term 3", "courses": ["AAAS306", "AAAS310"] },
+    { "term": "Term 4", "courses": ["AAAS400"] }
+  ]
+}

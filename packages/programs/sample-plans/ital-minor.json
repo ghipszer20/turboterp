@@ -1,0 +1,13 @@
+{
+  "programId": "ital-minor",
+  "source": "https://sllc.umd.edu/italian",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog requirements: ITAL204, 207, 301, 311 plus ITAL401 as the extra 3xx/4xx course. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["ITAL204", "ITAL207", "ITAL301"] },
+    { "term": "Term 2", "courses": ["ITAL311", "ITAL401"] }
+  ]
+}

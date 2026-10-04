@@ -14,7 +14,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ pat
     const data = await readScheduleFile(found.key);
     if (data === null) {
       return Response.json(
-        { error: "Course data hasn't been built yet (npm run schedule-data -w @superterp/course-data)." },
+        { error: "Course data hasn't been built yet (npm run schedule-data -w @turboterp/course-data)." },
         { status: 404, headers: { "Cache-Control": "public, max-age=60" } },
       );
     }

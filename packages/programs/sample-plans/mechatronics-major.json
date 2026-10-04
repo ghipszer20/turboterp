@@ -10,7 +10,7 @@
     "The plan's three open elective slots (Year 4 Spring: two 'ENMT 4xx' and one 'ENXX 4xx') are left out entirely -- no source names a department, number floor, or course list for them; see mechatronics-major-2026-27.ts's reviewNotes and docs/project/owner-review.md."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["MATH140", "CHEM135", "ENES100", "ENGL101"] },
+    { "term": "Year 1 Fall", "courses": ["MATH140", "CHEM135", "ENES100", "ENGL101", "UNIV100"] },
     { "term": "Year 1 Spring", "courses": ["MATH141", "PHYS161", "ENES102", "ENAE202"] },
     { "term": "Year 2 Fall", "courses": ["MATH241", "PHYS260", "PHYS261", "ENES220"] },
     { "term": "Year 2 Spring", "courses": ["MATH246", "MATH240", "ENES232", "PHYS270", "PHYS271"] },
@@ -18,5 +18,6 @@
     { "term": "Year 3 Spring", "courses": ["ENMT313", "ENMT332", "ENMT362", "ENMT372", "ENGL393"] },
     { "term": "Year 4 Fall", "courses": ["ENMT450", "ENMT471", "ENMT473", "ENMT483"] },
     { "term": "Year 4 Spring", "courses": ["ENMT477", "ENMT484"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

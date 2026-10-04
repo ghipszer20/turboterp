@@ -1,0 +1,20 @@
+{
+  "programId": "ensp-major-culture-environment",
+  "source": "https://agnr.umd.edu/sites/agnr.umd.edu/files/files/documents/ENSP%20FourYrPlan_BSOS%20Culture%20%26%20Environ.pdf",
+  "fetched": "2026-09-28",
+  "official": true,
+  "notes": [
+    "Official four-year plan transcribed with Gen Ed slots left out; unnamed Restricted Elective / Techniques & Methods slots are not encoded, so they are left out too. Calculus filled with MATH120; Statistics with PSYC200; the plan's 'Two of BSCI160/161...' with BSCI160 and BSCI161 (Biology), AREC240 (Economics), GEOG130 (Geography) and GEOG201/211 (Earth Sciences); 'RE in ANTH 1-4' filled with ANTH210, ANTH323, ANTH415, ANTH440; Applied Science and Policy ('ENSP 305, 330, 340 or 342') filled with ENSP330; ANTH240/340 taken for the archaeology sequence."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["ENSP101", "MATH120", "GEOG130", "ANTH222", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["ENSP102", "AREC240", "GEOG201", "GEOG211"] },
+    { "term": "Sophomore Fall", "courses": ["ANTH240", "BSCI160", "BSCI161"] },
+    { "term": "Sophomore Spring", "courses": ["ANTH340", "PSYC200"] },
+    { "term": "Junior Fall", "courses": ["ANTH322", "ANTH210"] },
+    { "term": "Junior Spring", "courses": ["ENSP330", "ANTH323"] },
+    { "term": "Senior Fall", "courses": ["ENSP400", "ANTH415"] },
+    { "term": "Senior Spring", "courses": ["ANTH440"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}

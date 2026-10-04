@@ -52,6 +52,7 @@ export const ppeMajor: Program = {
     "(https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/philosophy/philosophy-politics-economics-major/); " +
     "College of Arts and Humanities Philosophy, Politics, and Economics Four Year Academic Plan (department source), fetched 2026-09-28",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Catalog's elective list includes a bare 'WMST400' entry (no title/credits, likely a stray cross-listing " +
@@ -71,11 +72,10 @@ export const ppeMajor: Program = {
       "requirement structure (Disciplinary Foundations six courses, Core Sequence three courses, four " +
       "electives/12 credits, 39 total credits); the plan's ARHU-level items (ARHU 158, Global Engagement, Gen " +
       "Ed, generic 'Elective 1xx-4xx' breadth slots) are college/university layers, out of scope here.",
-    "Not encoded (engine gaps): an overall 2.0 GPA average across courses counted toward the major (grades " +
-      "of C- must be balanced with higher grades), residency rules (30 credits at UMD, 15 of the final 30 " +
+    "Not encoded (engine gaps): residency rules (30 credits at UMD, 15 of the final 30 " +
       "credits at 300-400 level, 12 upper-level major credits at UMD), and the 120-credit graduation minimum " +
       "(with 39 of those credits at 3xx-4xx level, a college-wide rule, not specific to this major). The audit " +
-      "engine checks per-requirement course assignment and per-course minGrade, not GPA, residency, or credit " +
+      "engine checks per-requirement course assignment and per-course minGrade and program minGpa, not residency, or credit " +
       "totals.",
   ],
   requirements: [

@@ -113,9 +113,9 @@ export const arecCommonReviewNotes: string[] = [
     "as the calculus gateway. The stated 3-6 credit range doesn't match either gateway's 3-credit " +
     "face value times two (6); not investigated further since the engine doesn't check requirement " +
     "credit totals, only per-course grades.",
-  "Not encoded (engine gap, matches other majors' precedent): the catalog's 2.00 cumulative GPA " +
-    "requirement across all courses used to satisfy major requirements (the per-course C- floor IS " +
-    "encoded via minGrade); any UMD/AGNR residency rules (none stated on this catalog page, unlike " +
+  "Program GPA 2.0 encoded as minGpa (the catalog's 2.00 GPA across all courses used to satisfy major " +
+    "requirements; the per-course C- floor is minGrade).",
+  "Not encoded (engine gap, matches other majors' precedent): any UMD/AGNR residency rules (none stated on this catalog page, unlike " +
     "other majors' department checklists); and the major's own 39-42 total-credit range plus each " +
     "specialization's 24-credit total, which the audit has no concept for.",
   "'Other upper-level AREC courses with permission of advisor' (each specialization's 'select five' " +

@@ -1,0 +1,14 @@
+{
+  "programId": "span-minor-heritage-latino-culture",
+  "source": "https://sllc.umd.edu/spanish",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog requirements: SPAN307 for the select-one slot and SPAN370 for the advanced slot. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["SPAN206", "SPAN306"] },
+    { "term": "Term 2", "courses": ["SPAN303", "SPAN311"] },
+    { "term": "Term 3", "courses": ["SPAN307", "SPAN370"] }
+  ]
+}

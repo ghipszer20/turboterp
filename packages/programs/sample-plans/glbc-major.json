@@ -10,7 +10,7 @@
     "Gen Ed and general-elective slots are left out: only the major is audited."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["GLBC200"] },
+    { "term": "Year 1 Fall", "courses": ["GLBC200", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["FREN204"] },
     { "term": "Year 2 Fall", "courses": ["FREN250", "GLBC360"] },
     { "term": "Year 2 Spring", "courses": ["FREN301"] },

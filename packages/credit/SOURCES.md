@@ -1,6 +1,6 @@
-# Sources for `@superterp/credit`
+# Sources for `@turboterp/credit`
 
-Fetched on 2026-09-25 with SuperTerp's User-Agent. The Registrar page, the catalog page, the current AP and IB charts, and the unlinked 2024 AP chart were each downloaded once (plus one HEAD request per PDF for its `Last-Modified` date). The Transfer Course Database took five requests: the start page, the search page, the institution search twice (the first used `countryCode=USA` and returned nothing), and one institution page. The older charts and the database help page were only found as links and never fetched. No code in this package touches the network.
+Fetched on 2026-09-25 with TurboTerp's User-Agent. The Registrar page, the catalog page, the current AP and IB charts, and the unlinked 2024 AP chart were each downloaded once (plus one HEAD request per PDF for its `Last-Modified` date). The Transfer Course Database took five requests: the start page, the search page, the institution search twice (the first used `countryCode=USA` and returned nothing), and one institution page. The older charts and the database help page were only found as links and never fetched. No code in this package touches the network.
 
 ## Where UMD publishes it
 

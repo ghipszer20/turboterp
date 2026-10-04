@@ -2,7 +2,7 @@
 // overkill on the campus map - only need UMD campus"), plus the pure geometry for showing
 // where a route's line leaves that box.
 
-import type { LonLat } from "@superterp/campus-data";
+import type { LonLat } from "@turboterp/campus-data";
 
 export type CampusBounds = { west: number; south: number; east: number; north: number };
 

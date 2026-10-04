@@ -10,7 +10,7 @@
     "WMST400, which appears as a bare, titleless line in the catalog's elective list, is not used anywhere in this plan or the Program's elective list -- see reviewNotes on the Program and docs/project/owner-review.md (department plan's elective list omits it; department page wins per owner ruling)."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["PHIL140", "GVPT170"] },
+    { "term": "Year 1 Fall", "courses": ["PHIL140", "GVPT170", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["ECON200", "PLCY100"] },
     { "term": "Year 2 Fall", "courses": ["ECON201", "PHIL245"] },
     { "term": "Year 2 Spring", "courses": ["PHPE400", "PHIL170"] },

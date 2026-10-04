@@ -17,6 +17,7 @@ export const arthMajor: Program = {
     "(https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/art-history-archaeology/art-history-major/); " +
     "College of Arts and Humanities Art History Four Year Academic Plan (department source), fetched 2026-09-28",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "'Select three ARTH courses at the 2xx level, one of which may be a Big Question course' (catalog " +
@@ -43,9 +44,9 @@ export const arthMajor: Program = {
     "Not encoded (engine gap: no requirement type caps credits by specific course number within a `choose` " +
       "pool): the catalog's per-course credit caps on special-topics numbers (at most 3 credits of 269/289, " +
       "6 credits of 369, 6 credits of 389).",
-    "Not encoded (engine gaps): an overall 2.0 GPA in the major, residency rules (implied by ARHU norms; " +
+    "Not encoded (engine gaps): residency rules (implied by ARHU norms; " +
       "not restated on this program's own catalog page), and the 120-credit graduation minimum stated on " +
-      "the four-year plan.",
+      "the four-year plan. Program GPA 2.0 encoded as minGpa.",
   ],
   requirements: [
     {

@@ -12,7 +12,7 @@
     "Exact term placement (which year/semester) for the 6 elective courses is reconstructed rather than read verbatim, because the source's term-grid OCR is garbled beyond reliable per-term parsing; the requirement-satisfying set of 12 courses and their identities are read directly from the source's own labels, only their year/semester slotting is estimated. Flagged in docs/project/owner-review.md."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["ARAB101"] },
+    { "term": "Year 1 Fall", "courses": ["ARAB101", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["ARAB102"] },
     { "term": "Year 2 Fall", "courses": ["ARAB201", "ARAB222"] },
     { "term": "Year 2 Spring", "courses": ["ARAB202", "ARAB250"] },

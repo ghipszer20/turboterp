@@ -9,12 +9,9 @@
     "Track choice filled with the Aeronautical Track: ENAE403 or 404 -> ENAE403; ENAE455 or 457 -> ENAE455; ENAE491 or 493 -> ENAE491; ENAE492 or 494 -> ENAE492.",
     "The plan's two generic 'ENAE Elective' slots (Year 4) are filled with ENAE425 (Mechanics of Composite Structures) and ENAE471 (Aircraft Flight Testing), both from the catalog's 'Aerospace Electives' list; neither is required by the Aeronautical track, so both are eligible."
   ],
-  "credits": {
-    "ENAE100": 1, "ENAE203": 1, "ENAE222": 4, "MATH140": 4, "MATH141": 4, "MATH241": 4,
-    "PHYS261": 1, "MATH243": 4, "PHYS271": 1, "ENAE480": 2, "ENAE491": 2
-  },
+  "credits": { "ENAE100": 1, "ENAE203": 1, "ENAE222": 4, "MATH140": 4, "MATH141": 4, "MATH241": 4, "PHYS261": 1, "MATH243": 4, "PHYS271": 1, "ENAE480": 2, "ENAE491": 2, "UNIV100": 1 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["ENAE100", "ENES100", "MATH140", "CHEM135"] },
+    { "term": "Year 1 Fall", "courses": ["ENAE100", "ENES100", "MATH140", "CHEM135", "UNIV100"] },
     { "term": "Year 1 Spring", "courses": ["ENAE202", "ENES200", "MATH141", "PHYS161"] },
     { "term": "Year 2 Fall", "courses": ["ENAE203", "ENAE222", "ENAE283", "MATH241", "PHYS260", "PHYS261"] },
     { "term": "Year 2 Spring", "courses": ["ENAE284", "ENES232", "MATH243", "PHYS270", "PHYS271"] },

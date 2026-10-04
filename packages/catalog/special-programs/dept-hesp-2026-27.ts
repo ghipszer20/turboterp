@@ -2,7 +2,7 @@
 // Source: https://hesp.umd.edu/undergraduate/honors-hearing-and-speech-sciences-undergraduate-students
 // (fetched 2026-09-27). Hand-transcribed. UNVERIFIED.
 
-import type { Program } from "@superterp/audit";
+import type { Program } from "@turboterp/audit";
 import { CATALOG_YEAR } from "./common.ts";
 
 export const SOURCE = "https://hesp.umd.edu/undergraduate/honors-hearing-and-speech-sciences-undergraduate-students";

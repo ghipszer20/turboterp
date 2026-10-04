@@ -1,7 +1,7 @@
 // Departmental Honors: Art History & Archaeology.
 // Source: https://arthistory.umd.edu/academics/undergraduate/honors (fetched 2026-09-26). Hand-transcribed. UNVERIFIED.
 
-import type { Program, ProgramMeta } from "@superterp/audit";
+import type { Program, ProgramMeta } from "@turboterp/audit";
 import { CATALOG_YEAR } from "./common.ts";
 
 export const SOURCE = "https://arthistory.umd.edu/academics/undergraduate/honors";

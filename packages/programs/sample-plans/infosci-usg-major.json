@@ -1,0 +1,18 @@
+{
+  "programId": "infosci-usg-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/universities-shady-grove/information/information-science/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No official term-by-term plan in the fetched sources; constructed from the catalog. Shady Grove is a 2+2 transfer program, so the benchmark courses sit in years 1-2 (transfer credit) and the 20 program courses in years 3-4. Gen Ed slots and the professional writing and open-elective slots (no courses named) are left out.",
+    "Major electives (15 credits of INST) filled with INST364, INST366, INST414, INST447 and INST462, real INST courses not otherwise required."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["MATH115", "PSYC100"] },
+    { "term": "Freshman Spring", "courses": ["STAT100", "INST126"] },
+    { "term": "Junior Fall", "courses": ["INST301", "INST311", "INST314"] },
+    { "term": "Junior Spring", "courses": ["INST326", "INST327", "INST352"] },
+    { "term": "Senior Fall", "courses": ["INST335", "INST346", "INST362", "INST364", "INST366"] },
+    { "term": "Senior Spring", "courses": ["INST414", "INST447", "INST462", "INST490"] }
+  ]
+}

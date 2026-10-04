@@ -1,0 +1,21 @@
+{
+  "programId": "tid-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/information/technology-info-design-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No official term-by-term 4-year plan exists in the fetched sources; constructed from the catalog (docs/project/owner-review.md flags this). Gen Ed slots are left out; only the major is audited.",
+    "Major electives (18 credits) filled with INST311, INST352, INST366, INST401, INST402 and INST405 from the catalog's approved list. INST380 chosen over PLCY380."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["INST104", "INST126", "IDEA258", "INST101"] },
+    { "term": "Freshman Spring", "courses": ["INST201", "SOCY105", "STAT100"] },
+    { "term": "Sophomore Fall", "courses": ["INST204", "INST311", "INST352"] },
+    { "term": "Sophomore Spring", "courses": ["INST367", "INST380"] },
+    { "term": "Junior Fall", "courses": ["INST406", "INST366", "INST401"] },
+    { "term": "Junior Spring", "courses": ["INST454", "INST402", "INST405"] },
+    { "term": "Senior Fall", "courses": ["INST466"] },
+    { "term": "Senior Spring", "courses": ["INST491"] }
+  ],
+  "credits": { "INST101": 1 }
+}

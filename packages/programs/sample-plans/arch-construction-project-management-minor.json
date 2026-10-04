@@ -1,0 +1,14 @@
+{
+  "programId": "arch-construction-project-management-minor",
+  "source": "https://pm.umd.edu/program/cpm-minor",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog and department page: ENCE325, ENCE423, ENCE424, ENCE426 and ARCH467 as the elective. The construction-industry internship is not a course and is not listed. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["ENCE325", "ENCE423"] },
+    { "term": "Term 2", "courses": ["ENCE424", "ENCE426"] },
+    { "term": "Term 3", "courses": ["ARCH467"] }
+  ]
+}

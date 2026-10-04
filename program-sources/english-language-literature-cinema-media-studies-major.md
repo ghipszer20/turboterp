@@ -358,30 +358,126 @@ Web Accessibility
 
 ## Sample plan (https://drive.google.com/uc?export=download&id=1B9ifEzSZ_rtJDP-6P0b5_D-AiNAAEmrw#Critical-Studies)
 
-!"#$%&!'()!")#$%&!'(*+
-,-.. /012345678987:;<=> 87:;?@?ABCDEFGHIJ:KLMNO5PQ 7LRSKLTUVHNIVNWA7UDEEGLRXAGBDE BILTYZV[NLW\IHI]AB[D^HWR\KY9U\VHLTUVHNIVNWA^UDEE ^S_LIHZNWA^`DEEB[^`?>a 8TNVZbN?ccP=cc5678987:;<=>A^`D 56788TNVZbN<ccP=cc5678d@? eKLT5\__SIHVLZ\IAe5D UVX\TLKWXHfHIgKLVZVNAUgDh?EE5678d@< :T\iLT8I]L]N_NIRh? :T\iLT8I]L]N_NIRh<5678d@? 5678d@<8TNVZbN?ccP=cc 56787LZ\ILTj6IRNKILZ\ILTdccP=cc8TNVZbN?ccP=cc 8TNVZbN?ccP=cc7LRSKLTUVHNIVN;LiA7;DEE ^HWR\KY9U\VHLTUVHNIVNWA^UDEE8TNVZbN?ccP=cc gK\kNWWH\ILTCKHZI]AgCD8TNVZbN?ccP=cc 8TNVZbN?ccP=cc56787LZ\ILTj6IRNKILZ\ILTdccP=cc 5678:NIKNWjBSRNSKWjG\bN_NIRWdccP=cc56788TNVZbNdccP=cc 56788TNVZbN<ccP=ccUVX\TLKWXHfHIgKLVZVNAUgDh<EE 8TNVZbN?ccP=cc8TNVZbNdccP=cc 8TNVZbN?ccP=cc8TNVZbNdccP=cc 8TNVZbN?ccP=cc56788TNVZbNdccP=cc 5678:NIKNWjBSRNSKWjG\bN_NIRWdccP=cc5678lXN\KHNWdccP=ccl\RLT5KNMHRWk\KmN]KNNO?<@ndoVKNMHRW_SWRiNdccP=ccTNbNT5678m\VS_NIRLKYjBIH_LZ\Ij\K8cfNKH_NIRLTdccP=cc
-pqrstuvwxyzusu{t|s}uu~{wswruxursur
-pqrstuvwxyzusu{t|s}uu~{wwqruxursur
-¡¢¢£¤¥¦§¤¨©©ª¡¢¤
-!"#$%& '%()*$"+$ ,-.'%(),/.'%()01&2+$ *$&345336'57&8""9$1"%$:(01&2+$ 3&%"+$;%)36029<2"==>$:(01&2+$$?'57&@#A=&"B5.=&"<2"==>$:((?%@
-CDEFGHDIDJKLMNOPHDQGKLROPSFHLDL TSFHLD THDQGKL UHVQDCDEFGHDIDJKLMWOPHDQGKLRXPSFHLDL TSFHLD THDQGKL UHVQD CDEFGHDIDJKL THDQGKL UHVQD
-CDEFGHDIDJKLMYPHDQGKLRWPSFHLDL TSFHLD THDQGKL UHVQDCDEFGHDIDJKLMZ[YPHDQGKLRWPSFHLDL TSFHLD THDQGKL UHVQDCDEFGHDIDJKLM\[]PHDQGKL TSFHLD THDQGKL UHVQD
-^_`abcddef^bg bhijklmno`apqrst`ucovowfnsg bhijxjiyzm{|nr`}tdvr~_vqowfn~g_ctuuvco`a~_vqowf~g bhijkl`fngi`_`arvtortz`fizgi`_`arvtortufig bhijxjiyzm{|fgvuc_pxcrv`arvtortufg bhijklvuc_pxcrv`arvtortufg bhijklmd`ovqtufg bhijm{|d`ovqtufg bhijtc_vtuk{rca`_uvvo_`rqrtfg bhijcrdto`_pnovd`qcoc_jt_vdto`ak{rca`_uvvo_`rqrtfgocod`c_ bhiji`qco`ahot_o`qco`abvotd`uk{bhijyto_tunt_uctdtouk{vwtuqcofhg bhijyto_tunt_uctdtouk{vwtuqcofhg bhiji`qco`ahot_o`qco`abvotd`uk{bhijjatrqtm{bhijjatrqtm{bhijjatrqtk{o}t_u`o}vowa_`acrefg bhijjatrqtk{o}t_u`o}vowa_`acrefgba_`abcdttorpfbbg
-¡¢£ ¤¥¦¥§¨©ª«¨ª«¬¨«®¯¦¨°®¬¬«±¥²¬«¦«³´μ¦¥μ´¶«¨´§«¨μ´¨·¸¹
-º» ¼½¾¿ÀÁÂ¾ÃÄÀÅÃÆÇÂÀÈÄ¾ÉÈÂÅÁ¾ÀÊÃÇËÌÆÂ¾ÍÀ¾ÁÎÀÄÁ¾¾ÉÀÏÐÐ¿ÀÑÀ¿ÒÓÉÀÅÃÆÇÂÀÂÌÆÂ¾ÍÀÂÀ¿ÀÅ¾ÀÔÀÈ¾ÉÀÇÕÇÃÌ¾ÉÀÖÇÀ×ÁÖÖÇÃÑÀÔØÙÚÛÇÆÍÇÈÅÂÃÇÕÇÃÌÁ¿ÈÂ¾ÃÕÜ¿ÌÀ¿ÀÅÝÑÀÂÁÑÁÈ¿ÁÍ¿ÀÕÇÃÌ¾ÉÀØÙÚÛÁÔÑÈÂÃÇÒ¼¼ÞÖ¾Ã¾ßÃÀ¿ÀÅÝÑÀÅÃÆÇÂÀÂÌÁËÍÀ¾ÁÎÀÄÁ¾¾ÉÀàÐÐ¿ÀÑÀ¿Òá¾ÆÔÀÄ¾ÂÂÀ¿ÀÅ¾ÀÈ¾ÉÀÇ¾ßÃÅÃÆÇÂÀÂÕÇÃÌÖÇÀ×ÁÖÖÇÃÑÀÔØÙÚÛÇÆÍÇÈÅÂÁÄÔ¾ßÃÅÃÆÇÂÀÂÈÄ¾ÉÈÂÁÇÀÁÕÇÃÌÃ¾ÉÀÇÖÇÃÊÇÁÌÂßÈ¾É¾ÉÀÁÖÖÇÃÑÁ¿ÃÕ¾ÉÀØÙÚÛÁÔÑÈÂÃÇâÃÇÕÃÆÇÅÃÆÇÂÀÂÈÄÅÃÄÂÆ¿¾ÁÝÃÄßÈ¾É¾ÉÀØÙÚÛÁÔÑÈÂÃÇ¾ÃÀÐÖ¿ÃÇÀÁÂÖÀÅÈÜÅÁÇÀÁÃÕÈÄ¾ÀÇÀÂ¾ÃÇÁÄÁÇÀÁÇÀ¿Á¾ÀÔ¾Ã¾ÉÀÈÇÕÆ¾ÆÇÀÁÅÁÔÀÌÈÅÃÇÖÇÃÕÀÂÂÈÃÄÁ¿Ö¿ÁÄÂÒáÃÌÀÅÃÆÇÂÀÂÕÃÇ¾ÉÀÌÁãÃÇÌÁËÁ¿ÂÃÅÃÆÄ¾¾ÃßÁÇÔäÀÄÀÇÁ¿ÛÔÆÅÁÝÃÄÇÀåÆÈÇÀÌÀÄ¾ÂÒæçèéêëçìíèìçêîïëîíðëðíèíñòóôõöïêéðçìçñöñí÷øêçêîéêùïêêëðêïìðçêèðïêíêëçìòñïïîéèîñë êèðïêíêëçìòñïïîéèîñë!"#$%$&'()**(+",**(-.!/"0(1#**23"455
+(OCR text; may contain recognition errors)
+Cinema and Media Studies - Critical Studies Four Year Academic Plan
+| ve | FW | spring |
+| benchmark Reguvemenss | [|
+[Ason/soisienester Jromenmestupr |
+wis eeawetwdn |
+I 1 Ee
+vee 1
+[benchmark zRequire ments | | |
+[Fewetodn [ce Natowl mematonaomn |
+lHeeedodn  eeawetwda |
+EE EE
+EE 2 LC
+[rkceton  eoksomwimgew |
+lecwedwtw  [dewedodw |
+[ [CINENational International xx-4x« CINE Genres, Auteurs, Movements xx |
+lwedeowesotw  fowedewehn |
+es
+I 2 a YS
+[Femweswdn  eawetwba |
+feemesan  eeawetwba |
+[  [CNEElectivedocdxx  [CINEGenres, Auteurs, Movements xxx |
+I ek 55
+Experimental 3xx-4xx
+rr {rr
+L[rotalcreditsfor Degree: 10; 39 credits mustbe ocdclevel |
+and Cultural Competence courses may also fulfill Distributive Studies categories.
+Cinema and Media Studies - Critical Studies
+[Academic Writing (AW) {Min.GraderC} | | | |
+[Professional Writing (Pw) | [| |
+[oaicomm(00) [| [|]
+Matha) [|
+[analyticReasoning (aR) | [| |
+[NaturalSciencetab(ny) | [|
+[NoturalSciences (Ns) | [| MCNe/iNelzasay) [|
+[History/Social Sciences (#5) | [| WMcmnesor 1
+[History/Social Sciences (#5) | [| WMeweseo | [|
+[Humanities (Hu) Jomneass| | |
+[Humanities (iu) | | MMCNETheorieswedx | [|
+EET re EERE |
+[Scholarship in Practice (sP)nonmajor | [| [M3ocax
+freee
+Normally double counted with Distributive Studies [CINE Genres, Auteurs, Movements ca | | |
+[BigQuestionis) | [1 [CINE Genres, Auteurs, Movements Joc | [|
+[BigQuestionis) | [| [CINE National & International Cinemas xxx | [|
+gE
+overlap permitted with Distributive Studies and/or Big Question) CINE Elective 2xco® | ||
+[CINE Elective 3x [|
+[Understanding Plural Soc. (UP) | [| MMCINEElectivedcoct |
+[Understanding PlualSoc. WPror | [|| “Atleast one course in this cotegory must be taken at the dx level. The courses must be selected
+Cultural Competency (CC) either from the pre-approved CINE rubrics or from a list of film electives available from the
+(overlap permitted with other requirements/courses “Up to two elective courses moy be token a the level, Students select ether wo courses rom
+‘pre-approved CINE rubrics and two courses in this area from other programs with the approval
+[TT I ofthe ve auvisorsorfour courses nconsutation with the CINE advisor to explore a specific
+111 ce ofinterestor onarco relted to thei future cademicar professional las,
+er
+[ote foams muse eames [1]
+[12 upper evel major credits must be cared at UM | [1 [Wl some couses forthe major may al count toword Gener Education regiements.
+Tr
+AN
+ER
 
 ## Sample plan (https://drive.google.com/uc?export=download&id=1-dNgdkQ622vupRk-U2eRXNRcfAniVSk-#Film-Production)
 
-!"#$%&!'()!")#$%&!'(*+
-,-.. /012345678987:;<=> 87:;?@?ABCDEFGHIJ:KLMNO5PQ 7LRSKLTUVHNIVNWA7UDEEGLRXAGBDE BILTYZV[NLW\IHI]AB[D^HWR\KY9U\VHLTUVHNIVNWA^UDEE ^S_LIHZNWA^`DEEB[^`?>a UVX\TLKWXHbHIcKLVZVNAUcDd?EE5678987:;<=>A^`D 56788TNVZeN<ffP=ff5678g@? :T\hLT8I]L]N_NIRd? :T\hLT8I]L]N_NIRd<5678g@< iKLT5\__SIHVLZ\IAi5D ^HWR\KY9U\VHLTUVHNIVNWA^UDEE5678g?@ 5678g@? UVX\TLKWXHbHIcKLVZVNAUcDd<EE5678gjk 5678g@<8TNVZeN?ffP=ff 5678g?@7LRSKLTUVHNIVN;LhA7;DEE cK\lNWWH\ILTCKHZI]AcCD5678:NIKNWmBSRNSKWmG\eN_NIRWgffP=ff56788TNVZeN<ffP=ff 5678=?>8TNVZeN?ffP=ff 8TNVZeN?ffP=ff8TNVZeN?ffP=ff 8TNVZeN?ffP=ff56787LZ\ILTn6IRNKILZ\ILTgffP=ff 5678oXN\KHNWgffP=ff8TNVZeNgffP=ff 5678=pp8TNVZeNgffP=ff 8TNVZeN?ffP=ff8TNVZeN?ffP=ff 8TNVZeN?ffP=ff8TNVZeN?ffP=ff 8TNVZeN?ffP=ffo\RLT5KNMHRWl\KqN]KNNO?<@rgpVKNMHRW_SWRhNgffP=ffTNeNT
-5678q\VS_NIRLKYmBIH_LZ\Im\K
-stuvwxyz{|}xvx~wvxx~zvzux{xuvxu
-stuvwxyz{|}xvx~wvxx~zztux{xuvxu
-¡¢£¤¥¢¢¥¦§¨©ª§«¬¬¢£¤¥§
-!"#$%&' ()%*"#$%&'+%&,&$' -./()%*"#$%&'-0/()%*"#$%&'1$'&$2 3,&$' 45!"#$%&'+! !6!''7!8%6!6!''($89'!:!%;!2!&<$&)1$'&$2 3,&$' +$%7!!=*6!''1$3'$&;>!3??%$@<$&)1$'&$2 3,&$'A!($89'!BC?$ D$8/!? !>!3??%$@<$&)!&)#$%&'A!''B
-EFGHIJFKFLMNOPQRJFSIMNTQRUHJNFN VUHJNF VJFSIMN WJXSFEFGHIJFKFLMNOYQRJFSIMNTZRUHJNFN VUHJNF VJFSIMN WJXSF EFGHIJFKFLMN VJFSIMN WJXSF
-EFGHIJFKFLMNO[RJFSIMNTYRUHJNFN VUHJNF VJFSIMN WJXSFEFGHIJFKFLMNO\][RJFSIMNTYRUHJNFN VUHJNF VJFSIMN WJXSFEFGHIJFKFLMNO^]_RJFSIMN VUHJNF VJFSIMN WJXSF
-`abcdeffgh`di djklmnopqbcrstuvbweqxqyhpui djklzlk{|o}~ptbvfxtaxsqyhpiaevwwxeqbcaxsqyhi djklmnbhpi djklmnkbabctxvqtv|bhk|ikbabctxvqtvwhkixwearzetxbctxvqtvwhi djklzlk{|o}~hixwearzetxbctxvqtvwhi djklmnfbqxsvwhi djklo}~ djklmnofbqxsvwhitecbawxxqabtstvhi djklveaxvwm}tecbawxxqabtstvhiqeqfbea djkletfvqbarpqxfbseqealvaxfvqbcm}djklkbseqbcjqvaqbseqbcdxqvfbwm}djkl{vqavwpvawevfvqwm}xyvwseqhjixyvwseqhji djkllcvtsvo}djkllcvtsvo}djklmndjklmqvawbqxqycabcetghi djkl}~qvawbqxqycabcetghi djkl}dcabcdefvvqtrhddi
-¡¢£¤¥¦§¨ ©ª«ª¬®¯°¯°±²°³´« μ³±±°¶ª·±°«°¸¹º«ªº¹»°¹¬°º¹¼½¾
-¿À ÁÂÃÄÅÆÇÃÈÉÄÈÃÈÆÊÆËÃËÌÄÍÈÆÈÎÍÌÉÏÍÆÐÑÏÏÍÌÒÆÅÍÄÓÍÔËÈÑÒÑÔÊÑÓÊÆÎÍÌÉÃÕÆÖ×ØÙÑÅÒÔÈÌÍÚÁÁÂÃÄÅÆÇÃÈÈÆÊÆËÃÃÛÌÖ×ØÙËÌÄÍÈÆÈÜÖ×ØÙÝÞßàÖ×ØÙÝÞáâÌÍÃÛÌËÌÄÍÈÆÈÎÍÌÉÌÃÕÆÍÏÍÌãÍÑÉÈÔÇÑÈÔÉÔÊÑÍÑÍÆÑÌÎÈÃÄÅÔÆÈÛÔÃÕÃÕÆÑÏÏÍÌÒÑÊÌÎÃÕÆÖ×ØÙÑÅÒÔÈÌÍÚ
-ÂÌÉÆËÌÄÍÈÆÈÎÌÍÃÕÆÉÑäÌÍÉÑåÑÊÈÌËÌÄÇÃÃÌÛÑÍÅæÆÇÆÍÑÊÙÅÄËÑçÌÇÍÆèÄÔÍÆÉÆÇÃÈÚéêëìíîêïðëïêíñòîñðóîóðëðôõö÷øùòíìóêïêôùôðíêíñìíòííîóíòïóêí ëóòíðíîêïõôòòñìëñ ôîí ëóòíðíîêïõôòòñìëñ ôî!"#$%&'(')*+#,--+.%!"/--+01 #$2%3+4&--56%788
+(OCR text; may contain recognition errors)
+Cinema and Media Studies - Film Production Four Year Academic Plan
+| ve | FW | spring |
+| benchmark Reguvemenss | [|
+[Ason/soisienester Jromenmesupr |
+wwe schobshempadceae |
+I 1 eS
+vee 1
+[ enchmarkzRequire ments | | |
+I 7 ve (1
+es
+[usdeemtr  [olsomwingew |
+[Cie Genres Auteurs, Movements ocdm [GIVE Documentary Animation, or |
+loWeteenwbw owes |
+[ [electivenA [Electivelocdx |
+leeewemsao  lmemenwaw |
+A
+[ce Naton 8 momatorai be [NE Theoresdmm |
+[Femweswdn  awems |
+feewesan  eeawetwbn |
+[  [electivendx  [Electivelwcdx |
+EE 7 YS
+rr {|
+lL [rotalCreditsfor Degree: 120, 39 credits mustbe ncdxlevel |
+and Cultural Competence courses may also fulfill Distributive Studies categories.
+Cinema and Media Studies - Film Production
+[Academic Writing (AW) (Min. Grade:c} | | | |
+[Professional writing (PW) | | ||
+[Oraicommoc) [| [| |
+Matha) [TT ]
+[AnalyticReasoning (AR) | [| |]
+[Natural Science Lab(Nt) | [1 |
+[NaturalSciences (Ns) | [|
+[History/Social Sciences (HS) | | | WMCINE/ENGL2as(HU) | |
+[History/Social Sciences (Hs) | | | Meowesor
+[Humanities(HU)  [cmezaas| | MMemeso
+[Humanities(py) | T]
+[scholarshipin Practice (sP) | | | WMCINETheories3wwao* [|
+SEE wea |
+Normally double counted with Distributive Studies [ CINE National & International Cinemas Jude | | |
+[ CINE Genres, Auteurs, Movements 3x | [|
+[BigQuestongs) [TT |
+[BigQuestion(s) | | | MMCNEElctivedocaoc [|
+a
+overlap permitted with Distributive Studies and/or Big Question) lllciNe3to [|
+[ones TT]
+[Understanding Plural Soc. (UP) | [| WMonesss [|
+EE I ———
+Cultural Competency (CC) “Students must select courses from pre-approved rubrics available from the CINE advisor.
+Students elect two CIN courses (GIVE 315, CINE 317) or two courses from other
+overlap permitted with other requirements/courses] programs ina simiar area of studies with the approval of the CINE ovisor:
+I AN BN
+0 0
+Er rT A
+[Soro ot 0 ete ms be era re 00000 [7]
+[12 upper level major credits must be earned at UMD | [] [some courses forthe major may aso count toward General Education requirements
+TT —
+CE
+Tr SN Nu

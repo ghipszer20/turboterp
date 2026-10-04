@@ -10,7 +10,7 @@
     "Supporting Area 'ARTH 200+ satisfying GenEd Diversity' (2 required): as with the other two tracks, only ARTH351 is named anywhere in the fetched source, so only one of the two slots (support-arth-diversity-1) is filled; the second (support-arth-diversity-2) is left unsatisfied on purpose and flagged in docs/project/owner-review.md and KNOWN_FAILURES."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["ARTT100", "ARTT110", "ARTT150"] },
+    { "term": "Year 1 Fall", "courses": ["ARTT100", "ARTT110", "ARTT150", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["ARTT200", "ARTT210", "ARTT255"] },
     { "term": "Year 2 Fall", "courses": ["ARTH351", "ARTH200", "ARTT355", "ARTT356"] },
     { "term": "Year 2 Spring", "courses": ["ARTT357", "ARTT361", "ARTT350", "ARTT351"] },

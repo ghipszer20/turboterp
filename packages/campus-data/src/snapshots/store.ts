@@ -8,7 +8,7 @@ import { mkdir, readdir, readFile, rename, rm, writeFile } from "node:fs/promise
 import { dirname, join, resolve } from "node:path";
 
 /** Bump when a snapshot's data shape changes; older snapshots then read as missing. */
-export const SNAPSHOT_SCHEMA = 1;
+export const SNAPSHOT_SCHEMA = 2;
 
 export type Snapshot<T> = {
   /** ISO timestamp of when the data was fetched from the source. */
@@ -116,7 +116,7 @@ async function renameWithRetry(from: string, to: string): Promise<void> {
 }
 
 /**
- * Where the file store lives: $SUPERTERP_SNAPSHOT_DIR, else <repo root>/.cache/snapshots
+ * Where the file store lives: $TURBOTERP_SNAPSHOT_DIR, else <repo root>/.cache/snapshots
  * (the repo root is the nearest folder above `cwd` with a package-lock.json), so the
  * CLI (run from packages/campus-data) and the web app (run from apps/web) share it.
  */
@@ -124,7 +124,7 @@ export function defaultSnapshotDir(
   cwd: string = process.cwd(),
   env: Record<string, string | undefined> = process.env,
 ): string {
-  if (env.SUPERTERP_SNAPSHOT_DIR) return env.SUPERTERP_SNAPSHOT_DIR;
+  if (env.TURBOTERP_SNAPSHOT_DIR) return env.TURBOTERP_SNAPSHOT_DIR;
   let dir = resolve(cwd);
   for (;;) {
     if (existsSync(join(dir, "package-lock.json"))) return join(dir, ".cache", "snapshots");

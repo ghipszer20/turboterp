@@ -12,7 +12,7 @@
     "Of the 12 ENGL courses used, 2 are 2xx-level (ENGL243, ENGL244) and 4 are 4xx-level (ENGL416, ENGL432, ENGL444, ENGL448), matching the plan's own footnote ('only two of the 12 ENGL courses may be taken at 1xx-2xx level, and at least four of the 12 ENGL courses must be taken at the 4xx level') even though the engine does not check this aggregate rule."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["ENGL243"] },
+    { "term": "Year 1 Fall", "courses": ["ENGL243", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["ENGL244"] },
     { "term": "Year 2 Fall", "courses": ["ENGL301", "ENGL310"] },
     { "term": "Year 2 Spring", "courses": ["ENGL327"] },

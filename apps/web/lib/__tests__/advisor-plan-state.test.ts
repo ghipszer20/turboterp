@@ -209,6 +209,14 @@ describe("planReducer: setup", () => {
     expect(plan.college).toBe("CMNS"); // untouched: no college in this action
   });
 
+  it("stores a transfer entry from setup; freshman (or omitted) leaves the plan without one", () => {
+    const setup = { type: "setup" as const, programs: ["cmsc-major"], catalogYear: "2026-27", startTerm: "Fall 2026", tracks: [], examTerms: {}, expectedGrades: {} };
+    let plan = planReducer(base(), { ...setup, entry: "transfer" });
+    expect(plan.entry).toBe("transfer");
+    plan = planReducer(plan, { ...setup, entry: "freshman" });
+    expect(plan).not.toHaveProperty("entry");
+  });
+
   it("stores double major vs double degree from setup; omitted, the plan has none", () => {
     const setup = { type: "setup" as const, programs: ["math-major-applied", "cmsc-major"], catalogYear: "2026-27", startTerm: "Fall 2026", tracks: [], examTerms: {}, expectedGrades: {} };
     expect(base()).not.toHaveProperty("degreeMode");

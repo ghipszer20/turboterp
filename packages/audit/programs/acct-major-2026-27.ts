@@ -79,6 +79,7 @@ export const acctMajor: Program = {
     "Robert H. Smith School of Business department page (College Requirements business core), " +
     "https://academiccatalog.umd.edu/undergraduate/colleges-schools/business/ (fetched 2026-09-28)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     ...bmgtCoreReviewNotes,

@@ -6,7 +6,7 @@
 
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import type { Program, Requirement, SetMember } from "@superterp/audit";
+import type { Program, Requirement, SetMember } from "@turboterp/audit";
 import { cmscMajor } from "../../audit/programs/cmsc-major-2026-27.ts";
 import { mathMajorTraditional } from "../../audit/programs/math-major-2026-27.ts";
 import { mathMajorApplied } from "../../audit/programs/math-major-applied-2026-27.ts";
@@ -65,9 +65,11 @@ function meaning(r: Requirement): string {
     case "sets":
       return `sets ${r.count ?? 1} of ${sorted(r.options.map(setKey))}${overlay}`;
     case "distribution":
-      return `distribution ${r.count}/${r.minAreas}/${r.maxPerArea} ${r.areas.map((a) => `${a.name}=${sorted(a.courses)}`)}${overlay}`;
+      return `distribution ${r.count}/${r.minAreas}/${r.maxPerArea} ${r.areas.map((a) => `${a.name}=${sorted(a.courses ?? [])}`)}${overlay}`;
     case "concentration":
       return `concentration ${JSON.stringify({ ...r, id: undefined, name: undefined })}`;
+    case "openSlot":
+      return `openSlot ${r.credits ?? ""}`;
   }
 }
 

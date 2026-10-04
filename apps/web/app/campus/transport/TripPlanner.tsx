@@ -7,8 +7,8 @@
 // on the bus. Selecting an itinerary is reported up to TransportMap, which draws it on the map.
 
 import { useId, useMemo, useState } from "react";
-import { formatMinutes } from "@superterp/campus-data/hours";
-import type { Itinerary, Place } from "@superterp/campus-data";
+import { formatMinutes } from "@turboterp/campus-data/hours";
+import type { Itinerary, Place } from "@turboterp/campus-data";
 import { LocationIcon, MapPinIcon, SwapIcon } from "@/components/icons";
 import { Card, EmptyState } from "@/components/ui";
 import styles from "./trip.module.css";
@@ -19,7 +19,7 @@ export type PickMode = "from" | "to" | null;
 type FieldState = { text: string; place: Place | null };
 export const emptyField: FieldState = { text: "", place: null };
 
-function searchBuildings(buildings: Building[], query: string, limit = 6): Building[] {
+export function searchBuildings<T extends { name: string }>(buildings: T[], query: string, limit = 6): T[] {
   const q = query.trim().toLowerCase();
   if (!q) return [];
   return buildings.filter((b) => b.name.toLowerCase().includes(q)).slice(0, limit);

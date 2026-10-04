@@ -142,7 +142,7 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
 
-# --- SuperTerp ---
+# --- TurboTerp ---
 # Secrets
 .env*
 !.env.example
@@ -169,3 +169,9 @@ apps/web/public/data/
 apps/web/public/vendor/
 graphify-out/
 .claude/worktrees/
+
+# UI review gallery (npm run ui-gallery -w @turboterp/web; regenerated screenshots)
+/ui-review/
+
+.vercel
+.env*

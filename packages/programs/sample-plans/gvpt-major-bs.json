@@ -9,9 +9,9 @@
     "Math/Statistics Benchmark filled with MATH140 (Calculus I); any of the eight listed options would satisfy the requirement equally. GVPT Foundational Course filled with GVPT280 (The Study of Comparative Politics); GVPT200 or GVPT282 would satisfy the requirement equally.",
     "Benchmark sequencing: Benchmark 1 (GVPT170, GVPT201, MATH140) completes by Freshman Spring; Benchmark 2 (GVPT320) is placed the following semester (Sophomore Fall), matching the department's 'within one semester of completing Benchmark 1' guidance (not enforced by the audit, informational only)."
   ],
-  "credits": { "MATH140": 4 },
+  "credits": { "MATH140": 4, "UNIV100": 1 },
   "terms": [
-    { "term": "Freshman Fall", "courses": ["GVPT170", "MATH140"] },
+    { "term": "Freshman Fall", "courses": ["GVPT170", "MATH140", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["GVPT201"] },
     { "term": "Sophomore Fall", "courses": ["GVPT320", "ECON200"] },
     { "term": "Sophomore Spring", "courses": ["GVPT280"] },

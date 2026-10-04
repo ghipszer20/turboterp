@@ -1,0 +1,15 @@
+{
+  "programId": "agst-minor",
+  "source": "https://psla.umd.edu/undergraduate/degrees/minors",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog requirements: PLSC110+PLSC111, ENST200, PLSC201+PLSC206, PLSC389, and two 300+ supporting courses (PLSC400, PLSC420). Flagged in docs/project/owner-review.md."
+  ],
+  "credits": { "ENST200": 4, "PLSC111": 1, "PLSC206": 1 },
+  "terms": [
+    { "term": "Term 1", "courses": ["PLSC110", "PLSC111", "ENST200"] },
+    { "term": "Term 2", "courses": ["PLSC201", "PLSC206", "PLSC400"] },
+    { "term": "Term 3", "courses": ["PLSC420", "PLSC389"] }
+  ]
+}

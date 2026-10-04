@@ -24,7 +24,7 @@ export const cmscMinor: Program = {
     "Electives: the department page just says 'two 400-level CMSC electives from the approved list' without naming it; the catalog's list (CMSC411 through CMSC474) is used since it isn't contradicted. 'Cannot use both CMSC460 and CMSC466' (department) is encoded as an alternatives pair.",
     "'Up to 3 credits of CMSC498 may substitute for one 400-level core course with prior approval', and 'students exempting all three core courses must take one additional 400-level class', are approval-gated exceptions, not encoded.",
     "'Maximum 6 credits overlap with primary major' (department) -> maxSharedWith: [{ credits: 6 }].",
-    "'Not eligible: Computer Engineering majors, and the computing track of Immersive Media Design' (department) is an eligibility gate, not enforced (no declared-major/track concept for this check). 'Must enroll in the minor for at least two semesters before graduation' is a timing rule, not encoded.",
+    "'Not eligible: Computer Engineering majors, and the computing track of Immersive Media Design' (department) is enforced via notOpenTo (Computer Engineering majors, every track, and the IMDM computing track). 'Must enroll in the minor for at least two semesters before graduation' is a timing rule, not encoded.",
   ],
   requirements: [
     { kind: "course", id: "gateway1", name: "Gateway: CMSC131, CMSC133 or CMSC141", options: ["CMSC131", "CMSC133", "CMSC141"], minGrade: "B-" },
@@ -55,4 +55,4 @@ export const cmscMinor: Program = {
   ],
 };
 
-export const cmscMinorMeta: ProgramMeta = { kind: "minor", college: "CMNS", sources: { catalog: "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/computer-science/computer-science-minor/", department: "https://undergrad.cs.umd.edu/computer-science-minor" } };
+export const cmscMinorMeta: ProgramMeta = { kind: "minor", notOpenTo: { programs: ["compe", "imdm-major-computing"], reason: "Not open to Computer Engineering majors or the Immersive Media Design computing track." }, college: "CMNS", sources: { catalog: "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/computer-science/computer-science-minor/", department: "https://undergrad.cs.umd.edu/computer-science-minor" } };

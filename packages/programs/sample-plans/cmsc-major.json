@@ -7,9 +7,9 @@
     "UMD publishes no CS sample plan: the catalog's Four-Year Plan tab and 4yearplans.umd.edu point to CMNS graduation plans, which point to undergrad.cs.umd.edu/degree-requirements-cs-major, whose only plan is a blank 'Computer Science Academic Plan' template. Flagged in docs/project/owner-review.md.",
     "Built from the department's 'Computer Science - General' tracking sheet (effective Spring 2026, same spreadsheet): gateway and lower-level courses as listed; STAT4xx -> STAT400; MATH/STATxxx -> MATH240; five area courses from Areas 1-4 -> CMSC414, CMSC420, CMSC421, CMSC430, CMSC451; 6 elective credits -> CMSC320, CMSC335; upper-level concentration (12 credits, one discipline) -> MATH310, MATH401, MATH406, MATH410. Gen Ed slots are left out: only the major is audited."
   ],
-  "credits": { "MATH140": 4, "MATH141": 4, "MATH240": 4, "CMSC131": 4, "CMSC132": 4, "CMSC216": 4, "CMSC250": 4 },
+  "credits": { "MATH140": 4, "MATH141": 4, "MATH240": 4, "CMSC131": 4, "CMSC132": 4, "CMSC216": 4, "CMSC250": 4, "CMNS100": 1 },
   "terms": [
-    { "term": "Fall 1", "courses": ["MATH140", "CMSC131"] },
+    { "term": "Fall 1", "courses": ["MATH140", "CMSC131", "CMNS100"] },
     { "term": "Spring 1", "courses": ["MATH141", "CMSC132"] },
     { "term": "Fall 2", "courses": ["CMSC216", "CMSC250", "MATH240"] },
     { "term": "Spring 2", "courses": ["CMSC330", "CMSC351", "STAT400"] },

@@ -30,6 +30,7 @@ export const spanMajorLanguageCultureProfessionalContexts: Program = {
     "https://drive.google.com/uc?export=download&id=1Lz_BBrjv7AeI3bf8GHRH5cBrNQBC0baF#Language,-Culture,-and-Professional-Contexts " +
     "(fetched 2026-09-28)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Track: 'Select two of the following courses in Spanish in Language, Culture, and Professional " +

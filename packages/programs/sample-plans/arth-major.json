@@ -11,7 +11,7 @@
     "Supporting Area (3 courses, one non-ARTH department) filled with SOCY310, SOCY320, and SOCY335 -- real SOCY courses already used elsewhere in this codebase (socy-major-2026-27.ts, the amst-major plan, and sds-major-socy.json) -- chosen only to satisfy the single-department/level/credit shape."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["ARTH200"] },
+    { "term": "Year 1 Fall", "courses": ["ARTH200", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["ARTH230"] },
     { "term": "Year 2 Fall", "courses": ["ARTT100"] },
     { "term": "Year 2 Spring", "courses": ["ARTH255"] },

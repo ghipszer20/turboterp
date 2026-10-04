@@ -12,6 +12,7 @@
 //   dining         30 min
 //   libraries      3 h
 //   recwell        6 h
+//   calendar       6 h
 //   room list      1 day
 //   room slots     5 min
 //   buses          6 h (in memory)
@@ -20,6 +21,7 @@ import { cacheLife } from "next/cache";
 import {
   addDays,
   DINING_HALLS,
+  fetchAcademicCalendar,
   fetchBuildings,
   fetchCategoryAvailability,
   fetchDiningMenu,
@@ -29,6 +31,7 @@ import {
   fetchShuttleFeed,
   nextDepartures,
   parseGtfs,
+  planArriveBy,
   planTrip,
   routeMap,
   routesOn,
@@ -36,22 +39,24 @@ import {
   type Building,
   type DiningMenu,
   type Feed,
+  type AcademicEvent,
   type LibraryHours,
   type Place,
+  type PlanArriveByResult,
   type PlanTripResult,
   type RecWellArea,
   type RoomAvailability,
   type RouteWithMap,
   type Stop,
-} from "@superterp/campus-data";
+} from "@turboterp/campus-data";
 import {
-  defaultSnapshotDir,
-  FileSnapshotStore,
+  openSnapshotStore,
   snapshotKeys,
   snapshotOrLive,
   type RoomCatalog,
   type Snapshot,
-} from "@superterp/campus-data/snapshots";
+  type SnapshotStore,
+} from "@turboterp/campus-data/snapshots";
 
 export type Result<T> = { ok: true; data: T } | { ok: false; error: string };
 
@@ -67,9 +72,9 @@ export async function safe<T>(load: () => Promise<T>): Promise<Result<T>> {
 
 // ---- snapshots ----
 
-let store: FileSnapshotStore | null = null;
-function snapshotStore(): FileSnapshotStore {
-  return (store ??= new FileSnapshotStore(defaultSnapshotDir()));
+let store: SnapshotStore | null = null;
+function snapshotStore(): SnapshotStore {
+  return (store ??= openSnapshotStore());
 }
 
 /** One snapshot, held in memory for `seconds` so concurrent requests share a single read. */
@@ -84,6 +89,11 @@ const STABLE = 600;
 export async function getLibraryHours(): Promise<LibraryHours[]> {
   const snap = await readSnapshot<LibraryHours[]>(snapshotKeys.libraryHours, STABLE);
   return (await snapshotOrLive(snap, liveLibraryHours)).data;
+}
+
+export async function getAcademicCalendar(): Promise<AcademicEvent[]> {
+  const snap = await readSnapshot<AcademicEvent[]>(snapshotKeys.academicCalendar, STABLE);
+  return (await snapshotOrLive(snap, liveAcademicCalendar)).data;
 }
 
 export async function getRecWellAreas(): Promise<RecWellArea[]> {
@@ -145,6 +155,12 @@ async function liveLibraryHours() {
   "use cache";
   cacheLife({ stale: 300, revalidate: 3 * 3600, expire: 2 * 86400 });
   return fetchLibraryHours(2);
+}
+
+async function liveAcademicCalendar() {
+  "use cache";
+  cacheLife({ stale: 300, revalidate: 6 * 3600, expire: 3 * 86400 });
+  return fetchAcademicCalendar();
 }
 
 async function liveRecWellAreas() {
@@ -261,4 +277,10 @@ export async function getDepartures(stopIds: string[], isoDate: string, fromMinu
 export async function planTripBetween(isoDate: string, fromMinutes: number, from: Place, to: Place): Promise<PlanTripResult> {
   const f = await loadFeed();
   return planTrip(f, isoDate, fromMinutes, from, to);
+}
+
+/** Arrive-by mode: the latest way to leave that still gets between two places by `arriveByMinutes`. */
+export async function planArriveByBetween(isoDate: string, arriveByMinutes: number, from: Place, to: Place): Promise<PlanArriveByResult> {
+  const f = await loadFeed();
+  return planArriveBy(f, isoDate, arriveByMinutes, from, to);
 }

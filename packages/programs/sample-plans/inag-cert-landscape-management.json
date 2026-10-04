@@ -1,0 +1,56 @@
+{
+  "programId": "inag-cert-landscape-management",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/agriculture-natural-resources/applied-agriculture/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "The IAA's two-year plans (go.umd.edu/program-plans) were not captured. Constructed from the catalog requirements; advisor-approved electives omitted (no list). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    {
+      "term": "Term 1",
+      "courses": [
+        "ENGL101",
+        "INAG100",
+        "INAG105",
+        "LARC160"
+      ]
+    },
+    {
+      "term": "Term 2",
+      "courses": [
+        "INAG110",
+        "MATH113",
+        "INAG106",
+        "PLSC205"
+      ]
+    },
+    {
+      "term": "Term 3",
+      "courses": [
+        "INAG226",
+        "INAG231",
+        "INAG244",
+        "PLSC272",
+        "INAG288"
+      ]
+    },
+    {
+      "term": "Term 4",
+      "courses": [
+        "PLSC253",
+        "INAG250",
+        "INAG251",
+        "INAG201"
+      ]
+    },
+    {
+      "term": "Term 5",
+      "courses": [
+        "INAG204",
+        "INAG206",
+        "INAG289"
+      ]
+    }
+  ]
+}

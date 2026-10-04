@@ -127,8 +127,7 @@ export const romlCommonReviewNotes: string[] = [
   "Not encoded (no prerequisite-ordering concept in the engine): 'Students must take " +
     "language-acquisition courses sequentially. Once credit has been received in a higher level " +
     "language acquisition or grammar course, a lower level course may not be taken for credit.'",
-  "Not encoded (engine gaps, matches other ARHU-language-major precedent): the 2.0 GPA-in-the-major " +
-    "requirement (distinct from the per-course C- floor, which IS encoded via `minGrade`); residency " +
+  "Not encoded (engine gaps, matches other ARHU-language-major precedent): residency " +
     "rules (30 credits at UMD, 15 of the final 30 at the 300-400 level, 12 upper-level major credits " +
     "at UMD); and the 120-credit graduation minimum.",
 ];

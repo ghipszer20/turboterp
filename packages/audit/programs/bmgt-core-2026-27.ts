@@ -109,9 +109,10 @@ export const bmgtCoreReviewNotes: string[] = [
     "own requirements. This is the source's undecidable 'no list given' case (owner ruling); the " +
     "College Requirements table's own 43-46 credit total already accounts for a 0-credit reading here " +
     "(43 without it, matching this file's 14 fixed requirements).",
-  "Not encoded (engine gaps, matching other majors' precedent): the Smith School's GPA rules " +
-    "(2.0 cumulative GPA and, beginning Fall 2012 matriculants, a 2.0 GPA across major-requirement " +
-    "courses; a 'C-' or better in every required course, which IS partially covered by each program's " +
+  "Program GPA 2.0 encoded as minGpa (the Smith School's 2.0 GPA across major-requirement courses, " +
+    "beginning Fall 2012 matriculants).",
+  "Not encoded (engine gaps, matching other majors' precedent): the Smith School's university-wide " +
+    "2.0 cumulative GPA; a 'C-' or better in every required course, which IS partially covered by each program's " +
     "`minGrade`); the LEP freshman/transfer admission gates (45-credit gateway-course review, 3.0/3.6 " +
     "transfer GPA thresholds); residency rules (50% of BMGT credit hours, and at least 45 of 120 total " +
     "hours, must be business/management credits earned at UMD College Park); the 58-hours-at-300/400- " +

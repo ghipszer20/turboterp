@@ -1,5 +1,5 @@
 {
-  "name": "@superterp/credit",
+  "name": "@turboterp/credit",
   "version": "0.1.0",
   "private": true,
   "description": "UMD credit for AP and IB exams and dual-enrollment courses, as audit-ready student courses. Framework-free.",
@@ -18,6 +18,6 @@
     "vitest": "^5.0.1"
   },
   "dependencies": {
-    "@superterp/audit": "*"
+    "@turboterp/audit": "*"
   }
 }

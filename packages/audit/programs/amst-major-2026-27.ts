@@ -31,6 +31,7 @@ export const amstMajor: Program = {
     "(https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/american-studies/american-studies-major/); " +
     "College of Arts and Humanities American Studies Four Year Academic Plan (department source), fetched 2026-09-28",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "'Select one AMST 1xx or 2xx level course' names an explicit example list (catalog footnote 1): " +
@@ -52,10 +53,10 @@ export const amstMajor: Program = {
       "requirements): catalog note 'At least twelve of the 3xx or 4xx level credits must be at the 4xx " +
       "level' spans the AMST 3xx/4xx choose, AMST340, AMST450, and the Focus Area concentration together. " +
       "Flagged in docs/project/owner-review.md.",
-    "Not encoded (engine gaps): an overall 2.0 GPA in the major, residency rules (30 credits at UMD, 15 " +
+    "Not encoded (engine gaps): residency rules (30 credits at UMD, 15 " +
       "of the final 30 credits at 300-400 level, 12 upper-level major credits at UMD), and the 120-credit " +
       "graduation minimum. The audit engine checks per-requirement course assignment and per-course " +
-      "minGrade, not GPA, residency, or credit totals.",
+      "minGrade, not residency or credit totals. Program GPA 2.0 encoded as minGpa.",
     "No disagreement found between the catalog and the department's four-year plan on the major's own " +
       "requirement structure (course counts, credits, AMST340/AMST450 sequence); the plan's ARHU-level " +
       "items (ARHU 158, Global Engagement, Gen Ed) are college/university layers, out of scope here.",

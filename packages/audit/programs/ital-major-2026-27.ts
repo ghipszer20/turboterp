@@ -33,6 +33,7 @@ export const italMajor: Program = {
     "College of Arts and Humanities official four-year academic plan for Italian Studies, " +
     "fetched 2026-09-28 (https://drive.google.com/uc?export=download&id=1DTZOYr6ZR0khHL4nxetKE9C1NGiK6_uu#Italian-Studies)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Department page vs. catalog: no disagreement found. The college's four-year plan's 'Major " +
@@ -60,7 +61,7 @@ export const italMajor: Program = {
       "ITAL478 section accompanies a specific 4xx course -- only that three of each are completed.",
     "The World Language Placement page (arhu.umd.edu/academics/world-language-placement, fetched as " +
       "context) has no Italian-specific placement rule to encode.",
-    "Not encoded (engine gaps): the 2.0 GPA-in-the-major requirement, residency rules (30 credits at " +
+    "Not encoded (engine gaps): residency rules (30 credits at " +
       "UMD, 15 of the final 30 at the 300-400 level, 12 upper-level major credits at UMD), and the " +
       "120-credit graduation minimum.",
   ],

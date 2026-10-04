@@ -7,18 +7,9 @@
     "No published 4-year plan was found for this track; constructed from the department's own current Earth and Environmental Sciences Track requirements page (docs/project/owner-review.md notes this for all three Geology tracks).",
     "Historical context filled with GEOL124. Core discipline choices: GEOL351 (Analytic Methods), GEOL423 (Environmental Geosciences), GEOL446 (Geophysics), GEOL443 (Earth Materials), GEOL331 (Geobiology). Experiential learning filled with GEOL386. The two Earth Sciences electives are filled with GEOL463 and GEOL472. Atmospheric/astronomy course filled with AOSC123."
   ],
-  "credits": {
-    "GEOL100": 3, "MATH140": 4, "CHEM131": 3, "CHEM132": 1,
-    "GEOL110": 1, "GEOL124": 3, "MATH141": 4,
-    "PHYS161": 3, "PHYS261": 1, "AOSC123": 3,
-    "GEOL102": 4, "GEOL322": 4,
-    "GEOL340": 4, "GEOL341": 4,
-    "GEOL342": 4, "GEOL351": 3,
-    "GEOL423": 4, "GEOL446": 3, "GEOL443": 4,
-    "GEOL331": 3, "GEOL386": 3, "GEOL463": 3, "GEOL472": 3
-  },
+  "credits": { "GEOL100": 3, "MATH140": 4, "CHEM131": 3, "CHEM132": 1, "GEOL110": 1, "GEOL124": 3, "MATH141": 4, "PHYS161": 3, "PHYS261": 1, "AOSC123": 3, "GEOL102": 4, "GEOL322": 4, "GEOL340": 4, "GEOL341": 4, "GEOL342": 4, "GEOL351": 3, "GEOL423": 4, "GEOL446": 3, "GEOL443": 4, "GEOL331": 3, "GEOL386": 3, "GEOL463": 3, "GEOL472": 3, "CMNS100": 1 },
   "terms": [
-    { "term": "Freshman Fall", "courses": ["GEOL100", "MATH140", "CHEM131", "CHEM132"] },
+    { "term": "Freshman Fall", "courses": ["GEOL100", "MATH140", "CHEM131", "CHEM132", "CMNS100"] },
     { "term": "Freshman Spring", "courses": ["GEOL110", "GEOL124", "MATH141"] },
     { "term": "Sophomore Fall", "courses": ["PHYS161", "PHYS261", "AOSC123"] },
     { "term": "Sophomore Spring", "courses": ["GEOL102", "GEOL322"] },

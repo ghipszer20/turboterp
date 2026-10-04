@@ -1,0 +1,20 @@
+{
+  "programId": "phsc-usg-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/universities-shady-grove/public-health-science/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No term-by-term plan is in the sources (the SPH page links to one and lists benchmarks). Shady Grove plan not in the sources; constructed from the College Park plan with PHSC300 in place of SPHL100, from the catalog table with the benchmarks respected (CHEM131/132 in two semesters, CHEM231/232 in four). Gen Ed left out. Fills: BSCI171 for the biology lab; HLTH424, MIEH330, MIEH331 and HLSA484 for the 12 credits of options (unconfirmed placeholders, not checked by the audit). Flagged in docs/project/owner-review.md."
+  ],
+  "credits": { "BSCI170": 3, "BSCI171": 1, "BSCI201": 4, "BSCI202": 4, "BSCI222": 4, "BSCI223": 4, "CHEM131": 3, "CHEM132": 1, "CHEM231": 3, "CHEM232": 1, "KNES320": 4 },
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["PHSC300", "MATH120", "CHEM131", "CHEM132", "BSCI170", "BSCI171"] },
+    { "term": "Freshman Spring", "courses": ["BSCI201", "BSCI222", "EPIB301"] },
+    { "term": "Sophomore Fall", "courses": ["CHEM231", "CHEM232", "BSCI202", "EPIB315"] },
+    { "term": "Sophomore Spring", "courses": ["BSCI223", "HLSA300", "MIEH300"] },
+    { "term": "Junior Fall", "courses": ["HLTH366", "KNES320", "PHSC415"] },
+    { "term": "Junior Spring", "courses": ["PHSC450", "HLTH424", "MIEH330"] },
+    { "term": "Senior Fall", "courses": ["MIEH331", "HLSA484"] },
+    { "term": "Senior Spring", "courses": ["PHSC497"] }
+  ]
+}

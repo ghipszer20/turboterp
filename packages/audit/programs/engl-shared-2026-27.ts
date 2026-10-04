@@ -60,9 +60,7 @@ export const englCommonReviewNotes: string[] = [
     "the 12 ENGL courses must be at the 4xx level'). Historical Studies, Electives and each track's " +
     "generic choose pools start at ENGL 200 (not 100) so at most the un-enforced two 1xx/2xx slots " +
     "would need to come from outside those pools, but the aggregate cap itself is not checked.",
-  "Not encoded (engine gap, matches other ARHU majors' precedent): the 2.0 GPA-in-the-major " +
-    "requirement (distinct from the per-course C- floor, which IS encoded via `minGrade`); " +
-    "residency rules; and the 120-credit graduation minimum.",
+  "Not encoded (engine gap, matches other ARHU majors' precedent): residency rules; and the 120-credit graduation minimum.",
   "Not encoded: ENGL301 must be taken before, or concurrently with, a student's first other 3xx/4xx " +
     "ENGL course (catalog footnote 1) -- no term-sequencing concept in the engine.",
   "Not encoded: 'Up to six credits of ENGL388 (Internship) may be included..., but not all from the " +

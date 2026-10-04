@@ -6,7 +6,7 @@ Pages never scrape UMD sites per request. Two jobs fetch the data ahead of time 
 
 | Job | Schedule | What it refreshes |
 | --- | --- | --- |
-| `buildSnapshots` (`daily`) | once a day, ~5:00am campus time | room catalog, today's room availability, today's menus for every hall, library hours (2 weeks), RecWell hours (14 days from today), Shuttle-UM GTFS feed, UMD building locations, then `pruneSnapshots` |
+| `buildSnapshots` (`daily`) | once a day, ~5:00am campus time | room catalog, today's room availability, today's menus for every hall, library hours (2 weeks), RecWell hours (14 days from today), Shuttle-UM GTFS feed, UMD building locations, registrar academic calendar, then `pruneSnapshots` |
 | `refreshFast` (`fast`) | every 5 minutes | room availability for today; each hall's menu once its snapshot is 30+ minutes old (so menus are re-checked every ~30 min), or right away when the date rolls over |
 | `pruneSnapshots` (`prune`) | run automatically at the end of `daily`; also available on its own | removes dated snapshots (and their matching `status/` entries) outside the keep window |
 
@@ -45,7 +45,9 @@ interface SnapshotStore {
 
 `FileSnapshotStore` stores each key as a JSON file: `dining/2026-09-25/19` is saved as `<dir>/dining/2026-09-25/19.json`. Each file is wrapped in `{ schema, key, updatedAt, data }`. Writes go to a temp file first and are then renamed into place. A file with a different `schema` number, or one that won't parse, reads as missing. Bump `SNAPSHOT_SCHEMA` whenever a data shape changes.
 
-The directory is `$SUPERTERP_SNAPSHOT_DIR`, or `<repo root>/.cache/snapshots` by default. That folder is gitignored, and the CLI and `next dev`/`next start` both resolve to it. A durable store (Supabase, or the host's data cache) will implement the same two methods when we deploy.
+The directory is `$TURBOTERP_SNAPSHOT_DIR`, or `<repo root>/.cache/snapshots` by default. That folder is gitignored, and the CLI and `next dev`/`next start` both resolve to it. `SupabaseSnapshotStore` keeps the same `{ schema, key, updatedAt, data }` wrapper as `<key>.json` objects in a Supabase Storage bucket (default name `snapshots`), through the Storage REST API with plain `fetch`. `openSnapshotStore()` picks the store from the environment: Supabase when `SUPABASE_SERVICE_ROLE_KEY` and `SUPABASE_URL` (or `NEXT_PUBLIC_SUPABASE_URL`) are both set, otherwise the file store above.
+
+The bucket must be private. Only server code and the build scripts hold the service-role key; never import the Supabase store or `openSnapshotStore` from a `"use client"` file, and never give the key a `NEXT_PUBLIC_` name. An explicit `--dir` on a build script still means the file store.
 
 Keys:
 
@@ -58,10 +60,11 @@ Keys:
 | `recwell/areas` | `RecWellArea[]` (14-day window) |
 | `buses/gtfs` | unzipped GTFS text files (about 7 MB); the web parses them once per server instance |
 | `buildings` | `Building[]` (umd.io map buildings: id, name, lat, lon) for the trip planner's place search |
+| `calendar/academic` | `AcademicEvent[]` (registrar dates for the current and next two terms: registration, schedule adjustment, drop with W, derived pass/fail, apply to graduate, finals) |
 | `status/<key>` | the last refresh attempt for `<key>` |
 
 ## Cleanup
 
-Dated keys (`rooms/<date>/...`, `dining/<date>/...`) add about 12 small files a day. `pruneSnapshots(store, now, { keepDays })` removes any dated snapshot — and its matching `status/<key>` entry — whose date falls outside `now`'s campus date ± `keepDays`. `keepDays` defaults to 1, keeping yesterday, today, and tomorrow (the extra day on each side is slack for timezone edges around midnight). Undated keys (`rooms/catalog`, `libraries/hours`, `recwell/areas`, `buses/gtfs`, `buildings`) are never touched.
+Dated keys (`rooms/<date>/...`, `dining/<date>/...`) add about 12 small files a day. `pruneSnapshots(store, now, { keepDays })` removes any dated snapshot — and its matching `status/<key>` entry — whose date falls outside `now`'s campus date ± `keepDays`. `keepDays` defaults to 1, keeping yesterday, today, and tomorrow (the extra day on each side is slack for timezone edges around midnight). Undated keys (`rooms/catalog`, `libraries/hours`, `recwell/areas`, `buses/gtfs`, `buildings`, `calendar/academic`) are never touched.
 
 The daily build runs `pruneSnapshots` automatically after refreshing everything else. It can also be run on its own with `npm run snapshots -- prune`.

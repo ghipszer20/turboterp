@@ -35,6 +35,7 @@ export const spanMajorLiteratureCultureMedia: Program = {
     "https://drive.google.com/uc?export=download&id=1eL0ki-g1XSznVOHn0HAHu_yuCddYjLpq#Spanish-and-Latin-American-Literature,-Culture,-and-Media " +
     "(fetched 2026-09-28)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Track: 'Select one of the following' (3 credits) is SPAN318, SPAN370, SPAN371, SPAN372, " +

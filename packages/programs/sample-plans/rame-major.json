@@ -11,7 +11,7 @@
     "Capstone filled with RELS408, named directly by the catalog, department page, and plan."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["RELS271"] },
+    { "term": "Year 1 Fall", "courses": ["RELS271", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["JWST225"] },
     { "term": "Year 2 Fall", "courses": ["JWST231"] },
     { "term": "Year 2 Spring", "courses": ["HIST120"] },

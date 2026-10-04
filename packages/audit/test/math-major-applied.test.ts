@@ -32,7 +32,7 @@ describe("Math major, Applied Mathematics Track, 2026–27", () => {
     expect(Object.keys(statuses)).toEqual([
       "math140", "math141", "math240", "math241", "math310", "intro3",
       "math410", "stat410", "stat4xx", "algebra", "numerical", "applied", "depth", "eight",
-      "programming", "supporting",
+      "programming", "supporting", "program-gpa",
     ]);
     for (const [id, status] of Object.entries(statuses)) expect(`${id}: ${status}`).toBe(`${id}: satisfied`);
   });

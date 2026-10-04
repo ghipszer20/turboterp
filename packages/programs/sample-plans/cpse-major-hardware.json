@@ -9,12 +9,9 @@
     "The 'MATH246/241/240' slot is filled with MATH241 (Calculus III); any of the three would satisfy the requirement equally.",
     "Track choice: Hardware Track. The plan's four generic 'ENEB 4XX' Year 4 Spring slots are filled with the track's required course (ENEB455) plus three more electives (ENEB443, ENEB451, ENEB452); combined with ENEB352 (Year 3 Spring, a prerequisite for ENEB451), that's the track's required 4 electives. Any four electives from the pool would satisfy the requirement equally."
   ],
-  "credits": {
-    "MATH140": 4, "MATH141": 4, "MATH241": 4, "CMSC131": 4,
-    "PHYS261": 1, "ENEB302": 4, "ENEB344": 4
-  },
+  "credits": { "MATH140": 4, "MATH141": 4, "MATH241": 4, "CMSC131": 4, "PHYS261": 1, "ENEB302": 4, "ENEB344": 4, "UNIV100": 1 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["ENES100", "MATH140", "CHEM135", "ENGL101"] },
+    { "term": "Year 1 Fall", "courses": ["ENES100", "MATH140", "CHEM135", "ENGL101", "UNIV100"] },
     { "term": "Year 1 Spring", "courses": ["MATH141", "PHYS161", "CMSC131"] },
     { "term": "Year 2 Fall", "courses": ["PHYS260", "PHYS261", "MATH241"] },
     { "term": "Year 3 Fall", "courses": ["ENEB302", "ENEB340", "ENEB341", "ENEB344", "ENEB354"] },

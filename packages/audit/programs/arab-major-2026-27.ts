@@ -33,6 +33,7 @@ export const arabMajor: Program = {
     "College of Arts and Humanities official four-year academic plan for Arabic Studies, " +
     "fetched 2026-09-28 (https://drive.google.com/uc?export=download&id=11biF06jxlkxYZ8_71AWJ7ZzpcEx-an7g#Arabic-Studies)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Department page vs. catalog: no numeric disagreement found. The college's four-year plan's own " +
@@ -64,7 +65,7 @@ export const arabMajor: Program = {
       "graduation requirements as '12 upper level major credits must be earned at UMD.' The audit engine " +
       "checks per-requirement course assignment and per-course minGrade, not a credit-level minimum " +
       "spanning every requirement.",
-    "Not encoded (engine gaps): the overall 2.0 cumulative GPA requirement for the major/minor, residency " +
+    "Not encoded (engine gaps): residency " +
       "rules (at least 30 credits at UMD, 15 of the final 30 credits at the 300-400 level), and the " +
       "120-credit graduation minimum.",
   ],

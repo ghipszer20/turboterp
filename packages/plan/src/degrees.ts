@@ -8,7 +8,7 @@
 //   Double degree: 2 degrees, 150 credits, and 18 credits in each degree not used for the other.
 //   Either one must be declared at least one full academic year before graduation.
 
-import { auditStudent, earnsCredit, type AuditResult, type Program } from "@superterp/audit";
+import { auditStudent, earnsCredit, type AuditResult, type Program } from "@turboterp/audit";
 import type { PlanCatalog } from "./catalog.ts";
 import type { Plan } from "./check.ts";
 import { DUAL_DEGREE_CREDITS, DUAL_DEGREE_UNIQUE_CREDITS, planCourses } from "./notices.ts";
@@ -84,7 +84,7 @@ export async function checkDegrees(
   catalog: PlanCatalog,
   degrees: Degree[],
   layers: Program[],
-  options: { today?: Date } = {},
+  options: { today?: Date; confirmed?: string[] } = {},
 ): Promise<DegreeCheck> {
   const mode = degreeMode(degrees);
   const courses = planCourses(plan, catalog);
@@ -101,7 +101,10 @@ export async function checkDegrees(
   const { results, uniqueCredits } = await auditStudent(
     entries.map((e) => e.program),
     courses,
-    double ? { degrees: groups, minUniqueCredits: DUAL_DEGREE_UNIQUE_CREDITS } : {},
+    {
+      ...(double ? { degrees: groups, minUniqueCredits: DUAL_DEGREE_UNIQUE_CREDITS } : {}),
+      ...(options.confirmed ? { confirmed: options.confirmed } : {}),
+    },
   );
   const audits = entries.map((e, i) => ({ ...e, result: results[i]! }));
 

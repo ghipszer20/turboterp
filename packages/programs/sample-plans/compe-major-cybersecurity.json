@@ -9,15 +9,9 @@
     "Chemistry, the 'ENEE304 or ENEE322', 'ENEE324 or STAT400' and 'CMSC412 or ENEE447' choices are filled the same way as compe-major.json.",
     "Technical Elective slots, changed from compe-major.json to also cover the specialization's areas: Category A = MATH401 (keeps the 400-level overlay) and CMSC456 (Area 1 Cryptography); Category B = CMSC420 (also Area 4 Systems/Software); Category C = ENEE420 and ENEE457 (Area 1 Security, in place of ENEE425); Category D = ENEE445 (Area 3 Hands-On, requires permission per the specialization page -- see docs/project/owner-review.md); Category E = CMSC435 (unchanged); Category F = ENEE426 (Area 2 Networks, in place of MATH403); Additional = ENEE460 (unchanged)."
   ],
-  "credits": {
-    "MATH140": 4, "MATH141": 4,
-    "CMSC131": 4, "CMSC132": 4, "CMSC216": 4, "CMSC250": 4, "CMSC412": 4,
-    "ENEE205": 4, "ENEE222": 4, "ENEE290": 4,
-    "ENEE245": 2, "ENEE445": 2,
-    "PHYS261": 1
-  },
+  "credits": { "MATH140": 4, "MATH141": 4, "CMSC131": 4, "CMSC132": 4, "CMSC216": 4, "CMSC250": 4, "CMSC412": 4, "ENEE205": 4, "ENEE222": 4, "ENEE290": 4, "ENEE245": 2, "ENEE445": 2, "PHYS261": 1, "UNIV100": 1 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["CHEM135", "CMSC131", "ENEE101", "MATH140"] },
+    { "term": "Year 1 Fall", "courses": ["CHEM135", "CMSC131", "ENEE101", "MATH140", "UNIV100"] },
     { "term": "Year 1 Spring", "courses": ["ENES100", "CMSC132", "PHYS161", "MATH141"] },
     { "term": "Year 2 Fall", "courses": ["ENEE244", "ENEE290", "PHYS260", "PHYS261", "CMSC250"] },
     { "term": "Year 2 Spring", "courses": ["ENEE222", "ENEE205", "CMSC216", "ENEE245"] },

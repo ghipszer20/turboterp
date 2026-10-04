@@ -7,18 +7,9 @@
     "No published 4-year plan or checksheet was found for any Geology track (department overview page confirms none is linked); this plan is built from the department's own current Professional Track requirements page and is a constructed plan, not an official one (docs/project/owner-review.md notes this for all three Geology tracks).",
     "Core discipline choices: GEOL351 (Quantitative Reasoning), GEOL340 (Surface Processes), GEOL446 (Geophysics), GEOL444 (Geochemistry), GEOL331 (Geobiology). The 300-400 level Geology elective is filled with GEOL412 (Geology of Terrestrial Planets)."
   ],
-  "credits": {
-    "GEOL100": 3, "MATH140": 4, "CHEM131": 3, "CHEM132": 1,
-    "GEOL110": 1, "GEOL102": 4, "MATH141": 4,
-    "PHYS161": 3, "PHYS261": 1, "GEOL322": 4,
-    "GEOL340": 4, "GEOL341": 4,
-    "GEOL342": 4, "GEOL351": 3,
-    "GEOL423": 4, "GEOL443": 4,
-    "GEOL446": 3, "GEOL444": 4, "GEOL331": 3,
-    "GEOL393": 3, "GEOL394": 3, "GEOL490": 6, "GEOL412": 3
-  },
+  "credits": { "GEOL100": 3, "MATH140": 4, "CHEM131": 3, "CHEM132": 1, "GEOL110": 1, "GEOL102": 4, "MATH141": 4, "PHYS161": 3, "PHYS261": 1, "GEOL322": 4, "GEOL340": 4, "GEOL341": 4, "GEOL342": 4, "GEOL351": 3, "GEOL423": 4, "GEOL443": 4, "GEOL446": 3, "GEOL444": 4, "GEOL331": 3, "GEOL393": 3, "GEOL394": 3, "GEOL490": 6, "GEOL412": 3, "CMNS100": 1 },
   "terms": [
-    { "term": "Freshman Fall", "courses": ["GEOL100", "MATH140", "CHEM131", "CHEM132"] },
+    { "term": "Freshman Fall", "courses": ["GEOL100", "MATH140", "CHEM131", "CHEM132", "CMNS100"] },
     { "term": "Freshman Spring", "courses": ["GEOL110", "GEOL102", "MATH141"] },
     { "term": "Sophomore Fall", "courses": ["PHYS161", "PHYS261", "GEOL322"] },
     { "term": "Sophomore Spring", "courses": ["GEOL340", "GEOL341"] },

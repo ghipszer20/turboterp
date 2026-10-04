@@ -1,0 +1,15 @@
+{
+  "programId": "rels-minor",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/jewish-studies/religious-studies-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog: RELS271, three 3xx+ courses (JWST331, HIST333, CLAS330) and two more from the catalog list (JWST171, PHIL236). Flagged in docs/project/owner-review.md."
+  ],
+  "credits": {},
+  "terms": [
+    { "term": "Term 1", "courses": ["RELS271", "JWST171"] },
+    { "term": "Term 2", "courses": ["PHIL236", "JWST331"] },
+    { "term": "Term 3", "courses": ["HIST333", "CLAS330"] }
+  ]
+}

@@ -10,7 +10,7 @@
 
 import * as cheerio from "cheerio";
 import type { Element } from "domhandler";
-import { fetchText, SourceError } from "@superterp/campus-data/http";
+import { fetchText, SourceError } from "@turboterp/campus-data/http";
 
 const SOC = "https://app.testudo.umd.edu/soc";
 
@@ -101,6 +101,24 @@ export function parseDepartments(html: string): Department[] {
     .filter((d) => /^[A-Z]{4}$/.test(d.code));
   if (depts.length === 0) throw new SourceError("soc", "page layout changed: no departments");
   return depts;
+}
+
+/**
+ * Prefixes the Academic Catalog's approved-courses index lists but Testudo's department index
+ * omits, although their pages exist (e.g. /soc/202608/CMNS has CMNS100/210/211). Checked 2026-09-29.
+ * A prefix whose page has no courses just contributes nothing.
+ */
+export const EXTRA_DEPARTMENT_PREFIXES: readonly string[] = [
+  "ARHX", "ARTX", "ARUX", "CINX", "CLAX", "CMLX", "CMNS", "COMX", "CPSD", "EDCI",
+  "EDPS", "ENGX", "HEIP", "HISX", "ITAX", "IVSP", "LASX", "LGBX", "MLSC", "MUET",
+  "MUSP", "OURS", "PHIX", "PHPX", "PSIT", "RELX", "SLLX", "SPAX", "THEX", "WMSX",
+];
+
+/** The index's departments plus the hidden prefixes above (the index's own entries win). */
+export function withExtraDepartments(departments: Department[]): Department[] {
+  const seen = new Set(departments.map((d) => d.code));
+  const extra = EXTRA_DEPARTMENT_PREFIXES.filter((code) => !seen.has(code)).map((code) => ({ code, name: code }));
+  return [...departments, ...extra];
 }
 
 // ---- department page ----

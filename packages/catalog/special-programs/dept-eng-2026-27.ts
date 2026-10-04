@@ -6,7 +6,7 @@
 // (see dept-aero-2026-27.ts, dept-bioe-2026-27.ts). Electrical and Computer Engineering has no honors page of
 // its own and is a "none" entry pointing here (see registry.ts).
 
-import type { Program, ProgramMeta } from "@superterp/audit";
+import type { Program, ProgramMeta } from "@turboterp/audit";
 import { CATALOG_YEAR } from "./common.ts";
 
 export const SOURCE = "https://www.eng.umd.edu/current/honors-program";

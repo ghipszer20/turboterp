@@ -11,7 +11,7 @@
     "Management Courses filled with ANSC255, named directly in the catalog's own Management Courses list for this specialization."
   ],
   "terms": [
-    { "term": "Freshman Fall", "courses": ["ANSC101", "ANSC103", "BSCI160", "CHEM131"] },
+    { "term": "Freshman Fall", "courses": ["ANSC101", "ANSC103", "BSCI160", "CHEM131", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["ANSC201", "BSCI170", "BSCI180", "CHEM132"] },
     { "term": "Sophomore Fall", "courses": ["ANSC314", "ECON200", "BIOM301", "PHYS121"] },
     { "term": "Sophomore Spring", "courses": ["ANSC315", "ANSC401", "BSCI223", "PHYS122"] },
@@ -19,5 +19,6 @@
     { "term": "Junior Spring", "courses": ["CHEM241", "CHEM242", "CHEM271"] },
     { "term": "Senior Fall", "courses": ["ANSC417", "ANSC435", "ANSC444"] },
     { "term": "Senior Spring", "courses": ["CHEM272", "ANSC255"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

@@ -13,5 +13,5 @@ describe("registry.generated.ts", () => {
     const committed = PROGRAMS.map(({ load: _load, ...rest }) => rest);
     const freshComparable = fresh.map(({ importPath: _importPath, exportName: _exportName, ...rest }) => rest);
     expect(committed).toEqual(freshComparable);
-  });
+  }, 60_000); // scans and loads every program file; slow under load as the registry grows
 });

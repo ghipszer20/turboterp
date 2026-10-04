@@ -11,13 +11,9 @@
     "The 'ENES200 or ENEE200' slot (Year 2 Fall) is filled with ENES200, as printed first on the graduation plan and catalog table; ENEE200 would satisfy the requirement equally.",
     "The five Technical Elective slots (Year 4 Fall x2, Year 4 Spring x3) are filled with ENME442, ENME454, ENME489C, ENME489E and ENME489Q, all from the department Bachelor of Science page's own Technical Electives list; any five qualifying courses totaling 15 credits would satisfy the requirement."
   ],
-  "credits": {
-    "MATH140": 4, "MATH141": 4, "MATH241": 4,
-    "PHYS261": 1, "PHYS271": 1,
-    "ENME272": 2
-  },
+  "credits": { "MATH140": 4, "MATH141": 4, "MATH241": 4, "PHYS261": 1, "PHYS271": 1, "ENME272": 2, "UNIV100": 1 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["ENES102", "MATH140", "CHEM135"] },
+    { "term": "Year 1 Fall", "courses": ["ENES102", "MATH140", "CHEM135", "UNIV100"] },
     { "term": "Year 1 Spring", "courses": ["ENES100", "MATH141", "PHYS161", "ENME272"] },
     { "term": "Year 2 Fall", "courses": ["ENES221", "ENME202", "MATH241", "PHYS260", "PHYS261", "ENES200"] },
     { "term": "Year 2 Spring", "courses": ["ENES220", "ENES232", "MATH246", "PHYS270", "PHYS271"] },

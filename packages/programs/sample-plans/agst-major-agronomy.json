@@ -10,7 +10,7 @@
     "The three 'AGST, PLSC or ANSC', 'AREC or BMGT' and 'AGST or PLSC x3' restricted-elective slots (all advisor-chosen, 300-level or above) are filled with ANSC401 (Animal Growth and Development), BMGT313 (Entrepreneurship), and AGST333, AGST426, AGST440 (all real 300+ courses in the named departments); the ENST Restricted Elective is filled with ENST411 (Principles of Soil Fertility, named directly in the Environmental Horticulture specialization's own list). The Multidiscipline Restricted Elective (Education, Computer Science or Policy) is filled with CMSC106, a real 100-level Computer Science course; see the owner-review.md flag on this slot's ambiguous department wording."
   ],
   "terms": [
-    { "term": "Freshman Fall", "courses": ["CHEM131", "PLSC201", "MATH115", "ANSC101", "ANSC103"] },
+    { "term": "Freshman Fall", "courses": ["CHEM131", "PLSC201", "MATH115", "ANSC101", "ANSC103", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["CHEM132", "PLSC206", "BSCI160", "PLSC112", "PLSC113"] },
     { "term": "Sophomore Fall", "courses": ["CHEM231", "ENST200", "BSCI180"] },
     { "term": "Sophomore Spring", "courses": ["CHEM232", "BSCI337", "AGST401"] },
@@ -18,5 +18,6 @@
     { "term": "Junior Spring", "courses": ["PLSC453", "ANSC232", "ANSC401"] },
     { "term": "Senior Fall", "courses": ["BMGT313", "AGST333", "AGST426"] },
     { "term": "Senior Spring", "courses": ["AGST440", "ENST411", "CMSC106", "PLSC389", "PLSC460"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

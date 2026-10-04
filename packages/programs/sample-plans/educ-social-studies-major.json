@@ -1,0 +1,21 @@
+{
+  "programId": "educ-social-studies-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/social-studies-education-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no readable Secondary Social Studies Education 4-year plan in the fetched sources (links only). Constructed from the catalog requirement table: subject-area courses first, pre-professional education next, TLPL470 in junior fall and TLPL471/479/478/489 in senior year. Gen Ed slots are left out. Flagged in docs/project/owner-review.md.",
+    "Fills (no course lists in the source): regional HIST electives HIST284 (East Asia) and HIST111; History electives HIST304, HIST306, HIST307, HIST310, HIST319, HIST320, HIST106, HIST120; all real catalog courses used by the History major's plan. Economics: ECON200."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["HIST200", "GEOG202", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["HIST208", "GVPT170", "SOCY100"] },
+    { "term": "Sophomore Fall", "courses": ["HIST284", "HIST111", "ECON200", "TLPL250"] },
+    { "term": "Sophomore Spring", "courses": ["HIST106", "HIST120", "EDHD413", "TLPL300"] },
+    { "term": "Junior Fall", "courses": ["HIST304", "HIST306", "EDHD426", "TLPL481", "TLPL488", "TLPL470"] },
+    { "term": "Junior Spring", "courses": ["HIST307", "HIST310"] },
+    { "term": "Senior Fall", "courses": ["HIST319", "HIST320", "TLPL471", "TLPL479"] },
+    { "term": "Senior Spring", "courses": ["HIST408", "TLPL478", "TLPL489"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}

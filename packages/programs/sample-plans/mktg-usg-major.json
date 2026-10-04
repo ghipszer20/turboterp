@@ -1,0 +1,79 @@
+{
+  "programId": "mktg-usg-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/universities-shady-grove/business/marketing/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "Shady Grove version: mirrors the College Park Marketing plan (mktg-major); the requirements are identical, so the same plan is used. Its official flag and placeholder notes carry over below.",
+    "No Marketing-specific 4-year plan was reachable from the fetched source (the catalog's 'Catalog four-year plan' section only links to the Smith School's general roadmaps page and 4yearplans.umd.edu; the college's own general BS 'Typical Program' table stops after the sophomore year with no Marketing-specific courses placed). This plan is CONSTRUCTED from the catalog's own College Requirements and Marketing-major requirement tables; flagged in docs/project/owner-review.md. Gen Ed slots are left out: only the major is audited.",
+    "Calculus gateway filled with MATH140 (Calculus I); Business Statistics gateway filled with BMGT230 (Business Statistics); Oral Communication filled with COMM107 (Oral Communication: Principles and Practices) -- all named directly in the catalog's own option lists, not invented.",
+    "The 9-credit 'select three of the following' elective is filled with BMGT450 (Integrated Marketing Communications), BMGT454 (Global Marketing), and BMGT484 (Digital Marketing) -- three courses named directly in that slot's own catalog list, avoiding the catalog's unenforced 6-credit cap on BMGT458 entirely.",
+    "Course placement (year/term) is constructed, not sourced from a published plan: BMGT220/BMGT221 (Principles of Accounting I/II) placed sophomore year matching the college's own Freshman-Sophomore School Requirements grouping; BMGT354/BMGT351/BMGT457 (the major's three fixed courses) and the three marketing electives are placed junior/senior year, after their Freshman-Sophomore prerequisites-in-spirit, since the source gives no term-by-term sequencing for them."
+  ],
+  "credits": {
+    "BMGT367": 1
+  },
+  "terms": [
+    {
+      "term": "Freshman Fall",
+      "courses": [
+        "BMGT110",
+        "MATH140"
+      ]
+    },
+    {
+      "term": "Freshman Spring",
+      "courses": [
+        "ECON200",
+        "COMM107"
+      ]
+    },
+    {
+      "term": "Sophomore Fall",
+      "courses": [
+        "BMGT220",
+        "ECON201"
+      ]
+    },
+    {
+      "term": "Sophomore Spring",
+      "courses": [
+        "BMGT221",
+        "BMGT230"
+      ]
+    },
+    {
+      "term": "Junior Fall",
+      "courses": [
+        "BMGT301",
+        "BMGT340",
+        "BMGT350"
+      ]
+    },
+    {
+      "term": "Junior Spring",
+      "courses": [
+        "BMGT364",
+        "BMGT380",
+        "BMGT354"
+      ]
+    },
+    {
+      "term": "Senior Fall",
+      "courses": [
+        "BMGT367",
+        "BMGT351",
+        "BMGT450",
+        "BMGT454"
+      ]
+    },
+    {
+      "term": "Senior Spring",
+      "courses": [
+        "BMGT495",
+        "BMGT457",
+        "BMGT484"
+      ]
+    }
+  ]
+}

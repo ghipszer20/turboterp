@@ -9,7 +9,7 @@
     "Advanced Courses (8 courses, 3xx-4xx level, at least 4 CLAS including the CLAS409 capstone) filled with CLAS305, CLAS308, CLAS309, CLAS310, CLAS409, plus LATN301, LATN302 and GREK301 for the remaining non-Classics-required slots -- the plan's own 'Four CLAS, LATN, GREK, or supporting courses (3xx-4xx)' and 'CLAS Supporting 3xx-4xx' slots."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["CLAS170", "CLAS171"] },
+    { "term": "Year 1 Fall", "courses": ["CLAS170", "CLAS171", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["CLAS180", "CLAS190"] },
     { "term": "Year 2 Fall", "courses": ["CLAS305", "CLAS308"] },
     { "term": "Year 2 Spring", "courses": ["CLAS309", "CLAS310"] },

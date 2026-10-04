@@ -1,0 +1,19 @@
+{
+  "programId": "ensp-major-environmental-politics-policy",
+  "source": "https://agnr.umd.edu/sites/agnr.umd.edu/files/files/documents/ENSP%20FourYrPlan_BSOS%20PoliticsPolicy.pdf",
+  "fetched": "2026-09-28",
+  "official": true,
+  "notes": [
+    "Official four-year plan transcribed with Gen Ed slots left out; unnamed Restricted Elective / Techniques & Methods slots are not encoded, so they are left out too. Calculus filled with MATH120; Statistics with PSYC200; Core groups filled with BSCI160/BSCI161 (Biology), GEOG201/211 (Earth Sciences), AREC240 (Economics) and GEOG202 (Geography; the plan shows only three groups, so an Elective is filled with GEOG202); 'GVPT choice' filled with GVPT201; a Restricted Elective filled with ENSP340 as the Core's Applied Science and Policy course (ENSP330 is required directly by the concentration and cannot be double-counted)."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["ENSP101", "MATH120", "GEOG201", "GEOG211", "GVPT170", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["ENSP102", "AREC240", "GEOG202"] },
+    { "term": "Sophomore Fall", "courses": ["GVPT200", "BSCI160", "BSCI161"] },
+    { "term": "Sophomore Spring", "courses": ["ECON201", "PSYC200", "GVPT201"] },
+    { "term": "Junior Fall", "courses": ["GVPT306", "GVPT280"] },
+    { "term": "Junior Spring", "courses": ["ENSP330", "ENSP340"] },
+    { "term": "Senior Fall", "courses": ["GVPT417", "ENSP400"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}

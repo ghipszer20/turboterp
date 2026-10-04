@@ -1,4 +1,4 @@
-import type { Program } from "@superterp/audit";
+import type { Program } from "@turboterp/audit";
 import { describe, expect, it } from "vitest";
 import { planCourses, validateSamplePlan, type SamplePlan } from "../src/harness.ts";
 
@@ -58,5 +58,50 @@ describe("validateSamplePlan", () => {
     const vacuous: Program = { ...program, requirements: [{ kind: "choose", id: "none", name: "Zero courses", count: 0, from: { departments: ["TOYS"] } }] };
     const v = await validateSamplePlan(vacuous, plan(["TOYS101"]));
     expect(v.mutants.every((m) => m.broke === false)).toBe(true);
+  });
+
+  it("treats every open slot as confirmed and makes no mutants for it", async () => {
+    const withSlot: Program = {
+      ...program,
+      requirements: [...program.requirements, { kind: "openSlot", id: "approved", name: "Approved courses", credits: 12 }],
+    };
+    const v = await validateSamplePlan(withSlot, plan(["TOYS101", "TOYS401", "TOYS402"]));
+    expect(v.unsatisfied).toEqual([]);
+    expect(v.mutants.some((m) => m.requirement === "approved")).toBe(false);
+    expect(v.mutants.every((m) => m.broke)).toBe(true);
+  });
+});
+
+describe("spread mutant (distribution requirements)", () => {
+  const dist: Program = {
+    id: "dist",
+    name: "Dist",
+    requirements: [
+      {
+        kind: "distribution",
+        id: "spread",
+        name: "Three courses from at least two areas, at most two per area",
+        count: 3,
+        minAreas: 2,
+        maxPerArea: 2,
+        areas: [
+          { name: "A", courses: ["AAAA101", "AAAA102", "AAAA103"] },
+          { name: "B", from: { departments: ["BBBB"] } },
+        ],
+      },
+    ],
+  };
+  const distPlan: SamplePlan = { programId: "dist", source: "https://example.edu/p", fetched: "2026-09-28", official: true, terms: [{ term: "Fall 1", courses: ["AAAA101", "AAAA102", "BBBB101"] }] };
+
+  it("piles the plan's courses into fewer areas than required, and the requirement breaks", async () => {
+    const v = await validateSamplePlan(dist, distPlan);
+    expect(v.unsatisfied).toEqual([]);
+    const spread = v.mutants.find((m) => m.kind === "spread")!;
+    expect(spread).toMatchObject({ requirement: "spread", removed: ["BBBB101"], broke: true, fillerCounted: false });
+  });
+
+  it("makes no spread mutant for other requirement kinds", async () => {
+    const v = await validateSamplePlan(program, plan(["TOYS101", "TOYS401", "TOYS402"]));
+    expect(v.mutants.some((m) => m.kind === "spread")).toBe(false);
   });
 });

@@ -1,6 +1,6 @@
 // Regenerates src/registry.generated.ts from every program file's own ProgramMeta (see
 // registry-builder.ts and packages/audit/src/audit.ts). Run `npm run build:registry
-// -w @superterp/programs` after adding, removing or renaming a program (or its ProgramMeta);
+// -w @turboterp/programs` after adding, removing or renaming a program (or its ProgramMeta);
 // test/registry-generated.test.ts fails if this drifts.
 import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -14,6 +14,14 @@ function sourcesLiteral(sources: { catalog?: string; department?: string }): str
   const fields: string[] = [];
   if (sources.catalog !== undefined) fields.push(`catalog: ${tsLiteral(sources.catalog)}`);
   if (sources.department !== undefined) fields.push(`department: ${tsLiteral(sources.department)}`);
+  return `{ ${fields.join(", ")} }`;
+}
+
+function notOpenToLiteral(gate: { programs?: string[]; colleges?: string[]; reason: string }): string {
+  const fields: string[] = [];
+  if (gate.programs !== undefined) fields.push(`programs: ${tsLiteral(gate.programs)}`);
+  if (gate.colleges !== undefined) fields.push(`colleges: ${tsLiteral(gate.colleges)}`);
+  fields.push(`reason: ${tsLiteral(gate.reason)}`);
   return `{ ${fields.join(", ")} }`;
 }
 
@@ -32,6 +40,8 @@ async function main() {
         `catalogYear: ${tsLiteral(e.catalogYear)}`,
         `verified: ${tsLiteral(e.verified)}`,
         `sources: ${sourcesLiteral(e.sources)}`,
+        ...(e.notOpenTo !== undefined ? [`notOpenTo: ${notOpenToLiteral(e.notOpenTo)}`] : []),
+        ...(e.onlyOpenTo !== undefined ? [`onlyOpenTo: ${notOpenToLiteral(e.onlyOpenTo)}`] : []),
         `load: () => import(${tsLiteral(e.importPath)}).then((m) => m.${e.exportName})`,
       ];
       return `  { ${fields.join(", ")} },`;
@@ -44,7 +54,7 @@ async function main() {
 // together, the ProgramMeta.defaultTrack one first. Each \`load\` is a literal \`import()\` path, so
 // a page listing every program never bundles their requirements -- each becomes its own chunk.
 //
-// Regenerate with \`npm run build:registry -w @superterp/programs\` after adding, removing or
+// Regenerate with \`npm run build:registry -w @turboterp/programs\` after adding, removing or
 // renaming a program (or its ProgramMeta); test/registry-generated.test.ts fails if this drifts.
 // See docs/project/program-batches.md.
 

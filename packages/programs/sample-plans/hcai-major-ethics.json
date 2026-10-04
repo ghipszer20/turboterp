@@ -8,7 +8,7 @@
     "Ethics Specialization filled with INST366, PHIL341, PHIL344, PHIL347, PHIL438, PHIL440, all real courses from the Academic Catalog's own Ethics Specialization list."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["HCAI100", "HCAI120"] },
+    { "term": "Year 1 Fall", "courses": ["HCAI100", "HCAI120", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["HCAI121", "WGSS115"] },
     { "term": "Year 2 Fall", "courses": ["HCAI200", "INST204"] },
     { "term": "Year 2 Spring", "courses": ["PHIL211", "INST366"] },

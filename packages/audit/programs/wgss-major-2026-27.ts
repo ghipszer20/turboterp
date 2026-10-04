@@ -65,6 +65,7 @@ export const wgssMajor: Program = {
     "womens-gender-sexuality-studies-major/); College of Arts and Humanities official four-year academic plan " +
     "for Women, Gender, and Sexuality Studies, fetched 2026-09-28 (PDF-to-text conversion unreadable, see reviewNotes)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Department plan unreadable: unlike other ARHU builds where the college's four-year-plan PDF converts to " +
@@ -93,7 +94,7 @@ export const wgssMajor: Program = {
     "Foundation Courses (WGSS301, WGSS487) and the Upper Level Requirements (24 credits total) are all at the " +
       "3xx level or above, so the catalog's 'at least 24 credits must be at or above the 3xx level' floor is met " +
       "automatically by this structure's own credit totals -- not separately encoded as its own requirement.",
-    "Not encoded (engine gaps): the 2.0 GPA-in-the-major requirement; residency rules; and the 120-credit " +
+    "Not encoded (engine gaps): residency rules; and the 120-credit " +
       "graduation minimum. The audit engine checks per-requirement course assignment and per-course minGrade, " +
       "not GPA, residency, or credit totals.",
   ],

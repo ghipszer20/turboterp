@@ -1,0 +1,14 @@
+{
+  "programId": "mlaw-minor-law-society",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/behavioral-social-sciences/law-society-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: MLAW304, MLAW305, MLAW388 and MLAW404. The 6 credits of electives are not encoded (no course list on the catalog page). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["MLAW304"] },
+    { "term": "Term 2", "courses": ["MLAW305", "MLAW388"] },
+    { "term": "Term 3", "courses": ["MLAW404"] }
+  ]
+}

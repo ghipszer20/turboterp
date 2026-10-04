@@ -6,15 +6,15 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   // The shared packages ship TypeScript source; let Next compile them.
   transpilePackages: [
-    "@superterp/campus-data",
-    "@superterp/audit",
-    "@superterp/course-data",
-    "@superterp/credit",
-    "@superterp/plan",
-    "@superterp/programs",
-    "@superterp/catalog",
-    "@superterp/ratings",
-    "@superterp/tracks",
+    "@turboterp/campus-data",
+    "@turboterp/audit",
+    "@turboterp/course-data",
+    "@turboterp/credit",
+    "@turboterp/plan",
+    "@turboterp/programs",
+    "@turboterp/catalog",
+    "@turboterp/ratings",
+    "@turboterp/tracks",
   ],
   // Keep old links working after the tab restructure.
   async redirects() {

@@ -9,12 +9,9 @@
     "The printed term grid shows only two 'Elective' slots (Year 4 Spring, 6 credits), while the same document's own overview page lists four Technical Elective slots (12 credits) and the grid's own term totals sum to 113 credits -- 7 short of the plan's stated 'minimum of 120 credits' (see docs/project/owner-review.md). Two more electives are added to Year 4 Spring here so this fixture reflects the full 12-credit requirement.",
     "The four Technical Elective slots are filled with ENBC403 (Research Methods in Biological Data Mining), ENBC411 (Advanced Programming in Python), ENBC423 (Applied Computer Vision) and ENBC455 (Bioinformatics Engineering), all from the catalog's 'Possible technical electives' list; any four of the ten listed electives would satisfy the requirement."
   ],
-  "credits": {
-    "MATH140": 4, "MATH141": 4, "MATH241": 4, "CHEM136": 1, "PHYS261": 1,
-    "ENBC301": 1, "ENBC352": 2
-  },
+  "credits": { "MATH140": 4, "MATH141": 4, "MATH241": 4, "CHEM136": 1, "PHYS261": 1, "ENBC301": 1, "ENBC352": 2, "UNIV100": 1 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["MATH140", "CHEM135", "CHEM136"] },
+    { "term": "Year 1 Fall", "courses": ["MATH140", "CHEM135", "CHEM136", "UNIV100"] },
     { "term": "Year 1 Spring", "courses": ["ENES100", "BIOE120", "MATH141", "PHYS161"] },
     { "term": "Year 2 Fall", "courses": ["MATH241", "BIOE241"] },
     { "term": "Year 2 Spring", "courses": ["PHYS260", "PHYS261"] },

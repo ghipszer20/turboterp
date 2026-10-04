@@ -1,0 +1,15 @@
+{
+  "programId": "jwst-minor",
+  "source": "https://jewishstudies.umd.edu/academic-programs/undergraduate/js-minor",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: five JWST courses (JWST171, JWST231, JWST324, JWST409, JWST492); the history, literature and thought/culture categories have no published list, so which course fills which category is not audited. Flagged in docs/project/owner-review.md."
+  ],
+  "credits": {},
+  "terms": [
+    { "term": "Term 1", "courses": ["JWST171", "JWST231"] },
+    { "term": "Term 2", "courses": ["JWST324", "JWST409"] },
+    { "term": "Term 3", "courses": ["JWST492"] }
+  ]
+}

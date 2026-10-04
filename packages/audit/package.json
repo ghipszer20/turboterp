@@ -1,5 +1,5 @@
 {
-  "name": "@superterp/audit",
+  "name": "@turboterp/audit",
   "version": "0.1.0",
   "private": true,
   "description": "Degree audit: checks a student's courses against program requirements, assigning courses by optimization (ADR 0001). Framework-free.",

@@ -20,6 +20,7 @@ export const geogMajorGds: Program = {
     "https://fellercenter.umd.edu/sites/fellercenter.umd.edu/files/Major%20Cards/GEOG%20Geospatial%20Data%20Science%20Major%20Checklist%20042924%20Writable.pdf " +
     "(Internet Archive copy, fetched 2026-09-28)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Benchmark 1 (Academic Writing, two Gen Ed courses, MATH120/140/136, GEOG201&211 or GEOG202, and an additional GEOG course of choice, all within two semesters of entering the major) is a progress-to-continue-in-the-major gate, not a separate graduation requirement: every GEOG/math course it names is already required below (the checklist's own 'Required Course 1' and 'Required Course 2' rows both list 'GEOG201&211 or GEOG202', meaning a student takes one for the benchmark and the other as Required Course 2, so both end up required). The timing rule is an admission-progress gate the audit doesn't model (matches the General GEOG track and the GVPT majors' benchmark precedent).",
@@ -28,7 +29,7 @@ export const geogMajorGds: Program = {
     "GIS Technical Requirement: the checklist requires GEOG272, GEOG276, and GEOG373 by name (not a choice, unlike the General track's technique gateway), plus two 'GEOG 400 Level Technical Course' blanks with no list on the checklist itself. The catalog's parallel 'Six credits from the following list' (GEOG416, GEOG470, GEOG472, GEOG473, GEOG475, GEOG476, GEOG477) is not contradicted by the checklist (the checklist is simply less detailed, leaving the two slots blank) so it's used to fill those two slots: encoded as `choose` count 2 from that literal 7-course list. GEOG476 and GEOG477 have no titles in the fetched catalog text (likely dropped in table conversion) but are used as-is since the source names them explicitly.",
     "Department-vs-catalog difference: the checklist's supporting-sequence row lists 'MATH120/140/136' for the first supporting course, while the catalog's prose names only MATH120 ('MATH120 | Elementary Calculus I | 3'). Per the department-wins ruling, encoded as a `course` requirement with all three options (same treatment as the General track).",
     "Not encoded (approved elective with no enumerable list; flagged in docs/project/owner-review.md): the remaining 4 Supporting Courses (12 credits), which the checklist says to refer to 'http://www.geog.umd.edu/content/gis' for, with no course list in the fetched source.",
-    "Not encoded (engine gap): the catalog's stated minimum 2.0 GPA across all courses used to satisfy the major (major + supporting sequence together); the checklist's residency rules (15 of the final 30 credits at the 300-400 level, 12 upper-level major credits at UMD, 30 credits at UMD, cumulative 2.0 UMD GPA); and the 120-credit graduation minimum.",
+    "Not encoded (engine gap): Program GPA 2.0 encoded as minGpa (major + supporting sequence together). the checklist's residency rules (15 of the final 30 credits at the 300-400 level, 12 upper-level major credits at UMD, 30 credits at UMD, cumulative 2.0 UMD GPA); and the 120-credit graduation minimum.",
   ],
   requirements: [
     { kind: "course", id: "geog201", name: "Geography of Environmental Systems", options: ["GEOG201"] },

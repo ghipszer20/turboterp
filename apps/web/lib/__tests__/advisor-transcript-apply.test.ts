@@ -109,3 +109,16 @@ describe("applyTranscriptImport: re-importing the same transcript", () => {
     expect(twice).toEqual(once);
   });
 });
+
+describe("applyTranscriptImport: cumulative GPA", () => {
+  it("sets plan.gpa from the transcript, overwriting an earlier value", () => {
+    const plan = { ...basePlan(), gpa: 2.9 };
+    expect(applyTranscriptImport(plan, { courses: [], ap: [], gpa: 3.55 }).gpa).toBe(3.55);
+  });
+
+  it("leaves plan.gpa alone when the transcript printed none", () => {
+    const plan = { ...basePlan(), gpa: 2.9 };
+    expect(applyTranscriptImport(plan, { courses: [], ap: [] }).gpa).toBe(2.9);
+    expect(applyTranscriptImport(basePlan(), { courses: [], ap: [], gpa: null }).gpa).toBeUndefined();
+  });
+});

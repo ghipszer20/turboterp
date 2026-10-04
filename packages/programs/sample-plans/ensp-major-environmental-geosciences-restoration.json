@@ -1,0 +1,75 @@
+{
+  "programId": "ensp-major-environmental-geosciences-restoration",
+  "source": "https://agnr.umd.edu/sites/agnr.umd.edu/files/files/documents/ENSPFourYrPlan_CMNS%20EnvGeoscience.pdf",
+  "fetched": "2026-09-28",
+  "official": true,
+  "notes": [
+    "Official four-year plan transcribed with Gen Ed slots left out; unnamed Restricted Elective / Techniques & Methods slots are not encoded, so they are left out too. Calculus filled with MATH140 (MATH141 is the concentration's Calculus II); Statistics with GEOG306; Core groups: GEOL100/110 (Earth Sciences), BSCI160/161 (Biology), CHEM131/132 (Chemistry), and AREC240 (Economics; the plan lacks a fourth group, so a FREE ELECTIVE is filled with AREC240); ENST200 kept from the plan; Applied Science and Policy ('ENSP330 or ENSP340') filled with ENSP330; GEOL452 chosen for the hydrology row."
+  ],
+  "terms": [
+    {
+      "term": "Freshman Fall",
+      "courses": [
+        "ENSP101",
+        "MATH140",
+        "GEOL100",
+        "GEOL110",
+        "BSCI160",
+        "BSCI161"
+      ]
+    },
+    {
+      "term": "Freshman Spring",
+      "courses": [
+        "ENSP102",
+        "MATH141"
+      ]
+    },
+    {
+      "term": "Sophomore Fall",
+      "courses": [
+        "CHEM131",
+        "CHEM132"
+      ]
+    },
+    {
+      "term": "Sophomore Spring",
+      "courses": [
+        "CHEM231",
+        "CHEM232",
+        "PHYS161",
+        "PHYS174",
+        "BSCI361",
+        "GEOG306"
+      ]
+    },
+    {
+      "term": "Junior Fall",
+      "courses": [
+        "ENST200",
+        "AREC240"
+      ]
+    },
+    {
+      "term": "Junior Spring",
+      "courses": [
+        "GEOL340",
+        "ENSP330"
+      ]
+    },
+    {
+      "term": "Senior Fall",
+      "courses": [
+        "GEOL452",
+        "GEOL453",
+        "ENSP386"
+      ]
+    },
+    {
+      "term": "Senior Spring",
+      "courses": [
+        "ENSP400"
+      ]
+    }
+  ]
+}

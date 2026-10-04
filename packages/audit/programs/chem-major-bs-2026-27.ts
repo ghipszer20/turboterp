@@ -19,6 +19,7 @@ export const chemMajorBs: Program = {
     "Department of Chemistry and Biochemistry, Chemistry BS (19050) checksheet, effective Fall 2026, " +
     "https://chem.umd.edu/sites/default/files/chemistrybs-checksheet-f26.pdf (fetched 2026-09-27)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Department-vs-catalog difference (owner ruling: follow the department page; same pattern already ruled on for Biochemistry): the catalog's required-courses table lists only UNIV100 as the freshman seminar; the department's checksheet allows UNIV100, UNIV101, GEMS100, HONR100, HLSC100, HEIP100 or ARHU105 for any incoming freshman starting as a CHEM/BCHM major. Widened to the department's list.",
@@ -27,7 +28,7 @@ export const chemMajorBs: Program = {
     "Not encoded (footnote detail, engine gap): the checksheet's footnotes on CHEM177 vs CHEM132 and CHEM277 vs CHEM272 substitutions with a resulting 'extra UL CHEM elective' requirement -- credit-driven cross-substitution the engine can't express. Both lower-level sequences above already require CHEM277 (not CHEM272), matching the checksheet's baseline table exactly, so this only affects students who deviate from either printed sequence; manual check.",
     "Upper Level CHEM/BCHM Courses (18 cr) are fully required for the B.S. (unlike Biochemistry, where CHEM401 is an optional ACS add-on): CHEM395, CHEM401, CHEM425, CHEM481, CHEM483, CHEM482 and CHEM484 are all flat requirements per the checksheet.",
     "'Take at least 6 credits' upper-level CHEM/BCHM elective pool includes BCHM461 or BCHM463 (Biochemistry I or Biochemistry of Physiology) alongside CHEM399/403/433/434/441/460/498 and BCHM462/465; 'Other CHEM course(s) contingent on approval from the Undergraduate Director' (CHEM4XX/CHEM6XX) is not encoded (approval-gated, unbounded).",
-    "Not encoded (engine gap, both sources agree): the 2.0 cumulative GPA and 2.0 major-average GPA requirements; the audit only checks per-course minGrade (C-).",
+    "Not encoded (engine gap, both sources agree): the 2.0 cumulative (university) GPA requirement. Program GPA 2.0 encoded as minGpa.",
     "Not encoded (engine gap): residency rules -- at least 30 credits at UMD, 15 of the final 30 credits at the 300-400 level, and 12 upper-level major credits at UMD. The audit engine has no residency/where-taken concept. Manual check.",
   ],
   requirements: [

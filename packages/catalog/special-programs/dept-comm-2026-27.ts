@@ -1,7 +1,7 @@
 // Departmental Honors: Communication.
 // Source: https://communication.umd.edu/academics/undergraduate/honors (fetched 2026-09-26). Hand-transcribed. UNVERIFIED.
 
-import type { Program, ProgramMeta } from "@superterp/audit";
+import type { Program, ProgramMeta } from "@turboterp/audit";
 import { CATALOG_YEAR } from "./common.ts";
 
 export const SOURCE = "https://communication.umd.edu/academics/undergraduate/honors";

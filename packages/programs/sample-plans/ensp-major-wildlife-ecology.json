@@ -1,0 +1,25 @@
+{
+  "programId": "ensp-major-wildlife-ecology",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/agriculture-natural-resources/environmental-science-policy/environmental-science-policy-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No published 4-year plan exists for this concentration: only the seven BSOS/CMNS concentrations have an official AGNR-hosted PDF plan. This plan is CONSTRUCTED from the catalog's own requirement rows instead (docs/project/owner-review.md flags this). Gen Ed courses are left out; only the major is audited.",
+    "Applied Science and Policy filled with ENSP330 (not ENSP305, which this concentration already requires directly -- see reviewNotes); Calculus filled with MATH140; Statistics filled with GEOG306.",
+    "'Four of five groups' filled with: Biology (BSCI160 & BSCI180), Chemistry (CHEM131 & CHEM132), Earth Sciences (ENST200), Economics (AREC240).",
+    "Biology Laboratory gateway filled with BSCI171 (not BSCI180, which is used above for the 'four of five groups' Biology set).",
+    "Internship/Research filled with ENSP386; ENSP499 would satisfy it equally.",
+    "The Restricted Electives (choose at least 6 courses, 3 per Area) line is not in this plan because it is not encoded in the Program (see reviewNotes and docs/project/owner-review.md): the catalog names no course or department for either Area."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["ENSP101", "MATH140", "CHEM131", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["ENSP102", "CHEM132", "PHYS121"] },
+    { "term": "Sophomore Fall", "courses": ["BSCI170", "BSCI171", "CHEM231"] },
+    { "term": "Sophomore Spring", "courses": ["CHEM232", "BSCI222", "ENST200"] },
+    { "term": "Junior Fall", "courses": ["BSCI160", "BSCI180", "ENST214"] },
+    { "term": "Junior Spring", "courses": ["BSCI361", "AREC240", "GEOG306"] },
+    { "term": "Senior Fall", "courses": ["ENST460", "ENSP305", "ENSP330"] },
+    { "term": "Senior Spring", "courses": ["ENSP386", "ENSP400"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}

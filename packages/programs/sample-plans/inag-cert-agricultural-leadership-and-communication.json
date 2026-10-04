@@ -1,0 +1,46 @@
+{
+  "programId": "inag-cert-agricultural-leadership-and-communication",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/agriculture-natural-resources/applied-agriculture/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "The IAA's two-year plans (go.umd.edu/program-plans) were not captured. Constructed from the catalog requirements; advisor-approved electives omitted (no list). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    {
+      "term": "Term 1",
+      "courses": [
+        "ENGL101",
+        "INAG100",
+        "INAG105",
+        "INAG103"
+      ]
+    },
+    {
+      "term": "Term 2",
+      "courses": [
+        "INAG110",
+        "MATH113",
+        "INAG131",
+        "INAG102"
+      ]
+    },
+    {
+      "term": "Term 3",
+      "courses": [
+        "INAG132",
+        "INAG201",
+        "INAG252",
+        "INAG288"
+      ]
+    },
+    {
+      "term": "Term 4",
+      "courses": [
+        "INAG203",
+        "INAG253",
+        "INAG289"
+      ]
+    }
+  ]
+}

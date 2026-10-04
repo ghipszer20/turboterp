@@ -1,0 +1,21 @@
+{
+  "programId": "educ-art-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/art-education-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no readable Art Education 4-year plan in the fetched sources. Constructed from the catalog requirement table: studio and art history first, pre-professional education courses next, the professional block and internship last (TLPL435 in a spring, TLPL433 in a fall, per the catalog footnotes). Gen Ed slots are left out. Flagged in docs/project/owner-review.md.",
+    "ARTH 300-400 level (6 credits, no list in the source) filled with ARTH305 and ARTH351, both real ARTH courses named in other art sources. Printmaking filled with ARTT341."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["ARTT100", "ARTT110", "ARTH200", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["ARTT150", "ARTT210", "ARTH201"] },
+    { "term": "Sophomore Fall", "courses": ["ARTT200", "ARTT320", "TLPL250"] },
+    { "term": "Sophomore Spring", "courses": ["ARTT341", "ARTH305", "EDHD413"] },
+    { "term": "Junior Fall", "courses": ["ARTT418", "ARTH351", "EDHD426", "TLPL436"] },
+    { "term": "Junior Spring", "courses": ["ARTT428", "TLPL437", "TLPL435", "EDSP470"] },
+    { "term": "Senior Fall", "courses": ["TLPL433", "TLPL479", "TLPL478"] },
+    { "term": "Senior Spring", "courses": ["TLPL447", "TLPL478", "TLPL489"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}

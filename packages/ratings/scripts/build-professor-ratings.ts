@@ -4,12 +4,12 @@
 // rerun resumes (delete that folder to refetch, e.g. once per term). Writes
 // .cache/professor-ratings.json: { v, term, generatedAt, ratings: { "<SOC name>": 4.2 } }.
 //
-//   npm run professor-ratings -w @superterp/ratings [-- --soc <soc-YYYYMM.json>]
+//   npm run professor-ratings -w @turboterp/ratings [-- --soc <soc-YYYYMM.json>]
 
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { fetchJson } from "@superterp/campus-data/http";
+import { fetchJson } from "@turboterp/campus-data/http";
 import { coursesOffered } from "../src/grade-files.ts";
 import { parseProfessorList, ratingsForInstructors, type ProfessorRating } from "../src/professor-ratings.ts";
 

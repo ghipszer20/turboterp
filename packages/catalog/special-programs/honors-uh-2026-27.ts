@@ -2,7 +2,7 @@
 // Sources: https://universityhonors.umd.edu/curriculum/ with the Thematic Clusters and
 // Theory & Practice Tracks pages (fetched 2026-09-25). Hand-transcribed. UNVERIFIED.
 
-import type { Program, ProgramMeta } from "@superterp/audit";
+import type { Program, ProgramMeta } from "@turboterp/audit";
 import { CATALOG_YEAR, HONORS_CITATION_NOTES } from "./common.ts";
 
 export const SOURCE = "https://universityhonors.umd.edu/curriculum/";

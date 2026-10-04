@@ -110,20 +110,60 @@ With approved content.
 
 ## Sample plan (https://drive.google.com/uc?export=download&id=11hH4qitJRsXvN2YkuQ3TnXOmlGF_RCrS#Human-Centered-Artificial-Intelligence)
 
-!"#$%&'"()
-*!"#*$%&'"()+!"#+$%&'"(),
--.// 0123456789:;; <=>?:;:@8ABCDEFGH>IJKLM7NO =JPQIJRSTFLGTLU@=SBCCE8V6::WC@E8B 8GJRXYTZLJU[GFG\@8ZB6789:;; 6Q]JGFYLU@6^BCC6789:_; 6789:_:8Z6^:W` A>SS::W@^aB6789_;; 6Q]JGFYLU@6^BCC bIJR7[]]QGFTJY[G@b7B9=SV_;c 6FUP[IXdS[TFJRSTFLGTLU@6SBCC STe[RJIUeFfFGaIJTYTL@SaBg_CC@G[GN]Jh[IB>R[iJR<G\J\L]LGPg: >R[iJR<G\J\L]LGPg_6789_;; 6789j;;a69?_::@Sag:B 9=SV_;c@6Sk9SB6789j;: =JPQIJRSTFLGTL?Ji@=?BCC 6789SfLTFJRFlJY[G7[QIUL:mmNcmm6789SfLTFJRFlJY[G7[QIULjmmNcmm 6789j;: 6789SfLTFJRFlJY[G7[QIUL:mmNcmm6789SfLTFJRFlJY[G7[QIUL:mmNcmm 6789SfLTFJRFlJY[G7[QIULjmmNcmm<RLTYnLjmmNcmm <RLTYnL:mmNcmm<RLTYnLjmmNcmm <RLTYnLjmmNcmmaI[oLUUF[GJRAIFYG\@aAB 6789cp;6789SfLTFJRFlJY[G7[QIUL:mmNcmm <RLTYnLjmmNcmm6789SfLTFJRFlJY[G7[QIULjmmNcmm <RLTYnLjmmNcmm<RLTYnLjmmNcmm <RLTYnL:mmNcmm<RLTYnLjmmNcmm <RLTYnL:mmNcmmV[PJR7ILKFPUo[IqL\ILLM:_;rjpTILKFPU]QUPiLjmmNcmmRLnLR
-stuvwxyz{|}xvx~wvxx~zvzux{xuvxu stuvx{|vwystuvwxyz{|}xvx~wvxx~zztux{xuvxu
-stuvwxyz{|}xvx~wvxx~zuux{xuvxu
-¡¢£¤¥¦¦§ ¨©¥¥ª£« ¥¨¨« ¬¥®£¯°±  ¥ ²¥£ ³³¨´©¥¥ª£« ¥¥¯
-!"#$%& '($)!"#$%&*$%+%#& ,-.'($)!"#$%&,/.'($)!"#$%&,0.'($)!"#$%&1#&%#23+%#& 45!"#$%&
-'#67& 8 $9 2%:#%(1#&%#23+%#&1#3&#%9;3<<$#=:#%(1#&%#23+%#&>'#67& ?@<#A#6.< ;3<<$#=:#%( %("#$%&>&&?+%%&$&%$##$$ B-/C#%&%$<%6D
-EFGHIJFKFLMNOPQRJFSIMNTQRUHJNFN VUHJNF VJFSIMN WJXSF
-EFGHIJFKFLMNOYQRJFSIMNTZRUHJNFN VUHJNF VJFSIMN WJXSF EFGHIJFKFLMN VJFSIMN WJXSF
-EFGHIJFKFLMNO[RJFSIMNTYRUHJNFN VUHJNF VJFSIMN WJXSFEFGHIJFKFLMNO\][RJFSIMNTYRUHJNFN VUHJNF VJFSIMN WJXSFEFGHIJFKFLMNO^]_RJFSIMN VUHJNF VJFSIMN WJXSF
-`abcdeebfghijkflmknopqblrsmtuivvktogwlmknopqslr `abcxeeymgwatjjzqyar c{|}xe~gqbrbogwnfigvtokopqbr `abced`abc|ifkgwkgntoatmvi~{gmgw|fkiofigq{r{gmgw|fkiofivq{|r`kvtm|tfkgw|fkiofivq`|r`kvtm|tfkgw|fkiofivq`|r`jgoknivq`r `abcdee`jgoknivq`r `abcdxe|ftwgmvkkosmgfnfiq|sr b}`ddqbr|ftwgmvkkosmgfnfiq|srotojgtm `abcdxd`abcxee`abcee`abcedkpivntoqc|rkpivntoqc|r l||ddqsrc{|}xe~q`|c|rs`cxddq|srohimvgohkopswmgw|tfzqsr `abcd~ohimvgohkopswmgw|tfzqsr `abcd~awmgwatjiiofqaar `abcd~`abcd~`abc~`abc~`abc~e
-¡¢£ ¤¥¦§¨©¨ª«¬ ¨¨®
-¯¥°¬±©²³ ¯§±¨¨¯¥°¬±©²´¦°°¨¨®
-«μ¶·¸¹μº©»¼·½¾μ¹¿À¹μÁ··¸¼Â·½¸μÃªÄ¨®ÅÆμÇ·ÈÂ¸¶º©»¼·½¾μ¹¿À¹μÁ··¸¼Â·½¸μμÇ·º©©É²©©¶·Ê·¶¨±ÀËË·¼¶·Ê·¶¿¸ÌÅ¼»¼·½¾μ¹¿À¹μÁ··¸¼Â·½¸μÃªÄºÍÀËË·¼¶·Ê·¶»¼·½¾μ¹«Î Ã¨®ÏÅ¼·ÐÀ¾Ê¸¶·ÂμÑ¾Æ¸ËË¶¾»¸Á¶·Ò¦¶ÅÁ¸¶¤ÂÓ¸Ó·¿·Âμ
-ÔÕÖÕ×ØÙÚÛØÚÛÜØÝÛÞßÖØàÞÜÜÛáÕâÜÛÖÛãäåÖÕåäæÛØä×ÛØåäØçèéêëìíîïìðñòóôëòóõôöëö÷øùìô
-íïìðñðîóìïðñòóôëòóõôöëö÷ìôëìïðñïð óîòóõôöëö ÷øùìôóô òð öóîëòóõôöë÷ìô!"#$%&%'(')*+,)%-..$-)%/$,0'))'1,2.'(2.34$5..)672$'''(282)$)%2%$''(2.34$".$&5)%,(')'05%2%1,9,2$'''(2.34$'#*.)49.,0'))'5..%9)%$(($)),)$($($')%$5'(2.34$'05%2%5..:2$'$2';:,;2':''*<$12$''-$)%1/$1,.'$2$))$5=.>24$1)'?@ABCDEAFGHCIJADCKC@FELMDNDOPJOQM@RSHT?HCIJADCKC@FELMDNDOPJOQM@R
+(OCR text; may contain recognition errors)
+rr EE
+few Jummeeur
+EE =F TF
+wuss fwesmsen |
+EE 72 I
+I SE A EE
+erm rommens [||
+hem ome |
+CC wmewm  |wmesss
+EO EE
+er EE
+feweduew  Joeembs |
+EE 7 TS
+I SE A EE
+Er 7
+EE oF ee CE
+roussecstmmoncomeioctn [evermebn |
+EE (v T
+EE [vv
+I EE
+EE Tr er Er
+**All students must complete two Distributive Studies courses that are approved for Big Question courses. The Understanding Plural
+Human-Centered Artificial Intelligence
+[rcadermicving oe) tm cre 1 | mvorzor |||
+rT I NR
+fomcammiog | [| |
+ome ws |||
+Iravcremonngn | |||
+Mavrscence oy | | |
+[Nawaisdencesvs) [| [1]
+[stoySocorscences 9 | worm |||
+[Wstory/socm scnces v9) ||| |
+foment | flow T]
+amanves ow [| Www [|
+[sro meer | man || Wwenmsow [|
+[soroarmp memcpy ||| Weer [|
+ET ———
+poner [||
+Bsqueson® wr | ||
+sawn [|| Wweswson | |
+TET —r—
+[oncersorangpu soc.0 | wos || Weve [|
+Understanding Plural Soc. (UP) or Err
+(overlap permitted with other requirements/courses) EE
+EE NE BE
+rT
+1 ew [|
+comme meme—— |
+HCA 121 and HEAL 200 equine ATH 115 (Mor Higher a a preequise
+[ems soaresis mustbecamea sono |] |W" theJollo thir junior yea, students moy dclore a specalzation and wil tke &
+courses specific to their chosen specialization (along with any prerequisites, which may
+[15f the na 0 creas must be come avne s00a00ievel | [1 Cry Gece speciation), erate students wil ov te opportunity to propose
+ET
+[owpericceas TT 0}
+[Ar 158 or equate ropicatie) | [1 |
+looborengogermere | [1]

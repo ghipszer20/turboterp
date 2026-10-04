@@ -291,3 +291,74 @@ export function planTrip(
 
   return { itineraries, noNearbyStops: false };
 }
+
+export type ArriveByOption = {
+  /** When to set out (minutes after midnight, campus clock) to still arrive by the target. */
+  leaveMinutes: number;
+  itinerary: Itinerary;
+};
+
+export type PlanArriveByResult = {
+  /** The latest-leaving option first: walking when it is comparable to the best transit option, else transit. */
+  options: ArriveByOption[];
+  noNearbyStops: boolean;
+};
+
+export type ArriveByOptions = PlanTripOptions & {
+  /** How much earlier than the target the search starts looking. Default 120 min. */
+  lookbackMinutes?: number;
+  /** Walking counts as comparable when it takes at most this many minutes longer than transit door to door. Default 5. */
+  walkPreferenceMinutes?: number;
+};
+
+/**
+ * Arrive-by mode: the itinerary with the latest departure that still arrives by `arriveByMinutes`.
+ * Built on planTrip (depart-at is unchanged): search forward from an early start, keep the
+ * feasible itineraries, then move the start past the latest feasible departure until none remain.
+ */
+export function planArriveBy(
+  feed: Feed,
+  isoDate: string,
+  arriveByMinutes: number,
+  from: Place,
+  to: Place,
+  options: ArriveByOptions = {},
+): PlanArriveByResult {
+  const { lookbackMinutes = 120, walkPreferenceMinutes = 5, ...tripOptions } = options;
+  const walkLegOnly = walkLeg(from, to);
+  const walkLeave = arriveByMinutes - walkLegOnly.minutes;
+  const walkOption: ArriveByOption = {
+    leaveMinutes: walkLeave,
+    itinerary: { kind: "walk", legs: [walkLegOnly], departMinutes: walkLeave, arriveMinutes: arriveByMinutes, totalMinutes: walkLegOnly.minutes },
+  };
+
+  let best: ArriveByOption | undefined;
+  let noNearbyStops = false;
+  let start = arriveByMinutes - lookbackMinutes;
+  for (let i = 0; i < 80; i++) {
+    const result = planTrip(feed, isoDate, start, from, to, { ...tripOptions, maxOptions: 20 });
+    if (result.noNearbyStops) {
+      noNearbyStops = true;
+      break;
+    }
+    let latestLeave = -Infinity;
+    for (const it of result.itineraries) {
+      if (it.kind !== "transit" || it.arriveMinutes > arriveByMinutes) continue;
+      const firstBus = it.legs.find((l): l is BusLeg => l.kind === "bus");
+      const lead = it.legs[0];
+      if (!firstBus || !lead || lead.kind !== "walk") continue;
+      const leave = firstBus.departMinutes - lead.minutes;
+      if (leave < start) continue;
+      latestLeave = Math.max(latestLeave, leave);
+      if (!best || leave > best.leaveMinutes) {
+        best = { leaveMinutes: leave, itinerary: { ...it, departMinutes: leave, totalMinutes: it.arriveMinutes - leave } };
+      }
+    }
+    if (latestLeave === -Infinity) break;
+    start = latestLeave + 1;
+  }
+
+  if (!best) return { options: [walkOption], noNearbyStops };
+  const walkComparable = walkLegOnly.minutes <= best.itinerary.totalMinutes + walkPreferenceMinutes;
+  return { options: walkComparable ? [walkOption, best] : [best, walkOption], noNearbyStops };
+}

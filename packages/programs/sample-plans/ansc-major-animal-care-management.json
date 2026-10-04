@@ -11,7 +11,7 @@
     "Management Courses filled with ANSC232, ANSC242 and ANSC250, all named directly in the catalog's own Management Courses list for this specialization."
   ],
   "terms": [
-    { "term": "Freshman Fall", "courses": ["ANSC101", "ANSC103", "BSCI160", "CHEM131"] },
+    { "term": "Freshman Fall", "courses": ["ANSC101", "ANSC103", "BSCI160", "CHEM131", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["ANSC201", "BSCI170", "BSCI180", "CHEM132"] },
     { "term": "Sophomore Fall", "courses": ["ANSC314", "AREC250", "BIOM301"] },
     { "term": "Sophomore Spring", "courses": ["ANSC315", "BSCI223", "ANSC401"] },
@@ -19,5 +19,6 @@
     { "term": "Junior Spring", "courses": ["AREC306", "CHEM231", "ANSC359"] },
     { "term": "Senior Fall", "courses": ["ANSC330", "ANSC340", "ANSC410"] },
     { "term": "Senior Spring", "courses": ["ANSC232", "ANSC242", "ANSC250"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

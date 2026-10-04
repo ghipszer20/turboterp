@@ -17,14 +17,22 @@
 
 .header {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
-  justify-content: space-between;
   gap: 12px;
   margin-bottom: 16px;
 }
 
+/* Phones: the program line and title get their own row; the buttons wrap below them. */
 .headerText {
+  flex: 1 1 100%;
   min-width: 0;
+}
+
+@media (min-width: 700px) {
+  .headerText {
+    flex: 1 1 0;
+  }
 }
 
 .eyebrow {
@@ -332,6 +340,12 @@
   background: var(--accent-tint);
 }
 
+/* Blocked by an eligibility gate (a chosen major closes this program). */
+.option[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
 .optionCheck {
   flex: none;
   width: 22px;
@@ -378,7 +392,7 @@
   font-weight: 600;
 }
 
-/* A grad course (600-897, not 799) on the plan grid or course sheet -- @superterp/plan/grad-courses. */
+/* A grad course (600-897, not 799) on the plan grid or course sheet -- @turboterp/plan/grad-courses. */
 .gradBadge {
   flex: none;
   padding: 1px 7px;
@@ -501,6 +515,7 @@
 
 .termHead {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
 }
@@ -521,6 +536,32 @@
 .termCredits[data-severity="error"] {
   color: var(--accent);
   font-weight: 600;
+}
+
+.keyDates {
+  margin: 0;
+  color: var(--text-2);
+  font: var(--t-foot);
+}
+
+.difficultyBadge {
+  padding: 2px 8px;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  color: var(--text-2);
+  font: var(--t-foot);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.difficultyBadge[data-level="high"] {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.difficultyText {
+  color: var(--text-2);
+  font: var(--t-foot);
 }
 
 .inlineIssue {
@@ -1123,6 +1164,40 @@
   font: var(--t-foot);
 }
 
+/* An Open Slot: neutral until ticked; the accent appears only on the checked box. */
+.reqStatus[data-status="confirm"] {
+  background: var(--fill, rgb(120 120 128 / 0.16));
+  color: var(--text-2);
+}
+
+.slotCredits {
+  color: var(--text-2);
+  font-weight: 400;
+}
+
+.slotCheck {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  min-height: 32px;
+  color: var(--text-2);
+  font: var(--t-foot);
+  cursor: pointer;
+}
+
+.slotCheck input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.slotCheck[data-checked] {
+  color: var(--text);
+}
+
 /* ---------- Tracks (audit view) ---------- */
 
 .trackSection {
@@ -1270,3 +1345,27 @@
   gap: 6px;
   margin-top: 12px;
 }
+
+/* ---------- Export menu ---------- */
+
+.exportWrap { position: relative; flex: none; }
+
+.exportMenu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 260px;
+  padding: 12px;
+  border: 0.5px solid var(--separator);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: 0 8px 28px rgb(0 0 0 / 0.14);
+}
+
+.exportHint { margin: 0; color: var(--text-3); font: var(--t-foot); }
+
+.exportSwitch { display: flex; align-items: center; gap: 8px; color: var(--text-2); font: var(--t-sub); }

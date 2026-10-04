@@ -1,6 +1,6 @@
-// A course-wide grade distribution (PlanetTerp, via @superterp/ratings files) as bars.
+// A course-wide grade distribution (PlanetTerp, via @turboterp/ratings files) as bars.
 
-import type { Distribution } from "@superterp/ratings";
+import type { Distribution } from "@turboterp/ratings";
 
 const GROUPS = ["A", "B", "C", "D", "F", "W"] as const;
 const COLUMNS: Record<string, string[]> = {

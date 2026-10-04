@@ -50,6 +50,21 @@ Medium:
 Order: the tiny bundles first (fastest registry growth, and they prove the brief), then the medium batches
 college by college. At most 3 builders run at once, and the next one starts whenever one is merged.
 
-## Status
-- Running: t-bsos1, t-bsos2, t-educ.
-- Merged: (none yet)
+## Status (paused by the owner 2026-09-28 after these merges)
+- Merged 2026-09-28: 10 batches (t-bsos2, t-bsos1, t-educ, t-sph-jour, t-engr, t-rotc, t-info-usg, t-agnr-arch, t-arhu, t-clas), 69-102k tokens each. All 10 tiny bundles are done.
+- Next when resumed: the medium batches in table order. Drop the Archaeology entry from `arth` (identical to the Classics listing; encoded as `clas-minor-archaeology`).
+- Merging: separate detached worktree `C:/Users/24GHi/Code/st-minors-merge`, push `HEAD:feat/course-data` (other sessions commit in the main checkout). Review-doc conflicts: `git merge-file --union`; registry: regenerate.
+
+## Follow-ups from the owner's answers (rulings.md "Minors"), queued
+1. Encoding fixes (one Sonnet builder): union lists for Math/Actuarial/Statistics (MATH340/341), Astronomy (ASTR498); C- floor for Climate Change Fluency, Computational Finance, Arts Leadership; Project Management accepts catalog OR department set (`sets`); advisor-approval notes on Demography SOCY201, Naval Science cultural courses, Atmospheric outside electives.
+2. Video Production and Documentary Filmmaking Minor: encode from the owner's table (rulings.md).
+3. Engine + UI: open-slot requirement ("Confirm with your advisor" checkbox), then convert every `OPEN SLOT:` note. UI change: show the owner before merging.
+4. Engine + picker: eligibility gates that block a minor for excluded majors (Astronomy, Chesapeake Bay, Meteorology, RAS, Economics, Paleobiology, Planetary Sciences, ACES pathways, and others in review notes).
+5. Engine: "courses from at least N different groups" (Entomology, then any other "N of the areas" rule).
+6. ProgramMeta: add a Universities at Shady Grove college group; move `ccjs-minor-shady-grove`.
+- Split 2026-09-28 (owner): the 26 medium batches go to two sessions; neither touches the other's half. Each department is in only one half, so program files never collide.
+  - **Half A (session A):** arth, engl1, engl-hist, jwst1, hebrew, mideast, sllc-me, sllc-ea, sllc-rom, sllc-eur, sllc-span, amst-lasc, bsos-a.
+  - **Half B (session B):** ling-musc, bws, bsos-b, agnr-a, agnr-b, arch, bmgt-a, bmgt-b, engr-b, step-plcy, nonprofit, educ-b, usg.
+  - Session A merges in `C:/Users/24GHi/Code/st-minors-merge`; session B uses its own detached worktree (e.g. `C:/Users/24GHi/Code/st-minors-merge-b`). Both pull before merging; conflicts are only in the registry (regenerate) and review docs (`git merge-file --union`).
+  - **Half B DONE 2026-09-28 (session B):** 26 minors encoded in 11 builders (bmgt-a+b and step-plcy+nonprofit bundled, one department each), all merged. Tokens: ling-musc 65k, bws 52k, bsos-b 49k, agnr-a 51k, agnr-b 53k, arch 59k, engr-b 60k, plcy 68k, educ-b 61k, usg 51k, bmgt 59k. Global Studies is not a separate program: it is an umbrella over four track minors (IDCM, Global Engineering Leadership, Global Poverty, Global Terrorism), noted in owner-review. Flags per batch in owner-review.md.
+- **Half A merged 2026-09-28 (28 programs):** arth (Art History; Archaeology = the existing `clas-minor-archaeology`, cross-listed), engl1, engl-hist, jwst1, hebrew, mideast, sllc-me, sllc-ea, sllc-rom, sllc-eur, sllc-span, amst-lasc, bsos-a. Full test/typecheck/lint/build pass. Open items for the owner: Middle Eastern Studies has empty `requirements` (all OPEN SLOT; the qualifying-course lists on the MESM webpage would let it be encoded; the sample-plan harness now skips the mutant check for empty-requirement programs); Korean Studies' Korea-related slot accepts only the 7 catalog example courses (narrower than the source). Intermittent sample-plan failures in majors (acct, compe, bioe, agst, musc) under load are 5s test timeouts, not encoding errors.

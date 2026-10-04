@@ -26,6 +26,7 @@ export const glbcMajor: Program = {
     "College of Arts and Humanities official four-year plan, fetched 2026-09-28 " +
     "(https://drive.google.com/uc?export=download&id=1xtu7OAIvMXD0bcWacqte__1eZ0dsGsN1#Global-Culture-and-Thought)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "minGrade 'C-' follows the pattern of every other SLLC/ARHU language major already encoded here " +
@@ -68,8 +69,7 @@ export const glbcMajor: Program = {
     "The catalog's own overlap rule ('the same course cannot be counted towards different " +
       "requirements of the program') doesn't need separate encoding: the engine already assigns each " +
       "course to at most one requirement per program by construction.",
-    "Not encoded (engine gaps, matching every other ARHU major's precedent): the 2.0 GPA-in-the-major " +
-      "requirement; residency rules; and the 120-credit graduation minimum.",
+    "Not encoded (engine gaps, matching every other ARHU major's precedent): residency rules; and the 120-credit graduation minimum. Program GPA 2.0 encoded as minGpa.",
   ],
   requirements: [
     { kind: "course", id: "glbc200", name: "Global Movements", options: ["GLBC200"] },

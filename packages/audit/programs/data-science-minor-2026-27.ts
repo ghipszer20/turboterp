@@ -27,7 +27,7 @@ export const dataScienceMinor: Program = {
     "DATA250's substitution ('CMSC250 and MATH240, MATH341, or MATH461') is encoded as a sets requirement: DATA250 alone, or CMSC250 paired with one of the three math courses. DATA320's substitution (CMSC320) and DATA400's substitution list are 'course' requirements with every accepted code as an option.",
     "'No more than six credits (or two courses) may overlap with the student's major' (program site; the catalog states only a transfer-credit limit) -> maxSharedWith: [{ courses: 2 }]. 'No course may satisfy the requirements of more than one minor' isn't enforced (the audit doesn't currently model cross-minor sharing, only major/minor).",
     "Prerequisite to declare (DATA100, STAT100, MATH135, DATA400, a 400-level STAT course, or an approved equivalent, C- or better) is an admission gate, not a minor requirement itself; not encoded, matching how the CS minor's gateway courses are kept separate from its core requirements.",
-    "Ineligible if declared in the Math-Statistics specialization (1701S), CS-Data-Science specialization (0701B), or CS-Machine-Learning specialization (0701F): an eligibility gate, not enforced (no declared-specialization concept for this check).",
+    "Ineligible if declared in the Math-Statistics specialization (1701S), CS-Data-Science specialization (0701B), or CS-Machine-Learning specialization (0701F): Enforced via notOpenTo for the two Computer Science specializations; the Math-Statistics specialization (1701S) is not a registered major, so it is left out.",
   ],
   requirements: [
     { kind: "course", id: "dataR", name: "Applications of R for Data Science", options: ["DATA110"] },
@@ -45,4 +45,4 @@ export const dataScienceMinor: Program = {
   ],
 };
 
-export const dataScienceMinorMeta: ProgramMeta = { kind: "minor", college: "CMNS", sources: { catalog: "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/computer-science/data-science-minor/", department: "https://data.umd.edu/prospective/" } };
+export const dataScienceMinorMeta: ProgramMeta = { kind: "minor", notOpenTo: { programs: ["cmsc-major-data-science", "cmsc-major-machine-learning"], reason: "Not open to students in the Computer Science Data Science or Machine Learning specializations." }, college: "CMNS", sources: { catalog: "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/computer-science/data-science-minor/", department: "https://data.umd.edu/prospective/" } };

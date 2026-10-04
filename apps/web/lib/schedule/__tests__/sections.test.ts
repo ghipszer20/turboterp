@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import type { Section } from "@superterp/course-data/schedules";
-import { distributionFromCounts, GRADE_COLUMNS, type CourseGrades } from "@superterp/ratings";
-import { bestRating, conflictPairs, gradeSummary, instructorLabel, meetingSummary, overlapsWith, pickSection, ratingTone, sectionChoices, sectionKey } from "../sections";
+import type { Section } from "@turboterp/course-data/schedules";
+import { distributionFromCounts, GRADE_COLUMNS, type CourseGrades } from "@turboterp/ratings";
+import { bestRating, conflictPairs, gpasFor, gradeSummary, recommendReason, instructorLabel, meetingSummary, overlapsWith, pickSection, ratingTone, sectionChoices, sectionKey } from "../sections";
 
 const sec = (
   id: string,
@@ -173,5 +173,22 @@ describe("conflictPairs", () => {
       ["CMSC351", "ENGL394"],
       ["STAT400", "ENGL394"],
     ]);
+  });
+});
+
+describe("recommendation helpers", () => {
+  const counts = Object.fromEntries(GRADE_COLUMNS.map((c) => [c, c === "A" ? 10 : c === "B" ? 10 : 0])) as Record<(typeof GRADE_COLUMNS)[number], number>;
+  const d = distributionFromCounts(counts, ["202401"]);
+  const grades = { STAT: { STAT400: { course: "STAT400", overall: d, byProfessor: { "Ann Lee": d }, terms: [] } } };
+
+  it("gpasFor maps course and professor to average GPA, skipping missing departments", () => {
+    const gpas = gpasFor({ ...grades, MATH: "missing" }, ["STAT400", "MATH140", "CMSC131"]);
+    expect(gpas).toEqual({ "STAT400|Ann Lee": 3.5 });
+  });
+
+  it("recommendReason is plain words and leaves out missing data", () => {
+    const s = sec("0101", ["Ann Lee"], [MWF10], 12);
+    expect(recommendReason(s, { "Ann Lee": 4.6 }, { "STAT400|Ann Lee": 3.4 })).toBe("4.6★ · avg GPA 3.4 · 12 open");
+    expect(recommendReason(s, {}, {})).toBe("12 open");
   });
 });

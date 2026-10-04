@@ -9,11 +9,9 @@
     "The two 'pick 6' placeholders (the supporting-electives requirement, 3 credits each) are filled with BSCI373 and GEOG201.",
     "AOSC493 is credited at 1 (the Major Requirements page's figure), not the 3 credits shown in the spreadsheet's own course-credit column, which looks like a stale swap with AOSC494 (see reviewNotes on the Program)."
   ],
-  "credits": {
-    "AOSC201": 1, "MATH140": 4, "MATH141": 4, "PHYS261": 1, "MATH241": 4, "PHYS271": 1, "AOSC493": 1
-  },
+  "credits": { "AOSC201": 1, "MATH140": 4, "MATH141": 4, "PHYS261": 1, "MATH241": 4, "PHYS271": 1, "AOSC493": 1, "CMNS100": 1 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["AOSC200", "AOSC201", "MATH140"] },
+    { "term": "Year 1 Fall", "courses": ["AOSC200", "AOSC201", "MATH140", "CMNS100"] },
     { "term": "Year 1 Spring", "courses": ["MATH141", "PHYS161", "CHEM135", "CHEM132"] },
     { "term": "Year 2 Fall", "courses": ["AOSC400", "MATH241", "PHYS260", "PHYS261"] },
     { "term": "Year 2 Spring", "courses": ["AOSC401", "MATH246", "PHYS270", "PHYS271", "AOSC247"] },

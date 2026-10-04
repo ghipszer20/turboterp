@@ -8,15 +8,9 @@
     "The Upper-level General Technical Elective slot (Junior Fall) is filled with MATH461 (Applied Nonlinear Dynamics, upper-level MATH), one of the prefixes the requirement allows.",
     "The ENEE Technical Elective slots (Category A x1, Category B x1, Category C x1, plus four generic 'ENEE Elective' slots totaling 22 credits) are filled with: Category A = ENEE420 (3); Category B = ENEE445 (2); Category C = ENEE408A (3); Additional = ENEE425 (3), ENEE426 (3), ENEE460 (3), ENEE474 (3), ENEE486 (2). Any courses meeting each category's own minimum credits would satisfy the requirement equally."
   ],
-  "credits": {
-    "ENEE140": 2,
-    "MATH140": 4, "MATH141": 4, "MATH241": 4,
-    "PHYS260": 3, "PHYS261": 1, "PHYS270": 3, "PHYS271": 1,
-    "ENEE205": 4, "ENEE222": 4, "ENEE245": 2, "ENEE290": 4, "ENEE323": 4, "ENEE305": 2, "ENEE382": 4,
-    "ENEE445": 2, "ENEE486": 2
-  },
+  "credits": { "ENEE140": 2, "MATH140": 4, "MATH141": 4, "MATH241": 4, "PHYS260": 3, "PHYS261": 1, "PHYS270": 3, "PHYS271": 1, "ENEE205": 4, "ENEE222": 4, "ENEE245": 2, "ENEE290": 4, "ENEE323": 4, "ENEE305": 2, "ENEE382": 4, "ENEE445": 2, "ENEE486": 2, "UNIV100": 1 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["CHEM135", "ENEE140", "ENEE101", "MATH140"] },
+    { "term": "Year 1 Fall", "courses": ["CHEM135", "ENEE140", "ENEE101", "MATH140", "UNIV100"] },
     { "term": "Year 1 Spring", "courses": ["ENEE150", "ENES100", "MATH141", "PHYS161"] },
     { "term": "Year 2 Fall", "courses": ["ENEE290", "ENEE244", "MATH241", "PHYS260", "PHYS261"] },
     { "term": "Year 2 Spring", "courses": ["ENEE205", "ENEE222", "ENEE245", "PHYS270", "PHYS271"] },

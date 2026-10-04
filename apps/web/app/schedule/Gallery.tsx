@@ -1,11 +1,14 @@
 "use client";
 
 import { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import type { Section } from "@superterp/course-data/schedules";
+import type { Building } from "@turboterp/campus-data/buildings";
+import type { Section } from "@turboterp/course-data/schedules";
 import { sectionBlocks } from "@/lib/schedule/block-items";
 import type { TimeScale } from "@/lib/schedule/calendar";
 import { courseColor } from "@/lib/schedule/colors";
 import type { FilterState } from "@/lib/schedule/filters";
+import { tightWalkLine } from "@/lib/schedule/conflicts";
+import { useBuildings } from "@/lib/schedule/use-buildings";
 import { columnsFor, decodeLayout, visibleRows, type EncodedLayouts } from "@/lib/schedule/gallery";
 import { pickSection } from "@/lib/schedule/sections";
 import { WeekCalendar } from "./WeekCalendar";
@@ -17,8 +20,8 @@ const MINI_COL = 170;
 const ZOOM_COL = 360;
 const HOVER_DELAY = 300; // owner: a short pause before the enlarged preview
 const PRESS_DELAY = 350;
-/** Card height: padding, day heads, the columns, and one 18 px strip row per course. */
-const cardHeight = (courses: number) => 212 + 18 * courses;
+/** Card height: padding, day heads, the columns, and one strip row per course (18 px; 33 px with a Recommended reason line). */
+const cardHeight = (courses: number, reasons = false) => 228 + (reasons ? 33 : 18) * courses;
 
 export type GalleryData = {
   layouts: EncodedLayouts;
@@ -26,6 +29,8 @@ export type GalleryData = {
   sectionByKey: ReadonlyMap<string, Section>;
   ratings: Readonly<Record<string, number>>;
   courseIds: string[];
+  /** Set only for the Recommended sort: the strip then explains each pick. */
+  gpas?: Readonly<Record<string, number>>;
 };
 
 /** The sections a card shows: for each interchangeable group, the best-rated instructor's. */
@@ -39,18 +44,26 @@ const Card = memo(function Card({
   index,
   size,
   days,
+  buildings,
 }: {
   data: GalleryData;
   index: number;
   size: "mini" | "zoom";
   days: FilterState["days"];
+  buildings: Building[];
 }) {
   const { picks, groups } = cardSections(data, index);
   const items = picks.flatMap((s) => sectionBlocks(s, { color: courseColor(data.courseIds, s.courseId), size }));
+  const walk = tightWalkLine(picks, buildings);
   return (
     <>
       <WeekCalendar size={size} scale={data.scale} items={items} height={size === "mini" ? MINI_COL : ZOOM_COL} days={days} />
-      <TeacherStrip picks={picks} groups={groups} courseIds={data.courseIds} ratings={data.ratings} size={size} />
+      <TeacherStrip picks={picks} groups={groups} courseIds={data.courseIds} ratings={data.ratings} gpas={data.gpas} size={size} />
+      {walk ? (
+        <p className={styles.cardWalk} title={walk}>
+          {walk}
+        </p>
+      ) : null}
     </>
   );
 });
@@ -69,6 +82,7 @@ export function Gallery({
   days: FilterState["days"];
   onOpen: (picks: Section[]) => void;
 }) {
+  const buildings = useBuildings();
   const box = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const [range, setRange] = useState({ first: 0, last: 3 });
@@ -80,7 +94,7 @@ export function Gallery({
   const colGap = phone ? 16 : 40;
   const rowGap = phone ? 28 : 44;
   const columns = width ? columnsFor(width, MIN_CARD, colGap) : 1;
-  const rowHeight = cardHeight(data.courseIds.length) + rowGap;
+  const rowHeight = cardHeight(data.courseIds.length, !!data.gpas) + rowGap;
   const rows = Math.ceil(data.layouts.count / columns);
 
   useLayoutEffect(() => {
@@ -149,7 +163,7 @@ export function Gallery({
             <div
               key={i}
               className={styles.card}
-              style={{ height: cardHeight(data.courseIds.length) }}
+              style={{ height: cardHeight(data.courseIds.length, !!data.gpas) }}
               role="button"
               tabIndex={0}
               aria-label={`Layout ${i + 1} of ${data.layouts.count}: open in the editor`}
@@ -185,27 +199,27 @@ export function Gallery({
                 }
               }}
             >
-              <Card data={data} index={i} size="mini" days={days} />
+              <Card data={data} index={i} size="mini" days={days} buildings={buildings} />
             </div>
           ))}
         </div>
       </div>
-      {zoom ? <Zoom data={data} days={days} index={zoom.index} rect={zoom.rect} /> : null}
+      {zoom ? <Zoom data={data} days={days} index={zoom.index} rect={zoom.rect} buildings={buildings} /> : null}
     </>
   );
 }
 
-function Zoom({ data, days, index, rect }: { data: GalleryData; days: FilterState["days"]; index: number; rect: DOMRect }) {
+function Zoom({ data, days, index, rect, buildings }: { data: GalleryData; days: FilterState["days"]; index: number; rect: DOMRect; buildings: Building[] }) {
   const vw = window.innerWidth;
   const vh = window.innerHeight;
   const w = Math.min(520, vw - 16);
-  const h = ZOOM_COL + 60 + 22 * data.courseIds.length;
+  const h = ZOOM_COL + 80 + 22 * data.courseIds.length;
   const left = rect.right + 16 + w < vw ? rect.right + 16 : rect.left - w - 16 >= 8 ? rect.left - w - 16 : (vw - w) / 2;
   const top = Math.min(Math.max(8, rect.top - 40), vh - h - 8);
   return (
     <div className={styles.zoom} style={{ left, top, width: w }} aria-hidden="true">
       <div className={styles.zoomCard}>
-        <Card data={data} index={index} size="zoom" days={days} />
+        <Card data={data} index={index} size="zoom" days={days} buildings={buildings} />
       </div>
     </div>
   );

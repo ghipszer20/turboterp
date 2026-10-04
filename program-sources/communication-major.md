@@ -373,101 +373,335 @@ the Student Academic Success-Degree Completion Policy section of this catalog
 
 ## Sample plan (https://drive.google.com/uc?export=download&id=1I36HqnXfxSpWs3PW_3on9226EDeW8CaR#Communication-Studies)
 
-!"#$% &'
-( !("#$% &') !)"#$% &'*
-+,-- ./01234566 789:;88:<=;>8 ?@AB787CDEFGH6IJKA=LMNO4PQ @LRS=LTUVINJVNWC@UFGGURLXWXVW=NYSI=NZNJR 6LR[C6DFG \SZLJIXNWC\]FGG\IWR<=^_U<VILTUVINJVNWC\UFGG 4566 7>8C7V=NMIRF4566 789<=;88C54F U`D`=NYSI=NZNJRCDaFDa\]7bc ?TNVXdN7eePfee?TNVXdN7eePfee4566 ;b8 \SZLJIXNWC\]FGG UV[<TL=W[IgIJh=LVXVNCUhFi7GG5JNLMMIX<JLTZLj<==NYSI=NZNJR AT<kLT?JlLlNZNJRi7 AT<kLT?JlLlNZNJRi;4566 ;b8 4566 ;87:>87:>8;:<=>8>4566 >eePfeeCmIdN=WIR^_nJVTSWI<JF 4566 >8f?TNVXdN7eePfee ?TNVXdN7eePfeeo<S=LMMIX<JLTZLj<==NYSI=NZNJRW @LRS=LTUVINJVNBLkC@BFGG \IWR<=^_U<VILTUVINJVNWC\UFGG4566 >8b:>8p:<=>89 4566 >eePfeeCDggTINMF4566 >eePfeeCBNLM_U<V4[LJlNF 4566 ;87:>87:>8;:<=>8>4566 ?TNVXdN>eePfee ?TNVXdN7eePfee?TNVXdN7eePfee ?TNVXdN7eePfeeh=<qNWWI<JLTE=IXJlChEF 4566 ?TNVXdN>eePfeeUV[<TL=W[IgIJh=LVXVNCUhFi;GG 4566 ?TNVXdN>eePfee4566 >77:>cp:<=>cc ?TNVXdN>eePfee4566 ?TNVXdN>eePfee ?TNVXdN7eePfee?TNVXdN7eePfee ?TNVXdN7eePfee`<RLT4=NMIRWq<=mNl=NNO7;8r>sV=NMIRWZSWRkN>eePfeeTNdNT
-tuvwxyz{|}~ywyxwyy{w{vy|yvwyv tuvwy|}wxz
-tuvwxyz{|}~ywyxwyy{{uvy|yvwyv
-tuvwxyz{|}~ywyxwyy{vvy|yvwyv
- ¡¢£¡¤¥¦§¨¨©¡ª «¦¦¬¤¡¦ªª¡®¦¯°¤§±²¡¡¦¯³¦¤¡´´ªμ«¦¦¬¤¡¦¯¦§
-!" #$ % !"& !'!" ()*#$ % !"(+*#$ % !"(,*#$ % !"-"!./'!" 01 !"
-#23"4 5.!6!$-"!./'!"-/"!57/88 96!$-"!./'!":#23";<8=2*87/88 96!$!$ !":"";'!!" "!   >)+?!"! 8!2@
-ABCDEFBGBHIJKLMNFBOEIJPMNQDFJBJ RQDFJB RFBOEIJ SFTOBABCDEFBGBHIJKUMNFBOEIJPVNQDFJBJ RQDFJB RFBOEIJ SFTOB ABCDEFBGBHIJ RFBOEIJ SFTOB
-ABCDEFBGBHIJKWNFBOEIJPUNQDFJBJ RQDFJB RFBOEIJ SFTOBABCDEFBGBHIJKXYWNFBOEIJPUNQDFJBJ RQDFJB RFBOEIJ SFTOBABCDEFBGBHIJKZY[NFBOEIJ RQDFJB RFBOEIJ SFTOB
-\]^^ _`abc``bdecf`ghijklmhnemopqrgns tuiovohvekwxmeklkpuyedzkvvmdpi{nemopqryns]ei{\dll|r]\s \]^^ c}`^iu~r^gs ]pkijjmodpi{lideekwxmeklkpugpi{ohkivdpmpqrgs dxeijjmodpi{lideekwxmeklkpuviuxei{thmkphkirsiuxei{thmkphkvrtsmvudetdhmi{thmkphkvrtsmvudetdhmi{thmkphkvrts \]^^ _`ar]\sbdec``r]\sbdecf`xlipmokvrs \]^^ c}`xlipmokvrs \]^^ _f`th~d{iev~mmpyeihohkrtysth~d{iev~mmpyeihohkrtyspdplide ^cf`rgsb\\tc``rgsb^^tc}_rgsbyt\c``rgsbt]\c`_rgsbdetg_``r^ggsmqxkvodprtsmqxkvodprts \]^^ c`_bf`_bf`cbdef`f\]^^ f`pjkevuipjmpqy{xei{tdh|rys \]^^ f`}bf`bdef`apjkevuipjmpqy{xei{tdh|rys\x{uxei{\dlkukphr\\s \]^^ ff`bf}rtytsbc`bc_bccbcbc}bcbfbbb}}b}b_bcbba`bdea}\]^^ fcrysbf`bfcr\\sb}bde`\]^^ f__bfrtysbdef\]^^ f__bff`bff_bfa`bfa_bfa}bfrtysbfbc}bcbde}}\]^^ f\]^^ f\]^^ f\]^^ f
-¡¢£¤¥ ¦§¨©ª«ª¬ ®®ª«¯°±²««³´μ´±¶·¸¹±¶º¶»¼
-μ¼½¶¾¿¼À«Á±¶Â¹¼¿º¸¿¼Ã¶¶¾±»¶Â¾¼Ä®ÅªÆ°Ç¼È¶É»¾½À«Á±¶Â¹¼¿º¸¿¼Ã¶¶¾±»¶Â¾¼¼È¶À««ÊË««½¶Ì¶½ª²¸ÍÍ¶±½¶Ì¶½º¾Î°±Á±¶Â¹¼¿º¸¿¼Ã¶¶¾±»¶Â¾¼Ä®ÅÀÏ¸ÍÍ¶±½¶Ì¶½Á±¶Â¹¼¿μÐÑÄªÆÒ°±¶·¸¹Ì¾½¶»¼Ó¹Ç¾ÍÍ½¹Á¾Ã½¶Ô¨½°Ã¾½¦»Õ¾Õ¶º¶»¼
-Ö×Ø×ÙÚÛÜÝÚÜÝÞÚßÝàáØÚâàÞÞÝã×äÞÝØÝåæçØ×çæèÝÚæÙÝÚçæÚéêëìíîïðñòóòôñõöíñõ÷óøóôùóîùùíøôñòùíîù÷ñí øíôøõîóùóîóù îóîñô îðù óùóîóù ìíîîñ îóøñí ïùôøñõñíîùóîìíîøîóøð÷ñí íôõóøùíùóîùö õøî ùóîóù îîîõì õîôòîó!"#$%&'("')%*+ ,!"#$%&'("')%* -./01.234045.3670/89.3/8:8;4.1.2<66.=83>?0<038;@>218A.<30B2C30/0<64D
+(OCR text; may contain recognition errors)
+EE EE
+rr lcoMM1070r200000 |[sATrequirement(R) |
+ews lees
+FE 757
+ewe
+ee
+I EE
+rr lcoMM3ucdxx(Diversity/inclusion)  |commzes |
+Teowebocbo rece
+TE
+EE EE
+CC omumtdscome Jowmoeem
+rr lcoMMElectivedncdxx  |Electivelwcd |
+eewaw leew |
+2 EE
+lerofessionalWriting(PW)  |cOMMElectivedxcdx |
+CC Tsnravcesney Jowceesmon |
+omnes emer]
+Ey Fe
+rr lFectvenwcdw [dectvebecax |
+EE
+EE Te Le
+Cultural Competence courses may also fulfill Distributive Studies categories.
+Communication - Communication Studies
+[Academic Writing (AW) (in. Grade: C | nation | [|
+[Professional writing Pw) | | [ |
+[OalComm(0C) —  cowmorezo| [1]
+Mathvw [|
+[Analytic Reasoning (AR) | staTrequrement | [|
+[Natural sciencetab) [| [1]
+[Natwralsciences (Ns) || [1]
+[History/Social sciences (bs) || [|
+[History/Social Sciences (Hs) | | [~~ Jcommio7(oc,or200(00or230 [| |
+[Humanites(vo) | Weommaso
+[Humanities(iy [1 | ~~ Meowmizo [| |
+[Scholarshipin Practices) | | [1]
+[Scholarship in Practice (SPhnonmajor | | [|
+Big Question BMGT 230 (AR), CCJS 200 (AR), QMMS 251 (AR),
+Normally double counted with Distributive Studies PSYC 200 (AR), SOCY 201(AR), or STAT 100 (MA & AR)
+[Bgauestons) [~~ [|
+[BgQuestonts) [~~] [| [como sor sm erss
+Diversity [TT
+(overlap permitted with Distributive Studies and/or Big Question)
+jcovmzos TT]
+[Understanding Plural Soc. (0p) | | | Mcomm3sos3oeor307 [|
+Understanding Plural Soc. (UP) or
+Cultural Competency (CC)
+Experiential Learning- optional COMM 330, 385 (SP & IS), 420, 421, 422, 424, 425, 428,
+(overlap permitted with other requirements/courses) 436, 448, 449, 455, 459, 461, 462, 469, 470, or 475
+rr 1 1 1]
+I A I E—
+oman mom mon [||
+[University Requirements for Graduation: |_|
+[Atleast 0cedts mustbecamnedatuve | [1 Mcomm3ain3seiseiorzss [|
+[£5 of the final 30 credits must be cared at he 300400 evel | [1] [COMM 311, 330, 331, 370, 371, 375, 386 (SP), 388,
+[12 upper evel major credits mustbeearnedatumd | [] [425,426 0rdss
+[ARHU Requirements for Graduation: [|
+Powwerteveloeds | [] Weommzaaw TT
+[AHL 18 or equivalent (applicable) | [] Weommzecax 1
+[cobalengagemens — [ [7] Weommzeas
+jcovmznan [|
 
 ## Sample plan (https://drive.google.com/uc?export=download&id=1ETspCX6Xy8feCY6kQlAhVTYc_XhYKWmS#Health-and-Science-Communication)
 
-!"#$%&!'(
-)!")#$%&!'(*!"*#$%&!'(+
-,-.. /012345677 89:;<99;=><?9 @ABC898DEFGHI7JKLB>MNOP5QR AMST>MUVWJOKWOXDAVGHHVSMYXYWX>OZTJ>O[OKS 7MS\D7EGH ]T[MKJYOXD]^GHH]JXS=>_`V=WJMUVWJOKWOXD]VGHH 5677 8?9D8W>ONJSG5677 89:=><99D65G VaEa>OZTJ>O[OKSDEbGEb]^8cd @UOWYeO8ffQgff@UOWYeO8ffQgff5677 <c9 ]T[MKJYOXD]^GHH VW\=UM>X\JhJKi>MWYWODViGj8HH6KOMNNJY=KMU[Mk=>>OZTJ>O[OKS BU=lMU@KmMmO[OKSj8 BU=lMU@KmMmO[OKSj<5677 <c9 5677 ?9<5677 ?ffQgffDnJeO>XJS_`oKWUTXJ=KG 5677 ?9g@UOWYeO8ffQgff @UOWYeO8ffQgffp=T>MNNJY=KMU[Mk=>>OZTJ>O[OKSX AMST>MUVWJOKWOCMlDACGHH ]JXS=>_`V=WJMUVWJOKWOXD]VGHH5677 ?9c;?9q;=>?9: 5677 ?ffQgffDEhhUJONG5677 ?ffQgffDCOMN`V=W5\MKmOG 5677 <98;?98;=>?9?5677 VhOWJMUJrMY=K@UOWYeO?ffQgff @UOWYeO8ffQgff@UOWYeO8ffQgff @UOWYeO8ffQgffi>=sOXXJ=KMUF>JYKmDiFG 5677 VhOWJMUJrMY=K@UOWYeO?ffQgffVW\=UM>X\JhJKi>MWYWODViGj<HH 5677 VhOWJMUJrMY=K@UOWYeO?ffQgff5677 ?88;?dq;=>?dd @UOWYeO?ffQgff5677 VhOWJMUJrMY=K@UOWYeO?ffQgff @UOWYeO8ffQgff@UOWYeO8ffQgff @UOWYeO8ffQgffa=SMU5>ONJSXs=>nOm>OOP8<9t?uW>ONJSX[TXSlO?ffQgffUOeOU
-vwxyz{|}~{y{zy{{}y}x{~{xy{x vwxy{~yz|
-vwxyz{|}~{y{zy{{}}wx{~{xy{x
-vwxyz{|}~{y{zy{{}xx{~{xy{x
-¡¢£¤¡¥£¦¡§¨¡©ªª« £¡¬¢ ¨¨®¦¯£¨¬¬¯£°¨±²¦¡©³´¡£¡£¨¡±μ¨¦¡£¶¶¬¡· ¨¨®¦¯£¨±¨©
-!"#$ %&"' !"#$("#)#!$ *+,%&"' !"#$*-,%&"' !"#$*.,%&"' !"#$/!$#!01)#!$ 23 !"#$
-%!45$6"70#8!#&/!$#!01)#!$/!1$!#791::"!;8!#&/!$#!01)#!$<%!45$=>:!?!4,:91::"!;8!#&#& !"#$<$$=)##$"$#"!!"" @+-A!#$#":#4B
-CDEFGHDIDJKLMNOPHDQGKLROPSFHLDL TSFHLD THDQGKL UHVQDCDEFGHDIDJKLMWOPHDQGKLRXPSFHLDL TSFHLD THDQGKL UHVQD CDEFGHDIDJKL THDQGKL UHVQD
-CDEFGHDIDJKLMYPHDQGKLRWPSFHLDL TSFHLD THDQGKL UHVQDCDEFGHDIDJKLMZ[YPHDQGKLRWPSFHLDL TSFHLD THDQGKL UHVQDCDEFGHDIDJKLM\[]PHDQGKL TSFHLD THDQGKL UHVQD
-^_`` abcdebbdfgehbijklmnojpgoqrstipu vwkqxqjxgmyzogmnmrw{gf|mxxofrk}pgoqrst{pu_gk}^fnn~t_^u ^_`` eb`kwt`iu _rmklloqfrk}nkfggmyzogmnmrwirk}qjmkxfrorstiu fzgklloqfrk}nkfggmyzogmnmrwxkwzgk}vjomrjmktukwzgk}vjomrjmxtvuoxwfgvfjok}vjomrjmxtvuoxwfgvfjok}vjomrjmxtvu ^_`` abct_^ufgebbt_^udfgehbznkroqmxtu ^_`` ebznkroqmxtu ^_`` ahbvjf}kgxoor{gkjqjmtv{uvjf}kgxoor{gkjqjmtv{urfrnkfg `ehbtiud^^vebbtiud``veatiud{v^ebbtiudv_^ebatiudfgviabbt`iiuoszmxqfrtvuoszmxqfrtvu ^_`` hbe^_`` ebadhbadfghbh^_`` hbrlmgxwkrlors{}zgk}vfj~t{u ^_`` hbdhbdfghbcrlmgxwkrlors{}zgk}vfj~t{u^z}wzgk}^fnmwmrjt^^u ^_`` hhbdhtv{vudebdeadeededededhdddddadeddcbdfgc^_`` het{udhbdhet^^uddfgb^_`` haadhtv{udfgh^_`` haadhhbdhhadhcbdhcadhcdhtv{udhdededfg^_`` h^_`` h^_`` h^_`` h
- ¡¢£¤¥¦§¨
-©ª«¤¬¢®¢¯°¤¤¬¯±¤²¬³£¤¦´ μ¶·¸¹º¶¸¹»»¸¹»¹¸¹»¼¸¹»½¸¹μ¾¸¢£¹¾¶
-¿ÀÁÂÃÄÃÅÆÇÇÃÄÈÉÊËÄÄÌÍÎÍÊÏÐÑÒÊÏÓÏÔÕ
-ÎÕÖÏ×ØÕÙÄÚÊÏÛÒÕØÓÑØÕÜÏÏ×ÊÔÏÛ×ÕÝÇÞÃßÉàÕáÏâÔ×ÖÙÄÚÊÏÛÒÕØÓÑØÕÜÏÏ×ÊÔÏÛ×ÕÕáÏÙÄÄãäÄÄÖÏåÏÖÃËÑææÏÊÖÏåÏÖÓ×çÉÊÚÊÏÛÒÕØÓÑØÕÜÏÏ×ÊÔÏÛ×ÕÝÇÞÙèÑææÏÊÖÏåÏÖÚÊÏÛÒÕØÎéêÝÃßëÉÊÏÐÑÒå×ÖÏÔÕìÒà×ææÖÒÚ×ÜÖÏíÁÖÉÜ×Ö¿Ôî×îÏÓÏÔÕ
-ïðñðòóôõöóõö÷óøöùúñóù÷÷öð÷öñöñðöóòöóó    ! "#$% !& !" '"!$ "! ()* "+ $$",$- .*/012345627894:;254<4176=>5?5@A;@B>1CD9E094:;254<4176=>5?5@A;@B>1C FGHIJGKLMIMNGLOPIHQRGLHQSQTMGJGKUOOGVQLWXIUILQTYWKJQZGULI[K\LIHIUOM]
+(OCR text; may contain recognition errors)
+Communication - Health and Science Communication Four Year Academic Plan
+COMM 107, 200, or 230 ENGL 101 (AW)* {Min. Grade: C-} Natural Sciences (NS)**
+Statistics requirement Math (MA)* Humanities (HU)**
+History/Social Sciences (HS)** COMM 130 (1 credit)
+[commiororao0(00) STAT requirement (AR)
+wavs Elective Doc-xx
+elective txcam
+wwe 1
+EL
+COMM 250 Humanities (HU)** Scholarship in Practice (SP) #1**
+One additional major requirement Global Engagement #1 Global Engagement #2
+[tempest ened oa Jcoum 250 comm 02
+comm scan Diversioindusion) comm 304
+LL eeciencax Elective Lorex
+Vs
+Four additional major requirements Natural Science Lab (NL)** History/Social Sciences (HS)**
+COMM 305, 306, or 307 COMM 3xx-4xx (Applied)
+lL lcOMM3ecaxx (Lead/Soc Change) COMM 201, 301, or 303
+| ]comM specialization Elective 3xx-axx Elective 1xxcdxx
+LL [electvetudx Elective Toco
+ves 1 0]
+| |professional writing (PW) COMM Specialization Elective 3xx-4xx
+| lscholarshipin Practice (sp) #2°* COMM Specialization Elective 3xx-4xx
+|commsu,3scor3ss Elective 3x
+| commspecialization Elective 3oxcaxx Elective 1xcdxx
+eect Elective Lodxc
+1] Total Credits for Degree: 120; 39 credits must be 3xx-4xx level
+Note: Some courses for the major may also count toward the General Education requirements.
+**All students must complete two Distributive Studies courses that are approved for Big Question courses. The Understanding Plural Societies and
+Cultural Competence courses may also fulfill Distributive Studies categories.
+Communication - Health and Science Communication
+[  Fundamentalstudies |
+[Academic Writing (AW) (Min Grade:¢) | evettor | [
+[Professional writing PW) |__| [|
+[OlComm. (00) [comwiorezo| [|
+Maha)
+[Analytic Reasoning (AR) |swregviremens| ||
+[Natural Science abn) |]
+Natwalsciences vs) | [1]
+[History/Social sciences (ws) | | [|
+[History/Social Sciences (5) | | | Wcommio7(0qor200(0C,er230 | | |
+[Humantes(O) | | Weommzso
+umanites(io) | Weommiso
+[Scholarshipin Practices?) | | [
+[Scholarship in Practice (SP)nonmaior | | |]
+Big Question BMGT 230 (AR), CCIS 200 (AR), QMMS 251 (AR),
+Normally double counted with Distributive Studies PSYC 200 (AR), SOCY 201(AR), or STAT 100 (MA & AR)
+[BgQueston(s) | |]
+[BigQueston(s) | | | Weommso TT
+Diversity common, 3000308
+(overlap permitted with Distributive Studies and/or Big Question)
+jcovmzes TT []
+[Understanding Plural Soc. (WP) | | [~~ Wcomm3os3060r307 | [1]
+omen |__| | |
+. N My 428, 436, 448, 449, 455, 459, 461, 462, 469, 470, or
+(overlap permitted with other requirements/courses) 475
+I A EN
+EE A EE EE
+comm sss vn so smiomserwo [||
+[University Requirements for Graduation: [|
+[Mest s0credis mustbecomedstovo | [J [Jcommsiyss(shorsss [|
+[15 ofthe fina 30 reits must be earned at he 300400kevel | [J Jllcomm 311, 330,331,370, 371, 375, 386 (5P), 388,
+[12 uopertevel major redts mustbe arnedatum0__ | (J J425,426, orass
+[ARHU Requirements for Graduation: [|]
+[ovpertevioeas [J] Weommsednr TT]
+[ARs or cqunatent (applicable) [J Weommzecaor 1]
+[oobaleogmgement [J Weommsecdsr |]
+[commBocaos [7]
 
 ## Sample plan (https://drive.google.com/uc?export=download&id=1gujq1AvfdD6crXvPwS8TVSB877MTQp54#Media-and-Digital-Communication)
 
-!"#$%&!'(
-)!")#$%&!'(
-*!"*#$%&!'(
-+,-- ./01234566 789:;88:<=;>8 ?@AB787CDEFGH6IJKA=LMNO4PQ @LRS=LTUVINJVNWC@UFGGURLXWXVW=NYSI=NZNJR 6LR[C6DFG \SZLJIXNWC\]FGG\IWR<=^_U<VILTUVINJVNWC\UFGG 4566 7>8C7V=NMIRF4566 789<=;88C54F U`D`=NYSI=NZNJRCDaFDa\]7bc ?TNVXdN7eePfee?TNVXdN7eePfee4566 ;b8 \SZLJIXNWC\]FGG UV[<TL=W[IgIJh=LVXVNCUhFi7GG5JNLMMIX<JLTZLj<==NYSI=NZNJR AT<kLT?JlLlNZNJRi7 AT<kLT?JlLlNZNJRi;4566 ;b8 4566 >8>4566 >eePfeeCmIdN=WIR^_nJVTSWI<JF 4566 >8f?TNVXdN7eePfee ?TNVXdN7eePfeeo<S=LMMIX<JLTZLj<==NYSI=NZNJRW @LRS=LTUVINJVNBLkC@BFGG \IWR<=^_U<VILTUVINJVNWC\UFGG4566 >8b:>8p:<=>89 4566 >eePfeeCDggTINMF4566 >eePfeeCBNLM_U<V4[LJlNF 4566 ;87:>87:<=>8;4566 UgNVILTIqLX<J?TNVXdN>eePfee ?TNVXdN7eePfee?TNVXdN7eePfee ?TNVXdN7eePfeeh=<rNWWI<JLTE=IXJlChEF 4566 UgNVILTIqLX<J?TNVXdN>eePfeeUV[<TL=W[IgIJh=LVXVNCUhFi;GG 4566 UgNVILTIqLX<J?TNVXdN>eePfee4566 >77:>cp:<=>cc ?TNVXdN>eePfee4566 UgNVILTIqLX<J?TNVXdN>eePfee ?TNVXdN7eePfee?TNVXdN7eePfee ?TNVXdN7eePfee`<RLT4=NMIRWr<=mNl=NNO7;8s>tV=NMIRWZSWRkN>eePfeeTNdNT
-uvwxyz{|}~zxzyxzz|x|wz}zwxzw uvwxz}~xy{
-uvwxyz{|}~zxzyxzz||vwz}zwxzw
-uvwxyz{|}~zxzyxzz|wwz}zwxzw
-¡¢¡£¡¤¥¦¡§¨¥¡¤©§¡ª¥«¬¥®®¯¤¤§¥°¤¦±¬¬²ª³§¬¡¡¡°°³§´¬μ¶ª¥·¸¥§¡¥§¬¥μ¹¤¡¤¬ª¡¥§º¤¡¤º°¥¡£¡¤¤»¤¤±¬¬²ª³§¬¡μ¬
-!"#$ %&"' !"#$("#)#!$ *+,%&"' !"#$*-,%&"' !"#$*.,%&"' !"#$/!$#!01)#!$ 23 !"#$
-%!45$6"70#8!#&/!$#!01)#!$/!1$!#791::"!;8!#&/!$#!01)#!$<%!45$=>:!?!4,:91::"!;8!#&#& !"#$<$$=)##$"$#"!!"" @+-A!#$#":#4B
-CDEFGHDIDJKLMNOPHDQGKLROPSFHLDL TSFHLD THDQGKL UHVQDCDEFGHDIDJKLMWOPHDQGKLRXPSFHLDL TSFHLD THDQGKL UHVQD CDEFGHDIDJKL THDQGKL UHVQD
-CDEFGHDIDJKLMYPHDQGKLRWPSFHLDL TSFHLD THDQGKL UHVQDCDEFGHDIDJKLMZ[YPHDQGKLRWPSFHLDL TSFHLD THDQGKL UHVQDCDEFGHDIDJKLM\[]PHDQGKL TSFHLD THDQGKL UHVQD
-^_`` abcdebbdfgehbijklmnojpgoqrstipu vwkqxqjxgmyzogmnmrw{gf|mxxofrk}pgoqrst{pu_gk}^fnn~t_^u ^_`` eb`kwt`iu _rmklloqfrk}nkfggmyzogmnmrwirk}qjmkxfrorstiu fzgklloqfrk}nkfggmyzogmnmrwxkwzgk}vjomrjmktukwzgk}vjomrjmxtvuoxwfgvfjok}vjomrjmxtvuoxwfgvfjok}vjomrjmxtvu ^_`` abct_^udfgebbt_^udfgehbznkroqmxtu ^_`` ebznkroqmxtu ^_`` ahbvjf}kgxoor{gkjqjmtv{uvjf}kgxoor{gkjqjmtv{urfrnkfg `ehbtiud^^vebbtiud``veatiud{v^ebbtiudv_^ebatiudfgviabbt`iiuoszmxqfrtvuoszmxqfrtvu ^_`` hbh^_`` ebadhbadfghbe^_`` hbrlmgxwkrlors{}zgk}vfj~t{u ^_`` hbdhbdfghbcrlmgxwkrlors{}zgk}vfj~t{u^z}wzgk}^fnmwmrjt^^u ^_`` hhbdhtv{vudebdeadeededededhdddddadeddcbdfgc^_`` het{udhbdhet^^uddfgb^_`` haadhtv{udfgh^_`` haadhhbdhhadhcbdhcadhcdhtv{udhdededfg^_`` h^_`` h^_`` h^_`` h
- ¡¢£¤¥¦§¨
-©ª«¤¬¢®¢¯°¤¤¬¯±¤²¬³£¤¦´ μ¶·¸μ¹º¸μ¹»¸μ¹¼¸μ¹μ¸μ¹½¸μ¹·¸μ¹¶¸½½¾¸¢£½¶¿
-ÀÁÂÃÄÅÄÆÇÈÈÄÅÉÊËÌÅÅÍÎÏÎËÐÑÒÓËÐÔÐÕÖ
-ÏÖ×ÐØÙÖÚÅÛËÐÜÓÖÙÔÒÙÖÝÐÐØËÕÐÜØÖÞÈßÄàÊáÖâÐãÕØ×ÚÅÛËÐÜÓÖÙÔÒÙÖÝÐÐØËÕÐÜØÖÖâÐÚÅÅäåÅÅ×ÐæÐ×ÄÌÒççÐË×ÐæÐ×ÔØèÊËÛËÐÜÓÖÙÔÒÙÖÝÐÐØËÕÐÜØÖÞÈßÚéÒççÐË×ÐæÐ×ÛËÐÜÓÖÙÏêëÞÄàìÊËÐÑÒÓæØ×ÐÕÖíÓáØçç×ÓÛØÝ×ÐîÂ×ÊÝØ×ÀÕïØïÐÔÐÕÖ
-ðñòñóôõö÷ôö÷øôù÷úòôúøø÷ñø÷ò÷òñ÷ôó÷ôô !!  " #$%&"'"# (#"% #" )*+ #, %%#-%. /+01234567389:5;<365=5287>?6@6AB<AC?2DE:F1:5;<365=5287>?6@6AB<AC?2D GHIJKHLMNJNOHMPQJIRSHMIRTRUNHKHLVPPHWRMXYJVJMRUZXLKR[HVMJ\L]MJIJVPN^
+(OCR text; may contain recognition errors)
+w——
+Co ownoemes wesw |
+EE 7 Co SO
+EE CC SO
+EE ci
+I EE
+we———
+commana Joma]
+EE Fy
+EE
+Ee EE
+EE cc tc ON 0
+EE Go Co
+I Co
+es]
+en ome |
+EE CT, LB CLL
+EE Th CS Ur SE
+EE eS
+EE cH 3 SN
+7 7
+Et eo
+Cultural Competence courses may also fulfill Distributive Studies categories.
+Communication - Media and Digital Communication
+[Academic writing (AW) (Min Grade: C1 | evan [|]
+[Professional writing Pw) | [|
+[OalComm oc) ~~ Jeowmororze[ [|
+Mathva)
+[Analytic Reasoning (AR) [st requrement | [|
+[Natwralsciencetabing [|
+[Nawralsciences (vs) [| [1]
+[History/Social Sciences (hs) | [|
+[History/Social Sciences (is) | | | Mcommi07(ocjer200(0cler230 | | |
+[Humanities (0) | [| Meowmmzso [|]
+[Humaniteso) [~~ [ [ Meowmizo [|]
+[scholarshipin Practice (sp) | [|
+[Scholarship in Practice (sPinonmajor | [|]
+Big Question BMGT 230 (AR), CCS 200 (AR), QMMS 251 (AR),
+Normally double counted with Distributive Studies PSYC 200 (AR), SOCY 201(AR), or STAT 100 (MA & AR)
+[Bgauestongs) [|
+[Bgauestongs) [| [| Mcowmss [|
+Diversity fcovmaos0032 [1]
+{overlap permitted with Distributive Studies and/or Big Question]
+jcovmsos TT
+[Understanding Plural Soc. (WP) | | | Mcomm3os3o6er307 | ||
+Cultural Competency Sr Teaming: optional COMM 330, 385 (SP & I), 420, 421, 422, 424, 425,
+428, 436, 448, 449, 455, 459, 461, 462, 469, 470, or
+11]
+rr © [1]
+[com spammers | [|
+[University Requirements for Graduation: [|
+[Mlessts0cedts mustbeeomedstv0 | [J [comms 3seeozss [|
+[£5 of the final 30 credits must be camed at the 300-4001evel | []|lcoMM 311, 330, 331, 370, 371, 375, 386 (SP), 388,
+[12 upper level major credits mustbecamed stud | [][l1425,426,0r455
+[ARHU Requirements for Graduation: ||
+Powperieveicears | 0 [eommzecaec [|
+[HU ss8orequalent (fopplcable) | [0] eommzecaer
+[cobaltngagement [0] Wcommzeser
+[commBocaes
+and 468
 
 ## Sample plan (https://drive.google.com/uc?export=download&id=1O_OqBgmiMqMASjpXXrRxG6JaR1f7gZjN#Political-Communication-and-Public-Advocacy)
 
-!"#$% &'
-( !("#$% &') !)"#$% &'*
-+,-- ./01234566 789:;88:<=;>8 ?@AB787CDEFGH6IJKA=LMNO4PQ @LRS=LTUVINJVNWC@UFGGURLXWXVW=NYSI=NZNJR 6LR[C6DFG \SZLJIXNWC\]FGG\IWR<=^_U<VILTUVINJVNWC\UFGG 4566 7>8C7V=NMIRF4566 789<=;88C54F U`D`=NYSI=NZNJRCDaFDa\]7bc ?TNVXdN7eePfee?TNVXdN7eePfee4566 ;b8 \SZLJIXNWC\]FGG UV[<TL=W[IgIJh=LVXVNCUhFi7GG5JNLMMIX<JLTZLj<==NYSI=NZNJR AT<kLT?JlLlNZNJRi7 AT<kLT?JlLlNZNJRi;4566 ;b8 4566 >874566 >eePfeeCmIdN=WIR^_nJVTSWI<JF 4566 >8f?TNVXdN7eePfee ?TNVXdN7eePfeeo<S=LMMIX<JLTZLj<==NYSI=NZNJRW @LRS=LTUVINJVNBLkC@BFGG \IWR<=^_U<VILTUVINJVNWC\UFGG4566 >8b:>8p:<=>89 4566 >eePfeeCDggTINMF4566 >eePfeeCBNLM_U<V4[LJlNF 4566 ;87:>8;:<=>8>4566 UgNVILTIqLX<J?TNVXdN>eePfee ?TNVXdN7eePfee?TNVXdN7eePfee ?TNVXdN7eePfeeh=<rNWWI<JLTE=IXJlChEF 4566 UgNVILTIqLX<J?TNVXdN>eePfeeUV[<TL=W[IgIJh=LVXVNCUhFi;GG 4566 UgNVILTIqLX<J?TNVXdN>eePfee4566 >77:>cp:<=>cc ?TNVXdN>eePfee4566 UgNVILTIqLX<J?TNVXdN>eePfee ?TNVXdN7eePfee?TNVXdN7eePfee ?TNVXdN7eePfee`<RLT4=NMIRWr<=mNl=NNO7;8s>tV=NMIRWZSWRkN>eePfeeTNdNT
-uvwxyz{|}~zxzyxzz|x|wz}zwxzw
-uvwxyz{|}~zxzyxzz||vwz}zwxzw
-uvwxyz{|}~zxzyxzz|wwz}zwxzw
-
-¡¢£¤¥¥¦¤§¡¨©¤¡¨ª¨«¥¢£¬ ¨¤®§¯¬¤¨«°®£¢¨±¬¤²£³¤¡¬¥´μμ¶««¥£®¬¥¡£¥¢¡·«¸³¥¤³¹£±º £®³¥¢£¤¥¥§¨¨¤¨··¤º®¦¤»³¼½£¥±¬¢£¤¥¥´¾§¿¬®¤¥¨¬®³¬¼À«£¤¨«¢³±¥¨¬®Á£«£¤¨«Á¡·¬¢¢£¤¥¥¡¨ª¨«¥¦£«Â««¸³¥¤³¹£±º £®³¥¢¨¼¤³¥´
-!"#$ %&"' !"#$("#)#!$ *+,%&"' !"#$*-,%&"' !"#$*.,%&"' !"#$/!$#!01)#!$ 23 !"#$
-%!45$6"70#8!#&/!$#!01)#!$/!1$!#791::"!;8!#&/!$#!01)#!$<%!45$=>:!?!4,:91::"!;8!#&#& !"#$<$$=)##$"$#"!!"" @+-A!#$#":#4B
-CDEFGHDIDJKLMNOPHDQGKLROPSFHLDL TSFHLD THDQGKL UHVQDCDEFGHDIDJKLMWOPHDQGKLRXPSFHLDL TSFHLD THDQGKL UHVQD CDEFGHDIDJKL THDQGKL UHVQD
-CDEFGHDIDJKLMYPHDQGKLRWPSFHLDL TSFHLD THDQGKL UHVQDCDEFGHDIDJKLMZ[YPHDQGKLRWPSFHLDL TSFHLD THDQGKL UHVQDCDEFGHDIDJKLM\[]PHDQGKL TSFHLD THDQGKL UHVQD
-^_`` abcdebbdfgehbijklmnojpgoqrstipu vwkqxqjxgmyzogmnmrw{gf|mxxofrk}pgoqrst{pu_gk}^fnn~t_^u ^_`` eb`kwt`iu _rmklloqfrk}nkfggmyzogmnmrwirk}qjmkxfrorstiu fzgklloqfrk}nkfggmyzogmnmrwxkwzgk}vjomrjmktukwzgk}vjomrjmxtvuoxwfgvfjok}vjomrjmxtvuoxwfgvfjok}vjomrjmxtvu ^_`` abct_^udfgebbt_^udfgehbznkroqmxtu ^_`` ebznkroqmxtu ^_`` ahbvjf}kgxoor{gkjqjmtv{uvjf}kgxoor{gkjqjmtv{urfrnkfg `ehbtiud^^vebbtiud``veatiud{v^ebbtiudv_^ebatiudfgviabbt`iiuoszmxqfrtvuoszmxqfrtvu ^_`` hba^_`` ebadhbedfghbh^_`` hbrlmgxwkrlors{}zgk}vfj~t{u ^_`` hbdhbdfghbcrlmgxwkrlors{}zgk}vfj~t{u^z}wzgk}^fnmwmrjt^^u ^_`` hhbdhtv{vudebdeadeededededhdddddadeddcbdfgc^_`` het{udhbdhet^^uddfgb^_`` haadhtv{udfgh^_`` haadhhbdhhadhcbdhcadhcdhtv{udhdededfg^_`` h^_`` h^_`` h^_`` h
- ¡¢£¤¥¦§¨ ©ª «¬¬
-®¯°¤±¢²³¢´μ¤²¤±´¶¤·±²¸£¤¦¹ ºº»º¼»º¼¬»º½»¼¾¿»¼À»¼À¾»¼À½»¼À¿»¼½»¼½¬»¢£¼½Á
-ÂÃÄÄÅÆÇÈÉÊÆÆËÌÍÌÉÎÏÐÑÉÎÒÎÓÔ
-ÍÔÕÎÖ×ÔØÆÙÉÎÚÑÔ×ÒÐ×ÔÛÎÎÖÉÓÎÚÖÔÜÄÝÅÞÈßÔàÎáÓÖÕØÆÙÉÎÚÑÔ×ÒÐ×ÔÛÎÎÖÉÓÎÚÖÔÔàÎØÆÆâãÆÆÕÎäÎÕÅÊÐååÎÉÕÎäÎÕÒÖæÈÉÙÉÎÚÑÔ×ÒÐ×ÔÛÎÎÖÉÓÎÚÖÔÜÄÝØçÐååÎÉÕÎäÎÕÙÉÎÚÑÔ×ÍèéÜÅÞêÈÉÎÏÐÑäÖÕÎÓÔëÑßÖååÕÑÙÖÛÕÎìíÕÈÛÖÕîÓïÖïÎÒÎÓÔ
-ðñòñóôõö÷ôö÷øôù÷úòôúøø÷ñø÷ò÷òñ÷ôó÷ôô !!  " #$%&"'"# (#"% #" )*+ #, %%#-%. /+01234567389:5;<365=5287>?6@6AB<AC?2DE:F1:5;<365=5287>?6@6AB<AC?2D GHIJKHLMNJNOHMPQJIRSHMIRTRUNHKHLVPPHWRMXYJVJMRUZXLKR[HVMJ\L]MJIJVPN^
+(OCR text; may contain recognition errors)
+Communication - Political Communication and Public Advocacy
+Four Year Academic Plan
+I A
+owwemed  wememeen
+wes Toews
+EE ee
+EE ccc ES
+J A
+EL I A
+[  [comM3wcom(Diersity/inchsion)  [commzos |
+Lo  leecwenosw eeawemowo |
+EE ER
+Er
+[commmantedoccmg  Joommaamon |
+coum spel toa sman [eee rman |
+EE rE rE
+I A
+CT Trctonwgew[covmspedsbaondeme man |
+shonin [commande soto |
+cowwsnmeerms  Jdewescax |
+EE Cs
+feet lemewaw |
+rr rr]
+L [foslicCredtsforDegreer 120 39credismustbedocaclevel |
+Cultural Competence courses may also fulfill Distributive Studies categories.
+Communication - Political Communication and Public Advocacy
+[ Fundamentalstudies |
+[Academic Writing (AW) (Min. Grade: ¢} | enetaor | |]
+[Professional writing bw) [| |]
+[oalCommoc) ~~ [cowworoze] | |
+Mathoww
+[Analytic Reasoning (AR) [srequeement| [|
+[Natural sciencetabng [|
+[Natural sciences vs) [|
+[History/Social sciences (bs) | [|
+[History/Social sciences Bs) | | | Jcommio7(oc,er20000C e230 ||]
+[Humanities (vo) [| Mcommaso [|]
+[Fumanities(o) [| Meowmso [|]
+[scholarshipinpracticesp) [| |]
+[Scholarshipin Practice (SP nonmajor | | |]
+Big Question BMGT 230 (AR), CIS 200 (AR), QMMS 251 (AR),
+Normally double counted with Distributive Studies PSYC 200 (AR), SOCY 201(AR), or STAT 100 (MA & AR)
+[gQuestongs) —— — [ [ ]
+[BgQuestongs) [| | Meowmsn TT 1]
+Diversity [covmaors20r308 |
+(overlap permitted with Distributive Studies and/or Big Question)
+jcovmzos TT]
+[Understanding Plural soc. wp) [|| Jcomm30s306or307 [| 1]
+Understanding Plural Soc. (UP) or
+Cultural Competency (CC)
+Experiential Learning: optional COMM 330, 385 (SP & IS), 420, 421, 422, 424, 425, 428,
+(overlap permitted with other requirements/courses) 436,448, 449, 455, 459, 461, 462, 469, 470, or 475
+EE A A EE
+1 1 1
+[omnes mco mow |] |
+[University Requirements for Graduation: [|]
+ET (C30 CY SE RO
+[15 ofthe final 0 credits must be camed atthe 300400level | [| [COMM 311,330, 331, 370, 371, 375, 386 (SP), 388, 425,
+[12 upper evel major cregts must be camed atom | [[]  Jll426,0rdss
+[ARHU Requirements for Graduation: |]
+[owerieeiceats | [] Meommsant [|
+[Ar 15s or cauvatene (fappiconie) | [] Mcommsant [|
+[Gobategagemers | [1 [comma [|]
+Jcommsoean: | | |
+]
 
 ## Sample plan (https://drive.google.com/uc?export=download&id=1p7VsEESCucKzHn92KjkI1CwjMIVUpyz3#Public-Relations)
 
-!"#$% &'
-( !("#$% &'
-) !)"#$% &'
-*+,, -./0123455 6789:779;<:=7 >?@A676BCDEFG5HIJ@<KLMN3OP ?KQR<KSTUHMIUMVB?TEFFTQKWVWUV<MXRH<MYMIQ 5KQZB5CEF [RYKIHWMVB[\EFF[HVQ;<]^T;UHKSTUHMIUMVB[TEFF T_C_<MXRH<MYMIQBC`E3455 678;<:77B43E 3455 6=7B6U<MLHQEC`[\6ab >SMUWcM6ddOedd>SMUWcM6ddOedd3455 :a7 [RYKIHWMVB[\EFF TUZ;SK<VZHfHIg<KUWUMBTgEh6FFBI;IOYKi;<E4IMKLLHW;IKSYKi;<<MXRH<MYMIQ @S;jKS>IkKkMYMIQh6 [HVQ;<]^T;UHKSTUHMIUMVB[TEFF3455 :a7 @S;jKS>IkKkMYMIQh:3455 =ddOeddBAMKL^T;U3ZKIkME 3455 :76>SMUWcM6ddOedd 3455 =7el;R<KLLHW;IKSYKi;<<MXRH<MYMIQV ?KQR<KSTUHMIUMAKjB?AEFF 3455 =a63455 ==6 3455 =7a9=7m9;<=783455 =ddOeddBnHcM<VHQ]^oIUSRVH;IE 3455 e8m>SMUWcM6ddOedd >SMUWcM6ddOedd>SMUWcM6ddOedd >SMUWcM6ddOeddg<;pMVVH;IKSD<HWIkBgDE 3455 =bmBTgE3455 =a= 3455 eb=3455 =769=7:9;<=7= >SMUWcM=ddOedd>SMUWcM6ddOedd >SMUWcM6ddOedd>SMUWcM6ddOedd >SMUWcM6ddOedd_;QKS3<MLHQVp;<nMk<MMN6:7q=rU<MLHQVYRVQjM=ddOeddSMcMS
-stuvwxyz{|}xvx~wvxx~zvzux{xuvxu stuvx{|vwy
-stuvwxyz{|}xvx~wvxx~zztux{xuvxu
-stuvwxyz{|}xvx~wvxx~zuux{xuvxu
-¡¢£¤¥¦£¢§¥¨£©ª£«¬¬¢¢¥£®¢¤¯ªª°¨±¥ª®®±¥²ª³´¨£«μ¶£¥£¥ª£³·¢¢ª¨£¥¸¢¢¸®£¡¢¢¹¢¢¯ªª°¨±¥ª³ª«
-!"# $%!&!"#'!"("# )*+$%!&!"#),+$%!&!"#)-+$%!&!"#.#"/0("# 12!"#
-$34#5!6/"7"%.#"/0("#.0#"68099! :7"%.#"/0("#;$34#<=9>3+98099! :7"%"%!"#;##<(""#!#"! !! ?*,@"#"!9"3A
-BCDEFGCHCIJKLMNOGCPFJKQNOREGKCK SREGKC SGCPFJK TGUPCBCDEFGCHCIJKLVNOGCPFJKQWOREGKCK SREGKC SGCPFJK TGUPC BCDEFGCHCIJK SGCPFJK TGUPC
-BCDEFGCHCIJKLXOGCPFJKQVOREGKCK SREGKC SGCPFJK TGUPCBCDEFGCHCIJKLYZXOGCPFJKQVOREGKCK SREGKC SGCPFJK TGUPCBCDEFGCHCIJKL[Z\OGCPFJK SREGKC SGCPFJK TGUPC
-]^__ `abcdaacefdgahijklmniofnpqrshot uvjpwpiwflxynflmlqvzfe{lwwneqj|ofnpqrszot^fj|]emm}s^]t ]^__ d~a_jvs_ht ^qljkknpeqj|mjefflxynflmlqvhqj|piljweqnqrsht eyfjkknpeqj|mjefflxynflmlqvwjvyfj|uinlqiljstjvyfj|uinlqilwsutnwvefueinj|uinlqilwsutnwvefueinj|uinlqilwsut ]^__ `abs^]tefdaas^]tcefdgaymjqnplwst ]^__ d~aymjqnplwst ]^__ `gauie|jfwnnqzfjipilsuztuie|jfwnnqzfjipilsuztqeqmjef _dgashtc]]udaashtc__ud~`shtczu]daashtcu^]da`shtcefuh`aas_hhtnrylwpeqsutnrylwpeqsut ]^__ da`]^__ ga`cgadcefgag]^__ gaqklfwvjqknqrz|yfj|uei}szt ]^__ ga~cgacefgabqklfwvjqknqrz|yfj|uei}szt]y|vyfj|]emlvlqis]]t ]^__ ggacg~suzutcdacd`cddcdcd~cdcgccc~~c~c`cdccbacefb~]^__ gdsztcgacgds]]tc~cefa]^__ gg`]^__ gsuzt]^__ g~`]^__ g~g]^__ b]^__ g
-¡¢£¤ ¥¦§¨©¨
-¢ª «¬
-®¯°°±²³´μ¶²²·¸¹¸μº»¼½μº¾º¿À
-¹ÀÁºÂÃÀÄ²ÅμºÆ½ÀÃ¾¼ÃÀÇººÂμ¿ºÆÂÀÈ°É±Ê´ËÀÌºÍ¿ÂÁÄ²ÅμºÆ½ÀÃ¾¼ÃÀÇººÂμ¿ºÆÂÀÀÌºÄ²²ÎÏ²²ÁºÐºÁ±¶¼ÑÑºμÁºÐºÁ¾ÂÒ´μÅμºÆ½ÀÃ¾¼ÃÀÇººÂμ¿ºÆÂÀÈ°ÉÄÓ¼ÑÑºμÁºÐºÁÅμºÆ½ÀÃ¹ÔÕÈ±ÊÖ´μº»¼½ÐÂÁº¿À×½ËÂÑÑÁ½ÅÂÇÁºØÙÁ´ÇÂÁÚ¿ÛÂÛº¾º¿À
-ÜÝÞÝßàáâãàâãäàåãæçÞàèæääãéÝêäãÞãëìíÞÝíìîãàìßãàíìàïðñòóôõö÷øùø÷ó÷ùùùô  ó÷øó ô÷óóôù ùôùôùô÷ôöù ùôù òóôô÷ôù÷óõ÷÷óô ùôòóôôùö÷óóùó ùôô ùôùõô÷÷øóôøôù!"#$%& '(!) #"%*+!%,!-.(-/+01&2%& '(!) #"%*+!%,!-.(-/+0 3456%7489:6:%;49%<=6%5>?49%5>@%>A:4%748B<%<4C>9D%E6B69>A%FD87>G4B%96H8I9656B<:J
+(OCR text; may contain recognition errors)
+Communication - Public Relations Four Year Academic Plan
+I EF
+lowwemes lowes |
+eww fees |
+cc
+ES
+eco J I EE
+EE CE TS
+ewes lows
+EE
+res rr]
+Ee EE ER
+owweowwmesm owes
+7 = R
+EE
+es
+Toeewwesew owen |
+I = NE
+ewww fess |
+Tew ewww
+ewes leew |
+I EE
+I LL
+Cultural Competence courses may also fulfill Distributive Studies categories.
+Communication - Public Relations
+[Academic Writing (AW) (Min. Grade: cy | ener | [
+[Professional writing Pw) | [|
+[oalcomm(00 —  Jeomwwroo| [|
+Manny 1
+[Analytic Reasoning (AR) [srrequremeni| [|
+[Naturalsciencetabny) | [|
+[Naturalsciencesvs) | [|
+[History/Social Sciences hs) | [|
+[History/Social Sciences (Hs) | | | JMcomm107(00er200(0Cer230 | |]
+[Humanites(io) | Weommaso
+[Humanites(ie) | Weommio |]
+[Scholarshipin Practice (sp) | comms | | |
+[Scholarship in Practice (SPynonmajor | | [|
+Big Question BMGT 230 (AR), CCJS 200 (AR), QMMS 251 (AR),
+Normally double counted with Distributive Studies PSYC 200 (AR), SOCY 201(AR), or STAT 100 (MA & AR)
+[BgQuestons)
+[Bgauestonts) | [| Weommoon TT]
+Diversity cowmsorsozorz0s | [|
+(overlap permitted with Distributive Studies and/or Big Question)
+cowmsos TT]
+[Understanding Plural Soc. (P) | |” | Mcomm3os,3060307 | | |
+ER RE a
+Cultural Competency (CC) COMM 330, 385 (SP & IS), 420, 421, 422, 424, 425,
+(overlap permitted with other requirements/courses) 475
+1
+EE I EN EN
+comaszs sun so mca sons [ [|
+[university Requirements for Graduation: [|
+[es soaess mbemmedmvo | [7] fcowmsst TT
+[[Eor he ral crdts mos become athe S000 | [1] flcommseslse) | | |
+[12 spperiew mor reds must becamed vo | [] |
+[ARHU Requirements for Graduation: | Weowwsst [TT
+[orowerewtoeas 7 Weowwsss
+[oy sear even apotabi ___|[] fcowmars
+[Sowrtwsgomen | ] Weowmiass
+re]

@@ -3,7 +3,7 @@
 // instructors teaching this term, keyed by the Schedule of Classes spelling, so the
 // schedule builder can look up `ratings[section.instructors[i]]` directly.
 
-import { SourceError } from "@superterp/campus-data/http";
+import { SourceError } from "@turboterp/campus-data/http";
 import { isTba, nameTokens } from "./course-grades.ts";
 
 export type ProfessorRating = { name: string; averageRating: number | null };

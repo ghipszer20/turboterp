@@ -8,12 +8,9 @@
     "The plan's three 'ASTR 3/4**' placeholders (three upper-level Astronomy courses) are filled with ASTR406, ASTR421 and ASTR430.",
     "The plan's three 'MATH/STAT 4**' placeholders are filled with MATH416, MATH464 and STAT401."
   ],
-  "credits": {
-    "MATH140": 4, "MATH141": 4, "PHYS275": 2, "ASTR232": 4, "MATH241": 4, "PHYS276": 2,
-    "MATH243": 4, "ASTR310": 4
-  },
+  "credits": { "MATH140": 4, "MATH141": 4, "PHYS275": 2, "ASTR232": 4, "MATH241": 4, "PHYS276": 2, "MATH243": 4, "ASTR310": 4, "CMNS100": 1 },
   "terms": [
-    { "term": "First Year Fall", "courses": ["ASTR130", "MATH140"] },
+    { "term": "First Year Fall", "courses": ["ASTR130", "MATH140", "CMNS100"] },
     { "term": "First Year Spring", "courses": ["ASTR131", "MATH141", "PHYS171", "PHYS275"] },
     { "term": "Second Year Fall", "courses": ["ASTR232", "MATH241", "PHYS272", "PHYS265"] },
     { "term": "Second Year Spring", "courses": ["PHYS273", "PHYS276", "MATH243"] },

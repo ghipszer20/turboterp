@@ -1,0 +1,20 @@
+{
+  "programId": "ensp-major-marine-coastal-management",
+  "source": "https://agnr.umd.edu/sites/agnr.umd.edu/files/files/documents/ENSP%20FourYrPlan_BSOS%20MarineCoastal.pdf",
+  "fetched": "2026-09-28",
+  "official": true,
+  "notes": [
+    "Official four-year plan transcribed with Gen Ed slots left out; unnamed Restricted Elective / Techniques & Methods slots are not encoded, so they are left out too. Calculus filled with MATH140; Statistics with GEOG306; Core groups: GEOG201/211 (Earth Sciences), BSCI160/161 (Biology), CHEM131/132 (Chemistry), AREC240 (Economics); AOSC200/201 and GEOG140 from the plan are kept; a Restricted Elective filled with ENSP340 as the Core's Applied Science and Policy course (ENSP342 is required directly and cannot be double-counted)."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["ENSP101", "GEOG201", "GEOG211", "MATH140", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["ENSP102", "BSCI160", "BSCI161", "AOSC200", "AOSC201"] },
+    { "term": "Sophomore Fall", "courses": ["CHEM131", "CHEM132", "GEOG140", "AREC240"] },
+    { "term": "Sophomore Spring", "courses": ["GEOG306"] },
+    { "term": "Junior Fall", "courses": ["AOSC375", "ENST450", "GEOG373"] },
+    { "term": "Junior Spring", "courses": ["GEOG441", "ENSP342", "GEOG272"] },
+    { "term": "Senior Fall", "courses": ["ENSP386", "ENSP340"] },
+    { "term": "Senior Spring", "courses": ["ENSP400"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}

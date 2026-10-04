@@ -1,7 +1,7 @@
 // Shared requirement building blocks for the Music Major's four degree-level tracks (Bachelor of
 // Arts in Music, Bachelor of Music, Bachelor of Music Education-Instrumental, Bachelor of Music
 // Education-Choral/General) and the BM's own per-area tracks (Jazz, Piano, Theory, Voice, Wind &
-// Percussion -- see each musc-major-bm-<area>-2026-27.ts; Composition's plan is unreadable and
+// Percussion -- see each musc-major-bm-<area>-2026-27.ts; Composition's OCR'd plan is still too garbled to encode, so it stays on the generic BM, and
 // Strings is the BM's generic/degree-level track itself, so neither gets its own file), 2026-27
 // UMD Academic Catalog. Not a program file itself (no `*Meta` export, so the registry generator
 // ignores it); imported by musc-major-*-2026-27.ts, which share the Music Theory sequence, the
@@ -101,8 +101,8 @@ export const muscCommonReviewNotes: string[] = [
     "Wind & Percussion) with their own official four-year plans; five (Jazz, Piano, Theory, Voice, " +
     "Wind & Percussion) are now encoded as their own musc-major-bm-<area>-2026-27.ts tracks because " +
     "their official plans name genuinely different required courses. Strings matches the BM's " +
-    "generic/degree-level track exactly, so it has no separate file. Composition's plan could not be " +
-    "read (garbled fetched text, no recoverable course numbers), so it is not broken out. This BA/BM/ " +
+    "generic/degree-level track exactly, so it has no separate file. Composition's OCR'd plan was " +
+    "re-checked but is still too garbled to read a course list, so it is not broken out. This BA/BM/ " +
     "BME track's own applied-lesson course numbers are taken from one area's official plan (see this " +
     "file's own notes) and used generically -- a real student's applied-lesson numbers vary by " +
     "instrument, but the semester count and credit shape are the same across areas per the catalog.",

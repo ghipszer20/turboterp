@@ -8,23 +8,9 @@
     "Track electives filled from the track's own lists: BIOE404 and BIOE461 for BIOE Foundational I & II; BIOE411, BIOE442, BIOE332 and BIOE474 for BIOE Elective I-IV (any BIOE 3xx+ course not already used for a Foundational or core requirement); CHEM241 for the Breadth Elective (this track's only listed option); BSCI222 for Biological Science Elective I (200-level); BCHM463 for Biological Science Elective II (300-level).",
     "Chemistry lecture sequence taken as CHEM135; Cell Biology & Physiology taken as BSCI331 & BSCI332 -- same defaults as the base plan."
   ],
-  "credits": {
-    "CHEM136": 1,
-    "MATH140": 4,
-    "MATH141": 4,
-    "BIOE121": 1,
-    "CHEM232": 1,
-    "MATH241": 4,
-    "MATH243": 4,
-    "PHYS261": 1,
-    "BIOE221": 1,
-    "BSCI222": 4,
-    "BSCI332": 1,
-    "BIOE340": 4,
-    "BIOE457": 4
-  },
+  "credits": { "CHEM136": 1, "MATH140": 4, "MATH141": 4, "BIOE121": 1, "CHEM232": 1, "MATH241": 4, "MATH243": 4, "PHYS261": 1, "BIOE221": 1, "BSCI222": 4, "BSCI332": 1, "BIOE340": 4, "BIOE457": 4, "UNIV100": 1 },
   "terms": [
-    { "term": "Freshman Fall", "courses": ["ENES100", "CHEM135", "CHEM136", "MATH140"] },
+    { "term": "Freshman Fall", "courses": ["ENES100", "CHEM135", "CHEM136", "MATH140", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["BIOE241", "MATH141", "PHYS161", "BIOE120", "BIOE121"] },
     { "term": "Sophomore Fall", "courses": ["CHEM231", "CHEM232", "MATH241", "MATH243", "PHYS260", "PHYS261", "BIOE221"] },
     { "term": "Sophomore Spring", "courses": ["BIOE232", "ENES102", "BIOE246", "BSCI222", "ENES200"] },

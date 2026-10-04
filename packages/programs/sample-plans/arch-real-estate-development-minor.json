@@ -1,0 +1,14 @@
+{
+  "programId": "arch-real-estate-development-minor",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/architecture-planning-preservation/real-estate-development-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the four required courses; the elective is an open slot with no published list, so none is planned. Flagged in docs/project/owner-review.md."
+  ],
+  "credits": {},
+  "terms": [
+    { "term": "Term 1", "courses": ["ARCH271", "RDEV270"] },
+    { "term": "Term 2", "courses": ["RDEV350", "RDEV450"] }
+  ]
+}

@@ -1,5 +1,6 @@
 export * from "./buildings.ts";
 export * from "./buses.ts";
+export * from "./calendar.ts";
 export * from "./dates.ts";
 export * from "./dining.ts";
 export * from "./hours.ts";

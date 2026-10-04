@@ -4,7 +4,7 @@
 // GPA)". These are tested here, apart from WhatIfView.tsx, because the repo has no component-
 // render test setup (every other Advisor view is covered the same way, at the lib level).
 
-import type { CourseWhatIf } from "@superterp/plan/what-if";
+import type { CourseWhatIf } from "@turboterp/plan/what-if";
 import { describe, expect, it } from "vitest";
 import { addedProgramNotes, completedCreditTotals, gatewayAttemptLimitNote, gatewayRuleText } from "../advisor/what-if-display";
 

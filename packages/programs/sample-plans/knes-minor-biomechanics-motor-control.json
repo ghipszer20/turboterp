@@ -1,0 +1,15 @@
+{
+  "programId": "knes-minor-biomechanics-motor-control",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/public-health/kinesiology/kinesiology-biomechanics-motor-control-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Constructed from the requirements: KNES100 fills the KNES1XX physical activity slot (no specific course is named; a real KNES 1XX course should be confirmed), plus five electives. Flagged in docs/project/owner-review.md."
+  ],
+  "credits": { "KNES100": 1 },
+  "terms": [
+    { "term": "Term 1", "courses": ["KNES100", "KNES226", "KNES265"] },
+    { "term": "Term 2", "courses": ["KNES300", "KNES370"] },
+    { "term": "Term 3", "courses": ["KNES385"] }
+  ]
+}

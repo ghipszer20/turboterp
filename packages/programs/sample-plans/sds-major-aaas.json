@@ -9,7 +9,7 @@
     "African American Studies Track II (9 credits) filled with AAAS310, AAAS320 and AAAS411, all real named electives from the catalog's own Track II list."
   ],
   "terms": [
-    { "term": "Freshman Fall", "courses": ["SDSB123", "STAT100"] },
+    { "term": "Freshman Fall", "courses": ["SDSB123", "STAT100", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["MATH115", "AAAS101"] },
     { "term": "Sophomore Fall", "courses": ["SDSB233", "AAAS210"] },
     { "term": "Sophomore Spring", "courses": ["SDSB326", "INST327"] },
@@ -17,5 +17,6 @@
     { "term": "Junior Spring", "courses": ["INST414", "AAAS310"] },
     { "term": "Senior Fall", "courses": ["INST462", "SDSB340", "AAAS320"] },
     { "term": "Senior Spring", "courses": ["INST447", "SDSI492", "AAAS411"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

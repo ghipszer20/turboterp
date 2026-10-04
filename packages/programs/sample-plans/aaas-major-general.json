@@ -9,9 +9,9 @@
     "AAAS101-or-AAAS202 Foundation choice -> AAAS101; AASP390-or-395 Advanced Methods choice -> AAAS395; the 5 AASP Course of Choice (Upper Level) slots -> AAAS302, AAAS306, AAAS310, AAAS320, AAAS330; Capstone -> AAAS397. All are real, currently-offered AAAS courses not otherwise required by this track, from the Academic Catalog's approved AAAS course list, picked to satisfy the count/level requirement, not for topical fit -- please confirm or substitute an advisor's actual picks.",
     "AAAS399 Research Practicum taken as two separate 1-credit registrations (Lab 1 in Year 2 Fall, Lab 2 in Year 2 Spring), per the checklist grid."
   ],
-  "credits": { "AAAS399": 1 },
+  "credits": { "AAAS399": 1, "UNIV100": 1 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["AAAS100", "AAAS101"] },
+    { "term": "Year 1 Fall", "courses": ["AAAS100", "AAAS101", "UNIV100"] },
     { "term": "Year 1 Spring", "courses": ["AAAS200"] },
     { "term": "Year 2 Fall", "courses": ["AAAS210", "AAAS399"] },
     { "term": "Year 2 Spring", "courses": ["AAAS395", "AAAS399"] },

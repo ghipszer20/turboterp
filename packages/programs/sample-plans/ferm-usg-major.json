@@ -1,0 +1,92 @@
+{
+  "programId": "ferm-usg-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/universities-shady-grove/fermentation-science/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "Shady Grove version: the same CONSTRUCTED plan as ferm-major (identical requirements; the Shady Grove catalog page has no four-year plan). official: false.",
+    "Placeholders filled with real catalog courses: the two AGST3XX slots (Viticulture and Enology; Brewing and Distilling) with AGST333 (Crafty Beverage Crops) and AGST399 (Special Problems in Agricultural Science & Technology); the three NFSC4XX slots (Fermentation Science Laboratory, Cheese and Fermented Dairy Products, Sensory Analysis Lab) with NFSC434, NFSC422 and NFSC450, all named in the catalog's suggested electives or sibling programs. Bio lab filled with BSCI180; PLSC110 for the horticulture/crop choice; NFSC386 taken for 3 credits."
+  ],
+  "credits": {
+    "BSCI180": 1,
+    "BSCI223": 4,
+    "CHEM132": 1,
+    "CHEM232": 1,
+    "CHEM242": 1,
+    "CHEM271": 2,
+    "CHEM272": 2
+  },
+  "terms": [
+    {
+      "term": "Freshman Fall",
+      "courses": [
+        "BSCI170",
+        "BSCI180",
+        "CHEM131",
+        "CHEM132",
+        "NFSC112"
+      ]
+    },
+    {
+      "term": "Freshman Spring",
+      "courses": [
+        "CHEM231",
+        "CHEM232",
+        "MATH120",
+        "PLSC110",
+        "PLSC130"
+      ]
+    },
+    {
+      "term": "Sophomore Fall",
+      "courses": [
+        "BSCI223",
+        "CHEM241",
+        "CHEM242",
+        "ENGL101"
+      ]
+    },
+    {
+      "term": "Sophomore Spring",
+      "courses": [
+        "CHEM271",
+        "CHEM272",
+        "AGST333",
+        "NFSC341"
+      ]
+    },
+    {
+      "term": "Junior Fall",
+      "courses": [
+        "BCHM463",
+        "NFSC421",
+        "NFSC423",
+        "ENGL393"
+      ]
+    },
+    {
+      "term": "Junior Spring",
+      "courses": [
+        "NFSC430",
+        "NFSC431",
+        "AGST399",
+        "NFSC412"
+      ]
+    },
+    {
+      "term": "Senior Fall",
+      "courses": [
+        "NFSC398",
+        "NFSC434",
+        "NFSC386"
+      ]
+    },
+    {
+      "term": "Senior Spring",
+      "courses": [
+        "NFSC422",
+        "NFSC450"
+      ]
+    }
+  ]
+}

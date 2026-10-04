@@ -1,0 +1,14 @@
+{
+  "programId": "lacs-minor",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/latin-american-studies-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog requirements: LACS234, LACS250, LACS486, plus two 300/400 electives from two departments (SPAN458 and LACS369, both named in the sources; the approved list is unpublished). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["LACS234", "LACS250"] },
+    { "term": "Term 2", "courses": ["SPAN458", "LACS369"] },
+    { "term": "Term 3", "courses": ["LACS486"] }
+  ]
+}

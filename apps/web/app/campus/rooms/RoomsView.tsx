@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { formatMinutes } from "@superterp/campus-data/hours";
+import { formatMinutes } from "@turboterp/campus-data/hours";
 import { Chip, Segmented } from "@/components/Segmented";
 import { Card, EmptyState, Section, StatusPill } from "@/components/ui";
 import { roomFitsSize } from "@/lib/rooms";

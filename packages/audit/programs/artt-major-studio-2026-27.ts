@@ -23,13 +23,14 @@ export const arttMajorStudio: Program = {
     "https://drive.google.com/uc?export=download&id=1AKJNiU7YmO-IrnINLLeJ0dM-tcs6ygQL " +
     "(fetched 2026-09-28)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "All majors enter in Track 1 (this program); Track 2 (Advanced Specialization) and Track 3 (Graphic Design) require a competitive portfolio review to enter. The admission gate itself (portfolio review, ~20 students/year, reapplication limits, prerequisite coursework to apply) is not encoded -- it's an admission decision, not a course requirement. See docs/project/owner-review.md.",
     "The catalog's Printmaking area lists a bare 'ARTT340' line (no title) above ARTT341/ARTT343; ARTT340 is not on the Academic Catalog's approved ARTT course list and the four-year plan's own summary of this area ('ARTT 320, 33x, 34x, or 370') never singles it out, so it's treated as a PDF-conversion artifact and left out of the Intermediate distribution's Printmaking area (only ARTT341 and ARTT343 are listed).",
     "'Art Theory' has no separate subject code in the catalog or department plan (ARTT150 'Introduction to Art Theory' is itself an ARTT course); every 'ARTH or Art Theory' elective below is encoded as ARTH or ARTT (300-499), since Art Theory courses are ARTT courses.",
     "Engine gap: the 'ARTH... that satisfies a GenEd Diversity Requirement' qualifier can't be jointly enforced with the ARTH department filter -- CourseFilter's genEd match (used elsewhere for the standalone Gen Ed Diversity requirement) ignores department entirely once set. Encoded as a plain ARTH (200-499) filter; the Diversity qualifier itself is left to the standalone Gen Ed layer.",
-    "Not encoded (engine gaps, one note per the batch instructions): the major's own 2.0 GPA-in-the-major requirement (distinct from the university's cumulative GPA), the plan's residency rules (30 credits at UMD, 15 of the final 30 at the 300-400 level, 12 upper-level major credits at UMD), and the 120-credit graduation minimum.",
+    "Not encoded (engine gaps, one note per the batch instructions): the plan's residency rules (30 credits at UMD, 15 of the final 30 at the 300-400 level, 12 upper-level major credits at UMD), and the 120-credit graduation minimum. Program GPA 2.0 encoded as minGpa.",
   ],
   requirements: [
     { kind: "course", id: "artt100", name: "Two-Dimensional Design Fundamentals", options: ["ARTT100"] },

@@ -8,7 +8,7 @@
     "None of the source's 'PHIL 1xx-4xx', '(Logic)', 'PHIL 3xx-4xx' or 'PHIL 4xx' slots name a specific course number (see reviewNotes on the Program -- the requirement's topic buckets are approximated with disjoint number bands since the engine can't verify topic). All 12 slots are filled with real PHIL course numbers from the Academic Catalog's approved-course list (main session, not the owner's source), matching each requirement's band: PHIL170 (Logic, 100-199); PHIL201, PHIL204, PHIL209, PHIL220, PHIL234, PHIL250 (History/Value Theory/Metaphysics-Epistemology combined bucket, 200-299, 6 courses); PHIL308, PHIL320, PHIL362, PHIL408, PHIL440 (Philosophy Electives, 300-499, 5 courses) -- chosen only to satisfy each bucket's band, not verified against actual course titles for topical fit."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["PHIL170", "PHIL201"] },
+    { "term": "Year 1 Fall", "courses": ["PHIL170", "PHIL201", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["PHIL204"] },
     { "term": "Year 2 Fall", "courses": ["PHIL209", "PHIL220"] },
     { "term": "Year 2 Spring", "courses": ["PHIL234"] },

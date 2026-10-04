@@ -8,14 +8,9 @@
     "The 'PHYS4XY Advanced Physics Elective' slot is filled with PHYS474 (Computational Physics), a real 400-level PHYS elective not otherwise required in this track.",
     "The 'PHYS375, or an approved 400-level BSCI elective' choice is filled with PHYS375, avoiding the need to guess a specific department-approved BSCI elective code."
   ],
-  "credits": {
-    "PHYS170": 1, "PHYS275": 2, "PHYS276": 2,
-    "MATH140": 4, "MATH141": 4, "MATH241": 4, "MATH243": 4,
-    "BSCI171": 1, "CHEM132": 1, "CHEM232": 1, "CHEM242": 1, "CHEM271": 2, "CHEM272": 2,
-    "BSCI330": 4, "PHYS313": 4
-  },
+  "credits": { "PHYS170": 1, "PHYS275": 2, "PHYS276": 2, "MATH140": 4, "MATH141": 4, "MATH241": 4, "MATH243": 4, "BSCI171": 1, "CHEM132": 1, "CHEM232": 1, "CHEM242": 1, "CHEM271": 2, "CHEM272": 2, "BSCI330": 4, "PHYS313": 4, "CMNS100": 1 },
   "terms": [
-    { "term": "Freshman Fall", "courses": ["MATH140", "PHYS170", "BSCI170"] },
+    { "term": "Freshman Fall", "courses": ["MATH140", "PHYS170", "BSCI170", "CMNS100"] },
     { "term": "Freshman Spring", "courses": ["MATH141", "PHYS171", "PHYS275", "BSCI171"] },
     { "term": "Sophomore Fall", "courses": ["MATH241", "PHYS272", "PHYS265", "CHEM131", "CHEM132"] },
     { "term": "Sophomore Spring", "courses": ["MATH243", "PHYS273", "PHYS276", "CHEM271", "CHEM272"] },

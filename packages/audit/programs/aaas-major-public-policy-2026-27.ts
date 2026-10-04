@@ -24,6 +24,7 @@ export const aaasMajorPublicPolicy: Program = {
     "https://fellercenter.umd.edu/sites/fellercenter.umd.edu/files/Major%20Cards/AAAS%20Public%20Policy%20Major%20Checklist%20040824%20writable.pdf " +
     "(Internet Archive copy, fetched 2026-09-28)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "PREFIX CHANGE: both fetched department checklists (dated 2024) use the retired AASP course prefix; the current 2026-27 catalog uses AAAS for the same course numbers. Every AAAS course below also accepts the matching AASP code as an alternative, so a student with an older AASP-coded transcript still gets credit. Flagged for owner confirmation that no course was actually renumbered (not just re-prefixed) along the way.",
@@ -33,7 +34,7 @@ export const aaasMajorPublicPolicy: Program = {
     "PLCY388/PLCY401 (Analytic Component) are PLCY-prefixed, not AAAS/AASP, so no AASP alternative applies to that requirement.",
     "AASP Policy Electives in African American Studies: the catalog names all 6 eligible courses explicitly (AAAS398, AAAS411, AAAS441, AAAS443, AAAS498, AAAS499; choose 3), so -- unlike the General track's un-enumerated Cluster requirement -- this is encoded as a literal 6-course `choose` list, each course paired with its AASP alternative.",
     "Capstone: the catalog names only AAAS397 (Senior Thesis) as a real course number for this 'Choose One' slot (shared with the General track); its other two options are printed as unnumbered placeholders. The checklist's parallel row names 'AASP401: Professional Seminar' or an approved Education Abroad experience, but AAAS401 is not on the Academic Catalog's current AAAS course list -- not encoded (only AAAS397 is), flagged in docs/project/owner-review.md (same issue as the General track).",
-    "Not encoded (engine gaps): the catalog's minimum 2.0 GPA across all courses used to satisfy the major; the checklist's residency rules (15 of the final 30 credits at the 300-400 level, 12 upper-level major credits at UMD, at least 30 credits at UMD, cumulative 2.0 UMD GPA); and the 120-credit graduation minimum.",
+    "Not encoded (engine gaps): Program GPA 2.0 encoded as minGpa. the checklist's residency rules (15 of the final 30 credits at the 300-400 level, 12 upper-level major credits at UMD, at least 30 credits at UMD, cumulative 2.0 UMD GPA); and the 120-credit graduation minimum.",
   ],
   requirements: [
     { kind: "course", id: "aaas100", name: "Introduction to African American and Africana Studies", options: ["AAAS100", "AASP100"] },

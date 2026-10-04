@@ -18,6 +18,7 @@ export const anscMajorScienceProfessional: Program = {
     "https://academiccatalog.umd.edu/undergraduate/colleges-schools/agriculture-natural-resources/animal-sciences/animal-sciences-major/ " +
     "(fetched 2026-09-28); no department page found (see program-sources/animal-sciences-major.md)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     ...anscCommonReviewNotes,

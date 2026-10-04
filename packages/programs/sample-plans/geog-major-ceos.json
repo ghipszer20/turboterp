@@ -9,9 +9,9 @@
     "Nine-credit CEOS technical list (GEOG371, GEOG417, GEOG461, GEOG471, GEOG472): filled with GEOG371, GEOG417, and GEOG461.",
     "Supporting course: MATH120 (the catalog names only MATH120 for this track; no department checklist was available to check for broadening, per the program's reviewNotes). The remaining 4 Supporting Courses (12 credits, advisor-approved, no enumerable list) are left out entirely."
   ],
-  "credits": { "GEOG211": 1, "GEOG212": 1 },
+  "credits": { "GEOG211": 1, "GEOG212": 1, "UNIV100": 1 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["GEOG201", "GEOG211", "MATH120"] },
+    { "term": "Year 1 Fall", "courses": ["GEOG201", "GEOG211", "MATH120", "UNIV100"] },
     { "term": "Year 1 Spring", "courses": ["GEOG202", "GEOG212"] },
     { "term": "Year 2 Fall", "courses": ["GEOG272", "GEOG330"] },
     { "term": "Year 2 Spring", "courses": ["GEOG276", "GEOG301"] },

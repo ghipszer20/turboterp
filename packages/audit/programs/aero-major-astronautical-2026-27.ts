@@ -23,6 +23,7 @@ export const aeroMajorAstronautical: Program = {
     "(fetched 2026-09-28); official Fall 2026 graduation plan, " +
     "https://eng.umd.edu/sites/clark.umd.edu/files/resource_documents/aerospace_fall_2026_gradplan.pdf (fetched 2026-09-28)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Department-vs-catalog-adjacent gap (not really a disagreement -- the department's Bachelor of Science landing page describes the curriculum only qualitatively, by year, with no course codes and rough semester groupings that don't cleanly map course-by-course): the catalog's course-by-course table (itself hard to parse -- an OCR-style export with footnote markers fused onto course codes, e.g. 'ENES1001', 'ENAE2222', 'MATH2433') and the official Fall 2026 graduation plan agree exactly with each other on every course code and its placement, so those two are used for the concrete requirements below.",
@@ -31,7 +32,8 @@ export const aeroMajorAstronautical: Program = {
     "Students must select a track (catalog: 'Students must select a track. All courses in either the Aeronautical or Astronautical track must be completed.'). Encoded as a separate track program, aero-major-aeronautical, sharing the major key 'aero'; the two 'ENAE Elective' slots exclude this track's own 4 required courses (404, 457, 493, 494) from counting twice, per the catalog footnote that ENAE398H or 'any 400 level ENAE course not required for the student's specific track' fills those slots.",
     "The two 'ENAE Elective' slots (catalog footnote 4) are encoded as `choose` count 2 from any ENAE course numbered 400-499 (excluding this track's own required 400-levels) plus ENAE398H by name, since the catalog's own list of 'recently offered' electives (ENAE398, ENAE415, ENAE425, ENAE471, ENAE488, ENAE499) is illustrative, not exhaustive ('The following courses have recently been offered as electives'), and any qualifying 400-level ENAE course is allowed by the requirement text itself.",
     "Not encoded (approved elective with no list, flagged in docs/project/owner-review.md): the 'Technical Elective' (catalog footnote 5: 'A 300/400 level course in Engineering, Mathematics, or Physical Sciences that has been approved for this purpose by the Undergraduate Program Director'). No enumerable course list exists in any source; the audit engine has no 'UPD-approved' concept.",
-    "Not encoded (engine gap, both sources agree): the 2.00 cumulative UMD GPA requirement, the 2.0 minimum GPA for all major/minor/certificate requirements, and the minimum-grade requirements in key prerequisite courses referenced via the college-wide engineering page. The audit only checks per-course minGrade (C-).",
+    "Program GPA 2.0 encoded as minGpa.",
+    "Not encoded (engine gap, both sources agree): the 2.00 cumulative UMD GPA requirement and the minimum-grade requirements in key prerequisite courses referenced via the college-wide engineering page. The audit only checks per-course minGrade (C-).",
     "Not encoded (engine gap): residency rules -- final 30 credits at UMD, 15 of the final 30 credits at the 300-400 level, 12 of the final 30 credits as upper-level major coursework. The audit engine has no residency/where-taken concept. Manual check.",
     "Not encoded (engine gap): the 124-credit total-credit minimum. The audit checks individual requirements, not the program's overall credit total.",
   ],

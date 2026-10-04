@@ -8,7 +8,7 @@
     "Arts Specialization filled with AMST260, ARCH418J, ARTT255, ARTT370, COMM371, COMM373, all real courses from the Academic Catalog's own Arts Specialization list."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["HCAI100", "HCAI120"] },
+    { "term": "Year 1 Fall", "courses": ["HCAI100", "HCAI120", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["HCAI121", "WGSS115"] },
     { "term": "Year 2 Fall", "courses": ["HCAI200", "INST204"] },
     { "term": "Year 2 Spring", "courses": ["PHIL211", "AMST260"] },

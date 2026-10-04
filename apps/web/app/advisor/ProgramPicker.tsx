@@ -4,10 +4,10 @@
 // and college. Reads registry metadata only; no Program's requirements load here.
 
 import { useState } from "react";
-import type { ProgramKind } from "@superterp/programs";
-import { collegeName } from "@superterp/plan/credit-caps";
+import type { ProgramKind } from "@turboterp/programs";
+import { collegeName } from "@turboterp/plan/credit-caps";
 import { Segmented } from "@/components/Segmented";
-import { kindTabs, pickerGroups } from "@/lib/advisor/program-picker";
+import { kindTabs, optionState, pickerGroups } from "@/lib/advisor/program-picker";
 import { PROGRAM_OPTIONS, type ProgramOption } from "@/lib/advisor/programs";
 import styles from "./advisor.module.css";
 
@@ -16,8 +16,14 @@ const TABS = kindTabs(PROGRAM_OPTIONS);
 
 const title = (o: ProgramOption) => o.name.replace(/ \(.*\)$/, "");
 
+/** ?q=astronomy starts the picker searching (a deep link; also used by screenshots). */
+function initialQuery(): string {
+  if (typeof window === "undefined") return "";
+  return new URLSearchParams(location.search).get("q") ?? "";
+}
+
 export function ProgramPicker({ label, selected, onToggle }: { label: string; selected: string[]; onToggle: (id: string) => void }) {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(initialQuery);
   const [kind, setKind] = useState<ProgramKind>("major");
   const groups = pickerGroups(PROGRAM_OPTIONS, { kind, query });
   const searching = query.trim() !== "";
@@ -54,16 +60,24 @@ export function ProgramPicker({ label, selected, onToggle }: { label: string; se
           <h3 className={styles.pickerGroupTitle}>{g.title}</h3>
           <div className={styles.optionList} role="group" aria-label={`${label}: ${g.title}`}>
             {g.options.map((o) => {
-              const on = selected.includes(o.id);
-              const sub = o.track ? `${o.track} track` : KIND_NAME[o.kind];
+              const { on, disabled, blocked } = optionState(o, selected);
+              const base = o.track ? `${o.track} track` : KIND_NAME[o.kind];
+              const sub = blocked ?? (searching ? `${base} · ${collegeName(o.college)}` : base);
               return (
-                <button key={o.id} type="button" className={styles.option} aria-pressed={on} onClick={() => onToggle(o.id)}>
+                <button
+                  key={o.id}
+                  type="button"
+                  className={styles.option}
+                  aria-pressed={on}
+                  aria-disabled={disabled || undefined}
+                  onClick={disabled ? undefined : () => onToggle(o.id)}
+                >
                   <span className={styles.optionCheck} aria-hidden="true">
                     {on ? "✓" : ""}
                   </span>
                   <span className={styles.optionText}>
                     <span className={styles.optionTitle}>{title(o)}</span>
-                    <span className={styles.optionSub}>{searching ? `${sub} · ${collegeName(o.college)}` : sub}</span>
+                    <span className={styles.optionSub}>{sub}</span>
                   </span>
                   {!o.verified ? (
                     <span className={styles.unverified} title="The owner hasn't reviewed these requirements against the catalog yet.">

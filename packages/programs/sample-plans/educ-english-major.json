@@ -1,0 +1,21 @@
+{
+  "programId": "educ-english-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/english-education-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no readable Secondary English Education 4-year plan in the fetched sources. Constructed from the catalog requirement table: ENGL subject-area courses first, pre-professional education courses next, the professional block and internship last. Gen Ed slots are left out. Flagged in docs/project/owner-review.md.",
+    "Element 2 (no course-to-period list in the source) filled with ENGL201, ENGL305, ENGL316, ENGL410, ENGL433; Element 3 with ENGL222, ENGL318, ENGL360; Element 4 with ENGL331, ENGL402, ENGL420, ENGL412; all real ENGL courses from the Academic Catalog list used by the English major's plans."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["ENGL201", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["ENGL222", "TLPL250"] },
+    { "term": "Sophomore Fall", "courses": ["ENGL301", "ENGL305", "COMM230"] },
+    { "term": "Sophomore Spring", "courses": ["ENGL316", "ENGL318", "EDHD413"] },
+    { "term": "Junior Fall", "courses": ["ENGL410", "ENGL360", "EDHD426", "TLPL488"] },
+    { "term": "Junior Spring", "courses": ["ENGL331", "ENGL402", "TLPL457", "TLPL300"] },
+    { "term": "Senior Fall", "courses": ["ENGL420", "ENGL412", "TLPL451", "TLPL452", "TLPL456", "TLPL479"] },
+    { "term": "Senior Spring", "courses": ["ENGL433", "TLPL478", "TLPL489"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}

@@ -1,14 +1,15 @@
 "use client";
 
 // The degree audit, per program, the CS gateway, and pre-professional Tracks. Reads the debounced
-// Analysis; never imports @superterp/audit or @superterp/tracks as a value (only types), so HiGHS
+// Analysis; never imports @turboterp/audit or @turboterp/tracks as a value (only types), so HiGHS
 // stays out of this file's bundle — it's already loaded by lib/advisor/analysis.ts, which the app
 // code-splits with import(). A Track's own data (name, categories, disclaimer, milestones) comes
 // through as a value on analysis.result.tracks[].track, which isn't an import and so is fine.
 
-import type { GatewayCourseStatus, GatewayOverallStatus, RequirementResult } from "@superterp/audit";
-import type { MilestoneTiming } from "@superterp/tracks";
+import type { GatewayCourseStatus, GatewayOverallStatus, Requirement, RequirementResult } from "@turboterp/audit";
+import type { MilestoneTiming } from "@turboterp/tracks";
 import type { AdvisorPlan } from "@/lib/advisor/plan-state";
+import { blockedNotice } from "@/lib/advisor/programs";
 import { showsScienceGpa } from "@/lib/advisor/tracks";
 import { gatewayAttemptLimitNote } from "@/lib/advisor/what-if-display";
 import type { AnalysisState, OpenCourse } from "./AdvisorApp";
@@ -16,6 +17,32 @@ import { dispatchPlan } from "./store";
 import styles from "./advisor.module.css";
 
 const REQ_STATUS: Record<RequirementResult["status"], string> = { satisfied: "Satisfied", partial: "In progress", missing: "Missing" };
+
+type OpenSlot = Extract<Requirement, { kind: "openSlot" }>;
+
+/** An Open Slot ("from an approved list" that isn't published): the student ticks it once their
+ * advisor confirms it; the program isn't complete until then. The key matches @turboterp/audit's slotKey. */
+function OpenSlotRow({ programId, slot, confirmed }: { programId: string; slot: OpenSlot; confirmed: boolean }) {
+  const key = `${programId}/${slot.id}`;
+  return (
+    <li className={styles.reqRow}>
+      <div className={styles.reqHead}>
+        <span className={styles.reqName}>
+          {slot.name}
+          {slot.credits !== undefined ? <span className={styles.slotCredits}> · {slot.credits} credits</span> : null}
+        </span>
+        <span className={styles.reqStatus} data-status={confirmed ? "satisfied" : "confirm"}>
+          {confirmed ? "Confirmed" : "Confirm with your advisor"}
+        </span>
+      </div>
+      {slot.note ? <p className={styles.reqGap}>{slot.note}</p> : null}
+      <label className={styles.slotCheck} data-checked={confirmed || undefined}>
+        <input type="checkbox" checked={confirmed} onChange={() => dispatchPlan({ type: "toggle-slot", key })} />
+        <span>My advisor confirmed my courses for this</span>
+      </label>
+    </li>
+  );
+}
 
 export function AuditView({
   plan,
@@ -47,10 +74,13 @@ export function AuditView({
             {!audit.program.verified ? <span className={styles.unverified}>Unverified</span> : null}
           </div>
           <p className={styles.cardNote}>
-            {audit.satisfied} of {audit.requirements.length} requirements met
+            {blockedNotice(audit.program.id, plan.programs) ?? `${audit.satisfied} of ${audit.total} requirements met`}
           </p>
           <ul className={styles.reqList}>
-            {audit.requirements.map(({ requirement, result, gap }) => (
+            {audit.requirements.map(({ requirement, result, gap }) =>
+              requirement.kind === "openSlot" ? (
+                <OpenSlotRow key={requirement.id} programId={audit.program.id} slot={requirement} confirmed={result.status === "satisfied"} />
+              ) : (
               <li key={requirement.id} className={styles.reqRow}>
                 <div className={styles.reqHead}>
                   <span className={styles.reqName}>{requirement.name}</span>
@@ -58,6 +88,7 @@ export function AuditView({
                     {REQ_STATUS[result.status]}
                   </span>
                 </div>
+                <GradeNotes result={result} />
                 {result.assigned.length > 0 ? (
                   <p className={styles.reqAssigned}>
                     Counted: <CourseChips ids={result.assigned} onOpenCourse={onOpenCourse} />
@@ -72,10 +103,23 @@ export function AuditView({
                         For example: <CourseChips ids={gap.suggestions} onOpenCourse={onOpenCourse} />
                       </>
                     ) : null}
+                    {gap.note ? ` ${gap.note}` : null}
                   </p>
                 ) : null}
               </li>
-            ))}
+              ),
+            )}
+            {audit.gpa ? (
+              <li className={styles.reqRow}>
+                <div className={styles.reqHead}>
+                  <span className={styles.reqName}>{audit.gpa.name}</span>
+                  <span className={styles.reqStatus} data-status={audit.gpa.status}>
+                    {REQ_STATUS[audit.gpa.status]}
+                  </span>
+                </div>
+                <GradeNotes result={audit.gpa} />
+              </li>
+            ) : null}
           </ul>
         </section>
       ))}
@@ -104,7 +148,7 @@ export function AuditView({
             ))}
           </ul>
           <label className={styles.field}>
-            <span className={styles.fieldLabel}>Cumulative UMD GPA</span>
+            <span className={styles.fieldLabel}>Cumulative UMD GPA (a transcript import fills this in from your transcript; you can edit it)</span>
             <input
               className={styles.input}
               type="number"
@@ -159,6 +203,7 @@ export function AuditView({
                               {REQ_STATUS[result.status]}
                             </span>
                           </div>
+                          <GradeNotes result={result} />
                           {result.assigned.length > 0 ? (
                             <p className={styles.reqAssigned}>
                               Counted: <CourseChips ids={result.assigned} onOpenCourse={onOpenCourse} />
@@ -173,6 +218,7 @@ export function AuditView({
                                   For example: <CourseChips ids={gap.suggestions} onOpenCourse={onOpenCourse} />
                                 </>
                               ) : null}
+                              {gap.note ? ` ${gap.note}` : null}
                             </p>
                           ) : null}
                         </li>
@@ -189,6 +235,13 @@ export function AuditView({
                 {showsScienceGpa(track) && scienceGpa.gpa !== null ? (
                   <p className={styles.cardNote}>
                     Science GPA (BCPM): {scienceGpa.gpa.toFixed(2)} ({scienceGpa.credits} credits)
+                  </p>
+                ) : null}
+                {showsScienceGpa(track) && scienceGpa.gpa !== null ? (
+                  <p className={styles.cardNote}>
+                    {BCPM_CATEGORIES.filter((k) => scienceGpa.byCategory[k].gpa !== null)
+                      .map((k) => `${BCPM_LABEL[k]} ${scienceGpa.byCategory[k].gpa!.toFixed(2)}`)
+                      .join(" · ")}
                   </p>
                 ) : null}
 
@@ -241,6 +294,28 @@ function milestoneBuckets(milestones: MilestoneTiming[], termOrder: string[]): {
   if (other.length) buckets.unshift({ label: "Not on a planned term", items: other.sort((a, b) => a.year - b.year) });
   if (after.length) buckets.push({ label: "After your last planned term", items: after.sort((a, b) => a.year - b.year) });
   return buckets;
+}
+
+const BCPM_CATEGORIES = ["biology", "chemistry", "physics", "math"] as const;
+const BCPM_LABEL = { biology: "Biology", chemistry: "Chemistry", physics: "Physics", math: "Math" };
+
+/** Grade notes on a requirement: completed courses that miss its minimum grade, and its minimum-GPA check. */
+function GradeNotes({ result }: { result: RequirementResult }) {
+  return (
+    <>
+      {result.belowMinimum?.map((b) => (
+        <p key={b.course} className={styles.reqGap}>
+          {b.course} ({b.grade}) doesn&apos;t count: this requirement needs {b.minGrade} or better.
+        </p>
+      ))}
+      {result.gpa ? (
+        <p className={styles.reqGap} data-severity={result.gpa.value < result.gpa.min ? "warning" : undefined}>
+          GPA in these courses: {result.gpa.value.toFixed(2)} (needs {result.gpa.min.toFixed(1)} or higher).
+          {result.gpa.atRisk ? " Below the minimum so far: the courses you still have planned need to raise it." : ""}
+        </p>
+      ) : null}
+    </>
+  );
 }
 
 function CourseChips({ ids, onOpenCourse }: { ids: string[]; onOpenCourse: (c: OpenCourse) => void }) {

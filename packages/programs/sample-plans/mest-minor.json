@@ -1,0 +1,12 @@
+{
+  "programId": "mest-minor",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/history/middle-eastern-studies-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor, and the sources name no qualifying courses except HIST120 (the catalog's own example). The plan holds only HIST120; the rest are open slots. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["HIST120"] }
+  ]
+}

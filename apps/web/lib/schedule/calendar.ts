@@ -2,7 +2,7 @@
 // editor: one time scale with hour labels, blocks per weekday (with side-by-side lanes when
 // classes overlap), and label fitting so text is hidden rather than clipped.
 
-import type { Meeting, Weekday } from "@superterp/course-data/schedules";
+import type { Meeting, Weekday } from "@turboterp/course-data/schedules";
 
 export const WEEKDAYS: readonly Weekday[] = ["M", "Tu", "W", "Th", "F"];
 export const DAY_SHORT: Record<Weekday, string> = { M: "MON", Tu: "TUE", W: "WED", Th: "THU", F: "FRI" };
@@ -122,4 +122,9 @@ export function labelFit(height: number, metrics: { line: number; pad: number })
   if (height >= 2 * metrics.line + metrics.pad) return "two";
   if (height >= metrics.line + metrics.pad) return "one";
   return "none";
+}
+
+/** Label lines for a block on a calendar of this size: the gallery's mini calendars show only color (owner, 2026-09-29). */
+export function blockLines(size: "mini" | "zoom" | "large", height: number, metrics: { line: number; pad: number }): "two" | "one" | "none" {
+  return size === "mini" ? "none" : labelFit(height, metrics);
 }

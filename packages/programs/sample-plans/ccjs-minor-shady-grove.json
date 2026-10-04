@@ -1,0 +1,27 @@
+{
+  "programId": "ccjs-minor-shady-grove",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/universities-shady-grove/behavioral-social-sciences/criminal-justice-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: CCJS100, two of CCJS340/342/345, three electives. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    {
+      "term": "Term 1",
+      "courses": [
+        "CCJS100",
+        "CCJS340",
+        "CCJS342"
+      ]
+    },
+    {
+      "term": "Term 2",
+      "courses": [
+        "CCJS310",
+        "CCJS330",
+        "CCJS360"
+      ]
+    }
+  ]
+}

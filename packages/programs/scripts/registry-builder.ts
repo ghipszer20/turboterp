@@ -17,8 +17,10 @@ export type BuiltEntry = {
   major?: string;
   track?: string;
   sources: { catalog?: string; department?: string };
+  notOpenTo?: { programs?: string[]; colleges?: string[]; reason: string };
+  onlyOpenTo?: { programs?: string[]; colleges?: string[]; reason: string };
   /** The literal specifier the generated file's `import()` must use, so the bundler can still
-   * split this program into its own chunk -- e.g. "@superterp/audit/programs/foo-2026-27.ts". */
+   * split this program into its own chunk -- e.g. "@turboterp/audit/programs/foo-2026-27.ts". */
   importPath: string;
   /** The Program's export name in that module, e.g. "fooMajor". */
   exportName: string;
@@ -27,8 +29,8 @@ export type BuiltEntry = {
 const repoRoot = fileURLToPath(new URL("../../..", import.meta.url));
 
 const SOURCES = [
-  { dir: repoRoot + "packages/audit/programs", importPrefix: "@superterp/audit/programs/" },
-  { dir: repoRoot + "packages/catalog/special-programs", importPrefix: "@superterp/catalog/special-programs/" },
+  { dir: repoRoot + "packages/audit/programs", importPrefix: "@turboterp/audit/programs/" },
+  { dir: repoRoot + "packages/catalog/special-programs", importPrefix: "@turboterp/catalog/special-programs/" },
 ];
 
 const KIND_RANK: Record<BuiltEntry["kind"], number> = { major: 0, minor: 1, certificate: 2, special: 3 };
@@ -62,6 +64,8 @@ async function collectEntries(): Promise<BuiltEntry[]> {
           major: meta.major as string | undefined,
           track: meta.track as string | undefined,
           sources: meta.sources as { catalog?: string; department?: string },
+          ...(meta.notOpenTo !== undefined ? { notOpenTo: meta.notOpenTo as BuiltEntry["notOpenTo"] } : {}),
+          ...(meta.onlyOpenTo !== undefined ? { onlyOpenTo: meta.onlyOpenTo as BuiltEntry["onlyOpenTo"] } : {}),
           importPath: `${importPrefix}${file}`,
           exportName: programKey,
         });

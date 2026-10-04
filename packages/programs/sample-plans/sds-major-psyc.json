@@ -9,9 +9,9 @@
     "PSYC300 is 4 credits (catalog table); noted in the credits map below.",
     "Track II Electives (9 credits, 300-400 PSYC) filled with PSYC301, PSYC302 and PSYC303, real PSYC courses not otherwise required by this track."
   ],
-  "credits": { "PSYC300": 4 },
+  "credits": { "PSYC300": 4, "UNIV100": 1 },
   "terms": [
-    { "term": "Freshman Fall", "courses": ["SDSB123", "STAT100"] },
+    { "term": "Freshman Fall", "courses": ["SDSB123", "STAT100", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["MATH120", "PSYC100"] },
     { "term": "Sophomore Fall", "courses": ["SDSB233", "PSYC200"] },
     { "term": "Sophomore Spring", "courses": ["SDSB326", "INST327"] },

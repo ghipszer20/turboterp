@@ -6,8 +6,8 @@ import { Segmented } from "@/components/Segmented";
 import { AUTOMATIC_PROGRAMS, CATALOG_YEARS, collegeOf, degreeModeOf, toggleProgram } from "@/lib/advisor/programs";
 import { defaultTerms, startTermOptions } from "@/lib/advisor/terms";
 import { examMilestone, toggleTrack, TRACKS, type Track } from "@/lib/advisor/tracks";
-import { COLLEGES, type College } from "@superterp/plan/credit-caps";
-import type { Milestone } from "@superterp/tracks/list";
+import { COLLEGES, type College } from "@turboterp/plan/credit-caps";
+import type { Milestone } from "@turboterp/tracks/list";
 import styles from "./advisor.module.css";
 import { ProgramPicker } from "./ProgramPicker";
 
@@ -23,6 +23,7 @@ export function SetupView({ plan, onDone, onCancel }: { plan: AdvisorPlan | null
   const [catalogYear, setCatalogYear] = useState<string>(plan?.catalogYear ?? CATALOG_YEARS[0]);
   const [startTerm, setStartTerm] = useState(plan?.startTerm ?? `Fall ${thisYear}`);
   const [college, setCollege] = useState<College>(plan?.college ?? collegeOf(plan?.programs ?? []) ?? COLLEGES[0]!.code);
+  const [transfer, setTransfer] = useState(plan?.entry === "transfer");
   const [tracks, setTracks] = useState<string[]>(plan?.tracks ?? []);
   const [degreeChoice, setDegreeChoice] = useState<DegreeChoice | undefined>(plan?.degreeMode);
   const degreeMode = degreeModeOf(programs, degreeChoice);
@@ -32,7 +33,9 @@ export function SetupView({ plan, onDone, onCancel }: { plan: AdvisorPlan | null
 
   const done = () => {
     const setup = { programs, catalogYear, startTerm, tracks, examTerms, expectedGrades, college, ...(degreeMode ? { degreeMode } : {}) };
-    onDone(plan ? planReducer(plan, { type: "setup", ...setup }) : newPlan(setup));
+    const entry = transfer ? ("transfer" as const) : ("freshman" as const);
+    const next = plan ? planReducer(plan, { type: "setup", ...setup, entry }) : newPlan(setup);
+    onDone(!plan && transfer ? { ...next, entry } : next);
   };
 
   const setExamTerm = (milestoneId: string, term: string) =>
@@ -123,6 +126,10 @@ export function SetupView({ plan, onDone, onCancel }: { plan: AdvisorPlan | null
             </select>
           </label>
         </div>
+        <label className={styles.checkRow}>
+          <input type="checkbox" checked={transfer} onChange={(e) => setTransfer(e.target.checked)} />
+          <span>I started at UMD as a transfer student</span>
+        </label>
         <p className={styles.panelNote}>
           The catalog year is usually the year you started or declared. Only 2026–27 is available so far. Your college sets
           how many credits you can take in a term before you need approval to go over.

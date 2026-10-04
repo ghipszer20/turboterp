@@ -10,7 +10,7 @@
     "AREC/PLSC/LARC Restricted Elective filled with LARC160 and PLSC303. AGST Internship or Elective (6 credits) filled with two separate AGST489 enrollments, matching the footnote's 'two internships for a total of 6 credits' option."
   ],
   "terms": [
-    { "term": "Freshman Fall", "courses": ["CHEM131", "PLSC201", "ANSC101", "ANSC103", "TLPL101"] },
+    { "term": "Freshman Fall", "courses": ["CHEM131", "PLSC201", "ANSC101", "ANSC103", "TLPL101", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["CHEM132", "PLSC206", "MATH113", "TLPL102"] },
     { "term": "Sophomore Fall", "courses": ["PLSC275", "ENST200", "AREC250", "BSCI160"] },
     { "term": "Sophomore Spring", "courses": ["BSCI487", "BSCI180", "INAG250"] },
@@ -18,5 +18,6 @@
     { "term": "Junior Spring", "courses": ["PLSC453", "PLSC112", "PLSC113", "PLSC115"] },
     { "term": "Senior Fall", "courses": ["AGST442", "AGST440", "TLPL488", "TLPL414", "ANSC255"] },
     { "term": "Senior Spring", "courses": ["BSCI121", "INAG252", "LARC160", "PLSC303", "AGST489", "AGST489"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

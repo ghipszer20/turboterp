@@ -1,7 +1,7 @@
-import type { Requirement, RequirementResult, StudentCourse } from "@superterp/audit";
-import { cmscMajor } from "@superterp/audit/programs/cmsc-major-2026-27.ts";
-import { genEd } from "@superterp/audit/programs/gen-ed-2026-27.ts";
-import { mathMajorApplied } from "@superterp/audit/programs/math-major-applied-2026-27.ts";
+import type { Requirement, RequirementResult, StudentCourse } from "@turboterp/audit";
+import { cmscMajor } from "@turboterp/audit/programs/cmsc-major-2026-27.ts";
+import { genEd } from "@turboterp/audit/programs/gen-ed-2026-27.ts";
+import { mathMajorApplied } from "@turboterp/audit/programs/math-major-applied-2026-27.ts";
 import { describe, expect, it } from "vitest";
 import { describeGap, filterText, genEdName, prerequisiteText } from "../advisor/requirements";
 
@@ -165,5 +165,19 @@ describe("prerequisiteText", () => {
     expect(prerequisiteText({ kind: "manual", text: "Permission of CMNS-Mathematics department." })).toBe(
       "Permission of CMNS-Mathematics department.",
     );
+  });
+});
+
+describe("describeGap: advisor approval", () => {
+  const listed: Requirement = { kind: "course", id: "leadership-elective", name: "Leadership Elective", options: ["ENES317", "ENES472"] };
+  const ctx = { courses: taken(), catalog: CATALOG };
+
+  it("says other courses may count when the requirement's list isn't closed", () => {
+    const open: Requirement = { ...listed, advisorMayApprove: true };
+    expect(describeGap(open, result(open, "missing"), ctx)!.note).toBe("Other courses may count with advisor approval.");
+  });
+
+  it("says nothing extra for a closed list", () => {
+    expect(describeGap(listed, result(listed, "missing"), ctx)!.note).toBeUndefined();
   });
 });

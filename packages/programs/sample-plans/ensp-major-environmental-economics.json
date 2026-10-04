@@ -1,0 +1,23 @@
+{
+  "programId": "ensp-major-environmental-economics",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/agriculture-natural-resources/environmental-science-policy/environmental-science-policy-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No published 4-year plan exists for this concentration: only the seven BSOS/CMNS concentrations have an official AGNR-hosted PDF plan. This plan is CONSTRUCTED from the catalog's own requirement rows instead (docs/project/owner-review.md flags this). Gen Ed courses are left out; only the major is audited.",
+    "Applied Science and Policy filled with ENSP330; Calculus filled with MATH140; Statistics filled with GEOG306.",
+    "'Four of five groups' filled with: Biology (BSCI160 & BSCI180), Chemistry (CHEM131 & CHEM132), Earth Sciences (ENST200), Geography (GEOG130).",
+    "Economics Foundation filled with Track 2 only (ECON201, ECON230, AREC326, and MATH121 for the 'select one' line); Track 1's courses (MATH141, ECON321/STAT400, standalone ECON326) are deliberately absent so the plan exercises exactly one branch of the `sets` choice.",
+    "The two Restricted Electives blocks (inside and outside Economics) are not in this plan because they are not encoded in the Program (see reviewNotes and docs/project/owner-review.md): the catalog names no course, department or area-specific course for either block."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["ENSP101", "MATH140", "CHEM131", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["ENSP102", "CHEM132", "ECON201"] },
+    { "term": "Sophomore Fall", "courses": ["BSCI160", "BSCI180", "ENST200"] },
+    { "term": "Sophomore Spring", "courses": ["GEOG130", "ECON230", "MATH121"] },
+    { "term": "Junior Fall", "courses": ["AREC326", "GEOG306"] },
+    { "term": "Junior Spring", "courses": ["ENSP330"] },
+    { "term": "Senior Fall", "courses": ["ENSP400"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}

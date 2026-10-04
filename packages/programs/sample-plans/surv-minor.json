@@ -1,0 +1,15 @@
+{
+  "programId": "surv-minor",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/behavioral-social-sciences/survey-methodology-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: STAT400 and STAT401 for statistics, SURV400, SURV630, SURV625, plus one 1-2 credit 600-level SURV course. The sources name no specific 1-2 credit course; SURV616 is a placeholder (credits unverified). Flagged in docs/project/owner-review.md."
+  ],
+  "credits": { "SURV616": 1 },
+  "terms": [
+    { "term": "Term 1", "courses": ["STAT400"] },
+    { "term": "Term 2", "courses": ["STAT401", "SURV400"] },
+    { "term": "Term 3", "courses": ["SURV630", "SURV625", "SURV616"] }
+  ]
+}

@@ -17,12 +17,13 @@ export const clasMajorLatinGreek: Program = {
     "College of Arts and Humanities, official Classics - Latin & Greek Four Year Academic Plan (department source), " +
     "https://drive.google.com/uc?export=download&id=1Go4fyz59qBM5GgDt7xvqJXxnuWw3b3WO (fetched 2026-09-28)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "The catalog requires 18 credits in ONE of LATN/GREK (primary) and 12 in the OTHER (secondary), a choice the plan itself leaves generic ('LATN or GREK'). Engine gap: there is no requirement kind that expresses 'reach 18 in exactly one of two departments, 12 in the other' as a disjunction of credit totals. Encoded instead as three requirements: an overlay minimum of 12 credits in LATN, an overlay minimum of 12 credits in GREK, and a consuming 30-credit total across LATN+GREK -- together these force both languages to appear with at least 12 credits each and 30 combined (which arithmetically forces one language to reach 18), without pinning down which language is primary. Flagged in docs/project/owner-review.md.",
     "Footnote 1 ('students with no previous training in the second language may count introductory level courses as part of the 12-hour requirement') is read as: the 12-credit secondary-language minimum has no level floor -- already true of the department + no-minNumber filter used here.",
     "Supporting courses (9 credits, footnote 2: 'For example, CLAS170, HIST110, and a 3xx- or 4xx-level course in Greek or Roman history') are encoded as CLAS/HIST/ARTH at any level, matching Option A's broader 'related fields such as HIST and ARTH' wording (Option B's own footnote names only CLAS and HIST examples, but doesn't rule out ARTH); the sample plan uses only the two courses actually named in the source (CLAS170, HIST110) plus one more real CLAS course, since no specific 'Greek or Roman history' course number is named or on an approved list.",
-    "Known engine gaps (one note): the major's 2.0 GPA-in-the-major requirement, the College of Arts and Humanities' overall 39 3xx-or-4xx-level-credit requirement (spans the whole degree, not just this major), residency rules, and the 120-credit graduation minimum are not encoded.",
+    "Known engine gaps (one note): the College of Arts and Humanities' overall 39 3xx-or-4xx-level-credit requirement (spans the whole degree, not just this major), residency rules, and the 120-credit graduation minimum are not encoded. Program GPA 2.0 encoded as minGpa.",
   ],
   requirements: [
     {

@@ -3,7 +3,7 @@
 // the College's official Health and Science Communication Four Year Academic Plan (department source),
 // https://drive.google.com/uc?export=download&id=1ETspCX6Xy8feCY6kQlAhVTYc_XhYKWmS (fetched 2026-09-28).
 // Owner ruling (docs/project/rulings.md): where the department page/plan and the catalog disagree,
-// follow the department source. No disagreement could be checked here -- see reviewNotes.
+// follow the department source. On the OCR re-check no disagreement was found -- see reviewNotes.
 // Encoded by hand. UNVERIFIED until the owner signs off.
 
 import type { Program, ProgramMeta } from "../src/audit.ts";
@@ -26,7 +26,7 @@ export const commMajorHealthScienceCommunication: Program = {
   minGrade: "C-",
   verified: false,
   reviewNotes: [
-    "The Health and Science Communication plan PDF's text conversion is fully garbled (a substitution-style symbol-font extraction with no legible course codes, term headers, or other course-level signal anywhere in the converted text). No term-by-term placement could be read from it, so `packages/programs/sample-plans/comm-major-health-science-communication.json` is CONSTRUCTED from the catalog's own requirement structure rather than read from the plan; flagged in docs/project/owner-review.md. Because the plan is unreadable, no department-vs-catalog disagreement could be checked for this track.",
+    "The Health and Science Communication plan PDF was re-read from OCR text: its slot types are legible (COMM107/200/230, COMM130, COMM250, COMM302, COMM304, COMM305/306/307, COMM201/301/303, Diversity & Inclusion, Leadership & Social Change, Applied, four Specialization Electives) and match this encoding; no department-vs-catalog disagreement found. The sample plan is official but its Fall/Spring placement is a best-effort reading of column-interleaved OCR; flagged in docs/project/owner-review.md.",
     "Communication Theory & Principles: COMM302 is fixed; the student then picks one of COMM201, COMM301, COMM303.",
     "Specialization Electives ('Select four of the following': COMM390, COMM419, COMM422, COMM424, COMM426, COMM427, COMM435, COMM459) is encoded as a choose(count 4) over exactly that named list -- the source's own footnote ('the same course cannot be used to fulfill more than one requirement') matches the engine's default behavior (a course counts toward at most one requirement in a program) and needs no separate encoding.",
     "The Communication & Society Leadership & Social Change list (COMM420, COMM421, COMM436, COMM455) includes numbers the source table gives no course title for -- kept literally since they're named in the source (never invented). See comm-shared-2026-27.ts.",

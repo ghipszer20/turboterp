@@ -2,10 +2,10 @@
   "programId": "comm-major-health-science-communication",
   "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/communication/communication-major/",
   "fetched": "2026-09-28",
-  "official": false,
+  "official": true,
   "notes": [
-    "No usable 4-year plan exists: the College's official Health and Science Communication four-year plan PDF (https://drive.google.com/uc?export=download&id=1ETspCX6Xy8feCY6kQlAhVTYc_XhYKWmS) converted to fully garbled, symbol-substituted text with no legible course codes, term headers, or other course-level signal anywhere in it. This plan is CONSTRUCTED from the catalog's own requirement structure instead (docs/project/owner-review.md flags this). Gen Ed courses are left out; only the major is audited.",
-    "College Requirement Statistics filled with PSYC200.",
+    "Official Health and Science Communication four-year plan (https://drive.google.com/uc?export=download&id=1ETspCX6Xy8feCY6kQlAhVTYc_XhYKWmS), read from OCR text. Its slot types are legible; exact Fall/Spring placement is a best-effort reading of column-interleaved OCR (COMM250, COMM302, Diversity & Inclusion and COMM304 in Year 2; Research Methods, Applied, Leadership & Social Change, COMM201/301/303 and specialization electives in Years 3-4). The OCR names slots, not specific courses, so every course below is a catalog fill. Gen Ed courses are left out; only the major is audited.",
+    "College Requirement Statistics (plan: Statistics requirement) filled with PSYC200.",
     "Communication Theory & Principles' remaining pick (alongside fixed COMM302) filled with COMM301.",
     "Research Methods choice filled with COMM306.",
     "Communication & Society's Leadership & Social Change pick filled with COMM385; Diversity & Inclusion pick filled with COMM360.",
@@ -14,13 +14,13 @@
   ],
   "credits": { "COMM130": 1 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["COMM200", "COMM130"] },
-    { "term": "Year 1 Spring", "courses": ["COMM250", "PSYC200"] },
-    { "term": "Year 2 Fall", "courses": ["COMM302", "COMM301"] },
-    { "term": "Year 2 Spring", "courses": ["COMM304", "COMM306"] },
-    { "term": "Year 3 Fall", "courses": ["COMM385", "COMM360"] },
-    { "term": "Year 3 Spring", "courses": ["COMM386", "COMM426"] },
-    { "term": "Year 4 Fall", "courses": ["COMM390", "COMM419"] },
+    { "term": "Year 1 Fall", "courses": ["COMM200", "COMM130", "ARHU158"] },
+    { "term": "Year 1 Spring", "courses": ["PSYC200"] },
+    { "term": "Year 2 Fall", "courses": ["COMM250", "COMM302"] },
+    { "term": "Year 2 Spring", "courses": ["COMM360", "COMM304"] },
+    { "term": "Year 3 Fall", "courses": ["COMM306", "COMM385", "COMM301"] },
+    { "term": "Year 3 Spring", "courses": ["COMM386", "COMM390"] },
+    { "term": "Year 4 Fall", "courses": ["COMM426", "COMM419"] },
     { "term": "Year 4 Spring", "courses": ["COMM422", "COMM427"] }
   ]
 }

@@ -544,25 +544,70 @@ Some courses for the major may also count toward General Educaon requirements.
 
 ## Sample plan (https://drive.google.com/uc?export=download&id=1g8J24Bz68wwqpZDqN_O19lIzJwle4FkX#Music-Liberal-Arts---Jazz-Studies)
 
-!"#$%&'()$!*+
-,!"#$%,&'()$!*+
--!"#$%-&'()$!*+
-.
-/011 23456789:;<=>?@AB;??@C? DEFGHIJ DEFGHHIK9:;<=>?@ABL:M;;C?;NOB; DEFPHIK DEFPHIQDEFPHRI DEFPHRHDEFPKKJS DEFPKKJSDEFPIJJ DEFPIJJTUVWHIHXYZ[\]D=C^V:L<;_P`a DYbcXDY[\YdcEHRe f:LBP@NNgC=9Lh@CXfP[DEFPHRI DEFGKIi DEFGKIeDEFPHRH DEFPKKJS DEFPKKJSDEFPKRI DEFPKRHDEFPKjIXcEkEG[ DEFPQjIDEFPIJJ DEFPIJJUL>g:LBF9=;C9;WLOXUW[\\ UL>g:LBF9=;C9;?XUF[\\F9l@BL:?l=m=CG:L9h9;XFG[nH\\DEFGQIR DEFP8QjDEFPKRI DEFPKKJS cgNLC=h;?XcE[\\DEFPKRH DEFPQjH YCLBoh9d;L?@C=CMXYd[DEFP8RR VB@OLBTCMLM;N;C>nKVB@OLBTCMLM;N;C>nH TB;9hp;Qqq`8qqXQ9:^[c=?>@:orF@9=LBF9=;C9;?XcF[\\DEFP8RQ G:@A;??=@CLBZ:=hCMXGZ[F9l@BL:?l=m=CG:L9h9;XFG[nK\\ c=?>@:orF@9=LBF9=;C9;?XcF[\\TB;9hp;Qqq`8qqXQ9:^[ TB;9hp;Qqq`8qqXQ9:^[TB;9hp;Qqq`8qqXQ9:^[ TB;9hp;Qqq`8qqXQ9:^[TB;9hp;Qqq`8qqXQ9:^[ TB;9hp;Hqq`8qqXQ9:^[TB;9hp;Qqq`8qqXH9:^[ TB;9hp;Hqq`8qqXH9:^[b@>LBP:;<=>?A@:s;M:;;_HKItQJ9:;<=>?Ng?>O;Qqq`8qqB;p;B
-uvwxyz{|}~zxzyxzz|x|wz}zwxzw uvwxz}~xy{
-uvwxyz{|}~zxzyxzz||vwz}zwxzw
-uvwxyz{|}~zxzyxzz|wwz}zwxzw
- ¡¢£¤¢¥ ¦§¨©©ª¢«¡¬§§¥®¢§««®¢¯§°±¥ ¨²³ ¢¢§°´§¥¢μμ«¶¬§§¥®¢§°§¨
-!"#$%&' ()%*"#$%&'+%&,&$' -./()%*"#$%&'-0/()%*"#$%&'-1/()%*"#$%&'2$'&$3 4,&$' 56!"#$%&'($78'!9!%:!3!&;$&)2$'&$3 4,&$'2$4'$&:<!4==%$>;$&)2$'&$3 4,&$'?!($78'!@A=$ B$7/!= !<!4==%$>;$&)!&)#$%&'?!''@,&&'%'&%$$%%!C.0D$&'&!!%=&7E
-FGHIJKGLGMNOPQRSKGTJNOURSVIKOGO WVIKOG WKGTJNO XKYTGFGHIJKGLGMNOPZRSKGTJNOU[SVIKOGO WVIKOG WKGTJNO XKYTG FGHIJKGLGMNO WKGTJNO XKYTGFGHIJKGLGMNOP\SKGTJNOUZSVIKOGO WVIKOG WKGTJNO XKYTGFGHIJKGLGMNOP]^\SKGTJNOUZSVIKOGO WVIKOG WKGTJNO XKYTGFGHIJKGLGMNOP_^`SKGTJNO WVIKOG WKGTJNO XKYTG
-abcdefghijkdhhilhmbnedofbpcfqlrsmpt ubcdefghijkncrddlhdovkdwcijdhhfilnkpcfqlrswptxcnkyioozsxyt {|}y~{ngs{mt {|}y~~mlnkqbdnhilflrsmt {|}yu{|}yu~ngcnk}bfdlbdnvstngcnk}bfdlbdhs}tfhgic}ibfnk}bfdlbdhs}tfhgic}ibfnk}bfdlbdhs}tonlfqdhs|tonlfqdhs|t {|}w~}biknchfflwcnbqbds}wt {|}w~~}biknchfflwcnbqbds}wtlilonic {|}wu{|}wu{|}y~u{|}y~frdhqils}t {|}y~frdhqils}t {|}y~~{|}yuus~bczhdodhgdcht{|}yu{|}yu~|ledchgnleflrwkcnk}ibzs|wt {|}yus||wt|ledchgnleflrwkcnk}ibzs|wtykgcnkyiodgdlbsyyt {|}w{|}y{|}y~{|}ya{|}ya{|}ya
-¡¢£ ¤¥¦§¨§
-©ª¡«¬¨
-©ª¡«¬¨
-®¯®°±²³´±³´μ±¶´·¸¯±¹·μμ´º®»μ´¯´¼½¾¯®¾½¿´±½°´±¾½±ÀÁÂ
-Ã½®Ä´¼½¾¯®¾½½±Å´¸·®μ¾´¯´¾½´μ¾·¸ÆÇÃÂÈÈÁ
-ÉÊËÌÍÎÏÐÑÌÎÒÓÔÓÕ
-ÌÖ ÉÉÊÉÎ×ÓÖØÓÏÙÐ×ÓÉÉÉÊÚÏÔÐÎÛÓÏÜÝÞßàáâÞãäåàæçÞáàèàÝãâéêáëáìíçìîêÝïðåñÜåàæçÞáàèàÝãâéêáëáìíçìîêÝïòóôõö÷óøõó÷÷óõõöõöóóõ öôøõó÷÷óõõöõöóóõøôõõôõôõõôöõó÷÷óõõöõöóøõôõõôõó÷ò õöôõóöôöôõôöô!"ö"õõó #$%&'($)*+&+',$*'-.&'%/0$*'%/1'/2+$'($)3-'-$4/*5'6&3&*/2'75)(/8$3'*&9):*&%&3-+;
+(OCR text; may contain recognition errors)
+Te EN
+I = E =
+I 1 SE 7: SN
+IE TV err NT
+TT eew  Jomememes |
+I Pr I
+ES EE
+emrees [|
+I = SE = =
+I 72 SE < S
+I TP (Ere
+I I Cr Te CS
+TT
+Jcowewmren  [secnesosopn |
+I ee I
+I EE
+7 SE EE
+I 1 SN TT R
+CT err mn [rovers
+CT Jreesosubm [decnesosopm |
+IE PE Fe (YE TT
+I = eR re wey PR
+I Fo (TE
+I ER
+I Tere
+and Cultural Competence courses may also fulfill Distributive Studies categories.
+Music - Bachelor of Arts - Jazz Studies
+[Academic Writing (AW) (Min. Grade: cd [enotaon [ [|]
+[professional writing Pw) [~~ [| |
+[oaiconm0g [| |
+athwa) [|
+[AnayticReasoning (ar) [| | |
+[Natural Science tabbing | [ [|]
+[NetwralSciences(ve) [|
+[History/Social sciences Ws) | [| |
+[History/social Sciences Ws) | [| |
+[Humanitesau) [museca] |]
+[Humaniteswo) TT Emus TT]
+[scholarshipinpractice(sp) | [[ @wusuo [ T ]
+[scholarship in Practice (sPinonmajor | [ [  Wwuse2or  [ T ]
+Big Question uses | [|
+Normally double counted with Distributive Studies Musct2
+wuscis [|
+[gquesiongy 1 wesc ||
+[igquesions) | [ [  fmuscimn [TT ]
+es
+(overlap permitted with Distributive Studies and/or Big Question) [Musc2s0 1 T]
+uses [|]
+[Understanding Paral oc. (07) [mscaso| | [wuscasommuaue | | |
+Understanding Pura oc. (UP) or
+Cultural Competency (CC) wuspzs TT |
++
+(overlap permitted with other requirements/courses) [musczer TT
+0 fwuscas 000000 T ]
+1 [ [ Pwuscass 000000 1
+woscass | ||
+EE TE Wa
+[or mermnoaests moos somes remo [1]
+[5 oosriewt mor eats mse eamezos [1]
+Some courses forthe mejor may also count toward General Education requirements,
+CB
+ET re EW
+EE
 
 ## Sample plan (https://drive.google.com/uc?export=download&id=1w2YlzMQT2kVfHveaxuIsWW0K2WCqseIL#Music-Liberal-Arts---Piano)
 
@@ -1029,25 +1074,75 @@ Some courses for the major may also count toward General Educaon requirements.
 
 ## Sample plan (https://drive.google.com/uc?export=download&id=1du3_qWLtmXz5ISfDcZPZqbfk3j_i8VU-#Music-Performance---Composition)
 
-!"#$%&'(# )*
-+ !"#$+%&'(# )*
-, !"#$,%&'(# )*
--
-./00 123456789:;<=>?@A:>>?B> CDEFGHI CDEFGGHJ89:;<=>?@AK9L::B>:MNA: CDEFGGIO CDEFGJHOCDEPGHJ CDEPGHQCDEPGRH CDEPGRGCDEPJJI?9QJI CDEPJJI?9QJICDEPHII CDEPHIISTUVGHGWXYZ[\C<B]U9K;:^P_` CXOaWCXZ[XbaDGRc a<>=?9deE?8<KAE8<:B8:>WaEZ[[CDEPGRH CDEFJHf CDEFJHcCDEPGRG CDEFJGfO CDEFJGcOCDEPJJI?9QJI CDEPJJI?9QJICDEPJRH CDEPJRGCDEPJgHWaDhDFZ CDEPQgHCDEPHII CDEPHIIi9KAP?MMjB<8Kk?BWiPZ XBKAdk8b:K>?B<BLWXbZCDEFQGRO CDEFQGgOCDEPJRH CDEPJJI?9QJI CDEPJJI?9QJICDEPJRG CDEPQgG CDEP7gQCDEP7gH CDEP7fHCDEPHII CDEPHIITK=j9KAE8<:B8:VKNWTVZ[[ TK=j9KAE8<:B8:>WTEZ[[ajMKB<k:>WaDZ[[CDEF7GIO CDEF7JHOWE8l?AK9>l<m<BF9K8k8:nJZCDEPJJI?9QJI CDEPJJI?9QJICDEP7RH CDEP7cgCDEP7IH a<>=?9deE?8<KAE8<:B8:>WaEZ[[CDEP7ooCj><8a<>=?9dSA:8kp: F9?@:>><?BKAY9<kBLWFYZE8l?AK9>l<m<BF9K8k8:WEFZnG[[WB?B_MKq?9Z SA:8kp:Goo_7ooWQ89]ZO?=KAP9:;<=>@?9r:L9::^GJH
-stuvwxyz{|}xvx~wvxx~zvzux{xuvxu stuvx{|vwy
-stuvwxyz{|}xvx~wvxx~zztux{xuvxu
-stuvwxyz{|}xvx~wvxx~zuux{xuvxu
-¡¢£¤¥¦§§¨ ©ª¥¥«£¬ ¥©©¬¥®¯£¦°±  ¥®²¥£ ³³©´ª¥¥«£¬ ¥®¥¦
-!"#$%& '($)!"#$%&*$%+%#& ,-.'($)!"#$%&,/.'($)!"#$%&,0.'($)!"#$%&1#&%#23+%#& 45!"#$%&'#67& 8 $9 2%:#%(1#&%#23+%#&1#3&#%9;3<<$#=:#%(1#&%#23+%#&>'#67& ?@<#A#6.< ;3<<$#=:#%(%("#$%&>&&?+%%&$&%$##$$B-/C#%&%$<%6D
-EFGHIJFKFLMNOPQRJFSIMNTQRUHJNFN VUHJNF VJFSIMN WJXSFEFGHIJFKFLMNOYQRJFSIMNTZRUHJNFN VUHJNF VJFSIMN WJXSF EFGHIJFKFLMN VJFSIMN WJXSFEFGHIJFKFLMNO[RJFSIMNTYRUHJNFN VUHJNF VJFSIMN WJXSFEFGHIJFKFLMNO\][RJFSIMNTYRUHJNFN VUHJNF VJFSIMN WJXSFEFGHIJFKFLMNO^]_RJFSIMN VUHJNF VJFSIMN WJXSF
-`abcdefghijcgghkglamdcneaobepkqrlos tabcdefghijmbqcckgcnujcvbhicggehkmjobepkqrvoswbmjxhnnyrwxs z{|x}~zmfrzls z{|x}~}lkmjpacmghkekqrls z{|xt~z{|xt~}mfbmj|aeckacmursmfbmj|aeckacgr|segfhb|haemj|aeckacgr|segfhb|haemj|aeckacgr|snmkepcgr{snmkepcgr{s z{|v}|ahjmbgeekvbmapacr|vs z{|v}}|ahjmbgeekvbmapacr|vskhknmhb z{|v}}z{|v}tz{|vtz{|vteqcgphkr|s z{|vt}eqcgphkr|s z{|vt}z{|x}tz{|x}z{|x}~{kdcbgfmkdekqvjbmj|hayr{vs z{|x}~}{kdcbgfmkdekqvjbmj|hayr{vs z{|xtthbtr}abygcncgfcbgsxjfbmjxhncfckarxxs z{|xt~z{|xt~}z{|xtr{{vsz{|v}~z{|v}z{|xz{|x}z{|x`zgeaegfhbjcapcz{|v`}z{|v`tr|vsz{|x`~z{|x`z{|x`z{|x`z{|x`z{|x`
-¡¢£¤ ¥¦§¨©¨
-ª«¢¬©ª«®¯¬©°
-ª«¢¬©
-±²³²´μ¶·¸μ·¸¹μº¸»¼³μ½»¹¹¸¾²¿¹¸³¸ÀÁÂ³²ÂÁÃ¸μÁ´¸μÂÁμÄÅÆ
-ÇÁ²È¸ÀÁÂ³²ÂÁÁμÉ¸Â¿ÊÂ¸³¸ÂÁ¸¹Â»¼ËÌÇ±ÆÍÍÅ
-ÎÏÐÑÒÓÔÕÖÑÓ×ØÙØÚ
-ÑÛ ÎÎÏÎÓÜØÛÝØÔÞÕÜØÎÎÎÏßÔÙÕÓàØÔáâãäåæçãèéêåëìãæåíåâèçîïæðæñòìñóïâôõêöáêåëìãæåíåâèçîïæðæñòìñóïâô÷øø ø øøø ø øøø ø øø÷! ø"# $%&'()%*+,',(-%+(./'(&01%+(&02(03,%()%*4.(.%50+6(7'4'+03(86*)09%4(+':*;+'&'4.,<
+(OCR text; may contain recognition errors)
+TC EE
+EE 7 [= SE
+CT wsmew  fwsewew |
+EE 7 TE
+EE CE YY RN TT
+EE TS [= eT CO
+lee
+1 Tr
+a EE
+EE 1 RE [== SN
+I YT RN [= SA
+I 72 NE [< S
+I eT SR [a ee VR
+I I A
+EE 1 [=
+EE CTY, [TP Tr CO
+ewer
+er
+EE 7 [7 Ye
+CT wsmew  lwscwew |
+EE 7 [=~ SR
+EE 7 [7 FR
+EE 1S
+I C= re Te Ee ere ER
+I EE
+Teme
+and Cultural Competence courses may also fulfill Distributive Studies categories.
+Music - Bachelor of Music - Composition
+[Academic Writing (AW) (Min Grade:C) | enataor | | |
+[Professional writing bw) | | | |
+[oaicommc [7]
+Maw 1}
+[anayticReasoning (af) | | | |
+[NatwralSciencetabNy) | | | |
+[Natwralsciences vs) [|| |
+[istonySoca sconces |||
+[Hstory/Social sciences (hs) | | | |
+[Humanities(y) ~~ wuscaeo | | |
+fmontiest [| www TT |
+[scholarshpin Practice 59) fwuspazor || fuse || |
+[scholarship in Practice (sPnonmajor | | | Wwwsenor [| |
+EE
+Normally double counted with Distributive Studies [MusP207, TT
+[wuss | [|
+[BgQuestonts [| | Wwwesearr [|]
+Bg Questonts | [| fwwasr [|
+ET  ————
+(overlap permitted with Distributive Studies and/or Big Question) IEE
+vusciso TT]
+[Understanding Plural soc. up) fvoscaso || fuses | | |
+Understanding Plural Soc. (UP) or [USC 229 07325 eewgsemesters) || |
+Cour) Competency (cc) TE —
+EE —
+(overlap permitted with other requirements/courses) [Musc260 (rugn) TT]
+© 1 gweesst 00 T ]
+[Qwest [| |
+[wuscsso [1]
+wosczer [|
+[rises move snes sow. [|
+[serve aro cests mot becomes sve vaio | [7] wsCoomusichimoneetve [||
+[opperimetmaprcests mo vecomessrovs |] fwosoaor ||]
+EE EE RN N
+[snus orm frppicmnel ——[] fwuscaso | | |
+vuscaco TT]
+Vsca |||
+DE BR
+[Vscase | | |
+osc ||
 
 ## Sample plan (https://drive.google.com/uc?export=download&id=1nlVRA54LPKzrofWqjOwEozZ-NI3Aajnq#Music-Performance---Jazz)
 

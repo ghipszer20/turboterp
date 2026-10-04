@@ -1,0 +1,15 @@
+{
+  "programId": "plsc-landscape-management-minor",
+  "source": "https://psla.umd.edu/undergraduate/degrees/minors",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog requirements: PLSC205, PLSC251, PLSC253, PLSC254, PLSC452, plus two of PLSC401/402/410/453 (PLSC401, PLSC453). Flagged in docs/project/owner-review.md."
+  ],
+  "credits": { "PLSC205": 4 },
+  "terms": [
+    { "term": "Term 1", "courses": ["PLSC205", "PLSC251", "PLSC253"] },
+    { "term": "Term 2", "courses": ["PLSC254", "PLSC452"] },
+    { "term": "Term 3", "courses": ["PLSC401", "PLSC453"] }
+  ]
+}

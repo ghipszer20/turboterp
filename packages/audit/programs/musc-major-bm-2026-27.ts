@@ -7,7 +7,8 @@
 // Strings, Theory, Voice, Wind & Percussion); five of the six other areas turned out to have
 // genuinely different required courses and are now their own tracks of this major key ("musc") --
 // see musc-major-bm-jazz/-piano/-theory/-voice/-wind-percussion-2026-27.ts. Composition's plan
-// could not be read (see reviewNotes) so it stays on this generic track. Owner ruling
+// was re-checked from its OCR text (2026-09-28) and is still not usable (see reviewNotes), so it
+// stays on this generic track. Owner ruling
 // (docs/project/rulings.md, 2026-09-26): where the department page (the college's own plan counts
 // as one) and the Academic Catalog disagree, the department page wins. Encoded by hand. UNVERIFIED
 // until the owner signs off.
@@ -48,9 +49,11 @@ export const muscMajorBm: Program = {
       "have genuinely different required courses (area-specific lesson numbers, ensemble courses, " +
       "and/or upper-division requirements) and are now encoded as their own tracks of this major key " +
       "(\"musc\"); see musc-major-bm-jazz/-piano/-theory/-voice/-wind-percussion-2026-27.ts. " +
-      "Composition's plan could not be read at all (the fetched text decoded to garbled, non-course " +
-      "content with no recoverable MUSP/MUSC course numbers), so it is not broken out and stays on " +
-      "this generic track pending a re-fetch. The Senior Recital the catalog attaches to the final " +
+      "Composition's plan was re-checked from its OCR text (2026-09-28): the OCR is only partly legible " +
+      "(term grids are noise; only a few fragments such as MUSC260 and MUSP207 survive, all matching " +
+      "what the generic plan already has) and no Composition-specific lesson, ensemble or composition " +
+      "course list can be read, so no Composition track is added and it stays on this generic track. " +
+      "Unverified against the real plan; needs a legible copy. The Senior Recital the catalog attaches to the final " +
       "lesson semester is not encoded anywhere (unencodable).",
     "'8 semesters of large ensemble participation' and '6-8 semesters of small ensemble " +
       "participation' encoded as MUSC229 x8 and MUSC129 x6 (the plan's own two ensemble course " +

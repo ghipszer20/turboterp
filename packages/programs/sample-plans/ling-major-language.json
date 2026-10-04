@@ -10,7 +10,7 @@
     "'Three 3xx-4xx level LING electives' (no course-to-slot list in either source) filled with LING330, LING410, LING460, all from the Academic Catalog's approved-course list the main session supplied for plan slots."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["LING200", "FREN103"] },
+    { "term": "Year 1 Fall", "courses": ["LING200", "FREN103", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["LING240", "FREN203"] },
     { "term": "Year 2 Fall", "courses": ["LING311", "LING321", "FREN204"] },
     { "term": "Year 2 Spring", "courses": ["LING320", "LING440", "FREN301"] },

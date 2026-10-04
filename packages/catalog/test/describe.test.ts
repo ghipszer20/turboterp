@@ -1,11 +1,11 @@
 // describeRequirement: a requirement in the plain language the owner reads in the review tool.
 
 import { describe, expect, it } from "vitest";
-import type { Program, Requirement } from "@superterp/audit";
-import { cmscMajor } from "@superterp/audit/programs/cmsc-major-2026-27.ts";
-import { genEd, university } from "@superterp/audit/programs/gen-ed-2026-27.ts";
-import { mathMajorTraditional } from "@superterp/audit/programs/math-major-2026-27.ts";
-import { mathMajorApplied } from "@superterp/audit/programs/math-major-applied-2026-27.ts";
+import type { Program, Requirement } from "@turboterp/audit";
+import { cmscMajor } from "@turboterp/audit/programs/cmsc-major-2026-27.ts";
+import { genEd, university } from "@turboterp/audit/programs/gen-ed-2026-27.ts";
+import { mathMajorTraditional } from "@turboterp/audit/programs/math-major-2026-27.ts";
+import { mathMajorApplied } from "@turboterp/audit/programs/math-major-applied-2026-27.ts";
 import { describeFilter, describeRequirement } from "../src/describe.ts";
 
 const text = (r: Requirement) => describeRequirement(r).text;

@@ -1,0 +1,26 @@
+{
+  "programId": "info-minor-tech-innovation-leadership",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/information/technology-innovation-leadership-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: all five required courses. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    {
+      "term": "Term 1",
+      "courses": [
+        "INST363",
+        "INST407"
+      ]
+    },
+    {
+      "term": "Term 2",
+      "courses": [
+        "INST457",
+        "INST453",
+        "INST463"
+      ]
+    }
+  ]
+}

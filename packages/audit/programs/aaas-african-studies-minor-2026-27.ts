@@ -26,7 +26,7 @@ export const aaasMinorAfricanStudies: Program = {
   verified: false,
   reviewNotes: [
     "Department page not checked (none provided); encoded from the catalog alone.",
-    "Area 1 'LANGUAGE: any approved African language course' (Igbo, Twi, Yoruba; Swahili through the Big Ten Alliance) names no subject prefix or course numbers, so it can't be encoded as a course filter; manual check. A student using a language course for Area 1 will show that slot as unfinished. 'Other relevant courses with permission of the program' (advisor-approved list) is likewise not encoded.",
+    "Area 1 'LANGUAGE: any approved African language course' (Igbo, Twi, Yoruba; Swahili through the Big Ten Alliance) names no subject prefix or course numbers, so it can't be encoded as a course filter; manual check. A student using a language course for Area 1 will show that slot as unfinished. 'Other relevant courses with permission of the program' (advisor-approved list) is likewise not encoded. Marked advisorMayApprove (area1, area2): other courses may count with advisor approval; only the listed courses count.",
     "'Two must be at the upper level' is encoded as an overlay requiring 2 courses numbered 300+ from the union of the two areas' lists; the source doesn't define 'upper level', assumed 300+.",
     "AAAS398 and AAAS468 appear in both areas; a course counts toward one area only (the audit's default), so a student needs distinct courses for the two areas. Topic conditions (ENGL368 'must be approved', HIST319 'The African City...', HIST428B) aren't modeled; any section is accepted.",
     "The Capstone (AAAS400, AAAS402 or AAAS468Z; optional, raises the total from 15 to 18 credits) is not encoded.",
@@ -34,8 +34,8 @@ export const aaasMinorAfricanStudies: Program = {
   ],
   requirements: [
     { kind: "course", id: "aaas200", name: "African Civilization", options: ["AAAS200"] },
-    { kind: "choose", id: "area1", name: "Area 1: History, Culture, and Language (2 courses)", count: 2, from: { courses: AREA1 } },
-    { kind: "choose", id: "area2", name: "Area 2: Politics, Society, and Development (2 courses)", count: 2, from: { courses: AREA2 } },
+    { kind: "choose", id: "area1", name: "Area 1: History, Culture, and Language (2 courses)", count: 2, from: { courses: AREA1 }, advisorMayApprove: true },
+    { kind: "choose", id: "area2", name: "Area 2: Politics, Society, and Development (2 courses)", count: 2, from: { courses: AREA2 }, advisorMayApprove: true },
     {
       kind: "choose",
       id: "upper-level",

@@ -1,0 +1,14 @@
+{
+  "programId": "uslt-minor",
+  "source": "https://amst.umd.edu/academic-programs/undergraduate/us-latina-o-studies-minor",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: USLT201, USLT202, USLT488, plus two upper-level electives (USLT498 named in the sources, and LACS369, a LACS course; the approved list is unpublished). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["USLT201", "USLT202"] },
+    { "term": "Term 2", "courses": ["USLT498", "LACS369"] },
+    { "term": "Term 3", "courses": ["USLT488"] }
+  ]
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import type { DietTag, Station } from "@superterp/campus-data";
+import type { DietTag, Station } from "@turboterp/campus-data";
 import { Chip, Segmented } from "@/components/Segmented";
 import { ExternalIcon } from "@/components/icons";
 import { Card, EmptyState, Section, SkeletonCard } from "@/components/ui";

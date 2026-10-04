@@ -34,6 +34,10 @@ export const muscMajorBa: Program = {
   minGrade: "C-",
   verified: false,
   reviewNotes: [
+    "Jazz Studies plan re-checked from its OCR text (2026-09-28): the OCR is mostly noise (term grids " +
+      "unreadable; only fragments such as MUSC260, MUSC229 and MUSC 312 survive), so no Jazz-specific " +
+      "requirement could be confirmed or ruled out. NOT confirmed as matching this Strings-based encoding; " +
+      "no Jazz Studies track added. Needs a legible copy of the plan.",
     "No disagreement found between the catalog and the Strings plan on the BA's own requirement " +
       "structure (5 semesters of lessons, 5 of ensemble, 4 of theory, 2 of history, 1 of global " +
       "music, 2 of class piano, 1 of form and analysis, 6 elective credits).",

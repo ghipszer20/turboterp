@@ -1,0 +1,20 @@
+{
+  "programId": "ecse-major-track-1",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/human-development-quantitative-methodology/early-childhood-special-education-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no readable ECSE 4-year plan in the fetched sources. Constructed from the catalog: pre-professional courses first, then the Fall/Spring junior and senior professional blocks by their catalog headings. Fills: social science = SOCY100, physical science = ASTR101, creative art = THET120. Gen Ed and the open biological science slot are left out. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["PSYC100", "MATH212", "TLPL250", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["HIST200", "MATH213", "SOCY100"] },
+    { "term": "Sophomore Fall", "courses": ["EDHD210", "ASTR101", "THET120"] },
+    { "term": "Sophomore Spring", "courses": ["EDHD220"] },
+    { "term": "Junior Fall", "courses": ["EDHD434", "EDHD425", "EDHD314"] },
+    { "term": "Junior Spring", "courses": ["EDHD431", "EDSP423", "EDSP315", "EDSP430", "EDSP433"] },
+    { "term": "Senior Fall", "courses": ["EDSP321", "EDHD322", "EDHD323", "EDSP417", "EDHD441", "EDHD442", "EDHD443", "EDHD444"] },
+    { "term": "Senior Spring", "courses": ["EDHD437", "EDHD432"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}

@@ -10,7 +10,7 @@
     "The Field choice is filled with the Business Management field: BMGT340, BMGT350 and BMGT364 (3 of the field's 4 named courses; BMGT380 unused)."
   ],
   "terms": [
-    { "term": "Freshman Fall", "courses": ["ECON200", "MATH120"] },
+    { "term": "Freshman Fall", "courses": ["ECON200", "MATH120", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["ECON201", "STAT100"] },
     { "term": "Sophomore Fall", "courses": ["AREC326", "BMGT230"] },
     { "term": "Sophomore Spring", "courses": ["AREC306", "AREC405"] },
@@ -18,5 +18,6 @@
     { "term": "Junior Spring", "courses": ["AREC433", "BMGT340"] },
     { "term": "Senior Fall", "courses": ["BMGT350"] },
     { "term": "Senior Spring", "courses": ["BMGT364"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

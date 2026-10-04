@@ -7,18 +7,9 @@
     "No published 4-year plan was found for this track; constructed from the department's own current Geophysics Track requirements page (docs/project/owner-review.md notes this for all three Geology tracks).",
     "Depth requirements filled with GEOL447, GEOL455, GEOL457. Context requirements filled with GEOL322, GEOL341. Breadth requirements filled with PHYS313, PHYS371. Chemistry is not encoded as a requirement for this track (see the Program's reviewNotes on the page's 'Recommended Courses' wording), so it's left out of this plan too."
   ],
-  "credits": {
-    "GEOL100": 3, "MATH140": 4, "PHYS161": 3,
-    "GEOL110": 1, "MATH141": 4, "PHYS265": 3,
-    "MATH241": 4, "PHYS272": 3, "PHYS275": 2,
-    "MATH243": 4, "GEOL351": 3, "PHYS273": 3, "PHYS276": 2,
-    "GEOL446": 3, "GEOL447": 3,
-    "GEOL455": 3, "GEOL457": 3,
-    "GEOL322": 4, "GEOL341": 4, "PHYS313": 4,
-    "GEOL393": 3, "GEOL394": 3, "PHYS371": 3
-  },
+  "credits": { "GEOL100": 3, "MATH140": 4, "PHYS161": 3, "GEOL110": 1, "MATH141": 4, "PHYS265": 3, "MATH241": 4, "PHYS272": 3, "PHYS275": 2, "MATH243": 4, "GEOL351": 3, "PHYS273": 3, "PHYS276": 2, "GEOL446": 3, "GEOL447": 3, "GEOL455": 3, "GEOL457": 3, "GEOL322": 4, "GEOL341": 4, "PHYS313": 4, "GEOL393": 3, "GEOL394": 3, "PHYS371": 3, "CMNS100": 1 },
   "terms": [
-    { "term": "Freshman Fall", "courses": ["GEOL100", "MATH140", "PHYS161"] },
+    { "term": "Freshman Fall", "courses": ["GEOL100", "MATH140", "PHYS161", "CMNS100"] },
     { "term": "Freshman Spring", "courses": ["GEOL110", "MATH141", "PHYS265"] },
     { "term": "Sophomore Fall", "courses": ["MATH241", "PHYS272", "PHYS275"] },
     { "term": "Sophomore Spring", "courses": ["MATH243", "GEOL351", "PHYS273", "PHYS276"] },

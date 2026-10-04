@@ -1,0 +1,15 @@
+{
+  "programId": "gtst-minor",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/behavioral-social-sciences/global-terrorism-studies-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: BSST200, BSST331 (Innovative Ideas), BSST338V and BSST371 (electives), BSST377, BSST386 (1 credit each), GVPT200 (Global Perspectives). Flagged in docs/project/owner-review.md."
+  ],
+  "credits": { "BSST377": 1, "BSST386": 1 },
+  "terms": [
+    { "term": "Term 1", "courses": ["BSST200", "BSST338V"] },
+    { "term": "Term 2", "courses": ["BSST331", "BSST371", "BSST377"] },
+    { "term": "Term 3", "courses": ["BSST386", "GVPT200"] }
+  ]
+}

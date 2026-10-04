@@ -1,12 +1,15 @@
 // What would satisfy an unmet Requirement (a Gap), in words, with example courses. Used by the
-// audit view, which loads with the solver, so importing @superterp/audit here is fine.
+// audit view, which loads with the solver, so importing @turboterp/audit here is fine.
 
-import { earnsCredit, matchesFilter, type Requirement, type RequirementResult, type SetMember, type StudentCourse } from "@superterp/audit";
+import { earnsCredit, inArea, matchesFilter, type Area, type Requirement, type RequirementResult, type SetMember, type StudentCourse } from "@turboterp/audit";
 import { filterText, listing } from "./words";
 
 export { filterText, genEdName, prerequisiteText } from "./words";
 
-export type Gap = { need: string; suggestions: string[] };
+/** `note`: an extra line for the student, e.g. that the requirement's list isn't closed. */
+export type Gap = { need: string; suggestions: string[]; note?: string };
+
+const ADVISOR_NOTE = "Other courses may count with advisor approval.";
 
 export type GapContext = {
   /** The student's courses (prior credit, completed and planned). */
@@ -24,6 +27,11 @@ function memberText(m: SetMember): string {
 
 export function describeGap(req: Requirement, result: RequirementResult, ctx: GapContext): Gap | null {
   if (result.status === "satisfied") return null;
+  const gap = gapFor(req, result, ctx);
+  return req.advisorMayApprove ? { ...gap, note: ADVISOR_NOTE } : gap;
+}
+
+function gapFor(req: Requirement, result: RequirementResult, ctx: GapContext): Gap {
   // A failed/withdrawn attempt earns no credit, so it's never "have" here -- the student still
   // needs a passing attempt of it, and it shouldn't count toward filling a filter member below.
   const have = new Set(ctx.courses.filter(earnsCredit).map((c) => c.id));
@@ -50,10 +58,10 @@ export function describeGap(req: Requirement, result: RequirementResult, ctx: Ga
     }
     case "distribution": {
       const n = Math.max(1, req.count - result.assigned.length);
-      const used = (area: { courses: string[] }) => area.courses.filter((id) => result.assigned.includes(id)).length;
+      const used = (area: Area) => result.assigned.filter((id) => inArea(area, { id })).length;
       const open = req.areas.filter((a) => used(a) < req.maxPerArea).sort((a, b) => used(a) - used(b));
       const inCatalog = new Set(ctx.catalog.map((c) => c.id));
-      const lists = open.map((a) => a.courses.filter((id) => !have.has(id) && inCatalog.has(id)));
+      const lists = open.map((a) => (a.courses ?? []).filter((id) => !have.has(id) && inCatalog.has(id)));
       const suggestions: string[] = [];
       for (let i = 0; suggestions.length < MAX_SUGGESTIONS && lists.some((l) => l.length > i); i++) {
         for (const l of lists) if (l[i] && suggestions.length < MAX_SUGGESTIONS) suggestions.push(l[i]!);
@@ -84,5 +92,7 @@ export function describeGap(req: Requirement, result: RequirementResult, ctx: Ga
       const others = req.options.length > 1 ? " (or another listed set)" : "";
       return { need: `Finish a set: ${listing(best.set.map(memberText), "and")}${others}.`, suggestions: best.missing };
     }
+    case "openSlot":
+      return { need: "Confirm with your advisor, then tick it below.", suggestions: [] };
   }
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { auditProgram, type Program } from "@superterp/audit";
+import { auditProgram, type Program } from "@turboterp/audit";
 import {
   creditForAp,
   creditForIb,

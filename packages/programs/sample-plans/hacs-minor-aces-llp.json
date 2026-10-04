@@ -1,0 +1,35 @@
+{
+  "programId": "hacs-minor-aces-llp",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/undergraduate-studies/advanced-cybersecurity-experience-students-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from Pathway 2: HACS318, 12 elective credits (HACS408 recorded as 6 credits of repeated seminar topics plus CMSC414 and CMSC412 as substitutions), HACS497 for the experiential course. HACS408 credit value assumed. Flagged in docs/project/owner-review.md."
+  ],
+  "credits": {
+    "HACS318": 1,
+    "HACS408": 6
+  },
+  "terms": [
+    {
+      "term": "Term 1",
+      "courses": [
+        "HACS318",
+        "HACS408"
+      ]
+    },
+    {
+      "term": "Term 2",
+      "courses": [
+        "CMSC414",
+        "CMSC412"
+      ]
+    },
+    {
+      "term": "Term 3",
+      "courses": [
+        "HACS497"
+      ]
+    }
+  ]
+}

@@ -2,8 +2,8 @@
 // course-level entries (never sections, so the schedule builder can sync by course only), and the
 // prior-credit form inputs (derived credit is recomputed, never stored).
 
-import type { College } from "@superterp/plan/credit-caps";
-import type { GradCreditTag } from "@superterp/plan/grad-courses";
+import type { College } from "@turboterp/plan/credit-caps";
+import type { GradCreditTag } from "@turboterp/plan/grad-courses";
 import { defaultTerms, parseTerm, sortTerms } from "./terms";
 
 export type PlannedCourse = {
@@ -12,7 +12,7 @@ export type PlannedCourse = {
   credits?: number;
   status?: "planned" | "completed";
   grade?: string;
-  /** How a graduate course's credits count (@superterp/plan/grad-courses); omitted (the default)
+  /** How a graduate course's credits count (@turboterp/plan/grad-courses); omitted (the default)
    * is "undergrad credit". Ignored by the checker for a non-graduate course. */
   gradTag?: GradCreditTag;
 };
@@ -56,13 +56,18 @@ export type AdvisorPlan = {
    */
   college?: College;
   /**
+   * How the student entered UMD. Omitted means a freshman; "transfer" skips the college intro
+   * course requirement (packages/audit/programs/college-intro.ts).
+   */
+  entry?: "freshman" | "transfer";
+  /**
    * With two majors: one degree with both (a double major) or two degrees (a double degree),
    * chosen in setup. Omitted means a double major (see degreeModeOf in programs.ts).
    */
   degreeMode?: DegreeChoice;
   /** Cumulative UMD GPA, for the CS gateway check. */
   gpa?: number;
-  /** Chosen pre-professional track ids (@superterp/tracks), never degree requirements. Omitted when empty. */
+  /** Chosen pre-professional track ids (@turboterp/tracks), never degree requirements. Omitted when empty. */
   tracks?: string[];
   /**
    * Planned term for an exam-content milestone, by the milestone's id (e.g. "mcat"): shared by
@@ -78,10 +83,15 @@ export type AdvisorPlan = {
   expectedGrades?: Record<string, Record<string, string>>;
   /**
    * The combined BS/MS program's total master's credits, for the double-count cap
-   * (@superterp/plan/grad-courses: 35% of this number). Optional; omitted shows an info note
+   * (@turboterp/plan/grad-courses: 35% of this number). Optional; omitted shows an info note
    * instead of checking the cap.
    */
   mastersCredits?: number;
+  /**
+   * Open Slots ("from an approved list" that isn't published) the student ticked as confirmed with
+   * their advisor, as "<programId>/<requirementId>" (@turboterp/audit slotKey). Omitted when empty.
+   */
+  confirmedSlots?: string[];
 };
 
 export type PlanAction =
@@ -97,6 +107,8 @@ export type PlanAction =
       college?: College;
       /** Omitted: leaves the plan's existing choice untouched. */
       degreeMode?: DegreeChoice;
+      /** Omitted: leaves the plan's existing entry untouched; "freshman" clears it. */
+      entry?: "freshman" | "transfer";
     }
   | { type: "add-course"; term: string; id: string; credits?: number }
   | { type: "remove-course"; term: string; id: string }
@@ -115,7 +127,9 @@ export type PlanAction =
   | { type: "set-gpa"; gpa: number | undefined }
   /** Applying a what-if comparison: replaces only the declared majors, never tracks, exam terms
    * or anything else "setup" also touches. */
-  | { type: "set-programs"; programs: string[] };
+  | { type: "set-programs"; programs: string[] }
+  /** Ticks or unticks an Open Slot as confirmed with the student's advisor. */
+  | { type: "toggle-slot"; key: string };
 
 export type DegreeChoice = "double-major" | "double-degree";
 export const DEGREE_CHOICES: DegreeChoice[] = ["double-major", "double-degree"];
@@ -203,6 +217,8 @@ export function planReducer(plan: AdvisorPlan, action: PlanAction): AdvisorPlan 
       const next: AdvisorPlan = { ...plan, programs: action.programs, catalogYear: action.catalogYear };
       if (action.college !== undefined) next.college = action.college;
       if (action.degreeMode !== undefined) next.degreeMode = action.degreeMode;
+      if (action.entry === "transfer") next.entry = "transfer";
+      else if (action.entry === "freshman") delete next.entry;
       if (action.tracks.length) next.tracks = action.tracks;
       else delete next.tracks;
       if (Object.keys(action.examTerms).length) next.examTerms = action.examTerms;
@@ -317,6 +333,14 @@ export function planReducer(plan: AdvisorPlan, action: PlanAction): AdvisorPlan 
       const next = { ...plan };
       if (action.mastersCredits === undefined) delete next.mastersCredits;
       else next.mastersCredits = action.mastersCredits;
+      return next;
+    }
+    case "toggle-slot": {
+      const had = plan.confirmedSlots ?? [];
+      const slots = had.includes(action.key) ? had.filter((k) => k !== action.key) : [...had, action.key];
+      const next = { ...plan };
+      if (slots.length === 0) delete next.confirmedSlots;
+      else next.confirmedSlots = slots;
       return next;
     }
   }

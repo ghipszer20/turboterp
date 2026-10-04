@@ -17,7 +17,7 @@ const PLACEHOLDER = "__OWNER_FILL_IN__";
 export const ABOUT: AboutConfig = {
   // OWNER: replace with a short bio for the "About the creator" section.
   creatorBio: PLACEHOLDER,
-  // OWNER: replace with the public GitHub repo URL, e.g. "https://github.com/you/superterp".
+  // OWNER: replace with the public GitHub repo URL, e.g. "https://github.com/you/turboterp".
   githubUrl: PLACEHOLDER,
   // OWNER: replace with the donation link once one exists (Ko-fi, Buy Me a Coffee, etc).
   donationUrl: PLACEHOLDER,
@@ -61,7 +61,7 @@ export type IssueReport = {
  * not '+', which mail clients would show literally.
  */
 export function buildReportMailto(email: string, report: IssueReport): string {
-  const subject = `SuperTerp issue: ${report.page || "(page not specified)"}`;
+  const subject = `TurboTerp issue: ${report.page || "(page not specified)"}`;
   const lines = [`What happened: ${report.what}`, `Page: ${report.page}`, report.replyTo ? `Reply to: ${report.replyTo}` : null].filter(
     (line): line is string => line !== null,
   );

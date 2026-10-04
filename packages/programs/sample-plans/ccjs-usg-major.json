@@ -1,0 +1,71 @@
+{
+  "programId": "ccjs-usg-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/universities-shady-grove/behavioral-social-sciences/criminology-criminal-justice-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "Copied from the College Park ccjs-major plan, since the requirements match; constructed (official: false).",
+    "No official term-by-term 4-year plan exists in the fetched sources (only a college checklist and a two-year plan for A.A. transfer students, neither a full 8-term grid), so this plan is constructed from the department's own major requirements instead (docs/project/owner-review.md flags this as constructed). Gen Ed slots are left out entirely: only the major is audited.",
+    "Gateway Math is filled with STAT100 (department page prefers STAT100 for the Advanced Statistics prerequisite chain); any of the five listed options would satisfy the requirement equally.",
+    "Advanced Statistics is filled with CCJS200 itself (the default, not one of the approved substitutes).",
+    "CCJS Criminal Justice Courses (select two of CCJS340/342/345) filled with CCJS340 and CCJS342.",
+    "CCJS Criminology/Theory Course (select one of CCJS450/451/454) filled with CCJS454.",
+    "CCJS Courses of Choice (400-level, 2 courses) filled with CCJS405 and CCJS418, both real CCJS courses from the Academic Catalog's approved-course list, chosen only to satisfy the level/count requirement.",
+    "CCJS Courses of Choice (any-level, 2 courses) filled with CCJS310 and CCJS330, both real CCJS courses from the Academic Catalog's approved-course list, chosen only to satisfy the count requirement."
+  ],
+  "terms": [
+    {
+      "term": "Freshman Fall",
+      "courses": [
+        "CCJS100",
+        "STAT100"
+      ]
+    },
+    {
+      "term": "Freshman Spring",
+      "courses": [
+        "CCJS105"
+      ]
+    },
+    {
+      "term": "Sophomore Fall",
+      "courses": [
+        "CCJS230"
+      ]
+    },
+    {
+      "term": "Sophomore Spring",
+      "courses": [
+        "CCJS200"
+      ]
+    },
+    {
+      "term": "Junior Fall",
+      "courses": [
+        "CCJS300",
+        "CCJS310"
+      ]
+    },
+    {
+      "term": "Junior Spring",
+      "courses": [
+        "CCJS340",
+        "CCJS330"
+      ]
+    },
+    {
+      "term": "Senior Fall",
+      "courses": [
+        "CCJS342",
+        "CCJS405"
+      ]
+    },
+    {
+      "term": "Senior Spring",
+      "courses": [
+        "CCJS454",
+        "CCJS418"
+      ]
+    }
+  ]
+}

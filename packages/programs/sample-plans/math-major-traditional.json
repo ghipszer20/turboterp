@@ -8,9 +8,9 @@
     "CMSC106 or 131 -> CMSC131; Math 240 or Math 461 -> MATH240; Supporting sequence I/II/III -> PHYS171, PHYS272, PHYS273 (Sequence Two); AMSC 460/466 -> AMSC460.",
     "The six 'Math 4**' / 'Math/Stat 4**' slots are filled from the same page's own Traditional example ('MATH 246, 401, 410, 411, 406, 420, STAT 400, STAT 401, AMSC 460'): MATH411, MATH401, MATH406, STAT400, MATH420, STAT401."
   ],
-  "credits": { "MATH140": 4, "MATH141": 4, "MATH240": 4, "MATH241": 4, "CMSC131": 4, "MATH206": 1, "PHYS171": 4, "PHYS272": 4, "PHYS273": 4 },
+  "credits": { "MATH140": 4, "MATH141": 4, "MATH240": 4, "MATH241": 4, "CMSC131": 4, "MATH206": 1, "PHYS171": 4, "PHYS272": 4, "PHYS273": 4, "CMNS100": 1 },
   "terms": [
-    { "term": "Freshman Fall", "courses": ["MATH140", "CMSC131"] },
+    { "term": "Freshman Fall", "courses": ["MATH140", "CMSC131", "CMNS100"] },
     { "term": "Freshman Spring", "courses": ["MATH141", "MATH206"] },
     { "term": "Sophomore Fall", "courses": ["MATH240", "MATH241", "PHYS171"] },
     { "term": "Sophomore Spring", "courses": ["MATH246", "MATH310", "PHYS272"] },

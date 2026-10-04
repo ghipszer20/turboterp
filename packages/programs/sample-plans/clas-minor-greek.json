@@ -1,0 +1,15 @@
+{
+  "programId": "clas-minor-greek",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/classical-languages-literature/greek-language-culture-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog requirements: GREK101, GREK102, GREK201 and GREK301 (ancient Greek, one at the 300 level) plus CLAS180 as the English-language Greek culture course (a Greek-focused course from the department's own archaeology-minor list). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["GREK101", "CLAS180"] },
+    { "term": "Term 2", "courses": ["GREK102"] },
+    { "term": "Term 3", "courses": ["GREK201"] },
+    { "term": "Term 4", "courses": ["GREK301"] }
+  ]
+}

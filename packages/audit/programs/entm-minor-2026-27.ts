@@ -21,7 +21,7 @@ export const entomologyMinor: Program = {
   maxSharedWith: [{ courses: 2 }],
   reviewNotes: [
     "Both sources agree exactly: BSCI337 required; one Advanced Entomology course from a 6-course list; 2-3 courses from two of four elective areas (Advanced Biology, Pollination Biology, Plant Sciences, Environmental Sciences).",
-    "'Choose 2-3 from two of the four areas (for BSCI majors, at least one from area III or IV)' is encoded as choose 2 from the union of all four areas' courses -- the engine can't express 'from exactly two areas' or the BSCI-major sub-condition, so a plan could in principle satisfy it from only one area; manual check.",
+    "'Choose 2-3 from two of the four areas (for BSCI majors, at least one from area III or IV)' is a distribution: 2 courses, one from each of two different areas (owner ruling 2026-09-28, \"from N different areas\"). A third elective is optional and not required. The BSCI-major sub-condition (one from area III or IV) is not encoded; manual check.",
     "'No more than 2 courses (6 credits) may count toward both the minor and major' -> maxSharedWith: [{ courses: 2 }].",
     "No declaration gate beyond emailing the department (open enrollment); nothing to encode there.",
   ],
@@ -35,22 +35,21 @@ export const entomologyMinor: Program = {
       from: { courses: ["BSCI467", "BSCI480", "BSCI481", "BSCI483", "BSCI494", "BSCI497"] },
     },
     {
-      kind: "choose",
+      kind: "distribution",
       id: "areaElectives",
       name: "Electives from two of: Advanced Biology, Pollination Biology, Plant Sciences, Environmental Sciences",
       count: 2,
-      from: {
-        courses: [
-          // I. Advanced Biology
-          "BSCI361", "BSCI363", "BSCI370", "BSCI392", "BSCI393", "BSCI410", "BSCI430",
-          // II. Pollination Biology
-          "BSCI121", "BSCI126",
-          // III. Plant Sciences
-          "PLSC205", "PLSC226", "PLSC253", "PLSC254", "PLSC405", "PLSC407", "PLSC420", "PLSC453",
-          // IV. Environmental Sciences
-          "ENST233", "ENST333", "ENST334", "ENST360", "ENST403", "ENST410", "ENST436", "ENST441", "ENST445", "ENST450",
-        ],
-      },
+      minAreas: 2,
+      maxPerArea: 1,
+      areas: [
+        { name: "Advanced Biology", courses: ["BSCI361", "BSCI363", "BSCI370", "BSCI392", "BSCI393", "BSCI410", "BSCI430"] },
+        { name: "Pollination Biology", courses: ["BSCI121", "BSCI126"] },
+        { name: "Plant Sciences", courses: ["PLSC205", "PLSC226", "PLSC253", "PLSC254", "PLSC405", "PLSC407", "PLSC420", "PLSC453"] },
+        {
+          name: "Environmental Sciences",
+          courses: ["ENST233", "ENST333", "ENST334", "ENST360", "ENST403", "ENST410", "ENST436", "ENST441", "ENST445", "ENST450"],
+        },
+      ],
     },
   ],
 };

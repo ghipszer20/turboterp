@@ -4,7 +4,7 @@
   "fetched": "2026-09-28",
   "official": false,
   "notes": [
-    "No usable 4-year plan exists: the College's official Media and Digital Communication four-year plan PDF (https://drive.google.com/uc?export=download&id=1gujq1AvfdD6crXvPwS8TVSB877MTQp54) converted to fully garbled, symbol-substituted text with no legible course codes, term headers, or other course-level signal anywhere in it. This plan is CONSTRUCTED from the catalog's own requirement structure instead (docs/project/owner-review.md flags this). Gen Ed courses are left out; only the major is audited.",
+    "No usable 4-year plan exists: the College's official Media and Digital Communication four-year plan PDF (https://drive.google.com/uc?export=download&id=1gujq1AvfdD6crXvPwS8TVSB877MTQp54) was re-checked from OCR text and is also illegible (shredded table; no course-by-term grid recoverable). This plan is CONSTRUCTED from the catalog's own requirement structure instead (docs/project/owner-review.md flags this). Gen Ed courses are left out; only the major is audited.",
     "College Requirement Statistics filled with CCJS200.",
     "Communication Theory & Principles' remaining pick (alongside fixed COMM303) filled with COMM302.",
     "Research Methods choice filled with COMM307.",
@@ -14,7 +14,7 @@
   ],
   "credits": { "COMM130": 1 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["COMM230", "COMM130"] },
+    { "term": "Year 1 Fall", "courses": ["COMM230", "COMM130", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["COMM250", "CCJS200"] },
     { "term": "Year 2 Fall", "courses": ["COMM303", "COMM302"] },
     { "term": "Year 2 Spring", "courses": ["COMM304", "COMM307"] },

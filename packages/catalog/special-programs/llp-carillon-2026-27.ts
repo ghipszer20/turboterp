@@ -2,7 +2,7 @@
 // Sources: https://carillon.umd.edu/carillon-experience/year-carillon and …/carillon-studio,
 // and the UMD Academic Catalog, Office of Undergraduate Studies (fetched 2026-09-25). Hand-transcribed. UNVERIFIED.
 
-import type { Program, ProgramMeta } from "@superterp/audit";
+import type { Program, ProgramMeta } from "@turboterp/audit";
 import { CATALOG_YEAR } from "./common.ts";
 
 export const SOURCE = "https://carillon.umd.edu/carillon-experience/year-carillon";

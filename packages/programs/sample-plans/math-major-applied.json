@@ -8,9 +8,9 @@
     "CMSC106 or 131 -> CMSC131; Math 240 or Math 461 -> MATH240; Supporting sequence I/II/III -> PHYS171, PHYS272, PHYS273 (Sequence Two); AMSC 460/466 -> AMSC460.",
     "The six 'Math 4**' / 'Math/Stat 4**' slots are filled with the Applied track's named courses (department page item 3): MATH411 (depth, with MATH410), STAT410, STAT420 (STAT4xx), MATH401 (algebra), MATH420 (applied list), MATH463 (elective). The plan has one 'Math/Stat 4**' slot but the track needs two STAT courses, so a 'Math 4**' slot holds one."
   ],
-  "credits": { "MATH140": 4, "MATH141": 4, "MATH240": 4, "MATH241": 4, "CMSC131": 4, "MATH206": 1, "PHYS171": 4, "PHYS272": 4, "PHYS273": 4 },
+  "credits": { "MATH140": 4, "MATH141": 4, "MATH240": 4, "MATH241": 4, "CMSC131": 4, "MATH206": 1, "PHYS171": 4, "PHYS272": 4, "PHYS273": 4, "CMNS100": 1 },
   "terms": [
-    { "term": "Freshman Fall", "courses": ["MATH140", "CMSC131"] },
+    { "term": "Freshman Fall", "courses": ["MATH140", "CMSC131", "CMNS100"] },
     { "term": "Freshman Spring", "courses": ["MATH141", "MATH206"] },
     { "term": "Sophomore Fall", "courses": ["MATH240", "MATH241", "PHYS171"] },
     { "term": "Sophomore Spring", "courses": ["MATH246", "MATH310", "PHYS272"] },

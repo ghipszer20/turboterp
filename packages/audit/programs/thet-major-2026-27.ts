@@ -26,6 +26,7 @@ export const thetMajor: Program = {
   catalogYear: "2026-27",
   source: THET_SOURCE,
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "The department's official four-year plan PDF (program-sources/theatre-major.md, 'Sample plan' section) " +
@@ -72,9 +73,9 @@ export const thetMajor: Program = {
       "areas -- costume, scenic, lighting and sound'; specific credit-count/semester deadlines) are " +
       "prerequisite-sequencing and scheduling-deadline rules, not encoded (no prerequisite-chain or per-area " +
       "sub-distribution-within-one-course-list concept in the engine).",
-    "Not encoded (engine gaps): the major's 2.0 GPA-in-the-major requirement; no course with a grade less " +
+    "Program GPA 2.0 encoded as minGpa. Not encoded (engine gaps): no course with a grade less " +
       "than 'C-' may satisfy major/supporting requirements (per-course minGrade is set; the GPA floor across " +
-      "all of them is not); no course for the major may be taken Pass/Fail or Audit; the requirement that " +
+      "all of them is minGpa); no course for the major may be taken Pass/Fail or Audit; the requirement that " +
       "at least 28 of the 49 major credits be 3xx or 4xx level (a floor spanning every area at once, beyond " +
       "the two per-area overlays above); the College of Arts and Humanities' own 3xx/4xx-credit minimum and " +
       "Global Engagement Requirement (college-wide, not Theatre-specific); residency rules; and the " +

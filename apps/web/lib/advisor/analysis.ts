@@ -1,17 +1,17 @@
 // The slower half of the Advisor: the degree audit (HiGHS), double-major / dual-degree notices
 // and the CS gateway. Loaded with import() and run after edits settle, never on every keystroke.
 
-import { auditPrograms, checkCsGateway, type GatewayResult, type Program, type Requirement, type RequirementResult } from "@superterp/audit";
-import type { CreditCourse } from "@superterp/credit";
-import type { PlanCatalog } from "@superterp/plan/catalog";
-import type { Plan } from "@superterp/plan/check";
-import { checkDegrees, type DegreeCheck } from "@superterp/plan/degrees";
-import { planCourses, programNotices, type ProgramNotice } from "@superterp/plan/notices";
-// The heavy, solver-backed half of @superterp/tracks (checkTrack calls auditProgram); this file is
+import { auditPrograms, checkCsGateway, PROGRAM_GPA_ID, type GatewayResult, type Program, type Requirement, type RequirementResult } from "@turboterp/audit";
+import type { CreditCourse } from "@turboterp/credit";
+import type { PlanCatalog } from "@turboterp/plan/catalog";
+import type { Plan } from "@turboterp/plan/check";
+import { checkDegrees, type DegreeCheck } from "@turboterp/plan/degrees";
+import { planCourses, programNotices, type ProgramNotice } from "@turboterp/plan/notices";
+// The heavy, solver-backed half of @turboterp/tracks (checkTrack calls auditProgram); this file is
 // already loaded with import() (see AdvisorApp.tsx), so it's fine for it to pull in HiGHS, the way
-// it already pulls in @superterp/audit's auditPrograms/checkCsGateway above. Never import this
-// module, or "@superterp/tracks" itself, from a file in the main bundle -- use
-// "@superterp/tracks/list" (lib/advisor/tracks.ts) there instead.
+// it already pulls in @turboterp/audit's auditPrograms/checkCsGateway above. Never import this
+// module, or "@turboterp/tracks" itself, from a file in the main bundle -- use
+// "@turboterp/tracks/list" (lib/advisor/tracks.ts) there instead.
 import {
   checkTrack,
   scienceGpa,
@@ -23,10 +23,10 @@ import {
   type ScienceGpa,
   type Track,
   type TrackCheckResult,
-} from "@superterp/tracks";
+} from "@turboterp/tracks";
 import { checkerPlan } from "./checker";
 import type { AdvisorPlan } from "./plan-state";
-import { AUTOMATIC_PROGRAMS, auditedPrograms, degreeModeOf, noticeCandidates, studentDegrees } from "./programs";
+import { AUTOMATIC_PROGRAMS, auditedPrograms, collegeLayers, degreeModeOf, noticeCandidates, studentDegrees } from "./programs";
 import { describeGap, type Gap } from "./requirements";
 import { matriculationTermId } from "./terms";
 import { resolvedPlan } from "./track-plan";
@@ -34,6 +34,10 @@ import { resolvedPlan } from "./track-plan";
 type ProgramAudit = {
   program: Program;
   requirements: { requirement: Requirement; result: RequirementResult; gap: Gap | null }[];
+  /** The program-wide GPA check (Program.minGpa), shown after the requirements; null without one. */
+  gpa: RequirementResult | null;
+  /** Rows shown: the requirements, plus the GPA check if any. */
+  total: number;
   satisfied: number;
 };
 
@@ -66,7 +70,7 @@ export type Analysis = {
 };
 
 /** Every graded course, prior credit and term courses, keeping every attempt of a repeat (AMCAS
- * and LSAC count each one; @superterp/plan/notices' planCourses counts a course once, so it can't
+ * and LSAC count each one; @turboterp/plan/notices' planCourses counts a course once, so it can't
  * be reused here). */
 function gradedCourses(plan: Plan): GradedCourse[] {
   const prior = (plan.priorCredit ?? []).filter((c) => c.grade).map((c) => ({ id: c.id, credits: c.credits, grade: c.grade }));
@@ -78,8 +82,9 @@ export async function runAnalysis(input: { plan: AdvisorPlan; catalog: PlanCatal
   const t = performance.now();
   const plan = checkerPlan(input.plan, input.priorCourses);
   const courses = planCourses(plan, input.catalog);
+  const layers = collegeLayers(input.plan);
   const [programs, candidates] = await Promise.all([
-    auditedPrograms(input.plan.programs),
+    auditedPrograms(input.plan.programs).then((ps) => [...ps, ...layers]),
     noticeCandidates(
       input.plan.programs,
       courses.map((c) => c.id),
@@ -89,9 +94,9 @@ export async function runAnalysis(input: { plan: AdvisorPlan; catalog: PlanCatal
   const [solveResults, notices, degrees] = await Promise.all([
     // With two or more majors, checkDegrees below already solves every program (with degree
     // groups and the 18-unique goal); reuse its audits instead of a second, disagreeing solve.
-    mode ? null : auditPrograms(programs, courses),
+    mode ? null : auditPrograms(programs, courses, { confirmed: input.plan.confirmedSlots ?? [] }),
     programNotices(plan, input.catalog, candidates, mode),
-    mode ? studentDegrees(input.plan.programs, mode).then((d) => checkDegrees(plan, input.catalog, d, AUTOMATIC_PROGRAMS, { today: new Date() })) : null,
+    mode ? studentDegrees(input.plan.programs, mode).then((d) => checkDegrees(plan, input.catalog, d, [...AUTOMATIC_PROGRAMS, ...layers], { today: new Date(), confirmed: input.plan.confirmedSlots ?? [] })) : null,
   ]);
   // Match by program id, not position: checkDegrees' own entries are laid out layers-first
   // (Gen Ed, university, then each degree's programs), while the Audit tab expects chosen
@@ -103,7 +108,9 @@ export async function runAnalysis(input: { plan: AdvisorPlan; catalog: PlanCatal
       const result = results[p]!.requirements[r]!;
       return { requirement, result, gap: describeGap(requirement, result, { courses, catalog: catalogList }) };
     });
-    return { program, requirements, satisfied: requirements.filter((x) => x.result.status === "satisfied").length };
+    const gpa = results[p]!.requirements.find((x) => x.id === PROGRAM_GPA_ID) ?? null;
+    const satisfied = requirements.filter((x) => x.result.status === "satisfied").length + (gpa?.status === "satisfied" ? 1 : 0);
+    return { program, requirements, gpa, total: requirements.length + (gpa ? 1 : 0), satisfied };
   });
 
   const term = matriculationTermId(input.plan.startTerm);

@@ -1,11 +1,14 @@
 "use client";
 
-import { checkPlan } from "@superterp/plan/check";
+import { checkPlan } from "@turboterp/plan/check";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Segmented } from "@/components/Segmented";
 import type { Analysis } from "@/lib/advisor/analysis";
 import { checkerPlan } from "@/lib/advisor/checker";
 import { hasConsent } from "@/lib/advisor/consent";
+import { authConfigured } from "@/lib/auth/client";
+import { useSession } from "@/lib/auth/use-session";
+import { AccountLine, SignInGate } from "./SignInGate";
 import { groupIssues } from "@/lib/advisor/issues";
 import type { AdvisorPlan } from "@/lib/advisor/plan-state";
 import { computePriorCredit } from "@/lib/advisor/prior-credit";
@@ -15,7 +18,9 @@ import { AuditView } from "./AuditView";
 import { CourseSheet } from "./CourseSheet";
 import { useCatalog, type CatalogState } from "./data";
 import { DisclaimerGate } from "./DisclaimerGate";
+import { ExportMenu } from "./ExportMenu";
 import { ImportTranscriptView } from "./ImportTranscriptView";
+import type { AcademicEvent } from "@turboterp/campus-data";
 import { PlanView } from "./PlanView";
 import { PriorCreditView } from "./PriorCreditView";
 import { SetupView } from "./SetupView";
@@ -35,14 +40,18 @@ const ANALYSIS_DELAY_MS = 350;
 
 export type OpenCourse = { id: string; term: string | null };
 
-export function AdvisorApp() {
+export function AdvisorApp({ calendar }: { calendar: AcademicEvent[] }) {
   const store = useAdvisorStore();
   const catalog = useCatalog();
+  const session = useSession();
+  const gated = authConfigured();
 
   if (store === null) return <Shell />;
+  if (gated && session.status === "loading") return <Shell />;
+  if (gated && session.status === "signed-out") return <SignInGate />;
   if (!store.consent || !hasConsent(store.consent)) return <DisclaimerGate />;
   if (!store.plan) return <SetupView plan={null} onDone={(plan) => savePlan(plan)} />;
-  return <Planner plan={store.plan} catalog={catalog} signedBy={store.consent.name} signedAt={store.consent.acceptedAt} />;
+  return <Planner plan={store.plan} catalog={catalog} signedBy={store.consent.name} signedAt={store.consent.acceptedAt} calendar={calendar} />;
 }
 
 function Shell() {
@@ -56,7 +65,7 @@ function Shell() {
   );
 }
 
-function Planner({ plan, catalog, signedBy, signedAt }: { plan: AdvisorPlan; catalog: CatalogState; signedBy: string; signedAt: string }) {
+function Planner({ plan, catalog, signedBy, signedAt, calendar }: { plan: AdvisorPlan; catalog: CatalogState; signedBy: string; signedAt: string; calendar: AcademicEvent[] }) {
   const view = useView();
   const [editing, setEditing] = useState(() => initialSetup());
   const [importing, setImporting] = useState(() => initialImport());
@@ -87,6 +96,7 @@ function Planner({ plan, catalog, signedBy, signedAt }: { plan: AdvisorPlan; cat
             {programsLabel(plan.programs)} · Catalog {plan.catalogYear.replace("-", "–")}
           </p>
           <h1 className={styles.title}>Advisor</h1>
+          {authConfigured() ? <AccountLine /> : null}
         </div>
         <button type="button" className={styles.ghostButton} onClick={() => setImporting(true)}>
           Import transcript
@@ -94,6 +104,7 @@ function Planner({ plan, catalog, signedBy, signedAt }: { plan: AdvisorPlan; cat
         <button type="button" className={styles.ghostButton} onClick={() => setEditing(true)}>
           Edit setup
         </button>
+        <ExportMenu plan={plan} analysis={analysis} catalog={ready?.catalog ?? null} />
       </header>
 
       <div className={styles.tabs}>
@@ -102,13 +113,13 @@ function Planner({ plan, catalog, signedBy, signedAt }: { plan: AdvisorPlan; cat
 
       {catalog.status === "missing" ? (
         <p className={styles.banner} data-tone="warning">
-          Course data isn&apos;t built on this server yet, so SuperTerp can&apos;t search courses or check prerequisites. Run{" "}
+          Course data isn&apos;t built on this server yet, so TurboTerp can&apos;t search courses or check prerequisites. Run{" "}
           <code>npm run advisor-data</code>.
         </p>
       ) : null}
 
       {view === "plan" ? (
-        <PlanView plan={plan} catalog={catalog} checked={checked} analysis={analysis} prior={prior} onOpenCourse={setOpen} />
+        <PlanView plan={plan} catalog={catalog} checked={checked} analysis={analysis} prior={prior} calendar={calendar} onOpenCourse={setOpen} />
       ) : null}
       {view === "credit" ? <PriorCreditView plan={plan} prior={prior} catalog={catalog} /> : null}
       {view === "audit" ? <AuditView plan={plan} analysis={analysis} onOpenCourse={setOpen} /> : null}
@@ -132,7 +143,7 @@ function Planner({ plan, catalog, signedBy, signedAt }: { plan: AdvisorPlan; cat
         </p>
         <p>
           Agreement signed by {signedBy} on {date}.
-          {ready ? ` Course data: ${termLabel(ready.term)} Schedule of Classes; courses not offered that term show as unknown.` : ""}
+          {ready ? ` Course data: ${termsLabel(ready.terms)} Schedule${ready.terms.length > 1 ? "s" : ""} of Classes; courses in none of those terms show as unknown.` : ""}
         </p>
       </footer>
     </main>
@@ -140,6 +151,10 @@ function Planner({ plan, catalog, signedBy, signedAt }: { plan: AdvisorPlan; cat
 }
 
 const termLabel = (id: string) => termFromMatriculationId(id) ?? "";
+const termsLabel = (ids: string[]) => {
+  const names = [...ids].sort().map(termLabel);
+  return names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names.at(-1)}` : (names[0] ?? "");
+};
 
 /** ?course=CMSC351 opens that course's sheet (a deep link; also used by screenshots). */
 function initialCourse(): OpenCourse | null {

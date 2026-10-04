@@ -1,0 +1,26 @@
+{
+  "programId": "me-usmsm-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/college-of-southern-maryland/mechanical-engineering-usmsm/",
+  "fetched": "2026-09-28",
+  "official": true,
+  "notes": [
+    "Southern Maryland version: mirrors the College Park Mechanical Engineering plan (me-major); the requirements are identical, so the same plan is used. Its official flag and placeholder notes carry over below.",
+    "A. James Clark School of Engineering official Fall 2026 Mechanical Engineering graduation plan. General-education slots (ENGL101, Oral Communication, Professional Writing, Scholarship in Practice, Humanities, History/Social Sciences) are left out: only the program's own requirements are audited here (they're covered by gen-ed-2026-27.ts).",
+    "The chemistry lecture sequence (Year 1 Fall) is filled with CHEM135 (the plan's own scheduled course), not the CHEM131/CHEM134 alternate.",
+    "ENES100 and ENES102 are each offered 'Year 1 Fall or Spring' on the plan; filled here as ENES102 (Fall) and ENES100 (Spring), matching the plan's own default first listing in each term.",
+    "The 'ENME 332 or ENME 400' slot is filled with ENME332 in Year 3 Spring (the plan's own default first listing there); ENME400 is filled in Year 4 Fall (the plan's default first listing for that term's paired slot). Both courses are required regardless of which term each is taken in.",
+    "The 'ENES200 or ENEE200' slot (Year 2 Fall) is filled with ENES200, as printed first on the graduation plan and catalog table; ENEE200 would satisfy the requirement equally.",
+    "The five Technical Elective slots (Year 4 Fall x2, Year 4 Spring x3) are filled with ENME442, ENME454, ENME489C, ENME489E and ENME489Q, all from the department Bachelor of Science page's own Technical Electives list; any five qualifying courses totaling 15 credits would satisfy the requirement."
+  ],
+  "credits": { "MATH140": 4, "MATH141": 4, "MATH241": 4, "PHYS261": 1, "PHYS271": 1, "ENME272": 2, "UNIV100": 1 },
+  "terms": [
+    { "term": "Year 1 Fall", "courses": ["ENES102", "MATH140", "CHEM135", "UNIV100"] },
+    { "term": "Year 1 Spring", "courses": ["ENES100", "MATH141", "PHYS161", "ENME272"] },
+    { "term": "Year 2 Fall", "courses": ["ENES221", "ENME202", "MATH241", "PHYS260", "PHYS261", "ENES200"] },
+    { "term": "Year 2 Spring", "courses": ["ENES220", "ENES232", "MATH246", "PHYS270", "PHYS271"] },
+    { "term": "Year 3 Fall", "courses": ["ENME331", "ENME350", "ENME382", "ENME392"] },
+    { "term": "Year 3 Spring", "courses": ["ENME332", "ENME351", "ENME361", "ENME371"] },
+    { "term": "Year 4 Fall", "courses": ["ENME400", "ENME472", "ENME442", "ENME454"] },
+    { "term": "Year 4 Spring", "courses": ["ENME462", "ENME489C", "ENME489E", "ENME489Q"] }
+  ]
+}

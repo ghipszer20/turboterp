@@ -12,7 +12,7 @@
     "Allied/Related Fields filled with PHYS102 and BSCI103, the catalog's own named examples for this requirement."
   ],
   "terms": [
-    { "term": "Freshman Fall", "courses": ["HESP120", "PSYC100"] },
+    { "term": "Freshman Fall", "courses": ["HESP120", "PSYC100", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["HESP202"] },
     { "term": "Sophomore Fall", "courses": ["HESP305", "PHYS102"] },
     { "term": "Sophomore Spring", "courses": ["HESP300", "HESP311", "QMMS251"] },
@@ -20,5 +20,6 @@
     { "term": "Junior Spring", "courses": ["HESP407", "HESP411"] },
     { "term": "Senior Fall", "courses": ["HESP406"] },
     { "term": "Senior Spring", "courses": ["HESP422"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

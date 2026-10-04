@@ -1,0 +1,14 @@
+{
+  "programId": "engl-minor-digital-storytelling",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/english-language-literature/digital-storytelling-poetics-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Constructed from the catalog: ENGL295 plus 12 credits of 3xx/4xx courses. The approved list (go.umd.edu/digitalstorytelling) was not in the fetched sources, so the four 3xx/4xx ENGL courses are placeholders (unverified against it). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["ENGL295"] },
+    { "term": "Term 2", "courses": ["ENGL393", "ENGL352"] },
+    { "term": "Term 3", "courses": ["ENGL353", "ENGL498"] }
+  ]
+}

@@ -19,6 +19,7 @@ export const chemMajorBa: Program = {
     "Department of Chemistry and Biochemistry, Chemistry BA (1905A) checksheet, effective Fall 2023 (updated 5/19/26), " +
     "https://chem.umd.edu/sites/default/files/chemistryba-checksheet-f26.pdf (fetched 2026-09-27)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "The checksheet's own file is named with an '-f26' suffix like the B.S. one and was last updated 5/19/26, but its header still reads 'Effective Fall 2023' -- the B.A. curriculum apparently hasn't changed since; noted for the owner in case a newer, unpublished B.A. checksheet exists.",
@@ -27,7 +28,7 @@ export const chemMajorBa: Program = {
     "Physical chemistry requirement is a three-way `sets` choice per the checksheet's 'Elements of Physical Chemistry I -or- Physical Chemistry 1+2' row: CHEM480 alone, or CHEM481+CHEM482, or CHEM481+BCHM485 (BCHM485 explicitly named by the checksheet as a CHEM482 substitute here, same substitution already seen on the Biochemistry major).",
     "Required Upper Level Laboratory (3-4 cr) is a four-way `sets` choice: BCHM477, CHEM425, BCHM464, or the CHEM483+CHEM484 pair together.",
     "The 100-200 level STEM elective (3-4 cr) and the upper-level CHEM/BCHM elective (3 cr) each encoded as `choose` pools from the checksheet's own named course lists; 'Other CHEM course(s) contingent on approval from the Undergraduate Director' (CHEM4XX) is not encoded (approval-gated, unbounded).",
-    "Not encoded (engine gap, both sources agree): the 2.0 cumulative GPA and 2.0 major-average GPA requirements; the audit only checks per-course minGrade (C-).",
+    "Not encoded (engine gap, both sources agree): the 2.0 cumulative (university) GPA requirement. Program GPA 2.0 encoded as minGpa.",
     "Not encoded (engine gap): residency rules -- at least 30 credits at UMD, 15 of the final 30 credits at the 300-400 level, and 12 upper-level major credits at UMD. Manual check.",
   ],
   requirements: [

@@ -1,0 +1,14 @@
+{
+  "programId": "plcy-minor-step",
+  "source": "https://spp.umd.edu/science-technology-ethics-and-policy-step-minor",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No published plan exists for minors; constructed from the catalog and department requirements. The three electives have no published list (OPEN SLOT), so they are left out; only ENES240 and the ENES440 capstone are placed."
+  ],
+  "credits": {},
+  "terms": [
+    { "term": "Sophomore Fall", "courses": ["ENES240"] },
+    { "term": "Senior Spring", "courses": ["ENES440"] }
+  ]
+}

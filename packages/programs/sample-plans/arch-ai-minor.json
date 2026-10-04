@@ -1,0 +1,13 @@
+{
+  "programId": "arch-ai-minor",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/architecture-planning-preservation/artificial-intelligence-in-architecture-Minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog's required courses (ARCH418 appears once; the minor needs the J and D sections). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["ARCH230", "PHIL211"] },
+    { "term": "Term 2", "courses": ["ARCH418", "ARCH470"] }
+  ]
+}

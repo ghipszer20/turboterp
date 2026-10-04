@@ -1,0 +1,15 @@
+{
+  "programId": "plcy-minor-nonprofit-leadership",
+  "source": "https://spp.umd.edu/your-education/undergraduate/minors",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No published plan exists for minors; constructed from the department requirements. Third required course filled with PLCY215; electives filled with AGNR301 and GEOG330 from the approved list."
+  ],
+  "credits": {},
+  "terms": [
+    { "term": "Sophomore Fall", "courses": ["PLCY213", "PLCY215"] },
+    { "term": "Junior Fall", "courses": ["PLCY310", "AGNR301"] },
+    { "term": "Senior Fall", "courses": ["GEOG330"] }
+  ]
+}

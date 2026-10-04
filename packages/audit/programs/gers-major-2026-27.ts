@@ -20,6 +20,7 @@ export const gersMajor: Program = {
     "College of Arts and Humanities official four-year academic plan for German Studies, " +
     "fetched 2026-09-28 (https://drive.google.com/uc?export=download&id=1hDoLft_mRqAwKEzh2voKvNnt32zj761n#German-Studies)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Department page vs. catalog: no disagreement found. sllc.umd.edu/german has no German-Studies-" +
@@ -48,10 +49,10 @@ export const gersMajor: Program = {
     "The World Language Placement page (arhu.umd.edu/academics/world-language-placement, fetched as " +
       "context) has no German-specific placement rule to encode; it's a generic ARHU-wide procedure " +
       "description page.",
-    "Not encoded (engine gaps): the 2.0 GPA-in-the-major requirement, the plan's 'At least 27 credits " +
+    "Not encoded (engine gaps): the plan's 'At least 27 credits " +
       "must be completed at 3xx-4xx level' aggregate check, residency rules (30 credits at UMD, 15 of " +
       "the final 30 at the 300-400 level, 12 upper-level major credits at UMD), ARHU's 39 upper-level-" +
-      "credit graduation requirement, and the 120-credit graduation minimum.",
+      "credit graduation requirement, and the 120-credit graduation minimum. Program GPA 2.0 encoded as minGpa.",
   ],
   requirements: [
     { kind: "course", id: "gers204", name: "German Grammar Review", options: ["GERS204"] },

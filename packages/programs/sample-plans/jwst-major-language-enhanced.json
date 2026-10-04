@@ -13,7 +13,7 @@
     "In-Major Electives (three courses in Jewish Studies) filled with JWST234, JWST235, and JWST256, all real JWST courses from the Academic Catalog's approved-course list."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["JWST171"] },
+    { "term": "Year 1 Fall", "courses": ["JWST171", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["JWST233"] },
     { "term": "Year 2 Fall", "courses": ["ISRL282"] },
     { "term": "Year 2 Spring", "courses": ["JWST262"] },

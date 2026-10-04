@@ -1,0 +1,15 @@
+{
+  "programId": "kore-minor-studies",
+  "source": "https://sllc.umd.edu/korean",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog requirements: KORA201 and KORA311 for language, and HIST319, SOCY398 and HIST284 for Korea-related courses. Flagged in docs/project/owner-review.md."
+  ],
+  "credits": {},
+  "terms": [
+    { "term": "Term 1", "courses": ["KORA201", "HIST284"] },
+    { "term": "Term 2", "courses": ["KORA311", "HIST319"] },
+    { "term": "Term 3", "courses": ["SOCY398"] }
+  ]
+}

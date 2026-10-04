@@ -21,6 +21,7 @@ export const rasMinor: Program = {
     "UMD Academic Catalog 2026–27, Robotics and Autonomous Systems Minor (CMSC); " +
     "Maryland Robotics Center, https://robotics.umd.edu/minor (fetched 2026-09-27)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   maxSharedWith: [{ courses: 2 }],
   reviewNotes: [
@@ -30,8 +31,8 @@ export const rasMinor: Program = {
     "The catalog names three electives by their umbrella special-topics code with the qualifying section in parentheses -- 'ENEE408 Capstone Design Project (ENEE408I Capstone Autonomous Robotics)', 'ENAE488 Topics in Aerospace Engineering (ENAE488O Introduction to Autonomous Multi-Robot Swarms)', 'CMSC498 Selected Topics in Computer Science (CMSC498E Robotics)' -- meaning only that specific section counts, not any section of the umbrella course. Encoded with the specific suffixed codes (ENEE408I, ENAE488O, CMSC498E), matching how the batch-1 Mathematics major encodes ENME489I and AOSC358L (specific sections of umbrella courses) rather than their bare parent codes.",
     "Prerequisites (MATH246 or ENES221, plus one of CMSC131/ENME202/ENAE202/ENEE150) are a declaration gate, not minor requirements themselves; not encoded (matches how the CS minor's gateway courses are kept separate from its core requirements) -- except that unlike the CS minor's gateway, these aren't restated as the minor's own Requirements here since the catalog cleanly separates 'Prerequisites' from 'Requirements' (no ambiguity to resolve).",
     "'Students may waive the supporting math course if they complete it for another minor or major' isn't encoded (the requirement itself still needs a qualifying course on the transcript; the waiver is an advising/paperwork exception).",
-    "'Open only to students majoring in Aerospace Engineering, Electrical and Computer Engineering, Mechanical Engineering, or Computer Science' [manual]: an eligibility-by-major gate, not enforced (no declared-major concept in the engine).",
-    "Department page's declaration gates (sophomore standing / 30 credits, 3.0 GPA, at least four semesters remaining before graduation) [manual]: admission conditions, not modeled. The department page separately states 'a minimum of 2.0 GPA and C- or better in all courses required for the minor' [manual]: the C- floor is the Program's minGrade; the 2.0 minor GPA is a manual check (no GPA-average concept).",
+    "'Open only to students majoring in Aerospace Engineering, Electrical and Computer Engineering, Mechanical Engineering, or Computer Science' [manual]: an eligibility-by-major gate. Enforced via onlyOpenTo (Aerospace, Electrical Engineering, Computer Engineering, Mechanical Engineering and every Computer Science track).",
+    "Department page's declaration gates (sophomore standing / 30 credits, 3.0 GPA, at least four semesters remaining before graduation) [manual]: admission conditions, not modeled. The department page separately states 'a minimum of 2.0 GPA and C- or better in all courses required for the minor' [manual]: the C- floor is the Program's minGrade; Program GPA 2.0 encoded as minGpa.",
     "'A maximum of 2 courses may be used to satisfy the requirements of both a major and a minor' -> maxSharedWith: [{ courses: 2 }].",
   ],
   requirements: [
@@ -58,4 +59,4 @@ export const rasMinor: Program = {
   ],
 };
 
-export const rasMinorMeta: ProgramMeta = { kind: "minor", college: "CMNS", short: "Robotics & Autonomous Systems", sources: { catalog: "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/computer-science/robotics-autonomous-systems-minor/", department: "https://robotics.umd.edu/minor" } };
+export const rasMinorMeta: ProgramMeta = { kind: "minor", college: "CMNS", short: "Robotics & Autonomous Systems", sources: { catalog: "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/computer-science/robotics-autonomous-systems-minor/", department: "https://robotics.umd.edu/minor" }, onlyOpenTo: { programs: ["aero", "ee-major", "ee-usmsm-major", "compe", "me-major", "me-usmsm-major", "cmsc-major", "cmsc-major-cybersecurity", "cmsc-major-data-science", "cmsc-major-machine-learning", "cmsc-major-quantum-information"], reason: "Only open to Aerospace Engineering, Electrical and Computer Engineering, Mechanical Engineering or Computer Science majors." } };

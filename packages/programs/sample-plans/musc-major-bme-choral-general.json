@@ -13,7 +13,7 @@
   ],
   "credits": { "MUSC329": 1, "MUSC099": 1 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["MUSP109", "MUSC102", "MUSC150", "MUSC329", "MUED186", "MUSC099"] },
+    { "term": "Year 1 Fall", "courses": ["MUSP109", "MUSC102", "MUSC150", "MUSC329", "MUED186", "MUSC099", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["MUSP110", "MUSC103", "MUSC151", "MUSC329", "MUED187", "MUSC099"] },
     { "term": "Year 2 Fall", "courses": ["MUSP207", "MUSC202", "MUSC250", "MUSC329", "MUED213", "MUSC099"] },
     { "term": "Year 2 Spring", "courses": ["MUSP208", "MUSC203", "MUSC251", "MUSC329", "MUED216", "MUSC099"] },

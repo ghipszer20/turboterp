@@ -9,7 +9,7 @@
     "Animal Management Course filled with ANSC242. Power/Structural/Technical choice filled with PLSC235; INAG235 would satisfy it equally. Plant Sciences choice filled with PLSC110 & PLSC111; PLSC112 & PLSC113 would satisfy it equally. Food Science choice filled with NFSC112; PLSC115 would satisfy it equally. Education Pre-Professional's one-of-two filled with TLPL401; TLPL488 would satisfy it equally. Teacher Certification's science-teaching choice filled with TLPL425; AGST425 would satisfy it equally."
   ],
   "terms": [
-    { "term": "Freshman Fall", "courses": ["CHEM131", "PLSC201", "ANSC101", "ANSC103", "TLPL101"] },
+    { "term": "Freshman Fall", "courses": ["CHEM131", "PLSC201", "ANSC101", "ANSC103", "TLPL101", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["CHEM132", "PLSC206", "MATH113", "TLPL102"] },
     { "term": "Sophomore Fall", "courses": ["CHEM231", "ENST200", "AREC250", "BSCI160"] },
     { "term": "Sophomore Spring", "courses": ["CHEM232", "BSCI337", "BSCI180", "INAG250"] },
@@ -17,5 +17,6 @@
     { "term": "Junior Spring", "courses": ["PLSC453", "PLSC110", "PLSC111", "NFSC112"] },
     { "term": "Senior Fall", "courses": ["AGST440", "AGST442", "EDHD426", "TLPL401", "TLPL414"] },
     { "term": "Senior Spring", "courses": ["TLPL415", "TLPL425", "TLPL481", "TLPL478", "TLPL479", "TLPL489"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

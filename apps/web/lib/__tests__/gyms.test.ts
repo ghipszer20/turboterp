@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseHours, type RecWellAreaToday } from "@superterp/campus-data";
+import { parseHours, type RecWellAreaToday } from "@turboterp/campus-data";
 import { gymRowTitle, MAIN_GYMS, regroupEppleyAreas } from "../gyms";
 
 const area = (

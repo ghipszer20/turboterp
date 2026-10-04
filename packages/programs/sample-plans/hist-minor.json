@@ -1,0 +1,14 @@
+{
+  "programId": "hist-minor",
+  "source": "https://history.umd.edu/academics/undergraduate/history-minor",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: six HIST courses, three at 3xx/4xx-level, at most one at 100-level. Geographic fields and pre/post-1750 balance are not checked by the audit. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["HIST110", "HIST208"] },
+    { "term": "Term 2", "courses": ["HIST284", "HIST319"] },
+    { "term": "Term 3", "courses": ["HIST396", "HIST408"] }
+  ]
+}

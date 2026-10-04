@@ -3,7 +3,7 @@
 // ("JIMÉNEZ-PORTER WRITERS' HOUSE NOTATION TRACK CURRICULAR REQUIREMENTS"; page fetched 2026-09-25).
 // Hand-transcribed (prose page). UNVERIFIED.
 
-import type { Program, ProgramMeta } from "@superterp/audit";
+import type { Program, ProgramMeta } from "@turboterp/audit";
 import { CATALOG_YEAR } from "./common.ts";
 
 export const SOURCE =

@@ -24,6 +24,7 @@ export const romlMajorItalianSpanish: Program = {
     "https://drive.google.com/uc?export=download&id=1nL-g2PQXdXaw7Zs4gDP8g8w0Np5suauD#Italian-&-Spanish " +
     "(fetched 2026-09-28)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "'One additional course at the 4xx level in one of the two languages' (3 credits) is a choose " +

@@ -814,6 +814,26 @@
    "description": "Introduces students to University life. In a small classroom setting, students will explore how to successfully bridge the gap between high school and college. Study skills, career decision-making, and student development processes will be explored."
   },
   {
+   "id": "CMNS100",
+   "department": "CMNS",
+   "title": "Becoming a Science Terp",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": "Must be first semester CMNS freshman student.",
+    "creditOnlyGrantedFor": "UNIV100 or CMNS100.",
+    "other": {}
+   },
+   "description": "Introduction to the College of Computer, Mathematical, and Natural Sciences for first-semester freshmen."
+  },
+  {
    "id": "CHEM131",
    "department": "CHEM",
    "title": "Chemistry I - Fundamentals of General Chemistry",

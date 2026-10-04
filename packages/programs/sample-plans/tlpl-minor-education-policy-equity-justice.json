@@ -1,0 +1,14 @@
+{
+  "programId": "tlpl-minor-education-policy-equity-justice",
+  "source": "https://education.umd.edu/academics/programs/undergraduate/education-policy-equity-and-justice-minor",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: the three core courses plus two electives (TLPL443, TLPL481); neither source names an approved-elective list. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["TLPL254", "TLPL360"] },
+    { "term": "Term 2", "courses": ["PLCY354", "TLPL443"] },
+    { "term": "Term 3", "courses": ["TLPL481"] }
+  ]
+}

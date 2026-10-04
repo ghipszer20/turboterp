@@ -2,7 +2,7 @@
 // Source: https://sllc.umd.edu/fields/german/undergraduate/honors ("German Studies Honors Program"; fetched 2026-09-26).
 // Hand-transcribed. UNVERIFIED.
 
-import type { Program, ProgramMeta } from "@superterp/audit";
+import type { Program, ProgramMeta } from "@turboterp/audit";
 import { CATALOG_YEAR } from "./common.ts";
 
 export const SOURCE = "https://sllc.umd.edu/fields/german/undergraduate/honors";

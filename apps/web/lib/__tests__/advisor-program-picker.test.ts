@@ -1,6 +1,7 @@
-import type { ProgramEntry } from "@superterp/programs";
+import type { ProgramEntry } from "@turboterp/programs";
 import { describe, expect, it } from "vitest";
-import { kindTabs, pickerGroups } from "../advisor/program-picker";
+import { findProgram } from "@turboterp/programs";
+import { kindTabs, optionState, pickerGroups } from "../advisor/program-picker";
 
 const entry = (id: string, name: string, kind: ProgramEntry["kind"], college: ProgramEntry["college"], track?: string): ProgramEntry => ({
   id,
@@ -52,5 +53,22 @@ describe("pickerGroups", () => {
 
   it("finds nothing for a search with no match", () => {
     expect(pickerGroups(OPTIONS, { kind: "major", query: "zoology" })).toEqual([]);
+  });
+});
+
+describe("optionState (eligibility gates)", () => {
+  const astrMinor = findProgram("astr-minor")!;
+
+  it("leaves an ungated or unblocked option enabled", () => {
+    expect(optionState(astrMinor, ["cmsc-major"])).toEqual({ on: false, disabled: false });
+    expect(optionState(findProgram("cmsc-major")!, ["astr-major-data-science"])).toEqual({ on: false, disabled: false });
+  });
+
+  it("disables an option a chosen major blocks, with the reason", () => {
+    expect(optionState(astrMinor, ["astr-major-data-science"])).toEqual({ on: false, disabled: true, blocked: astrMinor.notOpenTo!.reason });
+  });
+
+  it("keeps an already-chosen blocked option removable", () => {
+    expect(optionState(astrMinor, ["astr-major-data-science", "astr-minor"])).toEqual({ on: true, disabled: false, blocked: astrMinor.notOpenTo!.reason });
   });
 });

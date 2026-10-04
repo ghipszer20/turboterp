@@ -66,8 +66,9 @@ export const anscCommonReviewNotes: string[] = [
     "page that was not found/fetched; only the catalog's own printed course lists are encoded here, " +
     "which may be narrower than the department's live, currently-approved list. Flagged in " +
     "docs/project/owner-review.md.",
+  "Program GPA 2.0 encoded as minGpa.",
   "Not encoded (engine gap, matches other majors' precedent): the catalog's minimum-grade policy's " +
-    "cumulative 2.0 GPA and separate 2.0 GPA within major requirements (the per-course C- floor IS " +
+    "cumulative 2.0 GPA (the per-course C- floor IS " +
     "encoded via minGrade); no residency rule is stated on this catalog page (unlike other majors' " +
     "department checklists); and the major's own 69-76 total-credit range plus each specialization's " +
     "34-37 / 38-39 credit total, which the audit has no concept for.",

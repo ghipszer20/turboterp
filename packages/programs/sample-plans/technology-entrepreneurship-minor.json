@@ -1,0 +1,14 @@
+{
+  "programId": "technology-entrepreneurship-minor",
+  "source": "https://mtech.umd.edu/educate/minor",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog: ENES140 and ENES210 (6 credits at 100/200 level) plus ENES460, ENES461, ENES462 (9 credits at 400 level). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["ENES140", "ENES210"] },
+    { "term": "Term 2", "courses": ["ENES460", "ENES461"] },
+    { "term": "Term 3", "courses": ["ENES462"] }
+  ]
+}

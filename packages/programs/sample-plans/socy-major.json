@@ -12,7 +12,7 @@
     "The two 400 Level SOCY Research Courses of Choice are filled with SOCY411 and SOCY412, both real SOCY courses from the Academic Catalog's approved list, chosen only to satisfy the level/count requirement -- the actual approved research-methods list maintained by the Sociology Undergraduate Advising Office is not in the source (see reviewNotes on the Program)."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["MATH107", "SOCY100"] },
+    { "term": "Year 1 Fall", "courses": ["MATH107", "SOCY100", "UNIV100"] },
     { "term": "Year 1 Spring", "courses": ["SOCY230"] },
     { "term": "Year 2 Fall", "courses": ["SOCY201"] },
     { "term": "Year 2 Spring", "courses": ["SOCY202"] },
@@ -20,5 +20,6 @@
     { "term": "Year 3 Spring", "courses": ["SOCY241"] },
     { "term": "Year 4 Fall", "courses": ["SOCY310", "SOCY411"] },
     { "term": "Year 4 Spring", "courses": ["SOCY410", "SOCY412"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

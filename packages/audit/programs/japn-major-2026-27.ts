@@ -30,6 +30,7 @@ export const japnMajor: Program = {
     "College of Arts and Humanities official four-year academic plan for Japanese, " +
     "fetched 2026-09-28 (https://drive.google.com/uc?export=download&id=1NkCebF68ZokYba325f7rASFoEz-XZTbX#Japanese)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Department page vs. catalog: no disagreement found. The department page (sllc.umd.edu/fields/japanese/major) " +
@@ -63,7 +64,7 @@ export const japnMajor: Program = {
       "ARTH 300-499 course is accepted for the general-elective slots, not only advisor-approved ones.",
     "The World Language Placement page (arhu.umd.edu/academics/world-language-placement, fetched as context) " +
       "has no Japanese-specific placement rule to encode; it's a generic ARHU-wide procedure description page.",
-    "Not encoded (engine gaps): the 2.0 GPA-in-the-major requirement, residency rules (at least 30 credits at " +
+    "Not encoded (engine gaps): residency rules (at least 30 credits at " +
       "UMD, 15 of the final 30 at the 300-400 level, 12 upper-level major credits at UMD), ARHU's 39 upper-" +
       "level-credit graduation requirement, and the 120-credit graduation minimum.",
   ],

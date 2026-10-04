@@ -29,13 +29,14 @@ export const bsciMajorPhnb: Program = {
     "Biological Sciences Undergraduate Program, Physiology and Neurobiology PHNB (0404E) degree sheet, " +
     "https://bsci.umd.edu/s/PHNB-Curriculum-2026.pdf (fetched 2026-09-27)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Basic Program and Supporting Courses are identical across every Biological Sciences specialization (see bsci-major-genb-2026-27.ts's review notes for the biology-lab, math-sequence and freshman-seminar encodings, which repeat here).",
     "'Area courses: 11 credits' plus 'PHNB Area Labs (At least one)' is encoded as an 11-credit `choose` pool over the lecture list, the lab list and the optional statistics course, with an overlay `choose` (count 1) over the lab list for the at-least-one-Lab minimum.",
     "'Enrichment: 3 credits, from any 300- or 400-level BSCI, CHEM, or BCHM course' is encoded as a `choose` credit pool over that department/number-range filter.",
     "Special Topics and honors seminars (BSCI328/338/339/348/439, BSCI378H/398H) toward Area are not encoded -- variable section codes and/or advisor-gated.",
-    "Not encoded (engine gap, both sources agree): the 2.0 cumulative GPA and 2.0 major-average-GPA requirements.",
+    "Not encoded (engine gap, both sources agree): the 2.0 cumulative (university) GPA requirement. Program GPA 2.0 encoded as minGpa.",
   ],
   requirements: [
     { kind: "course", id: "bsci160", name: "Ecology and Evolution 1", options: ["BSCI160"] },

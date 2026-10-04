@@ -1,7 +1,7 @@
-// The stored plan as @superterp/plan's checker reads it.
+// The stored plan as @turboterp/plan's checker reads it.
 
-import type { CreditCourse } from "@superterp/credit";
-import type { Plan } from "@superterp/plan/check";
+import type { CreditCourse } from "@turboterp/credit";
+import type { Plan } from "@turboterp/plan/check";
 import type { AdvisorPlan } from "./plan-state";
 
 export function checkerPlan(plan: AdvisorPlan, priorCourses: CreditCourse[]): Plan {

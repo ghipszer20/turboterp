@@ -5,7 +5,7 @@
 // the same thing from the live Programs and fails if the checked-in file has drifted -- e.g. a
 // batch added a major but forgot to regenerate it (docs/project/program-batches.md).
 
-import { programCourseIds } from "@superterp/audit";
+import { programCourseIds } from "@turboterp/audit";
 import { describe, expect, it } from "vitest";
 import { MAJOR_COURSE_SETS } from "../src/course-sets.generated.ts";
 import { PROGRAMS } from "../src/registry.ts";
@@ -18,7 +18,7 @@ describe("MAJOR_COURSE_SETS", () => {
       fresh[entry.id] = programCourseIds(await entry.load());
     }
     expect(MAJOR_COURSE_SETS).toEqual(fresh);
-  });
+  }, 60_000); // loads every program file; slow under load as the registry grows
 
   it("carries no entries for non-major programs", () => {
     const nonMajors = new Set(PROGRAMS.filter((p) => p.kind !== "major").map((p) => p.id));

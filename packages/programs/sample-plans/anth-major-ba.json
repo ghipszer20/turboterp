@@ -10,7 +10,7 @@
     "Quantitative Skills Requirement (B.A.): STAT100."
   ],
   "terms": [
-    { "term": "Freshman Fall", "courses": ["ANTH210"] },
+    { "term": "Freshman Fall", "courses": ["ANTH210", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["ANTH240"] },
     { "term": "Sophomore Fall", "courses": ["ANTH260", "STAT100"] },
     { "term": "Sophomore Spring", "courses": ["ANTH340"] },
@@ -18,5 +18,6 @@
     { "term": "Junior Spring", "courses": ["ANTH496", "ANTH323"] },
     { "term": "Senior Fall", "courses": ["ANTH441", "ANTH415"] },
     { "term": "Senior Spring", "courses": ["ANTH440"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

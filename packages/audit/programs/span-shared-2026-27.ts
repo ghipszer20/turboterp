@@ -143,8 +143,7 @@ export const spanCommonReviewNotes: string[] = [
   "'Courses cannot be double-counted for different requirements in the major' is upheld by the audit " +
     "engine's own course-to-requirement assignment (a course is assigned to at most one requirement, " +
     "absent an explicit `overlay`), so no separate encoding is needed.",
-  "Not encoded (engine gaps, matches other ARHU language majors' precedent): the 2.0 GPA-in-the-major " +
-    "requirement (distinct from the per-course C- floor, which IS encoded via `minGrade`); residency " +
+  "Not encoded (engine gaps, matches other ARHU language majors' precedent): residency " +
     "rules (at least 30 credits at UMD, 15 of the final 30 at the 300-400 level, 12 upper-level major " +
     "credits at UMD); and the 120-credit graduation minimum.",
   "The ARHU World Language Placement page (arhu.umd.edu/academics/world-language-placement, fetched " +

@@ -20,6 +20,7 @@ export const psycMajorBa: Program = {
     "Department of Psychology, PSYC Courses & PSYC Syllabi, https://psyc.umd.edu/undergraduate/psyc-courses-psyc-syllabi (fetched 2026-09-28); " +
     "Feller Center, Psychology Major Checklist (Internet Archive, effective Spring 2022, updated 4/23/24) (fetched 2026-09-28)",
   minGrade: "C-",
+  minGpa: 1.7,
   verified: false,
   reviewNotes: [
     "PSYC100 (or PSYC221 if AP/IB credit was earned for PSYC100) needs a B- or higher, not the program's usual C-; both the catalog and the department page agree. Encoded as a requirement-level minGrade override.",
@@ -29,7 +30,7 @@ export const psycMajorBa: Program = {
     "psyc-total-credits (35 credits of any PSYC course, overlay) stands in for the catalog's 'at least 35 credits (11 courses) in Psychology' / the checklist's '11 PSYC courses totaling at least 35 credits'. It's an overlay so PSYC100/200/300, the multicultural course, the 400-level courses and the thematic courses all count toward it without being used up twice. The 11-course count itself isn't separately enforced (credits only). Per the checklist, PSYC309A/309C/389/478/479 don't count toward this total; the newly-fetched courses page independently lists a longer 'do not apply towards degree requirements' set (PSYC111, 123, 303, 309F/G/P, 389, 409, 468H, 469H, 478, 479, 499H) -- neither list is encoded as an exclusion on psyc-total-credits (the filter is department-only, per the no-named-list precedent elsewhere in this codebase), but the sample plan was checked against the courses page's list and no longer uses any course from it (it previously used PSYC303, since replaced).",
     "PSYC 400-Level Lab (psyc-400-lab) is encoded as '4 credits of 400-level PSYC' rather than a verified lab-course identity: the audit's course filter has no notion of which courses are labs, only department and course number. In principle two 3-credit 400-level courses could substitute for one true lab course; treat this as an approximation of the checklist's 'one 400-level Lab {Must have 85 credits}' row.",
     "Not encoded (admission/progress gate, matches other majors' precedent): the LEP gateway and Academic Review requirements (PSYC100 B-, BSCI170 C-, math C- within the student's first 45 credits; a 2.00 cumulative GPA for continuing students, 2.70 for later transfers/declarers applying to the major) and the 'no more than 3 PSYC courses per semester' cap (with named exceptions). These gate progress toward/within the major rather than what's needed to graduate with it.",
-    "Not encoded (engine gap): the requirement that all 35 PSYC credits average a C- (a GPA-style average, not a per-course minimum -- the per-course C-/B- minimums above are encoded); the college's residency/upper-level rules (15 of the final 30 credits at the 300-400 level, 12 upper-level major credits at UMD, 30 credits at UMD); and the 120-credit graduation minimum.",
+    "Not encoded (engine gap): the per-course C-/B- minimums above are encoded, and the requirement that all 35 PSYC credits average a C- is encoded as program GPA 1.7 (minGpa; C- = 1.7); the college's residency/upper-level rules (15 of the final 30 credits at the 300-400 level, 12 upper-level major credits at UMD, 30 credits at UMD); and the 120-credit graduation minimum.",
   ],
   requirements: [
     {

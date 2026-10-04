@@ -1,0 +1,15 @@
+{
+  "programId": "ugst-minor-asian-american-studies",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/undergraduate-studies/asian-american-studies-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: AAST200 foundational; AAST351 and AAST394 as the two AAST electives; AAST443 taken as the CM/GTI elective (the CM/GTI list is not in the sources, so that slot is an open slot, not audited); AAST499 as the upper-division course. Flagged in docs/project/owner-review.md."
+  ],
+  "credits": {},
+  "terms": [
+    { "term": "Term 1", "courses": ["AAST200", "AAST351"] },
+    { "term": "Term 2", "courses": ["AAST394", "AAST443"] },
+    { "term": "Term 3", "courses": ["AAST499"] }
+  ]
+}

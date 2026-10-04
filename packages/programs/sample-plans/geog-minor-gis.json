@@ -1,0 +1,14 @@
+{
+  "programId": "geog-minor-gis",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/behavioral-social-sciences/geographical-sciences/geographic-information-science-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: GEOG272 and GEOG373 required, GEOG473 and GEOG475 for the two GIS courses, GEOG306 for statistics. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["GEOG272", "GEOG306"] },
+    { "term": "Term 2", "courses": ["GEOG373"] },
+    { "term": "Term 3", "courses": ["GEOG473", "GEOG475"] }
+  ]
+}

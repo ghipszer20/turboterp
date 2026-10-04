@@ -5,7 +5,7 @@
 // explicit, confirmed "Update plan" click does (see plan-link.ts). `courses` is null until the
 // student overrides the plan's list for this term; `affectsPlan` says when that override changed.
 
-import type { Weekday } from "@superterp/course-data/schedules";
+import type { Weekday } from "@turboterp/course-data/schedules";
 import { DEFAULT_FILTERS, type FilterState } from "./filters";
 
 export type PlanId = "A" | "B" | "C";
@@ -28,7 +28,7 @@ export type SavedSchedule = {
   own: SectionPicks;
 };
 
-export const SAVED_KEY = "superterp-schedule";
+export const SAVED_KEY = "turboterp-schedule";
 
 export const emptySaved = (term: string): SavedSchedule => ({
   v: 1,

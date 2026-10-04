@@ -1,0 +1,13 @@
+{
+  "programId": "arth-minor",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/art-history-archaeology/art-history-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog requirements: three 2xx ARTH courses from the catalog's example list (ARTH200, ARTH250, ARTH290) and three 3xx ARTH courses (ARTH303, ARTH305, ARTH370, all named in the department's archaeology list). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["ARTH200", "ARTH250", "ARTH290"] },
+    { "term": "Term 2", "courses": ["ARTH303", "ARTH305", "ARTH370"] }
+  ]
+}

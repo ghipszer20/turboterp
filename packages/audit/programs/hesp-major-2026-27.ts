@@ -48,7 +48,7 @@ export const hespMajor: Program = {
       "course based on the biology of human systems' clause has no enumerable course list and is not " +
       "encoded, and the engine can't enforce the BSCI170-plus-(180-or-171) sequencing implied by the " +
       "catalog's wording -- any two courses from the six listed satisfy this requirement as encoded. The " +
-      "true advisor-approved list is almost certainly broader than these six courses; flag for the owner.",
+      "true advisor-approved list is almost certainly broader than these six courses; hesp-allied-fields is marked advisorMayApprove; flag for the owner.",
     "Not encoded (engine gaps, no sub-cap or GPA/residency mechanism): the 2.0 average required across all " +
       "major-requirement courses, the university residency rules (30 credits at UMD, 15 of the final 30 at " +
       "the 300-400 level, 12 upper-level major credits at UMD), and the 120-credit graduation minimum. The " +
@@ -120,6 +120,7 @@ export const hespMajor: Program = {
     {
       kind: "choose",
       id: "hesp-allied-fields",
+      advisorMayApprove: true,
       name: "Allied/Related Fields (2 courses)",
       count: 2,
       from: { courses: ["PHYS102", "PHYS103", "BSCI103", "BSCI170", "BSCI180", "BSCI171"] },

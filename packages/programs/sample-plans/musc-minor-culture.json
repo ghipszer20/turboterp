@@ -1,0 +1,17 @@
+{
+  "programId": "musc-minor-culture",
+  "source": "https://music.umd.edu/academic-programs/music-culture-minor",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No published plan for the minor; constructed from the catalog requirements. Two 2xx courses: MUSC204, MUSC220. Three 400-level: MUSC438E, MUSC438K (area studies) and MUSC435 (catalog-named alternative). Ensembles: MUSC129G (Balinese Gamelan) x2 and MUSC129K (Japanese Koto) x2, two culture areas, 1 credit each."
+  ],
+  "credits": { "MUSC129G": 1, "MUSC129K": 1 },
+  "terms": [
+    { "term": "Year 1 Fall", "courses": ["MUSC204", "MUSC129G"] },
+    { "term": "Year 1 Spring", "courses": ["MUSC220", "MUSC129G"] },
+    { "term": "Year 2 Fall", "courses": ["MUSC438E", "MUSC129K"] },
+    { "term": "Year 2 Spring", "courses": ["MUSC438K", "MUSC129K"] },
+    { "term": "Year 3 Fall", "courses": ["MUSC435"] }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "programId": "gfpl-major-development-sustainability",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/public-policy/global-and-foreign-policy-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No official four-year plan is published in the fetched sources; constructed from the catalog requirements (flagged in docs/project/owner-review.md). Gen Ed slots left out.",
+    "Global history placeholder filled with HIST200 (source gives only 'approved list, speak to advisor'); world language filled with SPAN103 then SPAN203 (the catalog's own example); statistics filled with STAT100.",
+    "The track-elective and track-or-general elective slots (12 credits) are OPEN SLOTs and are left out."
+  ],
+  "terms": [
+    { "term": "Year 1 Fall", "courses": ["GFPL100", "SPAN103"] },
+    { "term": "Year 1 Spring", "courses": ["GFPL102", "SPAN203", "STAT100"] },
+    { "term": "Year 2 Fall", "courses": ["GFPL203", "PLCY200"] },
+    { "term": "Year 2 Spring", "courses": ["AREC345", "PLCY304"] },
+    { "term": "Year 3 Fall", "courses": ["PLCY301", "SLLC200"] },
+    { "term": "Year 3 Spring", "courses": ["HIST200"] },
+    { "term": "Year 4 Fall", "courses": ["PLCY309"] }
+  ]
+}

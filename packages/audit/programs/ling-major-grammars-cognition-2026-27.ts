@@ -25,6 +25,7 @@ export const lingMajorGrammarsCognition: Program = {
     "https://drive.google.com/uc?export=download&id=1KT5gd9SfMR4YB1Kh_S3P9-yCgpQmBBRG#Music-Liberal-Arts---Grammars-and-Cognition " +
     "(fetched 2026-09-28)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Track: 'Select two approved electives in LING, PSYC, HESP, PHIL, or CMSC' (6 credits) names no " +

@@ -2,7 +2,7 @@
 // Source: https://sllc.umd.edu/special-programs/language-house/info-current-students-mentors
 // ("Coursework & Residency Requirements"; fetched 2026-09-25). Hand-transcribed. UNVERIFIED.
 
-import type { Program, ProgramMeta } from "@superterp/audit";
+import type { Program, ProgramMeta } from "@turboterp/audit";
 import { CATALOG_YEAR } from "./common.ts";
 
 export const SOURCE = "https://sllc.umd.edu/special-programs/language-house/info-current-students-mentors";

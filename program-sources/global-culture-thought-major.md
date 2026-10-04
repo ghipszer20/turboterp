@@ -292,15 +292,70 @@ Web Accessibility
 
 ## Sample plan (https://drive.google.com/uc?export=download&id=1xtu7OAIvMXD0bcWacqte__1eZ0dsGsN1#Global-Culture-and-Thought)
 
-!"#$%&!'(
-)!")#$%&!'(*!"*#$%&!'(+
-,-.. /0123456789:: ;<56=:=>?@ABCDEFG5HIJKL8MN <IOPHIQRSEKFSKT><RABBDIOU>D?AB ?FIQVWSXKITYFEFZ>?XA?X[\=]^ [P_IFEWKT>[\ABB56789:: [ETOYHV`RYSEIQRSEKFSK>[RABB6IFZPIZK8YPHTK9aaMbaa>5QYcIQ;FZIZK_KFOXKdGA 6IFZPIZK8YPHTK9aaMbaa6IFZPIZK8YPHTK9aaMbaa RSUYQIHTUEeEFfHISWSK>RfAg=BB[P_IFEWKT>[\ABB <IOPHIQRSEKFSK6Ic><6ABB6IFZPIZK8YPHTK9aaMbaa 6IFZPIZK8YPHTK9aaMbaa;QKSWhK=aaMbaa ;QKSWhK=aaMbaa;QKSWhK=aaMbaa ;QKSWhK=aaMbaa5678ij: [ETOYHV`RYSEIQRSEKFSKT>[RABB R668ROPJV?cHYIJ=aaMbaa>jSHKJEOTARSUYQIHTUEeEFfHISWSK>RfAg9BB 5678;QKSWhKiaaMbaa5678;QKSWhKiaaMbaa ;QKSWhKiaaMbaa5678;QKSWhKiaaMbaa ;QKSWhK=aaMbaa5678ij:fHYkKTTEYFIQ@HEWFZ>f@A 5678;QKSWhKiaaMbaa5678;QKSWhKiaaMbaaYH5678i]: ;QKSWhKiaaMbaa;QKSWhKiaaMbaa ;QKSWhKiaaMbaa;QKSWhKiaaMbaa ;QKSWhKiaaMbaa;QKSWhK=aaMbaa ;QKSWhK=aaMbaalYOIQ8HKJEOTkYHmKZHKKL=9:nioSHKJEOT_PTOcKiaaMbaaQKhKQ
-pqrstuvwxyzusu{t|s}uu~{wswruxursur pqrsuxyst|vpqrstuvwxyzusu{t|s}uu~{wwqruxursur
-pqrstuvwxyzusu{t|s}uu~{wrruxursur
-¡¢£¤¤¥¦§¢¢¨ ©¢¦¦©ª¢«¬£®¢«¯¢ °°¦±§¢¢¨ ©¢«¢£
-!" #$ % !"& !'!" ()*#$ % !"(+*#$ % !"(,*#$ % !"-"!./'!" 01 !"
-#23"4 5.!6!$-"!./'!"-/"!57/88 96!$-"!./'!":#23";<8=2*87/88 96!$!$ !":"";'!!" "!   >)+?!"! 8!2@
-ABCDEFBGBHIJKLMNFBOEIJPMNQDFJBJ RQDFJB RFBOEIJ SFTOBABCDEFBGBHIJKUMNFBOEIJPVNQDFJBJ RQDFJB RFBOEIJ SFTOB ABCDEFBGBHIJ RFBOEIJ SFTOB
-ABCDEFBGBHIJKWNFBOEIJPUNQDFJBJ RQDFJB RFBOEIJ SFTOBABCDEFBGBHIJKXYWNFBOEIJPUNQDFJBJ RQDFJB RFBOEIJ SFTOBABCDEFBGBHIJKZY[NFBOEIJ RQDFJB RFBOEIJ SFTOB
-\]^_`aabcdefghcijhklmnbiopjqrfsshqldtijhklmnpio ]dlmudmf_qujsf`vvwxvvyjdt_qggzny_o{d|}n{bo \]^_~abldtkcfdsqlhlmnbod|ujdtchflcf]dn]od|ujdtchflcfsnohs|qjqchdtchflcfsno \]^_`aahs|qjqchdtchflcfsno \]^_~augdlhkfsnougdlhkfsno ]dlmudmf_qujsf`vvwxvvc}qtdjs}hhlpjdckcfnpo ]dlmudmf_qujsf`vvwxvvc}qtdjs}hhlpjdckcfnpolqlgdqj ]dlmudmf_qujsf`vvwxvv]dlmudmf_qujsf`vvwxvvvfjhflkdt]fdjlhlm_qujsfvvwxvv^hmufskqlno vfjhflkdt]fdjlhlm_qujsfvvwxvv^hmufskqlno \]^_tfckf~vvwxvv\]^_tfckf~vvwxvv\]^_tfckf~vvwxvvlefjs|dlehlmptujdtqcznpo \]^_tfckf~vvwxvvlefjs|dlehlmptujdtqcznpo \]^_tfckf~vvwxvvqj\]^_~a_ut|ujdt_qgf|flcn__o
-  ¡¢£¤¥¢¤¥¦¢§¥¨©¢ª¨¦¦¥«¬¦¥ ¥®¯¯®°¥¢®¡¥¢¯®¢±²³´μ¶·¸´μ¶·¹¸¹º»¼·¸½¾¿¹ÀÁÂμ·Ã½ÄÅÆÇ¶ÅÇ¸È¿¶½ÉÊºËÌ¼·¸½¾¿¹ÀÍÎÏ¸·¾¸ÆÐÅÃÄ¸Å·Æ¾ÆÇÊÊº»¼·¸½¾¿¹ÀÑÄÒ´ÓÏÏ¸·Ä¸Ô¸ÃÍÃ¸¼ÐÔ¸¹ÊÊÊºËÕ¼·¸½¾¿¹Àμ· Ö×ØÙØÚÛÜÝÚÞØßàÛáâÛÛãØÝääÙØåØÙæÞâçæåØàèæèØÙâèéêâéØæÛãØÞÛãâèëèéÙàáãìíîÚÞØßàÛáâÛÛãØÝääÙØåØÙæÞâçæåØàèØâÚãæïÛðæßàñØÞØèÛÙâèéêâéØáæÛãØÞÛãâèëèéÙàáãòÖÖ×âóáôØßÛãÞæêéãâõõÞæåØßëßêÚâóæèöçÞæâß÷ßæøØáóÚæÞàèÛØÞèâóæèâÙàèÛØÞèáãàõ÷æÞæèùÚâøõêáÙØâÞèàèéÚæøøêèàóØáêõÛæÚÞØßàÛáò×ØÙØÚÛðãàÚãæõóæèáÛæõêÞáêØàèÚæèáêÙÛâóæèðàÛãÛãØâßåàáæÞòÖÖÖ×ØÙØÚÛÜÚÞØßàÛáâÛÛãØ ùÙØåØÙæÞâçæåØàèæèØ×õÞæéÞâøìíÚÞØßàÛáâÛÛãØ ùÙØåØÙæÞâçæåØàèæèØ×õÞæéÞâøâèßîÚÞØßàÛáâÛÛãØ ùÙØåØÙæÞâçæåØàèâèæÛãØÞ×õÞæéÞâøòøâáêçáóÛêÛØâèæïÛãØêõõØÞùÙØåØÙØÙØÚóåØÚæêÞáØáâèßàááÛÞæèéÙØèÚæêÞâéØßò !"  #$%&'($)*+,&-.$(/0($1&&',2&-'$3456789$:&;2'%)*+,&-.$(/0($1&&',2&-'$$:&)**<=**%&>&%6?0@@&,%&>&%/'A8,+,&-.$(/0($1&&',2&-'$345)B0@@&,%&>&%+,&-.$(#CD367E8,&F0.>'%&2$G.9'@@%.+'1%&HI%81'%J2K'K&/&2$ LMNOPMQRSOSTMRUVONWXMRNWYWZSMPMQ[UUM\WR]^O[ORWZ_]QPW`M[ROaQbRONO[USc
+(OCR text; may contain recognition errors)
+Global Culture and Thought Four Year Academic Plan
+[ BenchmarkiRequirements | [~~]
+[  awvass  [Humaniesur |
+[ febcaoo ~~ [History/SocialScience (HS)** |
+I = i r=
+Engagement Req.)
+EE
+-|Mwretempetyio [1]
+rv rr 0]
+[ Benchmark2Requirements | [~~]
+[Language Course | [scholarshipin Practice (SP) #1** |
+[ [tanguageCourse2ochox  [languageCoursedochxx |
+[  leectvebochx  electivelwedx |
+L lclectivelwax  [Elecivedocd |
+rvs I rr]
+| Benchmark3Requirements | [| ~~]
+[  leBCEectivedochor  [Electivelwchx |
+[  lotBCElectiveducAx  [Electivelwedx |
+r lewcso 0 0]
+( vas | 00000000 00000000]
+[ [professional Writing(PW) ___ |GLBCElectivelcdx |
+[  elBCElective3ochxorGLBC350  [Electivelwcd |
+[  lelctivedocdx  electiveldwedx |
+[  lelectivedochx  [electivelwedx |
+[ Teectvebocx  Jelectivelwedx |
+rr rr]
+LL IFotal Credits for Degree: 120; 39 credits must be 3ocdwxlevel |
+**All students must complete two Distributive Studies courses that are approved for Big Question courses. The Understanding Plural Societies and
+Global Culture and Thought
+[Academic writing (AW) Min. Grade: cy | [|]
+[professonar wrung ow) || ||
+[oaiconm0g | | [|
+TY — SR —
+[ava esammgi |||]
+CPE Te YT I
+Natur seences tvs) | [|]
+[WstorySociarscencests) ||| flees TT |
+[Wistory/Sociar sciences (as) ||| flows | | |
+[Humans ||]
+TT A [F771 RE
+[scnoarsmp mercer ||| [irmasecomserman || |
+[scholarship i Practice tsp nommaor ||| [tonguage Coursedochn |||
+ig Question [Language Course poh |||
+[oerermemmg cose boca [|
+[gouestonts) | | Jl ecerontol Leaming couse bach |||
+CT —
+Sreriy [emceameman | | |
+ET  ———
+[Gisc Ete smcbo ||
+[ncersanangpurarsoc. wp ||| Jlciscekanesncbo | | |
+EL EE
+Cultural Competency (CC) *Select 12 credits at the 2xx level or above in one language other than
+Experiential Learning- optional English OR 6 credits at the 2xx level or above in each of two different
+**Satisfied through approved Education Abroad, domestic or international
+I internship, or on-campus learning communities (up to3 credits). Select which
+1 1 1 option(s) to pursue in consultation with the GLBC advisor.
+**¥Select 15 credits at the 300- level or above in one SLLC program OR 9
+Es —— (CC
+[pessoas musvecamessowo | [1 We lac upper eve elective courses and s strongly encouraged.
+[15 ofthe fina 30 crets must be cored atthe 300400ievel | [1 |
+[12 upper evel major rectts must be camegatuwo | [1] |
+|ARHU Requirements for Graduation: |__|
+Some courses for the major may also count toward General Education requirements.
+[ssupperteverceans [1]
+[Avy 158 or equate apptcabier | [|
+oobarengagemens —— [ [7]

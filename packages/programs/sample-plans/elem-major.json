@@ -1,0 +1,20 @@
+{
+  "programId": "elem-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/elementary-education-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no readable Elementary Education 4-year plan in the fetched sources. Constructed from the catalog requirement table: gateway math and TLPL251 first, pre-professional courses next, the professional block and the yearlong internship (TLPL300, TLPL478 x3, TLPL479B/C, TLPL489 x2) last. Gen Ed, gateway science, the social science and the area of emphasis (all open slots) are left out. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["MATH212", "TLPL251", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["MATH213", "HIST200"] },
+    { "term": "Sophomore Fall", "courses": ["MATH214", "EDHD411", "TLPL250"] },
+    { "term": "Sophomore Spring", "courses": ["TLPL340", "PSYC221"] },
+    { "term": "Junior Fall", "courses": ["EDSP401", "TLPL332", "TLPL341", "TLPL342", "TLPL361", "TLPL479"] },
+    { "term": "Junior Spring", "courses": ["TLPL362", "TLPL312", "TLPL321", "TLPL343", "TLPL478", "TLPL479"] },
+    { "term": "Senior Fall", "courses": ["TLPL300", "TLPL344", "TLPL446", "TLPL478", "TLPL478"] },
+    { "term": "Senior Spring", "courses": ["TLPL489", "TLPL489"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}

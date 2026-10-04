@@ -1,18 +1,26 @@
 // The catalog of encoded Tracks, and the pure, framework-free helpers a UI needs to list and pick
-// them. Deliberately free of @superterp/audit's solver (only its types): a picker screen can
-// import this entry ("@superterp/tracks/list") without pulling HiGHS into its bundle. checkTrack
+// them. Deliberately free of @turboterp/audit's solver (only its types): a picker screen can
+// import this entry ("@turboterp/tracks/list") without pulling HiGHS into its bundle. checkTrack
 // itself (src/check.ts), which does call the solver, imports trackProgram from here too.
 
-import type { Program } from "@superterp/audit";
+import type { Program } from "@turboterp/audit";
+import { actuarialVee } from "../tracks/actuarial-vee.ts";
+import { cpaMaryland } from "../tracks/cpa-maryland.ts";
+import { preMedicalPhysics } from "../tracks/pre-medical-physics.ts";
 import { preAnesthesiologistAssistant } from "../tracks/pre-anesthesiologist-assistant.ts";
+import { preChiropractic } from "../tracks/pre-chiropractic.ts";
 import { preDental } from "../tracks/pre-dental.ts";
+import { preMls } from "../tracks/pre-mls.ts";
+import { preNaturopathic } from "../tracks/pre-naturopathic.ts";
 import { preDentalHygiene } from "../tracks/pre-dental-hygiene.ts";
 import { preGeneticCounseling } from "../tracks/pre-genetic-counseling.ts";
+import { preArtTherapy } from "../tracks/pre-art-therapy.ts";
 import { preLaw } from "../tracks/pre-law.ts";
 import { preMed } from "../tracks/pre-med.ts";
 import { preNursing } from "../tracks/pre-nursing.ts";
 import { preOptometry } from "../tracks/pre-optometry.ts";
 import { preOt } from "../tracks/pre-ot.ts";
+import { preSlp } from "../tracks/pre-slp.ts";
 import { prePa } from "../tracks/pre-pa.ts";
 import { prePharmacy } from "../tracks/pre-pharmacy.ts";
 import { prePodiatry } from "../tracks/pre-podiatry.ts";
@@ -37,6 +45,14 @@ export const TRACKS: Track[] = [
   preAnesthesiologistAssistant,
   preDentalHygiene,
   preGeneticCounseling,
+  preSlp,
+  preArtTherapy,
+  preChiropractic,
+  preNaturopathic,
+  preMls,
+  cpaMaryland,
+  actuarialVee,
+  preMedicalPhysics,
 ];
 
 /**

@@ -8,12 +8,9 @@
     "Third-year spring's and fourth-year's 'ASTR 4**' placeholders (three 400-level Astronomy courses) are filled with ASTR406, ASTR421 and ASTR430.",
     "Third-year spring's and fourth-year fall's 'PHYS 401 or 404 or 410' placeholders (two of the three) are filled with PHYS404 and PHYS410."
   ],
-  "credits": {
-    "MATH140": 4, "MATH141": 4, "PHYS275": 2, "ASTR232": 4, "MATH241": 4, "PHYS276": 2,
-    "MATH243": 4, "ASTR310": 4, "PHYS313": 4
-  },
+  "credits": { "MATH140": 4, "MATH141": 4, "PHYS275": 2, "ASTR232": 4, "MATH241": 4, "PHYS276": 2, "MATH243": 4, "ASTR310": 4, "PHYS313": 4, "CMNS100": 1 },
   "terms": [
-    { "term": "First Year Fall", "courses": ["ASTR130", "MATH140"] },
+    { "term": "First Year Fall", "courses": ["ASTR130", "MATH140", "CMNS100"] },
     { "term": "First Year Spring", "courses": ["ASTR131", "MATH141", "PHYS171", "PHYS275"] },
     { "term": "Second Year Fall", "courses": ["ASTR232", "MATH241", "PHYS272", "PHYS265"] },
     { "term": "Second Year Spring", "courses": ["PHYS273", "PHYS276", "MATH243"] },

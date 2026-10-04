@@ -4,20 +4,15 @@
   "fetched": "2026-09-28",
   "official": false,
   "notes": [
-    "CONSTRUCTED from the catalog's own requirement list. The department's official four-year plan PDF converted to unreadable font-remapped text (no legible course codes or term headers at all); see docs/project/owner-review.md.",
+    "CONSTRUCTED from the catalog's own requirement list. The department's single official four-year plan (OCR text) is generic across tracks and its course codes and term placement are too garbled to read; see docs/project/owner-review.md.",
     "Dance Forms (4 credits) filled with DANC138 and DANC228, each assumed at 2 credits (no per-course credit value is given in the source's Dance Forms list); flagged in the Program's reviewNotes.",
     "TDPS479 (Production Practicum) assumed at 1 credit per enrollment, matching the catalog's own '1 credit required of all majors' language; enrolled twice here (once for the shared 1-credit requirement, once for the Performance and Choreography area's additional 1 credit).",
     "Capstone filled with DANC485 (Seminar in Dance), the catalog's second named option (DANC488 is the other).",
     "Performance and Choreography electives (5 credits) filled with DANC466 and DANC371 (6 credits, both from the area's own named list), since no explicit sub-5-credit combination is given in the source."
   ],
-  "credits": {
-    "DANC179": 2,
-    "TDPS479": 1,
-    "DANC138": 2,
-    "DANC228": 2
-  },
+  "credits": { "DANC179": 2, "TDPS479": 1, "DANC138": 2, "DANC228": 2 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["DANC109", "DANC218", "TDPS201"] },
+    { "term": "Year 1 Fall", "courses": ["DANC109", "DANC218", "TDPS201", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["DANC179", "DANC219", "DANC138"] },
     { "term": "Year 2 Fall", "courses": ["DANC207", "DANC318", "DANC228"] },
     { "term": "Year 2 Spring", "courses": ["DANC304", "DANC319", "TDPS479"] },

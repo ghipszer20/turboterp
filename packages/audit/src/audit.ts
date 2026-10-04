@@ -19,7 +19,8 @@ export type CourseFilter = {
   anyCourse?: boolean;
 };
 
-export type Area = { name: string; courses: string[] };
+/** A distribution area: a course list, a course filter (a department, a level range), or both. */
+export type Area = { name: string; courses?: string[]; from?: CourseFilter };
 
 /** One member of a course set: a specific course, or `count` courses matching a filter ("two 400-level AOSC courses"). */
 export type SetMember = string | { count: number; from: CourseFilter };
@@ -32,6 +33,19 @@ export type Requirement = RequirementRule & {
   overlay?: boolean;
   /** Lowest grade a completed course needs for this requirement only, e.g. Academic Writing's "C-". */
   minGrade?: string;
+  /**
+   * Lowest credit-weighted GPA (UMD 4.0 scale) over the completed letter-graded courses assigned
+   * to this requirement, e.g. the CS Upper Level Concentration's 1.7. Below it with nothing
+   * planned for the requirement, a satisfied requirement drops to partial; with planned courses
+   * assigned it is only flagged at risk. The solver prefers higher-graded courses (a tie-break).
+   */
+  minGpa?: number;
+  /**
+   * The source's list isn't closed ("or an equivalent", "not limited to these examples", "other
+   * courses may be approved"): the audit accepts only the listed courses, and the Advisor tells the
+   * student that other courses may count with advisor approval (owner ruling, rulings.md "Minors").
+   */
+  advisorMayApprove?: true;
 };
 
 export type RequirementRule =
@@ -69,7 +83,13 @@ export type RequirementRule =
    * A member may be a filter part, e.g. ["AOSC200", "AOSC201", { count: 2, from: 400-level AOSC }].
    * A course counts toward one set, and one member of it, only.
    */
-  | { kind: "sets"; id: string; name: string; options: SetMember[][]; count?: number };
+  | { kind: "sets"; id: string; name: string; options: SetMember[][]; count?: number }
+  /**
+   * An Open Slot: "from an approved list" the department doesn't publish. It holds no courses and
+   * the audit assigns none to it; it's satisfied only once the student confirms it with their
+   * advisor (AuditOptions.confirmed), so the program isn't complete until then.
+   */
+  | { kind: "openSlot"; id: string; name: string; credits?: number; note?: string };
 
 export type Program = {
   id: string;
@@ -77,6 +97,12 @@ export type Program = {
   requirements: Requirement[];
   /** Lowest grade a completed course needs to count toward this program, e.g. "C-". */
   minGrade?: string;
+  /**
+   * Lowest credit-weighted GPA (UMD 4.0 scale) over every completed letter-graded course the
+   * program uses, each course counted once even if it fills an overlay requirement too. Audited as
+   * one extra result, id `program-gpa`, appended after the program's requirements.
+   */
+  minGpa?: number;
   /** Catalog edition these rules come from, e.g. "2026-27". */
   catalogYear?: string;
   /** Where the rules came from. */
@@ -102,13 +128,13 @@ export type SharingLimit = { programs?: string[]; courses?: number; credits?: nu
 
 /**
  * Picker metadata a program file declares next to each exported Program: everything ProgramEntry
- * (@superterp/programs) needs beyond the Program itself (id/name/catalogYear/verified come from
+ * (@turboterp/programs) needs beyond the Program itself (id/name/catalogYear/verified come from
  * the Program). The registry generator (packages/programs/scripts/build-registry.ts) pairs a
  * `<name>Meta` export with the `<name>` Program export in the same module.
  *
- * Lives here (not in @superterp/programs, which depends on @superterp/audit and @superterp/catalog)
+ * Lives here (not in @turboterp/programs, which depends on @turboterp/audit and @turboterp/catalog)
  * so program files in both packages can import it without a circular package dependency. `college`
- * repeats @superterp/plan's `College` union rather than importing it, for the same reason (plan
+ * repeats @turboterp/plan's `College` union rather than importing it, for the same reason (plan
  * depends on audit).
  */
 export type ProgramMeta = {
@@ -116,7 +142,7 @@ export type ProgramMeta = {
   /** The college that owns the program's catalog page (`colleges-schools/<slug>/` in its URL);
    * the Advisor's default for the credit-cap check. Special programs run by Undergraduate Studies
    * or the Honors College use UGST. */
-  college: "AGNR" | "ARCH" | "ARHU" | "BSOS" | "BMGT" | "CMNS" | "EDUC" | "ENGR" | "INFO" | "JOUR" | "SPHL" | "UGST";
+  college: "AGNR" | "ARCH" | "ARHU" | "BSOS" | "BMGT" | "CMNS" | "EDUC" | "ENGR" | "INFO" | "JOUR" | "PLCY" | "SPHL" | "UGST" | "USG";
   /** Short name for headers, e.g. "Math (Applied)". Defaults to the Program's own name. */
   short?: string;
   /** Tracks of one major share this key; a student has one track per major. Defaults to the
@@ -130,7 +156,19 @@ export type ProgramMeta = {
   defaultTrack?: true;
   /** The catalog page and the department's own page (the department page wins where they differ). */
   sources: { catalog?: string; department?: string };
+  /** Eligibility gate (owner ruling, docs/project/rulings.md "Minors"): the majors this minor or
+   * certificate is closed to; the Advisor blocks it for students who have declared one.
+   * `programs` holds program ids (one track, e.g. "bsci-major-phnb") or major keys (every track,
+   * e.g. "astr"); `colleges` means every major that college owns; `reason` is one plain sentence
+   * from the source. */
+  notOpenTo?: NotOpenTo;
+  /** The inverse gate: the program is open ONLY to students with a declared major matching this
+   * (same shape and matching as `notOpenTo`). A student with no declared major isn't blocked
+   * (they may still be heading into an eligible major). */
+  onlyOpenTo?: NotOpenTo;
 };
+
+export type NotOpenTo = { programs?: string[]; colleges?: ProgramMeta["college"][]; reason: string };
 
 export type StudentCourse = {
   id: string;
@@ -146,13 +184,13 @@ export type StudentCourse = {
 function requirementCourseIds(req: RequirementRule): string[] {
   if (req.kind === "course") return req.options;
   if (req.kind === "choose") return [...(req.from.courses ?? []), ...(req.alternatives?.flat() ?? [])];
-  if (req.kind === "distribution") return req.areas.flatMap((a) => a.courses);
-  if (req.kind === "concentration") return [];
+  if (req.kind === "distribution") return req.areas.flatMap((a) => a.courses ?? []);
+  if (req.kind === "concentration" || req.kind === "openSlot") return [];
   return req.options.flat().flatMap((m) => (typeof m === "string" ? [m] : (m.from.courses ?? [])));
 }
 
 /** Every literal course id a Program's requirements mention, deduped, in requirement order. Used
- * to build a per-program course set (@superterp/programs) cheaply, without running the audit --
+ * to build a per-program course set (@turboterp/programs) cheaply, without running the audit --
  * e.g. to pre-filter which undeclared majors are even worth auditing for a double-major notice. */
 export function programCourseIds(program: Program): string[] {
   return [...new Set(program.requirements.flatMap(requirementCourseIds))];
@@ -161,6 +199,13 @@ export function programCourseIds(program: Program): string[] {
 // UMD letter grades, lowest to highest.
 const GRADE_ORDER = ["F", "D-", "D", "D+", "C-", "C", "C+", "B-", "B", "B+", "A-", "A", "A+"];
 const gradeRank = (g: string) => GRADE_ORDER.indexOf(g.trim().toUpperCase());
+const GRADE_POINTS = [0, 0.7, 1, 1.3, 1.7, 2, 2.3, 2.7, 3, 3.3, 3.7, 4, 4];
+
+/** Grade points on UMD's 4.0 scale (A+ = 4.0), or undefined for a non-letter grade (P, S, W...). */
+export function gradePoints(grade: string | undefined): number | undefined {
+  const rank = grade === undefined ? -1 : gradeRank(grade);
+  return rank < 0 ? undefined : GRADE_POINTS[rank];
+}
 
 /**
  * A completed course graded F or W earns no credit (UMD grading; owner ruling: a course may be
@@ -183,12 +228,19 @@ function meetsGrade(course: StudentCourse, minGrade: string | undefined): boolea
   return rank >= 0 && rank >= gradeRank(minGrade);
 }
 
+/** Id of the synthetic result a program with `minGpa` gets; it is not one of `program.requirements`. */
+export const PROGRAM_GPA_ID = "program-gpa";
+
 export type RequirementResult = {
   id: string;
   name: string;
   status: "satisfied" | "partial" | "missing";
   /** Courses the Assignment put toward this requirement. */
   assigned: string[];
+  /** Only with a minGpa and at least one graded course assigned: the GPA of those completed courses. */
+  gpa?: { value: number; min: number; atRisk?: boolean };
+  /** Completed courses that would count toward this requirement if not for their grade. */
+  belowMinimum?: { course: string; grade: string; minGrade: string }[];
 };
 
 export type AuditResult = {
@@ -216,6 +268,11 @@ export function matchesFilter(filter: CourseFilter, course: Pick<StudentCourse, 
   return n >= (filter.minNumber ?? 0) && n <= (filter.maxNumber ?? 999);
 }
 
+/** Whether a course belongs to a distribution area: it is in the area's list or matches its filter. */
+export function inArea(area: Area, course: Pick<StudentCourse, "id" | "genEd">): boolean {
+  return (area.courses?.includes(course.id) ?? false) || (area.from ? matchesFilter(area.from, course) : false);
+}
+
 /** How many courses completing a set takes. */
 const setSize = (option: SetMember[]) => option.reduce((t, m) => t + (typeof m === "string" ? 1 : m.count), 0);
 
@@ -224,6 +281,7 @@ function need(req: Requirement): number {
   if (req.kind === "course") return 1;
   if (req.kind === "distribution") return req.count;
   if (req.kind === "concentration") return req.credits;
+  if (req.kind === "openSlot") return 0;
   if (req.kind === "sets") {
     const sizes = req.options.map(setSize).sort((a, b) => a - b);
     return sizes.slice(0, req.count ?? 1).reduce((t, n) => t + n, 0);
@@ -250,6 +308,7 @@ type Pair = {
 function pairsFor(req: Requirement, p: number, r: number, course: StudentCourse, c: number): Pair[] {
   const base = `x_${p}_${c}_${r}`;
   const plain = (weight: number): Pair[] => [{ p, c, r, area: null, department: null, name: base, weight }];
+  if (req.kind === "openSlot") return [];
   if (req.kind === "course") return req.options.includes(course.id) ? plain(1) : [];
   if (req.kind === "choose") return matchesFilter(req.from, course) ? plain(req.credits ? course.credits : 1) : [];
   if (req.kind === "concentration") {
@@ -274,10 +333,24 @@ function pairsFor(req: Requirement, p: number, r: number, course: StudentCourse,
     );
   }
   return req.areas.flatMap((area, a) =>
-    area.courses.includes(course.id)
+    inArea(area, course)
       ? [{ p, c, r, area: a, department: null, name: `${base}_${a}`, weight: 1 }]
       : [],
   );
+}
+
+/** Completed courses that would pair with the requirement but for the program's or requirement's minimum grade. */
+function belowMinimumFor(program: Program, req: Requirement, p: number, r: number, courses: StudentCourse[], assigned: Pair[]) {
+  const found: NonNullable<RequirementResult["belowMinimum"]> = [];
+  courses.forEach((course, c) => {
+    if (course.status !== "completed" || !course.grade || !earnsCredit(course) || found.some((f) => f.course === course.id)) return;
+    const minGrade = [program.minGrade, req.minGrade].find((m) => m !== undefined && !meetsGrade(course, m));
+    if (!minGrade) return;
+    // A retake that does count (same course, passing grade) makes the failed attempt irrelevant.
+    if (assigned.some((q) => courses[q.c]!.id === course.id)) return;
+    if (pairsFor(req, p, r, course, c).length > 0) found.push({ course: course.id, grade: course.grade.trim().toUpperCase(), minGrade });
+  });
+  return found;
 }
 
 const sum = (ps: Pair[]) => ps.map((q) => `${q.weight} ${q.name}`).join(" + ");
@@ -293,7 +366,12 @@ export type AuditOptions = {
    */
   degrees?: number[][];
   minUniqueCredits?: number;
+  /** Open Slots the student confirmed with their advisor, as "<programId>/<requirementId>". */
+  confirmed?: string[];
 };
+
+/** The key an Open Slot is confirmed by: requirement ids repeat across programs. */
+export const slotKey = (programId: string, requirementId: string) => `${programId}/${requirementId}`;
 
 export type StudentAudit = {
   results: AuditResult[];
@@ -517,30 +595,76 @@ export async function auditStudent(
   const objective = [
     ...programs.flatMap((pr, p) => pr.requirements.map((_, r) => `1000 ${y(p, r)}`)),
     ...pairs.map((q) => `1 ${q.name}`),
+    // A tie-break far below one course-use: among equally good assignments, prefer higher grades for a minGpa requirement.
+    ...pairs.flatMap((q) => {
+      const points = programs[q.p]!.minGpa === undefined && programs[q.p]!.requirements[q.r]!.minGpa === undefined ? undefined : gradePoints(courses[q.c]!.grade);
+      return points === undefined || courses[q.c]!.status !== "completed" ? [] : [`${(points * 0.01).toFixed(4)} ${q.name}`];
+    }),
     // Below a requirement (1000), above any course-use tie-break: never give up a requirement for it.
     ...uniqueGoal.map((u) => `500 ${u}`),
   ].join(" + ");
   const model = ["Maximize", ` obj: ${objective || "0 y_0_0"}`, "Subject To", ...constraints, "Binary", ` ${binaries.join(" ")}`, "End"];
 
   const highs = await getSolver();
-  const solution = highs.solve(model.join("\n"), { output_flag: false });
+  const solution = highs.solve(model.join("\n"), {
+    output_flag: false,
+    // The grade tie-break is far below the default relative gap on the 1000-point requirement terms.
+    ...(programs.some((pr) => pr.minGpa !== undefined || pr.requirements.some((req) => req.minGpa !== undefined)) ? { mip_rel_gap: 0 } : {}),
+  });
   if (solution.Status !== "Optimal") throw new Error(`Audit solver ended with status ${solution.Status}`);
   const chosen = (name: string) => (solution.Columns[name]?.Primal ?? 0) > 0.5;
 
+  // GPA over the completed letter-graded courses in `assigned`, each course once. `failed`: below the
+  // minimum with nothing planned (a planned course only flags it at risk).
+  const gpaCheck = (assigned: Pair[], min: number): { gpa?: NonNullable<RequirementResult["gpa"]>; failed: boolean } => {
+    const graded = [...new Set(assigned.filter((q) => courses[q.c]!.status === "completed" && gradePoints(courses[q.c]!.grade) !== undefined).map((q) => q.c))];
+    const credits = graded.reduce((t, c) => t + courses[c]!.credits, 0);
+    if (credits === 0) return { failed: false };
+    const points = graded.reduce((t, c) => t + gradePoints(courses[c]!.grade)! * courses[c]!.credits, 0);
+    const gpa: NonNullable<RequirementResult["gpa"]> = { value: Math.round((points / credits) * 100) / 100, min };
+    if (gpa.value >= min) return { gpa, failed: false };
+    if (assigned.some((q) => courses[q.c]!.status === "planned")) return { gpa: { ...gpa, atRisk: true }, failed: false };
+    return { gpa, failed: true };
+  };
+
+  const confirmed = new Set(options.confirmed ?? []);
   const results = programs.map((program, p) => {
     const used = new Set<number>();
     const requirements = program.requirements.map((req, r): RequirementResult => {
+      if (req.kind === "openSlot") {
+        const ok = confirmed.has(slotKey(program.id, req.id));
+        return { id: req.id, name: req.name, status: ok ? "satisfied" : "missing", assigned: [] };
+      }
       const assigned = pairs.filter((q) => q.p === p && q.r === r && chosen(q.name));
       assigned.forEach((q) => used.add(q.c));
       const progress = assigned.reduce((t, q) => t + q.weight, 0);
-      const satisfied = chosen(y(p, r)) && progress >= need(req);
+      let satisfied = chosen(y(p, r)) && progress >= need(req);
+      const check = req.minGpa === undefined ? undefined : gpaCheck(assigned, req.minGpa);
+      if (check?.failed) satisfied = false;
+      const gpa = check?.gpa;
+      const belowMinimum = belowMinimumFor(program, req, p, r, courses, assigned);
       return {
         id: req.id,
         name: req.name,
         status: satisfied ? "satisfied" : progress > 0 ? "partial" : "missing",
         assigned: assigned.map((q) => courses[q.c]!.id),
+        ...(gpa ? { gpa } : {}),
+        ...(belowMinimum.length > 0 ? { belowMinimum } : {}),
       };
     });
+    if (program.minGpa !== undefined) {
+      const assigned = pairs.filter((q) => q.p === p && chosen(q.name));
+      const check = gpaCheck(assigned, program.minGpa);
+      const gradedCourses = [...new Set(assigned.map((q) => q.c))].filter((c) => courses[c]!.status === "completed" && gradePoints(courses[c]!.grade) !== undefined);
+      const min = program.minGpa;
+      requirements.push({
+        id: PROGRAM_GPA_ID,
+        name: `Program GPA (at least ${Number.isInteger(min) ? min.toFixed(1) : min})`,
+        status: check.failed ? "missing" : "satisfied",
+        assigned: gradedCourses.map((c) => courses[c]!.id),
+        ...(check.gpa ? { gpa: check.gpa } : {}),
+      });
+    }
     return { requirements, unused: courses.filter((_, c) => !used.has(c)).map((c) => c.id) };
   });
 
@@ -553,7 +677,7 @@ export async function auditStudent(
   return { results, uniqueCredits };
 }
 
-export async function auditProgram(program: Program, courses: StudentCourse[]): Promise<AuditResult> {
-  const [result] = await auditPrograms([program], courses);
+export async function auditProgram(program: Program, courses: StudentCourse[], options: AuditOptions = {}): Promise<AuditResult> {
+  const [result] = await auditPrograms([program], courses, options);
   return result!;
 }

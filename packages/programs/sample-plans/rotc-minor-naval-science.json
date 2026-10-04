@@ -1,0 +1,15 @@
+{
+  "programId": "rotc-minor-naval-science",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/undergraduate-studies/naval-science-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog requirements: NAVY courses totalling at least 18 credits (NAVY100, 101, 200, 201, 300, 301, 302, 400), HIST224 and one Cultural/Regional course (HIST120). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["NAVY100", "NAVY101", "HIST224"] },
+    { "term": "Term 2", "courses": ["NAVY200", "NAVY201", "HIST120"] },
+    { "term": "Term 3", "courses": ["NAVY300", "NAVY301"] },
+    { "term": "Term 4", "courses": ["NAVY302", "NAVY400"] }
+  ]
+}

@@ -11,9 +11,9 @@
     "The plan previously filled remaining credits with PSYC318 and PSYC319 to reach the major's 35-credit/11-course total; both were dropped because they are not current PSYC course numbers in the fetched sources (the courses page shows the department renumbered the old 318D/319D special topics as PSYC381/PSYC391). Replaced with PSYC344 and PSYC361, real PSYC courses chosen for Theme II/III coverage, which also bring the total back to exactly 35 credits / 11 courses.",
     "Math gateway filled with MATH140; MATH120 would satisfy the requirement equally."
   ],
-  "credits": { "PSYC300": 4, "BSCI170": 4, "MATH140": 4, "PSYC420": 4 },
+  "credits": { "PSYC300": 4, "BSCI170": 4, "MATH140": 4, "PSYC420": 4, "UNIV100": 1 },
   "terms": [
-    { "term": "Freshman Fall", "courses": ["PSYC100", "MATH140"] },
+    { "term": "Freshman Fall", "courses": ["PSYC100", "MATH140", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["BSCI170", "PSYC200"] },
     { "term": "Sophomore Fall", "courses": ["PSYC300", "PSYC307"] },
     { "term": "Sophomore Spring", "courses": ["PSYC310", "PSYC336"] },

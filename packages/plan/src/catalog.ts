@@ -1,8 +1,8 @@
 // The course facts the plan checker needs, parsed once from Schedule of Classes records so that
 // checking a Plan on every edit does no text parsing.
 
-import type { Course } from "@superterp/course-data";
-import { parsePrerequisite, type Requirement } from "@superterp/course-data/prereqs";
+import type { Course } from "@turboterp/course-data";
+import { parsePrerequisite, type Requirement } from "@turboterp/course-data/prereqs";
 
 /**
  * Whether a course may be taken again for credit. Testudo states it only for some courses

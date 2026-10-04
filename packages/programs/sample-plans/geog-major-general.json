@@ -8,9 +8,9 @@
     "GEOG Physical Gateway Course -> GEOG301; GEOG Human Gateway Course -> GEOG330; GEOG Technique Gateway Course -> GEOG372 (of the enumerated GEOG372/373 choice); GEOG Elective Courses 1-3 -> GEOG303, GEOG331, GEOG358; GEOG Elective Courses 4-5 (400 level) -> GEOG421, GEOG422. All are real, currently-offered GEOG courses not otherwise required by this track, picked from the Academic Catalog's approved GEOG course list to satisfy the count/level requirement, not for topical fit -- please confirm or substitute an advisor's actual picks.",
     "Supporting Sequence 1 (MATH120/140/136) filled with MATH120; Supporting Sequences 2-5 (12 credits, advisor-approved, no enumerable list) are left out entirely -- see the program's reviewNotes and docs/project/owner-review.md."
   ],
-  "credits": { "GEOG211": 1, "GEOG212": 1 },
+  "credits": { "GEOG211": 1, "GEOG212": 1, "UNIV100": 1 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["GEOG201", "GEOG211", "MATH120"] },
+    { "term": "Year 1 Fall", "courses": ["GEOG201", "GEOG211", "MATH120", "UNIV100"] },
     { "term": "Year 1 Spring", "courses": ["GEOG202"] },
     { "term": "Year 2 Fall", "courses": ["GEOG301", "GEOG330", "GEOG212"] },
     { "term": "Year 2 Spring", "courses": ["GEOG306", "GEOG303"] },

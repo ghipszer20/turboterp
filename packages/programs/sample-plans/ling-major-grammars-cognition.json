@@ -11,7 +11,7 @@
     "'Select two approved electives in LING, PSYC, HESP, PHIL, or CMSC' (no number range given) filled with PSYC300 and HESP300, both real courses already used elsewhere in this codebase (psyc-major-ba-2026-27.ts, hesp-major-2026-27.ts)."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["LING200"] },
+    { "term": "Year 1 Fall", "courses": ["LING200", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["LING240"] },
     { "term": "Year 2 Fall", "courses": ["LING311", "LING321", "PHIL170"] },
     { "term": "Year 2 Spring", "courses": ["LING312", "LING322"] },

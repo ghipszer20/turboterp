@@ -1,0 +1,14 @@
+{
+  "programId": "aaas-minor-anti-black-racism",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/behavioral-social-sciences/african-american-africana-studies/anti-black-racism-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog: Behavioral and Social Sciences track (AAAS101), electives AAAS100 and AAAS310 (300+), ABRM330 and the ABRM450 capstone. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["AAAS101", "AAAS100"] },
+    { "term": "Term 2", "courses": ["ABRM330", "AAAS310"] },
+    { "term": "Term 3", "courses": ["ABRM450"] }
+  ]
+}

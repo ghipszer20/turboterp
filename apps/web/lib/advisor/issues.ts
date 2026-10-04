@@ -1,7 +1,7 @@
 // Plan checker issues → where the UI shows them: on the course card, on the term header, and in
 // the summary list (worst first).
 
-import type { PlanIssue } from "@superterp/plan/check";
+import type { PlanIssue } from "@turboterp/plan/check";
 
 export type Severity = PlanIssue["severity"];
 

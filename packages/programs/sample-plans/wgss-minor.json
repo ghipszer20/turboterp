@@ -1,0 +1,14 @@
+{
+  "programId": "wgss-minor",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/women-gender-sexuality-studies/womens-gender-sexuality-studies-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog: WGSS200 (intro), WGSS265 (lower level core), WGSS301, WGSS315 (upper level core) and WGSS410 (4xx upper level core). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["WGSS200", "WGSS265"] },
+    { "term": "Term 2", "courses": ["WGSS301", "WGSS315"] },
+    { "term": "Term 3", "courses": ["WGSS410"] }
+  ]
+}

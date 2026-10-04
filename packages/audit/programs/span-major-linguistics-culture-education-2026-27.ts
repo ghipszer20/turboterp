@@ -23,6 +23,7 @@ export const spanMajorLinguisticsCultureEducation: Program = {
     "https://drive.google.com/uc?export=download&id=139qrMn2SvwHU7jkbVgDX6hNFt6wFi9Hj#Linguistics,-Culture,-and-Education " +
     "(fetched 2026-09-28)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Track: 'The approved program in Spanish and Secondary Education requires 2 upper-level courses " +

@@ -22,19 +22,11 @@ export const chinMajor: Program = {
     "College of Arts and Humanities official four-year academic plan for Chinese, " +
     "fetched 2026-09-28 (https://drive.google.com/uc?export=download&id=1DA9AvJMUDq0Hn4oYY6xIH-u4XFD9C1lg#Chinese)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
-    "Department page vs. catalog: could NOT be compared. Unlike the other ARHU four-year plans already " +
-      "encoded (Arabic, American Studies, Art History), whose PDF-to-text conversions were merely garbled " +
-      "and column-interleaved but still contained some legible course codes and slot labels, the Chinese " +
-      "plan's conversion (see program-sources/chinese-major.md, 'Sample plan' section) produced no legible " +
-      "text at all -- no course codes, term headers or requirement labels survived, only what looks like " +
-      "font-remapped control characters end to end. No department-vs-catalog comparison was possible, and " +
-      "no course placement could be read from it. Please supply a readable copy if this matters.",
-    "Because the plan source is unusable, the sample plan (packages/programs/sample-plans/chin-major.json) " +
-      "is built entirely from the catalog's own requirement list, not read from the four-year plan -- " +
-      "treated the same as 'no official plan published' and marked official: false. Flagged in " +
-      "docs/project/owner-review.md.",
+    "Department page vs. catalog: OCR re-check (2026-09-28) of the four-year plan (program-sources/chinese-major.md, 'Sample plan' section) found it still too garbled to read the major courses or their term placement (only Gen Ed legend labels and the footnote about WL-placement substitution of higher CHIN courses survive; the term grid has no legible CHIN codes). No department-vs-catalog difference could be established; encoding unchanged. The one legible footnote (higher-level CHIN substitution with advisor approval, total of 17 CHIN language credits) matches the un-encoded placement exception noted below.",
+    "Because the plan text is still unusable (also after OCR), the sample plan (packages/programs/sample-plans/chin-major.json) is built from the catalog's own requirement list, not read from the four-year plan, and is marked official: false. Flagged in docs/project/owner-review.md.",
     "Not encoded (placement- and approval-based exception, no list given): footnote 1's 'Students with " +
       "the appropriate WLP level and the approval of the Chinese Undergraduate Advisor may substitute " +
       "CHIN207 (4 credits) with one 3-credit upper-level CHIN course and 1 credit of CHIN386 or CHIN499.' " +
@@ -46,7 +38,7 @@ export const chinMajor: Program = {
       "Government & Politics, or other-department courses taught in English, 'with the approval of the " +
       "Chinese Undergraduate Advisor,' plus approved language courses and independent study. The Electives " +
       "requirement below is encoded with only the catalog's own named scope (any 300/400-level CHIN course, " +
-      "or SLLC286).",
+      "or SLLC286). Marked advisorMayApprove (elective-upper, elective-remaining, history-culture-1, history-culture-2): other courses may count with advisor approval; only the listed courses count.",
     "Footnote 3 (EALL284/HIST284 and EALL285/HIST285 are interchangeable, whichever is offered) is encoded " +
       "directly: each History and Culture slot accepts either course.",
     "Not encoded (approval-based, no list given): 'Special Topics' and 'Colloquium' courses (variable " +
@@ -56,7 +48,7 @@ export const chinMajor: Program = {
       "the 38 credits for the major must be at the upper level (courses numbered 300 or above).' The audit " +
       "engine checks per-requirement course assignment and per-course minGrade, not a credit-level minimum " +
       "spanning every requirement.",
-    "Not encoded (engine gaps): the overall 2.0 cumulative GPA requirement for the major/minor, residency " +
+    "Not encoded (engine gaps): residency " +
       "rules, and the 120-credit graduation minimum.",
   ],
   requirements: [
@@ -78,12 +70,14 @@ export const chinMajor: Program = {
     {
       kind: "course",
       id: "history-culture-1",
+      advisorMayApprove: true,
       name: "East Asian Cultures I (or East Asian Civilization I)",
       options: ["EALL284", "HIST284"],
     },
     {
       kind: "course",
       id: "history-culture-2",
+      advisorMayApprove: true,
       name: "East Asian Cultures II (or East Asian Civilization II)",
       options: ["EALL285", "HIST285"],
     },
@@ -93,6 +87,7 @@ export const chinMajor: Program = {
     {
       kind: "choose",
       id: "elective-upper",
+      advisorMayApprove: true,
       name: "Electives, upper-level (at least 3 of the 6 elective credits at the 300/400 level)",
       credits: 3,
       from: { departments: ["CHIN"], minNumber: 300, maxNumber: 499, exclude: REQUIRED_CHIN_COURSES },
@@ -100,6 +95,7 @@ export const chinMajor: Program = {
     {
       kind: "choose",
       id: "elective-remaining",
+      advisorMayApprove: true,
       name: "Electives, remaining 3 credits (any 300/400-level CHIN course, or SLLC286; at most 3 of the " +
         "6 elective credits may be at the 200 level)",
       credits: 3,

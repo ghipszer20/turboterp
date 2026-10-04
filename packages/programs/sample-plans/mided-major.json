@@ -1,0 +1,20 @@
+{
+  "programId": "mided-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/middle-school-education-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no readable Middle School Education 4-year plan in the fetched sources. Constructed from the catalog requirement table: science and MATH212-214 first, pre-professional education courses next, the professional block and the yearlong internship (TLPL478, TLPL479, TLPL489) last. Choices: PHYS115 for the physics row, BSCI103 for the biology row, TLPL250 for Foundations. Gen Ed is left out. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["TLPL101", "MATH212", "GEOL100", "GEOL110", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["TLPL102", "MATH213", "CHEM131", "CHEM132"] },
+    { "term": "Sophomore Fall", "courses": ["MATH214", "PHYS115", "BSCI103", "TLPL250"] },
+    { "term": "Sophomore Spring", "courses": ["AOSC200", "AOSC201", "TLPL252", "MATH312"] },
+    { "term": "Junior Fall", "courses": ["MATH314", "MATH315", "EDHD413", "EDHD436", "TLPL300"] },
+    { "term": "Junior Spring", "courses": ["TLPL413", "TLPL420", "EDSP401", "TLPL441"] },
+    { "term": "Senior Fall", "courses": ["TLPL423", "TLPL481", "TLPL478", "TLPL479"] },
+    { "term": "Senior Spring", "courses": ["TLPL424", "TLPL489"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}

@@ -12,7 +12,7 @@
 
 import { describe, expect, it } from "vitest";
 import { parseGtfs } from "../src/buses.ts";
-import { planTrip, walkMinutes, type Place } from "../src/trip.ts";
+import { planArriveBy, planTrip, walkMinutes, type Place } from "../src/trip.ts";
 
 const feed = parseGtfs({
   "routes.txt": [
@@ -169,5 +169,33 @@ describe("planTrip: start and end near the same stop", () => {
     // should win over riding anywhere and back.
     expect(result.itineraries[0]!.kind).toBe("walk");
     expect(result.itineraries[0]!.totalMinutes).toBeLessThanOrEqual(1);
+  });
+});
+
+describe("planArriveBy", () => {
+  const startA = near(38.988, -76.945, "Stop A");
+  const nearC = near(38.99601, -76.95301, "Near Stop C");
+
+  it("leaves in time for the last bus that still arrives by the target", () => {
+    const r = planArriveBy(feed, DATE, 8 * 60 + 45, startA, nearC);
+    const best = r.options[0]!;
+    expect(best.itinerary.kind).toBe("transit");
+    const bus = best.itinerary.legs.find((l) => l.kind === "bus")!;
+    expect(bus.departMinutes).toBe(8 * 60 + 30); // the 08:30 trip, not the 08:00 one
+    expect(best.itinerary.arriveMinutes).toBeLessThanOrEqual(8 * 60 + 45);
+    expect(best.leaveMinutes).toBeLessThanOrEqual(8 * 60 + 30);
+    expect(best.itinerary.departMinutes).toBe(best.leaveMinutes);
+  });
+
+  it("falls back to an earlier bus when the later one would be late", () => {
+    const r = planArriveBy(feed, DATE, 8 * 60 + 12, startA, nearC);
+    const bus = r.options[0]!.itinerary.legs.find((l) => l.kind === "bus")!;
+    expect(bus.departMinutes).toBe(8 * 60);
+  });
+
+  it("offers walking the whole way and prefers it when comparable", () => {
+    const r = planArriveBy(feed, DATE, 9 * 60 + 30, START_NEAR_A, END_NEAR_D);
+    expect(r.options[0]!.itinerary.kind).toBe("walk");
+    expect(r.options[0]!.leaveMinutes).toBe(9 * 60 + 30 - r.options[0]!.itinerary.totalMinutes);
   });
 });

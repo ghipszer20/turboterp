@@ -19,6 +19,7 @@ export const geogMajorCeos: Program = {
     "Specialization, https://academiccatalog.umd.edu/undergraduate/colleges-schools/behavioral-social-sciences/geographical-sciences/geographical-sciences-major/ " +
     "(fetched 2026-09-28)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "No department checklist was available for this track: the Feller Center's 'GEOG CEOS Major Checklist' PDF failed to convert in the fetched source file ('Not converted (fetch failed: Invalid Root reference.)'). All requirements below come from the catalog's own Computational Earth Observation Science Specialization table; flagged in docs/project/owner-review.md so the owner can source the checklist separately.",
@@ -27,7 +28,7 @@ export const geogMajorCeos: Program = {
     "'Nine credits from the following list' (GEOG371, GEOG417, GEOG461, GEOG471, GEOG472) is fully enumerated and encoded as `choose` count 3 from those five literal options.",
     "Supporting course MATH120 is encoded from the catalog alone (no department checklist to broaden it, unlike the General and Geospatial Data Science tracks' checklists, which list MATH120/140/136). Flagged in docs/project/owner-review.md in case the missing CEOS checklist would have broadened this the same way.",
     "Not encoded (approved elective with no enumerable list; flagged in docs/project/owner-review.md): the remaining 4 Supporting Courses (12 credits), 'approved by GEOG advisor' with no course list in the fetched source.",
-    "Not encoded (engine gap): the catalog's stated minimum 2.0 GPA across all courses used to satisfy the major (major + supporting sequence together); residency rules; and the 120-credit graduation minimum. The audit checks individual requirements, not GPA, residency or overall credit totals.",
+    "Not encoded (engine gap): Program GPA 2.0 encoded as minGpa (major + supporting sequence together). residency rules; and the 120-credit graduation minimum. The audit checks individual requirements, not GPA, residency or overall credit totals.",
   ],
   requirements: [
     { kind: "course", id: "geog201", name: "Geography of Environmental Systems", options: ["GEOG201"] },

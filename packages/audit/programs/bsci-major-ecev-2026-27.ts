@@ -26,6 +26,7 @@ export const bsciMajorEcev: Program = {
     "Biological Sciences Undergraduate Program, Ecology and Evolution ECEV (0404B) degree sheet, " +
     "https://bsci.umd.edu/s/ECEV-Curriculum-2026.pdf (fetched 2026-09-27)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Basic Program and Supporting Courses are identical across every Biological Sciences specialization (see bsci-major-genb-2026-27.ts's review notes for the biology-lab, math-sequence and freshman-seminar encodings, which repeat here).",
@@ -33,7 +34,7 @@ export const bsciMajorEcev: Program = {
     "'14 credits of area courses, including two courses designated as Lab and two 400-level courses' is encoded as a 14-credit `choose` pool over the 300- and 400-level area lists, plus an overlay `choose` (count 2) over the 400-level list for the 400-level minimum. The Lab-designation minimum is not encoded -- no lab field on StudentCourse. BSCI484's footnote ('may act as an area Lab but may not fulfill one of the two 400-level courses required') is not enforced -- the 400-level overlay treats every 400-level course alike.",
     "'Enrichment: 3 credits, from any 300- or 400-level BSCI, CHEM, or BCHM course' is encoded as a `choose` credit pool over that department/number-range filter.",
     "Special Topics and honors seminars (BSCI328/338/339/348/439, BSCI378H/398H) and research/teaching credit toward Enrichment are not encoded -- variable section codes and/or advisor-gated.",
-    "Not encoded (engine gap, both sources agree): the 2.0 cumulative GPA and 2.0 major-average-GPA requirements.",
+    "Not encoded (engine gap, both sources agree): the 2.0 cumulative (university) GPA requirement. Program GPA 2.0 encoded as minGpa.",
   ],
   requirements: [
     { kind: "course", id: "bsci160", name: "Ecology and Evolution 1", options: ["BSCI160"] },

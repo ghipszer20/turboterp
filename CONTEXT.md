@@ -1,4 +1,4 @@
-# SuperTerp
+# TurboTerp
 
 An unofficial all-in-one app for University of Maryland students: campus information, a semester schedule builder, and an advisor that checks a four-year plan against every degree requirement.
 
@@ -7,7 +7,7 @@ An unofficial all-in-one app for University of Maryland students: campus informa
 ### Students and records
 
 **Student**:
-The person using SuperTerp, identified by a umd.edu account.
+The person using TurboTerp, identified by a umd.edu account.
 _Avoid_: User, account
 
 **Transcript**:
@@ -111,7 +111,7 @@ Credits or courses in the Plan that no Requirement needs.
 _Avoid_: Excess, waste
 
 **Manual Item**:
-A requirement SuperTerp cannot check itself (permission, placement, audition, clinical hours); the student confirms it.
+A requirement TurboTerp cannot check itself (permission, placement, audition, clinical hours); the student confirms it.
 _Avoid_: Unknown, unsupported requirement
 
 **Prerequisite**:

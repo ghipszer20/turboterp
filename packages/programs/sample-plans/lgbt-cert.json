@@ -1,0 +1,15 @@
+{
+  "programId": "lgbt-cert",
+  "source": "https://wgss.umd.edu/academic-programs/undergraduate/LGBTQ-Certificate",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this certificate. Constructed from the post-2020 requirements: LGBT200, five LGBT electives (LGBT265 and LGBT291 from the department page's pre-2020 list, then LGBT350, LGBT359, LGBT465) and LGBT386 as the capstone. The department lists no electives by thematic area. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["LGBT200", "LGBT265"] },
+    { "term": "Term 2", "courses": ["LGBT291", "LGBT350"] },
+    { "term": "Term 3", "courses": ["LGBT359", "LGBT465"] },
+    { "term": "Term 4", "courses": ["LGBT386"] }
+  ]
+}

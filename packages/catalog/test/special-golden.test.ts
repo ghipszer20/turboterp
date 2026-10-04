@@ -4,7 +4,7 @@
 // program and plans broken on purpose that must fail a named requirement.
 
 import { describe, expect, it } from "vitest";
-import { auditProgram, type Program, type StudentCourse } from "@superterp/audit";
+import { auditProgram, type Program, type StudentCourse } from "@turboterp/audit";
 import { scholarsArts } from "../special-programs/scholars-arts-2026-27.ts";
 import { honorsHumanities } from "../special-programs/honors-humanities-2026-27.ts";
 import { writersHouse } from "../special-programs/llp-writers-house-2026-27.ts";

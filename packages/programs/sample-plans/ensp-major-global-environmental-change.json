@@ -1,0 +1,20 @@
+{
+  "programId": "ensp-major-global-environmental-change",
+  "source": "https://agnr.umd.edu/sites/agnr.umd.edu/files/files/documents/ENSP%20FourYrPlan_BSOS%20GlobalEnvChange.pdf",
+  "fetched": "2026-09-28",
+  "official": true,
+  "notes": [
+    "Official four-year plan transcribed with Gen Ed slots left out; unnamed Restricted Elective / Techniques & Methods slots are not encoded, so they are left out too. Calculus filled with MATH140 (MATH121 is the concentration's Calculus II); Statistics with GEOG306; 'MATH120 or 140' etc. as above; PHYS121 taken for the physics row; Core groups: BSCI160/161, CHEM131/132, GEOG201/211 and AREC240 (Economics); 'UL Requirement 1-5' filled with BSCI361, GEOG331, GEOG301, GVPT306 and GEOG442; Techniques & Methods (GEOG373, GEOG272) shown as in the plan though not encoded; a Restricted Elective filled with ENSP330 as the Core's Applied Science and Policy course."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["ENSP101", "MATH140", "GEOG201", "GEOG211", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["ENSP102", "MATH121", "BSCI160", "BSCI161"] },
+    { "term": "Sophomore Fall", "courses": ["GEOL100", "PHYS121", "CHEM131", "CHEM132"] },
+    { "term": "Sophomore Spring", "courses": ["GEOL102", "CHEM231", "CHEM232"] },
+    { "term": "Junior Fall", "courses": ["GEOG306", "GEOG373", "GEOG272"] },
+    { "term": "Junior Spring", "courses": ["BSCI361", "GEOG331", "GEOG301", "GVPT306", "AREC240"] },
+    { "term": "Senior Fall", "courses": ["GEOG442", "ENSP386", "ENSP330"] },
+    { "term": "Senior Spring", "courses": ["ENSP400"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}

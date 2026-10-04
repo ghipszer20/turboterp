@@ -1,8 +1,8 @@
 // The program picker's search and grouping (SetupView, WhatIfView): pure, over registry metadata
 // only, so it scales to every UMD program without loading any requirements.
 
-import type { ProgramEntry, ProgramKind } from "@superterp/programs";
-import { COLLEGES, collegeName } from "@superterp/plan/credit-caps";
+import { blockedReason, type ProgramEntry, type ProgramKind } from "@turboterp/programs";
+import { COLLEGES, collegeName } from "@turboterp/plan/credit-caps";
 
 const KINDS: { kind: ProgramKind; label: string }[] = [
   { kind: "major", label: "Majors" },
@@ -20,6 +20,19 @@ export function kindTabs(options: ProgramEntry[]): KindTab[] {
 }
 
 const haystack = (o: ProgramEntry) => [o.name, o.short, o.track, o.id].filter(Boolean).join(" ").toLowerCase();
+
+export type OptionState = { on: boolean; disabled: boolean; blocked?: string };
+
+/**
+ * One picker option against the programs already chosen: whether it's on, and whether a chosen
+ * major closes it (ProgramMeta.notOpenTo; owner ruling, rulings.md "Minors"). A blocked option
+ * can't be added, but one that is already chosen stays removable.
+ */
+export function optionState(option: ProgramEntry, selected: readonly string[]): OptionState {
+  const on = selected.includes(option.id);
+  const blocked = blockedReason(option, selected);
+  return blocked === undefined ? { on, disabled: false } : { on, disabled: !on, blocked };
+}
 
 /**
  * Without a search: the chosen kind, grouped by college. With one: every kind, grouped by kind,

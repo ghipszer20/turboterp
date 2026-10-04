@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { Section } from "@superterp/course-data/schedules";
+import type { Section } from "@turboterp/course-data/schedules";
 import { sectionBlocks } from "../block-items";
 
 const stat: Section = {

@@ -1,0 +1,13 @@
+{
+  "programId": "hhm-minor",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/history/humanities-health-medicine-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog: ARHU230 and ENGL395 only; the four core-area courses are an open slot with no published list, so none are included. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["ARHU230"] },
+    { "term": "Term 2", "courses": ["ENGL395"] }
+  ]
+}

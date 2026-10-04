@@ -1,7 +1,7 @@
 // College Park Scholars: Business, Society and Entrepreneurship (Fall 2026 curriculum PDF).
 // Hand-transcribed. UNVERIFIED.
 
-import type { Program, ProgramMeta } from "@superterp/audit";
+import type { Program, ProgramMeta } from "@turboterp/audit";
 import { CATALOG_YEAR, SCHOLARS_CITATION_NOTES } from "./common.ts";
 
 export const SOURCE = "https://scholars.umd.edu/sites/default/files/2026-05/CurriculumRequirementsBSE2026_0.pdf";

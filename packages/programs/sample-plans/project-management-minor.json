@@ -1,0 +1,14 @@
+{
+  "programId": "project-management-minor",
+  "source": "https://pm.umd.edu/program/undergraduate-minor-in-project-management",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the department page: ENCE320, ENCE422, ENCE423, ENCE424 and ENCE421 as the elective. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["ENCE320", "ENCE422"] },
+    { "term": "Term 2", "courses": ["ENCE423", "ENCE424"] },
+    { "term": "Term 3", "courses": ["ENCE421"] }
+  ]
+}

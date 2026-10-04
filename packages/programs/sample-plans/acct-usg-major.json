@@ -1,0 +1,81 @@
+{
+  "programId": "acct-usg-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/universities-shady-grove/business/accounting/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "Shady Grove version: mirrors the College Park Accounting plan (acct-major); the requirements are identical, so the same plan is used. Its official flag and placeholder notes carry over below.",
+    "No Accounting-specific 4-year plan was reachable from the fetched source (the catalog's 'Catalog four-year plan' section only links to the Smith School's general roadmaps page and 4yearplans.umd.edu; the college's own general BS 'Typical Program' table stops after the sophomore year with no Accounting-specific courses placed). This plan is CONSTRUCTED from the catalog's own College Requirements and Accounting-major requirement tables; flagged in docs/project/owner-review.md. Gen Ed slots are left out: only the major is audited.",
+    "Calculus gateway filled with MATH140 (Calculus I); Business Statistics gateway filled with BMGT230 (Business Statistics); Oral Communication filled with COMM107 (Oral Communication: Principles and Practices) -- all named directly in the catalog's own option lists, not invented.",
+    "Track choice: Public Accounting Track (BMGT311, BMGT323, BMGT411, BMGT422 fixed, plus one of six named electives). The one-of-six elective slot is filled with BMGT313 (Financial Statement Analysis), a real course named directly in that slot's own catalog list.",
+    "Course placement (year/term) is constructed, not sourced from a published plan: BMGT220/BMGT221 (Principles of Accounting I/II) placed sophomore year matching the college's own Freshman-Sophomore School Requirements grouping; BMGT310/321/326 (the major's own 9-credit core) and the Public Accounting Track courses placed junior/senior year, after their Freshman-Sophomore prerequisites-in-spirit, since the source gives no term-by-term sequencing for them."
+  ],
+  "credits": {
+    "BMGT367": 1
+  },
+  "terms": [
+    {
+      "term": "Freshman Fall",
+      "courses": [
+        "BMGT110",
+        "MATH140"
+      ]
+    },
+    {
+      "term": "Freshman Spring",
+      "courses": [
+        "ECON200",
+        "COMM107"
+      ]
+    },
+    {
+      "term": "Sophomore Fall",
+      "courses": [
+        "BMGT220",
+        "ECON201"
+      ]
+    },
+    {
+      "term": "Sophomore Spring",
+      "courses": [
+        "BMGT221",
+        "BMGT230"
+      ]
+    },
+    {
+      "term": "Junior Fall",
+      "courses": [
+        "BMGT301",
+        "BMGT340",
+        "BMGT310"
+      ]
+    },
+    {
+      "term": "Junior Spring",
+      "courses": [
+        "BMGT350",
+        "BMGT364",
+        "BMGT321"
+      ]
+    },
+    {
+      "term": "Senior Fall",
+      "courses": [
+        "BMGT367",
+        "BMGT380",
+        "BMGT326",
+        "BMGT311"
+      ]
+    },
+    {
+      "term": "Senior Spring",
+      "courses": [
+        "BMGT495",
+        "BMGT323",
+        "BMGT411",
+        "BMGT422",
+        "BMGT313"
+      ]
+    }
+  ]
+}

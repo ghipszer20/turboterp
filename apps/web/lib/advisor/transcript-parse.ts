@@ -41,6 +41,8 @@ export type ParsedTranscript = {
   courses: ParsedCourse[];
   apLines: ParsedApLine[];
   unparsed: UnparsedLine[];
+  /** The last printed "UG Cumulative" GPA (0-4); null when none is printed or it is impossible. */
+  cumulativeGpa: { value: number; flagged: boolean; raw: string } | null;
 };
 
 const KNOWN_GRADES = new Set(["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F", "W", "I", "S", "U", "P", "AUD"]);
@@ -48,6 +50,7 @@ const KNOWN_GRADES = new Set(["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-",
 const GRADE_SHAPE = /^[A-Za-z]{1,4}[+-]?$/;
 const NUM_SHAPE = /^[\d@Oo]+(\.[\d@Oo]{1,3})?$/;
 const isNumShape = (tok: string) => NUM_SHAPE.test(tok) && /\d/.test(tok);
+const CUMULATIVE_LINE = /^UG Cumulative:/i;
 const METHOD_SHAPE = /^(REG|WD|CAN|AUD)$/i;
 
 const SEASON_NAMES: Record<string, string> = { fall: "Fall", winter: "Winter", spring: "Spring", summer: "Summer" };
@@ -111,6 +114,15 @@ function repairNumber(token: string): { value: number | null; repaired: boolean 
   const cleaned = token.replace(/[O@]/gi, "0");
   const value = Number.parseFloat(cleaned);
   return { value: Number.isFinite(value) ? value : null, repaired: cleaned !== token };
+}
+
+/** The GPA is the last field of "UG Cumulative: attempted; earned; qpoints; GPA". Repairs @/O -> 0 like credit numbers; rejects anything outside 0-4. */
+function parseCumulativeGpa(line: string, source: Source): { value: number; flagged: boolean; raw: string } | null {
+  const token = line.replace(CUMULATIVE_LINE, "").split(";").pop()!.trim();
+  if (!isNumShape(token)) return null;
+  const { value, repaired } = repairNumber(token);
+  if (value === null || value < 0 || value > 4) return null;
+  return { value, flagged: source === "ocr" || repaired, raw: line };
 }
 
 function parseApLine(line: string): { termCode: string | null; examRaw: string; score: number } | null {
@@ -197,6 +209,7 @@ export function parseTranscriptText(text: string, source: Source): ParsedTranscr
   let section: "completed" | "current" = "completed";
   let currentTerm: string | null = null;
   let lastApTermCode: string | null = null;
+  let cumulativeGpa: ParsedTranscript["cumulativeGpa"] = null;
 
   for (const line of lines) {
     if (mode === "front" && studentName === null && STUDENT_NAME.test(line)) {
@@ -209,6 +222,11 @@ export function parseTranscriptText(text: string, source: Source): ParsedTranscr
     }
     if (/^\*\*\s*Current Course Information\s*\*\*$/i.test(line)) {
       section = "current";
+      continue;
+    }
+    if (CUMULATIVE_LINE.test(line)) {
+      cumulativeGpa = parseCumulativeGpa(line, source);
+      if (!cumulativeGpa) unparsed.push({ raw: line, reason: "Couldn't read a cumulative GPA from this line" });
       continue;
     }
     if (SKIP_PATTERNS.some((re) => re.test(line))) continue;
@@ -257,5 +275,5 @@ export function parseTranscriptText(text: string, source: Source): ParsedTranscr
     unparsed.push({ raw: line, reason: "Unrecognized line" });
   }
 
-  return { studentName, courses, apLines, unparsed };
+  return { studentName, courses, apLines, unparsed, cumulativeGpa };
 }

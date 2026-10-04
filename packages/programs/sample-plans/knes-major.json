@@ -1,0 +1,20 @@
+{
+  "programId": "knes-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/public-health/kinesiology/kinesiology-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "sph.umd.edu publishes only benchmarks for Kinesiology (KNES200 in two semesters; BSCI202 plus three KNES core in four), not a term-by-term plan. Constructed from the catalog table with those benchmarks respected. Gen Ed left out. Fills: MATH113 for the MATH slot, STAT100 for the statistics slot, KNES320/KNES460/KNES462/KNES464/KNES474 (3 credits each, real KNES 300/400 courses named in the KNES minors) for the 15 option credits, and KNES100, KNES101, KNES102, KNES103 (1 credit each) for the four activity courses; the KNES1XX ids other than KNES100 are unconfirmed placeholders in the 100-199 range. Flagged in docs/project/owner-review.md."
+  ],
+  "credits": { "BSCI170": 3, "BSCI180": 1, "BSCI201": 4, "BSCI202": 4, "KNES300": 4, "KNES360": 4, "KNES385": 4, "KNES100": 1, "KNES101": 1, "KNES102": 1, "KNES103": 1, "UNIV100": 1 },
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["SPHL100", "BSCI170", "BSCI180", "MATH113", "KNES100", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["KNES200", "BSCI201", "STAT100", "KNES101"] },
+    { "term": "Sophomore Fall", "courses": ["BSCI202", "KNES285", "KNES287", "KNES102"] },
+    { "term": "Sophomore Spring", "courses": ["KNES350", "KNES370", "KNES103"] },
+    { "term": "Junior Fall", "courses": ["KNES300", "KNES360", "KNES385"] },
+    { "term": "Junior Spring", "courses": ["KNES320", "KNES460"] },
+    { "term": "Senior Fall", "courses": ["KNES462", "KNES464"] },
+    { "term": "Senior Spring", "courses": ["KNES474"] }
+  ]
+}

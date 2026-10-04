@@ -1,0 +1,13 @@
+{
+  "programId": "fren-minor",
+  "source": "https://sllc.umd.edu/french",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog requirements: the four core courses, then FREN302, FREN351 and a 4xx elective. The sources name no specific 4xx course, so FREN401 is a placeholder number. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["FREN204", "FREN250", "FREN301"] },
+    { "term": "Term 2", "courses": ["FREN387", "FREN302", "FREN351", "FREN401"] }
+  ]
+}

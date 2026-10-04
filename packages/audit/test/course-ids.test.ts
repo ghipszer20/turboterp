@@ -1,5 +1,5 @@
 // programCourseIds: every literal course id a Program's requirements mention, used by
-// @superterp/programs to build a lazy-safe per-major course set for the double-major notice
+// @turboterp/programs to build a lazy-safe per-major course set for the double-major notice
 // pre-filter (apps/web/lib/advisor/programs.ts) without loading every Program up front.
 
 import { describe, expect, it } from "vitest";

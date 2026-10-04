@@ -9,7 +9,7 @@
     "Track II Electives (9 credits) filled with HLTH377, HLSA300 and FMSC310, real named list courses."
   ],
   "terms": [
-    { "term": "Freshman Fall", "courses": ["SDSB123", "STAT100"] },
+    { "term": "Freshman Fall", "courses": ["SDSB123", "STAT100", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["MATH120", "SPHL100"] },
     { "term": "Sophomore Fall", "courses": ["SDSB233", "EPIB301"] },
     { "term": "Sophomore Spring", "courses": ["SDSB326", "INST327"] },
@@ -17,5 +17,6 @@
     { "term": "Junior Spring", "courses": ["INST414", "HLTH200"] },
     { "term": "Senior Fall", "courses": ["INST462", "SDSB340", "HLTH377"] },
     { "term": "Senior Spring", "courses": ["INST447", "SDSI492", "HLSA300", "FMSC310"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

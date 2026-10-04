@@ -1,21 +1,30 @@
-// The Programs a student can pick -- every entry in the program registry (@superterp/programs;
+// The Programs a student can pick -- every entry in the program registry (@turboterp/programs;
 // only Verified Programs will ship) -- plus the Requirement Layers every student gets: Gen Ed and
 // the university rules. The options carry metadata only; a Program's requirements load with
 // import() when it's audited (runAnalysis, runWhatIf), so the picker never bundles them.
 
-import type { Program } from "@superterp/audit";
-import { genEd, university } from "@superterp/audit/programs/gen-ed-2026-27.ts";
-import type { College } from "@superterp/plan/credit-caps";
-import type { Degree } from "@superterp/plan/degrees";
-import type { ProgramCandidate } from "@superterp/plan/notices";
-import { MAJOR_COURSE_SETS } from "@superterp/programs/course-sets";
+import type { Program } from "@turboterp/audit";
+import { collegeIntro } from "@turboterp/audit/programs/college-intro.ts";
+import { genEd, university } from "@turboterp/audit/programs/gen-ed-2026-27.ts";
+import type { College } from "@turboterp/plan/credit-caps";
+import type { Degree } from "@turboterp/plan/degrees";
+import type { ProgramCandidate } from "@turboterp/plan/notices";
+import { MAJOR_COURSE_SETS } from "@turboterp/programs/course-sets";
 import type { DegreeChoice } from "./plan-state";
-import { findProgram, loadPrograms, majorKey, PROGRAMS, type ProgramEntry } from "@superterp/programs";
+import { blockedReason, findProgram, loadPrograms, majorKey, PROGRAMS, type ProgramEntry } from "@turboterp/programs";
 
 export type ProgramOption = ProgramEntry;
 
 /** Majors, then minors, certificates and special programs, each major's default track first. */
 export const PROGRAM_OPTIONS: ProgramOption[] = PROGRAMS;
+
+/** The Audit's one-line notice for a saved program a chosen major closes (ProgramMeta.notOpenTo;
+ * added before the major, or saved by an older version), so it isn't shown as a normal program. */
+export function blockedNotice(programId: string, selected: readonly string[]): string | undefined {
+  const entry = findProgram(programId);
+  const reason = entry && blockedReason(entry, selected);
+  return reason === undefined ? undefined : `${reason} Remove it in Edit setup.`;
+}
 
 /** Every student is checked against these too. */
 export const AUTOMATIC_PROGRAMS: Program[] = [genEd, university];
@@ -48,6 +57,14 @@ export function majorPrograms(selected: string[]): Promise<Program[]> {
 /** The chosen programs, then Gen Ed and the university rules. */
 export async function auditedPrograms(selected: string[]): Promise<Program[]> {
   return [...(await majorPrograms(selected)), ...AUTOMATIC_PROGRAMS];
+}
+
+/** The college requirement layer(s) for a plan: the college's intro course, for freshman entrants
+ * only. The college is the plan's, or the one derived from its programs. */
+export function collegeLayers(plan: { programs: string[]; college?: College; entry?: "freshman" | "transfer" }): Program[] {
+  const college = plan.college ?? collegeOf(plan.programs);
+  const layer = college ? collegeIntro(college, plan.entry) : null;
+  return layer ? [layer] : [];
 }
 
 /** An undeclared major only clears the double-major notice pre-filter when at least this share of
@@ -126,7 +143,7 @@ export function degreeModeOf(selected: string[], stored: DegreeChoice | undefine
 }
 
 /**
- * The student's Degrees for checkDegrees (@superterp/plan/degrees): one degree holding every
+ * The student's Degrees for checkDegrees (@turboterp/plan/degrees): one degree holding every
  * chosen program for a double major (or a single major), or one degree per major for a double
  * degree, with minors and special programs in the first. The Advisor doesn't know which programs
  * are officially declared yet, so every one is "planned" (the declaration-deadline note shows).

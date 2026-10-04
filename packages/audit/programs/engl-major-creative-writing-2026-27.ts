@@ -19,6 +19,7 @@ export const englMajorCreativeWriting: Program = {
     "College of Arts and Humanities, official English Four Year Academic Plan (department source), " +
     "https://drive.google.com/uc?export=download&id=1hCmIPjZi3fZy96AM4mF4S1grGFEbZ46A#English (fetched 2026-09-28)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Element 3 (Creative Writing Track, 12 credits / 4 courses): the catalog names three distinct " +

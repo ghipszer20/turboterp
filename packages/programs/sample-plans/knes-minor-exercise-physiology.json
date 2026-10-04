@@ -1,0 +1,15 @@
+{
+  "programId": "knes-minor-exercise-physiology",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/public-health/kinesiology/kinesiology-exercise-physiology-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Constructed from the requirements: KNES100 fills the KNES1XX physical activity slot (no specific course is named; confirm a real KNES 1XX course), plus five electives of which three are 300/400-level. Flagged in docs/project/owner-review.md."
+  ],
+  "credits": { "KNES100": 1 },
+  "terms": [
+    { "term": "Term 1", "courses": ["KNES100", "KNES260", "KNES282"] },
+    { "term": "Term 2", "courses": ["KNES320", "KNES360"] },
+    { "term": "Term 3", "courses": ["KNES460"] }
+  ]
+}

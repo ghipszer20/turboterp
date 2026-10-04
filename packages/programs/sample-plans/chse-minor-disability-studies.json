@@ -1,0 +1,14 @@
+{
+  "programId": "chse-minor-disability-studies",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/counseling-higher-special-education/disability-studies-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: CHSE205 and EDSP220 as the foundations, then three 300+ electives (EDSP470, KNES334, PSYC354). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["CHSE205", "EDSP220"] },
+    { "term": "Term 2", "courses": ["EDSP470", "KNES334"] },
+    { "term": "Term 3", "courses": ["PSYC354"] }
+  ]
+}

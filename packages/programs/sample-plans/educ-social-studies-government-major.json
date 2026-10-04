@@ -1,0 +1,21 @@
+{
+  "programId": "educ-social-studies-government-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/social-studies-education-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no readable Secondary Social Studies Education 4-year plan in the fetched sources (links only). Constructed from the catalog requirement table: subject-area courses first, pre-professional education next, TLPL470 in junior fall and TLPL471/479/478/489 in senior year. Gen Ed slots are left out. Flagged in docs/project/owner-review.md.",
+    "Fills (no course lists in the source): regional HIST electives HIST284 and HIST111; upper GVPT GVPT320, GVPT354, GVPT356, GVPT357, GVPT377, GVPT388; GVPT electives GVPT200, GVPT280, GVPT282; all real catalog courses used by the GVPT major's plan. Economics: ECON200."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["GVPT170", "GVPT200", "HIST200", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["GVPT201", "GVPT241", "SOCY100", "TLPL250"] },
+    { "term": "Sophomore Fall", "courses": ["GVPT280", "GVPT282", "HIST208", "EDHD413"] },
+    { "term": "Sophomore Spring", "courses": ["HIST284", "HIST111", "ECON200", "GEOG202", "TLPL300"] },
+    { "term": "Junior Fall", "courses": ["GVPT320", "GVPT354", "EDHD426", "TLPL481", "TLPL488", "TLPL470"] },
+    { "term": "Junior Spring", "courses": ["GVPT356", "GVPT357"] },
+    { "term": "Senior Fall", "courses": ["GVPT377", "GVPT388", "TLPL471", "TLPL479"] },
+    { "term": "Senior Spring", "courses": ["TLPL478", "TLPL489"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}

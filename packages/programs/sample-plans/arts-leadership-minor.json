@@ -1,0 +1,14 @@
+{
+  "programId": "arts-leadership-minor",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/theatre-dance-performance-studies/arts-leadership-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog: ARHU240, ENGL398A, ARHU440, two of the choose-2 list (ARHU340, ARHU441) and ARTH300 for the advisor-approved 3 credits (no named list). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["ARHU240", "ENGL398A"] },
+    { "term": "Term 2", "courses": ["ARHU340", "ARHU441"] },
+    { "term": "Term 3", "courses": ["ARHU440", "ARTH300"] }
+  ]
+}

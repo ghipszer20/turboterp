@@ -9,9 +9,9 @@
     "Economics Courses of Choice named-list slot filled with ECON414 (Game Theory), one of the catalog's own named options.",
     "The merged econ-ba-300-400 slot (3 courses) is filled with ECON310, ECON311 and ECON312; the econ-ba-400 slot (3 courses) is filled with ECON410, ECON412 and ECON416 -- all real, currently-approved ECON courses from the builder brief's approved-course list, picked only to fill the count requirement since the catalog names no specific course numbers for these rows."
   ],
-  "credits": { "ECON305": 4, "ECON306": 4 },
+  "credits": { "ECON305": 4, "ECON306": 4, "UNIV100": 1 },
   "terms": [
-    { "term": "Freshman Fall", "courses": ["ECON200", "MATH120"] },
+    { "term": "Freshman Fall", "courses": ["ECON200", "MATH120", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["ECON201", "ECON230"] },
     { "term": "Sophomore Fall", "courses": ["ECON305", "ECON310"] },
     { "term": "Sophomore Spring", "courses": ["ECON306", "ECON311"] },

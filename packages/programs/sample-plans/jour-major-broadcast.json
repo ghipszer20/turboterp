@@ -1,0 +1,18 @@
+{
+  "programId": "jour-major-broadcast",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/journalism/journalism-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "CONSTRUCTED, not official: the catalog's four-year plan section only links to the college's roadmap page (4yearplans.umd.edu) with no term grid, so this plan is built from the catalog requirement rows. Gen Ed courses, the 6-credit language/math/programming slot, the second Supporting Area block and the Capstone Experience (no courses named; the broadcast capstone is unnamed too) are left out.",
+    "Broadcast: JOUR347 and JOUR360 fill Menu 1 and Menu 2 and the specialization. Other fills: statistics = STAT400; public speaking = COMM107; Supporting Area = four GVPT 300-level courses (GVPT306, GVPT307, GVPT309, GVPT310); Journalism and Society = JOUR447; Media Research = JOUR472; upper-level JOUR = JOUR455; skills courses = JOUR353 and JOUR361."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["JOUR152", "JOUR200", "STAT400", "COMM107", "HIST200"] },
+    { "term": "Freshman Spring", "courses": ["JOUR201", "ECON200", "GVPT170", "PSYC100"] },
+    { "term": "Sophomore Fall", "courses": ["JOUR320", "JOUR352", "JOUR347", "JOUR360"] },
+    { "term": "Sophomore Spring", "courses": ["JOUR402", "JOUR396", "JOUR447", "GVPT306"] },
+    { "term": "Junior Fall", "courses": ["JOUR472", "JOUR353", "JOUR361", "GVPT307", "GVPT309"] },
+    { "term": "Junior Spring", "courses": ["GVPT310", "JOUR455"] }
+  ]
+}

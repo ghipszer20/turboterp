@@ -1,0 +1,21 @@
+{
+  "programId": "plcy-pp-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/public-policy/public-policy-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "The SPP four-year plan page only links to downloadable Plans of Study; no plan text is readable, so this plan is CONSTRUCTED from the catalog requirements (flagged in docs/project/owner-review.md). Gen Ed slots are left out: only the major is audited.",
+    "The four policy electives are filled with PLCY214 (philanthropy, named in the Nonprofit Leadership minor), PLCY311, PLCY313 and PLCY380 (named in the Public Leadership minor's list); the sources name no elective courses for this major, so these are catalog-plausible fills, not sourced.",
+    "Placement follows the stated benchmarks (PLCY100/101 in the first two semesters, STAT100 and PLCY200 by semester four, PLCY400/PLCY401 after 90 credits) and prerequisites (PLCY100 before PLCY300, ECON200 before PLCY303, STAT100 before PLCY304, PLCY200 before PLCY400); otherwise term placement is constructed."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["PLCY100", "ECON200"] },
+    { "term": "Freshman Spring", "courses": ["PLCY101", "STAT100"] },
+    { "term": "Sophomore Fall", "courses": ["PLCY200", "PLCY201", "HIST201"] },
+    { "term": "Sophomore Spring", "courses": ["PLCY203", "PLCY300", "PLCY214"] },
+    { "term": "Junior Fall", "courses": ["PLCY302", "PLCY303", "PLCY311"] },
+    { "term": "Junior Spring", "courses": ["PLCY304", "PLCY309", "PLCY313"] },
+    { "term": "Senior Fall", "courses": ["PLCY401", "PLCY380"] },
+    { "term": "Senior Spring", "courses": ["PLCY400"] }
+  ]
+}

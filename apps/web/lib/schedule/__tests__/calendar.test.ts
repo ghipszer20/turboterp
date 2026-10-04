@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { Meeting } from "@superterp/course-data/schedules";
-import { clock, dayBlocks, hourLabel, labelFit, pct, timeScale, untimed } from "../calendar";
+import type { Meeting } from "@turboterp/course-data/schedules";
+import { blockLines, clock, dayBlocks, hourLabel, labelFit, pct, timeScale, untimed } from "../calendar";
 
 const m = (days: string[], start: number | null, end: number | null, type = "Lecture"): Meeting => ({
   days,
@@ -141,5 +141,17 @@ describe("labelFit", () => {
     expect(labelFit(16, { line: 12, pad: 4 })).toBe("one");
     expect(labelFit(28, { line: 12, pad: 4 })).toBe("two");
     expect(labelFit(27.9, { line: 12, pad: 4 })).toBe("one");
+  });
+});
+
+describe("blockLines", () => {
+  it("gives gallery mini blocks no text at all, however tall (owner: color only)", () => {
+    expect(blockLines("mini", 400, { line: 12, pad: 4 })).toBe("none");
+    expect(blockLines("mini", 20, { line: 12, pad: 4 })).toBe("none");
+  });
+
+  it("labels larger calendars as far as the lines fit", () => {
+    expect(blockLines("zoom", 40, { line: 12, pad: 4 })).toBe("two");
+    expect(blockLines("large", 20, { line: 12, pad: 4 })).toBe("one");
   });
 });

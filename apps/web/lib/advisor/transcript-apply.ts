@@ -18,8 +18,10 @@ export type SelectedAp = { exam: string; score: number };
 
 const uid = () => (typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `t${Math.random().toString(36).slice(2)}`);
 
-export function applyTranscriptImport(plan: AdvisorPlan, selection: { courses: SelectedCourse[]; ap: SelectedAp[] }): AdvisorPlan {
+export function applyTranscriptImport(plan: AdvisorPlan, selection: { courses: SelectedCourse[]; ap: SelectedAp[]; gpa?: number | null }): AdvisorPlan {
   let next = plan;
+  // The transcript's printed cumulative GPA replaces any earlier value (the student can still edit it); none printed leaves it alone.
+  if (selection.gpa !== undefined && selection.gpa !== null) next = planReducer(next, { type: "set-gpa", gpa: selection.gpa });
 
   for (const course of selection.courses) {
     if (!parseTerm(course.term)) continue; // defensive: every parsed term should already be "Season Year"

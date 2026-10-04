@@ -1,0 +1,21 @@
+{
+  "programId": "arch-major-ba",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/architecture-planning-preservation/architecture-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No readable official 4-year plan (the department page only links to PDFs). CONSTRUCTED from the catalog's BA requirement tables; term placement is illustrative. Flagged in docs/project/owner-review.md. Gen Ed slots left out.",
+    "Calculus filled with MATH140. The 21 credits of upper-level electives are filled with ARCH427, ARCH428, ARCH430, ARCH433, ARCH434, ARCH435 and ARCH470, real ARCH 4xx courses named in the Academic Catalog's minor requirement lists; the 9 directed-elective credits (an OPEN SLOT) are not planned."
+  ],
+  "credits": { "ARCH201": 1, "ARCH400": 6, "UNIV100": 1 },
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["ARCH171", "MATH140", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["ARCH200", "ARCH225", "PHYS121"] },
+    { "term": "Sophomore Fall", "courses": ["ARCH226", "ARCH300", "ARCH201"] },
+    { "term": "Sophomore Spring", "courses": ["ARCH400", "ARCH462"] },
+    { "term": "Junior Fall", "courses": ["ARCH463", "ARCH427", "ARCH428"] },
+    { "term": "Junior Spring", "courses": ["ARCH430", "ARCH433"] },
+    { "term": "Senior Fall", "courses": ["ARCH434", "ARCH435"] },
+    { "term": "Senior Spring", "courses": ["ARCH470"] }
+  ]
+}

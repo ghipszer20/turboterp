@@ -22,6 +22,7 @@ export const frenMajor: Program = {
     "College of Arts and Humanities official four-year academic plan for French, " +
     "fetched 2026-09-28 (https://drive.google.com/uc?export=download&id=17UqV14aynMTWEgyBOex0GzaajjhDtcjc#French)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Department page vs. catalog: no disagreement found. The college's four-year plan's 'Major " +
@@ -43,9 +44,9 @@ export const frenMajor: Program = {
       "any FREN4xx level course offered in French.'",
     "The World Language Placement page (arhu.umd.edu/academics/world-language-placement, fetched as " +
       "context) has no French-specific placement rule to encode.",
-    "Not encoded (engine gaps): the 2.0 GPA-in-the-major requirement, residency rules (30 credits at " +
+    "Not encoded (engine gaps): residency rules (30 credits at " +
       "UMD, 15 of the final 30 at the 300-400 level, 12 upper-level major credits at UMD), and the " +
-      "120-credit graduation minimum.",
+      "120-credit graduation minimum. Program GPA 2.0 encoded as minGpa.",
   ],
   requirements: [
     { kind: "course", id: "fren204", name: "French Grammar and Composition", options: ["FREN204"] },

@@ -9,14 +9,9 @@
     "The biochemistry sequence (Year 3 Spring) is filled with BCHM463 alone rather than BCHM461+BCHM462, since the plan's own footnote treats the BCHM461 path as the non-default option (it additionally consumes one of the three technical-elective slots with BCHM462).",
     "The three generic 'Tech Elective (see advisor)' slots (Year 4 Fall and Spring) are filled with CHBE451 (Photovoltaics), CHBE472 (Control of Air Pollution Sources) and CHBE482 (Biochemical Engineering), all from the Technical Electives page's list of CHBE senior electives; any three qualifying courses totaling 9 credits would satisfy the requirement."
   ],
-  "credits": {
-    "MATH140": 4, "MATH141": 4, "MATH241": 4,
-    "CHEM136": 1, "CHEM232": 1, "CHEM242": 1, "CHEM272": 2,
-    "PHYS261": 1, "PHYS271": 1,
-    "CHBE333": 1
-  },
+  "credits": { "MATH140": 4, "MATH141": 4, "MATH241": 4, "CHEM136": 1, "CHEM232": 1, "CHEM242": 1, "CHEM272": 2, "PHYS261": 1, "PHYS271": 1, "CHBE333": 1, "UNIV100": 1 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["ENES100", "MATH140", "CHEM135", "CHEM136"] },
+    { "term": "Year 1 Fall", "courses": ["ENES100", "MATH140", "CHEM135", "CHEM136", "UNIV100"] },
     { "term": "Year 1 Spring", "courses": ["CHBE101", "MATH141", "PHYS161", "BIOE120"] },
     { "term": "Year 2 Fall", "courses": ["MATH241", "CHEM231", "CHEM232", "PHYS260", "PHYS261", "CHBE250", "CHBE301"] },
     { "term": "Year 2 Spring", "courses": ["MATH246", "PHYS270", "PHYS271", "CHEM241", "CHEM242", "CHBE302"] },

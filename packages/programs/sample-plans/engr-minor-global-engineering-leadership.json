@@ -1,0 +1,14 @@
+{
+  "programId": "engr-minor-global-engineering-leadership",
+  "source": "https://eng.umd.edu/global/coursework",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: ENES138 (1 credit) for the dialogue slot, GVPT200 for the Global Perspectives Elective and BMGT363 for the Leadership Elective. Flagged in docs/project/owner-review.md."
+  ],
+  "credits": { "ENES138": 1 },
+  "terms": [
+    { "term": "Term 1", "courses": ["ENES317", "ENES138", "ENES472"] },
+    { "term": "Term 2", "courses": ["ENES424", "GVPT200", "BMGT363"] }
+  ]
+}

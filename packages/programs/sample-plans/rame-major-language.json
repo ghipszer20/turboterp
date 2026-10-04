@@ -9,7 +9,7 @@
     "First-year language prerequisite credits (6-12 credits to reach the second-year level) are not part of the major requirement being audited and are left out, same as Gen Ed and general-elective slots."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["RELS271"] },
+    { "term": "Year 1 Fall", "courses": ["RELS271", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["JWST225", "HEBR206"] },
     { "term": "Year 2 Fall", "courses": ["JWST231", "HEBR207"] },
     { "term": "Year 2 Spring", "courses": ["HIST120"] },

@@ -9,9 +9,9 @@
     "Anthropology-Environment Track II (9 credits) filled with ANTH450, ANTH454 and ANTH467, the only three courses the source names for this list.",
     "ANTH222 is 4 credits (catalog table); noted in the credits map below."
   ],
-  "credits": { "ANTH222": 4 },
+  "credits": { "ANTH222": 4, "UNIV100": 1 },
   "terms": [
-    { "term": "Freshman Fall", "courses": ["SDSB123", "STAT100"] },
+    { "term": "Freshman Fall", "courses": ["SDSB123", "STAT100", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["MATH115", "ANTH222"] },
     { "term": "Sophomore Fall", "courses": ["SDSB233", "INST314"] },
     { "term": "Sophomore Spring", "courses": ["SDSB326", "INST327"] },

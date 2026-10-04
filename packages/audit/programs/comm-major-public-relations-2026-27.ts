@@ -3,7 +3,7 @@
 // the College's official Public Relations Four Year Academic Plan (department source),
 // https://drive.google.com/uc?export=download&id=1p7VsEESCucKzHn92KjkI1CwjMIVUpyz3 (fetched 2026-09-28).
 // Owner ruling (docs/project/rulings.md): where the department page/plan and the catalog disagree,
-// follow the department source. No disagreement could be checked here -- see reviewNotes.
+// follow the department source. On the OCR re-check no disagreement was found -- see reviewNotes.
 // Encoded by hand. UNVERIFIED until the owner signs off.
 
 import type { Program, ProgramMeta } from "../src/audit.ts";
@@ -25,7 +25,7 @@ export const commMajorPublicRelations: Program = {
   minGrade: "C-",
   verified: false,
   reviewNotes: [
-    "The Public Relations plan PDF's text conversion is fully garbled (a substitution-style symbol-font extraction with no legible course codes, term headers, or other course-level signal anywhere in the converted text). No term-by-term placement could be read from it, so `packages/programs/sample-plans/comm-major-public-relations.json` is CONSTRUCTED from the catalog's own requirement structure rather than read from the plan; flagged in docs/project/owner-review.md. Because the plan is unreadable, no department-vs-catalog disagreement could be checked for this track.",
+    "The Public Relations plan PDF's OCR text is also illegible (shredded table; no course-by-term grid recoverable, only checklist fragments that match the catalog), so the sample plan stays CONSTRUCTED from the catalog's requirement structure (official: false). No department-vs-catalog disagreement could be found; flagged in docs/project/owner-review.md.",
     "Communication Theory & Principles: COMM201 is fixed; the student then picks one of COMM301, COMM302, COMM303.",
     "Applied: unlike the other four tracks (each a choose-one from a short list), Public Relations' own table names two specific required courses instead -- COMM331 and COMM386 -- with no 'select' language; encoded as two `course` requirements.",
     "COMM386 (Experiential Learning) is listed here as '3-6' credits (variable); encoded as a single `course` requirement (the engine has no variable-credit course type) -- matches the catalog's own 'Total Credits: 36-39' range for this track (36 assuming COMM386 = 3 credits).",

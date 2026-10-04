@@ -1,0 +1,15 @@
+{
+  "programId": "japn-minor",
+  "source": "https://sllc.umd.edu/fields/japanese/minor",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: JAPN301 (6 credits) for language, JAPN421 for linguistics, JAPN314 for literature/cultural studies, and JAPN401 as the additional course. The JAPN101/102/201 prerequisites are left out. Flagged in docs/project/owner-review.md."
+  ],
+  "credits": { "JAPN301": 6 },
+  "terms": [
+    { "term": "Term 1", "courses": ["JAPN301"] },
+    { "term": "Term 2", "courses": ["JAPN421", "JAPN314"] },
+    { "term": "Term 3", "courses": ["JAPN401"] }
+  ]
+}

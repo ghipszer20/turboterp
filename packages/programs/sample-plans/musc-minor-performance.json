@@ -1,0 +1,16 @@
+{
+  "programId": "musc-minor-performance",
+  "source": "https://music.umd.edu/academic-programs/music-performance-minor",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No published plan for the minor; constructed from the catalog requirements and the admissions page (lessons taken concurrently with large ensemble). Ensemble is MUSC229 (1 credit) x4; musicology elective is MUSC130."
+  ],
+  "credits": { "MUSP302": 2, "MUSP303": 2, "MUSP402": 2, "MUSP403": 2, "MUSC229": 1 },
+  "terms": [
+    { "term": "Year 1 Fall", "courses": ["MUSC140", "MUSP302", "MUSC229"] },
+    { "term": "Year 1 Spring", "courses": ["MUSC130", "MUSP303", "MUSC229"] },
+    { "term": "Year 2 Fall", "courses": ["MUSP402", "MUSC229"] },
+    { "term": "Year 2 Spring", "courses": ["MUSP403", "MUSC229"] }
+  ]
+}

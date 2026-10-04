@@ -208,3 +208,40 @@
 .legs li[data-kind="walk"] {
   font-style: italic;
 }
+
+.leaveDetail {
+  margin: 0;
+  color: var(--text-2);
+  font: var(--t-sub);
+}
+
+.leaveOrigin {
+  position: relative;
+  margin-top: 10px;
+}
+
+.leaveResults {
+  margin: 6px 0 0;
+  padding: 6px;
+  list-style: none;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.leaveResults button,
+.linkButton {
+  padding: 6px 8px;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font: inherit;
+  cursor: pointer;
+}
+
+.leaveResults button {
+  display: block;
+  width: 100%;
+  color: var(--text);
+  text-align: left;
+}

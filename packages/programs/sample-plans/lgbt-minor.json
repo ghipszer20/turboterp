@@ -1,0 +1,14 @@
+{
+  "programId": "lgbt-minor",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/women-gender-sexuality-studies/lesbian-gay-bisexual-transgender-studies/lesbian-gay-bisexual-transgender-studies-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog: LGBT200, LGBT310, LGBT488 (capstone) and two LGBT electives (LGBT265 lower level, LGBT350 upper level). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["LGBT200", "LGBT265"] },
+    { "term": "Term 2", "courses": ["LGBT310", "LGBT350"] },
+    { "term": "Term 3", "courses": ["LGBT488"] }
+  ]
+}

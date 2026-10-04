@@ -106,17 +106,64 @@ the Student Academic Success-Degree Completion Policy section of this catalog
 
 ## Sample plan (https://drive.google.com/uc?export=download&id=1RdyaKmH8ft-GLD4UHzet9ubPtwSVD1cr#Dance)
 
-!"
-##!"
-$$!"%
-&'(( )*+,-./012345 617834390:;<=>?@A7BCDEF2GH IBCJ2KLLM@?NCOK@9I2;/012P35 0QRS3TU >CVW9>0;</012P3U /012P35/0123X5 /012P4X/012345 /0123YYGZYY9/C@NE[KBL\]3;^/_`P43 7JKaCJ6@bCbELE@V]3 0@CJcONQEC\K@?@b90Q;/012d35 0BECKe6LfWC\?\]39dYYGZYY; `NWKJCB\W?f?@_BCNONE9`_;]3<<I@E/C@NE[KBL\NKMB\E /012d3U 7JKaCJ6@bCbELE@V]P/0123YYGZYY9/C@NE[KBL\]P; /012d35^/_`P43 /012dUd/012d4ZKB/012dUd RMLC@?OE\9RS;<< 1CVMBCJ`N?E@NE8Ca918;<<^/_`ZX5 R?\VKBcg`KN?CJ`N?E@NE\9R`;<< R?\VKBcg`KN?CJ`N?E@NE\9R`;<<0BECKe6LfWC\?\dYYGZYY 1CVMBCJ`N?E@NE\91`;<< ^/_`ZX593GdNBED?V\;/012d4Z 6JENOhEdYYGZYY0BECKe6LfWC\?\]P9dYYGZYY; 6JENOhEdYYGZYY_BKeE\\?K@CJ:B?O@b9_:; `NWKJCB\W?f?@_BCNONE9`_;]P<<RMLC@?OE\9RS;<< 0BECKe6LfWC\?\]Z9dYYGZYY;/012ZUUKB/012ZUT 6JENOhE3YYGZYY0BECKe6LfWC\?\]d9dYYGZYY; 6JENOhE3YYGZYY^/_`ZX593GdNBED?V\; 6JENOhE3YYGZYY6JENOhE3YYGZYY^KVCJ2BED?V\eKB/EbBEEF3P4id5NBED?V\LM\VaEdYYGZYYJEhEJ
-jklmnopqrstomounvmwooxuqymzqlorolmo{l| }jklm~orsmnvp{|
-jklmnopqrstomounvmwooxuqyyqk{lorolmo{l|
-jklmnopqrstomounvmwooxuqyllorolmo{l|
- ¡¢£ £¤¥¦§¨¥©ªª «¡¢£¥
-! "#$  % & ' ()* +#,"#$"$+-$ ../,"#$ 0 ()12. 3 (.-$ ../, 01   4!5. (6
-789:;<8=8>?@ABCD<8E;?@FCDG:<@8@ HG:<@8 H<8E;?@ I<JE8789:;<8=8>?@AKCD<8E;?@FLDG:<@8@ HG:<@8 H<8E;?@ I<JE8 789:;<8=8>?@ H<8E;?@ I<JE8789:;<8=8>?@AMD<8E;?@FKDG:<@8@ HG:<@8 H<8E;?@ I<JE8789:;<8=8>?@ANOMD<8E;?@FKDG:<@8@ HG:<@8 H<8E;?@ I<JE8 PJ>D8QG<=@RND<8E;?@S789:;<8=8>?@ATOUD<8E;?@ HG:<@8 H<8E;?@ I<JE8 V<8JGWX=YZJ@;@RBKD<8E;?@S[
-\]^_`ab]cdefghcijhklmn]io p^qr`a` \]^_s`btjuvfwwhuldxijhklmntioyjdx_uggzny_o {\t|sa`}d~n}]o \]^_`b]ldxkcfdwulhlmn]o ylf\dlcfujgwcujwf\]^_auj\]^_^d~jdx|chflcfrdn^ro {\t|b^d~jdx|chflcfwn^|o ]jfduvpgdwhwhw~uj|uchdx|chflcfwn|ohw~uj|uchdx|chflcfwn|ogdlhkfwnogdlhkfwno|cuxdjwhhltjdckcfn|to \]^_`ab|cuxdjwhhltjdckcfn|tolulgduj \]^_`b\]^_sa{\t|sa`\]^_s`hmfwkuln|o \]^_s`bhmfwkuln|o \]^_a\]^_`\]^_`b\]^_lefjw~dlehlmtxjdx|ucznto \]^_uj\]^_lefjw~dlehlmtxjdx|ucznto {\t|bn`cjzo_x~jdx_ugf~flcn__o \]^_`\]^_`{\t|bn`cjzo\pt{\pt{\pt{\pt{
-¡ ¢£¤£¥¦§¨©¦¨©ª¦«©¬ ¤¦®¬ªª©¯£°ª©¤©±²³¤£³²´©¦²¥©¦³²¦μ¶·
-¸¹
-º»¼½¾¿À¼ÁÂÃ¾ÄÅ¼¿¾Æ¾»ÁÀÇÈ¿É¿ÊËÅÊÌÈ»ÍÎÃÏºÃ¾ÄÅ¼¿¾Æ¾»ÁÀÇÈ¿É¿ÊËÅÊÌÈ»ÍÐÑÒÓÔÕÑÖ×ØÙÓÚÛÑÕÜÝÕÑÞÓÓÔÙßÓÚÔÑàáâãäåæÑçÓèßÔÒÖ×ØÙÓÚÛÑÕÜÝÕÑÞÓÓÔÙßÓÚÔÑÑçÓÖ××éê××ÒÓëÓÒãìÝííÓÙÒÓëÓÒÜÔîåÙØÙÓÚÛÑÕÜÝÕÑÞÓÓÔÙßÓÚÔÑàáâÖïÝííÓÙÒÓëÓÒØÙÓÚÛÑÕÐðñàãäòåÙÓóÝÛëÔÒÓßÑôÛæÔííÒÛØÔÞÒÓõöÒåÞÔÒ÷ßøÔøÓÜÓßÑ ùú
+(OCR text; may contain recognition errors)
+Dance Four Year Academic Plan
+|__BenchmarkiRequiremems [| [|]
+rr foane 0 foanczr 0]
+CT eawews TT JoANCLchw (Dance FormsfY) |
+rr rr 0000]
+lweeweee
+I
+|__Benchmark2Requirements | [0]
+fees oavesss
+EE
+-
+7 —
+| __Benchmark3Requitememts | [0]
+[AeaofEmphasisz (add  [Flectivedwd |
+EE
+7
+[Professional Writing(PW) [Scholarshipin Practice (Sp) #2 |
+rr [Humanitles(iur  [Areaofmphasis#a(3ucdnd |
+© [oaNcassorpancass  [electivelwedx |
+CC eacfEmphass® ech) fdecwenodw |
+[oesam@seaedty Jdecvenodw |
+I A
+EE
+LL [TotalCredisfor Degree: 120, 39 credits must be xcdxalevel |
+Cultural Competence courses may also fulfill Distributive Studies categories.
+[Academic Writing (AW) (Min. Grade: C) | ENGL10T| [|
+[Professional writing Pw) | [| |
+[Oalcommoc) | | [|]
+Mahan) | [| |
+[AnalyticReasoning (aR) | | [|]
+[Natural Sciencetab(Ny) | | [|]
+[Natural Sciences vs) | [| |
+[History/Social sciences (HS) | | [|
+[Hisory/Socia Sciences (1s) | | | |
+[Humanities (0) [|
+[HumanitiesW0) | | [|
+[Scholarship inPractice(sP) | | | Jeancioe [|
+[Scholarship in Practice (Ph nonmajor | | [~~ Jeancipp | | |
+I —
+Normally double counted with Distributive Studies [Tops200 1]
+forvczis | [|
+[BgQuestons) | | Meancas | | |
+leigauestion(s) | [| Moancss | | |
+ET —
+(overlap permitted with Distributive Studies and/or Big Question) EC
+oancass TT]
+[Understanding PluralSoc. (UP) | | [~~ [loAncassorDancass | | |
+Hr EE ee —
+Cultural Competency (CC)
+CE ———
+(overlap permitted with other requirements/courses) Er EE
+rT Weasley TT]
+rT  [ Woes |]
+oePTaoan TT]
+CRE EE RE
+[rssocestsmsmeermesowo | [] [omraab |
+[15 of the fina 30 credits must be eamed at the 300400 level | [| “Area of Emphasis courses willbe discussed with departmental advisor
+aman I
+[owmertotesis | [1 Wane comessor the mejor moy ako count toward Gener eucarion
+foo [J]

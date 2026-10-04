@@ -1,0 +1,14 @@
+{
+  "programId": "engr-minor-nanoscale-science-technology",
+  "source": "https://mse.umd.edu/undergraduate/degrees/minor-nano",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor, and the approved course list is not in the sources. Built from the participating departments: five courses from ENMA, PHYS and ENEE (ENMA300 and PHYS270 below 400; ENMA460, PHYS401 and ENEE491 at 400+). The two-per-department cap is a manual check (ENMA and PHYS each appear twice). Flagged in docs/project/owner-review.md."
+  ],
+  "credits": { "PHYS270": 4, "PHYS401": 4 },
+  "terms": [
+    { "term": "Term 1", "courses": ["ENMA300", "PHYS270"] },
+    { "term": "Term 2", "courses": ["ENMA460", "PHYS401", "ENEE491"] }
+  ]
+}

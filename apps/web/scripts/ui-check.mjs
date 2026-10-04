@@ -29,7 +29,7 @@ const edge = spawn(EDGE, [
   "--disable-gpu",
   "--hide-scrollbars",
   `--remote-debugging-port=${PORT}`,
-  `--user-data-dir=${join(tmpdir(), `superterp-ui-check-${Date.now()}`)}`,
+  `--user-data-dir=${join(tmpdir(), `turboterp-ui-check-${Date.now()}`)}`,
   "about:blank",
 ]);
 

@@ -1,8 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import type { Section } from "@superterp/course-data/schedules";
-import type { CourseGrades } from "@superterp/ratings";
+import type { Section } from "@turboterp/course-data/schedules";
+import type { CourseGrades } from "@turboterp/ratings";
 import { courseColor } from "@/lib/schedule/colors";
 import {
   bestRating,

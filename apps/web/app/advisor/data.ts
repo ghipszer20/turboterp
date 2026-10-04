@@ -4,18 +4,18 @@
 // keeps it in memory: the plan catalog up front, course details and grade files one department
 // at a time.
 
-import { decodeCatalogFile } from "@superterp/plan/catalog-file";
-import type { PlanCatalog } from "@superterp/plan/catalog";
-import { decodeDepartment, type CourseGrades } from "@superterp/ratings";
+import { decodeCatalogFile } from "@turboterp/plan/catalog-file";
+import type { PlanCatalog } from "@turboterp/plan/catalog";
+import { decodeDepartment, type CourseGrades } from "@turboterp/ratings";
 import { useEffect, useState } from "react";
 import { decodeCourseDetails, type CourseDetails } from "@/lib/advisor/course-details";
 
-type Index = { v: number; term: string; catalog: string; details: string; grades: string | null };
+type Index = { v: number; term: string; terms?: string[]; catalog: string; details: string; grades: string | null };
 
 export type CatalogState =
   | { status: "loading" }
   | { status: "missing" }
-  | { status: "ready"; catalog: PlanCatalog; term: string; list: { id: string; title: string; credits: number; genEd: string[] }[] };
+  | { status: "ready"; catalog: PlanCatalog; term: string; terms: string[]; list: { id: string; title: string; credits: number; genEd: string[] }[] };
 
 const BASE = "/data/advisor/";
 let indexPromise: Promise<Index | null> | null = null;
@@ -37,7 +37,7 @@ function loadCatalog(): Promise<CatalogState> {
     if (!res.ok) return { status: "missing" };
     const { catalog, term } = decodeCatalogFile(await res.json());
     const list = [...catalog.values()].map((c) => ({ id: c.id, title: c.title, credits: c.credits.min, genEd: c.genEd }));
-    return { status: "ready", catalog, term, list };
+    return { status: "ready", catalog, term, terms: index.terms ?? [term], list };
   })().catch(() => ({ status: "missing" }) as const);
   return catalogPromise;
 }

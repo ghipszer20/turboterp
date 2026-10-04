@@ -11,7 +11,7 @@
     "Focus Area (12 credits, one non-AMST department) filled with SOCY310, SOCY320, SOCY335, and SOCY410 -- real SOCY courses already used elsewhere in this codebase (socy-major-2026-27.ts and its sample plan, sds-major-socy.json) -- chosen only to satisfy the single-department/level/credit shape."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["AMST101"] },
+    { "term": "Year 1 Fall", "courses": ["AMST101", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["AMST202"] },
     { "term": "Year 2 Fall", "courses": ["AAAS100"] },
     { "term": "Year 2 Spring", "courses": ["SOCY200"] },

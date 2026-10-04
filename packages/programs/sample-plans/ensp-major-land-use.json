@@ -1,0 +1,20 @@
+{
+  "programId": "ensp-major-land-use",
+  "source": "https://agnr.umd.edu/sites/agnr.umd.edu/files/files/documents/ENSP%20FourYrPlan_BSOS%20LandUse.pdf",
+  "fetched": "2026-09-28",
+  "official": true,
+  "notes": [
+    "Official four-year plan transcribed with Gen Ed slots left out; unnamed Restricted Elective / Techniques & Methods slots are not encoded, so they are left out too. Calculus filled with MATH140; Statistics with GEOG306; Lower-level focus filled with GEOG140; Core groups: GEOG201/211 (Earth Sciences), BSCI160/161 (Biology), GEOG202 (Geography) and AREC240 (Economics); Applied Science and Policy ('ENSP330 or 340') filled with ENSP330."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["ENSP101", "MATH140", "GEOG201", "GEOG211", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["ENSP102", "GEOG202", "BSCI160", "BSCI161", "GEOG140"] },
+    { "term": "Sophomore Fall", "courses": ["AREC240"] },
+    { "term": "Sophomore Spring", "courses": ["GEOG306"] },
+    { "term": "Junior Fall", "courses": ["ENSP330", "GEOG373"] },
+    { "term": "Junior Spring", "courses": ["GEOG272"] },
+    { "term": "Senior Fall", "courses": ["ENSP386", "GEOG431"] },
+    { "term": "Senior Spring", "courses": ["ENSP400"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}

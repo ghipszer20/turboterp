@@ -153,11 +153,6 @@
   z-index: 1;
 }
 
-.block[data-conflict] {
-  border: 1.5px solid var(--rating-low);
-  box-shadow: inset 3px 0 0 var(--rating-low);
-}
-
 .block[data-ghost] {
   z-index: 2;
   border: 1.5px dashed color-mix(in srgb, var(--fg) 60%, transparent);

@@ -9,12 +9,9 @@
     "The two 'ENCE In-Major Tech Elective' slots are filled with ENCE420 and ENCE423, both drawn from the catalog's own 'Out of the following courses, students can only take 2' list (ENCE325, ENCE420, ENCE421, ENCE423, ENCE424, ENCE426) -- picking exactly two of that list satisfies both the technical-elective requirement and (incidentally) the unencoded at-most-2 cap.",
     "The 'STEM-Based Elective' and 'Open Elective' slots are left out entirely -- no enumerable course list exists in any source (both point to 'See advisor'), so neither is encoded as a requirement (see reviewNotes / docs/project/owner-review.md) and no real course id can be attributed to either here."
   ],
-  "credits": {
-    "PHYS261": 1, "MATH141": 4, "MATH241": 4, "MATH243": 4,
-    "ENCE365": 4, "ENCE367": 4, "ENCE464": 2, "ENCE467": 2
-  },
+  "credits": { "PHYS261": 1, "MATH141": 4, "MATH241": 4, "MATH243": 4, "ENCE365": 4, "ENCE367": 4, "ENCE464": 2, "ENCE467": 2, "UNIV100": 1 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["ENES100", "CHEM135", "MATH140", "ENCE205"] },
+    { "term": "Year 1 Fall", "courses": ["ENES100", "CHEM135", "MATH140", "ENCE205", "UNIV100"] },
     { "term": "Year 1 Spring", "courses": ["ENES102", "MATH141", "PHYS161", "ENES200"] },
     { "term": "Year 2 Fall", "courses": ["ENCE202", "ENES220", "MATH241", "PHYS260", "PHYS261"] },
     { "term": "Year 2 Spring", "courses": ["ENCE203", "ENCE305", "MATH243"] },

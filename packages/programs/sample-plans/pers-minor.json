@@ -1,0 +1,17 @@
+{
+  "programId": "pers-minor",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/languages-literatures-cultures/persian-studies/persian-studies-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: PERS103, 104, 201, 202, plus three electives (PERS353, PERS371, PERS385). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["PERS103"] },
+    { "term": "Term 2", "courses": ["PERS104"] },
+    { "term": "Term 3", "courses": ["PERS201"] },
+    { "term": "Term 4", "courses": ["PERS202"] },
+    { "term": "Term 5", "courses": ["PERS353", "PERS371"] },
+    { "term": "Term 6", "courses": ["PERS385"] }
+  ]
+}

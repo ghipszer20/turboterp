@@ -18,7 +18,7 @@
 //     member with a filter part, e.g. ["AOSC200", "AOSC201", { count: 2, from: {...} }]
 // A group is the course rows after the rule, up to the next header or text row.
 
-import type { Area, CourseFilter, Program, Requirement, SetMember } from "@superterp/audit";
+import type { Area, CourseFilter, Program, Requirement, SetMember } from "@turboterp/audit";
 import type { CatalogRow, CourseList, ProgramPage } from "./program.ts";
 
 export type DraftMeta = {
@@ -477,7 +477,7 @@ class ListDrafter {
         for (const s of parsed.slots) if (s.alts.length > 1) flattened.push(s.alts.map((a) => a[0]).join(" or "));
         areas.push({ name: label(g), courses: parsed.slots.flatMap((s) => s.alts.map((a) => a[0]!)) });
       }
-      const firstCode = areas[0]!.courses[0]!.toLowerCase();
+      const firstCode = areas[0]!.courses![0]!.toLowerCase();
       const id = this.id(`areas-${firstCode}`);
       this.add({ kind: "distribution", id, name, count: rule.count, minAreas: rule.minAreas, maxPerArea: rule.maxPerArea, areas }, [i, ...body]);
       if (flattened.length) {

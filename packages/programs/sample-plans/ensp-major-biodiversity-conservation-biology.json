@@ -1,0 +1,20 @@
+{
+  "programId": "ensp-major-biodiversity-conservation-biology",
+  "source": "https://agnr.umd.edu/sites/agnr.umd.edu/files/files/documents/ENSP%20FourYrPlan_CMNS_%20Biodiversity.pdf",
+  "fetched": "2026-09-28",
+  "official": true,
+  "notes": [
+    "Official four-year plan transcribed with Gen Ed slots left out; unnamed Restricted Elective / Techniques & Methods slots are not encoded, so they are left out too. Calculus filled with MATH140 (MATH141 is the concentration's Calculus II); Statistics with BIOM301; Core groups: BSCI160/161 (Biology), CHEM131/132 (Chemistry), GEOG201/211 (Earth Sciences) and AREC240 (Economics; the plan shows only three); 'App Sci & Pol' filled with ENSP330; the concentration's lab is BSCI171 (BSCI161 serves Core Group 1)."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["ENSP101", "MATH140", "BSCI160", "BSCI161", "CMNS100"] },
+    { "term": "Freshman Spring", "courses": ["ENSP102", "CHEM131", "CHEM132", "BSCI170", "BSCI171", "MATH141"] },
+    { "term": "Sophomore Fall", "courses": ["GEOG201", "GEOG211", "CHEM231", "CHEM232", "BSCI207"] },
+    { "term": "Sophomore Spring", "courses": ["CHEM241", "CHEM242", "AREC240"] },
+    { "term": "Junior Fall", "courses": ["BSCI222", "BSCI361"] },
+    { "term": "Junior Spring", "courses": ["BIOM301", "BSCI363"] },
+    { "term": "Senior Fall", "courses": ["BSCI370", "ENSP330"] },
+    { "term": "Senior Spring", "courses": ["ENSP400"] }
+  ],
+  "credits": { "CMNS100": 1 }
+}

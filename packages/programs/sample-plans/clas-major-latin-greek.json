@@ -9,7 +9,7 @@
     "Supporting courses (9 credits) filled with the two courses named directly in the catalog's own footnote example (CLAS170, HIST110) plus one more real CLAS course (CLAS308, Academic Catalog's approved list), since no specific 'Greek or Roman history' course number is named or on an approved list."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["LATN101", "CLAS170"] },
+    { "term": "Year 1 Fall", "courses": ["LATN101", "CLAS170", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["GREK101"] },
     { "term": "Year 2 Fall", "courses": ["LATN102", "HIST110"] },
     { "term": "Year 2 Spring", "courses": ["GREK102", "LATN201"] },

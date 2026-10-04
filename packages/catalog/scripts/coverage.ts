@@ -9,7 +9,7 @@
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { setTimeout as sleep } from "node:timers/promises";
-import { fetchText } from "@superterp/campus-data/http";
+import { fetchText } from "@turboterp/campus-data/http";
 import { parseProgramPage } from "../src/program.ts";
 import { PROGRAM_INDEX_URL, parseProgramIndex } from "../src/programs-index.ts";
 import { renderReport, summarize, type PageResult } from "./coverage-report.ts";

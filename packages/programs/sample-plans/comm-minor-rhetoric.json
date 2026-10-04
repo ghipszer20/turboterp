@@ -1,0 +1,14 @@
+{
+  "programId": "comm-minor-rhetoric",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/communication/rhetoric-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Constructed from the catalog: 15 credits, at least 3 in ENGL and 3 in COMM, 9 at 3xx+. The Rhetoric course lists were not in the fetched sources, so the courses are real ENGL/COMM courses chosen to meet the department minimums (unverified against the list). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["COMM107", "ENGL393"] },
+    { "term": "Term 2", "courses": ["COMM324", "ENGL394"] },
+    { "term": "Term 3", "courses": ["COMM401"] }
+  ]
+}

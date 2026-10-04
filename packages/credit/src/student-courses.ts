@@ -1,6 +1,6 @@
 // Turn exam credit into the audit's StudentCourse records.
 
-import type { StudentCourse } from "@superterp/audit";
+import type { StudentCourse } from "@turboterp/audit";
 import { CreditError, type CreditAward } from "./types.ts";
 
 /** A StudentCourse that remembers where the credit came from, e.g. "AP Calculus BC (5)". */

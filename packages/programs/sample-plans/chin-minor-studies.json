@@ -1,0 +1,16 @@
+{
+  "programId": "chin-minor-studies",
+  "source": "https://sllc.umd.edu/chinese",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog requirements: CHIN206, CHIN207 (4 credits each) and the three foundation topics courses. Flagged in docs/project/owner-review.md."
+  ],
+  "credits": { "CHIN206": 4, "CHIN207": 4 },
+  "terms": [
+    { "term": "Term 1", "courses": ["CHIN206"] },
+    { "term": "Term 2", "courses": ["CHIN207"] },
+    { "term": "Term 3", "courses": ["CHIN307", "CHIN315"] },
+    { "term": "Term 4", "courses": ["CHIN441"] }
+  ]
+}

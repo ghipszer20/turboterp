@@ -1,13 +1,13 @@
 "use client";
 
 // What-if program changes: switch a major, add one, or drop one, and see the effect before
-// committing to it. Never imports @superterp/plan/what-if (or @superterp/audit) as a value at
+// committing to it. Never imports @turboterp/plan/what-if (or @turboterp/audit) as a value at
 // the top of this file -- only types -- so HiGHS stays out of the main bundle; the comparison
 // itself is loaded with import() and run after the proposed set settles, like the Audit tab's
 // analysis (AdvisorApp.tsx's useAnalysis).
 
 import { useEffect, useRef, useState } from "react";
-import type { GatewayCourseStatus, GatewayOverallStatus, GatewayResult } from "@superterp/audit";
+import type { GatewayCourseStatus, GatewayOverallStatus, GatewayResult } from "@turboterp/audit";
 import { checkerPlan } from "@/lib/advisor/checker";
 import type { AdvisorPlan } from "@/lib/advisor/plan-state";
 import type { PriorCreditResult } from "@/lib/advisor/prior-credit";
@@ -116,7 +116,7 @@ function useCompare(
       try {
         const { runWhatIf } = await import("@/lib/advisor/what-if");
         const planForCheck = checkerPlan(plan, prior.courses);
-        const result = await runWhatIf(planForCheck, ready.catalog, plan.programs, proposed, plan.startTerm, plan.gpa);
+        const result = await runWhatIf(planForCheck, ready.catalog, plan.programs, proposed, plan.startTerm, plan.gpa, plan.confirmedSlots);
         if (id === run.current) setState({ status: "ready", result });
       } catch {
         if (id === run.current) setState((s) => ({ status: "error", result: s.result }));

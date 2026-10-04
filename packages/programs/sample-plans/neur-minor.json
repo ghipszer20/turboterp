@@ -1,0 +1,15 @@
+{
+  "programId": "neur-minor",
+  "source": "https://psyc.umd.edu/undergraduate/neuroscience-minor",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: PSYC300, PSYC409, NEUR405, PSYC304 and PSYC302 (one option per choice slot). The two elective slots have no published list (OPEN SLOT) and are left out. Flagged in docs/project/owner-review.md."
+  ],
+  "credits": { "PSYC300": 4, "PSYC409": 1, "NEUR405": 4 },
+  "terms": [
+    { "term": "Term 1", "courses": ["PSYC300", "PSYC302"] },
+    { "term": "Term 2", "courses": ["PSYC304", "NEUR405"] },
+    { "term": "Term 3", "courses": ["PSYC409"] }
+  ]
+}

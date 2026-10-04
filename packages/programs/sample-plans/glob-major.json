@@ -1,0 +1,19 @@
+{
+  "programId": "glob-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/public-health/global-environmental-occupational-health/global-health-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No term-by-term plan is published for Global Health (the SPH four-year-plans page lists only benchmarks). Constructed from the catalog table: benchmark courses first (GBHL200, GBHL210, BSCI170/180, SPHL100), 300-level core next, GBHL386 and the GBHL497 capstone last. Gen Ed, the world language, the second experiential course and the four Options courses are left out (OPEN SLOTs, not encoded). Fills: BSCI180 (lab, rather than BSCI171) and GVPT200 (rather than GVPT282). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["GBHL200", "GBHL210", "BSCI170", "BSCI180", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["SPHL100", "FMSC110", "NFSC100", "GVPT200"] },
+    { "term": "Sophomore Fall", "courses": ["HLTH230", "ANTH210", "BSCI213"] },
+    { "term": "Sophomore Spring", "courses": ["EPIB301", "EPIB315"] },
+    { "term": "Junior Fall", "courses": ["ANTH310", "GBHL310", "MIEH321"] },
+    { "term": "Junior Spring", "courses": ["HLSA320", "INST420", "GBHL386"] },
+    { "term": "Senior Spring", "courses": ["GBHL497"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}

@@ -1,0 +1,15 @@
+{
+  "programId": "russ-minor",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/languages-literatures-cultures/russian-language-literature/russian-studies-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: five courses from the catalog list, at least six credits taught in Russian (RUSS201, RUSS202) and nine credits at 3xx/4xx (RUSS301, RUSS321, RUSS328). Flagged in docs/project/owner-review.md."
+  ],
+  "credits": {},
+  "terms": [
+    { "term": "Term 1", "courses": ["RUSS201", "RUSS202"] },
+    { "term": "Term 2", "courses": ["RUSS301", "RUSS321"] },
+    { "term": "Term 3", "courses": ["RUSS328"] }
+  ]
+}

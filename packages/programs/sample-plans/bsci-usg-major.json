@@ -1,0 +1,24 @@
+{
+  "programId": "bsci-usg-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/universities-shady-grove/biological-sciences/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "Constructed from the College Park PHNB model plan, adapted to the Shady Grove table (BSCI223 added; BSCI207 and the freshman seminar removed). Not an official Shady Grove plan. Gen Ed and the 22 general elective credits are left out.",
+    "Area pool (11 credits) filled with BSCI410, BSCI433, BSCI401 and BSCI423; enrichment filled with BSCI462."
+  ],
+  "credits": {
+    "CHEM132": 1, "BSCI180": 1, "CHEM232": 1, "CHEM242": 1, "BSCI222": 4, "CHEM271": 2, "CHEM272": 2,
+    "PHYS131": 4, "PHYS132": 4, "MATH130": 4, "MATH131": 4, "BSCI223": 4, "BSCI423": 2, "BSCI462": 3
+  },
+  "terms": [
+    { "term": "Year 1 Fall", "courses": ["BSCI160", "CHEM131", "CHEM132", "MATH130"] },
+    { "term": "Year 1 Spring", "courses": ["BSCI170", "BSCI180", "CHEM231", "CHEM232", "MATH131"] },
+    { "term": "Year 2 Fall", "courses": ["CHEM241", "CHEM242", "BSCI223"] },
+    { "term": "Year 2 Spring", "courses": ["BSCI222", "CHEM271", "CHEM272"] },
+    { "term": "Year 3 Fall", "courses": ["PHYS131", "BCHM461", "BSCI331", "BSCI332"] },
+    { "term": "Year 3 Spring", "courses": ["PHYS132", "BSCI450"] },
+    { "term": "Year 4 Fall", "courses": ["BSCI353", "BSCI423", "BSCI410"] },
+    { "term": "Year 4 Spring", "courses": ["BSCI433", "BSCI401", "BSCI462"] }
+  ]
+}

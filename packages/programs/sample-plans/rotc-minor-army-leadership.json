@@ -1,0 +1,15 @@
+{
+  "programId": "rotc-minor-army-leadership",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/undergraduate-studies/army-leadership-studies-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog requirements: ARMY301, ARMY302, ARMY401, ARMY402 and HIST224. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["ARMY301", "HIST224"] },
+    { "term": "Term 2", "courses": ["ARMY302"] },
+    { "term": "Term 3", "courses": ["ARMY401"] },
+    { "term": "Term 4", "courses": ["ARMY402"] }
+  ]
+}

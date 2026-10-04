@@ -1,0 +1,14 @@
+{
+  "programId": "tlpl-minor-secondary-education",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/secondary-education-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: EDHD413, TLPL481, TLPL360 (foundation), AASP100 (elective), TLPL451 (methods). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["EDHD413", "TLPL481"] },
+    { "term": "Term 2", "courses": ["TLPL360", "AASP100"] },
+    { "term": "Term 3", "courses": ["TLPL451"] }
+  ]
+}

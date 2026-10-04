@@ -1,0 +1,17 @@
+{
+  "programId": "clas-minor-latin",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/classical-languages-literature/latin-language-literature-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog's no-prior-Latin route: LATN101, LATN102, LATN201, two 3xx reading courses (LATN301, LATN302, the numbers used in the department's Classics major plan) and one 4xx reading course (LATN405). Flagged in docs/project/owner-review.md."
+  ],
+  "credits": { "LATN101": 4, "LATN102": 4, "LATN201": 4 },
+  "terms": [
+    { "term": "Term 1", "courses": ["LATN101"] },
+    { "term": "Term 2", "courses": ["LATN102"] },
+    { "term": "Term 3", "courses": ["LATN201"] },
+    { "term": "Term 4", "courses": ["LATN301", "LATN302"] },
+    { "term": "Term 5", "courses": ["LATN405"] }
+  ]
+}

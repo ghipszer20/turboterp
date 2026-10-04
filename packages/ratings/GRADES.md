@@ -15,8 +15,8 @@ static, CDN-cached snapshots. Thousands of students read them.
 adds a term's grades some months after it ends, so more often gains nothing):
 
 ```sh
-npm run snapshot -w @superterp/course-data -- <term>   # if not already done
-npm run grades -w @superterp/ratings [-- <outDir>] [--soc <path/to/soc-YYYYMM.json>]
+npm run snapshot -w @turboterp/course-data -- <term>   # if not already done
+npm run grades -w @turboterp/ratings [-- <outDir>] [--soc <path/to/soc-YYYYMM.json>]
 ```
 
 - Reads the newest `packages/course-data/.cache/soc-*.json` (or `--soc`).
@@ -82,7 +82,7 @@ npm run grades -w @superterp/ratings [-- <outDir>] [--soc <path/to/soc-YYYYMM.js
 
 ## Decoded shape (what the UI works with)
 
-`decodeDepartment(json)` from `@superterp/ratings` returns
+`decodeDepartment(json)` from `@turboterp/ratings` returns
 `Record<courseId, CourseGrades>`:
 
 ```ts

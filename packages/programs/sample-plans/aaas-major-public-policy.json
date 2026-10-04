@@ -9,9 +9,9 @@
     "PLCY388-or-PLCY401 Analytic Component choice -> PLCY388; the 3 AASP Policy Course (Upper Level) slots -> AAAS411, AAAS441, AAAS443, from the catalog's own 6-course Policy Electives list; Capstone -> AAAS397.",
     "AAAS399 Research Practicum taken as two separate 1-credit registrations (Lab 1 in Year 2 Fall, Lab 2 in Year 2 Spring), per the checklist grid."
   ],
-  "credits": { "AAAS399": 1 },
+  "credits": { "AAAS399": 1, "UNIV100": 1 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["AAAS100"] },
+    { "term": "Year 1 Fall", "courses": ["AAAS100", "UNIV100"] },
     { "term": "Year 1 Spring", "courses": ["AAAS101"] },
     { "term": "Year 2 Fall", "courses": ["AAAS200", "AAAS210", "AAAS399"] },
     { "term": "Year 2 Spring", "courses": ["AAAS395", "AAAS399", "ECON200"] },

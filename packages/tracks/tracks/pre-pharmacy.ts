@@ -70,7 +70,7 @@ export const prePharmacy: Track = {
     MAPPING_NOTES.calculus,
     MAPPING_NOTES.statistics,
     "\"Physics with lab\" is mapped as one semester (physicsOneSemester), matching HPAO's singular wording for pharmacy, unlike medicine's two-semester requirement.",
-    "Microeconomics maps to ECON200 and communications to COMM107 (Oral Communication), UMD's most general course in each area. Re-checked directly against HPAO's pharmacy page (https://prehealth.umd.edu/explore-careers/pharmacy, fetched 2026-09-27): it does list \"Microeconomics\" and \"Communications\" as their own categories, confirming the wording, but names no UMD course for either, so ECON200/COMM107 stay SuperTerp's own reading.",
+    "Microeconomics maps to ECON200 and communications to COMM107 (Oral Communication), UMD's most general course in each area. Re-checked directly against HPAO's pharmacy page (https://prehealth.umd.edu/explore-careers/pharmacy, fetched 2026-09-27): it does list \"Microeconomics\" and \"Communications\" as their own categories, confirming the wording, but names no UMD course for either, so ECON200/COMM107 stay TurboTerp's own reading.",
     "No admission test (PCAT or otherwise) is named on HPAO's pharmacy page, so no category is tied to exam content and no exam milestone is included; PharmCAS itself does not require a standardized test.",
     "Entry is modeled as after a UMD bachelor's degree (4+4), the most common UMD path; a 2+4 or 3+4 student can adjust their planned entry year themselves.",
   ],

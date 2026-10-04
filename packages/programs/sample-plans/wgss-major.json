@@ -14,7 +14,7 @@
     "Upper Level Core-or-Elective (remaining 3 credits) filled with WGSS468, from the catalog's own named ULC list."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["WGSS200"] },
+    { "term": "Year 1 Fall", "courses": ["WGSS200", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["WGSS263"] },
     { "term": "Year 2 Fall", "courses": ["WGSS211"] },
     { "term": "Year 2 Spring", "courses": ["WGSS301"] },

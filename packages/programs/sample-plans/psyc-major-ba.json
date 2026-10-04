@@ -11,9 +11,9 @@
     "The plan previously filled remaining credits with PSYC302 and PSYC303 to reach the major's 35-credit/11-course total; PSYC302 was dropped as redundant (Theme I was already covered) and PSYC303 was dropped because the department's PSYC Courses & PSYC Syllabi page lists it under courses that 'do not apply towards degree requirements'. PSYC330 and PSYC353 (added for Theme II) bring the total back to exactly 35 credits / 11 courses.",
     "Math gateway filled with MATH120; MATH140 would satisfy the requirement equally."
   ],
-  "credits": { "PSYC300": 4, "BSCI170": 4, "PSYC424": 4 },
+  "credits": { "PSYC300": 4, "BSCI170": 4, "PSYC424": 4, "UNIV100": 1 },
   "terms": [
-    { "term": "Freshman Fall", "courses": ["PSYC100", "MATH120"] },
+    { "term": "Freshman Fall", "courses": ["PSYC100", "MATH120", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["BSCI170", "PSYC200"] },
     { "term": "Sophomore Fall", "courses": ["PSYC300", "PSYC301"] },
     { "term": "Sophomore Spring", "courses": ["PSYC330", "PSYC354"] },

@@ -18,6 +18,7 @@ export const imdmMajorEmergingCreatives: Program = {
   source:
     "UMD Academic Catalog 2026-27, Immersive Media Design Major, Emerging Creatives Track " +
     "(https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/art/immersive-media-design-major/)",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "'ARTT47X | (Advanced Digital Media Choice: 479a/c/d/e)' is encoded as a choose over " +

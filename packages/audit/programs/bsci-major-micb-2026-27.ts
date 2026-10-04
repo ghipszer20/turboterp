@@ -21,6 +21,7 @@ export const bsciMajorMicb: Program = {
     "Biological Sciences Undergraduate Program, Microbiology MICB (0404D) degree sheet, " +
     "https://bsci.umd.edu/s/MICB-Curriculum-2026.pdf (fetched 2026-09-27)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Basic Program and Supporting Courses are identical across every Biological Sciences specialization (see bsci-major-genb-2026-27.ts's review notes for the biology-lab, math-sequence and freshman-seminar encodings, which repeat here).",
@@ -30,7 +31,7 @@ export const bsciMajorMicb: Program = {
     "'Enrichment: 3 credits, from any 300- or 400-level BSCI, CHEM, or BCHM course' is encoded as a `choose` credit pool over that department/number-range filter.",
     "'Two courses designated as Lab' is not encoded -- no lab-designation field on StudentCourse. BSCI283 is footnoted as NOT counting as one of the two upper-level labs even though it's required; not enforced (same reason).",
     "Special Topics and honors seminars (BSCI328/338/339/348/439, BSCI378H/398H) toward Area are not encoded -- variable section codes and/or advisor-gated.",
-    "Not encoded (engine gap, both sources agree): the 2.0 cumulative GPA and 2.0 major-average-GPA requirements.",
+    "Not encoded (engine gap, both sources agree): the 2.0 cumulative (university) GPA requirement. Program GPA 2.0 encoded as minGpa.",
   ],
   requirements: [
     { kind: "course", id: "bsci160", name: "Ecology and Evolution 1", options: ["BSCI160"] },

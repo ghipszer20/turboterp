@@ -8,13 +8,9 @@
     "'One of PHYS485, PHYS487' is filled with PHYS485 (Electronic Circuits).",
     "The 'PHYS4XY Advanced Physics Elective' slot is filled with PHYS402 (Quantum Physics II), a real 400-level PHYS elective not otherwise required in this track."
   ],
-  "credits": {
-    "PHYS170": 1, "PHYS275": 2, "PHYS276": 2,
-    "MATH140": 4, "MATH141": 4, "MATH241": 4, "MATH243": 4,
-    "ENME272": 2, "PHYS313": 4, "PHYS401": 4
-  },
+  "credits": { "PHYS170": 1, "PHYS275": 2, "PHYS276": 2, "MATH140": 4, "MATH141": 4, "MATH241": 4, "MATH243": 4, "ENME272": 2, "PHYS313": 4, "PHYS401": 4, "CMNS100": 1 },
   "terms": [
-    { "term": "Freshman Fall", "courses": ["MATH140", "PHYS170", "ENME272"] },
+    { "term": "Freshman Fall", "courses": ["MATH140", "PHYS170", "ENME272", "CMNS100"] },
     { "term": "Freshman Spring", "courses": ["MATH141", "PHYS171", "PHYS275"] },
     { "term": "Sophomore Fall", "courses": ["MATH241", "PHYS272", "PHYS265"] },
     { "term": "Sophomore Spring", "courses": ["MATH243", "PHYS273", "PHYS276"] },

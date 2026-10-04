@@ -9,7 +9,7 @@
     "Anthropology-Health Track II (9 credits) filled with ANTH412, ANTH413 and ANTH415, real named electives from the catalog's own Track II list."
   ],
   "terms": [
-    { "term": "Freshman Fall", "courses": ["SDSB123", "STAT100"] },
+    { "term": "Freshman Fall", "courses": ["SDSB123", "STAT100", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["MATH115", "ANTH210"] },
     { "term": "Sophomore Fall", "courses": ["SDSB233", "INST314"] },
     { "term": "Sophomore Spring", "courses": ["SDSB326", "INST327"] },
@@ -17,5 +17,6 @@
     { "term": "Junior Spring", "courses": ["INST414", "ANTH412"] },
     { "term": "Senior Fall", "courses": ["INST462", "SDSB340", "ANTH413"] },
     { "term": "Senior Spring", "courses": ["INST447", "SDSI492", "ANTH415"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

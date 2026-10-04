@@ -38,9 +38,9 @@ describe("creditCap", () => {
     }
   });
 
-  it("lists all 12 UMD undergraduate colleges", () => {
+  it("lists the 13 UMD undergraduate colleges plus Shady Grove", () => {
     expect(COLLEGES.map((c) => c.code).sort()).toEqual(
-      ["AGNR", "ARCH", "ARHU", "BMGT", "BSOS", "CMNS", "EDUC", "ENGR", "INFO", "JOUR", "SPHL", "UGST"].sort(),
+      ["AGNR", "ARCH", "ARHU", "BMGT", "BSOS", "CMNS", "EDUC", "ENGR", "INFO", "JOUR", "PLCY", "SPHL", "UGST", "USG"].sort(),
     );
   });
 });

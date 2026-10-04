@@ -19,6 +19,7 @@ export const histMajor: Program = {
     "(https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/history/history-major/); " +
     "College of Arts and Humanities History Four Year Academic Plan (department source), fetched 2026-09-28",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "39 total credits: HIST208 (3) + three 1xx/2xx introductory courses (9) + 24 credits of electives + " +
@@ -47,8 +48,7 @@ export const histMajor: Program = {
     "The petition allowing up to two courses taught outside the History Department to count toward the " +
       "major (with Undergraduate Committee approval, and never toward the capstone) is a discretionary " +
       "approval process with no named course list; not encoded.",
-    "Not encoded (engine gaps, matches other ARHU majors' precedent): the 2.0 GPA-in-the-major requirement; " +
-      "residency rules (30 credits at UMD, 15 of the final 30 credits at the 300-400 level, 12 upper-level " +
+    "Not encoded (engine gaps, matches other ARHU majors' precedent): residency rules (30 credits at UMD, 15 of the final 30 credits at the 300-400 level, 12 upper-level " +
       "major credits at UMD); and the 120-credit graduation minimum.",
     "No disagreement found between the catalog and the department's four-year plan on the major's own " +
       "requirement structure (course counts, credits, HIST208/HIST408 sequence, the lower-level elective " +

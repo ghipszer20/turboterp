@@ -1,0 +1,14 @@
+{
+  "programId": "chse-minor-asl",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/counseling-higher-special-education/american-sign-language-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: the four core courses plus LING200 as the elective. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["CHSE376", "CHSE476"] },
+    { "term": "Term 2", "courses": ["CHSE477", "CHSE480"] },
+    { "term": "Term 3", "courses": ["LING200"] }
+  ]
+}

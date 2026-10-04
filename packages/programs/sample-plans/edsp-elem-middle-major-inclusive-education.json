@@ -1,0 +1,20 @@
+{
+  "programId": "edsp-elem-middle-major-inclusive-education",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/counseling-higher-special-education/elementary-middle-special-education-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no readable Elementary/Middle Special Education 4-year plan in the fetched sources. Constructed from the catalog: college requirements in years 1-2, then the four professional semesters (Semesters V-VIII) in the catalog's fall/spring order. Gen Ed and the two open lab-science slots are left out. Fills: ENGL literature = ENGL245; hearing/sign = HESP202; sociology = SOCY100; history = HIST200; child development = EDHD411. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["EDSP210", "PSYC100", "MATH212", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["SOCY100", "MATH213", "HIST200"] },
+    { "term": "Sophomore Fall", "courses": ["STAT100", "EDHD411", "TLPL250"] },
+    { "term": "Sophomore Spring", "courses": ["HESP202", "ENGL245"] },
+    { "term": "Junior Fall", "courses": ["EDSP411", "EDSP413", "EDSP400", "EDSP451", "EDSP443", "EDSP425"] },
+    { "term": "Junior Spring", "courses": ["TLPL362", "EDSP415", "EDSP416", "EDSP485", "EDSP426"] },
+    { "term": "Senior Fall", "courses": ["EDSP484", "EDSP487", "EDSP404", "TLPL321", "EDSP452"] },
+    { "term": "Senior Spring", "courses": ["EDSP490", "EDSP495"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}

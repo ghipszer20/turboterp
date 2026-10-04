@@ -1,0 +1,20 @@
+{
+  "programId": "fmsc-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/public-health/family-science/family-health-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No term-by-term plan is published for Family Health (the SPH page is change-of-major information only). Constructed from the catalog table, lower-level FMSC first and the FMSC477 internship last. Gen Ed left out. Fills: PSYC100 (social science), STAT100 (statistics), COMM107 (communication), ECON200 (economics), FMSC431 for the crises-or-violence row; FMSC190 and FMSC290 for the two 100-200 electives (FMSC290 is free because ECON200 fills the economics row); FMSC460 and FMSC420 for the two 300-400 electives. FMSC420 is an unconfirmed placeholder in the 300-400 range (no other real FMSC 300-400 course was in the sources). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["SPHL100", "FMSC110", "PSYC100", "COMM107", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["FMSC260", "STAT100", "ECON200", "FMSC190"] },
+    { "term": "Sophomore Fall", "courses": ["FMSC290", "FMSC330", "FMSC332"] },
+    { "term": "Sophomore Spring", "courses": ["FMSC302", "FMSC310", "FMSC340"] },
+    { "term": "Junior Fall", "courses": ["FMSC374", "FMSC381", "FMSC383"] },
+    { "term": "Junior Spring", "courses": ["FMSC432", "FMSC487", "FMSC431"] },
+    { "term": "Senior Fall", "courses": ["FMSC460", "FMSC420"] },
+    { "term": "Senior Spring", "courses": ["FMSC477"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}

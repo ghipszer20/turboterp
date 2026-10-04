@@ -1,0 +1,20 @@
+{
+  "programId": "rebe-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/architecture-planning-preservation/real-estate-built-environment-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No readable official 4-year plan (the department page only links to PDFs). CONSTRUCTED from the catalog table; term placement is illustrative. Flagged in docs/project/owner-review.md. Gen Ed slots left out.",
+    "Every choice is a course named in the catalog's own lists: finance RDEV270, design RDEV440, preservation HISP200, planning URSP250, culmination RDEV470, electives ECON200, ARCH225 and BMGT350."
+  ],
+  "credits": { "UNIV100": 1 },
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["RDEV250", "HISP200", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["URSP250", "ECON200"] },
+    { "term": "Sophomore Fall", "courses": ["RDEV270", "ARCH225"] },
+    { "term": "Sophomore Spring", "courses": ["RDEV350", "BMGT350"] },
+    { "term": "Junior Fall", "courses": ["RDEV410", "RDEV440"] },
+    { "term": "Junior Spring", "courses": ["RDEV415", "RDEV450"] },
+    { "term": "Senior Fall", "courses": ["RDEV470"] }
+  ]
+}

@@ -9,7 +9,7 @@
     "Introductory Course filled with INAG250, one of thirteen named options. Lower-level restricted electives filled with PLSC125 and PLSC203, two of the named options. Agriculture Business/Economics/Management/Marketing course filled with AREC306. Upper-level restricted electives filled with ENST411 and PLSC400, both named directly in this specialization's own list. Career Preparation choice filled with PLSC389; PLSC399 would satisfy it equally."
   ],
   "terms": [
-    { "term": "Freshman Fall", "courses": ["CHEM131", "PLSC201", "MATH115", "INAG250"] },
+    { "term": "Freshman Fall", "courses": ["CHEM131", "PLSC201", "MATH115", "INAG250", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["CHEM132", "PLSC206", "AREC250", "PLSC110"] },
     { "term": "Sophomore Fall", "courses": ["PLSC275", "ENST200", "BSCI170", "PLSC111"] },
     { "term": "Sophomore Spring", "courses": ["BSCI487", "BSCI180", "PLSC271"] },
@@ -17,5 +17,6 @@
     { "term": "Junior Spring", "courses": ["PLSC453", "AREC306", "PLSC432"] },
     { "term": "Senior Fall", "courses": ["PLSC433", "ENST411", "PLSC400"] },
     { "term": "Senior Spring", "courses": ["PLSC389", "PLSC460"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

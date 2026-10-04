@@ -1,0 +1,14 @@
+{
+  "programId": "nuclear-engineering-minor",
+  "source": "https://enme.umd.edu/undergraduate/degrees/minor-nuclear-engineering",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the department page: the four core courses; the fifth (advisor-approved) elective, ENME433, is shown but is an open slot the audit does not check. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["ENME430", "ENME431"] },
+    { "term": "Term 2", "courses": ["ENME432", "ENRE447"] },
+    { "term": "Term 3", "courses": ["ENME433"] }
+  ]
+}

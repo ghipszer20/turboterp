@@ -1,4 +1,4 @@
-// Prior credit form inputs → what each exam or course earns at UMD, using @superterp/credit.
+// Prior credit form inputs → what each exam or course earns at UMD, using @turboterp/credit.
 // Owner ruling: overlapping credit counts once; a second source for the same course is shown as
 // "overkill", never as an error. Each row is looked up on its own, so one bad row can't blank the rest.
 
@@ -14,7 +14,7 @@ import {
   type CreditCourse,
   type IbLevel,
   type PendingChoice,
-} from "@superterp/credit";
+} from "@turboterp/credit";
 import type { PriorInputs } from "./plan-state";
 
 export type Earn =

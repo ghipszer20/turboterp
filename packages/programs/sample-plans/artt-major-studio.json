@@ -10,7 +10,7 @@
     "Supporting Area 'ARTH 200+ satisfying GenEd Diversity' (2 required): only one specific ARTH course number is named anywhere in the fetched source (ARTH351, the department's own recommendation for the ARTH-or-Art-Theory elective, used here instead for that slot). No second real ARTH course number exists in the fetched source, so only one of the two ARTH Diversity slots (support-arth-diversity-1) is filled here; the second (support-arth-diversity-2) is left unsatisfied on purpose and flagged in docs/project/owner-review.md and KNOWN_FAILURES."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["ARTT100", "ARTT110", "ARTT150"] },
+    { "term": "Year 1 Fall", "courses": ["ARTT100", "ARTT110", "ARTT150", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["ARTT200", "ARTT210", "ARTT255"] },
     { "term": "Year 2 Fall", "courses": ["ARTH351", "ARTH200", "ARTT320"] },
     { "term": "Year 2 Spring", "courses": ["ARTT330", "ARTT370"] },

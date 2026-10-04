@@ -17,12 +17,13 @@ export const econMajorBs: Program = {
     "UMD Academic Catalog 2026–27, Economics Major; " +
     "Feller Center, ECON BS Major Checklist (Internet Archive, effective Fall 2021 and later, updated 4/24/24) (fetched 2026-09-28)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "No department-vs-catalog disagreement found: the checklist's Foundation Courses, Additional ECON Requirements (Statistics/ECON326/ECON325/ECON422) and Courses of Choice sections match the catalog's Foundation and Economics Courses of Choice sections course-for-course.",
     "Advanced Math gateway (ECON300 or MATH241) is encoded as a course-option pair. Both sources note that a student choosing MATH241 must also take 'another statistics course' -- this isn't a separate encoded requirement because the Statistics gateway (ECON321 or STAT401) is already required of every B.S. student regardless of which Advanced Math option they pick; the note doesn't describe an additional, unencoded course.",
     "ECON300, ECON321, ECON325, ECON326 and ECON422 (all required) are excluded from the econ-bs-400 and econ-bs-ba-300-400 elective filters so a required course can't double as its own elective (same treatment as civil-major's ENCE technical elective).",
-    "Not encoded (engine gap, matches other majors' precedent): the checklist's 2.0 average in all courses used to satisfy major requirements (per-course C- minimum is encoded; a GPA average is not); its residency rules (15 of the final 30 credits at the 300-400 level, 12 upper-level major credits at UMD, 30 credits at UMD, cumulative 2.0 GPA in all UMD coursework); and its 120-credit graduation minimum.",
+    "Not encoded (engine gap, matches other majors' precedent): per-course C- minimum is encoded; program GPA 2.0 (average in all courses used to satisfy major requirements) encoded as minGpa; its residency rules (15 of the final 30 credits at the 300-400 level, 12 upper-level major credits at UMD, 30 credits at UMD, cumulative 2.0 GPA in all UMD coursework); and its 120-credit graduation minimum.",
   ],
   requirements: [
     { kind: "course", id: "econ200", name: "Principles of Microeconomics", options: ["ECON200"] },

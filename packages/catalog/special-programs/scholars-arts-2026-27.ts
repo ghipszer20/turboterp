@@ -3,7 +3,7 @@
 // linked from https://scholars.umd.edu/about/curriculum/citation-requirements.
 // Hand-transcribed (the source is a PDF, not a catalog table). UNVERIFIED.
 
-import type { Program, ProgramMeta } from "@superterp/audit";
+import type { Program, ProgramMeta } from "@turboterp/audit";
 import { CATALOG_YEAR, SCHOLARS_CITATION_NOTES } from "./common.ts";
 
 export const SOURCE = "https://scholars.umd.edu/sites/default/files/2026-05/CurriculumRequirementsArts2026.pdf";

@@ -1,0 +1,15 @@
+{
+  "programId": "ling-minor",
+  "source": "https://linguistics.umd.edu/academic-programs/undergraduate/linguistics-minor",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No published plan for the minor; constructed from the department's requirements page. The 3xx-4xx LING elective is filled with LING312 (Syntax II), a course from the Linguistics major's catalog list."
+  ],
+  "terms": [
+    { "term": "Sophomore Fall", "courses": ["LING200"] },
+    { "term": "Sophomore Spring", "courses": ["LING240"] },
+    { "term": "Junior Fall", "courses": ["LING311", "LING321"] },
+    { "term": "Junior Spring", "courses": ["LING312"] }
+  ]
+}

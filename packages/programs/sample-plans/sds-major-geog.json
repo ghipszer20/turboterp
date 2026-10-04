@@ -9,7 +9,7 @@
     "Track II Electives filled with GEOG415 and GEOG416 (the 400-level pair) plus GEOG330 (any-level), all real named list courses."
   ],
   "terms": [
-    { "term": "Freshman Fall", "courses": ["SDSB123", "STAT100"] },
+    { "term": "Freshman Fall", "courses": ["SDSB123", "STAT100", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["MATH120", "GEOG202"] },
     { "term": "Sophomore Fall", "courses": ["SDSB233", "GEOG306"] },
     { "term": "Sophomore Spring", "courses": ["SDSB326", "INST327"] },
@@ -17,5 +17,6 @@
     { "term": "Junior Spring", "courses": ["INST414", "GEOG330"] },
     { "term": "Senior Fall", "courses": ["INST462", "SDSB340", "GEOG415"] },
     { "term": "Senior Spring", "courses": ["INST447", "SDSI492", "GEOG416"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

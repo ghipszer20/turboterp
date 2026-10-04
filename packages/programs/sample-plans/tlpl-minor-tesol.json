@@ -1,0 +1,14 @@
+{
+  "programId": "tlpl-minor-tesol",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/tesol-education-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: the three core courses plus the TESOL Education track (TLPL441, TLPL444). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["TLPL440", "TLPL442"] },
+    { "term": "Term 2", "courses": ["TLPL443", "TLPL441"] },
+    { "term": "Term 3", "courses": ["TLPL444"] }
+  ]
+}

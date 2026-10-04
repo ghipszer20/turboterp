@@ -10,7 +10,7 @@
     "The Field choice is filled with the Agricultural, Food and Natural Resource Systems field: AREC210, ANSC101 and PLSC112, all named directly in the catalog's field list."
   ],
   "terms": [
-    { "term": "Freshman Fall", "courses": ["AREC240", "MATH140"] },
+    { "term": "Freshman Fall", "courses": ["AREC240", "MATH140", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["ECON201", "STAT400"] },
     { "term": "Sophomore Fall", "courses": ["AREC326", "ECON230"] },
     { "term": "Sophomore Spring", "courses": ["AREC210", "ANSC101"] },
@@ -18,5 +18,6 @@
     { "term": "Junior Spring", "courses": ["AREC422", "AREC445"] },
     { "term": "Senior Fall", "courses": ["AREC453"] },
     { "term": "Senior Spring", "courses": ["AREC466"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

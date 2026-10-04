@@ -1,4 +1,4 @@
-# SuperTerp: plan to the first draft (MVP, deployed)
+# TurboTerp: plan to the first draft (MVP, deployed)
 
 ## Context
 The owner asked for a plan covering everything from now until the first draft of the project. Scope agreed on 2026-09-27:
@@ -45,7 +45,7 @@ One builder per batch, run 2 at a time, in order: **CMNS → ENGR → BSOS → A
 13. **Supabase auth:** umd.edu / terpmail magic-link sign-in. Only the Advisor requires it; Campus and Schedule stay open without an account.
 14. **Server storage:** plans (currently in browser storage, `lib/advisor/storage.ts`) sync to the database, with the device copy as a fallback. Signed clickwrap agreements are stored and a copy is emailed to the owner's records address (env var). One-tap delete.
 15. **Data pipeline:** GitHub Actions scheduled scrapers write snapshots; the CDN pre-warms them; the last good data is shown when a source is down; a GTFS expiry warning and scheduled check (the feed ends 2026-12-24).
-16. **Vercel deploy** of `apps/web`, secrets in env vars, a domain (superterp.app if still free), clickwrap terms and privacy pages (Claude drafts them; no lawyer, per ruling), "Not affiliated with UMD" on every page.
+16. **Vercel deploy** of `apps/web`, secrets in env vars, a domain (turboterp.app if still free), clickwrap terms and privacy pages (Claude drafts them; no lawyer, per ruling), "Not affiliated with UMD" on every page.
 17. **Pre-public checks:** GTFS license, scrub personal details from PROJECT_MEMORY.md and the git history, Apache-2.0 LICENSE, secret scan.
 
 ## Owner inputs needed along the way

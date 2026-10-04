@@ -1,9 +1,9 @@
 // Section-level helpers for the editor's side panel: the choices for one class, which
 // section stands in for a group of interchangeable ones, ratings and grade summaries.
 
-import { sectionsConflict, type Section } from "@superterp/course-data/schedules";
-import { NEUTRAL_RATING } from "@superterp/course-data/sort";
-import type { CourseGrades, Distribution } from "@superterp/ratings";
+import { sectionsConflict, type Section } from "@turboterp/course-data/schedules";
+import { gpaKey, NEUTRAL_RATING } from "@turboterp/course-data/sort";
+import type { CourseGrades, Distribution } from "@turboterp/ratings";
 import { clock } from "./calendar";
 
 export const sectionKey = (s: Pick<Section, "courseId" | "id">) => `${s.courseId}/${s.id}`;
@@ -118,5 +118,36 @@ export function conflictPairs(placed: Section[]): [string, string][] {
   placed.forEach((a, i) => {
     for (const c of overlapsWith(a, placed.slice(i + 1))) out.push([a.courseId, c]);
   });
+  return out;
+}
+
+/** Why "Recommended" liked a pick, in plain words: "4.6★ · avg GPA 3.4 · 12 open". Missing data is left out. */
+export function recommendReason(
+  s: Section,
+  ratings: Readonly<Record<string, number>>,
+  gpas: Readonly<Record<string, number>>,
+): string {
+  const parts: string[] = [];
+  const rating = bestRating(s, ratings);
+  if (rating !== undefined) parts.push(`${rating.toFixed(1)}★`);
+  const g = s.instructors.map((n) => gpas[gpaKey(s.courseId, n)]).filter((x): x is number => x !== undefined);
+  if (g.length) parts.push(`avg GPA ${Math.max(...g).toFixed(1)}`);
+  parts.push(`${s.seats.open} open`);
+  return parts.join(" · ");
+}
+
+/** Each instructor's average GPA per course, for the sort: `gpaKey(courseId, name)` → GPA. Skips missing data. */
+export function gpasFor(
+  gradesByDept: Readonly<Record<string, Record<string, CourseGrades> | "missing">>,
+  courseIds: readonly string[],
+): Record<string, number> {
+  const out: Record<string, number> = {};
+  for (const id of courseIds) {
+    const g = gradesByDept[id.slice(0, 4)];
+    if (!g || g === "missing") continue;
+    for (const [name, d] of Object.entries(g[id]?.byProfessor ?? {})) {
+      if (d.students > 0 && d.averageGpa !== null) out[gpaKey(id, name)] = d.averageGpa;
+    }
+  }
   return out;
 }

@@ -1,0 +1,13 @@
+{
+  "programId": "port-minor",
+  "source": "https://sllc.umd.edu/fields/portuguese",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog list: PORT205 and PORT207 plus three upper-level courses (PORT320, PORT332, PORT409) for 15 credits with 9 upper-level. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["PORT205", "PORT207", "PORT320"] },
+    { "term": "Term 2", "courses": ["PORT332", "PORT409"] }
+  ]
+}

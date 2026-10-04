@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { connection } from "next/server";
-import { campusDate, campusMinutes, recWellOnDate, type RecWellAreaToday } from "@superterp/campus-data";
+import { campusDate, campusMinutes, recWellOnDate, type RecWellAreaToday } from "@turboterp/campus-data";
 import { LiveStatus } from "@/components/LiveStatus";
 import { Card, Notice, Page, Row, Section, SkeletonCard, SourceError, SubHeading } from "@/components/ui";
 import { getRecWellAreas, safe } from "@/lib/campus";

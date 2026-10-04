@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { IndexedCourse } from "@superterp/course-data/schedule-files";
+import type { IndexedCourse } from "@turboterp/course-data/schedule-files";
 import { searchCourses } from "../search";
 
 const c = (id: string, title: string): IndexedCourse => ({ id, title, credits: { min: 3, max: 3 }, sections: 1 });

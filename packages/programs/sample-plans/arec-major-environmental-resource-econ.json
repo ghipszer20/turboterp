@@ -10,7 +10,7 @@
     "The Field choice is filled with the Environmental Data Science field: AREC280, GEOG272 and GEOG373, all named directly in the catalog's field list."
   ],
   "terms": [
-    { "term": "Freshman Fall", "courses": ["AREC250", "MATH120"] },
+    { "term": "Freshman Fall", "courses": ["AREC250", "MATH120", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["ECON201", "MATH107"] },
     { "term": "Sophomore Fall", "courses": ["AREC326", "BMGT230"] },
     { "term": "Sophomore Spring", "courses": ["AREC280", "GEOG272"] },
@@ -18,5 +18,6 @@
     { "term": "Junior Spring", "courses": ["AREC422", "AREC454"] },
     { "term": "Senior Fall", "courses": ["AREC456"] },
     { "term": "Senior Spring", "courses": ["AREC481"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

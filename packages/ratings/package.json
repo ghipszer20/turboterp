@@ -1,5 +1,5 @@
 {
-  "name": "@superterp/ratings",
+  "name": "@turboterp/ratings",
   "version": "0.1.0",
   "private": true,
   "description": "Professor ratings, course GPAs and grade distributions from PlanetTerp's public API. Framework-free.",
@@ -21,6 +21,6 @@
     "vitest": "^5.0.1"
   },
   "dependencies": {
-    "@superterp/campus-data": "*"
+    "@turboterp/campus-data": "*"
   }
 }

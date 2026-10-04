@@ -13,7 +13,7 @@
     "CCJS Courses of Choice (any-level, 2 courses) filled with CCJS310 and CCJS330, both real CCJS courses from the Academic Catalog's approved-course list, chosen only to satisfy the count requirement."
   ],
   "terms": [
-    { "term": "Freshman Fall", "courses": ["CCJS100", "STAT100"] },
+    { "term": "Freshman Fall", "courses": ["CCJS100", "STAT100", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["CCJS105"] },
     { "term": "Sophomore Fall", "courses": ["CCJS230"] },
     { "term": "Sophomore Spring", "courses": ["CCJS200"] },
@@ -21,5 +21,6 @@
     { "term": "Junior Spring", "courses": ["CCJS340", "CCJS330"] },
     { "term": "Senior Fall", "courses": ["CCJS342", "CCJS405"] },
     { "term": "Senior Spring", "courses": ["CCJS454", "CCJS418"] }
-  ]
+  ],
+  "credits": { "UNIV100": 1 }
 }

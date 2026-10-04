@@ -11,7 +11,7 @@
     "Capstone filled with HIST408 (the plan's primary option; HIST396 is the named substitute, not used here)."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["HIST110"] },
+    { "term": "Year 1 Fall", "courses": ["HIST110", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["HIST120"] },
     { "term": "Year 2 Fall", "courses": ["HIST208"] },
     { "term": "Year 2 Spring", "courses": ["HIST131"] },

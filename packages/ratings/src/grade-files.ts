@@ -3,7 +3,7 @@
 // Only counts and terms are stored; decodeDepartment derives shares, GPA and
 // student totals with the same code the build uses.
 
-import { SourceError } from "@superterp/campus-data/http";
+import { SourceError } from "@turboterp/campus-data/http";
 import { GRADE_COLUMNS, type GradeColumn } from "./planetterp.ts";
 import { distributionFromCounts, type CourseGrades, type Distribution } from "./course-grades.ts";
 

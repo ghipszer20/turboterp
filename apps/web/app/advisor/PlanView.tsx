@@ -1,16 +1,20 @@
 "use client";
 
-import type { PlanIssue } from "@superterp/plan/check";
-import { isGraduateCourse } from "@superterp/plan/grad-courses";
-import { useMemo, useState } from "react";
+import type { AcademicEvent } from "@turboterp/campus-data";
+import type { PlanIssue } from "@turboterp/plan/check";
+import { isGraduateCourse } from "@turboterp/plan/grad-courses";
+import type { TermDifficulty } from "@turboterp/plan/difficulty";
+import { useEffect, useMemo, useState } from "react";
+import { planDifficulty } from "@/lib/advisor/difficulty";
 import { courseKey, type IssueGroups, type Severity } from "@/lib/advisor/issues";
 import type { AdvisorPlan, PlanTermState } from "@/lib/advisor/plan-state";
 import type { PriorCreditResult } from "@/lib/advisor/prior-credit";
+import { formatKeyDates, termKeyDates } from "@/lib/calendar";
 import { searchCourses } from "@/lib/advisor/search";
 import { academicYears, parseTerm } from "@/lib/advisor/terms";
 import type { AnalysisState, OpenCourse } from "./AdvisorApp";
 import { ChecksPanel, Notices } from "./ChecksPanel";
-import type { CatalogState } from "./data";
+import { loadCourseGrades, type CatalogState } from "./data";
 import { dispatchPlan, openView } from "./store";
 import styles from "./advisor.module.css";
 
@@ -22,6 +26,7 @@ export function PlanView({
   checked,
   analysis,
   prior,
+  calendar,
   onOpenCourse,
 }: {
   plan: AdvisorPlan;
@@ -29,6 +34,7 @@ export function PlanView({
   checked: Checked;
   analysis: AnalysisState;
   prior: PriorCreditResult;
+  calendar: AcademicEvent[];
   onOpenCourse: (c: OpenCourse) => void;
 }) {
   const years = academicYears(plan.terms.map((t) => t.name));
@@ -37,6 +43,17 @@ export function PlanView({
   const creditsOf = (id: string, own?: number) => own ?? ready?.catalog.get(id)?.credits.min ?? null;
   const total = plan.terms.reduce((t, term) => t + term.courses.reduce((s, c) => s + (creditsOf(c.id, c.credits) ?? 0), 0), 0);
   const lastTerm = plan.terms.at(-1)?.name;
+  const [difficulty, setDifficulty] = useState<Map<string, TermDifficulty>>(new Map());
+  useEffect(() => {
+    if (!ready) return;
+    let live = true;
+    planDifficulty(plan, creditsOf, loadCourseGrades).then((d) => live && setDifficulty(d));
+    return () => {
+      live = false;
+    };
+    // creditsOf is derived from the catalog, so the plan and catalog status cover it.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [plan, ready]);
 
   return (
     <div className={styles.planLayout}>
@@ -69,6 +86,8 @@ export function PlanView({
                   catalog={catalog}
                   groups={checked?.groups ?? null}
                   creditsOf={creditsOf}
+                  keyDates={formatKeyDates(termKeyDates(calendar, name, name === lastTerm))}
+                  difficulty={difficulty.get(name)}
                   onOpenCourse={onOpenCourse}
                 />
               ))}
@@ -113,19 +132,23 @@ function OptionalTerms({ yearTerms }: { yearTerms: string[] }) {
   );
 }
 
-const DRAG_TYPE = "application/x-superterp-course";
+const DRAG_TYPE = "application/x-turboterp-course";
 
 function TermColumn({
   term,
   catalog,
   groups,
   creditsOf,
+  keyDates,
+  difficulty,
   onOpenCourse,
 }: {
   term: PlanTermState;
   catalog: CatalogState;
   groups: IssueGroups | null;
   creditsOf: (id: string, own?: number) => number | null;
+  keyDates: string;
+  difficulty: TermDifficulty | undefined;
   onOpenCourse: (c: OpenCourse) => void;
 }) {
   const [over, setOver] = useState(false);
@@ -166,6 +189,15 @@ function TermColumn({
           {credits}
           {unknown ? "+" : ""} cr
         </span>
+        {difficulty ? (
+          <span
+            className={styles.difficultyBadge}
+            data-level={difficulty.score >= 8 ? "high" : undefined}
+            title="An estimate from course averages, credit load and your grades"
+          >
+            Difficulty {difficulty.score}/10 · estimate
+          </span>
+        ) : null}
         {optional ? (
           <button
             type="button"
@@ -180,6 +212,8 @@ function TermColumn({
           </button>
         ) : null}
       </div>
+      {keyDates ? <p className={styles.keyDates}>Key dates: {keyDates}</p> : null}
+      {difficulty ? <p className={styles.difficultyText}>{difficulty.sentence}</p> : null}
       {termIssues.map((issue, i) => (
         <p key={i} className={styles.inlineIssue} data-severity={issue.severity}>
           {issue.message}
@@ -212,7 +246,7 @@ function TermColumn({
                   </span>
                   <span className={styles.courseCredits}>{cr === null ? "?" : cr} cr</span>
                 </span>
-                <span className={styles.courseTitle}>{info?.title ?? (ready ? "Not in SuperTerp's course data" : " ")}</span>
+                <span className={styles.courseTitle}>{info?.title ?? (ready ? "Not in TurboTerp's course data" : " ")}</span>
                 {issues.length > 0 ? (
                   <span className={styles.courseIssue} data-severity={worst}>
                     {issues[0]!.message}

@@ -1,0 +1,15 @@
+{
+  "programId": "rotc-minor-military-studies",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/undergraduate-studies/military-studies-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog requirements: ARSC300, ARSC301, ARSC400, ARSC401, one Global Affairs course (GVPT200) and one Military Affairs course (BMGT364). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["ARSC300", "GVPT200"] },
+    { "term": "Term 2", "courses": ["ARSC301", "BMGT364"] },
+    { "term": "Term 3", "courses": ["ARSC400"] },
+    { "term": "Term 4", "courses": ["ARSC401"] }
+  ]
+}

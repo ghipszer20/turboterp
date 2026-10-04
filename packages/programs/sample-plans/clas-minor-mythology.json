@@ -1,0 +1,14 @@
+{
+  "programId": "clas-minor-mythology",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/arts-humanities/classical-languages-literature/classical-mythology-minor/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog requirements: CLAS170 and CLAS470 plus three of the listed electives (CLAS320, CLAS330, CLAS374). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["CLAS170"] },
+    { "term": "Term 2", "courses": ["CLAS320", "CLAS330"] },
+    { "term": "Term 3", "courses": ["CLAS374", "CLAS470"] }
+  ]
+}

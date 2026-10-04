@@ -1,0 +1,20 @@
+{
+  "programId": "php-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/public-health/behavioral-community-health/public-health-practice-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No term-by-term plan is in the sources (the SPH page links to one and lists benchmarks). Constructed from the catalog table with the benchmarks respected (BSCI170/171, SPHL100, HLTH124 in two semesters; HLTH140, HLTH200, EPIB301, HLTH212 in four); HLTH491 last. Gen Ed left out. Fills: BSCI171 for the biology lab; HLTH212 for the anatomy row; HLTH300, HLTH325, HLTH377 and HLTH424 for the 12 credits of health electives (unconfirmed placeholders, not checked by the audit). Flagged in docs/project/owner-review.md."
+  ],
+  "credits": { "BSCI170": 3, "BSCI171": 1, "HLTH124": 1, "HLTH212": 4, "HLTH491": 12, "UNIV100": 1 },
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["SPHL100", "BSCI170", "BSCI171", "HLTH124", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["HLTH140", "HLTH200", "HLTH230"] },
+    { "term": "Sophomore Fall", "courses": ["EPIB301", "HLTH212", "HLTH306"] },
+    { "term": "Sophomore Spring", "courses": ["EPIB315", "HLTH302", "HLTH300"] },
+    { "term": "Junior Fall", "courses": ["HLTH364", "HLTH391", "HLTH325"] },
+    { "term": "Junior Spring", "courses": ["HLTH377", "HLTH424", "HLTH420"] },
+    { "term": "Senior Fall", "courses": ["HLTH490"] },
+    { "term": "Senior Spring", "courses": ["HLTH491"] }
+  ]
+}

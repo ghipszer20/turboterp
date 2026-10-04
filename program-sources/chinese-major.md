@@ -150,16 +150,59 @@ Web Accessibility
 
 ## Sample plan (https://drive.google.com/uc?export=download&id=1DA9AvJMUDq0Hn4oYY6xIH-u4XFD9C1lg#Chinese)
 
-!"#$
-%% !"#$
-&& !"#$
-'
-()** +,-./01234565 74895:5;<=>?@ABCD8EFGHI1JK 4FLMEFNOPBHCPHQ;4O>??1234566 AFLR;A<>? <CFNSTPUHFQVCBCW;<U>2BQLVESXOVPBFNOPBHCPHQ;2O>?? 2MYFCBTHQ;2Z>??1234565 1234566<U2Z5[\ 7<996\[VE23O]6\[12346:^ 2MYFCBTHQ;2Z>?? _EFN1VYYMCBPFTVC;_1>12346:` 12346:^ OPRVNFEQRBaBCbEFPTPH;Ob>c5??7<996\dVE23O]6\d 12346:`7NHPTeH5ffJdff 1234g5[7NHPTeH5ffJdff 7NHPTeH5ffJdff1234g:5VEg:[ 4FLMEFNOPBHCPH9Fh;49>?? 2BQLVESXOVPBFNOPBHCPHQ;2O>??1234g:6VEg:^ 1234g:5VEg:[ OPRVNFEQRBaBCbEFPTPH;Ob>c6??1234dd5 1234g:6VEg:^7NHPTeH5ffJdff 1234g:`7NHPTeHgffJdff 7NHPTeHgffJdffbEViHQQBVCFN=EBTCW;b=> 12347NHPTeHc6;gffJdff>1234d:5 7NHPTeH5ffJdff12347NHPTeHc5;6ffJdff> 7NHPTeH5ffJdff7NHPTeHgffJdff 7NHPTeHgffJdff7NHPTeHgffJdff]VLFN1EHGBLQiVEjHWEHHI56:kglPEHGBLQYMQLhHgffJdffNHeHN
-mnopqrstuvwrprxqypzrr{xt|p}toruropr~o mnopruvpqys~
-mnopqrstuvwrprxqypzrr{xt||tn~oruropr~o
-mnopqrstuvwrprxqypzrr{xt|ooruropr~o
-¡¡¢£¤¥¦££¦§¨©ª«¨¬£®¤¥¦¨
-!    "!    #!   $%& ' (  )*+ ,% -$%&$&,.& //0-$%& 1 )* 23/  4 )!/.& //0-  12   5"6/ )7
-89:;<=9>9?@ABCDE=9F<@AGDEH;=A9A IH;=A9 I=9F<@A J=KF989:;<=9>9?@ABLDE=9F<@AGMEH;=A9A IH;=A9 I=9F<@A J=KF9 89:;<=9>9?@A I=9F<@A J=KF989:;<=9>9?@ABNE=9F<@AGLEH;=A9A IH;=A9 I=9F<@A J=KF989:;<=9>9?@ABOPNE=9F<@AGLEH;=A9A IH;=A9 I=9F<@A J=KF989:;<=9>9?@ABQPRE=9F<@A IH;=A9 I=9F<@A J=KF9
-STUVWXWYZ[\]^_Z`a_bcdeY`fgh_cija[\]kSlm nVjoWpW STUVWXXqars]tt_rc[u`a_bcdeq`fva[uSr^^ievSf STUVXpwh[xyehYf STUVXpzYc[u{bZ|][trc_cdeY|f STUV}pWraSTUV}p~STUV}pXraSTUV}pwV[xa[uZ_]cZ]o[eVofV[xa[uZ_]cZ]teVfT_txra{rZ_[uZ_]cZ]teTfT_txra{rZ_[uZ_]cZ]teTfT^[c_b]teTfT^[c_b]teTf STUVXpwZyru[aty__cqa[ZbZ]eqf STUVXpzZyru[aty__cqa[ZbZ]eqfcrc^[ra STUV}pWra}p~STUV}pXra}pwSTUVpW_d]tbrceUf nYooXraTUX_d]tbrceUf nYooX~raTUX~STUV}pzc\]atx[c\_cdqua[urZieqf STUV}W~c\]atx[c\_cdqua[urZieqf STUVWSuxa[uSr^]x]cZ{eSSf STUVXlSTUV}l
- ¡¢£¤¥¦§¤¦¨©¨ª§¨¥«¨¬§®¯¨¯°±²«®¨³´μ¯¶·¸´¯μ®¹º¬§»μ§®¨°¼«®¨³´μ¯¶···£´¥¦§´¯½«¯°¾«®¨³´μ¯¶£´μ¨®¤μ§®¨°¼«®¨³´μ¯¶® ¿»¨«½À¨¯°¼«®¨³´μ¯¶···ÁÂÃÄÅÆÇÃÈÉÊÃËÃËÆÌÍÍÎÏÍÎÊÌÃÆÐÏÎÑÅÒÌÇÓÄÌÓÆÔÑÌÕÆÖÆÇÃ×ÐÒÔØÑÆÙÆÑÌÇÅÃËÆÌÍÍÎÏÙÌÑÏÚÃËÆÛÜÝÞÌÅÙÊÈÏÎÖÌßÈÄàÈáÃÄÃÆËÊÓËÆÎÑÆÙÆÑÛÜÝÞÑÌÇÓÄÌÓÆÕÏÄÎÈÆÈÚÏÎÕÏÄÎÈÆÈÊÇÃËÆÑÌÇÓÄÌÓÆÈÆâÄÆÇÕÆÍÎÏÙÊÅÆÅÃËÆÈÃÄÅÆÇÃÆÌÎÇÈÌÃÏÃÌÑÏÚãäÕÎåÏÚÛÜÝÞÑÌÇÓÄÌÓÆåÁÁÔÎÆæÎÆâÄÊÈÊÃÆÈçÛÜÝÞãèãÌÇÅãèèÏÎÆâÄÊÙÌÑÆÇÃåÁÁÁÛÏÄÎÈÆÈÊÇÛËÊÇÆÈÆÂÃÄÅÊÆÈÃÌÄÓËÃÊÇéÇÓÑÊÈËêÜÊÈÃÏÎßêëÏÙÆÎÇÖÆÇÃìÔÏÑÊáÕÈêÌÇÅÏÃËÆÎÌÍÍÎÏÙÆÅÅÆÍÌÎÃÖÆÇÃÈÖÌßÕÏÄÇÃÃÏÉÌÎÅÃËÊÈÎÆâÄÊÎÆÖÆÇÃÉÊÃËÌÍÍÎÏÙÌÑÏÚÃËÆÛÜÝÞÌÅÙÊÈÏÎåÒÌÇÓÄÌÓÆÕÏÄÎÈÆÈÌÇÅÊÇÅÆÍÆÇÅÆÇÃÈÃÄÅßÖÌßÌÑÈÏàÆÄÈÆÅÃÏÉÌÎÅÈÃËÊÈÎÆâÄÊÎÆÖÆÇÃÉËÆÇÌÍÍÎÏÙÆÅåíîïðñòóïôõöñ÷øïòñùñîôóúòòøîöíöñ÷øïòñùñîôóúòòøî  ! "  ! #$ %&'' % ( )'' % *+,-% .'' /0122  34567489:6:;49<=65>?495>@>A:4748B<<4C>9DE6B69>AFD87>G4B96H8I9656B<:J
+(OCR text; may contain recognition errors)
+Chinese Four Year Academic Plan
+I I A
+eww fewm
+ew www |
+I CL
+I
+| enchmark2Requiements | [|
+[ eectvetawo foams
+eweas  feewew
+EE
+| enchmark3Requiemenes | [|
+TT feewas eww |
+Tewessaw Tews |
+es 1
+CC reoumew foment |
+r ewwan  [eectivelode |
+TT lomuesenemen [mews |
+EE
+I 7
+rr rr
+lL [roulcredisforbegreei 2039 credits mustbe Suchuclevel |
+and Cultural Competence courses may also fulfill Distributive Studies categories.
+[Academic Writing (aw) (Min, Grade: 7 | EnGL1ol | | |
+[Professional writing Pw) [| [|
+[Oaicomm(cg [1 [ ]
+Mathwa) [|
+[Analytic Reasoning AR) [| | |
+[Natural Science tab) [| 1]
+[Natura Sciences (vs) | |
+[History/sodal ences tis) || |
+[History/Social Sciences (HS) | | [1]
+[Humanites(ie) [1]
+[umanites (au) [|| Memes [|
+[Scholarshipin Practice(sP) | | |  Jewnooy [| |
+[Scholarship in Practice (SP nonmajor | | | [cmnsoiorses [|
+Big Question ciiNso2orzos [ []
+Normally double counted with Distributive Studies formar [| |
+[Bgauestion(s) [| WeAuosaormstasa [|
+[BgQueston(s) [|  [WeAuzssorwstass [|
+(overlap permitted with Distributive Studies and/or Big Question) EEA
+[Understanding Plural soc. (P) [| [cww3ts [|
+eons |__| | Ra
+Cultural Competency (CC)
+CE —
+{overlap permitted with other requirements/courses) EE EE
+[TT I Students with the oppropriote World Language placement (WL) evel ond th approval
+[TT Wl ofthe chin advisor moy substitute higher evel chi language courses for courses in the
+language sequence provided the student coms a total of 17 cr. of CHiN language.
+[Atleast 30 credits mustbe eamedatumd | [J [Merecousesin chinese studs tought in Engish, History, Government & pics, and other
+[15 ofthe ina 30 credits must be eared atthe 300-400 level | []  [Mapproved departments may count toword ths requirement with approval of the
+[12 upper evel major credits must be eamedat MD | [] [Ml cumaovior Language courses and independent study moy lo be use towards
+is reuremens when apres.
+Er RR wR
+[ARH ts oreuvatent (Fopptati) | [eee erthemiermay ako countiouerd cereal ection
+TE SN wR

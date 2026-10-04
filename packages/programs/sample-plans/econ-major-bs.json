@@ -7,9 +7,9 @@
     "Feller Center's official ECON BS Major Checklist four-year academic plan (effective Fall 2021 and later, last updated 4/24/24). Academic Writing, Gen Ed, Elective and Upper Level Elective slots are left out: only the major's own requirements are audited (see reviewNotes).",
     "The grid's 'ECON BS or BA Course of Choice: 300/400 Level' slot (Year 3 Fall) is filled with ECON310; the 'ECON BS Course of Choice: 400 Level Course 1/2/3' slots are filled with ECON401, ECON406 and ECON407; the 'ECON BS or BA Course of Choice: 400 Level' slot is filled with ECON415 -- all real, currently-approved ECON courses from the builder brief's approved-course list, since the checklist's own grid names no specific course numbers for these rows."
   ],
-  "credits": { "MATH140": 4, "ECON325": 4, "ECON326": 4 },
+  "credits": { "MATH140": 4, "ECON325": 4, "ECON326": 4, "UNIV100": 1 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["MATH140", "ECON200"] },
+    { "term": "Year 1 Fall", "courses": ["MATH140", "ECON200", "UNIV100"] },
     { "term": "Year 1 Spring", "courses": ["ECON201", "ECON300"] },
     { "term": "Year 2 Fall", "courses": ["ECON326", "ECON321"] },
     { "term": "Year 2 Spring", "courses": ["ECON325"] },

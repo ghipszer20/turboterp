@@ -1,0 +1,25 @@
+{
+  "programId": "ensp-major-environment-agriculture",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/agriculture-natural-resources/environmental-science-policy/environmental-science-policy-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No published 4-year plan exists for this concentration: only the seven BSOS/CMNS concentrations have an official AGNR-hosted PDF plan. This plan is CONSTRUCTED from the catalog's own requirement rows instead (docs/project/owner-review.md flags this). Gen Ed courses are left out; only the major is audited.",
+    "Applied Science and Policy filled with ENSP330; Calculus filled with MATH140; Statistics filled with GEOG306.",
+    "'Four of five groups' filled with: Biology (BSCI160 & BSCI180), Earth Sciences (ENST200), Economics (AREC240), Geography (GEOG130) -- four of the nine set options, chosen to avoid reusing courses already required directly by this concentration (e.g. BSCI171 fills the concentration's own Biology Laboratory line so BSCI180 is free for this slot instead).",
+    "Cartography, Remote Sensing, and GIS filled with GEOG272 and GEOG373 (two of the five listed options; GEOG373's alternative ENST415 is not used).",
+    "Genetics gateway filled with BSCI222; PLSC203 would satisfy it equally. Biology Laboratory gateway filled with BSCI171; BSCI180 would satisfy it equally (and is used above instead for the 'four of five groups' Biology set).",
+    "The Restricted Electives (choose 5 courses in one Area) line is not in this plan because it is not encoded in the Program (see reviewNotes and docs/project/owner-review.md): the catalog names no course or department for either Area."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["ENSP101", "MATH140", "CHEM131", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["ENSP102", "CHEM232", "ANSC101", "ANSC103"] },
+    { "term": "Sophomore Fall", "courses": ["BSCI170", "BSCI171", "PLSC112"] },
+    { "term": "Sophomore Spring", "courses": ["PLSC113", "BSCI222", "ENST200"] },
+    { "term": "Junior Fall", "courses": ["BSCI160", "BSCI180", "GEOG306"] },
+    { "term": "Junior Spring", "courses": ["GEOG272", "GEOG373", "AREC240"] },
+    { "term": "Senior Fall", "courses": ["GEOG130", "ENSP330", "ENSP386"] },
+    { "term": "Senior Spring", "courses": ["ENSP400"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}

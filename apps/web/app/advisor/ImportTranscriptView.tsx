@@ -6,7 +6,7 @@
 // with no text layer (Testudo's own download button produces those). Nothing is applied until the
 // student reviews the parsed rows and confirms.
 
-import { apExamNames } from "@superterp/credit";
+import { apExamNames } from "@turboterp/credit";
 import { useMemo, useState } from "react";
 import { selectApLines } from "@/lib/advisor/transcript-ap-select";
 import { applyTranscriptImport, type SelectedAp, type SelectedCourse } from "@/lib/advisor/transcript-apply";
@@ -71,6 +71,15 @@ export function ImportTranscriptView({ plan, onDone, onCancel }: { plan: Advisor
           <h1 className={styles.title}>Import transcript</h1>
         </div>
       </header>
+
+      <section className={styles.panel}>
+        <h2 className={styles.panelTitle}>Why import?</h2>
+        <p className={styles.panelNote}>
+          Optional. Your past courses and grades let TurboTerp personalize its feedback on your 4-year plan and class schedule --
+          for example, how hard each upcoming semester is likely to feel for you -- and they fill in what you&apos;ve already
+          taken, so your audit starts out accurate.
+        </p>
+      </section>
 
       <section className={styles.panel}>
         <h2 className={styles.panelTitle}>From a Testudo unofficial transcript</h2>
@@ -148,6 +157,8 @@ function ReviewStage({
   const matchedAp = apSelection.matched;
   const infoAp = apSelection.info;
   const unmatchedAp = apSelection.unmatched;
+  const gpaFound = parsed.cumulativeGpa;
+  const [gpaChecked, setGpaChecked] = useState(true);
   const [apChecked, setApChecked] = useState<boolean[]>(() => matchedAp.map(() => true));
 
   const termGroups = useMemo(() => {
@@ -163,7 +174,7 @@ function ReviewStage({
     return order.map((term) => ({ term, rows: byTerm.get(term)! }));
   }, [parsed.courses]);
 
-  const anyChecked = courseChecked.some(Boolean) || apChecked.some(Boolean);
+  const anyChecked = courseChecked.some(Boolean) || apChecked.some(Boolean) || (gpaFound !== null && gpaChecked);
 
   const confirm = () => {
     const courses: SelectedCourse[] = parsed.courses
@@ -176,7 +187,7 @@ function ReviewStage({
         status: c.status,
       }));
     const ap: SelectedAp[] = matchedAp.filter((_, i) => apChecked[i]).map((a) => ({ exam: a.exam, score: a.score }));
-    onDone(applyTranscriptImport(plan, { courses, ap }));
+    onDone(applyTranscriptImport(plan, { courses, ap, gpa: gpaFound && gpaChecked ? gpaFound.value : null }));
   };
 
   const toggle = (arr: boolean[], set: (v: boolean[]) => void, i: number) => set(arr.map((v, j) => (i === j ? !v : v)));
@@ -229,6 +240,23 @@ function ReviewStage({
           </ul>
         </section>
       ))}
+
+      {gpaFound ? (
+        <section className={styles.card}>
+          <h2 className={styles.cardTitle}>Cumulative GPA</h2>
+          <label className={styles.checkRow}>
+            <input type="checkbox" checked={gpaChecked} onChange={() => setGpaChecked(!gpaChecked)} />
+            <div className={styles.entryHead}>
+              <span className={styles.entrySource}>{gpaFound.value.toFixed(2)} (from your transcript)</span>
+              {gpaFound.flagged ? (
+                <span className={styles.issueSeverity} data-severity="confirm">
+                  Check this
+                </span>
+              ) : null}
+            </div>
+          </label>
+        </section>
+      ) : null}
 
       {matchedAp.length > 0 ? (
         <section className={styles.card}>

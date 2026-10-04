@@ -27,6 +27,7 @@ export const socyMajor: Program = {
     "Feller Center SOCY Major Checklist, fetched via Internet Archive, Feb 2026 " +
     "(https://web.archive.org/web/20260210113440id_/https://fellercenter.umd.edu/sites/fellercenter.umd.edu/files/Major%20Cards/SOCY%20Major%20Checklist%20050724%20writable.pdf)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Department-vs-catalog difference: the Gateway Math options. The catalog text lists " +
@@ -43,7 +44,7 @@ export const socyMajor: Program = {
       "(SOCY 300-499 and SOCY 400-499 respectively), excluding the named requirement courses.",
     "Not encoded (prerequisite, not a requirement-satisfaction rule): SOCY201 requires MATH107 or " +
       "higher with a C- or better before enrollment. The audit engine does not model prerequisites.",
-    "Not encoded (engine gaps): the 2.0 cumulative GPA requirement across all major courses, residency " +
+    "Not encoded (engine gaps): residency " +
       "rules (30 credits at UMD, 15 of the final 30 credits at the 300-400 level, 12 upper-level major " +
       "credits at UMD), and the 120-credit graduation minimum. The audit engine checks per-requirement " +
       "course assignment and per-course minGrade, not GPA, residency, or credit totals.",

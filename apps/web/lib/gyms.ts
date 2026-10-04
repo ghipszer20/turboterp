@@ -11,7 +11,7 @@
 // one "Eppley Recreation Center" group with a `subsection` label so the gym
 // page can show them as sub-sections instead of separate top-level groups.
 
-import type { RecWellAreaToday } from "@superterp/campus-data";
+import type { RecWellAreaToday } from "@turboterp/campus-data";
 
 /** Matched against "<facility> | <area>" from `recWellOnDate`. */
 export const MAIN_GYMS = [

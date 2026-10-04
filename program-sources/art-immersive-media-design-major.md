@@ -158,24 +158,61 @@ Privacy Notice
 
 ## Sample plan (https://drive.google.com/uc?export=download&id=1UqFgW6mZjaq_xGlEWd68VIJrnYIPq-V2#Immersive-Media-Design)
 
-!"#$%"&!'"()!*+,#!-!.&/
-!"#01!.23-"#40)!*+,#!-!.&/
-!"#51!.23-"#45)!*+,#!-!.&/
-!"#6
-7899 :;<=>?@ABBCDD @ABBCDDEFGH @ABBCCD@ABBCCD IJFICKK LJMJCKNLJMJCKN LJMJCDC LJMJCODEPQHJ@BPCCOEJ@HR STUVCDCE@WHRXJYZ[U\]^_`Iab@APQCOc d\]eIfgghZYi]jfZEdIH@ABBKCD @ABBKDD STUVCklmKkOmKOOmKnDmKnkmf\KnOEPQH@ABBKOO @ABBKCD LJMJKnDEFo\YZpdZeqHLJMJKKN @ABBKOO T]rh\]eFiY_Zi_sETFHRRLJMJKnD LJMJKKNEt]eedZeqH @Z]eqjiA_]sfZYZpE@AHUefu]eSZp]p_g_ZrvC Uefu]eSZp]p_g_ZrvK@ABBlNw @ABBlNw LJMJlnDEFo\YZpdZeqHLJMJlOD LJMJlODEt]eedZeqH G\fx_ssYfZ]eW\YjZpEGWHLJMJlnD PYsrf\qyFfiY]eFiY_Zi_sEPFHRR PYsrf\qyFfiY]eFiY_Zi_sEPFHRRT]rh\]eFiY_Zi_V]uETVHRR Se_ijz_lwwakwwFi{fe]\s{YoYZG\]iji_`TfZaJ]|f\EFGHRR Se_ijz_lwwakww@ABBkNn@mImMmf\S LJMJknCEFo\YZpdZeqHLJMJknDEt]eedZeqH Se_ijz_lwwakwwSe_ijz_lwwakww Se_ijz_CwwakwwSe_ijz_lwwakww Se_ijz_CwwakwwSe_ijz_lwwakww Se_ijz_CwwakwwBfr]eI\_^Yrsxf\M_p\__`CKD}lni\_^Yrsghsru_lwwakwwe_z_e
-~ ~
-~
-~  ¡¢¢£¤¥¡¦§¢¨¦¢©
-ª«¬®¯«° ±«²³´´μ«³¬¶°·¸«³°·¹·º´«±«²»¬¬«¼·³½¬¶¾ »³·º¿½²±·À«»³Á²Â³° »¬´ÃÃÄºº´¬²½»¬´°²´¬±«°Åº¬¬¼«ÆÂ´¬³ÂÇ²ÀÈ¯¬²½Â´±«²³´´¬¶·¬·³·ÅÅ³«È½μ«³ÉÂÊË²´À«»±«²³´´ÌÍ¶Î»½³´¬·»½Â»ÊÏº²³·º¯«±ÂÀ´·»½Ð²º¬²³·ºÐ«°Å¬»±±«²³´´°·¹·º´«μ²ºÑººÆÂ´¬³ÂÇ²ÀÈ¯¬²½Â´±·¬Ê«³Â´Ì
-!"#$%&!'()* +",(-%&!'()*.! ()/)! '* 012+",(-%&!'()*032+",(-%&!'()*4'*)'5!#6/)! '* 072+",(-%&!'()*89$%&!'()*+':;!*#$<$(=$!5"$!) >'),4'*)'5!#6/)! '*4'6*')=?$6@@('A >'),4'*)'5!#6/)! '* B$+':;!*#$CD@'#E':2$@#$?$6@@('A >'),$),&!'()*B"$!**C/)! )*(!*)(''(!($F13G" ')*)$"$(@):H
-IJKLMNJOJPQRSTUVNJWMQRXUVYLNRJR ZYLNRJ ZNJWMQR [N\WJ
-IJKLMNJOJPQRS]UVNJWMQRX^VYLNRJR ZYLNRJ ZNJWMQR [N\WJ IJKLMNJOJPQR ZNJWMQR [N\WJIJKLMNJOJPQRS_VNJWMQRX]VYLNRJR ZYLNRJ ZNJWMQR [N\WJIJKLMNJOJPQRS`a_VNJWMQRX]VYLNRJR ZYLNRJ ZNJWMQR [N\WJIJKLMNJOJPQRSbacVNJWMQR ZYLNRJ ZNJWMQR [N\WJ
-deffghhdijklmniopnqrstdou deffgghvpwxlyynwrjzopnqrstvou {|}|g~pjzwmmtu|jt|du deff~ghdrjzqieljywrnrstdeu deff~{|}|~~{|}|~hjpjzinlriljtujpjzinlrilytu deffnywpwinjzinlrilytu {|}|hnywpwinjzinlrilytu {|}|hmjrnqlytumjrnqlytuiwzjpynnrvpjiqiltvuiwzjpynnrvpjiqiltvurwrmjwp deffghhtvudeffgghdeff~hhnslyqwrt{u deff~ghnslyqwrt{u deff~deffdeffd}wp|g~~rklpyjrknrsvzpjzwitvu |dfggt|durklpyjrknrsvzpjzwitvuzpjzwmllritu {|}|ghg{|}|g~{|}|ghtu{|}|~~{|}|~h{|}|h{|}|h{|}|h{|}|g
-¡¢£¤¥¦
-§¨©ª«¬®«¯®¯¯®°±®°«²®°¯³´μ¶
-·¸¹º»¼»½¾¿À»»Á
-Â½Ã½»Á¼·¸¹ºÄÅÆÇÈÉÊÅÇËÌÍÅÇ¾Î¿¿»¼¼
-¾ÏÐÉÌÈÏÑ¼ÄÇÉÒÓÏÈËÆÈÏÔÉÉÌÇÕÉÒÌÏÖ½Ã»ÁÅÊÏ×ÉØÕÌÐÑ¼ÄÇÉÒÓÏÈËÆÈÏÔÉÉÌÇÕÉÒÌÏÏ×ÉÑ¼¼ÙÚ¼¼ÐÉÛÉÐ»ÜÆÝÝÉÇÐÉÛÉÐËÌÍÅÇÄÇÉÒÓÏÈËÆÈÏÔÉÉÌÇÕÉÒÌÏÖ½ÃÑÞÆÝÝÉÇÐÉÛÉÐÄÇÉÒÓÏÈ¾ÎÀÖ»ÁßÅÇÉàÆÓÛÌÐÉÕÏáÓÊÌÝÝÐÓÄÌÔÐÉâ¹ÐÅÔÌÐ·ÕãÌãÉËÉÕÏ
-äåæåçèéêëèêëìèíëîïæèðîììëñåòìëæëóôõæåõôöëèôçëèõôè÷øù
-ú
-!"#$%$&$'("")$*+($',*$-(./("
+(OCR text; may contain recognition errors)
+I I EE
+ees odes
+A
+ee
+EL I I
+[Mustcompleteroroliokeview |
+EE A
+I EE
+[scholarhibinPrchceiNonMajor Sh) Jelectivedocdx |
+I
+TT ewemcoar  Jwoveimmon |
+I CR
+EE 1 TS
+EE TS
+Ee TR
+EE A
+I re
+Societies and Cultural Competence courses may also fulfill Distributive Studies categories.
+Immersive Media Design (Emerging Creatives, Track 2)
+[Academic writing (AW) (Win. Grade: c | Enctior [|]
+[Professional writing bw) | [| |
+oeicomm.0c) —}
+Matha) fwawas [0]
+|AnalyticReasoning (aR) [| | |
+[Natwral Science tabing | [|]
+[Natural Sciencesvs) | [| |
+[History/Social Sciences (hs) | [| |
+[History/Social Sciences (Hs) | [| |
+[Humanities 40) J wowso [ | |]
+eT Fd NN
+[Scholarship in Practice (SP) | awrraoo | | |
+[Scholarship in Practice (SP) nonmajor | [| |]
+Big Question arrose) [0 [0]
+EL —————
+aRrro0 |
+[BigQuestons) | [|  [arra0 [|
+BgQuestons) | [|  [Waress [|
+Diversity ERE EE
+eT ————
+ovsciz
+[Understanding Plural soc.) | [| wamusmay [0 [|
+Understanding Plural Soc. (UP) or [ENGL 143,245,255 200, 204, or205 (hi) | | |
+Er I EE © m——
+Experiential Learning- optional vom |
+CE ————
+voma27 [1]
+© 7 mew 0
+© [1 wove
+ivomsso | [|
+omaso |
+[Atleast 0 crits mustbecamedatumn | [1] Mwmomasr | [|
+[15 of the ino 30 credits must be earned at the 3004001evel | [1] |
+[12 upper evel major credits must be camedatumo | [1] |
+Some courses for the major may also count toward General Education
+[ovepertevercrests [ [] [reaiemens
+[ARHU 158 or equivalent (fappiicable) | [] |
+[cobat engagement | [1]

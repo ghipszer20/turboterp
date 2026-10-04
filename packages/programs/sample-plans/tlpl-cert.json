@@ -1,0 +1,14 @@
+{
+  "programId": "tlpl-cert",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/secondary-education-certificate/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this certificate. Constructed from the catalog outline: Part I (EDHD413, TLPL477, TLPL481, TLPL462), Part II social studies pair TLPL470 and TLPL471, Part III TLPL478 and TLPL489. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Part I", "courses": ["EDHD413", "TLPL477", "TLPL481", "TLPL462"] },
+    { "term": "Part II", "courses": ["TLPL470", "TLPL471"] },
+    { "term": "Part III", "courses": ["TLPL478", "TLPL489"] }
+  ]
+}

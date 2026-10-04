@@ -1,0 +1,15 @@
+{
+  "programId": "bmgt-minor-business-analytics",
+  "source": "https://rhsmith.umd.edu/programs/undergraduate/academics/academic-minors",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the requirements: BMGT110, BMGT230, MATH140 prerequisites; BMGT402, BMGT430, BMGT431; electives BMGT332 and BMGT347. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["BMGT110", "BMGT230", "MATH140"] },
+    { "term": "Term 2", "courses": ["BMGT402", "BMGT430"] },
+    { "term": "Term 3", "courses": ["BMGT431", "BMGT332"] },
+    { "term": "Term 4", "courses": ["BMGT347"] }
+  ]
+}

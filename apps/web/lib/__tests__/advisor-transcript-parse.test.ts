@@ -167,3 +167,31 @@ describe("parseTranscriptText: unparseable lines", () => {
     expect(r.unparsed).toEqual([expect.objectContaining({ raw: "??? totally garbled fragment ???" })]);
   });
 });
+
+describe("parseTranscriptText: cumulative GPA", () => {
+  const withCumulative = (line: string) => `Fall 2024\nCMSC131 OBJECT-ORIENTED PROG I A 4.00 4.00 16.00\nUG Cumulative: ${line}\n`;
+
+  it("reads the last printed cumulative GPA", () => {
+    const r = parseTranscriptText(CLEAN, "pdf");
+    expect(r.cumulativeGpa).toEqual({ value: 3.55, flagged: false, raw: "UG Cumulative: 14.00; 14.00; 49.70; 3.550" });
+  });
+
+  it("is null when no cumulative line is printed", () => {
+    expect(parseTranscriptText("Fall 2024\nCMSC131 OBJECT-ORIENTED PROG I A 4.00 4.00 16.00\n", "pdf").cumulativeGpa).toBeNull();
+  });
+
+  it("repairs OCR @ for 0 and flags it", () => {
+    const r = parseTranscriptText(withCumulative("4.00; 4.00; 16.00; 3.@5@"), "pdf");
+    expect(r.cumulativeGpa).toMatchObject({ value: 3.05, flagged: true });
+  });
+
+  it("flags every OCR-read GPA even when it needed no repair", () => {
+    expect(parseTranscriptText(withCumulative("4.00; 4.00; 16.00; 3.550"), "ocr").cumulativeGpa).toMatchObject({ value: 3.55, flagged: true });
+  });
+
+  it("rejects an impossible GPA and lists the line as unparsed", () => {
+    const r = parseTranscriptText(withCumulative("4.00; 4.00; 16.00; 35.50"), "pdf");
+    expect(r.cumulativeGpa).toBeNull();
+    expect(r.unparsed.some((u) => u.raw.includes("UG Cumulative"))).toBe(true);
+  });
+});

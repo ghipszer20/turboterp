@@ -3,7 +3,7 @@
 // set of majors. Uses small synthetic programs for the isolated rules, and the owner's real
 // Math (Applied) + CS plan for an integration check.
 
-import type { Program } from "@superterp/audit";
+import type { Program } from "@turboterp/audit";
 import { describe, expect, it } from "vitest";
 import { cmscMajor } from "../../audit/programs/cmsc-major-2026-27.ts";
 import { mathMajorApplied } from "../../audit/programs/math-major-applied-2026-27.ts";

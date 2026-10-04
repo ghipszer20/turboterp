@@ -160,23 +160,62 @@ the Student Academic Success-Degree Completion Policy section of this catalog
 
 ## Sample plan (https://drive.google.com/uc?export=download&id=1LJeussxI358rB4P4J7pbCZeQlEgE6jOv#Women,-Gender,-and-Sexuality-Studies)
 
-!"#$%&'"()
-*!"#*$%&'"()
-+
-,
--.// 0123456789:;<=>?@ABB7>C8=9D>8E FGAHIJIKL@MNOP;QRA8S:9TUVW GS<C8SXB7;9Q79=KGBMNNPS<YKPLMN LQSXZ[7\9S=>Q;Q]KL\M^;=<>8Z_B>7;SXB7;9Q79=K^BMNN ^C`SQ;[9=K^aMNNL\^aIbc d8SXU>``CQ;7S[>QKdUM@ABBeQ<8>U>C8=9 FX97[f9IggVhgg@ABB6JI ^C`SQ;[9=K^aMNN ^;=<>8Z_B>7;SXB7;9Q79=K^BMNN6S::;[>QSX789:;<=>?@ABB GS<C8SXB7;9Q79HSiKGHMNN B7Y>XS8=Y;j;Qk8S7[79KBkMlINN7>C8=9D>8E AX>iSXFQ]S]9`9Q<lI AX>iSXFQ]S]9`9Q<lm@ABB6JI @ABBH>D98H9f9XU>89FX97[f9IggVhgg FX97[f9IggVhggB7Y>XS8=Y;j;Qk8S7[79KBkMlmNN ^;=<>8Z_B>7;SXB7;9Q79=K^BMNN@ABBH>D98H9f9XFX97[f9 @ABBajj98H9f9XU>89FX97[f9IggVhgg @ABBajj98H9f9XU>89FX97[f9IggVhgg FX97[f96ggVhggFX97[f9IggVhgg FX97[f9IggVhggk8>?9==;>QSX@8;[Q]Kk@M @ABBajj98H9f9XU>89@ABBajj98H9f9XFX97[f9@ABBajj98H9f9XFX97[f9 @ABBhcnFX97[f96ggVhgg FX97[f96ggVhggFX97[f9IggVhgg FX97[f96ggVhggo><SXU89:;<=?>8p9]899TImJq6r789:;<=`C=<i96ggVhggX9f9X
-stuvwxyz{|}xvx~wvxx~zvzux{xuvxu
-stuvwxyz{|}xvx~wvxx~zztux{xuvxu 
-¡¢¢£¤¥
-¦¢§¨¢©¤¢ª««¬¢§©®¯¢©®°®«¢¤¢ª±§§¢²®³§±®£³ª¤®¥¢±´ªμ©±§«¶·μ«®¸¸¤¶¹®¯¢º«®³μ«¢¬¢³§®μ«·»»¼«§ª³±§«©ª«§¤¢©§§²¢½μ«§μ¾ª¥§ª³μ«¤¢ª««§®§®®¢³¬¢¿μÀÁª«¥¢±¤¢ª««¶Â±³«§®±³μ±ÀÃª®¢¤μ¥«®±³¡ª§ª®¡¢©§±¤¤¢ª««©®°®«¢¬ªÄ½μ«§μ¾ª¥§ª³μ«¤®§À¢μ«¶
-!"#$% &'#(!"#$%)#$*$"% &'#(+!"#$%&'#(,!"#$%-"%$"./*$"% 01!"#$%
-&"23%4#5.$6"$'-"%$"./*$"%-"/%"$57/88#"96"$'-"%$"./*$"%:&"23%;<8"="2>>87/88#"96"$'$'!"#$%:%%;*$$%#%$#""##?+,@"$%$#8$2A
-BCDEFGCHCIJKLMNOGCPFJKQNOREGKCK SREGKC SGCPFJKTGUPCBCDEFGCHCIJKLVNOGCPFJKQWOREGKCK SREGKC SGCPFJKTGUPC BCDEFGCHCIJK SGCPFJKTGUPC
-BCDEFGCHCIJKLXOGCPFJKQVOREGKCK SREGKC SGCPFJKTGUPCBCDEFGCHCIJKLYZXOGCPFJKQVOREGKCK SREGKC SGCPFJKTGUPCBCDEFGCHCIJKL[Z\OGCPFJK SREGKC SGCPFJKTGUPC
-]^_`abcdefghii^ej_d`ke_lm^na`ob^g_bpqrsmgtu_ef`ddbeqnvg_bpqrsugt ghii]wxy_nvzeoo{syzt ]naabpeqnv^_`abcdefghii^ej_d`ke_l|nc}s|mtmqnv~p^`ndeqbqrsmtncj_nvi^b`q^`nstncj_nvi^b`q^`dsitbdce_~ie^bnvi^b`q^`dsitbdce_~ie^bnvi^b`q^`dsitjonqbp`dstjonqbp`dsti^}evn_d}bbqu_n^p^`siuti^}evn_d}bbqu_n^p^`siutqeqone_brj`dpeqsitbrj`dpeqsitqa`_dcnqabqruvj_nvie^{sutqa`_dcnqabqruvj_nvie^{sutzjvcj_nvzeo`c`q^~szzt
-  ¡¢£¤¢£¥¡¢£¦£¥§¨©ª«¬«¬ª«¬ª«¬ª«£¬ª®¯£°±£²³´´ª´´£°±¡μ±²³£§¡¢μ£¡£¥§¶£·¢¸¤¢£§¢£§¢¬¯¬¹º»¼½½±£²¼³¯´´¹´´¼½½±£²¼³¯´´¹´´¼½½±£²¼³¯´´¹´´¼½½±¡μ±²¼³¯´´¹´´¼½½±¡μ±²¼³¯´´¹´´¾μ£¼£¼¯´´¹´´
-¿ÀÁÀÂÃÄÅÆÃÅÆÇÃÈÆÉÊÁÃËÉÇÇÆÌÀÍÇÆÁÆÎÏÐÁÀÐÏÑÆÃÏÂÆÃÐÏÃÒÓÔ
-ÕÕÖ×ØÙÚÛÜÝØÚÞØÙßàáàâãäßáÛåæàçÕÕÕÖèééáßêáëáìíáîÙåßáïáÚæàâðñäßáÛåæàç
-Øß
-ÕÖêØòáßêáëáìíáîÙåßáïáÚæàâóäßáÛåæàç
-ôõö÷øùúö÷öùöùú÷ ùøöôùøö÷ùù÷ùøô÷ù÷öùöùøùöùúöùø÷ùöù÷ùøööù ùöúøùø÷öùõö÷øù!"#$%&"&'%()"!*+%!*,*-&#$.((/*%01"."%*-20$#*3 .%"4$5%"!".(&6789:;<=9>?@;AB9<;C;8>=DE<F<GHBGIE8JK@L7@;AB9<;C;8>=DE<F<GHBGIE8JMNOPQRNSTUVPWXNRYZRN[PPQV\PWQN]^_`abcNdPe\QOSTUVPWXNRYZRN[PPQV\PWQNNdPSTTfgTTOPhPO`iZjjPVOPhPOYQkbVUVPWXNRYZRN[PPQV\PWQN]^_SlZjjPVOPhPOUVPWXNRMmn]`aobVPpZXhQOP\NqXcQjjOXUQ[OPrsOb[QOt\uQuPYP\N
+(OCR text; may contain recognition errors)
+Women, Gender, and Sexuality Studies Four Year Academic Plan
+I I EE
+I ee ee
+ews owconmmewon
+I =e SE
+ewes 7
+es
+I I EE
+lewesas  feeweeas
+IE FE
+I ee ee ee
+CC esewoemawe  [wosupeweor
+CC hewewan  wosupeweon
+CC ewewan  lweswae
+CC ewewaw  feeweseas
+I EE
+freemen [wesweeeme |
+I cl
+Elective
+wesw wesw
+I Tr  S CC
+CC ewewan leew
+I EE
+| [rwlCedtsforoepgee 1209 cedismustbe Bocdctevel |
++ **All students must complete two Distributive Studies courses that are approved for Big Question courses. The Understanding Plural Societies
+Women, Gender, and Sexuality Studies
+[Academic iting (AW) vin. Grose | ENGtiol | | |
+[Professional wrong PW) |||
+loralcomm. (oc) | [| [3 additional credits of WGSS coursework
+ah) || |
+[Analytic easorimg AR] | | |
+Notwrarscence song | | | |
+[Notural Sciences (v8) | | | |
+[History/Social sciences (5) | [| [Wselectone Introductory Course: LGBT200, WGsS 105,
+[History/Social Sciences (HS) | || Jl WGSS5 200, WGSS 205, WGSS 250, or WGSS 263
+Humanities) [| [| Wowerleelcorewopean | [|
+[Humanities (h) | [TW wer Level Elective (LLE) or select an additional course
+[Scholarship in Practice (sp) nommajor | | | |
+Big Question esse [|
+Normally double counted with Distributive Studies wessagy 111
+Beavesion® [| | Wopeemcemoman | | |
+Bgawesion® [|| Wieriewicoeiozom [|
+Diver [upper eve core cman | [|
+(overlap permitted with Distributive Studies and/or Big Question) [Upper Level Elective (ULE) 3ocax | | |
+[upperteve cece wie soci || |
+[Understanding Pura soe 07) ||| Waanonstvicormesmean | | |
+Understanding Purl So. (UP) o -
+ema || ||
+Experiential Learning--optional -Students must complete a minimum of 33 major credits.
+-All courses must come from the department's approved courses list or be
+submitted to the Director of Undergraduate Studies for approval.
+1 1
+© [T ]
+[res s0eegts motbecamed sro [7 |
+[Zapper evel major credits must be eamedatUMd | [1] | ome courses for the major may also count toward General Education requirements.
+EE WN
+EE Ww
+EE WN

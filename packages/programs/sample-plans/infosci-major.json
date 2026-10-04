@@ -1,0 +1,21 @@
+{
+  "programId": "infosci-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/information/information-science-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No official term-by-term 4-year plan exists in the fetched sources; constructed from the catalog tables (docs/project/owner-review.md flags this). Gen Ed slots are left out; only the major is audited.",
+    "Major electives (15 credits of INST) filled with INST364, INST366, INST414, INST447 and INST462, real INST courses not otherwise required."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["MATH115", "INST126", "INST201", "INST101"] },
+    { "term": "Freshman Spring", "courses": ["PSYC100", "STAT100"] },
+    { "term": "Sophomore Fall", "courses": ["INST311", "INST314", "INST326"] },
+    { "term": "Sophomore Spring", "courses": ["INST327", "INST352"] },
+    { "term": "Junior Fall", "courses": ["INST335", "INST346", "INST364"] },
+    { "term": "Junior Spring", "courses": ["INST362", "INST366", "INST414"] },
+    { "term": "Senior Fall", "courses": ["INST447", "INST462"] },
+    { "term": "Senior Spring", "courses": ["INST490"] }
+  ],
+  "credits": { "INST101": 1 }
+}

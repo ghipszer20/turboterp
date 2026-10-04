@@ -1,0 +1,20 @@
+{
+  "programId": "comm-usg-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/universities-shady-grove/communication/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No four-year plan in the source; CONSTRUCTED from the catalog requirements (flagged in docs/project/owner-review.md). Written as the two upper-division years of a transfer cohort; Gen Ed and transfer credit are left out.",
+    "Oral Communication filled with COMM107; Statistics with STAT100; Theory & Principles with COMM201 and COMM302; Research Methods choice with COMM305.",
+    "Leadership & Social Change filled with COMM422; Diversity & Inclusion with COMM382. Applied filled with COMM388 and COMM370 (untitled COMM420/421/436/454/455 deliberately not used).",
+    "The unnamed 3xx/4xx COMM electives filled with COMM340, COMM341, COMM351 and COMM365 (real catalog courses picked only to fill the slot)."
+  ],
+  "credits": { "COMM130": 1 },
+  "terms": [
+    { "term": "Year 3 Fall", "courses": ["COMM107", "COMM130", "STAT100"] },
+    { "term": "Year 3 Spring", "courses": ["COMM250", "COMM201", "COMM302"] },
+    { "term": "Year 4 Fall", "courses": ["COMM304", "COMM305", "COMM422"] },
+    { "term": "Year 4 Spring", "courses": ["COMM382", "COMM388", "COMM370"] },
+    { "term": "Year 4 Summer", "courses": ["COMM340", "COMM341", "COMM351", "COMM365"] }
+  ]
+}

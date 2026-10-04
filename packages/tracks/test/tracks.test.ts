@@ -2,7 +2,7 @@
 // course it names exists (test/fixtures/umd-courses.json, taken from UMD's Schedule of Classes).
 
 import { readFileSync } from "node:fs";
-import { auditProgram, type Requirement, type SetMember } from "@superterp/audit";
+import { auditProgram, type Requirement, type SetMember } from "@turboterp/audit";
 import { describe, expect, it } from "vitest";
 import { HPAO_DISCLAIMER, TRACKS, trackProgram, type Track } from "../src/index.ts";
 import known from "./fixtures/umd-courses.json" with { type: "json" };
@@ -21,7 +21,7 @@ function courseIds(req: Requirement): string[] {
     case "sets":
       return req.options.flat().flatMap(member);
     case "distribution":
-      return req.areas.flatMap((a) => a.courses);
+      return req.areas.flatMap((a) => a.courses ?? []);
     default:
       return [];
   }
@@ -52,7 +52,18 @@ const EXPECTED = [
   "pre-anesthesiologist-assistant",
   "pre-dental-hygiene",
   "pre-genetic-counseling",
+  "pre-slp",
+  "pre-art-therapy",
+  "pre-chiropractic",
+  "pre-naturopathic",
+  "pre-mls",
+  "cpa-maryland",
+  "actuarial-vee",
+  "pre-medical-physics",
 ];
+
+// Business-school credentials (and pre-law) don't use the health-professions science GPA.
+const NO_SCIENCE_GPA = ["pre-law", "pre-art-therapy", "cpa-maryland", "actuarial-vee"];
 
 describe("track definitions", () => {
   it("include every track the owner asked for", () => {
@@ -61,10 +72,11 @@ describe("track definitions", () => {
 
   // Owner ruling (Tracks, 2026-09-27): pre-law ignores science GPA (BCPM) -- only health tracks
   // show it. Flagged per track (`usesScienceGpa`), not by a hard-coded id check in the UI.
-  it("flags science GPA (BCPM) for health tracks only, not pre-law", () => {
+  it("flags science GPA (BCPM) for health tracks only, not pre-law, pre-art-therapy or the business credentials", () => {
     const preLaw = TRACKS.find((t) => t.id === "pre-law")!;
     expect(preLaw.usesScienceGpa).not.toBe(true);
-    for (const track of TRACKS.filter((t) => t.id !== "pre-law")) {
+    for (const id of NO_SCIENCE_GPA) expect(TRACKS.find((t) => t.id === id)!.usesScienceGpa, id).not.toBe(true);
+    for (const track of TRACKS.filter((t) => !NO_SCIENCE_GPA.includes(t.id))) {
       expect(track.usesScienceGpa, track.id).toBe(true);
     }
   });

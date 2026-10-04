@@ -1,0 +1,17 @@
+{
+  "programId": "educ-world-language-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/world-language-education-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no readable World Language Education 4-year plan in the fetched sources (links only). Constructed from the catalog requirement table: education pre-professional courses first, methods (Fall only) and the internship last. Only the education component is encoded, so no language courses appear; Gen Ed slots are left out. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Sophomore Fall", "courses": ["TLPL250"] },
+    { "term": "Sophomore Spring", "courses": ["EDHD413"] },
+    { "term": "Junior Fall", "courses": ["EDHD426", "TLPL442", "TLPL445"] },
+    { "term": "Junior Spring", "courses": ["TLPL477"] },
+    { "term": "Senior Fall", "courses": ["TLPL450", "TLPL479"] },
+    { "term": "Senior Spring", "courses": ["TLPL478", "TLPL489"] }
+  ]
+}

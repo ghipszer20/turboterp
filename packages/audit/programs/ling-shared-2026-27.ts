@@ -61,7 +61,5 @@ export const lingCommonReviewNotes: string[] = [
     "the audit engine's own course-to-requirement assignment (a course is assigned to at most one " +
     "requirement, absent an explicit `overlay`), so no separate encoding is needed for the Core's " +
     "overlapping 3xx-4xx LING pools (select-two list vs. the generic three-elective pool).",
-  "Not encoded (engine gap, matches other ARHU majors' precedent): the 2.0 GPA-in-the-major " +
-    "requirement (distinct from the per-course C- floor, which IS encoded via `minGrade`); " +
-    "residency rules; and the 120-credit graduation minimum.",
+  "Not encoded (engine gap, matches other ARHU majors' precedent): residency rules; and the 120-credit graduation minimum.",
 ];

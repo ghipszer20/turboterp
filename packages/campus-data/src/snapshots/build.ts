@@ -1,7 +1,7 @@
 // The snapshot jobs (how they're scheduled: ../../SNAPSHOTS.md).
 //
 //   buildSnapshots  daily, ~5am   room catalog, room availability, today's menus,
-//                                 library hours, RecWell hours, Shuttle-UM GTFS
+//                                 library hours, RecWell hours, Shuttle-UM GTFS, academic calendar
 //   refreshFast     every ~5 min  room availability; menus once they're 30 min old
 //
 // A source that fails never overwrites its last good snapshot: the error goes
@@ -12,6 +12,7 @@ import { fetchBuildings, type Building } from "../buildings.ts";
 import { addDays, campusDate } from "../dates.ts";
 import { DINING_HALLS, fetchDiningMenu, type DiningMenu } from "../dining.ts";
 import { parseGtfs, SHUTTLE_UM_GTFS_URL, unzipGtfs } from "../buses.ts";
+import { fetchAcademicCalendar, type AcademicEvent } from "../calendar.ts";
 import { fetchBytes } from "../http.ts";
 import { fetchLibraryHours, type LibraryHours } from "../libraries.ts";
 import { fetchRecWellAreas, recWellWindow, type RecWellArea } from "../recwell.ts";
@@ -38,6 +39,8 @@ export type CampusSources = {
   shuttleGtfs(): Promise<Record<string, string>>;
   /** UMD building locations, for the trip planner's place search. */
   buildings(): Promise<Building[]>;
+  /** Key registrar dates for the current and next terms. */
+  academicCalendar(): Promise<AcademicEvent[]>;
 };
 
 export const liveSources: CampusSources = {
@@ -49,6 +52,7 @@ export const liveSources: CampusSources = {
   recWellAreas: fetchRecWellAreas,
   shuttleGtfs: async () => unzipGtfs(await fetchBytes("buses", SHUTTLE_UM_GTFS_URL)),
   buildings: fetchBuildings,
+  academicCalendar: fetchAcademicCalendar,
 };
 
 export const snapshotKeys = {
@@ -60,6 +64,7 @@ export const snapshotKeys = {
   recWellAreas: "recwell/areas",
   shuttleGtfs: "buses/gtfs",
   buildings: "buildings",
+  academicCalendar: "calendar/academic",
   /** The last attempt to refresh a snapshot key. */
   status: (key: string) => `status/${key}`,
 } as const;
@@ -161,6 +166,11 @@ export async function buildSnapshots(
       return files;
     }),
     refresh(store, now, snapshotKeys.buildings, () => sources.buildings()),
+    refresh(store, now, snapshotKeys.academicCalendar, async () => {
+      const events = await sources.academicCalendar();
+      if (events.length === 0) throw new Error("academic calendar came back empty");
+      return events;
+    }),
   ]);
   await pruneSnapshots(store, now);
   return report(results.flat());

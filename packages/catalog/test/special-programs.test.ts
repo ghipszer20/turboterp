@@ -4,7 +4,7 @@
 
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import type { CourseFilter, Program, Requirement } from "@superterp/audit";
+import type { CourseFilter, Program, Requirement } from "@turboterp/audit";
 import { specialPrograms } from "../special-programs/registry.ts";
 
 const COURSE = /^[A-Z]{4}\d{3}[A-Z]?$/;
@@ -21,7 +21,7 @@ function codes(r: Requirement): { courses: string[]; departments: string[] } {
     case "choose":
       return { courses: [...filterCodes(r.from).courses, ...(r.alternatives ?? []).flat()], departments: filterCodes(r.from).departments };
     case "distribution":
-      return { courses: r.areas.flatMap((a) => a.courses), departments: [] };
+      return { courses: r.areas.flatMap((a) => a.courses ?? []), departments: [] };
     case "concentration":
       return { courses: [], departments: r.excludeDepartments ?? [] };
     case "sets": {
@@ -32,6 +32,8 @@ function codes(r: Requirement): { courses: string[]; departments: string[] } {
         departments: filters.flatMap((f) => f.departments),
       };
     }
+    case "openSlot":
+      return { courses: [], departments: [] };
   }
 }
 

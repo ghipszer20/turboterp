@@ -1,0 +1,14 @@
+{
+  "programId": "pwrt-minor",
+  "source": "https://english.umd.edu/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no sample plan for this minor. Built from the catalog: ENGL297 plus four approved 3xx/4xx-level courses (ENGL393, ENGL394, ENGL388, ENGL390 are examples; the approved list is not in the source and the 12 credits are an open slot). Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Term 1", "courses": ["ENGL297", "ENGL393"] },
+    { "term": "Term 2", "courses": ["ENGL394", "ENGL388"] },
+    { "term": "Term 3", "courses": ["ENGL390"] }
+  ]
+}

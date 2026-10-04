@@ -22,7 +22,7 @@ export const physMajorEducation: Program = {
     "The 'Introductory Education Courses' rows are named slightly differently between sources -- catalog: 'TLPL101 Inquiry Approach to Teaching STEM (Step 1)' and 'TLPL102 Inquiry Teaching of STEM in Middle School'; department page: 'TLPL101 Inquiry Teaching of STEM in Elementary School' and 'TLPL102 Inquiry Teaching of STEM in Middle School'. Same course codes and credits, not a real disagreement; the department page's titles are used.",
     "Math methods is a `sets` choice per both sources: MATH243, or MATH240 + MATH246, same as the Physics specialization.",
     "'One of PHYS401, PHYS404, PHYS410, PHYS413' (3-4 credits) is encoded as a `choose` of 1 from those four courses, per both sources.",
-    "The department page's footnote on PHYS375 ('may be replaced by an additional, non-seminar, 400-level approved Physics course of 3-4 credits not being used to satisfy another requirement') is not encoded (engine gap -- an open-ended, advisor-approved substitution, not a fixed course list); PHYS375 is required as named. Not a disagreement with the catalog, which doesn't mention the substitution at all.",
+    "The department page's footnote on PHYS375 ('may be replaced by an additional, non-seminar, 400-level approved Physics course of 3-4 credits not being used to satisfy another requirement') is not encoded (engine gap -- an open-ended, advisor-approved substitution, not a fixed course list); PHYS375 is required as named, and the phys375 requirement is marked advisorMayApprove. Not a disagreement with the catalog, which doesn't mention the substitution at all.",
     "The single 'PHYS4XY Advanced Physics Elective' slot is encoded as a `choose` pool of 1 course from any 400-level PHYS course not already required by name in this track (including the four courses in the 'one of' choice above, matching how the Physics specialization excludes its own named upper-level PHYS courses from its elective pool).",
     "Not encoded (flagged in docs/project/owner-review.md): the College of Education's Secondary Education Program admission requirement for students who also want a teaching certificate, and any GPA/residency rule beyond the university-wide C- minimum (already set as minGrade) -- neither source states a program-specific rule the engine could check.",
     "No official sample graduation plan was found for this specialization in the fetched sources (program-sources/physics-major.md); the CMNS four-year-plans page only links out to the department's Physics page, not a per-specialization plan. The sample plan fixture is constructed from these requirements, `official: false`, and flagged in docs/project/owner-review.md.",
@@ -47,7 +47,7 @@ export const physMajorEducation: Program = {
     { kind: "course", id: "tlpl415", name: "Perspectives in Science", options: ["TLPL415"] },
     { kind: "course", id: "phys313", name: "Electricity and Magnetism I", options: ["PHYS313"] },
     { kind: "course", id: "phys371", name: "Modern Physics", options: ["PHYS371"] },
-    { kind: "course", id: "phys375", name: "Experimental Physics III: Waves, Optics and Modern Physics", options: ["PHYS375"] },
+    { kind: "course", id: "phys375", advisorMayApprove: true, name: "Experimental Physics III: Waves, Optics and Modern Physics", options: ["PHYS375"] },
     {
       kind: "choose",
       id: "advanced-support",

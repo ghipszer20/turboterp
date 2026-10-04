@@ -1,7 +1,7 @@
 // A Requirement in plain language: "One of: CMSC131, CMSC133", "Choose 2 of: …,
 // at most one of CMSC460 / CMSC466". Framework-free.
 
-import type { CourseFilter, Requirement, SetMember } from "@superterp/audit";
+import type { CourseFilter, Requirement, SetMember } from "@turboterp/audit";
 
 export type Described = {
   /** The rule in one line. */
@@ -59,7 +59,7 @@ function describeRule(r: Requirement): Pick<Described, "text" | "details"> {
       const cap = r.maxPerArea < r.count ? `, at most ${r.maxPerArea} per area` : "";
       return {
         text: `${plural(r.count, "course")} from at least ${plural(r.minAreas, "area")}${cap}`,
-        details: r.areas.map((a) => `${a.name}: ${list(a.courses)}`),
+        details: r.areas.map((a) => `${a.name}: ${[...(a.courses?.length ? [list(a.courses)] : []), ...(a.from ? [describeFilter(a.from)] : [])].join("; ")}`),
       };
     }
     case "concentration": {
@@ -73,6 +73,10 @@ function describeRule(r: Requirement): Pick<Described, "text" | "details"> {
         text: count === 1 ? "One of these sets:" : `${count} of these sets:`,
         details: r.options.map((set) => set.map(member).join(" + ")),
       };
+    }
+    case "openSlot": {
+      const amount = r.credits !== undefined ? `${r.credits} credits` : "Courses";
+      return { text: `${amount} from an approved list that isn't published: confirm with your advisor`, details: r.note ? [r.note] : [] };
     }
   }
 }

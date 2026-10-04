@@ -1,0 +1,21 @@
+{
+  "programId": "arch-major-bs",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/architecture-planning-preservation/architecture-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "No readable official 4-year plan (the department page only links to PDFs). CONSTRUCTED from the catalog's BS requirement tables; term placement is illustrative. Flagged in docs/project/owner-review.md. Gen Ed slots left out.",
+    "Calculus filled with MATH140 (named in the catalog). ARCH4XX (12 credits) filled with ARCH418, ARCH420, ARCH422 and ARCH423, real ARCH 4xx courses named in the Academic Catalog's minor requirement lists. ARCH474 and the studios carry the catalog's stated credits."
+  ],
+  "credits": { "ARCH201": 1, "ARCH400": 6, "ARCH401": 6, "ARCH402": 6, "ARCH403": 6, "ARCH474": 1, "UNIV100": 1 },
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["ARCH171", "MATH140", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["ARCH200", "ARCH225", "PHYS121"] },
+    { "term": "Sophomore Fall", "courses": ["ARCH226", "ARCH300", "ARCH201"] },
+    { "term": "Sophomore Spring", "courses": ["ARCH400", "ARCH462"] },
+    { "term": "Junior Fall", "courses": ["ARCH401", "ARCH463", "ARCH464"] },
+    { "term": "Junior Spring", "courses": ["ARCH402", "ARCH465", "ARCH418"] },
+    { "term": "Senior Fall", "courses": ["ARCH403", "ARCH466", "ARCH474", "ARCH420"] },
+    { "term": "Senior Spring", "courses": ["ARCH422", "ARCH423"] }
+  ]
+}

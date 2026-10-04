@@ -4,13 +4,13 @@
   "fetched": "2026-09-28",
   "official": false,
   "notes": [
-    "No usable 4-year plan exists: the College's official Critical Studies four-year plan PDF (https://drive.google.com/uc?export=download&id=1B9ifEzSZ_rtJDP-6P0b5_D-AiNAAEmrw) converted to fully garbled, symbol-substituted text with no legible course codes, term headers, or other course-level signal anywhere in it -- there was nothing legible to place courses by. This plan is CONSTRUCTED from the catalog's own requirement structure and its own prerequisite note instead (docs/project/owner-review.md flags this). Gen Ed courses are left out; only the major is audited.",
+    "CONSTRUCTED: the College's official Critical Studies four-year plan is available only as OCR text, which is still too garbled to read term placement (only rubric labels such as CINE Genres/Auteurs/Movements and National & International Cinemas are legible, without course codes). Built from the catalog's own requirement structure and prerequisite note instead. Gen Ed courses are left out; only the major is audited.",
     "Program Core's four rubric slots (Film Theories; Documentary/Animation/Experimental/Other Visual Media; National/International Cinemas; Genres/Auteurs/Movements) filled with CINE329, CINE331, CINE332, CINE334 -- real, currently-approved CINE courses picked only to fill the count/level requirement (no rubric-to-course list exists in any fetched source; see the program's reviewNotes).",
     "Critical Studies Track's two additional Genres/Auteurs/Movements and National/International Cinemas picks filled with CINE335 and CINE336 for the same reason.",
     "Four Cinema and Media Studies Electives filled with CINE280 and CINE282 (the plan's two 200-level picks, allowed by footnote 4) plus CINE337 and CINE341."
   ],
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["CINE245"] },
+    { "term": "Year 1 Fall", "courses": ["CINE245", "ARHU158"] },
     { "term": "Year 1 Spring", "courses": ["CINE301", "CINE302"] },
     { "term": "Year 2 Fall", "courses": ["CINE329", "CINE331"] },
     { "term": "Year 2 Spring", "courses": ["CINE332", "CINE334"] },

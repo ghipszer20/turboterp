@@ -32,6 +32,7 @@ export const lingMajorLanguage: Program = {
     "https://drive.google.com/uc?export=download&id=1N4Sf-yodBQvBImqf8enLGN1g3ookBpCy#Music-Education---Language " +
     "(fetched 2026-09-28)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     "Track: '12 credits of a single chosen language' names no department list (see LANGUAGE_DEPTS " +

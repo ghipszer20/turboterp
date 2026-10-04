@@ -26,9 +26,9 @@ export const physicsMinor: Program = {
     "PHYS265 substitutes named by the catalog (AOSC247, CMSC106, CMSC131, ENAE202) are included as options on that requirement.",
     "'PHYS260 (with a B- or higher) substitutes for PHYS272' -- the B- floor can't be set for just one option among a requirement's options (Program.minGrade / Requirement.minGrade apply to the whole requirement); PHYS260 is accepted at the Program's own C- floor instead, and the extra grade condition is a manual check.",
     "'PHYS371 or PHYS420' is one row on the catalog's table (an either/or alternative between two differently-titled courses, not a cross-list), encoded as an alternatives pair so taking both counts once toward the 3 electives.",
-    "'Other upper-level Physics courses can be substituted only with Associate Chair and Minor Advisor approval' isn't encoded (open-ended, approval-gated).",
+    "'Other upper-level Physics courses can be substituted only with Associate Chair and Minor Advisor approval' isn't encoded as a course list (open-ended, approval-gated); the electives requirement is marked advisorMayApprove.",
     "'No more than 7 credits in this minor can count toward major requirements' -> maxSharedWith: [{ credits: 7 }].",
-    "'Physics majors and students majoring in Astronomy are not eligible to complete the Physics Minor': an eligibility gate, not enforced (no declared-major concept in the engine).",
+    "'Physics majors and students majoring in Astronomy are not eligible to complete the Physics Minor': Enforced via notOpenTo.",
     "Prerequisites (MATH140, MATH141, MATH241, MATH243 or (MATH240 and MATH246), PHYS171) are background expected before the minor's own courses, not minor requirements themselves; not encoded.",
   ],
   requirements: [
@@ -39,6 +39,7 @@ export const physicsMinor: Program = {
     {
       kind: "choose",
       id: "electives",
+      advisorMayApprove: true,
       name: "Upper-level electives",
       count: 3,
       from: {
@@ -52,4 +53,4 @@ export const physicsMinor: Program = {
   ],
 };
 
-export const physicsMinorMeta: ProgramMeta = { kind: "minor", college: "CMNS", sources: { catalog: "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/physics/physics-minor/", department: "https://www.umdphysics.umd.edu/academics/undergraduate/ugrad-requirements.html" } };
+export const physicsMinorMeta: ProgramMeta = { kind: "minor", notOpenTo: { programs: ["phys", "astr"], reason: "Not open to Physics or Astronomy majors." }, college: "CMNS", sources: { catalog: "https://academiccatalog.umd.edu/undergraduate/colleges-schools/computer-mathematical-natural-sciences/physics/physics-minor/", department: "https://www.umdphysics.umd.edu/academics/undergraduate/ugrad-requirements.html" } };

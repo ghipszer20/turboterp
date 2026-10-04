@@ -25,6 +25,7 @@ export const arecMajorEnvironmentalResourceEcon: Program = {
     "https://academiccatalog.umd.edu/undergraduate/colleges-schools/agriculture-natural-resources/agricultural-resource-economics/agricultural-resource-economics-major/ " +
     "(fetched 2026-09-28); no department page found (see program-sources/agricultural-resource-economics-major.md)",
   minGrade: "C-",
+  minGpa: 2.0,
   verified: false,
   reviewNotes: [
     ...arecCommonReviewNotes,

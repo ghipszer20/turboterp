@@ -9,15 +9,9 @@
     "The 'ENEE304 or ENEE322', 'ENEE324 or STAT400' and 'CMSC412 or ENEE447' choices are each filled with the option printed first on the plan.",
     "The generic Technical Elective slots (Category A x2, B, C x2, D, E, F, and the Additional elective, totaling 26 credits) are filled with: Category A = MATH401, MATH402; Category B = CMSC420; Category C = ENEE420, ENEE425; Category D = ENEE445; Category E = CMSC435; Category F = MATH403; Additional = ENEE460. Any courses meeting each category's own minimum credits would satisfy the requirement equally."
   ],
-  "credits": {
-    "MATH140": 4, "MATH141": 4,
-    "CMSC131": 4, "CMSC132": 4, "CMSC216": 4, "CMSC250": 4, "CMSC412": 4,
-    "ENEE205": 4, "ENEE222": 4, "ENEE290": 4,
-    "ENEE245": 2, "ENEE445": 2,
-    "PHYS261": 1
-  },
+  "credits": { "MATH140": 4, "MATH141": 4, "CMSC131": 4, "CMSC132": 4, "CMSC216": 4, "CMSC250": 4, "CMSC412": 4, "ENEE205": 4, "ENEE222": 4, "ENEE290": 4, "ENEE245": 2, "ENEE445": 2, "PHYS261": 1, "UNIV100": 1 },
   "terms": [
-    { "term": "Year 1 Fall", "courses": ["CHEM135", "CMSC131", "ENEE101", "MATH140"] },
+    { "term": "Year 1 Fall", "courses": ["CHEM135", "CMSC131", "ENEE101", "MATH140", "UNIV100"] },
     { "term": "Year 1 Spring", "courses": ["ENES100", "CMSC132", "PHYS161", "MATH141"] },
     { "term": "Year 2 Fall", "courses": ["ENEE244", "ENEE290", "PHYS260", "PHYS261", "CMSC250"] },
     { "term": "Year 2 Spring", "courses": ["ENEE222", "ENEE205", "CMSC216", "ENEE245"] },

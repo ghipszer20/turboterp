@@ -1,5 +1,5 @@
 // Pure display helpers for the What-if tab (WhatIfView.tsx). Type-only imports from
-// @superterp/audit and @superterp/plan/what-if only -- like what-if.ts, this must never
+// @turboterp/audit and @turboterp/plan/what-if only -- like what-if.ts, this must never
 // value-import either (both pull HiGHS in transitively), so WhatIfView.tsx can keep importing
 // this file at the top while still loading the comparison itself with import().
 //
@@ -8,8 +8,8 @@
 // the new major, and the internal-transfer requirements (gateway courses and GPA) for
 // limited-enrollment majors."
 
-import type { GatewayRule } from "@superterp/audit";
-import type { CourseWhatIf } from "@superterp/plan/what-if";
+import type { GatewayRule } from "@turboterp/audit";
+import type { CourseWhatIf } from "@turboterp/plan/what-if";
 import { PROGRAM_OPTIONS } from "./programs";
 
 /** The gateway rule's grade and GPA minimums in one sentence (matches AuditView's wording for the
@@ -58,8 +58,8 @@ export type CompletedCreditTotals = { counts: number; elective: number; unused: 
  * prior credit "completed" status too) would apply under the proposed majors: how many count
  * toward a requirement, become electives, or go unused. Not-yet-taken (planned) courses are
  * excluded; those aren't "existing credits" yet. A completed course that earns no credit (F or W --
- * see @superterp/audit's earnsCredit, mirrored on CourseWhatIf.earnsCredit since this file can't
- * value-import @superterp/audit) contributes to none of the three totals.
+ * see @turboterp/audit's earnsCredit, mirrored on CourseWhatIf.earnsCredit since this file can't
+ * value-import @turboterp/audit) contributes to none of the three totals.
  */
 export function completedCreditTotals(courses: CourseWhatIf[]): CompletedCreditTotals {
   const totals: CompletedCreditTotals = { counts: 0, elective: 0, unused: 0 };

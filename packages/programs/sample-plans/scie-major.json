@@ -1,0 +1,20 @@
+{
+  "programId": "scie-major",
+  "source": "https://academiccatalog.umd.edu/undergraduate/colleges-schools/education/teaching-learning-policy-leadership/science-education-major/",
+  "fetched": "2026-09-28",
+  "official": false,
+  "notes": [
+    "UMD publishes no readable Secondary Education - Science 4-year plan in the fetched sources (per-area plans are only linked). Constructed from the catalog table: TLPL101/102 early, pre-professional courses next, TLPL401 before the professional application, the fall senior TLPL425 and the yearlong internship last. Only the 41-credit education component is planned; the content-area major and Gen Ed are left out. Flagged in docs/project/owner-review.md."
+  ],
+  "terms": [
+    { "term": "Freshman Fall", "courses": ["TLPL101", "UNIV100"] },
+    { "term": "Freshman Spring", "courses": ["TLPL102"] },
+    { "term": "Sophomore Fall", "courses": ["TLPL250", "TLPL414"] },
+    { "term": "Sophomore Spring", "courses": ["TLPL415", "EDHD426"] },
+    { "term": "Junior Fall", "courses": ["TLPL401", "BSCI348"] },
+    { "term": "Junior Spring", "courses": ["TLPL488", "TLPL479"] },
+    { "term": "Senior Fall", "courses": ["TLPL425", "TLPL478"] },
+    { "term": "Senior Spring", "courses": ["TLPL489"] }
+  ],
+  "credits": { "UNIV100": 1 }
+}
