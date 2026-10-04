@@ -1,11 +1,11 @@
 <!doctype html>
 <meta charset="utf-8">
-<title>TurboTerp logo options, round 5</title>
+<title>TurboTerp logo options, round 6</title>
 <style>
   body { font: 15px/1.4 -apple-system, system-ui, "Segoe UI", sans-serif; margin: 0; background: #f5f5f7; color: #1d1d1f; }
   h1 { font-size: 22px; margin: 20px 24px 4px; }
   p { margin: 0 24px 14px; color: #6e6e73; }
-  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; padding: 0 24px 24px; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 0 24px 24px; }
   .opt { border-radius: 18px; overflow: hidden; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
   .opt h2 { font-size: 16px; margin: 0; padding: 14px 18px 0; }
   .opt small { display: block; padding: 2px 18px 10px; color: #6e6e73; min-height: 38px; }
@@ -15,8 +15,8 @@
   .word { font: 700 20px/1 ui-rounded, "SF Pro Rounded", system-ui, sans-serif; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; margin-left: auto; }
   .word span { color: #BA0C2F; } .dark .word span { color: #ff4d6a; }
 </style>
-<h1>TurboTerp logo options, round 5</h1>
-<p>A real diamondback shell: the plates (scutes) laid out as on the animal, each with its concentric growth rings. Plain legs. White on the original red (#BA0C2F).</p>
+<h1>TurboTerp logo options, round 6</h1>
+<p>Option L with the rim band removed: the ringed plates now run out to the edge of the shell, with only a thin white outline around them. Shown with a simpler version for tiny sizes.</p>
 <div class="grid" id="grid"></div>
 <script>
 const R = '#BA0C2F';
@@ -50,23 +50,23 @@ const body = `<g fill="#fff">
   <path d="${SHELL}"/>
 </g>`;
 const V = [
-  [[59,40],[69,40],[75,46],[70.5,52],[57.5,52],[53,46]],
+  [[59,37.5],[69,37.5],[75,46],[70.5,52],[57.5,52],[53,46]],
   [[57.5,52],[70.5,52],[75.5,58],[70.5,64],[57.5,64],[52.5,58]],
   [[57.5,64],[70.5,64],[75.5,70],[70.5,76],[57.5,76],[52.5,70]],
   [[57.5,76],[70.5,76],[75.5,82],[70.5,88],[57.5,88],[52.5,82]],
-  [[57.5,88],[70.5,88],[74,93],[67,98.5],[61,98.5],[54,93]],
+  [[57.5,88],[70.5,88],[74,93],[67,100.5],[61,100.5],[54,93]],
 ];
 const CL = [
-  [[59,40],[53,46],[57.5,52],[52.5,58],[39.5,57],[46,45.5]],
-  [[52.5,58],[57.5,64],[52.5,70],[37.5,70],[39.5,57]],
-  [[52.5,70],[57.5,76],[52.5,82],[40,83],[37.5,70]],
-  [[52.5,82],[57.5,88],[54,93],[61,98.5],[47.5,93.5],[40,83]],
+  [[59,37.5],[53,46],[57.5,52],[52.5,58],[38.5,55],[47.5,42]],
+  [[52.5,58],[57.5,64],[52.5,70],[35,70],[38.5,55]],
+  [[52.5,70],[57.5,76],[52.5,82],[37.5,85],[35,70]],
+  [[52.5,82],[57.5,88],[54,93],[61,100.5],[48,96.5],[37.5,85]],
 ];
 const flip = (p) => p.map(([x, y]) => [128 - x, y]);
 const C = [...CL, ...CL.map(flip)];
 const rimTicks = `<path d="${mirror('').length ? '' : ''}M64 40V33M64 98.500V105" fill="none" stroke="${R}" stroke-width="1.500"/>` +
   `<g fill="none" stroke="${R}" stroke-width="1.500">${mirror(`<path d="M46 45.500 41 40M39.500 57 33 55M37.500 70 31 70.500M40 83 34 86.500M47.500 93.500 43.500 99M52 42.300 49.500 36.500M42.300 51 36.500 47.500M38.200 63.500 31.500 62.500M38.300 76.500 32 78.500M43.300 88.500 38.500 93M54 96.300 52 102.500"/>`)}</g>`;
-const above = (rings, dot) => body + clipped(plates(V, rings, 1.700, 1.100, dot) + plates(C, rings, 1.700, 1.100, dot) + rimTicks, SHELL);
+const above = (rings, dot) => body + clipped(plates(V, rings, 1.700, 1.100, dot) + plates(C, rings, 1.700, 1.100, dot), SHELL);
 
 // ---- Side view, striding ----
 const S_SHELL = "M18 76C22 58 44 46 68 47c22 1 38 13 38 27-26 9-62 10-88 2z";
@@ -96,9 +96,8 @@ function sideView(rings, dot) {
 }
 
 const options = [
-  ["L. From above, ringed plates", "Full shell: 5 spine plates, 4 on each side and the rim, each with growth rings.", () => above([0.62], 0.26)],
-  ["M. From above, plates only", "The same shell without the rings: cleaner when small.", () => above([], 0)],
-  ["N. Striding, ringed plates", "Side view mid-step, with the side plates, rim and rings.", () => sideView([0.6], 0.24)],
+  ["L. Ringed plates, no rim", "For the app icon and anywhere the logo is shown large.", () => above([0.62], 0.26)],
+  ["L (small). Plates only", "Same shell without rings, for the browser tab and other tiny sizes.", () => above([], 0)],
 ];
 const img = (svg, px) => `<img width="${px}" height="${px}" alt="" src="data:image/svg+xml;utf8,${encodeURIComponent(svg)}">`;
 document.getElementById('grid').innerHTML = options.map(([name, note, make]) => {
