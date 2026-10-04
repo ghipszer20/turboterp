@@ -1,7 +1,7 @@
 # SuperTerp — Project Memory
 
 > Single source of truth for project context. Update this file whenever a decision changes.
-> Last updated: 2026-10-02 (snapshot retries, advisor-approval note).
+> Last updated: 2026-10-04 (advisor-approval flags applied, schedule screenshots).
 > Read by the main session at the start of every session (builders don't read it; CLAUDE.md), so keep it under ~20 KB (section 18).
 
 ## 1. Vision
@@ -98,7 +98,7 @@ Moved to `docs/project/legal.md`. Read it before building the disclaimer, accoun
 - **Built** (full list in `docs/project/built.md`; all unverified by the owner unless noted): About page; Campus tab (dining, libraries, study rooms, gyms, Transport map + trip planner); Schedule builder linked to the 4-year plan; Advisor tab (disclaimer, setup, credit caps, What-if, AP/IB credit, plan grid, checks, audit, transcript import, grad courses, 22 pre-professional tracks, college intro layer, 4-year plan export PDF/Excel); ~417 programs in the registry. Logged skips: AI major (unpublished), Individual Studies, Global Studies (umbrella).
 - **Done 2026-09-29 (owner-notes session; detail in the status log):** UI review folder (`npm run ui-gallery -w @superterp/web` → gitignored `ui-review/`); workload-based semester difficulty; takeout replaced by a plain plan export; overlaps block saving (no conflict styling); color-only gallery blocks + gallery walk line; phone Advisor header; "Why import?" note; college intro courses (audit layer for CMNS/ARHU/SPHL, first fall of major plans, `entry` + transfer checkbox); new-tracks research (`docs/project/new-tracks-research.md`).
 - **Done 2026-10-02 (main session):** snapshot script retries and refuses to save a partial term; `Requirement.advisorMayApprove` shows "other courses may count with advisor approval" on unmet audit rows (applied to `agst-minor` only); stale roadmap to-dos removed.
-- **Next:** Wave 4 (deployment) once the owner creates Vercel and Supabase accounts. Meanwhile: screenshots of the overlap note and gallery walk line for approval. 22 tracks now (8 added 2026-09-29, all unverified; owner-review lists the numbers to confirm). Reuse `.claude/worktrees/merge-s1` for merges.
+- **Next:** Wave 4 (deployment) once the owner creates Vercel and Supabase accounts. Nothing else is queued that does not need the owner. 22 tracks now (8 added 2026-09-29, all unverified; owner-review lists the numbers to confirm). Reuse `.claude/worktrees/merge-s1` for merges.
 - **Waiting on the owner:** see `docs/project/owner-review.md` (include it in every progress report; add new items there).
 - **Known to-dos:** see `docs/project/roadmap.md` "Known to-dos" (add new ones there).
 

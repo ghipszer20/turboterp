@@ -15,8 +15,11 @@ export const saveBlockedBy = (sections: Section[]): [string, string][] => confli
 export const overlapNote = (pairs: [string, string][]): string =>
   `${pairs.map(([a, b]) => `${a} and ${b}`).join("; ")} overlap. Saving as a Plan is blocked until the overlap is fixed.`;
 
-/** One short line for the first tight walk in a layout, or null. "Tight walk: ~12 min, CMSC131 → MATH141 on Mon". */
+/**
+ * One short line for the first tight walk in a layout, or null. "Tight walk Mon: ~12 min, CMSC131 → MATH141".
+ * A gallery card shows it on a single line, so the day comes first and only the end can be cut off.
+ */
 export function tightWalkLine(sections: Section[], buildings: readonly Building[]): string | null {
   const w = dayWalks(sections, buildings).find((x) => x.tight);
-  return w ? `Tight walk: ~${w.minutes} min, ${w.fromCourse} → ${w.toCourse} on ${DAY_NAMES[w.day]}` : null;
+  return w ? `Tight walk ${DAY_NAMES[w.day]}: ~${w.minutes} min, ${w.fromCourse} → ${w.toCourse}` : null;
 }

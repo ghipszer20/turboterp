@@ -59,7 +59,11 @@ const Card = memo(function Card({
     <>
       <WeekCalendar size={size} scale={data.scale} items={items} height={size === "mini" ? MINI_COL : ZOOM_COL} days={days} />
       <TeacherStrip picks={picks} groups={groups} courseIds={data.courseIds} ratings={data.ratings} gpas={data.gpas} size={size} />
-      {walk ? <p className={styles.cardWalk}>{walk}</p> : null}
+      {walk ? (
+        <p className={styles.cardWalk} title={walk}>
+          {walk}
+        </p>
+      ) : null}
     </>
   );
 });

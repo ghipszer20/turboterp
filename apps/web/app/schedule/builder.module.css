@@ -821,4 +821,8 @@
   color: var(--muted);
   font: var(--t-foot);
   line-height: 1.2;
+  /* The card's height allows one line: never wrap into the clipped area. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

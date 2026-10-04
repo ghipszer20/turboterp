@@ -34,8 +34,8 @@ describe("tightWalkLine", () => {
   it("is null with no tight walk", () => {
     expect(tightWalkLine([sec("A100", ["M"], 600, 650), sec("B100", ["M"], 700, 750, "MCK")], buildings)).toBeNull();
   });
-  it("names the first tight walk", () => {
+  it("names the first tight walk, day first so a narrow card cuts off the least", () => {
     const line = tightWalkLine([sec("A100", ["M"], 600, 650), sec("B100", ["M"], 655, 700, "MCK")], buildings);
-    expect(line).toMatch(/^Tight walk: ~\d+ min, A100 → B100 on Mon$/);
+    expect(line).toMatch(/^Tight walk Mon: ~\d+ min, A100 → B100$/);
   });
 });
