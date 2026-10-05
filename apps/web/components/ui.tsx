@@ -11,7 +11,11 @@ export function Page({ title, subtitle, children }: { title: string; subtitle?: 
         <h1 className={styles.largeTitle}>{title}</h1>
       </header>
       {children}
-      <p className={styles.disclaimer}>Unofficial. Not affiliated with the University of Maryland.</p>
+      <p className={styles.disclaimer}>
+        Unofficial. Not affiliated with the University of Maryland.
+        <br />
+        <Link href="/terms">Terms of Use</Link> · <Link href="/privacy">Privacy Policy</Link>
+      </p>
     </main>
   );
 }

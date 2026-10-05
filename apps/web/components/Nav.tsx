@@ -21,6 +21,13 @@ const INFO_LINKS = [
   { href: "/support", label: "Support", aria: "Support TurboTerp", Icon: HeartIcon },
 ] as const;
 
+// Terms and Privacy sit under them in the sidebar. Phones have no room for two more icons in
+// the top bar, so there the links are in the line at the foot of every page (ui.tsx).
+const LEGAL_LINKS = [
+  { href: "/terms", label: "Terms of Use" },
+  { href: "/privacy", label: "Privacy Policy" },
+] as const;
+
 function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
@@ -79,7 +86,7 @@ export function Nav() {
           })}
         </ul>
         <div className={styles.infoLinks}>
-          {INFO_LINKS.map(({ href, label }) => (
+          {[...INFO_LINKS, ...LEGAL_LINKS].map(({ href, label }) => (
             <Link
               key={href}
               href={href}
@@ -94,10 +101,7 @@ export function Nav() {
         <div className={styles.appearance}>
           <ThemeToggle />
         </div>
-        <p className={styles.fine}>
-          Unofficial. Not affiliated with the University of Maryland. <Link href="/terms">Terms</Link> ·{" "}
-          <Link href="/privacy">Privacy</Link>
-        </p>
+        <p className={styles.fine}>Unofficial. Not affiliated with the University of Maryland.</p>
       </nav>
     </>
   );
