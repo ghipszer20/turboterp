@@ -11,7 +11,8 @@
     "./schedules": "./src/schedules.ts",
     "./sort": "./src/sort.ts",
     "./explain": "./src/explain.ts",
-    "./schedule-files": "./src/schedule-files.ts"
+    "./schedule-files": "./src/schedule-files.ts",
+    "./soc-refresh": "./src/soc-refresh.ts"
   },
   "scripts": {
     "test": "vitest run",
