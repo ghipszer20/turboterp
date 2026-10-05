@@ -30,7 +30,7 @@ Follow `docs/project/program-batches.md` (read it once).
 ## Working style
 - The harness (`sample-plans.test.ts`, `registry.test.ts`, `registry-generated.test.ts`, `course-sets.test.ts`) is the test for program data; write tests first for any logic you add.
 - Quiet output: iterate with `npm test -w @turboterp/programs -- --reporter=dot 2>&1 | tail -n 30`. At the end run the full `npm test`, `npm run typecheck`, `npm run lint`, `npm run build` once each (through `tail -n 30`); report pass/fail and failures only.
-- Navigate with the graph, not by exploring: `graphify query "<question>" --graph C:/Users/24GHi/Code/SuperTerp/graphify-out/graph.json --budget 800`. Read only your source files, the files you change and the pattern files named here or in the brief. Don't re-read unchanged files. Don't consult advisor or other agents.
+- Navigate with the graph, not by exploring: `graphify query "<question>" --graph "$(git rev-parse --git-common-dir)/../graphify-out/graph.json" --budget 800`. Read only your source files, the files you change and the pattern files named here or in the brief. Don't re-read unchanged files. Don't consult advisor or other agents.
 - Scratch scripts: the scratchpad is shared with other builders, so prefix every script name with your branch id (e.g. `educ-a_gen.py`); never run a script you didn't just write.
 - Commit and push after each program (`git push -u origin <branch>`). Commit messages end with `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`.
 - **Hard cap: about 40 tool calls.** At the cap, commit, push and report what's done and what's left, even mid-major.

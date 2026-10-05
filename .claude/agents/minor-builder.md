@@ -30,7 +30,7 @@ Follow `docs/project/program-batches.md` (read it once).
 ## Working style
 - Test-first where you write logic; for program data, the harness (`sample-plans.test.ts`, `registry.test.ts`, `registry-generated.test.ts`) is the test.
 - Quiet output: iterate with `npm test -w @turboterp/programs -- --reporter=dot 2>&1 | tail -n 30`. At the end run the full `npm test`, `npm run typecheck`, `npm run lint`, `npm run build` once each (through `tail -n 30`) and report pass/fail and failures only.
-- Navigate with the graph, not by exploring: `graphify query "<question>" --graph C:/Users/24GHi/Code/SuperTerp/graphify-out/graph.json --budget 800`. Read only the files you change and the pattern files named above. Don't re-read unchanged files.
+- Navigate with the graph, not by exploring: `graphify query "<question>" --graph "$(git rev-parse --git-common-dir)/../graphify-out/graph.json" --budget 800`. Read only the files you change and the pattern files named above. Don't re-read unchanged files.
 - Commit and push after each minor (`git push -u origin <branch>`). Commit messages end with `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`.
 - Cap: about 40 tool calls. At the cap, commit, push and report what's done and what's left.
 

@@ -8,15 +8,18 @@ import { StatusPill } from "./ui";
 /** An "Open until 9pm" pill that stays correct as time passes. */
 export function LiveStatus({
   hours,
+  tomorrow,
   initialMinutes,
   inline = false,
 }: {
   hours: DayHours | undefined;
+  /** The next day's hours, so "open until midnight" isn't shown for a place that stays open past it. */
+  tomorrow?: DayHours;
   initialMinutes: number;
   inline?: boolean;
 }) {
   const minutes = useCampusMinutes(initialMinutes);
-  const { status, text } = hoursStatus(hours, minutes);
+  const { status, text } = hoursStatus(hours, minutes, tomorrow);
   return (
     <StatusPill status={status} inline={inline}>
       {text}

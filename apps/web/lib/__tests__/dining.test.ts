@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { DiningMenu } from "@turboterp/campus-data";
-import { diningSlice, resolveMeal, stationDisplayName } from "../dining";
+import { diningSlice, hallFromQuery, resolveMeal, stationDisplayName } from "../dining";
 
 const item = (name: string) => ({ name, labelUrl: null, diets: [], contains: [] });
 const menu: DiningMenu = {
@@ -74,5 +74,16 @@ describe("stationDisplayName", () => {
   it("leaves other station names unchanged", () => {
     expect(stationDisplayName("Grill")).toBe("Grill");
     expect(stationDisplayName("Breakfast Sandwiches")).toBe("Breakfast Sandwiches");
+  });
+});
+
+describe("hallFromQuery", () => {
+  it("reads the hall a link asked for", () => {
+    expect(hallFromQuery("16", [19, 16, 51])).toBe(16);
+  });
+  it("ignores a missing, malformed or unknown hall", () => {
+    expect(hallFromQuery(undefined, [19, 16, 51])).toBeNull();
+    expect(hallFromQuery("abc", [19, 16, 51])).toBeNull();
+    expect(hallFromQuery("99", [19, 16, 51])).toBeNull();
   });
 });

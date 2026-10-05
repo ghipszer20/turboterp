@@ -57,6 +57,10 @@ describe("registrationChecklist", () => {
     expect(r).toEqual({ status: "wrong-term", message: "Switch to Spring 2027 to prepare" });
   });
 
+  it("asks for courses, not 'unpublished', when none are added yet", () => {
+    expect(registrationChecklist({ ...base, saved, courses: [], sections: [] }).status).toBe("no-courses");
+  });
+
   it("says the schedule isn't published when there are no sections", () => {
     expect(registrationChecklist({ ...base, saved, courses: ["CMSC351"], sections: [] }).status).toBe("not-published");
   });

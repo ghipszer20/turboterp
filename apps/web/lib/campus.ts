@@ -27,6 +27,7 @@ import {
   fetchDiningMenu,
   fetchLibraryHours,
   fetchRecWellAreas,
+  fetchStampVenues,
   fetchRoomCatalog,
   fetchShuttleFeed,
   nextDepartures,
@@ -38,6 +39,7 @@ import {
   studyRoomCategories,
   type Building,
   type DiningMenu,
+  type StampVenue,
   type Feed,
   type AcademicEvent,
   type LibraryHours,
@@ -89,6 +91,11 @@ const STABLE = 600;
 export async function getLibraryHours(): Promise<LibraryHours[]> {
   const snap = await readSnapshot<LibraryHours[]>(snapshotKeys.libraryHours, STABLE);
   return (await snapshotOrLive(snap, liveLibraryHours)).data;
+}
+
+export async function getStampVenues(): Promise<StampVenue[]> {
+  const snap = await readSnapshot<StampVenue[]>(snapshotKeys.stampVenues, STABLE);
+  return (await snapshotOrLive(snap, liveStampVenues)).data;
 }
 
 export async function getAcademicCalendar(): Promise<AcademicEvent[]> {
@@ -157,6 +164,12 @@ async function liveLibraryHours() {
   return fetchLibraryHours(2);
 }
 
+async function liveStampVenues() {
+  "use cache";
+  cacheLife({ stale: 300, revalidate: 3 * 3600, expire: 2 * 86400 });
+  return fetchStampVenues();
+}
+
 async function liveAcademicCalendar() {
   "use cache";
   cacheLife({ stale: 300, revalidate: 6 * 3600, expire: 3 * 86400 });
@@ -189,7 +202,7 @@ async function liveRoomCatalog() {
 
 async function liveRoomAvailability(locationId: number, categoryId: number, isoDate: string) {
   "use cache";
-  cacheLife({ stale: 60, revalidate: 300, expire: 3600 });
+  cacheLife({ stale: 60, revalidate: 120, expire: 3600 });
   const { rooms } = await liveRoomCatalog();
   return fetchCategoryAvailability(rooms, locationId, categoryId, isoDate, addDays(isoDate, 1));
 }

@@ -29,7 +29,7 @@ type Envelope<T> = Snapshot<T> & { schema: number; key: string };
 
 const KEY = /^[a-z0-9][a-z0-9_-]*(?:\/[a-z0-9][a-z0-9_-]*)*$/i;
 
-function checkKey(key: string): void {
+export function checkKey(key: string): void {
   if (!KEY.test(key)) throw new Error(`Invalid snapshot key: ${JSON.stringify(key)}`);
 }
 

@@ -166,7 +166,12 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [ready, courses, data.sections, data.ratings, data.gpas, filtersKey],
   );
-  const { result, pending } = useLayouts(view.kind === "own" ? null : request);
+  const { shown, pending } = useLayouts(view.kind === "own" ? null : request);
+  const result = shown?.result ?? null;
+  // The layouts on screen decode against the request they answer, not the current course list:
+  // while a new request is pending (e.g. just after a course is removed) the two differ.
+  const shownReq = shown?.req ?? null;
+  const shownSectionByKey = useMemo(() => new Map((shownReq?.sections ?? []).map((s) => [sectionKey(s), s])), [shownReq]);
 
   // Performance probe: time from asking for layouts to the first cards on screen.
   const askedAt = useRef(0);
@@ -403,6 +408,11 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
 
   return (
     <div className={styles.builder}>
+      {termName ? (
+        <p className={styles.termLine}>
+          <b>{termName}</b> classes, from UMD&apos;s Schedule of Classes. Sections and instructors change by term.
+        </p>
+      ) : null}
       <div className={styles.modeRow}>
         <Segmented<"browse" | "own">
           label="How to build"
@@ -514,7 +524,7 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
           ) : result ? (
             <div style={{ opacity: pending ? 0.5 : 1, transition: "opacity 160ms ease" }}>
               <Gallery
-                data={{ layouts: result.layouts, scale: result.scale, sectionByKey, ratings: data.ratings, courseIds: courses, gpas: recommended ? data.gpas : undefined }}
+                data={{ layouts: result.layouts, scale: result.scale, sectionByKey: shownSectionByKey, ratings: shownReq?.ratings ?? data.ratings, courseIds: shownReq?.courseIds ?? courses, gpas: shownReq?.gpas }}
                 days={filters.days}
                 onOpen={(picks) => setView({ kind: "editor", picks: Object.fromEntries(picks.map((s) => [s.courseId, s])) })}
               />

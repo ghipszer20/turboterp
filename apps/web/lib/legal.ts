@@ -130,7 +130,7 @@ export const PRIVACY: LegalSection[] = [
     heading: "Coming next: your plan on every device (planned)",
     paragraphs: [
       "We plan to store your plan and your signed agreement (version, time, account and a hash of the typed name) on our server, tied to your account, so they follow you between devices.",
-      "You will be able to delete it all with one tap. This page will be updated before that starts.",
+      "You will be able to delete it all yourself, after confirming that you mean it. This page will be updated before that starts.",
     ],
   },
   {

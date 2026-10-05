@@ -46,6 +46,18 @@ describe("RecWell sheet", () => {
     expect(recWellOnDate(areas, "2031-01-01")).toEqual([]);
   });
 
+  it("carries the next day's hours, so a status can follow a day that runs past midnight", () => {
+    const area = {
+      group: "Eppley Recreation Center",
+      name: "Eppley Recreation Center",
+      url: null,
+      setting: "indoor" as const,
+      hoursByDate: { "2026-01-04": "8am - 12am", "2026-01-05": "24 Hours" },
+    };
+    expect(recWellOnDate([area], "2026-01-04")[0]!.tomorrow).toEqual({ kind: "24h" });
+    expect(recWellOnDate([area], "2026-01-05")[0]!.tomorrow).toBeUndefined();
+  });
+
   it("fails loudly if the sheet layout changes", () => {
     expect(() => parseRecWellTab("totally,different\nlayout,here", "indoor")).toThrow(SourceError);
   });

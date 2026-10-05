@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { getAuthClient } from "@/lib/auth/client";
-import { emailProblem } from "@/lib/auth/email";
+import { emailProblem, sendProblem } from "@/lib/auth/email";
 import { useSession } from "@/lib/auth/use-session";
 import styles from "./advisor.module.css";
 
-/** Sign-in by emailed link, shown before the agreement. UMD addresses only. */
+/** Sign-in by emailed link, shown before the agreement. Terpmail addresses only. */
 export function SignInGate() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -25,10 +25,10 @@ export function SignInGate() {
         email: address,
         options: { emailRedirectTo: `${window.location.origin}/advisor` },
       });
-      if (failed) setError("We couldn't send the link. Try again in a moment.");
+      if (failed) setError(sendProblem(failed));
       else setSent(address);
-    } catch {
-      setError("We couldn't send the link. Try again in a moment.");
+    } catch (thrown) {
+      setError(sendProblem(thrown));
     } finally {
       setBusy(false);
     }
@@ -45,7 +45,7 @@ export function SignInGate() {
       {sent ? (
         <div className={styles.gate}>
           <p className={styles.gateIntro}>
-            We sent a sign-in link to <strong>{sent}</strong>. Open it on this device to continue.
+            We sent a sign-in link to <strong>{sent}</strong>. Open it on this device to continue. If it isn&apos;t there in a minute, check your spam folder.
           </p>
           <button type="button" className={styles.ghostButton} onClick={() => (setSent(null), setError(null))}>
             Use a different address
@@ -55,13 +55,13 @@ export function SignInGate() {
         <form className={styles.gate} onSubmit={submit} noValidate>
           <p className={styles.gateIntro}>Your plan is tied to your UMD account.</p>
           <label className={styles.field}>
-            <span className={styles.fieldLabel}>UMD email</span>
+            <span className={styles.fieldLabel}>Terpmail address</span>
             <input
               className={styles.input}
               type="email"
               inputMode="email"
               autoComplete="email"
-              placeholder="you@umd.edu"
+              placeholder="jdoe@terpmail.umd.edu"
               value={email}
               onChange={(e) => (setEmail(e.target.value), setError(null))}
             />

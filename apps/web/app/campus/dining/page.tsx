@@ -1,20 +1,25 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { connection } from "next/server";
-import { campusDate, campusMinutes, DINING_HALLS } from "@turboterp/campus-data";
-import { Notice, Page, SkeletonCard } from "@/components/ui";
-import { getAllDiningMenus } from "@/lib/campus";
-import { diningSlice } from "@/lib/dining";
-import { currentMealName } from "@/lib/status";
+import { addDays, campusDate, campusMinutes, DINING_HALLS } from "@turboterp/campus-data";
+import { LiveStatus } from "@/components/LiveStatus";
+import { Card, Notice, Page, Row, Section, SkeletonCard } from "@/components/ui";
+import { getAllDiningMenus, getStampVenues, safe } from "@/lib/campus";
+import { diningSlice, hallFromQuery } from "@/lib/dining";
+import { OTHER_STAMP_VENUES } from "@/lib/stamp";
+import { currentMealName, hoursLabel } from "@/lib/status";
 import { DiningView } from "./DiningView";
 
 export const metadata: Metadata = { title: "Dining" };
 
-export default function DiningPage() {
+export default function DiningPage({ searchParams }: { searchParams: Promise<{ hall?: string | string[] }> }) {
   return (
     <Page title="Dining" subtitle="Campus">
       <Suspense fallback={<SkeletonCard rows={8} />}>
-        <Menus />
+        <Menus searchParams={searchParams} />
+      </Suspense>
+      <Suspense fallback={<SkeletonCard rows={4} />}>
+        <Stamp />
       </Suspense>
       <Notice>
         Menus from UMD Dining (nutrition.umd.edu) and can change. Always check allergen labels at the station if you
@@ -24,10 +29,39 @@ export default function DiningPage() {
   );
 }
 
-// Only the first hall's current meal ships with the page; other halls and
-// meals load from /api/dining when tapped.
-async function Menus() {
+// Food places in the Stamp Student Union, with today's hours from UMD Dining Services.
+async function Stamp() {
   await connection();
+  const today = campusDate();
+  const tomorrow = addDays(today, 1);
+  const minutes = campusMinutes();
+  const res = await safe(getStampVenues);
+  if (!res.ok) return null;
+  return (
+    <Section title="Stamp Student Union">
+      <Card>
+        {res.data.map((v) => (
+          <Row
+            key={v.id}
+            title={v.name}
+            subtitle={<LiveStatus hours={v.days[today]} tomorrow={v.days[tomorrow]} initialMinutes={minutes} inline />}
+            trailing={hoursLabel(v.days[today], v.days[tomorrow])}
+          />
+        ))}
+        {OTHER_STAMP_VENUES.map((name) => (
+          <Row key={name} title={name} subtitle="Hours not published by UMD Dining" />
+        ))}
+      </Card>
+    </Section>
+  );
+}
+
+// One hall's current meal ships with the page: the hall a link asked for (?hall=16, from Today's
+// rows), else the first. Other halls and meals load from /api/dining when tapped.
+async function Menus({ searchParams }: { searchParams: Promise<{ hall?: string | string[] }> }) {
+  await connection();
+  const asked = hallFromQuery((await searchParams).hall, DINING_HALLS.map((h) => h.id));
+  const index = Math.max(0, DINING_HALLS.findIndex((h) => h.id === asked));
   const today = campusDate();
   const preferredMeal = currentMealName(campusMinutes());
   const results = await getAllDiningMenus(today);
@@ -35,7 +69,7 @@ async function Menus() {
     const r = results[i]!;
     return { id: h.id, name: h.short, meals: r.ok ? r.data.meals.map((m) => m.name) : null };
   });
-  const first = results[0]!;
-  const initial = { hallId: DINING_HALLS[0].id, ...diningSlice(first.ok ? first.data : null, preferredMeal) };
+  const first = results[index]!;
+  const initial = { hallId: DINING_HALLS[index]!.id, ...diningSlice(first.ok ? first.data : null, preferredMeal) };
   return <DiningView date={today} halls={halls} initial={initial} preferredMeal={preferredMeal} />;
 }

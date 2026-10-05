@@ -1,11 +1,12 @@
 import { Suspense } from "react";
 import { connection } from "next/server";
-import { campusDate, campusMinutes, DINING_HALLS, orderLibraries, recWellOnDate } from "@turboterp/campus-data";
+import { addDays, campusDate, campusMinutes, DINING_HALLS, orderLibraries, recWellOnDate } from "@turboterp/campus-data";
 import { BusIcon, DiningIcon, GymIcon, LibraryIcon, RoomIcon } from "@/components/icons";
 import { RegistrationCountdown } from "@/app/RegistrationCountdown";
 import { LiveStatus } from "@/components/LiveStatus";
 import { Card, IconTile, Page, Row, Section, SkeletonCard } from "@/components/ui";
-import { getAcademicCalendar, getAllDiningMenus, getLibraryHours, getRecWellAreas, getRoutesOn, safe } from "@/lib/campus";
+import { getAcademicCalendar, getAllDiningMenus, getLibraryHours, getRecWellAreas, getRoutesOn, getStampVenues, safe } from "@/lib/campus";
+import { stampSummary } from "@/lib/stamp";
 import { eventTitle, formatEventDate, upcomingDates } from "@/lib/calendar";
 import { gymRowTitle, MAIN_GYMS } from "@/lib/gyms";
 import { compactLibraryName } from "@/lib/libraries";
@@ -45,7 +46,7 @@ async function Today() {
   return (
     <Page title="Today" subtitle={dateLabel}>
       <RegistrationCountdown />
-      <Section title="Eat">
+      <Section title="Dining">
         <Suspense fallback={<SkeletonCard rows={3} />}>
           <Dining today={today} minutes={minutes} />
         </Suspense>
@@ -55,12 +56,12 @@ async function Today() {
           <Libraries today={today} minutes={minutes} />
         </Suspense>
       </Section>
-      <Section title="Work out">
+      <Section title="Fitness">
         <Suspense fallback={<SkeletonCard rows={2} />}>
           <Gyms today={today} minutes={minutes} />
         </Suspense>
       </Section>
-      <Section title="Get around">
+      <Section title="Transport">
         <Suspense fallback={<SkeletonCard rows={1} />}>
           <Buses today={today} />
         </Suspense>
@@ -73,7 +74,7 @@ async function Today() {
 }
 
 async function Dining({ today, minutes }: { today: string; minutes: number }) {
-  const menus = await getAllDiningMenus(today);
+  const [menus, stamp] = await Promise.all([getAllDiningMenus(today), safe(getStampVenues)]);
   const meal = currentMealName(minutes);
   return (
     <Card>
@@ -83,7 +84,7 @@ async function Dining({ today, minutes }: { today: string; minutes: number }) {
         return (
           <Row
             key={hall.id}
-            href="/campus/dining"
+            href={`/campus/dining?hall=${hall.id}`}
             leading={
               <IconTile>
                 <DiningIcon />
@@ -94,6 +95,18 @@ async function Dining({ today, minutes }: { today: string; minutes: number }) {
           />
         );
       })}
+      {stamp.ok && (
+        <Row
+          href="/campus/dining"
+          leading={
+            <IconTile>
+              <DiningIcon />
+            </IconTile>
+          }
+          title="Stamp"
+          subtitle={stampSummary(stamp.data, today, minutes)}
+        />
+      )}
     </Card>
   );
 }
@@ -113,7 +126,7 @@ async function Libraries({ today, minutes }: { today: string; minutes: number })
             </IconTile>
           }
           title={compactLibraryName(lib.name)}
-          subtitle={<LiveStatus hours={lib.days[today]} initialMinutes={minutes} inline />}
+          subtitle={<LiveStatus hours={lib.days[today]} tomorrow={lib.days[addDays(today, 1)]} initialMinutes={minutes} inline />}
         />
       ))}
       <Row
@@ -150,7 +163,7 @@ async function Gyms({ today, minutes }: { today: string; minutes: number }) {
               </IconTile>
             }
             title={gymRowTitle(b.group, b.name)}
-            subtitle={<LiveStatus hours={b.hours} initialMinutes={minutes} inline />}
+            subtitle={<LiveStatus hours={b.hours} tomorrow={b.tomorrow} initialMinutes={minutes} inline />}
           />
         ))
       )}

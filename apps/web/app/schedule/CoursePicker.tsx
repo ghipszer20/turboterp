@@ -29,7 +29,7 @@ export function CoursePicker({
   const [active, setActive] = useState(0);
   const listId = useId();
   const results = useMemo(
-    () => searchCourses(courses, query, 12).filter((c) => !picked.includes(c.id)).slice(0, 8),
+    () => searchCourses(courses, query, 60).filter((c) => !picked.includes(c.id)).slice(0, 50),
     [courses, query, picked],
   );
   const titleOf = useMemo(() => new Map(courses.map((c) => [c.id, c.title])), [courses]);

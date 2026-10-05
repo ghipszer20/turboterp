@@ -44,6 +44,8 @@ export function RegistrationPanel(props: Props) {
       <h2 className={styles.title}>Get ready to register</h2>
       {list.status === "wrong-term" ? (
         <p className={styles.note}>{list.message}</p>
+      ) : list.status === "no-courses" ? (
+        <p className={styles.note}>Add your courses above and your registration checklist for {termName} appears here.</p>
       ) : list.status === "not-published" ? (
         <p className={styles.note}>{termName}’s Schedule of Classes isn’t published yet. Check back once it is.</p>
       ) : (
