@@ -20,7 +20,7 @@ export default function AboutPage() {
             </p>
             <p>It&apos;s free and open source. Not affiliated with the University of Maryland.</p>
             <p>
-              Read the <Link href="/terms">Terms of Use</Link> and the <Link href="/privacy">Privacy</Link> notice.
+              Read the <Link href="/terms">Terms of Use</Link> and the <Link href="/privacy">Privacy Policy</Link>.
             </p>
           </div>
         </Card>
