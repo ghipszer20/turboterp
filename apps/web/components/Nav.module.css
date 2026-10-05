@@ -15,6 +15,11 @@
   color: var(--text);
 }
 
+.wordmark {
+  flex: none;
+  white-space: nowrap;
+}
+
 .mark {
   margin-right: 8px;
   vertical-align: -6px;

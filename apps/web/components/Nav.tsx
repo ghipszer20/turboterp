@@ -53,7 +53,7 @@ export function Nav() {
               <Icon size={22} />
             </Link>
           ))}
-          <ThemeToggle />
+          <ThemeToggle compact />
         </div>
       </header>
       <nav className={styles.nav} aria-label="Main">
