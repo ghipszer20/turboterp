@@ -166,11 +166,11 @@ describe("easternToDate", () => {
 
 describe("appointmentIcs", () => {
   const ics = appointmentIcs("Spring 2027", "2026-11-03T09:00", new Date("2026-10-05T12:00:00Z"));
-  it("is one event with alarms 1 day and 15 minutes before", () => {
+  it("is one event with a single alarm, 1 day before", () => {
     expect(ics.match(/BEGIN:VEVENT/g)).toHaveLength(1);
-    expect(ics.match(/BEGIN:VALARM/g)).toHaveLength(2);
+    expect(ics.match(/BEGIN:VALARM/g)).toHaveLength(1);
     expect(ics).toContain("TRIGGER:-P1D");
-    expect(ics).toContain("TRIGGER:-PT15M");
+    expect(ics).not.toContain("TRIGGER:-PT15M");
     expect(ics).toContain("DTSTART;TZID=America/New_York:20261103T090000");
     expect(ics).toContain("SUMMARY:Registration appointment (Spring 2027)");
     expect(ics.endsWith("END:VCALENDAR\r\n")).toBe(true);
