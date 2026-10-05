@@ -1,6 +1,6 @@
 <!doctype html>
 <meta charset="utf-8">
-<title>TurboTerp logo: Turbo options</title>
+<title>TurboTerp logo: Compact options</title>
 <style>
   body { font: 14px/1.35 -apple-system, system-ui, "Segoe UI", sans-serif; margin: 0; background: #f5f5f7; color: #1d1d1f; }
   h1 { font-size: 21px; margin: 16px 20px 2px; }
@@ -13,13 +13,13 @@
   .big img { filter: drop-shadow(0 6px 14px rgba(120, 8, 30, .28)); }
   .row { display: flex; align-items: center; justify-content: center; gap: 12px; padding-top: 10px; }
 </style>
-<h1>TurboTerp logo: options on "Turbo"</h1>
-<p>Twelve takes on the speeding terrapin. Shown large, then at 48, 32 and 16 px.</p>
+<h1>TurboTerp logo: options on "Compact"</h1>
+<p>Twelve takes on the compact speeding terrapin (number 11 last round). Shown large, then at 48, 32 and 16 px.</p>
 <div class="grid" id="grid"></div>
 <script>
 let n = 0;
 const W = '#fff', R = '#BA0C2F';
-const tile = (inner, white) => { const g = `g${n++}`; return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D0183C"/><stop offset="1" stop-color="#A80A29"/></linearGradient></defs>${white ? `<rect x=".5" y=".5" width="127" height="127" rx="29" fill="#fff" stroke="#e5e5ea"/>` : `<rect width="128" height="128" rx="29" fill="url(#${g})"/>`}${inner}</svg>`; };
+const tile = (inner, white, flat) => { const g = `g${n++}`; return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D0183C"/><stop offset="1" stop-color="#A80A29"/></linearGradient></defs>${white ? `<rect x=".5" y=".5" width="127" height="127" rx="29" fill="#fff" stroke="#e5e5ea"/>` : `<rect width="128" height="128" rx="29" fill="${flat ? R : `url(#${g})`}"/>`}${inner}</svg>`; };
 function logo(o = {}) {
   const fg = o.white ? R : W, bg = o.white ? W : R;
   const lean = o.lean ?? 12, dx = o.dx ?? 5, dy = o.dy ?? 0, sc = o.scale ?? 1;
@@ -36,21 +36,22 @@ function logo(o = {}) {
     <path d="M25 78a37 33 0 0 1 74 0z"/><rect x="25" y="74" width="74" height="10" rx="5"/>${head}${legSvg}</g>${seams}</g>`;
   const lines = (o.lines ?? [[10, 26, 62], [6, 22, 74], [12, 24, 86]]).map(([a, b, y]) => `M${a} ${y}H${b}`).join("");
   const extra = o.extra ? o.extra(fg, bg) : "";
-  return tile(body + (lines ? `<path d="${lines}" fill="none" stroke="${fg}" stroke-width="${o.lineW ?? 5}" stroke-linecap="round"/>` : "") + extra, o.white);
+  return tile(body + (lines ? `<path d="${lines}" fill="none" stroke="${fg}" stroke-width="${o.lineW ?? 5}" stroke-linecap="round"/>` : "") + extra, o.white, o.flat);
 }
+const C = { scale: 0.84, dx: 6, lines: [[18, 32, 66], [14, 28, 76], [20, 30, 86]], lineW: 4.500 };
 const options = [
-  ["Original", "Concept 5 as shown before.", {}],
-  ["Hard lean", "Leaning further forward with longer lines.", { lean: 22, dx: 2, lines: [[8, 30, 60], [4, 30, 73], [12, 28, 86]] }],
-  ["Two bold lines", "Fewer, heavier speed lines.", { lines: [[6, 26, 66], [10, 24, 80]], lineW: 6.500 }],
-  ["Arrow lines", "Three lines stepped so they point forward.", { lines: [[14, 24, 60], [4, 24, 72], [14, 24, 84]], lineW: 5.500, dx: 6 }],
-  ["Shell seams", "The original with plate lines on the shell.", { seams: true }],
-  ["Striding", "Legs kicked out mid-run.", { legs: "stride", lean: 14 }],
-  ["Gliding", "No legs: a low, clean shape skimming along.", { legs: "none", dy: 6, lines: [[8, 26, 66], [4, 22, 78], [14, 30, 92]] }],
-  ["Neck out", "Head stretched forward, racing.", { neck: true, lean: 16, dx: 0 }],
-  ["Dashes", "Broken trails: a dot and a dash on each line.", { lines: [[6, 7, 62], [14, 26, 62], [3, 4, 74], [11, 22, 74], [9, 10, 86], [17, 26, 86]], lineW: 5 }],
-  ["Streaks through the shell", "The speed lines slice into the back of the shell.", { lines: [], dx: 9, extra: (fg, bg) => `<path d="M0 60H50M0 71H46M0 82H44" fill="none" stroke="${bg}" stroke-width="4.500" stroke-linecap="round"/><path d="M12 65.500H40M6 76.500H40" fill="none" stroke="${fg}" stroke-width="6.500" stroke-linecap="round"/>` }],
-  ["Compact", "Smaller terrapin with more breathing room.", { scale: 0.84, dx: 6, lines: [[18, 32, 66], [14, 28, 76], [20, 30, 86]], lineW: 4.500 }],
-  ["Inverted", "The original in red on a white tile.", { white: true }],
+  ["As shown", "Number 11 from last round.", { ...C }],
+  ["Smaller still", "Even more space around it.", { ...C, scale: 0.72, dx: 8, lines: [[26, 38, 68], [22, 34, 76.500], [27, 36, 85]], lineW: 4 }],
+  ["Two bold lines", "Fewer, heavier speed lines.", { ...C, lines: [[14, 31, 69], [18, 30, 81]], lineW: 5.500 }],
+  ["Arrow lines", "Lines stepped so they point forward.", { ...C, lines: [[21, 31, 66], [12, 31, 76], [21, 31, 86]], lineW: 5 }],
+  ["Wind", "Lines get shorter toward the ground.", { ...C, lines: [[8, 31, 64], [15, 30, 75], [22, 30, 86]] }],
+  ["Neck out", "Head stretched forward.", { ...C, neck: true, lean: 15, dx: 2 }],
+  ["Neck out, two bold lines", "The two above combined.", { ...C, neck: true, lean: 15, dx: 2, lines: [[14, 31, 69], [18, 30, 81]], lineW: 5.500 }],
+  ["Striding", "Legs kicked out mid-run.", { ...C, legs: "stride", lean: 14 }],
+  ["Hard lean", "Leaning further into it.", { ...C, lean: 21, dx: 3 }],
+  ["Shell seams", "Plate lines on the shell.", { ...C, seams: true }],
+  ["Flat red", "Exactly the original box colour, with no shading.", { ...C, flat: true }],
+  ["Inverted", "Red on a white tile.", { ...C, white: true }],
 ];
 const img = (svg, px) => `<img width="${px}" height="${px}" alt="" src="data:image/svg+xml;utf8,${encodeURIComponent(svg)}">`;
 document.getElementById('grid').innerHTML = options.map(([name, note, o], i) => {
