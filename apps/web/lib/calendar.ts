@@ -25,6 +25,39 @@ export function eventTitle(e: AcademicEvent): string {
   return SHORT[e.kind] ?? e.label;
 }
 
+/** Title for the Calendar tab: says what the date is for, naming the term where the Registrar's title does not. */
+export function calendarTitle(e: AcademicEvent): string {
+  const { term, label } = e;
+  switch (e.kind) {
+    case "registration-appointments":
+      return `${term} registration: your time slot is posted on Testudo`;
+    case "priority-registration":
+      return `${term} priority registration begins`;
+    case "early-registration":
+      return `${term} early registration`;
+    case "first-day":
+      return `First day of ${term} classes`;
+    case "last-class":
+      return `Last day of ${term} classes`;
+    case "finals":
+      return `${term} final exams`;
+    case "schedule-adjustment":
+      return `${term} schedule adjustment period`;
+    case "pass-fail":
+      return `${term} pass/fail deadline`;
+    case "drop-w": {
+      const suffix = /\(.*\)\s*$/.exec(label)?.[0];
+      return `Last day to drop a ${term} course with a W${suffix ? ` ${suffix}` : ""}`;
+    }
+    case "apply-to-graduate":
+      return label;
+    default:
+      if (/^general registration/i.test(label)) return `${term} general registration`;
+      if (/^(schedule of classes|mandatory waitlist)/i.test(label)) return `${term} ${label}`;
+      return label;
+  }
+}
+
 /** Drop-with-W, pass/fail and finals for a term, plus apply-to-graduate on the graduation term. */
 export function termKeyDates(events: AcademicEvent[], termName: string, isGraduationTerm: boolean): AcademicEvent[] {
   const kinds = TERM_ORDER.filter((k) => isGraduationTerm || k !== "apply-to-graduate");
