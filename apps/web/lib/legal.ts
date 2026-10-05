@@ -1,26 +1,40 @@
-// Plain-language Terms of Use and Privacy notice, as data. First drafts, no lawyer review
+// Plain-language Terms of Use and Privacy Policy, as data. No lawyer review
 // (docs/project/legal.md). Bump the version whenever the meaning changes.
 
-export const TERMS_VERSION = "2026-09-29";
+export const TERMS_VERSION = "2026-10-04";
 export const PRIVACY_VERSION = "2026-10-04";
 
-export type LegalSection = { heading: string; paragraphs: string[] };
+/** A paragraph, or a list of bullet points. */
+export type LegalBlock = string | string[];
+export type LegalSection = { heading: string; paragraphs: LegalBlock[] };
+
+/** "2026-10-04" → "October 4, 2026", for the "Last updated" line. */
+export function formatVersion(version: string): string {
+  return new Date(`${version}T00:00:00Z`).toLocaleDateString("en-US", { timeZone: "UTC", year: "numeric", month: "long", day: "numeric" });
+}
 
 /** Every localStorage key the app writes. The privacy text must name each one. */
 export const STORAGE_KEYS = [
   "turboterp-advisor-plan",
   "turboterp-advisor-consent",
   "turboterp-schedule",
+  "turboterp-registration",
   "turboterp-leave-origin",
   "turboterp-theme",
 ] as const;
 
 export const TERMS: LegalSection[] = [
   {
+    heading: "Introduction",
+    paragraphs: [
+      "Welcome to TurboTerp. These Terms of Use (\"Terms\") cover your use of the TurboTerp website and app. By using TurboTerp, you agree to these Terms. If you don't agree, please don't use it.",
+    ],
+  },
+  {
     heading: "What TurboTerp is",
     paragraphs: [
-      "TurboTerp is a free, open-source app made by a UMD student. It brings campus info, a schedule builder, a four-year plan and a degree audit into one place.",
-      "The code is released under the Apache-2.0 license. These terms cover using the app and website, not the code.",
+      "TurboTerp is a free, open-source app made by a UMD student. It brings campus info, a schedule builder, an academic calendar, a four-year plan and a degree audit into one place.",
+      "It is a student project. It has no ads and no paid features, and it is not a business.",
     ],
   },
   {
@@ -33,19 +47,27 @@ export const TERMS: LegalSection[] = [
     heading: "Not academic advising",
     paragraphs: [
       "Nothing here is academic advising. That includes the Advisor, the planner, the degree audit, credit estimates, pre-professional tracks and any suggestions or feedback.",
-      "Before you use the Advisor, it asks you to read a short agreement and sign it by typing your name. That agreement covers the same ground as this page, in more detail.",
+      "Before you use the Advisor, it asks you to read a short agreement and sign it by typing your name. That agreement covers the same ground as this page, in more detail, and it applies on top of these Terms.",
     ],
   },
   {
     heading: "Data may be wrong or out of date",
     paragraphs: [
-      "Catalog rules, courses, times, grades and campus info change, and we can get things wrong. Where it matters, TurboTerp shows the catalog year it used.",
+      "Catalog rules, courses, seats, times, grades, dates and campus info change, and we can get things wrong. Where it matters, TurboTerp shows the catalog year it used.",
+      "TurboTerp does not guarantee that anything it shows is accurate, complete or current. Nothing on it is an official university record.",
     ],
   },
   {
     heading: "Your responsibility to check",
     paragraphs: [
-      "You are responsible for confirming everything with your academic advisor and UMD's official degree audit before you register, drop a course or change programs.",
+      "You are responsible for confirming everything with your academic advisor and UMD's official degree audit before you register, drop a course or change programs. Check official UMD sources for deadlines, hours and schedules that matter to you.",
+    ],
+  },
+  {
+    heading: "Accounts",
+    paragraphs: [
+      "You can use TurboTerp without an account. If you make one, you sign in with a link sent to your email address, so keep that inbox secure and use an address that is yours.",
+      "We may suspend or remove an account that is used to misuse the site. You can ask us to delete your account at any time.",
     ],
   },
   {
@@ -63,82 +85,162 @@ export const TERMS: LegalSection[] = [
   {
     heading: "Acceptable use",
     paragraphs: [
-      "Please don't scrape the site, overload it, or try to break or misuse it. Use it for yourself and be kind to the shared services it depends on.",
+      "Please don't scrape the site, overload it, or try to break or misuse it. Don't try to get into data or accounts that aren't yours. Use it for yourself and be kind to the shared services it depends on.",
+    ],
+  },
+  {
+    heading: "Intellectual property",
+    paragraphs: [
+      "TurboTerp's code is open source under the Apache-2.0 license, which sets the rules for using the code. These Terms cover using the hosted app and website, not the code.",
+      "The TurboTerp name and logo belong to the project. Please don't use them in a way that suggests your own project is TurboTerp or is endorsed by it.",
+      "Anything you enter, such as your plan and your schedule, stays yours.",
     ],
   },
   {
     heading: "Third-party data",
     paragraphs: [
-      "TurboTerp shows data from other sources: UMD's Schedule of Classes, PlanetTerp, campus dining, LibCal, RecWell and Shuttle-UM GTFS. Each stays the property of its owner.",
+      "TurboTerp shows data from other sources: UMD's Schedule of Classes and Academic Catalog, PlanetTerp, campus dining, LibCal, RecWell and Shuttle-UM. Each stays the property of its owner and is subject to that owner's terms.",
+      "Grade distributions and professor ratings come from PlanetTerp. They are shown as is and are not an official university record.",
       "Shuttle-UM GTFS data is used under the Interline license, for non-commercial educational use.",
     ],
   },
   {
-    heading: "Changes to these terms",
+    heading: "Donations",
     paragraphs: [
-      "We may update these terms. The version date at the top changes when we do. If the Advisor agreement changes in a way that matters, it asks you to sign again.",
+      "Donations are voluntary and only help cover running costs, such as hosting and the domain. A donation buys nothing: no features, no perks and no priority. Donations are gifts and are not tax-deductible.",
+    ],
+  },
+  {
+    heading: "Changes to these Terms",
+    paragraphs: [
+      "We may update these Terms at any time. The date at the top changes when we do. If you keep using TurboTerp after a change, you agree to the updated Terms. If the Advisor agreement changes in a way that matters, it asks you to sign again.",
+    ],
+  },
+  {
+    heading: "Governing law",
+    paragraphs: [
+      "These Terms are governed by the laws of Maryland, United States, without regard to its conflict of law rules.",
+    ],
+  },
+  {
+    heading: "Contact us",
+    paragraphs: [
+      "Questions about these Terms? Reach us through the Report an issue page, linked below.",
+      "By using TurboTerp, you acknowledge that you have read, understood and agree to these Terms.",
     ],
   },
 ];
 
 export const PRIVACY: LegalSection[] = [
   {
-    heading: "The short version",
+    heading: "Introduction",
     paragraphs: [
-      "An account is optional, and it holds just your email address. The Advisor works without one, and what you enter stays in your browser. No analytics, no ads, no tracking cookies, and nothing is sold.",
+      "This Privacy Policy explains what TurboTerp collects, where it is kept and what we do with it.",
+      "The short version: an account is optional, and it holds just your email address. Your plan and schedule stay in your browser. No analytics, no ads, no tracking cookies, and nothing is sold.",
+    ],
+  },
+  {
+    heading: "What we collect",
+    paragraphs: [
+      "An account is optional. Campus, Schedule, Calendar, Today and the Advisor all work without one.",
+      "If you sign in, we collect your email address, and nothing else. Any email address works; it doesn't have to be a UMD one. There is no password: you sign in with a link sent to that address.",
+      "We use your email address only to sign you in and to tell your account apart from others. We don't send newsletters or marketing email.",
+      "We never ask for or store your Testudo password or your UID, and we never see your official UMD records.",
     ],
   },
   {
     heading: "What is stored in your browser",
     paragraphs: [
       "TurboTerp saves a few things on your device using your browser's local storage. None of it is sent to us.",
-      "turboterp-advisor-plan: your four-year plan.",
-      "turboterp-advisor-consent: your signed Advisor agreement (version, date and typed name).",
-      "turboterp-schedule: your saved schedule.",
-      "turboterp-leave-origin: the building you chose as your starting point for leave-by times.",
-      "turboterp-theme: your light or dark choice.",
+      [
+        "turboterp-advisor-plan: your four-year plan, including the courses, grades and credit you entered.",
+        "turboterp-advisor-consent: your signed Advisor agreement (version, date and typed name).",
+        "turboterp-schedule: your saved schedule.",
+        "turboterp-registration: your registration checklist and the registration appointment time you typed in.",
+        "turboterp-leave-origin: the building you chose as your starting point for leave-by times.",
+        "turboterp-theme: your light or dark choice.",
+      ],
+      "If you are signed in, our sign-in provider's code also keeps a sign-in token there, so you stay signed in on that device.",
       "Clearing your site data in the browser deletes all of it.",
     ],
   },
   {
     heading: "Transcripts",
     paragraphs: [
-      "If you add a transcript PDF, it is read in your browser, including text recognition (OCR) for scanned pages. The file is never uploaded.",
+      "If you add a transcript PDF, it is read in your browser, including text recognition (OCR) for scanned pages. The file is never uploaded, and we never see it.",
     ],
   },
   {
-    heading: "Tracking",
-    paragraphs: ["No analytics, no ads and no tracking cookies. We don't sell or share personal data."],
+    heading: "Cookies and tracking",
+    paragraphs: [
+      "No analytics, no ads and no tracking cookies.",
+      "While the site is in preview, entering the access code sets one cookie, tt_access, so that browser stays let in for 180 days. It holds a scrambled copy of the code and nothing about you.",
+    ],
   },
   {
     heading: "Maps and location",
     paragraphs: [
-      "Map tiles are loaded from OpenFreeMap, so it sees your IP address like any site you load images from.",
       "Your location is used only when you tap a button like \"Show my location\", and it isn't stored.",
       "When you plan a trip, its start and end points (which can be your location) are sent to our server to find buses. They're used for that request only and aren't saved.",
-      "Like any website, our host may keep short-lived request logs (such as IP address and the page requested) to run the service.",
     ],
   },
   {
-    heading: "Signing in",
+    heading: "How your data is used and shared",
     paragraphs: [
-      "An account is optional. The Advisor, Campus, Schedule and Today all work without one, and your plan stays in your browser.",
-      "When you sign in, your email address is stored with our sign-in provider, Supabase, so we can send you a sign-in link. We never ask for or store your Testudo password.",
+      "Your data is used only to run TurboTerp for you. We do not sell, rent or give away your email address or anything else about you, to advertisers, data brokers or anyone else.",
+      "The only others that handle it are the services listed below, and only as far as running the site needs.",
+    ],
+  },
+  {
+    heading: "Other services involved",
+    paragraphs: [
+      [
+        "Supabase runs sign-in and the database, in the United States. It stores your email address and sends the email with your sign-in link.",
+        "Vercel hosts the website. Like any web host, it may keep short-lived request logs (such as IP address and the page requested) to run and protect the service.",
+        "OpenFreeMap serves the map tiles, so it sees your IP address when a map loads, like any site you load images from.",
+      ],
+      "Links to other sites, such as UMD pages, LibCal and Testudo, take you to services with their own privacy policies.",
+    ],
+  },
+  {
+    heading: "Reports and donations",
+    paragraphs: [
+      "Report an issue opens a message in your own email app or on GitHub. We receive what you choose to send, including your email address if you send it by email. Issues filed on GitHub are public.",
+      "Donations go through Venmo, under Venmo's own privacy policy. We never see your card or bank details. We see what Venmo shows the person receiving a payment: your Venmo name, the amount and any note.",
     ],
   },
   {
     heading: "Coming next: your plan on every device (planned)",
     paragraphs: [
-      "Storing your plan and your signed agreement on our server is planned, not built yet. The plan is to keep them (version, time, account and a hash of the typed name) on our server, tied to your account, so they follow you between devices.",
+      "Storing your plan and your signed agreement on our server is planned, not built yet. The plan is to keep them (version, time, account and a scrambled copy of the typed name) on our server, tied to your account, so they follow you between devices.",
       "You will be able to delete it all yourself, after confirming that you mean it. This page will be updated before that starts.",
     ],
   },
   {
-    heading: "Contact",
-    paragraphs: ["Questions or a deletion request? Use the report and contact options on the About page."],
+    heading: "Deleting your data",
+    paragraphs: [
+      "Everything in your browser is yours to delete: clear the site's data in your browser settings.",
+      "To delete your account and the email address stored with it, ask us through the Report an issue page, linked below. Send the request from the address the account uses, so we know it is yours.",
+    ],
   },
   {
-    heading: "Changes to this notice",
-    paragraphs: ["If this changes, the version date at the top changes too."],
+    heading: "Data security",
+    paragraphs: [
+      "The site is served over an encrypted connection, and account data is kept with a provider that encrypts it in transit and at rest. Keys and passwords for these services are kept out of the public code. No system is perfectly secure, so we keep as little about you as we can.",
+    ],
+  },
+  {
+    heading: "Children",
+    paragraphs: ["TurboTerp is made for college students. It is not meant for children under 13, and we don't knowingly collect their data."],
+  },
+  {
+    heading: "Changes to this policy",
+    paragraphs: [
+      "We may update this policy. The date at the top changes when we do. If we start collecting something new or using your data in a new way, this page is updated before that starts.",
+    ],
+  },
+  {
+    heading: "Contact us",
+    paragraphs: ["Questions, or a request to delete your data? Reach us through the Report an issue page, linked below."],
   },
 ];
