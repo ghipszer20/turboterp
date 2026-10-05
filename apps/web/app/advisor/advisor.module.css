@@ -275,6 +275,12 @@
   gap: 16px;
 }
 
+.gateTitle {
+  font: var(--t-headline);
+  font-weight: 600;
+  color: var(--text);
+}
+
 .gateIntro {
   font: var(--t-sub);
   color: var(--text-2);
