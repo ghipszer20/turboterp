@@ -43,3 +43,23 @@ export function reviewsView(s: ReviewSummary) {
     profileUrl: `https://planetterp.com/professor/${encodeURIComponent(s.slug)}`,
   };
 }
+
+export const POPOVER_WIDTH = 340;
+const GAP = 8;
+const EDGE = 12;
+/** Below this much room under the name, the popover opens above it instead (when above has more). */
+const MIN_BELOW = 320;
+
+export type PopoverPlacement = { top?: number; bottom?: number; left: number; maxHeight: number };
+
+/** Where the desktop popover goes: under the name, or above it near the bottom of the screen. */
+export function popoverPlacement(
+  rect: { top: number; bottom: number; left: number },
+  view: { width: number; height: number },
+): PopoverPlacement {
+  const left = Math.max(EDGE, Math.min(rect.left, view.width - POPOVER_WIDTH - EDGE));
+  const below = view.height - rect.bottom - GAP - EDGE;
+  const above = rect.top - GAP - EDGE;
+  if (below < MIN_BELOW && above > below) return { bottom: view.height - rect.top + GAP, left, maxHeight: above };
+  return { top: rect.bottom + GAP, left, maxHeight: below };
+}

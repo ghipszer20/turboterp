@@ -6,17 +6,14 @@
 
 import { createContext, useCallback, useContext, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { loadReviews, reviewsFileUrl, reviewsView, type ReviewsState } from "@/lib/schedule/instructor-reviews";
+import { loadReviews, popoverPlacement, reviewsFileUrl, reviewsView, type PopoverPlacement, type ReviewsState } from "@/lib/schedule/instructor-reviews";
 import { RatingBadge } from "./RatingBadge";
 import styles from "./reviews.module.css";
-
-const POPOVER_WIDTH = 340;
-const GAP = 8;
 
 export function InstructorReviews({ name, url }: { name: string; url: string }) {
   const [open, setOpen] = useState(false);
   const [state, setState] = useState<ReviewsState | "loading">("loading");
-  const [pos, setPos] = useState<{ top: number; left: number } | null>(null);
+  const [pos, setPos] = useState<PopoverPlacement | null>(null);
   const trigger = useRef<HTMLSpanElement>(null);
   const panel = useRef<HTMLDivElement>(null);
   const titleId = useId();
@@ -29,10 +26,7 @@ export function InstructorReviews({ name, url }: { name: string; url: string }) 
   const toggle = () => {
     if (open) return close();
     const r = trigger.current?.getBoundingClientRect();
-    if (r) {
-      const left = Math.max(12, Math.min(r.left, window.innerWidth - POPOVER_WIDTH - 12));
-      setPos({ top: r.bottom + GAP, left });
-    }
+    if (r) setPos(popoverPlacement(r, { width: window.innerWidth, height: window.innerHeight }));
     setOpen(true);
   };
 
@@ -103,7 +97,16 @@ export function InstructorReviews({ name, url }: { name: string; url: string }) 
               aria-labelledby={titleId}
               tabIndex={-1}
               className={styles.panel}
-              style={pos ? ({ "--top": `${pos.top}px`, "--left": `${pos.left}px` } as React.CSSProperties) : undefined}
+              style={
+                pos
+                  ? ({
+                      "--top": pos.top === undefined ? "auto" : `${pos.top}px`,
+                      "--bottom": pos.bottom === undefined ? "auto" : `${pos.bottom}px`,
+                      "--left": `${pos.left}px`,
+                      "--max-h": `${pos.maxHeight}px`,
+                    } as React.CSSProperties)
+                  : undefined
+              }
               onClick={stop}
             >
               <header className={styles.head}>

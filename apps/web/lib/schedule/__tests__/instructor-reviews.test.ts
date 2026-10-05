@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { ReviewSummary } from "@turboterp/ratings";
-import { loadReviews, reviewsFileUrl, reviewsView } from "../instructor-reviews";
+import { loadReviews, reviewsFileUrl, reviewsView, popoverPlacement } from "../instructor-reviews";
 
 const summary: ReviewSummary & { v: number } = {
   v: 1,
@@ -55,5 +55,21 @@ describe("reviewsView", () => {
   });
   it("uses the singular for one review", () => {
     expect(reviewsView({ ...summary, count: 1 }).countLabel).toBe("1 review");
+  });
+});
+
+describe("popoverPlacement", () => {
+  const view = { width: 1280, height: 820 };
+
+  it("opens below the name when there is room", () => {
+    expect(popoverPlacement({ top: 100, bottom: 120, left: 300 }, view)).toEqual({ top: 128, left: 300, maxHeight: 680 });
+  });
+
+  it("opens above a name near the bottom of the screen", () => {
+    expect(popoverPlacement({ top: 770, bottom: 790, left: 300 }, view)).toEqual({ bottom: 58, left: 300, maxHeight: 750 });
+  });
+
+  it("keeps the panel inside the right edge", () => {
+    expect(popoverPlacement({ top: 100, bottom: 120, left: 1200 }, view).left).toBe(1280 - 340 - 12);
   });
 });

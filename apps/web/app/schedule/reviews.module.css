@@ -20,9 +20,10 @@
   position: fixed;
   z-index: 90;
   top: var(--top, 80px);
+  bottom: var(--bottom, auto);
   left: var(--left, 12px);
   width: 340px;
-  max-height: min(70vh, 560px);
+  max-height: min(560px, var(--max-h, 70vh));
   overflow-y: auto;
   padding: 16px;
   border: 1px solid var(--card-border);
