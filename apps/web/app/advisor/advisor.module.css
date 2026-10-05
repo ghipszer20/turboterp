@@ -433,27 +433,23 @@
 
 /* ---------- Plan grid ---------- */
 
-.planLayout {
+.summaryMain {
   display: flex;
-  flex-direction: column-reverse;
-  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
 }
 
-@media (min-width: 1000px) {
-  .planLayout {
-    flex-direction: row;
-    align-items: flex-start;
-  }
-  .planSide {
-    flex: none;
-    width: 320px;
-    position: sticky;
-    top: 16px;
-  }
-  .planMain {
-    flex: 1;
-    min-width: 0;
-  }
+.programChecks {
+  margin-bottom: 16px;
+  padding: 0 14px 12px;
+  border: 0.5px solid var(--separator);
+  border-radius: var(--r-md);
+}
+
+.programChecks > .trackGroup:first-child {
+  margin-top: 0;
+  border-top: 0;
 }
 
 .summaryBar {
@@ -772,7 +768,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 10px;
 }
 
 .severityCount {
@@ -812,6 +807,9 @@
 }
 
 .issueRow {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   border-left: 3px solid transparent;
   padding-left: 8px;
 }
@@ -897,6 +895,15 @@
   font: var(--t-caption);
   font-weight: 600;
   margin-bottom: 4px;
+}
+
+.trackNotes {
+  margin-top: 6px;
+}
+
+.trackNotes summary {
+  cursor: pointer;
+  font-weight: 600;
 }
 
 .tipList {
