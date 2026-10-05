@@ -59,7 +59,33 @@ export type RefreshReport = {
   ok: number;
   failed: number;
   failures: { key: string; error: string }[];
+  /** Set when the run did no work because the last refresh is younger than the interval. */
+  skipped?: "not due";
 };
+
+/** The parts of the academic calendar snapshot (calendar/academic) this needs. */
+export type CalendarEvent = { term: string; kind: string; start: string; end?: string };
+
+const SEASON_BY_MONTH: Record<string, string> = { "01": "Spring", "05": "Summer", "08": "Fall", "12": "Winter" };
+const newYorkDate = (d: Date) => new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York" }).format(d);
+
+/**
+ * How often seat counts refresh: every 5 minutes from the first day of classes through the end
+ * of schedule adjustment (dates from the academic calendar, compared as New York dates),
+ * every 15 minutes otherwise, and when the calendar lacks those dates.
+ */
+export function seatRefreshIntervalMinutes(now: Date, events: CalendarEvent[] | null, term: string): 5 | 15 {
+  const season = SEASON_BY_MONTH[term.slice(4)];
+  if (!season || !events) return 15;
+  const name = `${season} ${term.slice(0, 4)}`;
+  const mine = events.filter((e) => e.term === name);
+  const first = mine.find((e) => e.kind === "first-day")?.start;
+  const adjustment = mine.find((e) => e.kind === "schedule-adjustment");
+  const last = adjustment?.end ?? adjustment?.start;
+  if (!first || !last) return 15;
+  const today = newYorkDate(now);
+  return today >= first && today <= last ? 5 : 15;
+}
 
 const ATTEMPTS = 3;
 const REFRESH_KEY = (term: string) => `schedule/${term}/refresh`;
@@ -112,9 +138,19 @@ export async function refreshSeats(store: SnapshotStore, deps: RefreshDeps, now:
   const started = deps.clock();
   const generatedAt = now.toISOString();
   const updatedAt = generatedAt;
+  const state = (await store.get<{ next?: string; completedAt?: string }>(REFRESH_KEY(term)))?.data;
+  const cursor = state?.next;
+  // A run resuming from a cursor always continues; otherwise wait out the interval.
+  if (cursor === undefined && state?.completedAt) {
+    const calendar = (await store.get<CalendarEvent[]>("calendar/academic"))?.data ?? null;
+    const interval = seatRefreshIntervalMinutes(now, calendar, term);
+    if (now.getTime() - Date.parse(state.completedAt) < (interval - 0.5) * 60_000) {
+      report.skipped = "not due";
+      return report;
+    }
+  }
   const courses = await loadCourses(store, term);
   const groups = groupBy(courses, (c) => c.department);
-  const cursor = (await store.get<{ next: string }>(REFRESH_KEY(term)))?.data.next;
   const ratings = await loadRatings(store, term);
 
   const fresh: CourseIndexFile["courses"] = [];
@@ -134,7 +170,7 @@ export async function refreshSeats(store: SnapshotStore, deps: RefreshDeps, now:
     const result = await fetchEach(batches, (batch) => deps.fetchSections(term, batch), { attempts: ATTEMPTS, pause: deps.pause });
     if (result.failed.length > 0) {
       report.failed++;
-      report.failures.push({ key: dept, error: result.failed[0].message });
+      report.failures.push({ key: dept, error: result.failed[0]?.message ?? "failed" });
       continue;
     }
     const built = buildScheduleFiles({ term, courses: deptCourses, sections: result.items }, { generatedAt, ratings });
@@ -164,9 +200,9 @@ export async function refreshSeats(store: SnapshotStore, deps: RefreshDeps, now:
 
   if (stoppedAt) {
     report.done = false;
-    await store.put(REFRESH_KEY(term), { updatedAt, data: { next: stoppedAt } });
+    await store.put(REFRESH_KEY(term), { updatedAt, data: { next: stoppedAt, completedAt: state?.completedAt } });
   } else {
-    await store.delete(REFRESH_KEY(term));
+    await store.put(REFRESH_KEY(term), { updatedAt, data: { completedAt: generatedAt } });
   }
   return report;
 }
@@ -200,7 +236,7 @@ export async function refreshCourses(store: SnapshotStore, deps: RefreshDeps, no
     const result = await fetchEach([code], (d) => deps.fetchCourses(term, d), { attempts: ATTEMPTS, pause: deps.pause });
     if (result.failed.length > 0) {
       report.failed++;
-      report.failures.push({ key: code, error: result.failed[0].message });
+      report.failures.push({ key: code, error: result.failed[0]?.message ?? "failed" });
       continue;
     }
     list = [...list.filter((c) => c.department !== code), ...result.items];

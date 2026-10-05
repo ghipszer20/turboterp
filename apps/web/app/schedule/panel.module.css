@@ -246,6 +246,11 @@
   flex-basis: 100%;
 }
 
+.seatsAge {
+  color: var(--text-3);
+  font: 400 11px/1.3 var(--font);
+}
+
 .gradeNone {
   color: var(--text-3);
   font: italic 400 11px/1.3 var(--font);

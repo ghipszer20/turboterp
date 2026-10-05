@@ -128,5 +128,13 @@ export function useScheduleData(courseIds: string[], wantGrades = false) {
     [grades],
   );
 
-  return { indexState, term, ...derived, loaded: derived.loaded && gradesLoaded, gpas, loadGrades, gradesFor };
+  /** When the department's seat counts were last refreshed, or null while loading / missing. */
+  const seatsUpdatedAt = useCallback(
+    (courseId: string): string | null => {
+      const d = depts[deptOf(courseId)];
+      return d && d !== "missing" ? d.generatedAt : null;
+    },
+    [depts],
+  );
+  return { indexState, term, ...derived, loaded: derived.loaded && gradesLoaded, gpas, loadGrades, gradesFor, seatsUpdatedAt };
 }

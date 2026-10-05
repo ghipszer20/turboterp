@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { beforeEach, describe, expect, it } from "vitest";
 import { FileSnapshotStore } from "@turboterp/campus-data/snapshots";
-import { refreshCourses, refreshSeats, type RefreshDeps } from "../src/soc-refresh.ts";
+import { refreshCourses, refreshSeats, seatRefreshIntervalMinutes, type RefreshDeps } from "../src/soc-refresh.ts";
 import { decodeCourseIndex, decodeDepartmentSections } from "../src/schedule-files.ts";
 import type { Course, Section } from "../src/soc.ts";
 
@@ -50,8 +50,8 @@ describe("refreshSeats", () => {
     const report = await refreshSeats(store, deps(), NOW);
     expect(report).toMatchObject({ job: "soc-seats", done: true, failed: 0 });
     const cmsc = decodeDepartmentSections(await get("schedule/202701/sections/CMSC"));
-    expect(cmsc.sections[0].seats.open).toBe(7);
-    expect(cmsc.courses[0].title).toBe("Intro");
+    expect(cmsc.sections[0]!.seats.open).toBe(7);
+    expect(cmsc.courses[0]!.title).toBe("Intro");
     expect(cmsc.generatedAt).toBe(NOW.toISOString());
     const index = decodeCourseIndex(await get("schedule/202701/index"));
     expect(index.courses.map((c) => c.id).sort()).toEqual(["CMSC131", "MATH140"]);
@@ -69,7 +69,7 @@ describe("refreshSeats", () => {
     await put("schedule/202701/sections/CMSC", { v: 1, old: true });
     const report = await refreshSeats(
       store,
-      deps({ fetchSections: async (_t, ids) => { if (ids[0].startsWith("CMSC")) throw new Error("boom"); return ids.map((id) => section(id, 5)); } }),
+      deps({ fetchSections: async (_t, ids) => { if (ids[0]!.startsWith("CMSC")) throw new Error("boom"); return ids.map((id) => section(id, 5)); } }),
       NOW,
     );
     expect(report.failed).toBe(1);
@@ -92,13 +92,13 @@ describe("refreshSeats", () => {
     const first = await refreshSeats(store, slow, NOW);
     expect(first.done).toBe(false);
     expect(await get("schedule/202701/sections/MATH")).toBeUndefined();
-    expect(await get("schedule/202701/refresh")).toEqual({ next: "MATH" });
+    expect(await get("schedule/202701/refresh")).toMatchObject({ next: "MATH" });
     calls = [];
     now = 0;
     const second = await refreshSeats(store, deps(), NOW);
     expect(second.done).toBe(true);
     expect(calls).toEqual([["MATH140"]]);
-    expect(await get("schedule/202701/refresh")).toBeUndefined();
+    expect(await get("schedule/202701/refresh")).toEqual({ completedAt: NOW.toISOString() });
     const index = decodeCourseIndex(await get("schedule/202701/index"));
     expect(index.courses.map((c) => c.id).sort()).toEqual(["CMSC131", "MATH140"]);
   });
@@ -159,5 +159,63 @@ describe("refreshCourses", () => {
     expect(seen).not.toContain("ARHX");
     expect((await get<{ courses: Course[] }>("schedule/202701/courses"))!.courses.map((c) => c.id)).toContain("MATH100");
     expect(await get("schedule/202701/courses-refresh")).toBeUndefined();
+  });
+});
+
+describe("seatRefreshIntervalMinutes", () => {
+  const ev = [
+    { term: "Spring 2027", kind: "first-day", start: "2027-01-25" },
+    { term: "Spring 2027", kind: "schedule-adjustment", start: "2027-01-25", end: "2027-02-05" },
+  ];
+  const at = (iso: string) => seatRefreshIntervalMinutes(new Date(iso), ev, "202701");
+  it("is 5 from the first day through the end of schedule adjustment", () => {
+    expect(at("2027-01-25T15:00:00Z")).toBe(5);
+    expect(at("2027-02-05T23:30:00-05:00")).toBe(5);
+  });
+  it("is 15 the day before and the day after", () => {
+    expect(at("2027-01-24T12:00:00-05:00")).toBe(15);
+    expect(at("2027-02-06T00:30:00-05:00")).toBe(15);
+  });
+  it("compares New York dates, not UTC", () => {
+    expect(at("2027-01-25T03:00:00Z")).toBe(15); // still Jan 24 at 10pm in New York
+    expect(at("2027-02-06T03:00:00Z")).toBe(5); // still Feb 5 at 10pm in New York
+  });
+  it("is 15 without calendar dates for the term", () => {
+    expect(seatRefreshIntervalMinutes(new Date("2027-01-28T12:00:00Z"), [], "202701")).toBe(15);
+    expect(seatRefreshIntervalMinutes(new Date("2027-01-28T12:00:00Z"), ev, "202608")).toBe(15);
+    expect(seatRefreshIntervalMinutes(new Date("2027-01-28T12:00:00Z"), null, "202701")).toBe(15);
+  });
+});
+
+describe("refreshSeats due check", () => {
+  const adjustment = [
+    { term: "Spring 2027", kind: "first-day", start: "2027-01-25" },
+    { term: "Spring 2027", kind: "schedule-adjustment", start: "2027-01-25", end: "2027-02-05" },
+  ];
+  const at = (min: number) => new Date(Date.parse("2027-01-28T15:00:00Z") + min * 60_000);
+  beforeEach(async () => {
+    await put("schedule/202701/courses", { term: "202701", courses: [course("CMSC131")] });
+  });
+  it("skips with no requests when the last refresh is younger than the interval", async () => {
+    await refreshSeats(store, deps(), at(0));
+    calls = [];
+    const r = await refreshSeats(store, deps(), at(10));
+    expect(r).toMatchObject({ done: true, skipped: "not due" });
+    expect(calls).toEqual([]);
+    expect((await refreshSeats(store, deps(), at(15))).skipped).toBeUndefined();
+  });
+  it("uses 5 minutes inside the adjustment period", async () => {
+    await put("calendar/academic", adjustment);
+    await refreshSeats(store, deps(), at(0));
+    calls = [];
+    expect((await refreshSeats(store, deps(), at(3))).skipped).toBe("not due");
+    expect((await refreshSeats(store, deps(), at(5))).skipped).toBeUndefined();
+    expect(calls.length).toBe(1);
+  });
+  it("always continues from a saved cursor", async () => {
+    await put("schedule/202701/refresh", { next: "CMSC", completedAt: at(0).toISOString() });
+    const r = await refreshSeats(store, deps(), at(1));
+    expect(r.skipped).toBeUndefined();
+    expect(calls.length).toBe(1);
   });
 });

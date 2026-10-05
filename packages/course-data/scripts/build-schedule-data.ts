@@ -8,6 +8,7 @@
 // Writes (keys in the snapshot store):
 //   schedule/current                    { term }  (which term the app shows)
 //   schedule/<term>/index               course index for search
+//   schedule/<term>/courses             full course list (read by the scheduled seat refresh)
 //   schedule/<term>/sections/<DEPT>     sections + instructor ratings, one department
 //   schedule/<term>/grades/<DEPT>       grade distributions (copied from @turboterp/ratings' build)
 
@@ -49,6 +50,8 @@ const term: string = snapshot.term;
 const size = (x: unknown) => JSON.stringify(x).length;
 
 await store.put(`schedule/${term}/index`, { updatedAt, data: index });
+// The full course list, which the scheduled seat refresh reads (src/soc-refresh.ts).
+await store.put(`schedule/${term}/courses`, { updatedAt, data: { term, courses: snapshot.courses } });
 let bytes = 0;
 for (const [dept, file] of Object.entries(departments)) {
   await store.put(`schedule/${term}/sections/${dept}`, { updatedAt, data: file });
