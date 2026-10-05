@@ -22,6 +22,8 @@ export type AcademicEvent = {
   label: string;
   start: string;
   end?: string;
+  /** The registrar's explanation under the title (absent on older snapshots). */
+  description?: string;
   /** Not on the registrar's page; worked out from another row. */
   derived?: boolean;
 };
@@ -70,10 +72,16 @@ export function parseAcademicCalendar(html: string, term: string): AcademicEvent
     const cells = $(tr).find("td");
     if (cells.length < 2) return;
     const first = cells.eq(0);
-    const label = (first.find("strong").first().text() || first.text()).replace(/\s+/g, " ").trim();
+    // The title is everything before the first line break (bold text plus any suffix such as
+    // " - University closed"); the explanation sits after it.
+    const [head = "", ...rest] = (first.html() ?? "").split(/<br\s*\/?>/i);
+    const collapse = (h: string) => cheerio.load(`<div>${h}</div>`)("div").text().replace(/\s+/g, " ").trim();
+    const label = collapse(head);
+    const description = collapse(rest.join(" "));
     const dates = parseDates(cells.eq(1).text());
     if (!label || dates.length === 0) return;
     const event: AcademicEvent = { term, kind: classify(label), label, start: dates[0]! };
+    if (description) event.description = description;
     if (dates[1] && dates[1] !== dates[0]) event.end = dates[1];
     events.push(event);
   });
@@ -86,17 +94,35 @@ export function parseAcademicCalendar(html: string, term: string): AcademicEvent
   return events;
 }
 
-/** The registrar's default (current) term and the next two (the picker runs newest first, so they sit just above it). */
-export async function fetchAcademicCalendar(): Promise<AcademicEvent[]> {
+const isoToday = () => new Date().toISOString().slice(0, 10);
+
+/**
+ * Every term the registrar's picker lists that has not fully passed. The picker runs newest
+ * first, so we stop at the first term whose dates are all before `today`. Pages load one at a
+ * time; a page that fails is skipped, and we only throw when none load.
+ */
+export async function fetchAcademicCalendar(today: string = isoToday()): Promise<AcademicEvent[]> {
   const url = (id: string) => `${CALENDAR_URL}?field_academic_terms_target_id=${id}`;
   const first = await fetchText("calendar", CALENDAR_URL);
   const terms = listCalendarTerms(first);
+  if (terms.length === 0) throw new Error("calendar: no terms listed");
   const selected = cheerio.load(first)(`${TERM_OPTIONS}[selected]`).first().attr("value");
-  const start = Math.max(0, terms.findIndex((t) => t.id === selected));
-  const wanted = terms.slice(Math.max(0, start - 2), start + 1).reverse();
-  if (wanted.length === 0) throw new Error("calendar: no terms listed");
-  const pages = await Promise.all(
-    wanted.map((t) => (t.id === terms[start]?.id ? Promise.resolve(first) : fetchText("calendar", url(t.id)))),
-  );
-  return wanted.flatMap((t, i) => parseAcademicCalendar(pages[i]!, t.name));
+  const events: AcademicEvent[] = [];
+  let loaded = 0;
+  let lastError: unknown;
+  for (const t of terms) {
+    let html: string;
+    try {
+      html = t.id === selected ? first : await fetchText("calendar", url(t.id));
+    } catch (err) {
+      lastError = err;
+      continue;
+    }
+    loaded++;
+    const parsed = parseAcademicCalendar(html, t.name);
+    if (parsed.length > 0 && !parsed.some((e) => (e.end ?? e.start) >= today)) break;
+    events.push(...parsed);
+  }
+  if (loaded === 0) throw lastError instanceof Error ? lastError : new Error("calendar: no term loaded");
+  return events;
 }

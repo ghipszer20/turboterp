@@ -143,3 +143,16 @@ export const MapPinIcon = (p: IconProps) => (
     <circle cx="12" cy="10" r="2.3" />
   </Icon>
 );
+
+export const FlagIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M5 21V4" />
+    <path d="M5 4.5h12l-2.5 4 2.5 4H5" />
+  </Icon>
+);
+
+export const HeartIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z" />
+  </Icon>
+);
