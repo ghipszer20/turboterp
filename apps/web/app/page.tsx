@@ -5,9 +5,8 @@ import { BusIcon, DiningIcon, GymIcon, LibraryIcon, RoomIcon } from "@/component
 import { RegistrationCountdown } from "@/app/RegistrationCountdown";
 import { LiveStatus } from "@/components/LiveStatus";
 import { Card, IconTile, Page, Row, Section, SkeletonCard } from "@/components/ui";
-import { getAcademicCalendar, getAllDiningMenus, getLibraryHours, getRecWellAreas, getRoutesOn, getStampVenues, safe } from "@/lib/campus";
+import { getAllDiningMenus, getLibraryHours, getRecWellAreas, getRoutesOn, getStampVenues, safe } from "@/lib/campus";
 import { stampSummary } from "@/lib/stamp";
-import { eventTitle, formatEventDate, upcomingDates } from "@/lib/calendar";
 import { gymRowTitle, MAIN_GYMS } from "@/lib/gyms";
 import { compactLibraryName } from "@/lib/libraries";
 import { currentMealName, mealHighlights } from "@/lib/status";
@@ -66,9 +65,6 @@ async function Today() {
           <Buses today={today} />
         </Suspense>
       </Section>
-      <Suspense fallback={null}>
-        <UpcomingDates today={today} />
-      </Suspense>
     </Page>
   );
 }
@@ -187,21 +183,6 @@ async function Buses({ today }: { today: string }) {
         subtitle={count === null ? "Departures near you" : `${count} routes running today · departures near you`}
       />
     </Card>
-  );
-}
-
-async function UpcomingDates({ today }: { today: string }) {
-  const res = await safe(getAcademicCalendar);
-  const dates = res.ok ? upcomingDates(res.data, today) : [];
-  if (dates.length === 0) return null;
-  return (
-    <Section title="Upcoming dates">
-      <Card>
-        {dates.map((e) => (
-          <Row key={`${e.term}-${e.kind}-${e.start}`} title={eventTitle(e)} subtitle={`${formatEventDate(e)} · ${e.term}`} />
-        ))}
-      </Card>
-    </Section>
   );
 }
 

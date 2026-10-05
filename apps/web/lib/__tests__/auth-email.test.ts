@@ -1,26 +1,33 @@
 import { describe, expect, it } from "vitest";
-import { emailProblem, isUmdEmail, sendProblem } from "../auth/email";
-import { decideSession } from "../auth/session-state";
+import { emailProblem, isEmail, sendProblem } from "../auth/email";
+import { accountControl, decideSession } from "../auth/session-state";
 
-describe("isUmdEmail", () => {
-  it("accepts terpmail.umd.edu, any case, trimmed", () => {
-    expect(isUmdEmail("terry@terpmail.umd.edu")).toBe(true);
-    expect(isUmdEmail("  Terry@TerpMail.UMD.edu ")).toBe(true);
+describe("isEmail", () => {
+  it("accepts any normal address, trimmed", () => {
+    expect(isEmail("terry@terpmail.umd.edu")).toBe(true);
+    expect(isEmail("  Terry@Example.COM ")).toBe(true);
+    expect(isEmail("a@gmail.com")).toBe(true);
   });
-  it("rejects plain umd.edu: students' mailboxes are terpmail (owner, 2026-10-04)", () => {
-    expect(isUmdEmail("terry@umd.edu")).toBe(false);
-  });
-  it("rejects other domains, subdomains and lookalikes", () => {
-    for (const e of ["a@gmail.com", "a@terpmail.umd.edu.evil.com", "x@notterpmail.umd.edu", "a@cs.umd.edu", "a@evil.com@terpmail.umd.edu", "terpmail.umd.edu", "@terpmail.umd.edu", "a b@terpmail.umd.edu", ""])
-      expect(isUmdEmail(e)).toBe(false);
+  it("rejects malformed addresses", () => {
+    for (const e of ["", "a", "a@", "@b.com", "a@b", "a b@c.com", "a@b@c.com", "a@b..", "a@.com"]) expect(isEmail(e)).toBe(false);
   });
 });
 
 describe("emailProblem", () => {
   it("returns a plain message or null", () => {
-    expect(emailProblem("a@gmail.com")).toBe("Use your @terpmail.umd.edu address.");
-    expect(emailProblem("a@umd.edu")).toBe("Use your @terpmail.umd.edu address.");
-    expect(emailProblem("a@terpmail.umd.edu")).toBeNull();
+    expect(emailProblem("nope")).toBe("Enter a valid email address.");
+    expect(emailProblem("a@gmail.com")).toBeNull();
+  });
+});
+
+describe("accountControl", () => {
+  it("shows nothing without auth config or while loading", () => {
+    expect(accountControl(false, "signed-out")).toBe("none");
+    expect(accountControl(true, "loading")).toBe("none");
+  });
+  it("offers sign-in when signed out and the account when signed in", () => {
+    expect(accountControl(true, "signed-out")).toBe("sign-in");
+    expect(accountControl(true, "signed-in")).toBe("account");
   });
 });
 

@@ -2,7 +2,7 @@
 // (docs/project/legal.md). Bump the version whenever the meaning changes.
 
 export const TERMS_VERSION = "2026-09-29";
-export const PRIVACY_VERSION = "2026-09-29";
+export const PRIVACY_VERSION = "2026-10-04";
 
 export type LegalSection = { heading: string; paragraphs: string[] };
 
@@ -85,7 +85,7 @@ export const PRIVACY: LegalSection[] = [
   {
     heading: "The short version",
     paragraphs: [
-      "Only the Advisor uses an account, and it holds just your UMD email address. What you enter stays in your browser. No analytics, no ads, no tracking cookies, and nothing is sold.",
+      "An account is optional, and it holds just your email address. The Advisor works without one, and what you enter stays in your browser. No analytics, no ads, no tracking cookies, and nothing is sold.",
     ],
   },
   {
@@ -122,14 +122,14 @@ export const PRIVACY: LegalSection[] = [
   {
     heading: "Signing in",
     paragraphs: [
-      "Only the Advisor needs an account. Campus, Schedule and Today work without one.",
-      "When you sign in, your UMD email address is stored with our sign-in provider, Supabase, so we can send you a sign-in link. We never ask for or store your Testudo password.",
+      "An account is optional. The Advisor, Campus, Schedule and Today all work without one, and your plan stays in your browser.",
+      "When you sign in, your email address is stored with our sign-in provider, Supabase, so we can send you a sign-in link. We never ask for or store your Testudo password.",
     ],
   },
   {
     heading: "Coming next: your plan on every device (planned)",
     paragraphs: [
-      "We plan to store your plan and your signed agreement (version, time, account and a hash of the typed name) on our server, tied to your account, so they follow you between devices.",
+      "Storing your plan and your signed agreement on our server is planned, not built yet. The plan is to keep them (version, time, account and a hash of the typed name) on our server, tied to your account, so they follow you between devices.",
       "You will be able to delete it all yourself, after confirming that you mean it. This page will be updated before that starts.",
     ],
   },

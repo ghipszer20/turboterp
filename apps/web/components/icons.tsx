@@ -37,6 +37,14 @@ export const CampusIcon = (p: IconProps) => (
   </Icon>
 );
 
+export const CalendarIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="3.5" y="5" width="17" height="15.5" rx="3" />
+    <path d="M3.5 10h17M8 3v4M16 3v4" />
+    <path d="M8 14h.01M12 14h.01M16 14h.01M8 17.5h.01M12 17.5h.01" strokeWidth={2.4} />
+  </Icon>
+);
+
 export const ScheduleIcon = (p: IconProps) => (
   <Icon {...p}>
     <rect x="3.5" y="5" width="17" height="15.5" rx="3" />

@@ -1,6 +1,23 @@
 import { describe, expect, it } from "vitest";
 import type { Section } from "@turboterp/course-data/schedules";
-import { buildIcs, escapeText, foldLine } from "../ics";
+import { allDayIcs, buildIcs, escapeText, foldLine } from "../ics";
+
+describe("allDayIcs", () => {
+  const now = new Date("2026-10-04T12:00:00Z");
+  it("makes a one-day all-day event with an exclusive end", () => {
+    const s = allDayIcs({ title: "Labor Day", start: "2026-09-07" }, now);
+    expect(s).toContain("DTSTART;VALUE=DATE:20260907\r\n");
+    expect(s).toContain("DTEND;VALUE=DATE:20260908\r\n");
+    expect(s).toContain("SUMMARY:Labor Day\r\n");
+    expect(s.startsWith("BEGIN:VCALENDAR\r\n")).toBe(true);
+    expect(s.endsWith("END:VCALENDAR\r\n")).toBe(true);
+  });
+  it("includes the last day of a range, across month ends", () => {
+    const s = allDayIcs({ title: "Winter Break", start: "2026-12-28", end: "2027-01-31" }, now);
+    expect(s).toContain("DTSTART;VALUE=DATE:20261228\r\n");
+    expect(s).toContain("DTEND;VALUE=DATE:20270201\r\n");
+  });
+});
 import { termDates } from "../term-dates";
 
 const sec = (over: Partial<Section> = {}, meetings: Section["meetings"] = []): Section => ({

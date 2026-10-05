@@ -10,7 +10,7 @@ Moved out of PROJECT_MEMORY.md (section 11) on 2026-09-26 so it loads only when 
     - The student is responsible for checking with their advisor and UMD's official degree audit before registering or changing programs.
     - No warranty, and limitation of liability (e.g. for extra semesters or costs).
     - Covers the advisor, optimizer, LLM feedback and pre-professional tracks too.
-  - **Proof of consent:** store the agreement version, timestamp, account, and a hash of the typed name on the server. So the planner **requires a umd.edu account** (a change from "no account needed"; other tabs stay usable without one). Ask for re-consent when the wording changes materially.
+  - **Proof of consent:** store the agreement version, timestamp, account, and a hash of the typed name on the server. So the planner **requires a umd.edu account** (a change from "no account needed"; other tabs stay usable without one). **Superseded (owner, 2026-10-04):** accounts must NOT be tied to a UMD email ("this is supposed to be an unofficial student project"); the owner likes having accounts, with any email address. Whether the Advisor requires sign-in or only offers it is not yet decided. Ask for re-consent when the wording changes materially.
   - **Protection inside the product too, not only the signature:**
     - Every audit result cites its catalog rule and catalog year.
     - "Verify with your advisor" prompts at high-stakes moments: committing a program change or dropping a course that delays graduation.

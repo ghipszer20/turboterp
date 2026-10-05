@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { getAuthClient } from "@/lib/auth/client";
+import { authConfigured, getAuthClient } from "@/lib/auth/client";
 import { emailProblem, sendProblem } from "@/lib/auth/email";
+import { accountControl } from "@/lib/auth/session-state";
 import { useSession } from "@/lib/auth/use-session";
 import styles from "./advisor.module.css";
 
-/** Sign-in by emailed link, shown before the agreement. Terpmail addresses only. */
-export function SignInGate() {
+/** Optional sign-in by emailed link, opened from the Advisor header. Any email address works. */
+function SignInCard({ onClose }: { onClose: () => void }) {
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState<string | null>(null);
@@ -35,33 +36,29 @@ export function SignInGate() {
   };
 
   return (
-    <main className={styles.page}>
-      <header className={styles.header}>
-        <div className={styles.headerText}>
-          <p className={styles.eyebrow}>Advisor</p>
-          <h1 className={styles.title}>{sent ? "Check your email" : "Sign in"}</h1>
-        </div>
-      </header>
+    <section className={styles.gate} aria-label="Sign in">
       {sent ? (
-        <div className={styles.gate}>
+        <>
+          <h2 className={styles.gateTitle}>Check your email</h2>
           <p className={styles.gateIntro}>
             We sent a sign-in link to <strong>{sent}</strong>. Open it on this device to continue. If it isn&apos;t there in a minute, check your spam folder.
           </p>
           <button type="button" className={styles.ghostButton} onClick={() => (setSent(null), setError(null))}>
             Use a different address
           </button>
-        </div>
+        </>
       ) : (
         <form className={styles.gate} onSubmit={submit} noValidate>
-          <p className={styles.gateIntro}>Your plan is tied to your UMD account.</p>
+          <h2 className={styles.gateTitle}>Sign in</h2>
+          <p className={styles.gateIntro}>An account is optional. Syncing your plan between devices is coming soon.</p>
           <label className={styles.field}>
-            <span className={styles.fieldLabel}>Terpmail address</span>
+            <span className={styles.fieldLabel}>Email address</span>
             <input
               className={styles.input}
               type="email"
               inputMode="email"
               autoComplete="email"
-              placeholder="jdoe@terpmail.umd.edu"
+              placeholder="jdoe@example.com"
               value={email}
               onChange={(e) => (setEmail(e.target.value), setError(null))}
             />
@@ -76,20 +73,36 @@ export function SignInGate() {
           </button>
         </form>
       )}
-    </main>
+      <button type="button" className={styles.linkButton} onClick={onClose}>
+        {sent ? "Done" : "Not now"}
+      </button>
+    </section>
   );
 }
 
-/** Small signed-in line for the Advisor header: the address and a quiet sign-out. */
+/** Advisor header account UI: a quiet "Sign in" (opens the card below) or the signed-in address and "Sign out". */
 export function AccountLine() {
   const session = useSession();
-  if (session.status !== "signed-in") return null;
-  const signOut = () => void getAuthClient().then((c) => c.auth.signOut());
-  return (
+  const [open, setOpen] = useState(false);
+  const control = accountControl(authConfigured(), session.status);
+  if (control === "none") return null;
+  if (control === "account") {
+    const signOut = () => void getAuthClient().then((c) => c.auth.signOut());
+    return (
+      <p className={styles.fine}>
+        {session.email}{" "}
+        <button type="button" className={styles.linkButton} onClick={signOut}>
+          Sign out
+        </button>
+      </p>
+    );
+  }
+  return open ? (
+    <SignInCard onClose={() => setOpen(false)} />
+  ) : (
     <p className={styles.fine}>
-      {session.email}{" "}
-      <button type="button" className={styles.linkButton} onClick={signOut}>
-        Sign out
+      <button type="button" className={styles.linkButton} onClick={() => setOpen(true)}>
+        Sign in
       </button>
     </p>
   );
