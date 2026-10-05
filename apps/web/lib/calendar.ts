@@ -25,21 +25,6 @@ export function eventTitle(e: AcademicEvent): string {
   return SHORT[e.kind] ?? e.label;
 }
 
-function addDaysIso(iso: string, days: number): string {
-  const d = new Date(`${iso}T12:00:00Z`);
-  d.setUTCDate(d.getUTCDate() + days);
-  return d.toISOString().slice(0, 10);
-}
-
-/** The next dates worth showing: useful kinds only, still ahead (or under way) within `days`, soonest first. */
-export function upcomingDates(events: AcademicEvent[], today: string, days = 45, max = 4): AcademicEvent[] {
-  const limit = addDaysIso(today, days);
-  return events
-    .filter((e) => e.kind !== "other" && endOf(e) >= today && e.start <= limit)
-    .sort(byStart)
-    .slice(0, max);
-}
-
 /** Drop-with-W, pass/fail and finals for a term, plus apply-to-graduate on the graduation term. */
 export function termKeyDates(events: AcademicEvent[], termName: string, isGraduationTerm: boolean): AcademicEvent[] {
   const kinds = TERM_ORDER.filter((k) => isGraduationTerm || k !== "apply-to-graduate");

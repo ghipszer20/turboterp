@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { AcademicEvent } from "@turboterp/campus-data";
-import { dedupeEvents, formatKeyDates, groupByMonth, isHighlighted, isKeyEvent, nextEvent, termKeyDates, upcomingDates } from "../calendar";
+import { dedupeEvents, formatKeyDates, groupByMonth, isHighlighted, isKeyEvent, nextEvent, termKeyDates } from "../calendar";
 
 const ev = (kind: AcademicEvent["kind"], start: string, end?: string, term = "Spring 2027"): AcademicEvent => ({
   term,
@@ -19,22 +19,6 @@ const events = [
   ev("first-day", "2027-01-27"),
   ev("drop-w", "2026-11-11", undefined, "Fall 2026"),
 ];
-
-describe("upcomingDates", () => {
-  it("keeps useful kinds within the window, soonest first, capped", () => {
-    const got = upcomingDates(events, "2027-01-20", 45, 3);
-    expect(got.map((e) => e.kind)).toEqual(["first-day", "apply-to-graduate", "pass-fail"]);
-  });
-
-  it("drops past dates, but keeps a range that has started and not ended", () => {
-    expect(upcomingDates(events, "2027-05-15").map((e) => e.kind)).toEqual(["finals"]);
-    expect(upcomingDates(events, "2027-05-21")).toEqual([]);
-  });
-
-  it("looks only `days` ahead", () => {
-    expect(upcomingDates(events, "2027-02-10", 10)).toEqual([]);
-  });
-});
 
 describe("termKeyDates", () => {
   it("returns drop, pass/fail and finals for the term", () => {
