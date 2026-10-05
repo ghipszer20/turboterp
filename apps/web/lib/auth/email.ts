@@ -5,7 +5,7 @@ export function isEmail(email: string): boolean {
   const parts = email.trim().toLowerCase().split("@");
   if (parts.length !== 2) return false;
   const [name, domain] = parts;
-  if (name === "" || /s/.test(name) || /s/.test(domain)) return false;
+  if (name === "" || /\s/.test(name) || /\s/.test(domain)) return false;
   const labels = domain.split(".");
   return labels.length >= 2 && labels.every((l) => l !== "");
 }
