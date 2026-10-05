@@ -72,6 +72,13 @@ describe("buildScheduleFiles", () => {
     expect(dept.ratings).toEqual({ "Archana Khurana": 4.6 });
   });
 
+  it("lists the department's instructors that have a review file", () => {
+    const withReviews = buildScheduleFiles(snapshot, { ratings, reviews: ["Archana Khurana", "Someone Elsewhere"], ...meta });
+    const dept = decodeDepartmentSections(JSON.parse(JSON.stringify(withReviews.departments.STAT)));
+    expect(dept.reviews).toEqual(["Archana Khurana"]);
+    expect(decodeDepartmentSections(JSON.parse(JSON.stringify(files.departments.STAT))).reviews).toEqual([]);
+  });
+
   it("is much smaller than the snapshot it came from", () => {
     const compact = JSON.stringify(files.departments.STAT).length;
     const original = JSON.stringify(snapshot.sections.filter((s) => s.courseId === "STAT400")).length;

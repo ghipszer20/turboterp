@@ -21,6 +21,12 @@ describe("scheduleDataKey", () => {
     expect(scheduleDataKey(["202701", "grades", "STAT"])).toEqual({ key: "schedule/202701/grades/STAT", maxAge: 86400 });
   });
 
+  it("maps one instructor's review summary", () => {
+    expect(scheduleDataKey(["202701", "reviews", "jose-a-nunez"])).toEqual({ key: "schedule/202701/reviews/jose-a-nunez", maxAge: 86400 });
+    expect(scheduleDataKey(["202701", "reviews", "../x"])).toBeNull();
+    expect(scheduleDataKey(["202701", "reviews", "Jose"])).toBeNull();
+  });
+
   it.each([
     [["2027", "index"]],
     [["202701", "sections", "cmsc"]],

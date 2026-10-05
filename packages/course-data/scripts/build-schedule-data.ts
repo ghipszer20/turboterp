@@ -3,19 +3,21 @@
 // of Classes snapshot, after the optional ratings and grade builds:
 //
 //   npm run schedule-data -w @turboterp/course-data
-//     [-- --soc <soc-YYYYMM.json>] [--ratings <professor-ratings.json>] [--grades <grades-out dir>] [--dir <snapshot dir>]
+//     [-- --soc <soc-YYYYMM.json>] [--ratings <professor-ratings.json>] [--grades <grades-out dir>] [--reviews <reviews-out dir>] [--dir <snapshot dir>]
 //
 // Writes (keys in the snapshot store):
 //   schedule/current                    { term }  (which term the app shows)
 //   schedule/<term>/index               course index for search
 //   schedule/<term>/sections/<DEPT>     sections + instructor ratings, one department
 //   schedule/<term>/grades/<DEPT>       grade distributions (copied from @turboterp/ratings' build)
+//   schedule/<term>/reviews/<key>       one instructor's PlanetTerp review summary (from @turboterp/ratings, key = instructorFileKey)
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { FileSnapshotStore, openSnapshotStore, type SnapshotStore } from "@turboterp/campus-data/snapshots";
 import { buildScheduleFiles } from "../src/schedule-files.ts";
+import { instructorFileKey } from "@turboterp/ratings";
 
 const pkg = fileURLToPath(new URL("..", import.meta.url));
 const args = process.argv.slice(2);
@@ -34,6 +36,7 @@ function newestSoc(): string {
 const socPath = resolve(flag("--soc") ?? newestSoc());
 const ratingsPath = resolve(flag("--ratings") ?? join(pkg, "..", "ratings", ".cache", "professor-ratings.json"));
 const gradesDir = resolve(flag("--grades") ?? join(pkg, "..", "ratings", ".cache", "grades-out"));
+const reviewsDir = resolve(flag("--reviews") ?? join(pkg, "..", "ratings", ".cache", "reviews-out"));
 const dirArg = flag("--dir");
 const store: SnapshotStore = dirArg ? new FileSnapshotStore(dirArg) : openSnapshotStore();
 
@@ -43,8 +46,13 @@ const ratings = existsSync(ratingsPath)
   : {};
 if (!existsSync(ratingsPath)) console.warn(`No ratings at ${ratingsPath}: every professor will show as unrated`);
 
+const reviewNames: string[] = existsSync(join(reviewsDir, "index.json"))
+  ? (JSON.parse(readFileSync(join(reviewsDir, "index.json"), "utf8")) as { names: string[] }).names
+  : [];
+if (reviewNames.length === 0) console.warn(`No review summaries at ${reviewsDir}: instructor names will stay plain text`);
+
 const updatedAt = snapshot.fetchedAt ?? new Date().toISOString();
-const { index, departments } = buildScheduleFiles(snapshot, { ratings, generatedAt: new Date().toISOString() });
+const { index, departments } = buildScheduleFiles(snapshot, { ratings, reviews: reviewNames, generatedAt: new Date().toISOString() });
 const term: string = snapshot.term;
 const size = (x: unknown) => JSON.stringify(x).length;
 
@@ -54,6 +62,7 @@ for (const [dept, file] of Object.entries(departments)) {
   await store.put(`schedule/${term}/sections/${dept}`, { updatedAt, data: file });
   bytes += size(file);
 }
+const written = new Set<string>();
 let grades = 0;
 let gradeBytes = 0;
 if (existsSync(gradesDir)) {
@@ -64,6 +73,17 @@ if (existsSync(gradesDir)) {
     gradeBytes += size(data);
   }
 } else console.warn(`No grade files at ${gradesDir}: the section panel will say "No grade data"`);
+let reviews = 0;
+for (const name of reviewNames) {
+  const key = instructorFileKey(name);
+  if (!key || !existsSync(join(reviewsDir, `${key}.json`))) continue;
+  const data = JSON.parse(readFileSync(join(reviewsDir, `${key}.json`), "utf8"));
+  if (!written.has(key)) {
+    written.add(key);
+    await store.put(`schedule/${term}/reviews/${key}`, { updatedAt, data });
+    reviews++;
+  }
+}
 // Written last, so the app never points at a term whose files aren't all there.
 await store.put("schedule/current", { updatedAt, data: { term } });
 
@@ -74,4 +94,5 @@ console.log(`  sections: ${Object.keys(departments).length} departments, ${kb(by
   Object.entries(departments).map(([d, f]) => [d, size(f)] as const).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([d, n]) => `${d} ${kb(n)}`).join(", ")
 }`);
 console.log(`  ratings: ${Object.keys(ratings).length} instructors`);
+console.log(`  reviews: ${reviews} instructors`);
 console.log(`  grades: ${grades} departments, ${kb(gradeBytes)} total`);
