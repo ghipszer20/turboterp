@@ -1,17 +1,17 @@
-// Sign-in is for UMD students, whose mailboxes are @terpmail.umd.edu (owner, 2026-10-04: not
-// plain @umd.edu). The server enforces the same rule (supabase/migrations).
+// Accounts take any email address (owner, 2026-10-04: TurboTerp is an unofficial student project,
+// not tied to a UMD account). This is only a typo check; Supabase confirms the address by emailing the link.
 
-const STUDENT_DOMAIN = "terpmail.umd.edu";
-
-export function isUmdEmail(email: string): boolean {
+export function isEmail(email: string): boolean {
   const parts = email.trim().toLowerCase().split("@");
   if (parts.length !== 2) return false;
   const [name, domain] = parts;
-  return name !== "" && !/\s/.test(name) && domain === STUDENT_DOMAIN;
+  if (name === "" || /s/.test(name) || /s/.test(domain)) return false;
+  const labels = domain.split(".");
+  return labels.length >= 2 && labels.every((l) => l !== "");
 }
 
 export function emailProblem(email: string): string | null {
-  return isUmdEmail(email) ? null : "Use your @terpmail.umd.edu address.";
+  return isEmail(email) ? null : "Enter a valid email address.";
 }
 
 /** What to tell the student when the sign-in email couldn't be sent. */
