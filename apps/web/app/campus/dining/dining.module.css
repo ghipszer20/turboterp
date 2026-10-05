@@ -45,8 +45,9 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-width: 680px;
-  margin: 12px auto 0;
+  /* Lines up with the controls above, whose 680px includes their side padding. */
+  max-width: calc(680px - 2 * var(--gutter));
+  margin: 12px 0 0;
 }
 
 .stations > section {
@@ -54,8 +55,9 @@
 }
 
 .results {
-  max-width: 680px;
-  margin: 12px auto 0;
+  /* Lines up with the controls above, whose 680px includes their side padding. */
+  max-width: calc(680px - 2 * var(--gutter));
+  margin: 12px 0 0;
 }
 
 .stationCard {
@@ -72,7 +74,7 @@
 
 .items {
   margin: 0;
-  padding: 0 0 6px;
+  padding: 0;
   list-style: none;
 }
 
@@ -108,9 +110,8 @@
   flex: 1 1 auto;
   min-width: 0;
   font: var(--t-body);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  /* Food names are the point of the page: wrap, never cut them off. */
+  overflow-wrap: anywhere;
 }
 
 .tags {
