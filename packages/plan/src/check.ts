@@ -68,6 +68,8 @@ export type PlanIssue = {
   course?: string;
   /** Plain language, for the student. */
   message: string;
+  /** A few words for the course card, when the message is too long for it (confirm items). */
+  short?: string;
 };
 
 export type Season = "Fall" | "Winter" | "Spring" | "Summer";
@@ -274,6 +276,7 @@ export function checkPlan(plan: Plan, catalog: PlanCatalog, options: CheckOption
             severity: "confirm",
             ...at,
             message: `${where} also needs something TurboTerp can't check. Confirm it yourself: ${confirmTexts(info.prerequisite, prereqHistory).join("; ")}.`,
+            short: `Confirm: ${confirmTexts(info.prerequisite, prereqHistory).join("; ")}`,
           });
         }
       }
@@ -295,6 +298,7 @@ export function checkPlan(plan: Plan, catalog: PlanCatalog, options: CheckOption
             severity: "confirm",
             ...at,
             message: `${where} also has a corequisite TurboTerp can't check. Confirm it yourself: ${confirmTexts(info.corequisite, coreqHistory).join("; ")}.`,
+            short: `Confirm: ${confirmTexts(info.corequisite, coreqHistory).join("; ")}`,
           });
         }
       }

@@ -98,6 +98,7 @@ describe("prerequisites", () => {
         course: "CMSC420",
         message:
           "CMSC420 (Spring 2027) also needs something TurboTerp can't check. Confirm it yourself: permission of CMNS-Computer Science department.",
+        short: "Confirm: permission of CMNS-Computer Science department",
       },
     ]);
   });
