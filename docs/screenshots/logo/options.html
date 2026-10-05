@@ -1,6 +1,6 @@
 <!doctype html>
 <meta charset="utf-8">
-<title>TurboTerp logo concepts</title>
+<title>TurboTerp logo: Turbo options</title>
 <style>
   body { font: 14px/1.35 -apple-system, system-ui, "Segoe UI", sans-serif; margin: 0; background: #f5f5f7; color: #1d1d1f; }
   h1 { font-size: 21px; margin: 16px 20px 2px; }
@@ -8,45 +8,53 @@
   .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; padding: 0 20px 20px; }
   .opt { border-radius: 16px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.08); padding: 12px 14px 12px; }
   .opt h2 { font-size: 15px; margin: 0; }
-  .opt small { display: block; color: #6e6e73; min-height: 36px; margin-bottom: 8px; }
+  .opt small { display: block; color: #6e6e73; min-height: 36px; margin-bottom: 6px; }
   .big { display: flex; justify-content: center; }
   .big img { filter: drop-shadow(0 6px 14px rgba(120, 8, 30, .28)); }
-  .row { display: flex; align-items: center; justify-content: center; gap: 12px; padding-top: 12px; }
+  .row { display: flex; align-items: center; justify-content: center; gap: 12px; padding-top: 10px; }
 </style>
-<h1>TurboTerp logo concepts (fresh start)</h1>
-<p>Eight ideas, each built from a few simple shapes on the original red. Shown large, then at 48, 32 and 16 px.</p>
+<h1>TurboTerp logo: options on "Turbo"</h1>
+<p>Twelve takes on the speeding terrapin. Shown large, then at 48, 32 and 16 px.</p>
 <div class="grid" id="grid"></div>
 <script>
 let n = 0;
-const box = (inner) => { const g = `g${n++}`; return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D0183C"/><stop offset="1" stop-color="#A80A29"/></linearGradient></defs><rect width="128" height="128" rx="29" fill="url(#${g})"/>${inner}</svg>`; };
 const W = '#fff', R = '#BA0C2F';
-const line = (d, w = 7) => `<path d="${d}" fill="none" stroke="${W}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
-const cut = (d, w = 5) => `<path d="${d}" fill="none" stroke="${R}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
-
-// A solid side-view terrapin made of a dome, a head and two feet.
-const solid = (fill) => `<g fill="${fill}">
-  <path d="M25 78a37 33 0 0 1 74 0z"/>
-  <rect x="25" y="74" width="74" height="10" rx="5"/>
-  <path d="M92 76c2-9 7-15 14-15a9 9 0 0 1 0 18c-3 0-5 2-7 5H92z"/>
-  <rect x="37" y="80" width="13" height="15" rx="6.500"/>
-  <rect x="74" y="80" width="13" height="15" rx="6.500"/>
-</g>`;
-
-const hex = (cx, cy, r) => "M" + [0, 1, 2, 3, 4, 5].map((i) => { const a = (Math.PI / 3) * i - Math.PI / 2; return `${(cx + r * Math.cos(a)).toFixed(2)} ${(cy + r * Math.sin(a)).toFixed(2)}`; }).join("L") + "z";
-
+const tile = (inner, white) => { const g = `g${n++}`; return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D0183C"/><stop offset="1" stop-color="#A80A29"/></linearGradient></defs>${white ? `<rect x=".5" y=".5" width="127" height="127" rx="29" fill="#fff" stroke="#e5e5ea"/>` : `<rect width="128" height="128" rx="29" fill="url(#${g})"/>`}${inner}</svg>`; };
+function logo(o = {}) {
+  const fg = o.white ? R : W, bg = o.white ? W : R;
+  const lean = o.lean ?? 12, dx = o.dx ?? 5, dy = o.dy ?? 0, sc = o.scale ?? 1;
+  const legs = o.legs ?? "stub";
+  const legSvg = legs === "none" ? "" : legs === "stride"
+    ? `<rect x="36" y="76" width="13" height="19" rx="6.500" transform="rotate(28 42.500 80)"/><rect x="74" y="76" width="13" height="19" rx="6.500" transform="rotate(-28 80.500 80)"/>`
+    : `<rect x="37" y="80" width="13" height="15" rx="6.500"/><rect x="74" y="80" width="13" height="15" rx="6.500"/>`;
+  const head = o.neck
+    ? `<path d="M90 77c4-10 12-19 23-19a9 9 0 0 1 0 18c-5 0-9 3-12 8H90z"/>`
+    : `<path d="M92 76c2-9 7-15 14-15a9 9 0 0 1 0 18c-3 0-5 2-7 5H92z"/>`;
+  const seams = o.seams ? `<path d="M44 78 50 60H74L80 78M50 60 45 50M74 60 79 50" fill="none" stroke="${bg}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>` : "";
+  const shift = Math.tan((lean * Math.PI) / 180) * 85 + dx;
+  const body = `<g transform="translate(${shift.toFixed(1)} ${dy}) skewX(${-lean}) translate(${(64 * (1 - sc)).toFixed(1)} ${(80 * (1 - sc)).toFixed(1)}) scale(${sc})"><g fill="${fg}">
+    <path d="M25 78a37 33 0 0 1 74 0z"/><rect x="25" y="74" width="74" height="10" rx="5"/>${head}${legSvg}</g>${seams}</g>`;
+  const lines = (o.lines ?? [[10, 26, 62], [6, 22, 74], [12, 24, 86]]).map(([a, b, y]) => `M${a} ${y}H${b}`).join("");
+  const extra = o.extra ? o.extra(fg, bg) : "";
+  return tile(body + (lines ? `<path d="${lines}" fill="none" stroke="${fg}" stroke-width="${o.lineW ?? 5}" stroke-linecap="round"/>` : "") + extra, o.white);
+}
 const options = [
-  ["Silhouette", "A solid terrapin in profile. Nothing else.", solid(W)],
-  ["Silhouette with shell seams", "The same profile with three plate lines cut into the shell.", solid(W) + cut("M44 78 50 60H74L80 78M50 60 45 50M74 60 79 50", 4)],
-  ["Single line", "One even line: shell, head and two steps.", line("M18 82H98M24 82a35 31 0 0 1 70 0M42 82v11M76 82v11", 6.500) + `<circle cx="106.500" cy="73" r="8.500" fill="none" stroke="${W}" stroke-width="6.500"/>`],
-  ["Shell only", "Just the domed shell with its plates, sitting on a line.", `<path d="M24 82a40 38 0 0 1 80 0z" fill="${W}"/><rect x="18" y="88" width="92" height="7" rx="3.500" fill="${W}"/>` + cut("M45 82 52 62H76L83 82M52 62 46 49M76 62 82 49", 4.500)],
-  ["Turbo", "The profile leaning forward with speed lines: the 'Turbo' in the name.", `<g transform="translate(22 0) skewX(-12)">${solid(W)}</g>` + line("M10 62H26M6 74H22M12 86H24", 5)],
-  ["Cut-out", "A white disc with the terrapin cut out of it.", `<circle cx="64" cy="64" r="43" fill="${W}"/><g transform="translate(13.500 14) scale(.78)">${solid(R)}</g>`],
-  ["M in the shell", "A domed shell whose seams are an M.", `<path d="M22 88a42 42 0 0 1 84 0z" fill="${W}"/><rect x="16" y="93" width="96" height="7" rx="3.500" fill="${W}"/>` + cut("M42 88V62L64 80 86 62V88", 6)],
-  ["Inverted", "The plain silhouette in red on a white tile, for places where a white icon suits better.", "__INV__"],
+  ["Original", "Concept 5 as shown before.", {}],
+  ["Hard lean", "Leaning further forward with longer lines.", { lean: 22, dx: 2, lines: [[8, 30, 60], [4, 30, 73], [12, 28, 86]] }],
+  ["Two bold lines", "Fewer, heavier speed lines.", { lines: [[6, 26, 66], [10, 24, 80]], lineW: 6.500 }],
+  ["Arrow lines", "Three lines stepped so they point forward.", { lines: [[14, 24, 60], [4, 24, 72], [14, 24, 84]], lineW: 5.500, dx: 6 }],
+  ["Shell seams", "The original with plate lines on the shell.", { seams: true }],
+  ["Striding", "Legs kicked out mid-run.", { legs: "stride", lean: 14 }],
+  ["Gliding", "No legs: a low, clean shape skimming along.", { legs: "none", dy: 6, lines: [[8, 26, 66], [4, 22, 78], [14, 30, 92]] }],
+  ["Neck out", "Head stretched forward, racing.", { neck: true, lean: 16, dx: 0 }],
+  ["Dashes", "Broken trails: a dot and a dash on each line.", { lines: [[6, 7, 62], [14, 26, 62], [3, 4, 74], [11, 22, 74], [9, 10, 86], [17, 26, 86]], lineW: 5 }],
+  ["Streaks through the shell", "The speed lines slice into the back of the shell.", { lines: [], dx: 9, extra: (fg, bg) => `<path d="M0 60H50M0 71H46M0 82H44" fill="none" stroke="${bg}" stroke-width="4.500" stroke-linecap="round"/><path d="M12 65.500H40M6 76.500H40" fill="none" stroke="${fg}" stroke-width="6.500" stroke-linecap="round"/>` }],
+  ["Compact", "Smaller terrapin with more breathing room.", { scale: 0.84, dx: 6, lines: [[18, 32, 66], [14, 28, 76], [20, 30, 86]], lineW: 4.500 }],
+  ["Inverted", "The original in red on a white tile.", { white: true }],
 ];
 const img = (svg, px) => `<img width="${px}" height="${px}" alt="" src="data:image/svg+xml;utf8,${encodeURIComponent(svg)}">`;
-document.getElementById('grid').innerHTML = options.map(([name, note, inner], i) => {
-  const svg = inner === "__INV__" ? `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><rect x=".5" y=".5" width="127" height="127" rx="29" fill="#fff" stroke="#e5e5ea"/>${solid(R)}</svg>` : box(inner);
+document.getElementById('grid').innerHTML = options.map(([name, note, o], i) => {
+  const svg = logo(o);
   return `<div class="opt"><h2>${i + 1}. ${name}</h2><small>${note}</small><div class="big">${img(svg, 190)}</div><div class="row">${[48, 32, 16].map((s) => img(svg, s)).join('')}</div></div>`;
 }).join('');
 </script>
