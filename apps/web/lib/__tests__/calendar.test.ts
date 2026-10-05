@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { AcademicEvent } from "@turboterp/campus-data";
-import { dedupeEvents, formatKeyDates, groupByMonth, isHighlighted, isKeyEvent, isPast, nextEvent, termKeyDates } from "../calendar";
+import { calendarTitle, dedupeEvents, formatKeyDates, groupByMonth, isHighlighted, isKeyEvent, isPast, nextEvent, termKeyDates } from "../calendar";
 
 const ev = (kind: AcademicEvent["kind"], start: string, end?: string, term = "Spring 2027"): AcademicEvent => ({
   term,
@@ -152,5 +152,29 @@ describe("calendar tab, review fixes", () => {
     expect(isPast(list[0]!, "2026-10-13")).toBe(true);
     expect(isPast(list[1]!, "2026-10-13")).toBe(false);
     expect(isPast(list[2]!, "2026-10-13")).toBe(false);
+  });
+});
+
+describe("calendarTitle", () => {
+  const t = (kind: AcademicEvent["kind"], label: string, term: string): AcademicEvent => ({ term, kind, label, start: "2026-10-09" });
+  it.each([
+    ["registration-appointments", "Registration appointment and blocks available", "Spring 2027", "Spring 2027 registration: your time slot is posted on Testudo"],
+    ["priority-registration", "Priority registration and graduate student registration begins", "Spring 2027", "Spring 2027 priority registration begins"],
+    ["early-registration", "Early registration", "Spring 2027", "Spring 2027 early registration"],
+    ["other", "General registration", "Spring 2027", "Spring 2027 general registration"],
+    ["first-day", "First day of classes", "Spring 2027", "First day of Spring 2027 classes"],
+    ["last-class", "Last day of classes", "Fall 2026", "Last day of Fall 2026 classes"],
+    ["finals", "Final exams", "Fall 2026", "Fall 2026 final exams"],
+    ["drop-w", "Last day to drop a course with a W (undergraduate students only)", "Fall 2026", "Last day to drop a Fall 2026 course with a W (undergraduate students only)"],
+    ["drop-w", "Last day to drop a course with a W", "Fall 2026", "Last day to drop a Fall 2026 course with a W"],
+    ["apply-to-graduate", "Last day to apply for December 2026 graduation", "Fall 2026", "Last day to apply for December 2026 graduation"],
+    ["schedule-adjustment", "Schedule adjustment period", "Fall 2026", "Fall 2026 schedule adjustment period"],
+    ["pass-fail", "Pass/fail deadline", "Fall 2026", "Fall 2026 pass/fail deadline"],
+    ["other", "Labor Day - University closed", "Fall 2026", "Labor Day - University closed"],
+    ["other", "Schedule of Classes available", "Spring 2027", "Spring 2027 Schedule of Classes available"],
+  ] as const)("%s: %s", (kind, label, term, want) => expect(calendarTitle(t(kind, label, term))).toBe(want));
+
+  it("leaves the Advisor's short forms alone", () => {
+    expect(formatKeyDates([t("drop-w", "Last day to drop a course with a W", "Fall 2026")])).toContain("Drop with W");
   });
 });
