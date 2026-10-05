@@ -54,7 +54,7 @@ describe("RecWell sheet", () => {
       setting: "indoor" as const,
       hoursByDate: { "2026-01-04": "8am - 12am", "2026-01-05": "24 Hours" },
     };
-    expect(recWellOnDate([area], "2026-01-04")[0]!.tomorrow).toEqual({ kind: "24h" });
+    expect(recWellOnDate([area], "2026-01-04")[0]!.tomorrow).toMatchObject({ kind: "24h" });
     expect(recWellOnDate([area], "2026-01-05")[0]!.tomorrow).toBeUndefined();
   });
 

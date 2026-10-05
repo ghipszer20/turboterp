@@ -131,7 +131,7 @@ function Body({
               ) : null}
             </div>
             <p className={styles.muted}>
-              Find it in Testudo and type it here (Eastern time). The calendar file reminds you 1 day and 15 minutes before for {termName}.
+              Find it in Testudo and type it here (Eastern time). The calendar file reminds you 1 day before.
             </p>
           </li>
         </ul>

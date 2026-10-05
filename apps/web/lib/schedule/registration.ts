@@ -164,7 +164,7 @@ export function registrationChecklist(i: ChecklistInput): Checklist {
   };
 }
 
-/** The appointment as a calendar file: one 30-minute event, alarms 1 day and 15 minutes before. */
+/** The appointment as a calendar file: one 30-minute event with one alarm, 1 day before (owner, 2026-10-04). */
 export function appointmentIcs(termName: string, appointment: string, now: Date = new Date()): string {
   const start = appointment.replace(/[-:]/g, "") + "00";
   const startMs = Date.parse(`${appointment}:00Z`) + 30 * 60_000;
@@ -192,7 +192,6 @@ export function appointmentIcs(termName: string, appointment: string, now: Date 
     `SUMMARY:${escapeText(summary)}`,
     `DESCRIPTION:${escapeText("Register for classes in Testudo. Check for holds and have your backup sections ready.")}`,
     ...alarm("-P1D", `${summary} is tomorrow`),
-    ...alarm("-PT15M", `${summary} starts in 15 minutes`),
     "END:VEVENT",
     "END:VCALENDAR",
   ];

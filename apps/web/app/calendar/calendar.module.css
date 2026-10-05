@@ -1,0 +1,33 @@
+.item + .item {
+  border-top: 0.5px solid var(--separator);
+}
+
+.highlight {
+  background: var(--accent-tint);
+}
+
+.past {
+  opacity: 0.5;
+}
+
+.add {
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--accent);
+  font: var(--t-sub);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.earlier {
+  display: block;
+  margin: 20px 0 0;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: var(--t-sub);
+  cursor: pointer;
+}

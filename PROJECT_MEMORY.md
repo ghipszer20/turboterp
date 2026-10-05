@@ -55,9 +55,10 @@ See the package.json files: Next.js web app (apps/web), TypeScript packages, HiG
 
 ## 8. UI / design
 - **Principles:** show the answer, not the data; one main action per screen; plain language (e.g. "Humanities (DSHU)"); color only when it means something (white and gray, one accent, a pastel for each requirement category); an instant feel (cached data, skeleton loading, springs, haptics); accessibility (Dynamic Type, VoiceOver, dark mode, AA contrast).
-- **Navigation (owner decision, 2026-09-24):** THREE main tabs: **Campus · Schedule · Advisor**.
+- **Navigation (owner decision, 2026-09-24; Calendar added 2026-10-04):** FOUR main tabs: **Campus · Schedule · Calendar · Advisor**.
   - **Campus** has a sub-nav: Dining · Transit (Shuttle-UM) · Libraries (hours + study rooms) · Gyms.
   - **Schedule**: the schedule builder, plus course and professor info (replaces the old Explore idea).
+  - **Calendar**: UMD's academic dates by month (breaks, finals, registration), key dates by default.
   - **Advisor**: the 4-year plan / degree audit plus LLM advising.
   - **Today** summary is the home page (`/`), reached from the TurboTerp logo; it's not a tab.
 - **Onboarding** in under 60 seconds: major and year → transcript → audit.
