@@ -680,6 +680,11 @@
   color: var(--soon);
 }
 
+.courseIssue[data-severity="confirm"] {
+  color: var(--text);
+  font-weight: 600;
+}
+
 .addCourse {
   padding: 8px;
   border: 0.5px dashed var(--separator);
@@ -880,21 +885,26 @@
   font-weight: 600;
 }
 
-.noticeList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.tips {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 0.5px solid var(--separator);
+  color: var(--text-3);
+  font: var(--t-caption);
 }
 
-.notice {
-  padding: 8px 10px;
-  border-radius: var(--r-sm);
-  background: var(--open-tint);
-  color: var(--text);
-  font: var(--t-sub);
+.tipsTitle {
+  font: var(--t-caption);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.tipList {
+  margin: 0;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
 /* ---------- Track checks (grouped under the track's name, in the Checks card) ---------- */

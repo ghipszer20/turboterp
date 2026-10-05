@@ -1,7 +1,8 @@
 "use client";
 
-// The plan's checks: a summary list (worst first), each chosen track's checkTrack issues grouped
-// under its name, and the program notices. checkPlan's issues are synchronous and run on every
+// The plan's checks: what needs action (errors and warnings, worst first), each chosen track's
+// checkTrack issues grouped under its name, and small-print tips (the full-time rule, double major
+// and dual degree notes). Confirm items aren't listed here: they sit on their course card. checkPlan's issues are synchronous and run on every
 // edit; track issues and notices come from the debounced audit (AnalysisState).
 
 import type { PlanIssue } from "@turboterp/plan/check";
@@ -10,7 +11,7 @@ import type { PlanIssue } from "@turboterp/plan/check";
 import type { TrackIssue } from "@turboterp/tracks";
 import type { AnalysisState, OpenCourse } from "./AdvisorApp";
 import type { CatalogState } from "./data";
-import { SEVERITY, SEVERITY_ORDER, type IssueGroups, type Severity } from "@/lib/advisor/issues";
+import { planTips, SEVERITY, SEVERITY_ORDER, type IssueGroups, type Severity } from "@/lib/advisor/issues";
 import styles from "./advisor.module.css";
 
 type Checked = { issues: PlanIssue[]; groups: IssueGroups } | null;
@@ -28,8 +29,12 @@ export function ChecksPanel({
 }) {
   const tracks = analysis.result?.tracks ?? [];
   const degrees = analysis.result?.degrees ?? null;
-  const degreeIssues = degrees ? [...degrees.issues].sort((a, b) => rank(a.severity) - rank(b.severity)) : [];
-  const noPlanIssues = !checked || checked.issues.length === 0;
+  const degreeIssues = degrees ? degrees.issues.filter((i) => i.severity !== "info").sort((a, b) => rank(a.severity) - rank(b.severity)) : [];
+  const noPlanIssues = !checked || checked.groups.checks.length === 0;
+  const tips = planTips(checked?.issues ?? [], [
+    ...(analysis.result?.notices ?? []).map((n) => n.message),
+    ...(degrees?.issues ?? []).filter((i) => i.severity === "info").map((i) => i.message),
+  ]);
   const loadingTracks = tracks.length === 0 && analysis.status === "running";
 
   return (
@@ -47,14 +52,14 @@ export function ChecksPanel({
           {!noPlanIssues ? (
             <>
               <div className={styles.severityCounts}>
-                {SEVERITY_ORDER.filter((s) => checked!.groups.counts[s] > 0).map((s) => (
+                {(["error", "warning"] as const).filter((s) => checked!.groups.counts[s] > 0).map((s) => (
                   <span key={s} className={styles.severityCount} data-severity={s}>
                     {SEVERITY[s].plural(checked!.groups.counts[s])}
                   </span>
                 ))}
               </div>
               <ul className={styles.issueList}>
-                {checked!.groups.summary.map((issue, i) => (
+                {checked!.groups.checks.map((issue, i) => (
                   <IssueRow key={i} issue={issue} onOpenCourse={onOpenCourse} />
                 ))}
               </ul>
@@ -89,6 +94,16 @@ export function ChecksPanel({
           ) : null}
         </>
       )}
+      {tips.length > 0 ? (
+        <div className={styles.tips}>
+          <h3 className={styles.tipsTitle}>Tips</h3>
+          <ul className={styles.tipList}>
+            {tips.map((tip) => (
+              <li key={tip}>{tip}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
     </section>
   );
 }
@@ -150,36 +165,23 @@ function TrackIssueRow({ issue, onOpenCourse }: { issue: TrackIssue; onOpenCours
   );
 }
 
-/** Program notices: always info, never a warning (double major, dual degree, close-to-major). */
+/** The program analysis's own state, shown only while it has nothing yet or failed; its notices
+ * (double major, dual degree, close-to-major) are tips in the Checks card. */
 export function Notices({ analysis }: { analysis: AnalysisState }) {
-  if (analysis.status === "error" && !analysis.result) {
+  if (analysis.result) return null;
+  if (analysis.status === "error") {
     return (
       <section className={styles.card} aria-label="Program notices">
         <p className={styles.cardNote}>Couldn&apos;t check your programs and the CS gateway right now.</p>
       </section>
     );
   }
-  const notices = analysis.result?.notices ?? [];
-  if (notices.length === 0) {
-    if (analysis.status === "running" && !analysis.result) {
-      return (
-        <section className={styles.card} aria-label="Program notices">
-          <p className={styles.cardNote}>Checking your programs…</p>
-        </section>
-      );
-    }
-    return null;
+  if (analysis.status === "running") {
+    return (
+      <section className={styles.card} aria-label="Program notices">
+        <p className={styles.cardNote}>Checking your programs…</p>
+      </section>
+    );
   }
-  return (
-    <section className={styles.card} aria-label="Program notices" aria-busy={analysis.status === "running"}>
-      <h2 className={styles.cardTitle}>Good to know</h2>
-      <ul className={styles.noticeList}>
-        {notices.map((n, i) => (
-          <li key={i} className={styles.notice} data-severity="info">
-            {n.message}
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
+  return null;
 }

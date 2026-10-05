@@ -6,7 +6,7 @@ import { isGraduateCourse } from "@turboterp/plan/grad-courses";
 import type { TermDifficulty } from "@turboterp/plan/difficulty";
 import { useEffect, useMemo, useState } from "react";
 import { planDifficulty } from "@/lib/advisor/difficulty";
-import { courseKey, type IssueGroups, type Severity } from "@/lib/advisor/issues";
+import { cardNote, courseKey, type IssueGroups, type Severity } from "@/lib/advisor/issues";
 import type { AdvisorPlan, PlanTermState } from "@/lib/advisor/plan-state";
 import type { PriorCreditResult } from "@/lib/advisor/prior-credit";
 import { formatKeyDates, termKeyDates } from "@/lib/calendar";
@@ -96,9 +96,23 @@ export function PlanView({
           </section>
         ))}
         {lastTerm ? (
-          <button type="button" className={styles.addTerm} onClick={() => dispatchPlan({ type: "add-term", name: nextMainTerm(lastTerm) })}>
-            + Add {nextMainTerm(lastTerm)}
-          </button>
+          <div className={styles.optionalTerms}>
+            <button type="button" className={styles.addTerm} onClick={() => dispatchPlan({ type: "add-term", name: nextMainTerm(lastTerm) })}>
+              + Add {nextMainTerm(lastTerm)}
+            </button>
+            {plan.terms.length > 1 ? (
+              <button
+                type="button"
+                className={styles.smallButton}
+                onClick={() => {
+                  const n = byName.get(lastTerm)!.courses.length;
+                  if (n === 0 || confirm(`Are you sure you want to delete ${lastTerm} and its ${n} course(s)?`)) dispatchPlan({ type: "remove-term", name: lastTerm });
+                }}
+              >
+                Remove {lastTerm}
+              </button>
+            ) : null}
+          </div>
         ) : null}
       </div>
     </div>
@@ -156,7 +170,8 @@ function TermColumn({
   const optional = season === "Winter" || season === "Summer";
   const credits = term.courses.reduce((t, c) => t + (creditsOf(c.id, c.credits) ?? 0), 0);
   const unknown = term.courses.some((c) => creditsOf(c.id, c.credits) === null);
-  const termIssues = groups?.byTerm.get(term.name) ?? [];
+  // Info (a light term) is a tip in the Checks card, not a banner on every term.
+  const termIssues = (groups?.byTerm.get(term.name) ?? []).filter((i) => i.severity !== "info");
   const ready = catalog.status === "ready" ? catalog : null;
 
   const drop = (e: React.DragEvent, index?: number) => {
@@ -204,7 +219,7 @@ function TermColumn({
             className={styles.iconButton}
             aria-label={`Remove ${term.name}`}
             onClick={() => {
-              if (term.courses.length === 0 || confirm(`Remove ${term.name} and its ${term.courses.length} course(s)?`))
+              if (term.courses.length === 0 || confirm(`Are you sure you want to delete ${term.name} and its ${term.courses.length} course(s)?`))
                 dispatchPlan({ type: "remove-term", name: term.name });
             }}
           >
@@ -249,8 +264,7 @@ function TermColumn({
                 <span className={styles.courseTitle}>{info?.title ?? (ready ? "Not in TurboTerp's course data" : " ")}</span>
                 {issues.length > 0 ? (
                   <span className={styles.courseIssue} data-severity={worst}>
-                    {issues[0]!.message}
-                    {issues.length > 1 ? ` (+${issues.length - 1} more)` : ""}
+                    {cardNote(issues)}
                   </span>
                 ) : null}
               </button>
