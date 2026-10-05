@@ -2,7 +2,7 @@
 // tabs) but only the viewed meal's stations. Shared by the page's first
 // render and /api/dining, so taps render exactly like the first view.
 
-import type { DiningMenu, Station } from "@turboterp/campus-data";
+import { DINING_HALLS, type DiningMenu, type MenuItem, type Station } from "@turboterp/campus-data";
 
 export type DiningSlice = {
   /** Meal names the hall serves today; null when its menu couldn't be loaded. */
@@ -39,6 +39,42 @@ export function stationDisplayName(name: string): string {
 }
 
 /** The hall a link asked for (`/campus/dining?hall=16`, from Today's rows), or null if absent or unknown. */
+export type SearchMatch = { hallId: number; hall: string; meal: string; station: string; item: MenuItem };
+
+export const SEARCH_LIMIT = 60;
+
+/**
+ * Foods whose name contains every word of `query`, across all halls' menus for the day
+ * (menus in hall order; null for a hall that couldn't load). Results follow hall then meal
+ * order, list an item once per hall + meal + station, and stop at SEARCH_LIMIT (`capped`).
+ */
+export function searchMenus(
+  menus: readonly (DiningMenu | null)[],
+  query: string,
+): { results: SearchMatch[]; capped: boolean } {
+  const q = query.trim().toLowerCase();
+  if (q.length < 2) return { results: [], capped: false };
+  const words = q.split(/\s+/);
+  const results: SearchMatch[] = [];
+  for (const menu of menus) {
+    if (!menu) continue;
+    const hall = DINING_HALLS.find((h) => h.id === menu.hallId)?.short ?? String(menu.hallId);
+    for (const meal of menu.meals) {
+      for (const station of meal.stations) {
+        const seen = new Set<string>();
+        for (const item of station.items) {
+          const name = item.name.toLowerCase();
+          if (seen.has(name) || !words.every((w) => name.includes(w))) continue;
+          seen.add(name);
+          if (results.length === SEARCH_LIMIT) return { results, capped: true };
+          results.push({ hallId: menu.hallId, hall, meal: meal.name, station: stationDisplayName(station.name), item });
+        }
+      }
+    }
+  }
+  return { results, capped: false };
+}
+
 export function hallFromQuery(raw: string | string[] | undefined, hallIds: readonly number[]): number | null {
   const id = typeof raw === "string" && raw !== "" ? Number(raw) : NaN;
   return hallIds.includes(id) ? id : null;

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { DiningMenu } from "@turboterp/campus-data";
-import { diningSlice, hallFromQuery, resolveMeal, stationDisplayName } from "../dining";
+import { diningSlice, hallFromQuery, resolveMeal, searchMenus, stationDisplayName } from "../dining";
 
 const item = (name: string) => ({ name, labelUrl: null, diets: [], contains: [] });
 const menu: DiningMenu = {
@@ -85,5 +85,51 @@ describe("hallFromQuery", () => {
     expect(hallFromQuery(undefined, [19, 16, 51])).toBeNull();
     expect(hallFromQuery("abc", [19, 16, 51])).toBeNull();
     expect(hallFromQuery("99", [19, 16, 51])).toBeNull();
+  });
+});
+
+describe("searchMenus", () => {
+  const south: DiningMenu = { ...menu, hallId: 16 };
+  const yah: DiningMenu = {
+    hallId: 19,
+    date: "2026-09-25",
+    meals: [
+      { name: "Lunch", stations: [{ name: "Woks", items: [item("Spicy Chicken Burger")] }] },
+      { name: "Dinner", stations: [{ name: "Breakfast", items: [item("Burger Bowl"), item("Burger Bowl")] }] },
+    ],
+  };
+  // Menus come in DINING_HALLS order: 19 (Yahentamitsi), 16 (South Campus), 51.
+  const all = [yah, south, null];
+
+  it("ignores queries under 2 characters", () => {
+    expect(searchMenus(all, "b").results).toEqual([]);
+    expect(searchMenus(all, "  ").results).toEqual([]);
+  });
+
+  it("matches case-insensitively across halls and meals, once per station, in hall then meal order", () => {
+    const { results } = searchMenus(all, "BURGER");
+    expect(results.map((r) => [r.hall, r.meal, r.station, r.item.name])).toEqual([
+      ["Yahentamitsi", "Lunch", "Woks", "Spicy Chicken Burger"],
+      ["Yahentamitsi", "Dinner", "Breakfast Area", "Burger Bowl"],
+      ["South Campus", "Lunch", "Grill", "Burger"],
+    ]);
+    expect(results[0]!.hallId).toBe(19);
+  });
+
+  it("needs every word, in any order", () => {
+    expect(searchMenus(all, "burger chicken").results).toHaveLength(1);
+    expect(searchMenus(all, "burger pasta").results).toEqual([]);
+  });
+
+  it("caps results and flags when more exist", () => {
+    const big: DiningMenu = {
+      hallId: 19,
+      date: "d",
+      meals: [{ name: "Lunch", stations: [{ name: "S", items: Array.from({ length: 70 }, (_, i) => item(`Taco ${i}`)) }] }],
+    };
+    const r = searchMenus([big], "taco");
+    expect(r.results).toHaveLength(60);
+    expect(r.capped).toBe(true);
+    expect(searchMenus(all, "burger").capped).toBe(false);
   });
 });
