@@ -118,15 +118,19 @@ async function loadCourses(store: SnapshotStore, term: string): Promise<CourseRo
   return (index?.courses ?? []).map(([id, title, min, max]) => ({ id, department: id.slice(0, 4), title, credits: { min, max } }));
 }
 
-/** Every instructor rating in the existing department files, merged into one map. */
-async function loadRatings(store: SnapshotStore, term: string): Promise<Record<string, number>> {
+/** Every instructor rating in the existing department files, merged into one map, and every instructor with a review file. */
+async function loadRatings(store: SnapshotStore, term: string): Promise<{ ratings: Record<string, number>; reviews: Set<string> }> {
   const keys = await store.list(`schedule/${term}/sections`);
   const ratings: Record<string, number> = {};
+  const reviews = new Set<string>();
   for (let i = 0; i < keys.length; i += 20) {
     const files = await Promise.all(keys.slice(i, i + 20).map((k) => store.get<DepartmentSectionsFile>(k)));
-    for (const f of files) Object.assign(ratings, f?.data.ratings);
+    for (const f of files) {
+      Object.assign(ratings, f?.data.ratings);
+      for (const n of f?.data.reviews ?? []) reviews.add(n);
+    }
   }
-  return ratings;
+  return { ratings, reviews };
 }
 
 export async function refreshSeats(store: SnapshotStore, deps: RefreshDeps, now: Date): Promise<RefreshReport> {
@@ -151,7 +155,7 @@ export async function refreshSeats(store: SnapshotStore, deps: RefreshDeps, now:
   }
   const courses = await loadCourses(store, term);
   const groups = groupBy(courses, (c) => c.department);
-  const ratings = await loadRatings(store, term);
+  const { ratings, reviews } = await loadRatings(store, term);
 
   const fresh: CourseIndexFile["courses"] = [];
   const refreshed = new Set<string>();
@@ -173,7 +177,7 @@ export async function refreshSeats(store: SnapshotStore, deps: RefreshDeps, now:
       report.failures.push({ key: dept, error: result.failed[0]?.message ?? "failed" });
       continue;
     }
-    const built = buildScheduleFiles({ term, courses: deptCourses, sections: result.items }, { generatedAt, ratings });
+    const built = buildScheduleFiles({ term, courses: deptCourses, sections: result.items }, { generatedAt, ratings, reviews });
     const file: DepartmentSectionsFile = built.departments[dept] ?? {
       v: SCHEDULE_FILE_VERSION,
       term,

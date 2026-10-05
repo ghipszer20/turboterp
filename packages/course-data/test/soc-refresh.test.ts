@@ -110,6 +110,13 @@ describe("refreshSeats", () => {
     expect(decodeDepartmentSections(await get("schedule/202701/sections/CMSC")).ratings).toEqual({ "Ann Lee": 4.5 });
   });
 
+  it("carries the instructors with a review file over from the existing department files", async () => {
+    await put("schedule/202701/courses", { term: "202701", courses: [course("CMSC131"), course("MATH140")] });
+    await put("schedule/202701/sections/MATH", { v: 1, term: "202701", dept: "MATH", generatedAt: "x", courses: {}, ratings: {}, reviews: ["Ann Lee"] });
+    await refreshSeats(store, deps(), NOW);
+    expect(decodeDepartmentSections(await get("schedule/202701/sections/CMSC")).reviews).toEqual(["Ann Lee"]);
+  });
+
   it("falls back to the index and department files when the courses key is absent", async () => {
     await put("schedule/202701/index", { v: 1, term: "202701", generatedAt: "x", courses: [["CMSC131", "Intro", 4, 4, 1]] });
     await put("schedule/202701/sections/CMSC", { v: 1, term: "202701", dept: "CMSC", generatedAt: "x", courses: { CMSC131: { t: "Intro", cr: [4, 4], s: [] } }, ratings: {} });
