@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AdvisorIcon, CalendarIcon, CampusIcon, InfoIcon, ScheduleIcon, TodayIcon } from "./icons";
+import { AdvisorIcon, CalendarIcon, CampusIcon, FlagIcon, HeartIcon, InfoIcon, ScheduleIcon, TodayIcon } from "./icons";
 import { ThemeToggle } from "./ThemeToggle";
 import styles from "./Nav.module.css";
 
@@ -12,6 +12,13 @@ const TABS = [
   { href: "/schedule", label: "Schedule", Icon: ScheduleIcon },
   { href: "/calendar", label: "Calendar", Icon: CalendarIcon },
   { href: "/advisor", label: "Advisor", Icon: AdvisorIcon },
+] as const;
+
+// Three small buttons, kept separate (owner): About, Report an issue, Support.
+const INFO_LINKS = [
+  { href: "/about", label: "About", aria: "About TurboTerp", Icon: InfoIcon },
+  { href: "/report", label: "Report an issue", aria: "Report an issue", Icon: FlagIcon },
+  { href: "/support", label: "Support", aria: "Support TurboTerp", Icon: HeartIcon },
 ] as const;
 
 function isActive(pathname: string, href: string) {
@@ -35,15 +42,18 @@ export function Nav() {
           Turbo<span>Terp</span>
         </Link>
         <div className={styles.topBarControls}>
-          <Link
-            href="/about"
-            className={styles.aboutIconLink}
-            aria-label="About TurboTerp"
-            aria-current={pathname === "/about" ? "page" : undefined}
-          >
-            <InfoIcon size={22} />
-          </Link>
-          <ThemeToggle />
+          {INFO_LINKS.map(({ href, aria, Icon }) => (
+            <Link
+              key={href}
+              href={href}
+              className={styles.aboutIconLink}
+              aria-label={aria}
+              aria-current={pathname === href ? "page" : undefined}
+            >
+              <Icon size={22} />
+            </Link>
+          ))}
+          <ThemeToggle compact />
         </div>
       </header>
       <nav className={styles.nav} aria-label="Main">
@@ -68,15 +78,20 @@ export function Nav() {
             );
           })}
         </ul>
+        <div className={styles.infoLinks}>
+          {INFO_LINKS.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className={styles.aboutLink}
+              data-active={pathname === href}
+              aria-current={pathname === href ? "page" : undefined}
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
         <div className={styles.appearance}>
-          <Link
-            href="/about"
-            className={styles.aboutLink}
-            data-active={pathname === "/about"}
-            aria-current={pathname === "/about" ? "page" : undefined}
-          >
-            About
-          </Link>
           <ThemeToggle />
         </div>
         <p className={styles.fine}>

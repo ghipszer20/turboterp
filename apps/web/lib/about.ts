@@ -9,6 +9,7 @@ export type AboutConfig = {
   creatorBio: string;
   githubUrl: string;
   donationUrl: string;
+  venmoHandle: string;
   contactEmail: string;
 };
 
@@ -19,8 +20,9 @@ export const ABOUT: AboutConfig = {
   creatorBio: PLACEHOLDER,
   // OWNER: replace with the public GitHub repo URL, e.g. "https://github.com/you/turboterp".
   githubUrl: PLACEHOLDER,
-  // OWNER: replace with the donation link once one exists (Ko-fi, Buy Me a Coffee, etc).
-  donationUrl: PLACEHOLDER,
+  // OWNER (Venmo account "turboterp", owner 2026-10-04): donations go to Venmo.
+  donationUrl: "https://venmo.com/u/turboterp",
+  venmoHandle: "@turboterp",
   // OWNER: replace with the contact email once it's created.
   contactEmail: PLACEHOLDER,
 };
@@ -34,6 +36,7 @@ export type ResolvedAbout = {
   githubUrl: string | null;
   issuesUrl: string | null;
   donationUrl: string | null;
+  venmoHandle: string | null;
   contactEmail: string | null;
 };
 
@@ -45,6 +48,7 @@ export function resolveAbout(cfg: AboutConfig): ResolvedAbout {
     githubUrl,
     issuesUrl: githubUrl ? `${githubUrl.replace(/\/+$/, "")}/issues/new` : null,
     donationUrl: isPlaceholder(cfg.donationUrl) ? null : cfg.donationUrl,
+    venmoHandle: isPlaceholder(cfg.venmoHandle) ? null : cfg.venmoHandle,
     contactEmail: isPlaceholder(cfg.contactEmail) ? null : cfg.contactEmail,
   };
 }

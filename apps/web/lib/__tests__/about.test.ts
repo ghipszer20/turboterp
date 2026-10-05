@@ -1,10 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { buildReportMailto, isPlaceholder, resolveAbout, type AboutConfig } from "../about";
+import { ABOUT, buildReportMailto, isPlaceholder, resolveAbout, type AboutConfig } from "../about";
 
 const FILLED: AboutConfig = {
   creatorBio: "I'm a UMD student who built this.",
   githubUrl: "https://github.com/example/turboterp",
-  donationUrl: "https://buymeacoffee.com/example",
+  donationUrl: "https://venmo.com/u/example",
+  venmoHandle: "@example",
   contactEmail: "hello@example.com",
 };
 
@@ -12,6 +13,7 @@ const PLACEHOLDER_CONFIG: AboutConfig = {
   creatorBio: "__OWNER_FILL_IN__",
   githubUrl: "__OWNER_FILL_IN__",
   donationUrl: "__OWNER_FILL_IN__",
+  venmoHandle: "__OWNER_FILL_IN__",
   contactEmail: "__OWNER_FILL_IN__",
 };
 
@@ -25,6 +27,14 @@ describe("isPlaceholder", () => {
   });
 });
 
+describe("ABOUT", () => {
+  it("points donations at the TurboTerp Venmo account", () => {
+    const resolved = resolveAbout(ABOUT);
+    expect(resolved.donationUrl).toBe("https://venmo.com/u/turboterp");
+    expect(resolved.venmoHandle).toBe("@turboterp");
+  });
+});
+
 describe("resolveAbout", () => {
   it("resolves every field to null when the config is all placeholders", () => {
     const resolved = resolveAbout(PLACEHOLDER_CONFIG);
@@ -33,6 +43,7 @@ describe("resolveAbout", () => {
       githubUrl: null,
       issuesUrl: null,
       donationUrl: null,
+      venmoHandle: null,
       contactEmail: null,
     });
   });
@@ -41,6 +52,7 @@ describe("resolveAbout", () => {
     const resolved = resolveAbout(FILLED);
     expect(resolved.bio).toBe(FILLED.creatorBio);
     expect(resolved.donationUrl).toBe(FILLED.donationUrl);
+    expect(resolved.venmoHandle).toBe(FILLED.venmoHandle);
     expect(resolved.contactEmail).toBe(FILLED.contactEmail);
   });
 
