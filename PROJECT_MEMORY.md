@@ -61,7 +61,7 @@ See the package.json files: Next.js web app (apps/web), TypeScript packages, HiG
   - **Advisor**: the 4-year plan / degree audit plus LLM advising.
   - **Today** summary is the home page (`/`), reached from the TurboTerp logo; it's not a tab.
 - **Onboarding** in under 60 seconds: major and year → transcript → audit.
-- Don't use Testudo or UMD logos. **Logo (owner pick, 2026-10-04):** a small solid white terrapin in profile, mid-stride, with three speed lines, on the red tile (`apps/web/app/icon.svg`, `lib/logo.ts`). The owner rejected detailed top-down terrapins (scutes, rings, diamonds, claws, speckles, eyes): keep it minimal.
+- Don't use Testudo or UMD logos. **Logo (owner pick, 2026-10-04):** a small solid white terrapin in profile, mid-stride, with two bold speed lines, on the red tile (`apps/web/app/icon.svg`, `lib/logo.ts`). The owner rejected detailed top-down terrapins (scutes, rings, diamonds, claws, speckles, eyes): keep it minimal.
 - The website gets a desktop layout, not a stretched phone app.
 
 ## 9. Phases and time estimate

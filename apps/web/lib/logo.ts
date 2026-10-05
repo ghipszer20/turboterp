@@ -1,4 +1,4 @@
-// The TurboTerp mark: a terrapin in profile, mid-stride, with speed lines (owner pick,
+// The TurboTerp mark: a terrapin in profile, mid-stride, with two speed lines (owner pick,
 // 2026-10-04). An original drawing; not Testudo or any UMD logo. app/icon.svg holds the same
 // drawing on its red tile, so change both together.
 
@@ -12,7 +12,7 @@ export const LOGO_MARK_SVG =
   `<rect x="36" y="76" width="13" height="19" rx="6.500" transform="rotate(28 42.500 80)"/>` +
   `<rect x="74" y="76" width="13" height="19" rx="6.500" transform="rotate(-28 80.500 80)"/>` +
   `</g>` +
-  `<path d="M18 66H32M14 76H28M20 86H30" fill="none" stroke="#fff" stroke-width="4.500" stroke-linecap="round"/>` +
+  `<path d="M13 69H31M18 82H31" fill="none" stroke="#fff" stroke-width="6.500" stroke-linecap="round"/>` +
   `</svg>`;
 
 export const LOGO_MARK_DATA_URI = `data:image/svg+xml;base64,${Buffer.from(LOGO_MARK_SVG).toString("base64")}`;
