@@ -58,7 +58,7 @@ export default function AboutPage() {
 
       <p className={styles.moreLinks}>
         <Link href="/report">Report an issue</Link>
-        <Link href="/support">Support TurboTerp</Link>
+        <Link href="/donate">Donate</Link>
       </p>
     </Page>
   );

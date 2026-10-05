@@ -13,7 +13,7 @@ import { formatKeyDates, termKeyDates } from "@/lib/calendar";
 import { searchCourses } from "@/lib/advisor/search";
 import { academicYears, parseTerm } from "@/lib/advisor/terms";
 import type { AnalysisState, OpenCourse } from "./AdvisorApp";
-import { ChecksPanel, Notices } from "./ChecksPanel";
+import { CheckCounts, Notices, PlanTips, ProgramChecks, TermIssue } from "./ChecksPanel";
 import { loadCourseGrades, type CatalogState } from "./data";
 import { dispatchPlan, openView } from "./store";
 import styles from "./advisor.module.css";
@@ -56,22 +56,22 @@ export function PlanView({
   }, [plan, ready]);
 
   return (
-    <div className={styles.planLayout}>
-      <div className={styles.planSide}>
-        <Notices analysis={analysis} />
-        <ChecksPanel checked={checked} catalogStatus={catalog.status} analysis={analysis} onOpenCourse={onOpenCourse} />
-      </div>
-
-      <div className={styles.planMain}>
+    <div>
+      <div>
         <div className={styles.summaryBar}>
-          <span>
-            <strong>{total + prior.totalCredits}</strong> credits planned
-            {prior.totalCredits > 0 ? ` (${prior.totalCredits} from prior credit)` : ""}
+          <span className={styles.summaryMain}>
+            <span>
+              <strong>{total + prior.totalCredits}</strong> credits planned
+              {prior.totalCredits > 0 ? ` (${prior.totalCredits} from prior credit)` : ""}
+            </span>
+            <CheckCounts checked={checked} />
           </span>
           <button type="button" className={styles.linkButton} onClick={() => openView("credit")}>
             {prior.entries.length ? "Edit prior credit" : "Add AP, IB or college credit"}
           </button>
         </div>
+        <Notices analysis={analysis} />
+        <ProgramChecks analysis={analysis} onOpenCourse={onOpenCourse} />
 
         {years.map((year, i) => (
           <section key={year.label} className={styles.year} aria-label={`Year ${i + 1}, ${year.label}`}>
@@ -114,6 +114,7 @@ export function PlanView({
             ) : null}
           </div>
         ) : null}
+        <PlanTips checked={checked} analysis={analysis} />
       </div>
     </div>
   );
@@ -230,9 +231,7 @@ function TermColumn({
       {keyDates ? <p className={styles.keyDates}>Key dates: {keyDates}</p> : null}
       {difficulty ? <p className={styles.difficultyText}>{difficulty.sentence}</p> : null}
       {termIssues.map((issue, i) => (
-        <p key={i} className={styles.inlineIssue} data-severity={issue.severity}>
-          {issue.message}
-        </p>
+        <TermIssue key={i} issue={issue} />
       ))}
       <ul className={styles.courseList}>
         {term.courses.map((c, index) => {
