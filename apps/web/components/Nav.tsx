@@ -14,11 +14,11 @@ const TABS = [
   { href: "/advisor", label: "Advisor", Icon: AdvisorIcon },
 ] as const;
 
-// Three small buttons, kept separate (owner): About, Report an issue, Support.
+// Three small buttons, kept separate (owner): About, Report an issue, Donate.
 const INFO_LINKS = [
   { href: "/about", label: "About", aria: "About TurboTerp", Icon: InfoIcon },
   { href: "/report", label: "Report an issue", aria: "Report an issue", Icon: FlagIcon },
-  { href: "/support", label: "Support", aria: "Support TurboTerp", Icon: HeartIcon },
+  { href: "/donate", label: "Donate", aria: "Donate to TurboTerp", Icon: HeartIcon },
 ] as const;
 
 function isActive(pathname: string, href: string) {
