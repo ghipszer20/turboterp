@@ -1,0 +1,86 @@
+/* Report an issue page. Cards add a real thin border (ui.module.css cards have shadows only). */
+
+.card {
+  border: 1px solid var(--card-border);
+}
+
+.form {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font: var(--t-foot);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  font: var(--t-body);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 96px;
+  font-family: inherit;
+}
+
+.input:focus,
+.textarea:focus {
+  outline: 3px solid var(--accent-tint-2);
+  border-color: var(--accent);
+}
+
+.formFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sendButton {
+  align-self: flex-start;
+  padding: 9px 18px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--accent);
+  color: var(--on-accent);
+  font: var(--t-sub);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--fast) ease, opacity var(--fast) ease;
+}
+
+.sendButton:hover {
+  background: var(--accent-hover);
+}
+
+.sendButton:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.comingSoon {
+  color: var(--text-2);
+  font: var(--t-sub);
+}
+
+.comingSoon a {
+  color: var(--accent);
+}
