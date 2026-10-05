@@ -13,6 +13,9 @@ export function authorizeCron(authorizationHeader: string | null, secret: string
   return timingSafeEqual(given, wanted) ? "ok" : "unauthorized";
 }
 
-export function cronJob(name: string): "fast" | "daily" | null {
-  return name === "fast" || name === "daily" ? name : null;
+const JOBS = ["fast", "daily", "soc-seats", "soc-courses"] as const;
+export type CronJob = (typeof JOBS)[number];
+
+export function cronJob(name: string): CronJob | null {
+  return (JOBS as readonly string[]).includes(name) ? (name as CronJob) : null;
 }

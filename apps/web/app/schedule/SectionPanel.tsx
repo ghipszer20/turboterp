@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import type { Section } from "@turboterp/course-data/schedules";
 import type { CourseGrades } from "@turboterp/ratings";
+import { seatsAge } from "@/lib/age";
 import { courseColor } from "@/lib/schedule/colors";
 import {
   bestRating,
@@ -58,6 +59,7 @@ export function SectionPanel({
   preview,
   ratings,
   grades,
+  seatsUpdatedAt = null,
   overlaps,
   onPreview,
   onCommit,
@@ -73,6 +75,8 @@ export function SectionPanel({
   ratings: Readonly<Record<string, number>>;
   /** undefined while loading; null when there's no file */
   grades: Record<string, CourseGrades> | null | undefined;
+  /** When this department's seat counts were last refreshed (ISO), or null when unknown. */
+  seatsUpdatedAt?: string | null;
   /** Build my own: the placed courses a section would overlap. */
   overlaps?: (s: Section) => string[];
   onPreview: (s: Section | null) => void;
@@ -146,6 +150,7 @@ export function SectionPanel({
         <div className={styles.headText}>
           <h3>{courseId} · choose a section</h3>
           <p>{title}</p>
+          {seatsUpdatedAt ? <p className={styles.seatsAge}>{seatsAge(seatsUpdatedAt, new Date())}</p> : null}
         </div>
         <button type="button" className={styles.close} aria-label="Close" onClick={onClose}>
           ✕
