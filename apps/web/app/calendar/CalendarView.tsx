@@ -4,7 +4,7 @@ import { useState } from "react";
 import type { AcademicEvent } from "@turboterp/campus-data";
 import { Segmented } from "@/components/Segmented";
 import { Card, Row, Section } from "@/components/ui";
-import { eventTitle, formatEventDate, groupByMonth, isHighlighted, isKeyEvent, nextEvent } from "@/lib/calendar";
+import { eventTitle, formatEventDate, groupByMonth, isHighlighted, isKeyEvent, isPast, nextEvent } from "@/lib/calendar";
 import { allDayIcs } from "@/lib/schedule/ics";
 import styles from "./calendar.module.css";
 
@@ -22,7 +22,7 @@ function download(e: AcademicEvent) {
 }
 
 function DateRow({ e, today }: { e: AcademicEvent; today: string }) {
-  const past = (e.end ?? e.start) < today;
+  const past = isPast(e, today);
   return (
     <div className={`${styles.item} ${isHighlighted(e) ? styles.highlight : ""} ${past ? styles.past : ""}`}>
       <Row
@@ -30,7 +30,7 @@ function DateRow({ e, today }: { e: AcademicEvent; today: string }) {
         subtitle={`${formatEventDate(e)} · ${e.term}`}
         trailing={
           <button type="button" className={styles.add} onClick={() => download(e)} aria-label={`Add ${eventTitle(e)} to my calendar`}>
-            Add to my calendar
+            Add
           </button>
         }
       />
@@ -40,8 +40,12 @@ function DateRow({ e, today }: { e: AcademicEvent; today: string }) {
 
 export function CalendarView({ events, today }: { events: AcademicEvent[]; today: string }) {
   const [mode, setMode] = useState<Mode>("key");
-  const shown = mode === "key" ? events.filter(isKeyEvent) : events;
-  const next = nextEvent(shown, today);
+  // Dates already behind us stay out of the way until asked for.
+  const [earlier, setEarlier] = useState(false);
+  const inMode = mode === "key" ? events.filter(isKeyEvent) : events;
+  const hasEarlier = inMode.some((e) => isPast(e, today));
+  const shown = earlier ? inMode : inMode.filter((e) => !isPast(e, today));
+  const next = nextEvent(inMode, today);
   return (
     <>
       <Segmented
@@ -59,6 +63,11 @@ export function CalendarView({ events, today }: { events: AcademicEvent[]; today
             <DateRow e={next} today={today} />
           </Card>
         </Section>
+      ) : null}
+      {hasEarlier ? (
+        <button type="button" className={styles.earlier} onClick={() => setEarlier(!earlier)}>
+          {earlier ? "Hide earlier dates" : "Show earlier dates"}
+        </button>
       ) : null}
       {groupByMonth(shown).map((g) => (
         <Section key={g.key} title={g.title}>

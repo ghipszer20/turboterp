@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { AcademicEvent } from "@turboterp/campus-data";
-import { dedupeEvents, formatKeyDates, groupByMonth, isHighlighted, isKeyEvent, nextEvent, termKeyDates } from "../calendar";
+import { dedupeEvents, formatKeyDates, groupByMonth, isHighlighted, isKeyEvent, isPast, nextEvent, termKeyDates } from "../calendar";
 
 const ev = (kind: AcademicEvent["kind"], start: string, end?: string, term = "Spring 2027"): AcademicEvent => ({
   term,
@@ -117,5 +117,40 @@ describe("nextEvent", () => {
     expect(nextEvent(list, "2026-10-16")?.label).toBe("Fall Break");
     expect(nextEvent(list, "2026-10-17")?.label).toBe("Thanksgiving Break");
     expect(nextEvent(list, "2027-01-01")).toBeUndefined();
+  });
+});
+
+describe("calendar tab, review fixes", () => {
+  const labelled = (kind: AcademicEvent["kind"], label: string, start: string, end?: string, term = "Fall 2026"): AcademicEvent => ({
+    term,
+    kind,
+    label,
+    start,
+    ...(end ? { end } : {}),
+  });
+
+  it("keeps priority registration as a key date although its label mentions graduate students", () => {
+    const e = labelled("priority-registration", "Priority registration and graduate student registration begins", "2026-10-29");
+    expect(isKeyEvent(e)).toBe(true);
+  });
+
+  it("names the later term when the same event is listed under two terms", () => {
+    const merged = dedupeEvents([
+      labelled("other", "Commencement", "2027-05-23", "2027-05-26", "Fall 2026"),
+      labelled("other", "Commencement", "2027-05-24", undefined, "Fall 2026"),
+      labelled("other", "Commencement", "2027-05-23", "2027-05-26", "Spring 2027"),
+    ]);
+    expect(merged).toEqual([labelled("other", "Commencement", "2027-05-23", "2027-05-26", "Spring 2027")]);
+  });
+
+  it("splits finished dates from the ones still ahead or under way", () => {
+    const list = [
+      labelled("first-day", "First day of classes", "2026-08-31"),
+      labelled("other", "Fall Break", "2026-10-12", "2026-10-13"),
+      labelled("finals", "Final exams", "2026-12-14", "2026-12-21"),
+    ];
+    expect(isPast(list[0]!, "2026-10-13")).toBe(true);
+    expect(isPast(list[1]!, "2026-10-13")).toBe(false);
+    expect(isPast(list[2]!, "2026-10-13")).toBe(false);
   });
 });

@@ -64,8 +64,8 @@ const HIGHLIGHT_OTHER = /break|holiday|recess|labor day|thanksgiving|martin luth
 
 /** Dates most students care about: breaks, holidays, class start/end, finals, registration, key deadlines. */
 export function isKeyEvent(e: AcademicEvent): boolean {
-  if (NOT_KEY.test(e.label)) return false;
-  return e.kind === "other" ? KEY_OTHER.test(e.label) : true;
+  // Every classified kind is a key date; NOT_KEY only weeds out "other" rows.
+  return e.kind !== "other" || (KEY_OTHER.test(e.label) && !NOT_KEY.test(e.label));
 }
 
 /** Breaks, holidays and finals stand out in the list. */
@@ -73,13 +73,34 @@ export function isHighlighted(e: AcademicEvent): boolean {
   return e.kind === "finals" || (e.kind === "other" && HIGHLIGHT_OTHER.test(e.label));
 }
 
-/** Drops repeats of the same event (same label, overlapping dates), keeping the one with a range. */
+const SEASONS = ["winter", "spring", "summer", "fall"];
+
+/** "Spring 2027" sorts after "Fall 2026". */
+function termRank(term: string): number {
+  const [season = "", year = "0"] = term.toLowerCase().split(" ");
+  return Number(year) * 10 + SEASONS.indexOf(season);
+}
+
+/** Finished before `today` (an event still under way is not past). */
+export function isPast(e: AcademicEvent, today: string): boolean {
+  return endOf(e) < today;
+}
+
+/**
+ * Drops repeats of the same event (same label, overlapping dates), keeping the widest range.
+ * The registrar lists some dates under two terms (Commencement); the later term is named.
+ */
 export function dedupeEvents(events: AcademicEvent[]): AcademicEvent[] {
   const out: AcademicEvent[] = [];
   for (const e of [...events].sort(byStart)) {
     const i = out.findIndex((o) => o.label === e.label && e.start <= endOf(o));
-    if (i < 0) out.push(e);
-    else if (endOf(e) > endOf(out[i]!)) out[i] = { ...e, start: out[i]!.start };
+    if (i < 0) {
+      out.push(e);
+      continue;
+    }
+    const kept = out[i]!;
+    const widest = endOf(e) > endOf(kept) ? { ...e, start: kept.start } : kept;
+    out[i] = { ...widest, term: termRank(e.term) > termRank(kept.term) ? e.term : kept.term };
   }
   return out;
 }
