@@ -477,6 +477,7 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
           scale={ownScale}
           gradesFor={data.gradesFor}
           loadGrades={data.loadGrades}
+          seatsUpdatedAt={data.seatsUpdatedAt}
           initialOpen={courses.find((c) => !ownPicks[c]) ?? null}
           header={planHeader(saved.own, <h2 className={styles.editorTitle}>Your week</h2>)}
         />
@@ -492,6 +493,7 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
           scale={result?.scale ?? ownScale}
           gradesFor={data.gradesFor}
           loadGrades={data.loadGrades}
+          seatsUpdatedAt={data.seatsUpdatedAt}
           header={planHeader(
             idsOf(view.picks),
             <button type="button" className={styles.back} onClick={() => setView({ kind: "gallery" })}>

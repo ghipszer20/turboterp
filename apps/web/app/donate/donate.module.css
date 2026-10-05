@@ -1,0 +1,50 @@
+/* Donate page: the owner's text and one main action. */
+
+.card {
+  border: 1px solid var(--card-border);
+}
+
+.body {
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font: var(--t-body);
+  color: var(--text);
+  max-width: 60ch;
+}
+
+.text p {
+  margin: 0;
+}
+
+.action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.donateButton {
+  padding: 12px 24px;
+  border-radius: var(--r-pill);
+  background: var(--accent);
+  color: var(--on-accent);
+  font: var(--t-body);
+  font-weight: 600;
+}
+
+.donateButton:hover {
+  background: var(--accent-hover);
+}
+
+.handle {
+  color: var(--text-2);
+  font: var(--t-sub);
+}

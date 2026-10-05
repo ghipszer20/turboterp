@@ -20,9 +20,11 @@ describe("authorizeCron", () => {
 });
 
 describe("cronJob", () => {
-  it("knows fast and daily only", () => {
+  it("knows its jobs only", () => {
     expect(cronJob("fast")).toBe("fast");
     expect(cronJob("daily")).toBe("daily");
+    expect(cronJob("soc-seats")).toBe("soc-seats");
+    expect(cronJob("soc-courses")).toBe("soc-courses");
     expect(cronJob("prune")).toBeNull();
     expect(cronJob("")).toBeNull();
     expect(cronJob("constructor")).toBeNull();

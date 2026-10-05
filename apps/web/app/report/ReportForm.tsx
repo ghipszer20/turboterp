@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { buildReportMailto } from "@/lib/about";
-import styles from "./about.module.css";
+import styles from "./report.module.css";
 
 /**
  * A short "report an issue" form. There's no server: Send just opens a
@@ -54,7 +54,7 @@ export function ReportForm({ contactEmail, issuesUrl }: { contactEmail: string |
           type="email"
           value={replyEmail}
           onChange={(e) => setReplyEmail(e.target.value)}
-          placeholder="you@terpmail.umd.edu"
+          placeholder="jdoe@example.com"
         />
       </label>
       <div className={styles.formFoot}>
