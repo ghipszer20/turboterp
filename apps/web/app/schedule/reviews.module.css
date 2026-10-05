@@ -1,0 +1,206 @@
+/* Instructor reviews: a quiet popover (desktop) or bottom sheet (phone). Tokens from globals.css. */
+.name {
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--card-border);
+  text-underline-offset: 3px;
+  border-radius: 4px;
+}
+
+.name:hover {
+  text-decoration-color: var(--text-2);
+}
+
+.name:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.panel {
+  position: fixed;
+  z-index: 90;
+  top: var(--top, 80px);
+  left: var(--left, 12px);
+  width: 340px;
+  max-height: min(70vh, 560px);
+  overflow-y: auto;
+  padding: 16px;
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--text);
+  font: var(--t-foot);
+  box-shadow: 0 8px 32px rgb(0 0 0 / 0.16);
+  outline: none;
+}
+
+@media (max-width: 699px) {
+  .panel {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    max-height: 80vh;
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+    border-width: 1px 0 0;
+    border-radius: 18px 18px 0 0;
+  }
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.title {
+  margin: 0;
+  font: 700 17px/1.25 var(--font);
+}
+
+.close {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  margin: -4px -6px 0 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-2);
+  font: 400 22px/28px var(--font);
+  cursor: pointer;
+}
+
+.close:hover {
+  background: var(--surface-2);
+}
+
+.close:focus-visible {
+  outline: 2px solid var(--accent);
+}
+
+.overview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  color: var(--text-2);
+}
+
+.bars {
+  display: grid;
+  gap: 4px;
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+  color: var(--text-2);
+}
+
+.bars li {
+  display: grid;
+  grid-template-columns: 24px 1fr 28px;
+  align-items: center;
+  gap: 8px;
+}
+
+.track {
+  height: 4px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--surface-2);
+}
+
+.fill {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--text-2);
+}
+
+.n {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.courses {
+  margin: 0 0 12px;
+  color: var(--text-2);
+}
+
+.courses b {
+  display: block;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.excerpts {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.excerpts li {
+  padding-top: 10px;
+  border-top: 1px solid var(--card-border);
+}
+
+.meta {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 2px;
+  color: var(--text-2);
+  font-weight: 600;
+}
+
+.excerpts q {
+  quotes: none;
+  line-height: 1.4;
+}
+
+.note {
+  margin: 4px 0 12px;
+  color: var(--text-2);
+}
+
+.link {
+  display: inline-block;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.credit {
+  margin: 12px 0 0;
+  color: var(--text-2);
+  font-size: 11px;
+}
+
+.skeleton {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.skeleton i {
+  display: block;
+  height: 10px;
+  border-radius: 5px;
+  background: var(--surface-2);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton i {
+    animation: none;
+  }
+}

@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { Fragment, useRef } from "react";
 import type { Section } from "@turboterp/course-data/schedules";
+import { InstructorName } from "./InstructorReviews";
 import type { CourseGrades } from "@turboterp/ratings";
 import { courseColor } from "@/lib/schedule/colors";
 import {
@@ -119,7 +120,12 @@ export function SectionPanel({
         >
           <span className={styles.rowTop}>
             <b className={styles.sectionId}>{s.id}</b>
-            <span className={styles.who}>{s.instructors.join(", ") || "TBA"}</span>
+            <span className={styles.who}>{s.instructors.length ? s.instructors.map((n, i) => (
+                <Fragment key={n}>
+                  {i ? ", " : null}
+                  <InstructorName name={n} />
+                </Fragment>
+              )) : "TBA"}</span>
             <RatingBadge rating={bestRating(s, ratings)} />
             <span className={styles.seats} data-low={seats <= 5 || undefined}>
               {seats} open
