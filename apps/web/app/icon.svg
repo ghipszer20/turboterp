@@ -1,8 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#BA0C2F"/>
-  <g fill="none" stroke="#fff" stroke-width="3.2" stroke-linejoin="round">
-    <path d="M32 13 45 20.5v15L32 43 19 35.5v-15z"/>
-    <path d="M32 28 45 20.5M32 28 19 20.5M32 28v15"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D0183C"/>
+      <stop offset="1" stop-color="#A80A29"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="29" fill="url(#g)"/>
+  <!-- The mark: a terrapin in profile, mid-stride, with speed lines. Same drawing as lib/logo.ts. -->
+  <g transform="translate(27.2 0) skewX(-14) translate(10.2 12.8) scale(.84)" fill="#fff">
+    <path d="M25 78a37 33 0 0 1 74 0z"/>
+    <rect x="25" y="74" width="74" height="10" rx="5"/>
+    <path d="M92 76c2-9 7-15 14-15a9 9 0 0 1 0 18c-3 0-5 2-7 5H92z"/>
+    <rect x="36" y="76" width="13" height="19" rx="6.500" transform="rotate(28 42.500 80)"/>
+    <rect x="74" y="76" width="13" height="19" rx="6.500" transform="rotate(-28 80.500 80)"/>
   </g>
-  <text x="32" y="56" text-anchor="middle" font-family="-apple-system,system-ui,sans-serif" font-size="9" font-weight="700" fill="#fff">ST</text>
+  <path d="M18 66H32M14 76H28M20 86H30" fill="none" stroke="#fff" stroke-width="4.500" stroke-linecap="round"/>
 </svg>

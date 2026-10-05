@@ -17,6 +17,12 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+// The terrapin mark beside the wordmark; decorative, since the wordmark names the site.
+function LogoMark() {
+  // eslint-disable-next-line @next/next/no-img-element -- a tiny static SVG; next/image adds nothing here
+  return <img src="/icon.svg" alt="" width={26} height={26} className={styles.mark} />;
+}
+
 export function Nav() {
   const pathname = usePathname();
   return (
@@ -24,6 +30,7 @@ export function Nav() {
       {/* Phones: small wordmark at the top that goes to Today. */}
       <header className={styles.topBar}>
         <Link href="/" className={styles.wordmark} aria-current={pathname === "/" ? "page" : undefined}>
+          <LogoMark />
           Turbo<span>Terp</span>
         </Link>
         <div className={styles.topBarControls}>
@@ -40,6 +47,7 @@ export function Nav() {
       </header>
       <nav className={styles.nav} aria-label="Main">
         <Link href="/" className={styles.brand} aria-current={pathname === "/" ? "page" : undefined}>
+          <LogoMark />
           Turbo<span>Terp</span>
         </Link>
         <Link href="/" className={`${styles.tab} ${styles.todayLink}`} data-active={pathname === "/"}>
