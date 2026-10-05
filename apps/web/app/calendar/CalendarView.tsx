@@ -4,15 +4,15 @@ import { useState } from "react";
 import type { AcademicEvent } from "@turboterp/campus-data";
 import { Segmented } from "@/components/Segmented";
 import { Card, Row, Section } from "@/components/ui";
-import { eventTitle, formatEventDate, groupByMonth, isHighlighted, isKeyEvent, isPast, nextEvent } from "@/lib/calendar";
+import { calendarTitle, formatEventDate, groupByMonth, isHighlighted, isKeyEvent, isPast, nextEvent } from "@/lib/calendar";
 import { allDayIcs } from "@/lib/schedule/ics";
 import styles from "./calendar.module.css";
 
 type Mode = "key" | "all";
 
 function download(e: AcademicEvent) {
-  const title = eventTitle(e);
-  const ics = allDayIcs({ title, start: e.start, end: e.end, description: e.term });
+  const title = calendarTitle(e);
+  const ics = allDayIcs({ title, start: e.start, end: e.end, description: e.description ? `${e.term}. ${e.description}` : e.term });
   const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
   const a = document.createElement("a");
   a.href = url;
@@ -21,25 +21,44 @@ function download(e: AcademicEvent) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+const LONG_DESCRIPTION = 110;
+
+function Description({ text }: { text: string }) {
+  const [open, setOpen] = useState(false);
+  const long = text.length > LONG_DESCRIPTION;
+  return (
+    <div className={styles.desc}>
+      <p className={`${styles.descText} ${long && !open ? styles.clamp : ""}`}>{text}</p>
+      {long ? (
+        <button type="button" className={styles.more} onClick={() => setOpen(!open)} aria-expanded={open}>
+          {open ? "Less" : "More"}
+        </button>
+      ) : null}
+    </div>
+  );
+}
+
 function DateRow({ e, today }: { e: AcademicEvent; today: string }) {
   const past = isPast(e, today);
+  const title = calendarTitle(e);
   return (
     <div className={`${styles.item} ${isHighlighted(e) ? styles.highlight : ""} ${past ? styles.past : ""}`}>
       <Row
-        title={eventTitle(e)}
+        title={title}
         subtitle={`${formatEventDate(e)} · ${e.term}`}
         trailing={
-          <button type="button" className={styles.add} onClick={() => download(e)} aria-label={`Add ${eventTitle(e)} to my calendar`}>
+          <button type="button" className={styles.add} onClick={() => download(e)} aria-label={`Add ${title} to my calendar`}>
             Add
           </button>
         }
       />
+      {e.description ? <Description text={e.description} /> : null}
     </div>
   );
 }
 
 export function CalendarView({ events, today }: { events: AcademicEvent[]; today: string }) {
-  const [mode, setMode] = useState<Mode>("key");
+  const [mode, setMode] = useState<Mode>("all");
   // Dates already behind us stay out of the way until asked for.
   const [earlier, setEarlier] = useState(false);
   const inMode = mode === "key" ? events.filter(isKeyEvent) : events;
@@ -51,8 +70,8 @@ export function CalendarView({ events, today }: { events: AcademicEvent[]; today
       <Segmented
         label="Which dates to show"
         options={[
-          { value: "key", label: "Key dates" },
           { value: "all", label: "All dates" },
+          { value: "key", label: "Key dates" },
         ]}
         value={mode}
         onChange={setMode}

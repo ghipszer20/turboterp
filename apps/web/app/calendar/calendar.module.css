@@ -21,6 +21,34 @@
   white-space: nowrap;
 }
 
+.desc {
+  margin: -4px 0 0;
+  padding: 0 16px 11px;
+  color: var(--text-3);
+  font: var(--t-foot);
+}
+
+.descText {
+  margin: 0;
+}
+
+.clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.more {
+  margin: 2px 0 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: var(--t-foot);
+  cursor: pointer;
+}
+
 .earlier {
   display: block;
   margin: 20px 0 0;
