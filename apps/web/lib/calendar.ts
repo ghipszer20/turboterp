@@ -70,3 +70,55 @@ const LINE_LABEL: Partial<Record<AcademicEventKind, string>> = {
 export function formatKeyDates(events: AcademicEvent[]): string {
   return events.map((e) => `${LINE_LABEL[e.kind] ?? eventTitle(e)} ${formatEventDate(e)}`).join(" · ");
 }
+
+// ---- Calendar tab ----
+
+const NOT_KEY = /refund|transcript|clearance|conferral|grades|waitlist|graduate student|schedule of classes|cancel registration|general registration/i;
+const KEY_OTHER = /break|holiday|recess|reading day|labor day|thanksgiving|martin luther king|presidents|memorial|juneteenth|commencement/i;
+const HIGHLIGHT_OTHER = /break|holiday|recess|labor day|thanksgiving|martin luther king|presidents|memorial|juneteenth/i;
+
+/** Dates most students care about: breaks, holidays, class start/end, finals, registration, key deadlines. */
+export function isKeyEvent(e: AcademicEvent): boolean {
+  if (NOT_KEY.test(e.label)) return false;
+  return e.kind === "other" ? KEY_OTHER.test(e.label) : true;
+}
+
+/** Breaks, holidays and finals stand out in the list. */
+export function isHighlighted(e: AcademicEvent): boolean {
+  return e.kind === "finals" || (e.kind === "other" && HIGHLIGHT_OTHER.test(e.label));
+}
+
+/** Drops repeats of the same event (same label, overlapping dates), keeping the one with a range. */
+export function dedupeEvents(events: AcademicEvent[]): AcademicEvent[] {
+  const out: AcademicEvent[] = [];
+  for (const e of [...events].sort(byStart)) {
+    const i = out.findIndex((o) => o.label === e.label && e.start <= endOf(o));
+    if (i < 0) out.push(e);
+    else if (endOf(e) > endOf(out[i]!)) out[i] = { ...e, start: out[i]!.start };
+  }
+  return out;
+}
+
+export type MonthGroup = { key: string; title: string; events: AcademicEvent[] };
+
+const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+/** Events grouped by the month they start in, in date order. */
+export function groupByMonth(events: AcademicEvent[]): MonthGroup[] {
+  const groups: MonthGroup[] = [];
+  for (const e of [...events].sort(byStart)) {
+    const key = e.start.slice(0, 7);
+    let g = groups[groups.length - 1];
+    if (!g || g.key !== key) {
+      g = { key, title: `${MONTH_NAMES[Number(key.slice(5, 7)) - 1]} ${key.slice(0, 4)}`, events: [] };
+      groups.push(g);
+    }
+    g.events.push(e);
+  }
+  return groups;
+}
+
+/** The soonest event that has not finished by `today` (one in progress counts). */
+export function nextEvent(events: AcademicEvent[], today: string): AcademicEvent | undefined {
+  return [...events].sort(byStart).find((e) => endOf(e) >= today);
+}

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { AcademicEvent } from "@turboterp/campus-data";
-import { formatKeyDates, termKeyDates, upcomingDates } from "../calendar";
+import { dedupeEvents, formatKeyDates, groupByMonth, isHighlighted, isKeyEvent, nextEvent, termKeyDates, upcomingDates } from "../calendar";
 
 const ev = (kind: AcademicEvent["kind"], start: string, end?: string, term = "Spring 2027"): AcademicEvent => ({
   term,
@@ -59,5 +59,79 @@ describe("formatKeyDates", () => {
   it("joins short labels with dates and date ranges", () => {
     const line = formatKeyDates(termKeyDates(events, "Spring 2027", false));
     expect(line).toBe("Pass/fail Feb 9 · Drop with W Apr 13 · Finals May 13–20");
+  });
+});
+
+const other = (label: string, start: string, end?: string, term = "Fall 2026"): AcademicEvent => ({
+  term,
+  kind: "other",
+  label,
+  start,
+  ...(end ? { end } : {}),
+});
+
+describe("isKeyEvent", () => {
+  it.each(["Fall Break", "Thanksgiving Break", "Winter Break", "Spring Break", "Reading Day", "Labor Day", "Commencement"])(
+    "treats %s as key",
+    (label) => expect(isKeyEvent(other(label, "2026-10-01"))).toBe(true),
+  );
+
+  it.each([
+    "Last day to drop a course with 80% refund",
+    "Official transcripts available for fall",
+    "Degree clearances due",
+    "Instructors can begin submitting final grades",
+    "Mandatory waitlist check-in period",
+    "Graduate student registration deadlines",
+    "Schedule of classes available",
+    "Cancel registration deadline",
+    "General registration begins",
+  ])("treats %s as not key", (label) => expect(isKeyEvent(other(label, "2026-10-01"))).toBe(false));
+
+  it("treats the useful kinds as key", () => {
+    for (const k of ["first-day", "last-class", "finals", "priority-registration", "schedule-adjustment", "pass-fail", "drop-w", "apply-to-graduate"] as const) {
+      expect(isKeyEvent(ev(k, "2027-02-01"))).toBe(true);
+    }
+  });
+});
+
+describe("isHighlighted", () => {
+  it("highlights breaks, holidays and finals only", () => {
+    expect(isHighlighted(other("Fall Break", "2026-10-15"))).toBe(true);
+    expect(isHighlighted(other("Labor Day", "2026-09-07"))).toBe(true);
+    expect(isHighlighted(ev("finals", "2027-05-13", "2027-05-20"))).toBe(true);
+    expect(isHighlighted(other("Reading Day", "2026-12-10"))).toBe(false);
+    expect(isHighlighted(ev("first-day", "2027-01-27"))).toBe(false);
+  });
+});
+
+describe("dedupeEvents", () => {
+  it("merges repeated events across terms, keeping the range", () => {
+    const got = dedupeEvents([
+      other("Commencement", "2027-05-20", undefined, "Spring 2027"),
+      other("Commencement", "2027-05-20", "2027-05-21", "Spring 2027"),
+      other("Commencement", "2027-05-20", "2027-05-21", "Fall 2026"),
+      other("Fall Break", "2026-10-15"),
+    ]);
+    expect(got).toHaveLength(2);
+    expect(got.find((e) => e.label === "Commencement")?.end).toBe("2027-05-21");
+  });
+});
+
+describe("groupByMonth", () => {
+  it("groups by start month in date order", () => {
+    const g = groupByMonth([other("B", "2026-11-02"), other("A", "2026-10-30"), other("C", "2026-10-05")]);
+    expect(g.map((m) => m.title)).toEqual(["October 2026", "November 2026"]);
+    expect(g[0]!.events.map((e) => e.label)).toEqual(["C", "A"]);
+  });
+});
+
+describe("nextEvent", () => {
+  const list = [other("Fall Break", "2026-10-15", "2026-10-16"), other("Thanksgiving Break", "2026-11-25", "2026-11-29")];
+  it("returns the soonest event not yet over, counting one in progress", () => {
+    expect(nextEvent(list, "2026-10-04")?.label).toBe("Fall Break");
+    expect(nextEvent(list, "2026-10-16")?.label).toBe("Fall Break");
+    expect(nextEvent(list, "2026-10-17")?.label).toBe("Thanksgiving Break");
+    expect(nextEvent(list, "2027-01-01")).toBeUndefined();
   });
 });
