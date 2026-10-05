@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Card, Notice, Page, Row, Section } from "@/components/ui";
+import { Card, Page, Row, Section } from "@/components/ui";
 import { ABOUT, resolveAbout } from "@/lib/about";
-import { ReportForm } from "./ReportForm";
 import styles from "./about.module.css";
 
 export const metadata: Metadata = { title: "About" };
@@ -27,19 +26,6 @@ export default function AboutPage() {
         </Card>
       </Section>
 
-      <Section title="Report an issue">
-        <Card className={styles.card}>
-          <ReportForm contactEmail={about.contactEmail} issuesUrl={about.issuesUrl} />
-        </Card>
-        {about.issuesUrl ? (
-          <Card className={styles.card}>
-            <Row title="GitHub Issues" subtitle="File an issue on GitHub" href={about.issuesUrl} external />
-          </Card>
-        ) : (
-          <Notice>GitHub Issues link coming soon.</Notice>
-        )}
-      </Section>
-
       <Section title="About the creator">
         <Card className={styles.card}>
           <div className={styles.prose}>
@@ -58,24 +44,6 @@ export default function AboutPage() {
         </Card>
       </Section>
 
-      <Section title="Support TurboTerp">
-        <Card className={styles.card}>
-          <div className={styles.support}>
-            <p className={styles.supportText}>
-              TurboTerp is free to use. Donations only cover what it costs to keep it running -- hosting and the
-              domain -- nothing more.
-            </p>
-            {about.donationUrl ? (
-              <a className={styles.donateButton} href={about.donationUrl} target="_blank" rel="noreferrer">
-                Chip in for hosting
-              </a>
-            ) : (
-              <p className={styles.comingSoon}>Donation link coming soon.</p>
-            )}
-          </div>
-        </Card>
-      </Section>
-
       <Section title="Contact">
         <Card className={styles.card}>
           <div className={styles.contactRow}>
@@ -87,6 +55,11 @@ export default function AboutPage() {
           </div>
         </Card>
       </Section>
+
+      <p className={styles.moreLinks}>
+        <Link href="/report">Report an issue</Link>
+        <Link href="/support">Support TurboTerp</Link>
+      </p>
     </Page>
   );
 }

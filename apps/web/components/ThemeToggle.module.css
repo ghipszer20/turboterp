@@ -4,11 +4,24 @@
 }
 
 /* Until the current theme is known, hide the selection so it never shows the wrong one. */
-.toggle[data-ready="false"] {
+.toggle[data-ready="false"],
+.compact[data-ready="false"] {
   visibility: hidden;
 }
 
 .toggle :global(button) {
   padding: 5px 10px;
   font-size: 13px;
+}
+
+.compact {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 44px;
+  margin: -10px 0;
+  border: 0;
+  background: none;
+  color: var(--text-2);
+  cursor: pointer;
 }
