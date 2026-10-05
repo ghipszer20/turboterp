@@ -113,3 +113,26 @@ export function buildIcs(term: string, sections: Section[], now: Date = new Date
   const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//TurboTerp//Schedule Builder//EN", "CALSCALE:GREGORIAN", ...VTIMEZONE, ...events, "END:VCALENDAR"];
   return lines.map(foldLine).join("\r\n") + "\r\n";
 }
+
+/** One all-day event (inclusive of `end` when given) as a calendar file. Dates are "YYYY-MM-DD". */
+export function allDayIcs(e: { title: string; start: string; end?: string; description?: string }, now: Date = new Date()): string {
+  const last = parseDay(e.end ?? e.start);
+  const exclusiveEnd = new Date(last.getTime() + DAY_MS);
+  const day = e.start.replace(/-/g, "");
+  const lines = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//TurboTerp//Academic Calendar//EN",
+    "CALSCALE:GREGORIAN",
+    "BEGIN:VEVENT",
+    `UID:${day}-${escapeText(e.title).replace(/[^A-Za-z0-9]+/g, "-")}@turboterp`,
+    `DTSTAMP:${stampOf(now)}`,
+    `DTSTART;VALUE=DATE:${day}`,
+    `DTEND;VALUE=DATE:${ymd(exclusiveEnd)}`,
+    `SUMMARY:${escapeText(e.title)}`,
+    ...(e.description ? [`DESCRIPTION:${escapeText(e.description)}`] : []),
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ];
+  return lines.map(foldLine).join("\r\n") + "\r\n";
+}

@@ -2,14 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AdvisorIcon, CampusIcon, InfoIcon, ScheduleIcon, TodayIcon } from "./icons";
+import { AdvisorIcon, CalendarIcon, CampusIcon, InfoIcon, ScheduleIcon, TodayIcon } from "./icons";
 import { ThemeToggle } from "./ThemeToggle";
 import styles from "./Nav.module.css";
 
-// Three main tabs (owner decision). Today lives at "/" and is reached from the logo.
+// Four main tabs (owner decision). Today lives at "/" and is reached from the logo.
 const TABS = [
   { href: "/campus", label: "Campus", Icon: CampusIcon },
   { href: "/schedule", label: "Schedule", Icon: ScheduleIcon },
+  { href: "/calendar", label: "Calendar", Icon: CalendarIcon },
   { href: "/advisor", label: "Advisor", Icon: AdvisorIcon },
 ] as const;
 
