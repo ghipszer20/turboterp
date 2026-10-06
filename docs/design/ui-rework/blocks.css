@@ -1,0 +1,35 @@
+/* Class-block treatments for the schedule builder, compared side by side (blocks.html).
+   Each course has a solid hue, a deeper hue for edges, a pale fill and an ink color. */
+
+.block.c1 { --solid: #3b82f6; --deep: #1d4ed8; --pale: #dbeafe; --ink: #1e3a8a; }
+.block.c2 { --solid: #22a35a; --deep: #15803d; --pale: #dcfce7; --ink: #14532d; }
+.block.c3 { --solid: #f59e0b; --deep: #b45309; --pale: #fef3c7; --ink: #78350f; }
+.block.c4 { --solid: #8b5cf6; --deep: #6d28d9; --pale: #ede9fe; --ink: #4c1d95; }
+body.dark .block.c1 { --pale: #1e3a8a; --ink: #dbeafe; --deep: #93c5fd; }
+body.dark .block.c2 { --pale: #14532d; --ink: #dcfce7; --deep: #86efac; }
+body.dark .block.c3 { --pale: #78350f; --ink: #fef3c7; --deep: #fcd34d; }
+body.dark .block.c4 { --pale: #4c1d95; --ink: #ede9fe; --deep: #c4b5fd; }
+
+.frames { gap: 28px; }
+.blockLabel { margin: 10px 0 0; text-align: center; font: 600 13px/1.3 var(--font); color: #3f4450; width: 393px; }
+body.dark .blockLabel { color: #c3c6cf; }
+.blockLabel small { display: block; font-weight: 400; color: #6b7080; }
+.week { --sep-grid: rgb(60 60 67 / .09); }
+body.dark .week { --sep-grid: rgb(235 235 245 / .1); }
+.block { left: 2px; right: 2px; padding: 2px 3px; }
+.block b { font-size: 9.5px; letter-spacing: -.02em; }
+.block span { opacity: 1; }
+
+/* S1 Bordered solid: solid fill, a deeper 1.5px edge, soft drop shadow, white text. */
+.s1 .block { background: var(--solid); color: #fff; border: 1.5px solid var(--deep); box-shadow: 0 1px 3px rgb(0 0 0 / .18); border-radius: 7px; }
+.s1 .block span { color: rgb(255 255 255 / .88); }
+
+/* S2 Calendar: pale fill, a thick colored left bar and a hue-tinted hairline, dark ink text (Apple/Google Calendar). */
+.s2 .block { background: var(--pale); color: var(--ink); border: 1px solid color-mix(in srgb, var(--solid) 45%, transparent); border-left: 3px solid var(--solid); border-radius: 6px; }
+.s2 .block b { color: var(--ink); }
+.s2 .block span { color: color-mix(in srgb, var(--ink) 80%, transparent); }
+
+/* S3 Ring: solid fill with a white inset ring and a hue outline, so blocks read as raised cards. */
+.s3 .block { background: var(--solid); color: #fff; border-radius: 8px; box-shadow: inset 0 0 0 2px var(--surface), 0 0 0 1.5px var(--deep), 0 2px 6px rgb(0 0 0 / .18); }
+.s3 .block span { color: rgb(255 255 255 / .88); }
+body.dark .s3 .block { box-shadow: inset 0 0 0 2px #000, 0 0 0 1.5px var(--solid), 0 2px 6px rgb(0 0 0 / .4); }
