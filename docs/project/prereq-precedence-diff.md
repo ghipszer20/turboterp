@@ -2,7 +2,7 @@
 
 Parser before: `origin/feat/course-data`; after: `feat/prereq-precedence`. Both merged snapshots (202608 + 202701, `mergeSnapshots`).
 
-**55 changed trees: 53 prerequisite, 2 corequisite.** Rule applied: "or" binds tighter than "and" at sentence, ";" clause and comma-list level (docs/project/prereq-audit-verdicts.md, P1).
+**53 changed trees: 51 prerequisite, 2 corequisite** (PLSC201 and PLSC271, listed below, ended up unchanged after the parallel-pairs rule). Rule applied: "or" binds tighter than "and" at sentence, ";" clause and comma-list level (docs/project/prereq-audit-verdicts.md, P1).
 
 ## AGST275 (prerequisite)
 
@@ -343,10 +343,7 @@ RELS427 (= JWST427); EDHD323, EDHD443, EDSP417 (= EDHD322 track template); PHYS3
 
 ### Unsure
 
-- PLSC201, PLSC271: "PLSC110 and PLSC111 or (PLSC112 and PLSC113)" now reads ALL[PLSC110, ANY[PLSC111, ALL[PLSC112, PLSC113]]]
-  (strict "or binds tighter"). The author probably meant (110 and 111) or (112 and 113), which the old tree had. The new reading can
-  say unmet for a student who took 112 and 113 only; it never says met wrongly. The same strictness applies to AGST275's
-  "BSCI160 and BSCI180 or BSCI161". Owner call if a looser reading is wanted when parentheses follow the "or".
+- PLSC201, PLSC271: settled by the main session from UMD's catalog, which writes the same alternatives for another PLSC course as "PLSC110 and PLSC111; or (PLSC112 and PLSC113)" (lecture + lab pairs). A parallel-pairs rule (a bare "and" run as long as the parenthesized group after "or") now reads (110 and 111) or (112 and 113); only these two courses match it, and BSCI420's unequal run stays strict. Their trees are unchanged from before P1.
 - "or equivalent" after a plain (non-comma) clause stays an alternative to the whole clause, as before; only after a comma list
   ("MATH461, ENMA300, and ENMA165 or equivalent", ENMA437) does it bind to the last item. P2 may revisit.
 - MATH140 and the MATH107/113/115/120/135 family: the explanation sentence is merged into the preceding manual item (verdict rule),

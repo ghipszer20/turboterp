@@ -1014,3 +1014,30 @@ describe("and/or precedence: unchanged trees", () => {
     });
   });
 });
+
+// Parallel pairs: "A and B or (C and D)" with a bare "and" run as long as the parenthesized group
+// is (A and B) or (C and D). UMD's catalog writes the same PLSC alternatives elsewhere as
+// "PLSC110 and PLSC111; or (PLSC112 and PLSC113)" (lecture + lab pairs).
+describe("parallel and-pairs around a parenthesized or", () => {
+  it("PLSC201 prerequisite", () => {
+    expect(
+      parsePrerequisite(
+        "Minimum grade of C- in PLSC110 and PLSC111 or (PLSC112 and PLSC113); and minimum grade of C- in CHEM131 and CHEM132.",
+      ),
+    ).toEqual(all(any(all(c("PLSC110"), c("PLSC111")), all(c("PLSC112"), c("PLSC113"))), all(c("CHEM131"), c("CHEM132"))));
+  });
+  it("PLSC271 prerequisite", () => {
+    expect(
+      parsePrerequisite(
+        "Minimum grade of C- in PLSC110 and PLSC111 or (PLSC112 and PLSC113); or minimum grade of C- in BSCI170 and (BSCI180 or BSCI171).",
+      ),
+    ).toEqual(
+      any(any(all(c("PLSC110"), c("PLSC111")), all(c("PLSC112"), c("PLSC113"))), all(c("BSCI170"), any(c("BSCI180"), c("BSCI171")))),
+    );
+  });
+  it("leaves an unequal run strict (BSCI420)", () => {
+    expect(parsePrerequisite("(BSCI331 or BSCI330) and (BSCI222 or HLSC322) and CHEM237 or (CHEM231 and CHEM232).")).toEqual(
+      all(any(n("BSCI331"), n("BSCI330")), any(n("BSCI222"), n("HLSC322")), any(n("CHEM237"), all(n("CHEM231"), n("CHEM232")))),
+    );
+  });
+});

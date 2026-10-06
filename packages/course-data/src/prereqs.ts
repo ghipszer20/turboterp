@@ -110,6 +110,7 @@ function parseExpression(
   levelLeaf: (dept: string, minNumber: number) => Requirement,
 ): Requirement | null {
   let pos = 0;
+  const parenthesized = new WeakSet<Requirement>();
 
   function atom(): Requirement | null {
     const t = tokens[pos];
@@ -130,6 +131,7 @@ function parseExpression(
       pos++;
       const inner = semiExpr();
       if (tokens[pos]?.type === "close") pos++;
+      if (inner) parenthesized.add(inner);
       return inner;
     }
     // "both A and B" and "either A or B" are one group.
@@ -185,6 +187,20 @@ function parseExpression(
         pos++;
       } else if (group.length === 0) break;
       else if (tokens[pos]?.type !== "course" && tokens[pos]?.type !== "level" && tokens[pos]?.type !== "open") break;
+    }
+    // Parallel pairs: "A and B or (C and D)", where the chain opens with a bare "and" run as long as
+    // the parenthesized group, reads (A and B) or (C and D) (PLSC201/271; the catalog writes the same
+    // PLSC alternatives as "PLSC110 and PLSC111; or (PLSC112 and PLSC113)").
+    const pair = groups[0] ? groups.findIndex((g) => g.length === 2) : -1;
+    const paren = pair > 0 ? groups[pair]![1]! : undefined;
+    if (
+      paren?.kind === "all" &&
+      parenthesized.has(paren) &&
+      paren.of.length === pair + 1 &&
+      groups.slice(0, pair + 1).every((g, i) => (i < pair ? g.length === 1 : true))
+    ) {
+      const run = groups.slice(0, pair + 1).map((g) => g[0]!);
+      groups.splice(0, pair + 1, [{ kind: "all", of: run }, paren]);
     }
     return { groups, conjs, bare: groups.length === 1 && groups[0]!.length === 1 && conjs.length === 0 };
   }
