@@ -1,14 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Chip } from "@/components/Segmented";
 import { Card, EmptyState, SearchField } from "@/components/ui";
 import { groupSearchHits, parseDiningQuery, type SearchMatch } from "@/lib/dining";
 import styles from "./FoodSearch.module.css";
-
-const MAX_GROUPS = 4;
-const ITEMS_PER_GROUP = 6;
 
 type Hall = { id: number; name: string };
 type State = { key: string; status: "done"; results: SearchMatch[] } | { key: string; status: "error" };
@@ -40,11 +36,6 @@ export function FoodSearch({ date, halls, meals }: { date: string; halls: Hall[]
 
   const current = state && state.key === key ? state : null;
   const scope = `${halls.find((h) => h.id === hallId)?.name ?? "all halls"} ${meal ? meal.toLowerCase() : "today"}`;
-  const seeAll = `/campus/dining?${new URLSearchParams({
-    q: query ?? "",
-    ...(hallId ? { hall: String(hallId) } : {}),
-    ...(meal ? { meal } : {}),
-  })}`;
 
   return (
     <div className={styles.wrap}>
@@ -82,22 +73,16 @@ export function FoodSearch({ date, halls, meals }: { date: string; halls: Hall[]
               <EmptyState title={`No ${query} at ${scope}.`}>Try a different word, hall or meal.</EmptyState>
             ) : (
               <>
-                {groupSearchHits(current.results)
-                  .slice(0, MAX_GROUPS)
-                  .map((g) => (
+                {groupSearchHits(current.results).map((g) => (
                     <div key={`${g.hall}|${g.meal}|${g.station}`} className={styles.group}>
                       <p className={styles.where}>
                         {g.hall} · {g.meal} · {g.station}
                       </p>
                       <p className={styles.foods}>
-                        {g.items.slice(0, ITEMS_PER_GROUP).join(", ")}
-                        {g.items.length > ITEMS_PER_GROUP ? ` +${g.items.length - ITEMS_PER_GROUP} more` : ""}
+                        {g.items.join(", ")}
                       </p>
                     </div>
                   ))}
-                <Link href={seeAll} className={styles.more}>
-                  See all on Dining
-                </Link>
               </>
             )}
           </div>

@@ -293,6 +293,11 @@
   }
 }
 
+/* The action tile ("Find a study room", "Find a food") ends a grid: it sits in the last column of the last row. */
+.tileGrid > .tile[data-accent]:last-child:not(:only-child) {
+  grid-column: -2 / -1;
+}
+
 .tile {
   --a-tint: var(--surface);
   --a-ink: var(--accent);

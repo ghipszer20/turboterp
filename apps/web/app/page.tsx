@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { connection } from "next/server";
 import { addDays, campusDate, campusMinutes, DINING_HALLS, orderLibraries, recWellOnDate } from "@turboterp/campus-data";
-import { BusIcon, DiningIcon, GymIcon, LibraryIcon, RoomIcon } from "@/components/icons";
+import { BusIcon, DiningIcon, GymIcon, LibraryIcon, RoomIcon, SearchIcon } from "@/components/icons";
 import { NextClassHero, type UpNext } from "@/app/NextClassHero";
 import { RegistrationCountdown } from "@/app/RegistrationCountdown";
 import { HeroRow, Page, Section, SkeletonCard, Tile, TileGrid } from "@/components/ui";
@@ -16,8 +16,6 @@ import {
   safe,
 } from "@/lib/campus";
 import { eventTitle, formatEventDate, nextEvent } from "@/lib/calendar";
-import { FoodSearch } from "@/app/FoodSearch";
-import { mealsServed } from "@/lib/dining";
 import { stampSummary } from "@/lib/stamp";
 import { gymRowTitle, MAIN_GYMS } from "@/lib/gyms";
 import { compactLibraryName, MAIN_LIBRARIES } from "@/lib/libraries";
@@ -77,11 +75,6 @@ async function Today() {
           <Dining today={today} minutes={minutes} />
         </Suspense>
       </Section>
-      <Section title="Find a food">
-        <Suspense fallback={<SkeletonCard rows={2} />}>
-          <FindFood today={today} />
-        </Suspense>
-      </Section>
       <Section title="Study">
         <Suspense fallback={<SkeletonGrid />}>
           <Libraries today={today} minutes={minutes} />
@@ -123,18 +116,6 @@ async function Hero({ today }: { today: string }) {
   );
 }
 
-async function FindFood({ today }: { today: string }) {
-  await connection();
-  const menus = (await getAllDiningMenus(today)).map((m) => (m.ok ? m.data : null));
-  return (
-    <FoodSearch
-      date={today}
-      halls={DINING_HALLS.map((h) => ({ id: h.id, name: h.short }))}
-      meals={mealsServed(menus)}
-    />
-  );
-}
-
 async function Dining({ today, minutes }: { today: string; minutes: number }) {
   const [menus, stamp] = await Promise.all([getAllDiningMenus(today), safe(getStampVenues)]);
   const meal = currentMealName(minutes);
@@ -163,6 +144,14 @@ async function Dining({ today, minutes }: { today: string; minutes: number }) {
           sub={stampSummary(stamp.data, today, minutes)}
         />
       )}
+      <Tile
+        href="/campus/dining/search"
+        icon={<SearchIcon />}
+        area="dining"
+        title="Find a food"
+        sub="Search every hall by meal"
+        accent
+      />
     </TileGrid>
   );
 }
