@@ -31,6 +31,12 @@ export type Requirement = RequirementRule & {
    * courses, which must include MATH410…": MATH410 counts toward both.
    */
   overlay?: boolean;
+  /**
+   * Ids of requirements in the same program: an overlay with `within` counts a course only if that
+   * course is also assigned (using it up) to one of them, e.g. Gen Ed's Big Question courses must
+   * be among the Distributive Studies courses.
+   */
+  within?: string[];
   /** Lowest grade a completed course needs for this requirement only, e.g. Academic Writing's "C-". */
   minGrade?: string;
   /**
@@ -103,6 +109,12 @@ export type Program = {
    * one extra result, id `program-gpa`, appended after the program's requirements.
    */
   minGpa?: number;
+  /**
+   * Caps on exam credit: of the courses assigned to any of `requirements` (ids in this program),
+   * at most `courses` may be StudentCourse.exam courses, each counted once. E.g. Gen Ed's "only 6
+   * of the 8 Distributive Studies courses can be AP or IB credit".
+   */
+  examLimits?: { requirements: string[]; courses: number }[];
   /** Catalog edition these rules come from, e.g. "2026-27". */
   catalogYear?: string;
   /** Where the rules came from. */
@@ -177,6 +189,8 @@ export type StudentCourse = {
   grade?: string;
   /** Gen Ed codes the course carries (from the Schedule of Classes). */
   genEd?: string[];
+  /** The credit comes from an AP or IB exam (see Program.examLimits). */
+  exam?: true;
 };
 
 /** Every literal course id one requirement mentions -- never a department/number-range filter's
@@ -433,6 +447,39 @@ export async function auditStudent(
     courses.forEach((_, c) => {
       const mine = pairs.filter((q) => q.p === p && q.c === c && consumes(q));
       if (mine.length > 1) constraints.push(` once_${p}_${c}: ${mine.map((q) => q.name).join(" + ")} <= 1`);
+    }),
+  );
+
+  // An overlay with `within` counts a course only if it also fills one of those requirements.
+  programs.forEach((program, p) => {
+    const index = (ids: string[]) => ids.map((id) => program.requirements.findIndex((req) => req.id === id)).filter((r) => r >= 0);
+    program.requirements.forEach((req, r) => {
+      if (!req.within) return;
+      const targets = index(req.within);
+      pairs
+        .filter((q) => q.p === p && q.r === r)
+        .forEach((q) => {
+          const hosts = pairs.filter((w) => w.p === p && w.c === q.c && targets.includes(w.r) && consumes(w));
+          constraints.push(` within_${q.name}: ${[q.name, ...hosts.map((w) => `- ${w.name}`)].join(" ")} <= 0`);
+        });
+    });
+  });
+
+  // Exam credit limits (Program.examLimits): a helper binary per exam course, so one counts once.
+  programs.forEach((program, p) =>
+    program.examLimits?.forEach((limit, l) => {
+      const targets = limit.requirements.map((id) => program.requirements.findIndex((req) => req.id === id));
+      const flags: string[] = [];
+      courses.forEach((course, c) => {
+        if (!course.exam) return;
+        const mine = pairs.filter((q) => q.p === p && q.c === c && targets.includes(q.r));
+        if (mine.length === 0) return;
+        const e = `e_${p}_${l}_${c}`;
+        binaries.push(e);
+        flags.push(e);
+        mine.forEach((q) => constraints.push(` exam_${e}_${q.name}: ${q.name} - ${e} <= 0`));
+      });
+      if (flags.length > 0) constraints.push(` examcap_${p}_${l}: ${flags.join(" + ")} <= ${limit.courses}`);
     }),
   );
 
