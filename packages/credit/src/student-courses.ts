@@ -51,7 +51,7 @@ export function toStudentCourses(
   const courses: CreditCourse[] = [];
   const needsChoice: PendingChoice[] = [];
   const add = (id: string, credits: number, genEd: string[], source: string) => {
-    if (!courses.some((c) => c.id === id)) courses.push({ id, credits, status: "completed", genEd, source });
+    if (!courses.some((c) => c.id === id)) courses.push({ id, credits, status: "completed", genEd, source, exam: true });
   };
 
   for (const award of awards) {

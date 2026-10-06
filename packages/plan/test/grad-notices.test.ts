@@ -41,3 +41,33 @@ describe("planCourses and grad credit tags", () => {
     expect(courses.map((c) => c.id)).toEqual(["CMSC131"]);
   });
 });
+
+describe("planCourses and exam credit", () => {
+  const withPrior = (priorCredit: NonNullable<Plan["priorCredit"]>): Plan => ({ priorCredit, terms: [] });
+
+  it("flags AP and IB prior credit as exam credit", () => {
+    const courses = planCourses(
+      withPrior([
+        { id: "MATH140", credits: 4, source: "AP Calculus BC (5)" },
+        { id: "DSHU:IB History HL", credits: 3, source: "IB History HL (6)" },
+      ]),
+      EMPTY_CATALOG,
+    );
+    expect(courses.map((c) => c.exam)).toEqual([true, true]);
+  });
+
+  it("doesn't flag dual enrollment, other prior credit or planned courses", () => {
+    const courses = planCourses(
+      {
+        priorCredit: [
+          { id: "MATH141", credits: 4, source: "PGCC MATH 141" },
+          { id: "ENGL101", credits: 3 },
+          { id: "HIST100", credits: 3, source: "Apple Valley High (AP-style)" },
+        ],
+        terms: [{ name: "Fall 2026", courses: [{ id: "CMSC131", credits: 4 }] }],
+      },
+      EMPTY_CATALOG,
+    );
+    for (const c of courses) expect("exam" in c).toBe(false);
+  });
+});

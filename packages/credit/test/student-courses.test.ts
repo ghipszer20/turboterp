@@ -13,8 +13,8 @@ describe("toStudentCourses", () => {
   it("turns AP Calculus BC 5 into two completed courses with no grade", () => {
     expect(toStudentCourses([creditForAp("Calculus BC", 5)])).toEqual({
       courses: [
-        { id: "MATH140", credits: 4, status: "completed", genEd: ["FSMA", "FSAR"], source: "AP Calculus BC (5)" },
-        { id: "MATH141", credits: 4, status: "completed", genEd: [], source: "AP Calculus BC (5)" },
+        { id: "MATH140", credits: 4, status: "completed", genEd: ["FSMA", "FSAR"], source: "AP Calculus BC (5)", exam: true },
+        { id: "MATH141", credits: 4, status: "completed", genEd: [], source: "AP Calculus BC (5)", exam: true },
       ],
       needsChoice: [],
       notCounted: [],
@@ -24,9 +24,9 @@ describe("toStudentCourses", () => {
   it("gives credit with no UMD course a placeholder id no course requirement can match", () => {
     const { courses } = toStudentCourses([creditForAp("Computer Science A", 4), creditForAp("Biology", 3), creditForIb("Psychology", "HL", 5)]);
     expect(courses).toEqual([
-      { id: "L1:AP Computer Science A", credits: 3, status: "completed", genEd: [], source: "AP Computer Science A (4)" },
-      { id: "DSNL:AP Biology", credits: 4, status: "completed", genEd: ["DSNL"], source: "AP Biology (3)" },
-      { id: "DSHS:IB Psychology HL", credits: 3, status: "completed", genEd: ["DSHS"], source: "IB Psychology HL (5)" },
+      { id: "L1:AP Computer Science A", credits: 3, status: "completed", genEd: [], source: "AP Computer Science A (4)", exam: true },
+      { id: "DSNL:AP Biology", credits: 4, status: "completed", genEd: ["DSNL"], source: "AP Biology (3)", exam: true },
+      { id: "DSHS:IB Psychology HL", credits: 3, status: "completed", genEd: ["DSHS"], source: "IB Psychology HL (5)", exam: true },
     ]);
   });
 
@@ -51,7 +51,7 @@ describe("toStudentCourses", () => {
       notCounted: [],
     });
     expect(toStudentCourses([history], { "AP United States History (4)": "HIST201" }).courses).toEqual([
-      { id: "HIST201", credits: 3, status: "completed", genEd: ["DSHS", "DSHU", "DVUP"], source: "AP United States History (4)" },
+      { id: "HIST201", credits: 3, status: "completed", genEd: ["DSHS", "DSHU", "DVUP"], source: "AP United States History (4)", exam: true },
     ]);
   });
 
@@ -134,5 +134,20 @@ describe("in the degree audit", () => {
     const { courses } = toStudentCourses([creditForAp("Calculus BC", 5), creditForAp("Biology", 3), creditForAp("Computer Science A", 4)]);
     const status = Object.fromEntries((await auditProgram(program, courses)).requirements.map((r) => [r.id, r.status]));
     expect(status).toEqual({ calc1: "satisfied", lab: "satisfied", cs: "missing", total: "satisfied" });
+  });
+});
+
+describe("exam credit flag", () => {
+  it("marks AP and IB courses, generic awards included, as exam credit", () => {
+    const { courses } = toStudentCourses([creditForAp("Calculus BC", 5), creditForAp("Biology", 3), creditForIb("Psychology", "HL", 5)]);
+    expect(courses.length).toBeGreaterThan(2);
+    for (const c of courses) expect(c.exam).toBe(true);
+  });
+
+  it("doesn't mark dual enrollment as exam credit", () => {
+    const entry = { institution: "PGCC", course: "MATH 140", credits: 4, umdEquivalent: [{ id: "MATH140", genEd: ["FSMA", "FSAR"] }] };
+    const courses = dualEnrollmentToStudentCourses([entry]);
+    expect(courses.length).toBe(1);
+    for (const c of courses) expect(c.exam).toBeUndefined();
   });
 });
