@@ -53,7 +53,9 @@ const TOKEN = new RegExp(`${BASE_TOKEN.source}|(${PROSE_ITEMS.join("|")})`, "g")
 /** `tail`: a manual alternative appended to the end of the clause's list. */
 function tokenize(text: string, tail?: string): Token[] {
   const raw: Token[] = [];
-  for (const m of text.matchAll(TOKEN)) {
+  // "PSYC300-499 course range": the kind has no maximum, so it reads "PSYC300 or higher".
+  const ranged = text.replace(/\b([A-Z]{4})\s?(\d{3})-\d{3}\s+course\s+range\b/g, "$1$2 or higher");
+  for (const m of ranged.matchAll(TOKEN)) {
     const prev = raw.at(-1);
     const before = raw.at(-2);
     if (m[1]) raw.push({ type: "course", value: `${m[1].toUpperCase()}${m[2]}` });
@@ -335,6 +337,9 @@ const hasTopLevelConnector = (text: string) => topLevelTokens(text).some((t) => 
 // "2 courses from (…)", "two 400-level MATH courses": there is no count kind, so the clause is a manual item.
 const COUNTED = /(?<!take\s)\b(?:2|two)\s+(?:courses\s+from|\d00-level)\b/i;
 
+const CADETS = /\bcadets? must\b/i;
+const EXAMPLE = /\((?:ex\.|e\.g\.|i\.e\.)[^)]*\)/i;
+
 /** "(…)" around the whole text: dropped. */
 function unwrap(text: string): string {
   const t = text.trim();
@@ -349,6 +354,10 @@ function unwrap(text: string): string {
 
 function parseClause(text: string): Requirement | null {
   if (COUNTED.test(text)) return { kind: "manual", text: clean(unwrap(text)) };
+  // "AFROTC cadets must also register for ARSC059": applies to some students only.
+  if (CADETS.test(text)) return { kind: "manual", text: clean(text) };
+  // "Introductory entomology course (ex. BSCI337)": a code that only illustrates the requirement.
+  if (EXAMPLE.test(text) && !hasCourse(tokenize(text.replace(EXAMPLE, " ")))) return { kind: "manual", text: clean(text) };
   const trailing = TRAILING_MANUAL.exec(text);
   const useTrailing =
     trailing !== null && hasCourse(tokenize(text.slice(0, trailing.index)));
@@ -443,6 +452,8 @@ export function parsePrerequisite(text: string | null): Requirement | null {
   for (const sentence of splitTopLevel(text, sentenceEnd)) {
     const m = /^(or|and)\b\s*/i.exec(sentence);
     const body = sentence.slice(m?.[0].length ?? 0);
+    // "Repeatable to 12 credits (if content differs)" is not a requirement.
+    if (/^repeatable\b/i.test(body.trim())) continue;
     const req = parseSemicolonClauses(body);
     if (!req) continue;
     // A waiver sentence is an alternative even with no connector.
