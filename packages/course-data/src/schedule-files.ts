@@ -31,6 +31,8 @@ export type DepartmentSectionsFile = {
   courses: Record<string, { t: string; cr: [number, number]; s: EncodedSection[] }>;
   /** PlanetTerp average rating by instructor (SOC spelling); unrated instructors are left out. */
   ratings: Record<string, number>;
+  /** Instructors (SOC spelling) with a PlanetTerp review summary file. Absent in older files. */
+  reviews?: string[];
 };
 
 export type IndexedCourse = { id: string; title: string; credits: { min: number; max: number }; sections: number };
@@ -42,6 +44,7 @@ export type DepartmentSections = {
   courses: { id: string; title: string; credits: { min: number; max: number } }[];
   sections: Section[];
   ratings: Record<string, number>;
+  reviews: string[];
 };
 
 type Snapshot = { term: string; courses: Pick<Course, "id" | "department" | "title" | "credits">[]; sections: Section[] };
@@ -64,8 +67,9 @@ const encodeSection = (s: Section): EncodedSection => [
 
 export function buildScheduleFiles(
   snapshot: Snapshot,
-  options: { generatedAt: string; ratings?: Record<string, number> },
+  options: { generatedAt: string; ratings?: Record<string, number>; reviews?: Iterable<string> },
 ): { index: CourseIndexFile; departments: Record<string, DepartmentSectionsFile> } {
+  const reviewed = new Set(options.reviews ?? []);
   const byCourse = new Map<string, Section[]>();
   for (const s of snapshot.sections) byCourse.set(s.courseId, [...(byCourse.get(s.courseId) ?? []), s]);
 
@@ -90,12 +94,14 @@ export function buildScheduleFiles(
       generatedAt: options.generatedAt,
       courses: {},
       ratings: {},
+      reviews: [],
     });
     file.courses[id] = { t: title, cr: [credits.min, credits.max], s: sections.map(encodeSection) };
     for (const s of sections) {
       for (const name of s.instructors) {
         const r = options.ratings?.[name];
         if (r !== undefined) file.ratings[name] = r;
+        if (reviewed.has(name) && !file.reviews!.includes(name)) file.reviews!.push(name);
       }
     }
   }
@@ -143,5 +149,5 @@ export function decodeDepartmentSections(data: unknown): DepartmentSections {
       });
     }
   }
-  return { term: f.term, dept: f.dept, generatedAt: f.generatedAt, courses, sections, ratings: { ...f.ratings } };
+  return { term: f.term, dept: f.dept, generatedAt: f.generatedAt, courses, sections, ratings: { ...f.ratings }, reviews: [...(f.reviews ?? [])] };
 }

@@ -1,6 +1,7 @@
 import type { NextRequest } from "next/server";
 import { connection } from "next/server";
 import { buildSnapshots, openSnapshotStore, pruneSnapshots, refreshFast } from "@turboterp/campus-data/snapshots";
+import { liveRefreshDeps, refreshCourses, refreshSeats } from "@turboterp/course-data/soc-refresh";
 import { authorizeCron, cronJob } from "@/lib/cron";
 
 // Scheduled refresh, called by Supabase cron (supabase/migrations/0003_cron_refresh.sql)
@@ -20,6 +21,14 @@ async function run(request: NextRequest, context: { params: Promise<{ job: strin
   try {
     const store = openSnapshotStore();
     const now = new Date();
+    if (job === "soc-seats" || job === "soc-courses") {
+      const refresh = job === "soc-seats" ? refreshSeats : refreshCourses;
+      const r = await refresh(store, liveRefreshDeps(), now);
+      return Response.json(
+        { ...r, ms: Math.round(performance.now() - started) },
+        { headers: { "Cache-Control": "no-store" } },
+      );
+    }
     const report = await (job === "daily" ? buildSnapshots : refreshFast)(store, now);
     if (job === "daily") await pruneSnapshots(store, now);
     const failures = report.results.flatMap((r) => (r.ok ? [] : [{ key: r.key, error: r.error }]));

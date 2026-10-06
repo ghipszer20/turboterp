@@ -18,7 +18,8 @@
   color: var(--text);
 }
 
-.prose p + p {
+.prose p + p,
+.prose ul + p {
   color: var(--text-2);
   font: var(--t-sub);
 }
@@ -44,4 +45,15 @@
 
 .moreLinks a {
   color: var(--text-2);
+}
+
+/* Bullet lists on the Terms and Privacy pages. */
+.list {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--text-2);
+  font: var(--t-sub);
 }

@@ -18,6 +18,26 @@ export type SelectedAp = { exam: string; score: number };
 
 const uid = () => (typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `t${Math.random().toString(36).slice(2)}`);
 
+const FOUR_YEARS = 8; // fall and spring terms
+const isMain = (name: string) => /^(Fall|Spring) /.test(name);
+
+/** A transcript that starts before the plan did adds terms at the front. The plan stays four years
+ * (owner, 2026-10-04): empty terms are dropped from the end until eight fall and spring terms are
+ * left. A term with courses, or one an exam is planned for, is never dropped. */
+function trimToFourYears(before: AdvisorPlan, after: AdvisorPlan): AdvisorPlan {
+  const mains = (p: AdvisorPlan) => p.terms.filter((t) => isMain(t.name)).length;
+  if (mains(after) <= mains(before)) return after;
+  const examTerms = new Set(Object.values(after.examTerms ?? {}));
+  let next = after;
+  for (;;) {
+    const last = next.terms.at(-1);
+    if (!last || last.courses.length > 0 || examTerms.has(last.name)) break;
+    if (isMain(last.name) && mains(next) <= FOUR_YEARS) break;
+    next = planReducer(next, { type: "remove-term", name: last.name });
+  }
+  return next;
+}
+
 export function applyTranscriptImport(plan: AdvisorPlan, selection: { courses: SelectedCourse[]; ap: SelectedAp[]; gpa?: number | null }): AdvisorPlan {
   let next = plan;
   // The transcript's printed cumulative GPA replaces any earlier value (the student can still edit it); none printed leaves it alone.
@@ -44,6 +64,8 @@ export function applyTranscriptImport(plan: AdvisorPlan, selection: { courses: S
       });
     }
   }
+
+  next = trimToFourYears(plan, next);
 
   // Testudo lists one AP line per course equivalency (the same exam can repeat on one transcript),
   // and a student may re-import the same transcript later: skip any exam already in prior.ap either

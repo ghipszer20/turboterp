@@ -1,4 +1,4 @@
-/* Support page: one text block and one main action. */
+/* Donate page: the owner's text and one main action. */
 
 .card {
   border: 1px solid var(--card-border);
@@ -12,9 +12,16 @@
 }
 
 .text {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   font: var(--t-body);
   color: var(--text);
-  max-width: 46ch;
+  max-width: 60ch;
+}
+
+.text p {
+  margin: 0;
 }
 
 .action {

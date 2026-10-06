@@ -1,0 +1,80 @@
+/* OPTION B — "Widgets": iOS home-screen feel. Rounded tiles instead of row lists,
+   a red hero widget, soft pastel tints per area, rounded display type, floating pill tab bar. */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
+:root {
+  --font-display: "Plus Jakarta Sans", ui-rounded, "SF Pro Rounded", var(--font);
+  --bg: #f3f4f8;
+  --surface-2: #eceef4;
+  --r-lg: 22px;
+  --shadow: 0 1px 2px rgb(20 24 40 / .04), 0 8px 24px rgb(20 24 40 / .06);
+  --card-border: rgb(20 24 40 / .06);
+  --tint-dining: #fff0e6; --ink-dining: #b4440a;
+  --tint-study: #e9f0ff; --ink-study: #1d4ed8;
+  --tint-fitness: #e6f7ee; --ink-fitness: #15803d;
+  --tint-transport: #f1e9ff; --ink-transport: #6d28d9;
+}
+
+.pageHead h1, .groupHead h2, .heroTitle, .heroNum, .brand, .wordmark, .yearHead h2, .termHead h3 { font-family: var(--font-display); }
+.pageHead h1 { font-weight: 800; }
+
+.side { background: var(--bg); }
+.side .tab { border-radius: 14px; }
+.side .tab.active { background: var(--surface); color: var(--accent); box-shadow: var(--shadow); }
+.side .tab.active svg { color: var(--accent); }
+
+/* Floating pill tab bar */
+.phone .tabBar { margin: 0 14px 16px; padding: 8px 6px; border-radius: 28px; background: rgb(255 255 255 / .92); box-shadow: 0 8px 30px rgb(20 24 40 / .14); backdrop-filter: blur(20px); }
+.phone .tabBar .tab.active { color: var(--accent); }
+.phone .tabBar .tab.active svg { stroke-width: 2.25; }
+
+/* Hero widgets */
+.heroMain { background: linear-gradient(135deg, #d0183c, #a80a29); color: #fff; border-radius: var(--r-lg); box-shadow: 0 10px 30px rgb(186 12 47 / .28); }
+.heroMain .heroLabel { color: rgb(255 255 255 / .75); }
+.heroMain .heroSub { color: rgb(255 255 255 / .85); }
+.heroSide { background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow); }
+
+/* Tiles */
+.groupHead { margin: 0 2px 10px; }
+.groupHead h2 { font-size: 17px; }
+.list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.phoneMain .list { grid-template-columns: 1fr 1fr; gap: 10px; }
+.item { flex-direction: column; align-items: flex-start; gap: 10px; padding: 14px 14px 12px; min-height: 112px; background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow); }
+.item .text { width: 100%; gap: 1px; }
+.item .title { font-weight: 600; font-size: 15px; }
+.item .sub { white-space: normal; font-size: 12.5px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.item .icon { width: 32px; height: 32px; border-radius: 10px; }
+.chev { display: none; }
+.group[data-cat="dining"] .icon { background: var(--tint-dining); color: var(--ink-dining); }
+.group[data-cat="study"] .icon { background: var(--tint-study); color: var(--ink-study); }
+.group[data-cat="fitness"] .icon { background: var(--tint-fitness); color: var(--ink-fitness); }
+.group[data-cat="transport"] .icon { background: var(--tint-transport); color: var(--ink-transport); }
+.group[data-cat="transport"] .list { grid-template-columns: 1fr; }
+.group[data-cat="transport"] .item { flex-direction: row; align-items: center; min-height: 0; }
+.item[data-status] .status::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: currentColor; margin-right: 5px; vertical-align: 1px; }
+.item.accent { background: var(--accent-tint); box-shadow: none; }
+.item.accent .icon { background: var(--surface); color: var(--accent); }
+.item.accent .title { color: var(--accent); }
+
+/* Advisor */
+.summary { background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 14px 18px; }
+.term { background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 16px; }
+.course { border-radius: 12px; background: var(--cat-bg, var(--surface-2)); }
+.course[data-cat="major"] { --cat-bg: var(--cat-major-bg); } .course[data-cat="major"] .cid { color: #8a0a24; }
+.course[data-cat="gened"] { --cat-bg: var(--cat-gened-bg); } .course[data-cat="gened"] .cid { color: #0b4a8f; }
+.course[data-cat="college"] { --cat-bg: var(--cat-college-bg); } .course[data-cat="college"] .cid { color: #1f6b2a; }
+.course .ctitle, .course .ccr { color: rgb(29 29 31 / .62); }
+.term.warn { box-shadow: var(--shadow), 0 0 0 2px rgb(186 12 47 / .25); }
+.mustFix { border-radius: 12px; border-left: 0; }
+.addCourse { border-style: solid; border-color: transparent; background: var(--surface-2); }
+.extraTerms button { border: 0; background: var(--surface); box-shadow: var(--shadow); }
+.subTabs { background: var(--surface); box-shadow: var(--shadow); border-radius: 14px; }
+.subTabs a.on { background: var(--accent); color: #fff; box-shadow: none; border-radius: 11px; }
+
+/* Schedule */
+.week { background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 12px 10px 10px 4px; }
+.block { border-radius: 8px; }
+:root { --c1-bg: #3b82f6; --c1-fg: #fff; --c2-bg: #22a35a; --c2-fg: #fff; --c3-bg: #f59e0b; --c3-fg: #fff; --c4-bg: #8b5cf6; --c4-fg: #fff; }
+.block span { opacity: .9; }
+.teachers .c1 i { background: #3b82f6; } .teachers .c2 i { background: #22a35a; } .teachers .c3 i { background: #f59e0b; } .teachers .c4 i { background: #8b5cf6; }
+.btn.primary.wide { border-radius: 16px; box-shadow: 0 8px 24px rgb(186 12 47 / .25); }

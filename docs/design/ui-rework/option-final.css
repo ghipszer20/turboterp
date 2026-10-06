@@ -1,0 +1,103 @@
+/* FINAL (owner picks, 2026-10-05): B "Widgets" + B1 tinted tiles + B2 flat hairline borders + S1 class blocks.
+   Blocks tier their text by height: tall = course + room, short = course only, tiny = color only. Nothing wraps or clips. */
+@import url("option-b.css");
+
+/* Tiles: area tint, hairline border, no shadow */
+.item { box-shadow: none; background: var(--tile, var(--surface)); border: 1px solid var(--card-border); }
+.item .icon { background: var(--surface); }
+.group[data-cat="dining"] .item { --tile: var(--tint-dining); }
+.group[data-cat="study"] .item { --tile: var(--tint-study); }
+.group[data-cat="fitness"] .item { --tile: var(--tint-fitness); }
+.group[data-cat="transport"] .item { --tile: var(--tint-transport); }
+.group[data-cat="dining"] .item .icon { color: var(--ink-dining); }
+.group[data-cat="study"] .item .icon { color: var(--ink-study); }
+.group[data-cat="fitness"] .item .icon { color: var(--ink-fitness); }
+.group[data-cat="transport"] .item .icon { color: var(--ink-transport); }
+.item .sub { color: rgb(29 29 31 / .62); }
+body.dark .item .sub { color: rgb(245 245 247 / .66); }
+.item.accent { background: var(--accent); color: var(--on-accent); border-color: transparent; }
+.item.accent .icon { background: rgb(255 255 255 / .2); color: #fff; }
+.item.accent .title, .item.accent .sub { color: #fff; }
+.heroSide, .summary, .term, .week, .subTabs { box-shadow: none; border: 1px solid var(--card-border); }
+.heroMain { box-shadow: none; }
+.side .tab.active { box-shadow: none; border: 1px solid var(--card-border); }
+.phone .tabBar { box-shadow: none; border: 1px solid var(--card-border); }
+.btn.primary.wide { box-shadow: none; }
+
+/* S1 class blocks */
+.block.c1 { --solid: #3b82f6; --deep: #1d4ed8; }
+.block.c2 { --solid: #22a35a; --deep: #15803d; }
+.block.c3 { --solid: #f59e0b; --deep: #b45309; }
+.block.c4 { --solid: #8b5cf6; --deep: #6d28d9; }
+body.dark .block.c1 { --deep: #93c5fd; } body.dark .block.c2 { --deep: #86efac; }
+body.dark .block.c3 { --deep: #fcd34d; } body.dark .block.c4 { --deep: #c4b5fd; }
+.week { --sep-grid: rgb(60 60 67 / .09); }
+body.dark .week { --sep-grid: rgb(235 235 245 / .1); }
+.block {
+  left: 2px; right: 2px; padding: 0 2px; border-radius: 7px;
+  background: var(--solid); color: #fff; border: 1.5px solid var(--deep); box-shadow: 0 1px 3px rgb(0 0 0 / .18);
+  container-type: size; justify-content: center; gap: 1px;
+}
+.block b, .block span { display: block; white-space: nowrap; overflow: hidden; line-height: 1.12; text-align: center; }
+/* Text scales with the block (owner, 2026-10-05): both lines always show; a short block gets a smaller font,
+   never a hidden or cut label. cqh = 1% of the block's height, cqw = 1% of its width. */
+.block b { font-size: min(clamp(6px, 30cqh, 9.5px), 15cqw); letter-spacing: -.03em; }
+.block span { font-size: min(clamp(5.5px, 25cqh, 8.5px), 14cqw); color: rgb(255 255 255 / .88); opacity: 1; }
+
+/* Dining (owner, 2026-10-05): no brown. Light keeps the peach tile with a brighter orange icon; dark tiles stay
+   graphite with a solid colored icon chip instead of a tinted fill. */
+:root { --ink-dining: #e8590c; }
+body.dark .group .item { --tile: var(--surface); }
+body.dark .group[data-cat="dining"] .item .icon { background: #ff7a1a; color: #fff; }
+body.dark .group[data-cat="study"] .item .icon { background: #3b82f6; color: #fff; }
+body.dark .group[data-cat="fitness"] .item .icon { background: #22a35a; color: #fff; }
+body.dark .group[data-cat="transport"] .item .icon { background: #8b5cf6; color: #fff; }
+
+/* Search for a food */
+.searchField { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px; margin-bottom: 12px; border-radius: 14px; background: var(--surface); border: 1px solid var(--card-border); color: var(--text-3); font-size: 15px; }
+.searchField svg { width: 18px; height: 18px; color: var(--text-2); }
+.phoneMain .searchField { margin-bottom: 10px; }
+
+/* Dining page */
+.campusNav { margin-bottom: 14px; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.chips button { padding: 7px 14px; border-radius: 999px; background: var(--surface); border: 1px solid var(--card-border); font-size: 14px; font-weight: 500; color: var(--text-2); }
+.chips button.on { background: var(--accent); color: var(--on-accent); border-color: transparent; }
+.chips.small { margin: 0; gap: 6px; } .chips.small button { padding: 5px 11px; font-size: 13px; }
+.mealRow { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+.mealRow .subTabs { margin-bottom: 0; }
+.openNow { font-size: 13px; color: var(--open); font-weight: 500; }
+.phoneMain .mealRow { flex-direction: column; align-items: flex-start; gap: 6px; }
+.phoneMain .mealRow .subTabs { width: 100%; display: grid; grid-template-columns: 1fr 1fr 1fr; }
+.phoneMain .mealRow .subTabs a { text-align: center; }
+.menu { max-width: 680px; }
+.station { margin-top: 16px; }
+.station h3 { margin: 0 4px 6px; font: 600 12.5px/1 var(--font); letter-spacing: .06em; text-transform: uppercase; color: var(--text-2); }
+.foods { background: var(--tint-dining); border: 1px solid var(--card-border); border-radius: 16px; overflow: hidden; }
+body.dark .foods { background: var(--surface); }
+.food { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 42px; padding: 8px 14px; font-size: 15px; }
+.food + .food { border-top: 1px solid var(--card-border); }
+.tags { display: flex; gap: 4px; }
+.tags i { font: 600 10px/1 var(--font); font-style: normal; padding: 3px 5px; border-radius: 5px; background: rgb(0 0 0 / .06); color: var(--text-2); }
+body.dark .tags i { background: rgb(255 255 255 / .1); }
+
+/* Browse layouts gallery: every mini block always shows course + section (owner, 2026-10-05). */
+.galleryBar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; font-size: 14px; }
+.phoneMain .galleryBar { flex-direction: column; align-items: flex-start; gap: 8px; }
+.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.phoneMain .gallery { grid-template-columns: 1fr; gap: 10px; }
+.layout { display: block; padding: 10px 10px 8px; background: var(--surface); border: 1px solid var(--card-border); border-radius: 16px; }
+.layoutHead { display: flex; justify-content: space-between; align-items: baseline; margin: 0 2px 6px; font-size: 13px; color: var(--text-2); }
+.layoutHead b { color: var(--text); font-size: 14px; }
+.week.mini { --px: .42px; border: 0; padding: 0; border-radius: 0; background: none; }
+.phoneMain .week.mini { --px: .5px; }
+.phoneMain .layout .teachers { grid-template-columns: 1fr 1fr; }
+.phoneMain .chips { flex-wrap: nowrap; overflow: hidden; }
+.week.mini .dayHeads, .week.mini .grid { grid-template-columns: 16px repeat(5, 1fr); }
+.week.mini .dayHeads span { font-size: 9px; padding-bottom: 2px; }
+.week.mini .hours span { font-size: 7.5px; transform: translateY(-4px); padding-right: 3px; }
+.week.mini .block { left: 1px; right: 1px; border-radius: 4px; border-width: 1px; box-shadow: none; gap: 0; }
+.week.mini .block b { font-size: min(clamp(5px, 34cqh, 8px), 15cqw); }
+.week.mini .block span { font-size: min(clamp(4.5px, 28cqh, 7px), 16cqw); }
+.layout .teachers { grid-template-columns: 1fr 1fr; gap: 3px 8px; margin-top: 8px; font-size: 10.5px; }
+.layout .teachers .t i { width: 8px; height: 8px; }

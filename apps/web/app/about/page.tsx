@@ -20,7 +20,7 @@ export default function AboutPage() {
             </p>
             <p>It&apos;s free and open source. Not affiliated with the University of Maryland.</p>
             <p>
-              Read the <Link href="/terms">Terms of Use</Link> and the <Link href="/privacy">Privacy</Link> notice.
+              Read the <Link href="/terms">Terms of Use</Link> and the <Link href="/privacy">Privacy Policy</Link>.
             </p>
           </div>
         </Card>
@@ -58,7 +58,7 @@ export default function AboutPage() {
 
       <p className={styles.moreLinks}>
         <Link href="/report">Report an issue</Link>
-        <Link href="/support">Support TurboTerp</Link>
+        <Link href="/donate">Donate</Link>
       </p>
     </Page>
   );
