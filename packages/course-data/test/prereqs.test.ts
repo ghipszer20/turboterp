@@ -344,6 +344,41 @@ describe("parsePrerequisite", () => {
       );
     });
 
+    it("treats a waiver after a comma as an alternative to the course (JOUR772)", () => {
+      expect(
+        parsePrerequisite("Must have completed JOUR502, or students who have taken courses with comparable content may contact the department."),
+      ).toEqual(any(course("JOUR502"), manual("students who have taken courses with comparable content may contact the department")));
+    });
+
+    it("treats a waiver inside parentheses as an alternative (PSYC732)", () => {
+      expect(
+        parsePrerequisite(
+          "PSYC603; and (PSYC602; or students who have taken courses with comparable content may contact the department). Or permission of instructor.",
+        ),
+      ).toEqual(
+        any(
+          all(course("PSYC603"), any(course("PSYC602"), manual("students who have taken courses with comparable content may contact the department"))),
+          manual("permission of instructor"),
+        ),
+      );
+    });
+
+    it("keeps 'or equivalent' in the middle of a list of alternatives (ENME485)", () => {
+      expect(parsePrerequisite("ENME202 or equivalent, experience using Python, or permission of the instructor.")).toEqual(
+        any(any(course("ENME202"), manual("equivalent")), manual("permission of the instructor")),
+      );
+    });
+
+    it("keeps 'or equivalent programming experience' inside a parenthesized list (CMSC456)", () => {
+      expect(parsePrerequisite("(CMSC106, CMSC131, or ENEE150; or equivalent programming experience).")).toEqual(
+        any(any(course("CMSC106"), course("CMSC131"), course("ENEE150")), manual("equivalent programming experience")),
+      );
+    });
+
+    it("reads a grade phrase that stands alone: 'C- or better in' (JAPN320)", () => {
+      expect(parsePrerequisite("C- or better in JAPN 202.")).toEqual(course("JAPN202", { minGrade: "C-" }));
+    });
+
     it("reads semicolon clauses after 'one of the following' with the list's final connector (GFPL492)", () => {
       expect(
         parsePrerequisite(

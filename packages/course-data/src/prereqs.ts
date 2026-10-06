@@ -15,7 +15,8 @@ const MIN_GRADE = new RegExp(
     "|(?:[Aa] )?[Gg]rades? of (?:an? )?" +
     "|(?:completed )?with (?:an? )?(?:grade of )?" +
     "|(?:must )?(?:receive|earn(?:ed)?) an? )" +
-    "([A-D][+-]?)(?![A-Za-z0-9])( or (?:[Hh]igher|[Bb]etter))?",
+    "([A-D][+-]?)(?![A-Za-z0-9])( or (?:[Hh]igher|[Bb]etter))?" +
+    "|(?<![\\w+-])([A-D][+-]?) or (?:[Hh]igher|[Bb]etter)",
   "g",
 );
 
@@ -27,7 +28,7 @@ type Token =
 // Case-sensitive on purpose: department codes are uppercase, so "than 300"
 // never reads as a course. Connectors are matched in either case.
 const TOKEN =
-  /\b([A-Z]{4})\s?(\d{3}[A-Z]?)\b|\b([Aa][Nn][Dd]|[Oo][Rr])\b|(,)|([([])|([)\]])|\b((?:1|[Oo]ne)\s+(?:courses?\b|of the following))|(;)|(\/)|\b(\d{3}[A-Z]?)\b(?![-\w])(?!\s+(?:hours|credits|units|words|points))/g;
+  /\b([A-Z]{4})\s?(\d{3}[A-Z]?)\b|\b([Aa][Nn][Dd]|[Oo][Rr])\b|(,)|([([])|([)\]])|\b((?:1|[Oo]ne)\s+(?:courses?\b|of the following))|(;)|(\/)|\b(\d{3}[A-Z]?)\b(?![-\w])(?!\s+(?:hours|credits|units|words|points))|\b((?:other\s+\w+\s+)?(?:equivalent|comparable)(?:(?![A-Z]{4}\s?\d{3})[^;,()])*)/g;
 
 /** `tail`: a manual alternative appended to the end of the clause's list. */
 function tokenize(text: string, tail?: string): Token[] {
@@ -49,7 +50,8 @@ function tokenize(text: string, tail?: string): Token[] {
       if (prev && ["or", "and", "comma"].includes(prev.type) && before?.type === "course") {
         raw.push({ type: "course", value: `${before.value.slice(0, 4)}${m[10]}` });
       }
-    } else raw.push({ type: m[3]!.toLowerCase() as "and" | "or" });
+    } else if (m[11]) raw.push({ type: "manual", text: clean(m[11]) });
+    else raw.push({ type: m[3]!.toLowerCase() as "and" | "or" });
   }
   if (tail) raw.push({ type: "or" }, { type: "manual", text: tail });
 
@@ -199,7 +201,7 @@ const MANUAL_WITH_COURSE = /\beligibility\b|\bplacement\b/i;
 
 // "… MATH340 and permission of …": a trailing non-course requirement inside a clause.
 const TRAILING_MANUAL =
-  /\s+(and|or)\s+((?:permission|must\b|familiarity|approval|junior|senior|sophomore|students?\b)[\s\S]*|(?:other\s+\w+\s+)?(?:equivalent|comparable)(?:\s+\w+){0,2})[\s.]*$/i;
+  /\s+(and|or)\s+((?:permission|must\b|familiarity|approval|junior|senior|sophomore|students?\b)[\s\S]*|(?:other\s+\w+\s+)?(?:equivalent|comparable)(?:\s+\w+){0,2})[\s.)]*$/i;
 
 // A waiver offers a way around the prerequisite; its course codes are not requirements.
 const WAIVER =
@@ -214,17 +216,17 @@ const hasCourse = (tokens: Token[]) => tokens.some((t) => t.type === "course");
 function parseClause(text: string): Requirement | null {
   const trailing = TRAILING_MANUAL.exec(text);
   const useTrailing =
-    trailing !== null &&
-    hasCourse(tokenize(text.slice(0, trailing.index))) &&
-    !(WAIVER.test(text) && /^students?\b/i.test(trailing[2]!));
+    trailing !== null && hasCourse(tokenize(text.slice(0, trailing.index)));
   if (!useTrailing && WAIVER.test(text)) {
     const rest = clean(text);
     return rest ? { kind: "manual", text: rest } : null;
   }
   if (useTrailing) {
     const headText = text.slice(0, trailing.index);
-    const tail = clean(trailing[2]!);
-    const isOr = trailing[1]!.toLowerCase() === "or";
+    let tail = clean(trailing[2]!);
+    // A closing parenthesis that belongs to the head is not part of the tail.
+    while (tail.endsWith(")") && (tail.match(/\)/g)?.length ?? 0) > (tail.match(/\(/g)?.length ?? 0)) tail = tail.slice(0, -1).trim();
+    const isOr = trailing[1]!.toLowerCase() === "or" || WAIVER.test(tail);
     // "…, and one of the following: A, B, or equivalent": the alternative joins the list.
     if (isOr && tail && ONE_OF_FOLLOWING.test(headText)) return parseBody(headText, tail);
     return combine(isOr ? "any" : "all", parseClause(headText), tail ? { kind: "manual", text: tail } : null);
@@ -238,7 +240,7 @@ function parseClause(text: string): Requirement | null {
 
 function parseBody(text: string, tail?: string): Requirement | null {
   const stripped = text.replace(EXCLUSION, " ");
-  const grade = [...stripped.matchAll(MIN_GRADE)][0]?.[1];
+  const grade = [...stripped.matchAll(MIN_GRADE)].map((m) => m[1] ?? m[3])[0];
   const body = stripped.replace(MIN_GRADE, " ");
   const concurrent = CONCURRENT.test(text);
   const parsed = hasCourse(tokenize(body))

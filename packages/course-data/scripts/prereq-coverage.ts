@@ -47,7 +47,7 @@ for (const c of withPrereq) {
   const inTree = treeCourses(tree);
   const manual = manualTexts(tree).join(" ");
   const lost = [...codesIn(text)].filter((code) => !inTree.has(code) && !codesIn(manual).has(code));
-  const swallowed = [...codesIn(manual)].filter((code) => !/eligibility|placement/i.test(manual) && !inTree.has(code));
+  const swallowed = [...codesIn(manual.replace(/((?:not|excluding|except)[^)]*)/gi, " "))].filter((code) => !/eligibility|placement/i.test(manual) && !inTree.has(code));
   if (inTree.size === 0) manualOnly++;
   if (lost.length === 0 && swallowed.length === 0) clean++;
   else problems.push({ id: c.id, text, lost: [...lost, ...swallowed.map((s) => `${s} (in manual)`)] });
@@ -117,7 +117,8 @@ for (const c of withPrereq) {
 
   for (const clause of clauses) {
     if (WAIVER.test(clause) && !/\bor comparable\b/i.test(clause)) {
-      const bad = [...codesIn(clause)].filter((k) => inTree.has(k) && !codesOutside(clause).has(k));
+      const waiver = clause.slice(clause.search(/students? who|comparable/i));
+      const bad = [...codesIn(waiver)].filter((k) => inTree.has(k) && !codesOutside(waiver).has(k));
       if (bad.length) flag("A", `waiver clause codes required: ${bad.join(", ")}`);
     }
     for (const ex of clause.match(EXCLUSION) ?? []) {
