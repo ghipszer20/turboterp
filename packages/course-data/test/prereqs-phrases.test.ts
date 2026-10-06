@@ -214,3 +214,50 @@ describe("P6: concurrent phrasing", () => {
     );
   });
 });
+
+describe("P7: conditional corequisite", () => {
+  it("ARSC100", () => {
+    expect(parsePrerequisite("AFROTC cadets must also register for ARSC059.")).toEqual(
+      man("AFROTC cadets must also register for ARSC059"),
+    );
+  });
+  it("ARSC300", () => {
+    expect(parsePrerequisite("AFROTC cadets must also register for ARSC059; or permission of UGST-AFROTC-Air Science.")).toEqual(
+      any(man("AFROTC cadets must also register for ARSC059"), man("permission of UGST-AFROTC-Air Science")),
+    );
+  });
+});
+
+describe("P8: examples are not requirements", () => {
+  it("ENTM797", () => {
+    expect(parsePrerequisite("Introductory entomology course (ex. BSCI337); a college level understanding of biology is required.")).toEqual(
+      all(man("Introductory entomology course (ex. BSCI337)"), man("a college level understanding of biology is required")),
+    );
+  });
+});
+
+describe("P9: course ranges", () => {
+  it("FMSC485", () => {
+    expect(parsePrerequisite("FMSC330; or 1 course from PSYC300-499 course range.")).toEqual(
+      any(n("FMSC330"), { kind: "dept-level", dept: "PSYC", minNumber: 300 }),
+    );
+  });
+});
+
+describe("P10: non-requirement sentences", () => {
+  it("ENGL388P", () => {
+    expect(parsePrerequisite("Permission of ARHU-English department. Repeatable to 12 credits if content differs.")).toEqual(
+      man("Permission of ARHU-English department"),
+    );
+  });
+  it("ENGL388V", () => {
+    expect(parsePrerequisite("Permission of the ARHU-English department. Repeatable to 12 credits.")).toEqual(
+      man("Permission of the ARHU-English department"),
+    );
+  });
+  it("ENGL388W / SPAN388W", () => {
+    expect(parsePrerequisite("Permission of the Writing Center (1205 Tawes Hall). Repeatable to 12 credits.")).toEqual(
+      man("Permission of the Writing Center (1205 Tawes Hall)"),
+    );
+  });
+});
