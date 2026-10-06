@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TurboTerp UI rework · Final · Widgets, tinted tiles, S1 blocks (dark)</title>
+<title>TurboTerp UI rework · Final (dark)</title>
 <link rel="stylesheet" href="base.css">
 <link rel="stylesheet" href="option-final.css">
 <link rel="stylesheet" href="dark.css">
@@ -23,13 +23,14 @@
     <symbol id="i-bus" viewBox="0 0 24 24"><rect x="4" y="3.5" width="16" height="15" rx="3"/><path d="M4 10h16M8 18.5v2M16 18.5v2M8 14.5h.01M16 14.5h.01" stroke-width="2.2"/></symbol>
     <symbol id="i-room" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="3"/><path d="M3.5 9h17M9 9v11"/></symbol>
     <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
     <symbol id="i-walk" viewBox="0 0 24 24"><circle cx="13" cy="4.5" r="1.8"/><path d="M9.5 21 11 15l-2.5-2.5 1-5 3-1 2.5 3 3 1.5M12.5 15.5 15 18l1 4M8.5 12.5 6 15"/></symbol>
   </defs>
 </svg>
 
 <!-- ============ BOARD 1: TODAY (desktop + phone) ============ -->
 <section class="board">
-  <h2 class="boardTitle">Final · Widgets, tinted tiles, S1 blocks (dark) · Today</h2>
+  <h2 class="boardTitle">Final (dark) · Today</h2>
   <div class="frames">
     <div class="frame desktop">
       <aside class="side">
@@ -68,11 +69,12 @@
 
         <section class="group" data-cat="dining">
           <div class="groupHead"><h2>Dining</h2><a class="more" href="#">All menus</a></div>
+          <a class="searchField" href="#"><svg><use href="#i-search"/></svg><span>Search for a food across all dining halls</span></a>
           <div class="list">
-            <a class="item" href="#"><span class="icon"><svg><use href="#i-dining"/></svg></span><span class="text"><span class="title">Yahentamitsi</span><span class="sub">Lunch: Grill, Pasta Bar, Sprouts, Good Food Gluten Free</span></span><span class="chev"></span></a>
-            <a class="item" href="#"><span class="icon"><svg><use href="#i-dining"/></svg></span><span class="text"><span class="title">South Campus</span><span class="sub">Lunch: Broiler Works, Chef's Table, Bagel Bar +1 more</span></span><span class="chev"></span></a>
-            <a class="item" href="#"><span class="icon"><svg><use href="#i-dining"/></svg></span><span class="text"><span class="title">251 North</span><span class="sub">Lunch: Smash Burger, Harvest Vegan, Noodle Bar +2 more</span></span><span class="chev"></span></a>
-            <a class="item" href="#"><span class="icon"><svg><use href="#i-dining"/></svg></span><span class="text"><span class="title">Stamp</span><span class="sub">11 of 14 open · Subway closes at 7pm</span></span><span class="chev"></span></a>
+            <a class="item" href="#"><span class="icon"><svg><use href="#i-dining"/></svg></span><span class="text"><span class="title">Yahentamitsi</span><span class="sub">Lunch: Orange chicken, Margherita pizza, Chicken shawarma</span></span><span class="chev"></span></a>
+            <a class="item" href="#"><span class="icon"><svg><use href="#i-dining"/></svg></span><span class="text"><span class="title">South Campus</span><span class="sub">Lunch: Smash burger, Baja fish tacos, Pesto penne</span></span><span class="chev"></span></a>
+            <a class="item" href="#"><span class="icon"><svg><use href="#i-dining"/></svg></span><span class="text"><span class="title">251 North</span><span class="sub">Lunch: Korean BBQ bowl, Buffalo chicken wrap, Mac and cheese</span></span><span class="chev"></span></a>
+            <a class="item" href="#"><span class="icon"><svg><use href="#i-dining"/></svg></span><span class="text"><span class="title">Stamp</span><span class="sub">11 of 14 open · Panda Express, Chick-fil-A, Subway until 7pm</span></span><span class="chev"></span></a>
           </div>
         </section>
 
@@ -124,7 +126,7 @@
 
 <!-- ============ BOARD 2: ADVISOR PLAN (desktop) + SCHEDULE (phone) ============ -->
 <section class="board">
-  <h2 class="boardTitle">Final · Widgets, tinted tiles, S1 blocks (dark) · Advisor plan and Schedule builder</h2>
+  <h2 class="boardTitle">Final (dark) · Advisor plan and Schedule builder</h2>
   <div class="frames">
     <div class="frame desktop">
       <aside class="side">
@@ -283,6 +285,104 @@
         <a class="tab" href="#"><svg><use href="#i-calendar"/></svg><span>Calendar</span></a>
         <a class="tab" href="#"><svg><use href="#i-advisor"/></svg><span>Advisor</span></a>
       </nav>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOARD 3: DINING PAGE ============ -->
+<section class="board">
+  <h2 class="boardTitle">Final (dark) · Campus › Dining</h2>
+  <div class="frames">
+    <div class="frame desktop">
+      <aside class="side">
+        <a class="brand" href="#"><img src="icon.svg" alt="" width="26" height="26"><span>Turbo<em>Terp</em></span></a>
+        <nav class="tabs"><a class="tab" href="#"><svg><use href="#i-today"/></svg><span>Today</span></a><a class="tab active" href="#"><svg><use href="#i-campus"/></svg><span>Campus</span></a><a class="tab" href="#"><svg><use href="#i-schedule"/></svg><span>Schedule</span></a><a class="tab" href="#"><svg><use href="#i-calendar"/></svg><span>Calendar</span></a><a class="tab" href="#"><svg><use href="#i-advisor"/></svg><span>Advisor</span></a></nav>
+        <div class="sideFoot">
+          <a href="#">About</a><a href="#">Report an issue</a><a href="#">Donate</a>
+          <a href="#" class="legal">Terms of Use</a><a href="#" class="legal">Privacy Policy</a>
+          <div class="seg"><button class="on">Light</button><button>Dark</button></div>
+          <p class="fine">Unofficial. Not affiliated with the University of Maryland.</p>
+        </div>
+      </aside>
+      <main class="content dining" id="dining-main">
+        <header class="pageHead"><p class="eyebrow">Campus</p><h1>Dining</h1></header>
+        <div class="subTabs campusNav"><a class="on" href="#">Dining</a><a href="#">Transport</a><a href="#">Libraries</a><a href="#">Gyms</a></div>
+        <a class="searchField" href="#"><svg><use href="#i-search"/></svg><span>Search for a food across all dining halls</span></a>
+        <div class="chips"><button class="on">South Campus</button><button>Yahentamitsi</button><button>251 North</button><button>Stamp</button></div>
+        <div class="mealRow"><div class="subTabs meals"><a href="#">Breakfast</a><a class="on" href="#">Lunch</a><a href="#">Dinner</a></div><span class="openNow">Open · lunch until 2pm, dinner from 4:30pm</span></div>
+        <div class="menu"><section class="station"><h3>Grill</h3><div class="foods"><div class="food"><span>Smash burger</span><span class="tags"><i>HA</i></span></div><div class="food"><span>Grilled chicken sandwich</span><span class="tags"><i>HA</i></span></div><div class="food"><span>Sweet potato fries</span><span class="tags"><i>V</i><i>GF</i></span></div></div></section><section class="station"><h3>Chef's Table</h3><div class="foods"><div class="food"><span>Baja fish tacos</span><span class="tags"></span></div><div class="food"><span>Cilantro lime rice</span><span class="tags"><i>V</i><i>GF</i></span></div><div class="food"><span>Black beans</span><span class="tags"><i>VG</i><i>GF</i></span></div></div></section><section class="station"><h3>Pasta</h3><div class="foods"><div class="food"><span>Pesto penne</span><span class="tags"><i>V</i></span></div><div class="food"><span>Marinara rigatoni</span><span class="tags"><i>VG</i></span></div><div class="food"><span>Garlic bread</span><span class="tags"><i>V</i></span></div></div></section><section class="station"><h3>Sprouts</h3><div class="foods"><div class="food"><span>Tofu stir-fry</span><span class="tags"><i>VG</i><i>GF</i></span></div><div class="food"><span>Quinoa salad</span><span class="tags"><i>VG</i><i>GF</i></span></div></div></section></div>
+      </main>
+    </div>
+    <div class="frame phone">
+      <header class="topBar">
+        <a class="wordmark" href="#"><img src="icon.svg" alt="" width="24" height="24"><span>Turbo<em>Terp</em></span></a>
+        <span class="topIcons"><i></i><i></i><i></i><i></i></span>
+      </header>
+      <main class="content phoneMain dining" data-clone="dining-main"></main>
+      <nav class="tabBar"><a class="tab active" href="#"><svg><use href="#i-campus"/></svg><span>Campus</span></a><a class="tab" href="#"><svg><use href="#i-schedule"/></svg><span>Schedule</span></a><a class="tab" href="#"><svg><use href="#i-calendar"/></svg><span>Calendar</span></a><a class="tab" href="#"><svg><use href="#i-advisor"/></svg><span>Advisor</span></a></nav>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOARD 4: BROWSE LAYOUTS GALLERY ============ -->
+<section class="board">
+  <h2 class="boardTitle">Final (dark) · Schedule › Browse layouts</h2>
+  <div class="frames">
+    <div class="frame desktop">
+      <aside class="side">
+        <a class="brand" href="#"><img src="icon.svg" alt="" width="26" height="26"><span>Turbo<em>Terp</em></span></a>
+        <nav class="tabs"><a class="tab" href="#"><svg><use href="#i-today"/></svg><span>Today</span></a><a class="tab" href="#"><svg><use href="#i-campus"/></svg><span>Campus</span></a><a class="tab active" href="#"><svg><use href="#i-schedule"/></svg><span>Schedule</span></a><a class="tab" href="#"><svg><use href="#i-calendar"/></svg><span>Calendar</span></a><a class="tab" href="#"><svg><use href="#i-advisor"/></svg><span>Advisor</span></a></nav>
+        <div class="sideFoot">
+          <a href="#">About</a><a href="#">Report an issue</a><a href="#">Donate</a>
+          <a href="#" class="legal">Terms of Use</a><a href="#" class="legal">Privacy Policy</a>
+          <div class="seg"><button class="on">Light</button><button>Dark</button></div>
+          <p class="fine">Unofficial. Not affiliated with the University of Maryland.</p>
+        </div>
+      </aside>
+      <main class="content schedule" id="gallery-main">
+        <header class="pageHead"><p class="eyebrow">Spring 2027 · 15 credits</p><h1>Schedule</h1></header>
+        <div class="subTabs"><a href="#">Pick courses</a><a class="on" href="#">Browse layouts</a><a href="#">Build my own</a></div>
+        <div class="galleryBar"><span class="muted"><b>48 layouts</b> fit your 5 courses · best first</span><span class="chips small"><button class="on">Best</button><button>No Fridays</button><button>Late start</button><button>Fewest walks</button></span></div>
+        <div class="gallery"><a class="layout" href="#">
+      <div class="layoutHead"><b>Layout 1</b><span>15 cr · no Fridays</span></div>
+      <div class="week mini"><div class="dayHeads"><span></span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span></div>
+      <div class="grid"><div class="hours"><span>9</span><span>10</span><span>11</span><span>12</span><span>1</span><span>2</span><span>3</span><span>4</span></div><div class="day"><i class="block c1" style="--s:60;--d:50"><b>CMSC132</b><span>0101</span></i><i class="block c3" style="--s:300;--d:75"><b>COMM107</b><span>0204</span></i></div><div class="day"><i class="block c2" style="--s:30;--d:75"><b>MATH241</b><span>0311</span></i><i class="block c4" style="--s:210;--d:75"><b>CHEM131</b><span>1101</span></i></div><div class="day"><i class="block c1" style="--s:60;--d:50"><b>CMSC132</b><span>0101</span></i><i class="block c1" style="--s:120;--d:50"><b>CMSC132</b><span>0101</span></i><i class="block c3" style="--s:300;--d:75"><b>COMM107</b><span>0204</span></i></div><div class="day"><i class="block c2" style="--s:30;--d:75"><b>MATH241</b><span>0311</span></i><i class="block c4" style="--s:210;--d:75"><b>CHEM131</b><span>1101</span></i><i class="block c4" style="--s:360;--d:110"><b>CHEM131</b><span>1101</span></i></div><div class="day"><i class="block c1" style="--s:60;--d:50"><b>CMSC132</b><span>0101</span></i></div></div></div>
+      <div class="teachers"><span class="t c1"><i></i>Padua-Perez 4.6</span><span class="t c2"><i></i>Wong 4.2</span><span class="t c3"><i></i>Staff</span><span class="t c4"><i></i>Kahn 3.1</span></div>
+    </a><a class="layout" href="#">
+      <div class="layoutHead"><b>Layout 2</b><span>15 cr · late start</span></div>
+      <div class="week mini"><div class="dayHeads"><span></span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span></div>
+      <div class="grid"><div class="hours"><span>9</span><span>10</span><span>11</span><span>12</span><span>1</span><span>2</span><span>3</span><span>4</span></div><div class="day"><i class="block c1" style="--s:180;--d:50"><b>CMSC132</b><span>0201</span></i><i class="block c3" style="--s:300;--d:75"><b>COMM107</b><span>0204</span></i></div><div class="day"><i class="block c2" style="--s:150;--d:75"><b>MATH241</b><span>0321</span></i><i class="block c4" style="--s:330;--d:75"><b>CHEM131</b><span>1102</span></i></div><div class="day"><i class="block c1" style="--s:180;--d:50"><b>CMSC132</b><span>0201</span></i><i class="block c3" style="--s:300;--d:75"><b>COMM107</b><span>0204</span></i></div><div class="day"><i class="block c2" style="--s:150;--d:75"><b>MATH241</b><span>0321</span></i><i class="block c4" style="--s:330;--d:75"><b>CHEM131</b><span>1102</span></i></div><div class="day"><i class="block c1" style="--s:180;--d:50"><b>CMSC132</b><span>0201</span></i><i class="block c4" style="--s:60;--d:110"><b>CHEM131</b><span>1102</span></i></div></div></div>
+      <div class="teachers"><span class="t c1"><i></i>Kruskal 3.9</span><span class="t c2"><i></i>Wong 4.2</span><span class="t c3"><i></i>Staff</span><span class="t c4"><i></i>Kahn 3.1</span></div>
+    </a><a class="layout" href="#">
+      <div class="layoutHead"><b>Layout 3</b><span>15 cr · no Fridays</span></div>
+      <div class="week mini"><div class="dayHeads"><span></span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span></div>
+      <div class="grid"><div class="hours"><span>9</span><span>10</span><span>11</span><span>12</span><span>1</span><span>2</span><span>3</span><span>4</span></div><div class="day"><i class="block c1" style="--s:60;--d:50"><b>CMSC132</b><span>0101</span></i><i class="block c3" style="--s:300;--d:75"><b>COMM107</b><span>0204</span></i></div><div class="day"><i class="block c2" style="--s:30;--d:75"><b>MATH241</b><span>0311</span></i><i class="block c4" style="--s:210;--d:75"><b>CHEM131</b><span>1101</span></i></div><div class="day"><i class="block c1" style="--s:60;--d:50"><b>CMSC132</b><span>0101</span></i><i class="block c1" style="--s:120;--d:50"><b>CMSC132</b><span>0101</span></i><i class="block c3" style="--s:300;--d:75"><b>COMM107</b><span>0204</span></i></div><div class="day"><i class="block c2" style="--s:30;--d:75"><b>MATH241</b><span>0311</span></i><i class="block c4" style="--s:210;--d:75"><b>CHEM131</b><span>1101</span></i><i class="block c4" style="--s:360;--d:110"><b>CHEM131</b><span>1101</span></i></div><div class="day"></div></div></div>
+      <div class="teachers"><span class="t c1"><i></i>Padua-Perez 4.6</span><span class="t c2"><i></i>Wong 4.2</span><span class="t c3"><i></i>Staff</span><span class="t c4"><i></i>Kahn 3.1</span></div>
+    </a><a class="layout" href="#">
+      <div class="layoutHead"><b>Layout 4</b><span>15 cr · mornings only</span></div>
+      <div class="week mini"><div class="dayHeads"><span></span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span></div>
+      <div class="grid"><div class="hours"><span>9</span><span>10</span><span>11</span><span>12</span><span>1</span><span>2</span><span>3</span><span>4</span></div><div class="day"><i class="block c1" style="--s:0;--d:50"><b>CMSC132</b><span>0301</span></i><i class="block c3" style="--s:120;--d:75"><b>COMM107</b><span>0101</span></i></div><div class="day"><i class="block c2" style="--s:30;--d:75"><b>MATH241</b><span>0311</span></i><i class="block c4" style="--s:150;--d:75"><b>CHEM131</b><span>1201</span></i></div><div class="day"><i class="block c1" style="--s:0;--d:50"><b>CMSC132</b><span>0301</span></i><i class="block c3" style="--s:120;--d:75"><b>COMM107</b><span>0101</span></i></div><div class="day"><i class="block c2" style="--s:30;--d:75"><b>MATH241</b><span>0311</span></i><i class="block c4" style="--s:150;--d:75"><b>CHEM131</b><span>1201</span></i></div><div class="day"><i class="block c1" style="--s:0;--d:50"><b>CMSC132</b><span>0301</span></i><i class="block c4" style="--s:60;--d:110"><b>CHEM131</b><span>1201</span></i></div></div></div>
+      <div class="teachers"><span class="t c1"><i></i>Kruskal 3.9</span><span class="t c2"><i></i>Wong 4.2</span><span class="t c3"><i></i>Lopez 4.4</span><span class="t c4"><i></i>Kahn 3.1</span></div>
+    </a><a class="layout" href="#">
+      <div class="layoutHead"><b>Layout 5</b><span>15 cr · long lunch</span></div>
+      <div class="week mini"><div class="dayHeads"><span></span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span></div>
+      <div class="grid"><div class="hours"><span>9</span><span>10</span><span>11</span><span>12</span><span>1</span><span>2</span><span>3</span><span>4</span></div><div class="day"><i class="block c1" style="--s:60;--d:50"><b>CMSC132</b><span>0101</span></i><i class="block c3" style="--s:360;--d:75"><b>COMM107</b><span>0302</span></i></div><div class="day"><i class="block c2" style="--s:0;--d:75"><b>MATH241</b><span>0101</span></i><i class="block c4" style="--s:390;--d:75"><b>CHEM131</b><span>1301</span></i></div><div class="day"><i class="block c1" style="--s:60;--d:50"><b>CMSC132</b><span>0101</span></i><i class="block c3" style="--s:360;--d:75"><b>COMM107</b><span>0302</span></i></div><div class="day"><i class="block c2" style="--s:0;--d:75"><b>MATH241</b><span>0101</span></i><i class="block c4" style="--s:390;--d:75"><b>CHEM131</b><span>1301</span></i><i class="block c4" style="--s:60;--d:110"><b>CHEM131</b><span>1301</span></i></div><div class="day"><i class="block c1" style="--s:60;--d:50"><b>CMSC132</b><span>0101</span></i></div></div></div>
+      <div class="teachers"><span class="t c1"><i></i>Padua-Perez 4.6</span><span class="t c2"><i></i>Shin 3.6</span><span class="t c3"><i></i>Lopez 4.4</span><span class="t c4"><i></i>Kahn 3.1</span></div>
+    </a><a class="layout" href="#">
+      <div class="layoutHead"><b>Layout 6</b><span>15 cr · no Fridays</span></div>
+      <div class="week mini"><div class="dayHeads"><span></span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span></div>
+      <div class="grid"><div class="hours"><span>9</span><span>10</span><span>11</span><span>12</span><span>1</span><span>2</span><span>3</span><span>4</span></div><div class="day"><i class="block c1" style="--s:240;--d:50"><b>CMSC132</b><span>0401</span></i><i class="block c3" style="--s:300;--d:75"><b>COMM107</b><span>0204</span></i></div><div class="day"><i class="block c2" style="--s:150;--d:75"><b>MATH241</b><span>0321</span></i><i class="block c4" style="--s:210;--d:75"><b>CHEM131</b><span>1101</span></i></div><div class="day"><i class="block c1" style="--s:240;--d:50"><b>CMSC132</b><span>0401</span></i><i class="block c3" style="--s:300;--d:75"><b>COMM107</b><span>0204</span></i></div><div class="day"><i class="block c2" style="--s:150;--d:75"><b>MATH241</b><span>0321</span></i><i class="block c4" style="--s:210;--d:75"><b>CHEM131</b><span>1101</span></i><i class="block c4" style="--s:360;--d:110"><b>CHEM131</b><span>1101</span></i></div><div class="day"></div></div></div>
+      <div class="teachers"><span class="t c1"><i></i>Kruskal 3.9</span><span class="t c2"><i></i>Wong 4.2</span><span class="t c3"><i></i>Staff</span><span class="t c4"><i></i>Kahn 3.1</span></div>
+    </a></div>
+      </main>
+    </div>
+    <div class="frame phone">
+      <header class="topBar">
+        <a class="wordmark" href="#"><img src="icon.svg" alt="" width="24" height="24"><span>Turbo<em>Terp</em></span></a>
+        <span class="topIcons"><i></i><i></i><i></i><i></i></span>
+      </header>
+      <main class="content phoneMain schedule" data-clone="gallery-main"></main>
+      <nav class="tabBar"><a class="tab" href="#"><svg><use href="#i-campus"/></svg><span>Campus</span></a><a class="tab active" href="#"><svg><use href="#i-schedule"/></svg><span>Schedule</span></a><a class="tab" href="#"><svg><use href="#i-calendar"/></svg><span>Calendar</span></a><a class="tab" href="#"><svg><use href="#i-advisor"/></svg><span>Advisor</span></a></nav>
     </div>
   </div>
 </section>
