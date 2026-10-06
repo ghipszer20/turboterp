@@ -184,3 +184,33 @@ describe("P5: no sentence split after an initial or abbreviation", () => {
     );
   });
 });
+
+describe("P6: concurrent phrasing", () => {
+  it("NFSC380", () => {
+    expect(parsePrerequisite("Minimum of C- in NFSC315; and BCHM461 must be completed or in progress.")).toEqual(
+      all(c("NFSC315"), k("BCHM461")),
+    );
+  });
+  it("ENST415", () => {
+    expect(
+      parsePrerequisite("CHEM131; and PHYS121 must be completed or in progress; or permission of AGNR-Environmental Science & Technology department."),
+    ).toEqual(any(all(n("CHEM131"), k("PHYS121")), man("permission of AGNR-Environmental Science & Technology department")));
+  });
+  it("ENST462", () => {
+    expect(
+      parsePrerequisite(
+        "(BSCI160 and BSCI161) and (BSCI170 and BSCI171); and ENST460 must be completed or in progress; or permission of instructor.",
+      ),
+    ).toEqual(
+      any(all(all(n("BSCI160"), n("BSCI161")), all(n("BSCI170"), n("BSCI171")), k("ENST460")), man("permission of instructor")),
+    );
+  });
+  it("ENVH414", () => {
+    expect(parsePrerequisite("SPHL100 and EPIB301 enrolled or completed.")).toEqual(all(k("SPHL100"), k("EPIB301")));
+  });
+  it("ENFP440", () => {
+    expect(parsePrerequisite("Must have completed with a C- or better or concurrently be enrolled in ENFP300.")).toEqual(
+      course("ENFP300", { minGrade: "C-", concurrentOk: true }),
+    );
+  });
+});
