@@ -102,3 +102,51 @@ describe("P2: dropped 'or <prose>' alternatives", () => {
     );
   });
 });
+
+describe("P3: dropped requirements", () => {
+  const ECON =
+    "Minimum grade of C- in ECON200 and ECON201; and minimum grade of C- in ECON300 or (MATH241 and any statistics course).";
+  const econ = all(all(c("ECON200"), c("ECON201")), any(c("ECON300"), all(c("MATH241"), man("any statistics course"))));
+  for (const id of ["ECON321", "ECON325", "ECON326"]) {
+    it(id, () => expect(parsePrerequisite(ECON)).toEqual(econ));
+  }
+  it("KNES386", () => {
+    expect(
+      parsePrerequisite("Must have completed at least one KNES core class with a C- or better and must have completed SPHL100 with a C- or better."),
+    ).toEqual(all(man("at least one KNES core class"), c("SPHL100")));
+  });
+  it("ENES440", () => {
+    expect(parsePrerequisite("Students must receive a B- or better in ENES240 and take 2 courses from the STEP minor elective list.")).toEqual(
+      all(b("ENES240"), man("take 2 courses from the STEP minor elective list")),
+    );
+  });
+  it("HLSC322", () => {
+    expect(
+      parsePrerequisite(
+        "CHEM131, CHEM132, BSCI160, BSCI170, and either BSCI180 or (BSCI161 and BSCI171); or must have completed BSCI170, (BSCI180 or BSCI171), and two semesters of Chemistry.",
+      ),
+    ).toEqual(
+      any(
+        all(n("CHEM131"), n("CHEM132"), n("BSCI160"), n("BSCI170"), any(n("BSCI180"), all(n("BSCI161"), n("BSCI171")))),
+        all(n("BSCI170"), any(n("BSCI180"), n("BSCI171")), man("two semesters of Chemistry")),
+      ),
+    );
+  });
+  it("BIOE461", () => {
+    expect(parsePrerequisite("Minimum grade of C- in BIOE120, must have earned a minimum of 60 credits.")).toEqual(
+      all(c("BIOE120"), man("must have earned a minimum of 60 credits")),
+    );
+  });
+  it("ENPM631", () => {
+    expect(
+      parsePrerequisite(
+        "ENPM694 or ENPM818O and ability to write code in one programming language and/or Undergraduate coursework in a programming language; or permission of instructor.",
+      ),
+    ).toEqual(
+      any(
+        all(any(n("ENPM694"), n("ENPM818O")), man("ability to write code in one programming language and/or Undergraduate coursework in a programming language")),
+        man("permission of instructor"),
+      ),
+    );
+  });
+});
