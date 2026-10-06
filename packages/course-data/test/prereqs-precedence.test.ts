@@ -235,7 +235,8 @@ describe("and/or precedence (P1)", () => {
           n("BSCI170"),
           any(n("BSCI180"), all(n("BSCI161"), n("BSCI171"))),
         ),
-        all(n("BSCI170"), any(n("BSCI180"), n("BSCI171"))),
+        // P3: "two semesters of Chemistry" is kept as a manual item (was dropped when P1 was written).
+        all(n("BSCI170"), any(n("BSCI180"), n("BSCI171")), man("two semesters of Chemistry")),
       ),
     );
   });
