@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { afterEach, vi } from "vitest";
-import { fetchAcademicCalendar, listCalendarTerms, parseAcademicCalendar } from "../src/calendar.ts";
+import { fetchAcademicCalendar, listCalendarTerms, parseAcademicCalendar, withWinterBreak } from "../src/calendar.ts";
 
 const fixture = (name: string) => readFileSync(new URL(`./fixtures/${name}`, import.meta.url), "utf8");
 const spring = fixture("academic-calendar-447.html");
@@ -94,5 +94,22 @@ describe("fetchAcademicCalendar", () => {
   it("throws when no term loads", async () => {
     vi.spyOn(globalThis, "fetch").mockImplementation(async () => new Response("nope", { status: 500 }));
     await expect(fetchAcademicCalendar("2026-10-04")).rejects.toThrow();
+  });
+});
+
+describe("withWinterBreak", () => {
+  const both = () => [...parseAcademicCalendar(fall, "Fall 2026"), ...parseAcademicCalendar(spring, "Spring 2027")];
+
+  it("runs the break from the day after fall finals to the day before spring classes, noting winter term and the closure", () => {
+    const breaks = withWinterBreak(both()).filter((e) => e.label.startsWith("Winter Break"));
+    expect(breaks).toHaveLength(1);
+    expect(breaks[0]).toMatchObject({ term: "Fall 2026", label: "Winter Break", start: "2026-12-22", end: "2027-01-26", derived: true });
+    expect(breaks[0]!.description).toContain("Winter term");
+    expect(breaks[0]!.description).toContain("University closed Dec 25 – Jan 3");
+  });
+
+  it("leaves the registrar's row alone when the spring term isn't loaded", () => {
+    const fallOnly = parseAcademicCalendar(fall, "Fall 2026");
+    expect(withWinterBreak(fallOnly)).toEqual(fallOnly);
   });
 });

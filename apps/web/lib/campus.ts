@@ -37,6 +37,7 @@ import {
   routeMap,
   routesOn,
   studyRoomCategories,
+  withWinterBreak,
   type Building,
   type DiningMenu,
   type StampVenue,
@@ -100,7 +101,8 @@ export async function getStampVenues(): Promise<StampVenue[]> {
 
 export async function getAcademicCalendar(): Promise<AcademicEvent[]> {
   const snap = await readSnapshot<AcademicEvent[]>(snapshotKeys.academicCalendar, STABLE);
-  return (await snapshotOrLive(snap, liveAcademicCalendar)).data;
+  // Applied on read, so snapshots stored before this rule get the student winter break too.
+  return withWinterBreak((await snapshotOrLive(snap, liveAcademicCalendar)).data);
 }
 
 export async function getRecWellAreas(): Promise<RecWellArea[]> {
