@@ -34,7 +34,7 @@ function readOrigin(): Origin | null {
 }
 
 /** Sections the saved schedule picked, or null when there is no saved schedule. */
-async function loadPickedSections(): Promise<Section[] | null> {
+export async function loadPickedSections(): Promise<Section[] | null> {
   let raw: string | null = null;
   try {
     raw = localStorage.getItem(SAVED_KEY);

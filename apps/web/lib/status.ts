@@ -79,3 +79,14 @@ export function mealHighlights(meal: MealLike, count = 3): string {
   const rest = pick.length - count;
   return rest > 0 ? `${shown} +${rest} more` : shown;
 }
+
+type FoodMeal = { name: string; stations: { name: string; items: { name: string }[] }[] };
+
+/** "Lunch: Orange chicken, Margherita pizza, Chicken shawarma": the first foods on the menu, not station names. */
+export function mealFoods(meal: FoodMeal, count = 3): string {
+  const isBreakfast = /breakfast/i.test(meal.name);
+  const main = meal.stations.filter((s) => !FILLER.test(s.name) && (isBreakfast || !/breakfast/i.test(s.name)));
+  const foods = main.flatMap((s) => s.items.map((i) => i.name)).slice(0, count);
+  if (foods.length > 0) return `${meal.name}: ${foods.join(", ")}`;
+  return `${meal.name}: ${mealHighlights(meal) || "No menu posted"}`;
+}
