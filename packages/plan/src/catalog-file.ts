@@ -25,6 +25,8 @@ export type CompactCourse = {
   q?: Requirement;
   /** repeatable: a credit limit, or 0 for "repeatable, no stated limit" */
   r?: number;
+  /** Twins: f = Renumbered ("Formerly"), x = Cross-listed, co = Credit-only */
+  e?: { f?: string[]; x?: string[]; co?: string[] };
 };
 
 export type CatalogFile = {
@@ -43,6 +45,13 @@ export function encodeCatalogFile(catalog: PlanCatalog, meta: { term: string; ge
     if (course.prerequisite) out.p = course.prerequisite;
     if (course.corequisite) out.q = course.corequisite;
     if (course.repeat.kind === "repeatable") out.r = course.repeat.maxCredits ?? 0;
+    const t = course.twins;
+    if (t) {
+      out.e = {};
+      if (t.renumbered) out.e.f = t.renumbered;
+      if (t.crossListed) out.e.x = t.crossListed;
+      if (t.creditOnly) out.e.co = t.creditOnly;
+    }
     return out;
   });
   return { v: CATALOG_FILE_VERSION, term: meta.term, generatedAt: meta.generatedAt, courses };
@@ -64,6 +73,7 @@ export function decodeCatalogFile(data: unknown): { term: string; generatedAt: s
       prerequisite: c.p ?? null,
       corequisite: c.q ?? null,
       repeat: c.r === undefined ? { kind: "unknown" } : c.r === 0 ? { kind: "repeatable" } : { kind: "repeatable", maxCredits: c.r },
+      ...(c.e ? { twins: { ...(c.e.f && { renumbered: c.e.f }), ...(c.e.x && { crossListed: c.e.x }), ...(c.e.co && { creditOnly: c.e.co }) } } : {}),
     });
   }
   return { term: file.term ?? "", generatedAt: file.generatedAt ?? "", catalog };

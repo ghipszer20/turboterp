@@ -3,6 +3,7 @@
 
 import type { Course } from "@turboterp/course-data";
 import { parsePrerequisite, type Requirement } from "@turboterp/course-data/prereqs";
+import { parseCourseTwins, type Twins } from "./twins.ts";
 
 /**
  * Whether a course may be taken again for credit. Testudo states it only for some courses
@@ -19,6 +20,9 @@ export type CatalogCourse = {
   prerequisite: Requirement | null;
   corequisite: Requirement | null;
   repeat: Repeatability;
+  /** Renumbered, Cross-listed and Credit-only Twins, as this course's own Testudo lines name them
+   * (twinsOf gives the symmetric view). Left out when there are none. */
+  twins?: Twins;
 };
 
 export type PlanCatalog = ReadonlyMap<string, CatalogCourse>;
@@ -46,6 +50,7 @@ export function buildCatalog(...lists: Course[][]): PlanCatalog {
   const catalog = new Map<string, CatalogCourse>();
   for (const course of lists.flat()) {
     if (catalog.has(course.id)) continue;
+    const { twins } = parseCourseTwins(course);
     catalog.set(course.id, {
       id: course.id,
       title: course.title,
@@ -54,6 +59,7 @@ export function buildCatalog(...lists: Course[][]): PlanCatalog {
       prerequisite: parsePrerequisite(course.texts.prerequisite),
       corequisite: parsePrerequisite(course.texts.corequisite),
       repeat: repeatability(course),
+      ...(Object.keys(twins).length > 0 ? { twins } : {}),
     });
   }
   return catalog;
