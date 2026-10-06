@@ -1,7 +1,7 @@
 # TurboTerp — Project Memory
 
 > Single source of truth for project context. Update this file whenever a decision changes.
-> Last updated: 2026-10-04 (renamed SuperTerp to TurboTerp; schedule screenshots).
+> Last updated: 2026-10-05 (UI rework mockups).
 > Read by the main session at the start of every session (builders don't read it; CLAUDE.md), so keep it under ~20 KB (section 18).
 
 ## 1. Vision
@@ -101,6 +101,7 @@ Moved to `docs/project/legal.md`. Read it before building the disclaimer, accoun
 - **Done 2026-10-02 (main session):** snapshot script retries and refuses to save a partial term; `Requirement.advisorMayApprove` shows "other courses may count with advisor approval" on unmet audit rows (45 requirements in 30 program files); stale roadmap to-dos removed.
 - **Wave 4 in progress (2026-10-04; detail in the status log):** Vercel project `turboterp` and Supabase project `turboterp` (us-east-1) exist; keys live only in the gitignored `apps/web/.env.local` and in Vercel env vars. Merged: Supabase snapshot store, terpmail-only magic-link sign-in. Live at turboterp.com since 2026-10-04 (first deploy went to production); `--prod` deploys only with the owner's go. The owner runs `npx vercel deploy` (blocked for Claude). Live: scheduled refresh (Supabase cron every 3 minutes and daily), Stamp dining, course-data refresh (seats every 15 minutes, 5 during schedule adjustment; course list nightly; migration 0005). **Left:** Supabase Auth URL settings and custom SMTP (built-in mail is limited to a few messages an hour); **accounts take any email and the Advisor only offers sign-in** (owner, 2026-10-04; merged, migration 0004 applied); plan and agreement sync with a confirmed delete (not started); records email; acceptance run; the owner requests in roadmap "Known to-dos". Before going public again: fresh repo or history rewrite (owner's name and terpmail are in old commits). 22 tracks now (8 added 2026-09-29, all unverified; owner-review lists the numbers to confirm). Reuse `.claude/worktrees/merge-s1` for merges.
 - **Pre-launch gate (owner, 2026-10-04):** the public sees `/coming-soon`; the access code (Vercel env `SITE_ACCESS_CODE`, never in the repo) opens the site for 180 days per browser; `/api/cron/*` stays open for the Supabase jobs; search engines are told not to list the site. Local dev has no gate. Migration 0004 (any-email sign-ups) is applied.
+- **UI rework (2026-10-05):** three direction mockups (`docs/screenshots/ui-rework/`, branch `feat/ui-rework`) await the owner's pick before any product code changes; then build the chosen one tab by tab with screenshots.
 - **Waiting on the owner:** see `docs/project/owner-review.md` (include it in every progress report; add new items there).
 - **Known to-dos:** see `docs/project/roadmap.md` "Known to-dos" (add new ones there).
 

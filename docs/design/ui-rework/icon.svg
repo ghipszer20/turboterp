@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D0183C"/>
+      <stop offset="1" stop-color="#A80A29"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="29" fill="url(#g)"/>
+  <!-- The mark: a terrapin in profile, mid-stride, with two speed lines. Same drawing as lib/logo.ts. -->
+  <g transform="translate(27.2 0) skewX(-14) translate(10.2 12.8) scale(.84)" fill="#fff">
+    <path d="M25 78a37 33 0 0 1 74 0z"/>
+    <rect x="25" y="74" width="74" height="10" rx="5"/>
+    <path d="M92 76c2-9 7-15 14-15a9 9 0 0 1 0 18c-3 0-5 2-7 5H92z"/>
+    <rect x="36" y="76" width="13" height="19" rx="6.500" transform="rotate(28 42.500 80)"/>
+    <rect x="74" y="76" width="13" height="19" rx="6.500" transform="rotate(-28 80.500 80)"/>
+  </g>
+  <path d="M13 69H31M18 82H31" fill="none" stroke="#fff" stroke-width="6.500" stroke-linecap="round"/>
+</svg>

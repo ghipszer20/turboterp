@@ -1,0 +1,96 @@
+/* OPTION C — "Editorial": Swiss-minimal. White page, no cards, hairline dividers, big tight type,
+   red only for the active tab, the one primary button and live status. Inter, tabular numbers. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font);
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f4f4f5;
+  --sep: rgb(0 0 0 / .1);
+  --text: #111113; --text-2: #5f6065; --text-3: #8b8c92;
+  --shadow: none;
+  --card-border: rgb(0 0 0 / .12);
+  --r-lg: 0; --r-md: 0; --r-sm: 6px;
+}
+
+body { font-feature-settings: "cv11", "ss01"; }
+
+/* Sidebar: text list, red rule marks the active item */
+.side { background: #fafafa; border-right: 1px solid var(--sep); padding-top: 30px; }
+.brand { font-weight: 800; }
+.side .tab { border-radius: 0; padding: 8px 12px; border-left: 2px solid transparent; margin-left: -14px; padding-left: 24px; font-weight: 500; }
+.side .tab svg { width: 18px; height: 18px; }
+.side .tab.active { border-left-color: var(--accent); color: var(--accent); }
+.side .tab.active svg { color: var(--accent); }
+.seg { border-radius: 6px; } .seg button { border-radius: 4px; }
+
+.tabBar { border-top: 1px solid var(--sep); background: #fff; }
+.tabBar .tab { font-weight: 500; }
+
+/* Type */
+.eyebrow { color: var(--accent); font-size: 12px; letter-spacing: .08em; }
+.pageHead h1 { font-size: 40px; font-weight: 800; letter-spacing: -.035em; }
+.phoneMain .pageHead h1 { font-size: 34px; }
+.pageHead { padding-bottom: 18px; border-bottom: 1px solid var(--text); }
+.groupHead { margin: 0 0 4px; }
+.groupHead h2 { font-size: 12.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text-2); }
+.more { font-size: 13px; }
+
+/* Hero as a typographic block */
+.hero { gap: 0; border-bottom: 1px solid var(--sep); }
+.heroMain { padding: 18px 0; }
+.heroTitle { font-size: 26px; letter-spacing: -.025em; }
+.heroSide { padding: 18px 0 18px 24px; border-left: 1px solid var(--sep); }
+.phoneMain .heroSide { border-left: 0; border-top: 1px solid var(--sep); padding: 14px 0; }
+.heroNum { font-size: 40px; }
+
+/* Lists: hairlines, no tiles */
+.group { margin-top: 24px; }
+.item { padding: 12px 0; border-bottom: 1px solid var(--sep); min-height: 58px; gap: 14px; }
+.item:first-child { border-top: 1px solid var(--sep); }
+.item .icon { width: 24px; height: 24px; border-radius: 0; color: var(--text-3); }
+.item .icon svg { width: 20px; height: 20px; stroke-width: 1.5; }
+.item .title { font-weight: 500; font-size: 15.5px; }
+.item .sub { font-size: 13.5px; }
+.item.accent .title { color: var(--accent); }
+.item.accent .icon { color: var(--accent); }
+.chev { border-color: var(--text-3); width: 8px; height: 8px; border-width: 1px; }
+
+/* Advisor */
+.btn { border-radius: 6px; border-color: var(--text); font-weight: 500; }
+.btn.primary { border-radius: 6px; }
+.subTabs { background: none; padding: 0; gap: 22px; border-bottom: 1px solid var(--sep); border-radius: 0; width: 100%; margin-bottom: 0; }
+.subTabs a { padding: 8px 0; border-radius: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.subTabs a.on { background: none; box-shadow: none; border-bottom-color: var(--accent); color: var(--text); font-weight: 600; }
+.summary { padding: 14px 0; border-bottom: 1px solid var(--sep); margin-bottom: 22px; }
+.badge.fix { border-radius: 4px; }
+.sumMeter { border-radius: 0; height: 4px; } .sumMeter i { border-radius: 0; }
+.yearHead { margin: 0 0 8px; }
+.yearHead h2 { font-size: 20px; letter-spacing: -.02em; }
+.terms { gap: 32px; }
+.term { padding: 0; }
+.termHead { border-bottom: 1px solid var(--text); padding-bottom: 8px; margin-bottom: 6px; }
+.termHead h3 { font-weight: 600; font-size: 15px; }
+.pill { border-radius: 4px; background: none; border: 1px solid var(--sep); }
+.courses { gap: 0; }
+.course { padding: 8px 0; border-bottom: 1px solid var(--sep); grid-template-columns: 76px 1fr auto; grid-template-areas: "id title cr" "id flag flag"; column-gap: 10px; align-items: baseline; }
+.course .cid { color: var(--cat-ink, var(--text)); }
+.course[data-cat="major"] { --cat-ink: var(--cat-major); }
+.course[data-cat="gened"] { --cat-ink: var(--cat-gened); }
+.course[data-cat="college"] { --cat-ink: var(--cat-college); }
+.course .ctitle { font-size: 13.5px; color: var(--text); }
+.course .cflag { font-weight: 500; color: var(--soon); }
+.mustFix { border-radius: 0; background: none; padding: 6px 0 6px 12px; }
+.addCourse { border: 0; text-align: left; padding: 8px 0; }
+.extraTerms button { border-radius: 4px; }
+
+/* Schedule */
+.schedule .subTabs { display: flex; gap: 18px; margin-bottom: 10px; }
+.schedule .subTabs a { padding: 8px 0; }
+.week { --sep-grid: rgb(0 0 0 / .08); }
+.dayHeads { border-bottom: 1px solid var(--text); margin-bottom: 2px; }
+.block { border-radius: 3px; border-left: 3px solid var(--fg); }
+.block.c1 { --fg: var(--c1-fg); } .block.c2 { --fg: var(--c2-fg); } .block.c3 { --fg: var(--c3-fg); } .block.c4 { --fg: var(--c4-fg); }
+.btn.primary.wide { border-radius: 6px; }
