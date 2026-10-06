@@ -40,6 +40,13 @@ const PROSE = "(?:(?![A-Z]{4}\\s?\\d{3})(?:[^;,()]|\\((?:(?![A-Z]{4}\\s?\\d{3})[
 const PROSE_ITEMS = [
   // "X or a minimum of 60 credits", "or approved prior study in Matlab", "or another course that …"
   "(?<=\\b[Oo]r\\s+)(?:a\\s+minimum\\s+of|(?:an?\\s+)?approved|another|enrolled\\s+in|course\\s+in|other|experience)\\b" + PROSE,
+  // Requirements that name no course: "any statistics course", "at least one KNES core class", …
+  "\\bany\\s+statistics\\s+course\\b",
+  "\\bat\\s+least\\s+one\\s+KNES\\s+core\\s+class\\b",
+  "\\btwo\\s+semesters\\s+of\\s+Chemistry\\b",
+  "\\btake\\s+2\\s+courses\\s+from\\s+the\\s+STEP\\s+minor\\s+elective\\s+list\\b",
+  "\\b(?:must\\s+have\\s+earned\\s+)?a\\s+minimum\\s+of\\s+\\d+\\s+credits\\b",
+  "\\bability\\s+to\\s+write\\s+code\\b" + PROSE,
 ];
 const TOKEN = new RegExp(`${BASE_TOKEN.source}|(${PROSE_ITEMS.join("|")})`, "g");
 
