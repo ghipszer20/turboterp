@@ -71,6 +71,7 @@ export async function buildPdf(t: PlanExport) {
       styles: { font: "helvetica", fontSize: 8.5, cellPadding: { top: 1, bottom: 1, left: 2, right: 2 }, textColor: INK, valign: "middle", overflow: "ellipsize", minCellHeight: ROW_H },
       columnStyles: {
         [cols.code]: { cellWidth: 62, fontStyle: "bold", cellPadding: { top: 1, bottom: 1, left: 12, right: 2 } },
+        [cols.title]: { cellWidth: termW - 62 - 24 - 32 },
         [cols.cr]: { cellWidth: 24, halign: "right" },
         [cols.grade]: { cellWidth: 32, halign: "center" },
       },
@@ -80,12 +81,12 @@ export async function buildPdf(t: PlanExport) {
       ],
       body: [
         ...term.rows.map((r) => [r.code, r.title, String(r.credits), r.grade]),
-        [{ content: "", styles: {} }, { content: "Total", styles: { fontStyle: "bold" as const } }, { content: String(term.total), styles: { fontStyle: "bold" as const, halign: "right" as const } }, ""],
+        [{ content: "Total", styles: { fontStyle: "bold" as const } }, "", { content: String(term.total), styles: { fontStyle: "bold" as const, halign: "right" as const } }, ""],
       ],
       didParseCell: (d) => {
         if (d.section === "body" && d.column.index === cols.title && d.row.index < term.rows.length) {
           // Cut with an ellipsis so the title never wraps.
-          const avail = d.cell.width - 4;
+          const avail = termW - 62 - 24 - 32 - 4;
           let s = d.cell.text.join("");
           doc.setFont("helvetica", "normal").setFontSize(8.5);
           if (doc.getTextWidth(s) > avail) {
