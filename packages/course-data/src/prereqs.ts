@@ -374,7 +374,7 @@ function assemble(pieces: Piece[], flat: boolean): Requirement | null {
     const last = run?.at(-1);
     if (p.explains && last?.kind === "manual") {
       run![run!.length - 1] = { kind: "manual", text: `${last.text}; and ${p.text}` };
-    } else if (p.connector === "or" && p.waiver && runs.length > 0) {
+    } else if (p.connector === "or" && p.waiver && runs.length > 1) {
       runs.splice(0, runs.length, [fold()!, p.req]);
     } else if (p.connector === "or" && run) run.push(p.req);
     else runs.push([p.req]);
