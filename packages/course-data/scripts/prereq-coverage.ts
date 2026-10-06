@@ -15,6 +15,7 @@ import type { Course } from "../src/soc.ts";
 const { parsePrerequisite } = (await import(process.env.PARSER ? pathToFileURL(process.env.PARSER).href : "../src/prereqs.ts")) as {
   parsePrerequisite: (t: string | null) => Requirement | null;
 };
+const EXCLUDED = /\((?:not|excluding|except)\b[^)]*\)/gi;
 const term = process.argv[2] ?? "202701";
 const { courses } = JSON.parse(readFileSync(`.cache/soc-${term}.json`, "utf8")) as { courses: Course[] };
 
@@ -47,7 +48,7 @@ for (const c of withPrereq) {
   const inTree = treeCourses(tree);
   const manual = manualTexts(tree).join(" ");
   const lost = [...codesIn(text)].filter((code) => !inTree.has(code) && !codesIn(manual).has(code));
-  const swallowed = [...codesIn(manual.replace(/((?:not|excluding|except)[^)]*)/gi, " "))].filter((code) => !/eligibility|placement/i.test(manual) && !inTree.has(code));
+  const swallowed = [...codesIn(manual.replace(EXCLUDED, " "))].filter((code) => !/eligibility|placement/i.test(manual) && !inTree.has(code));
   if (inTree.size === 0) manualOnly++;
   if (lost.length === 0 && swallowed.length === 0) clean++;
   else problems.push({ id: c.id, text, lost: [...lost, ...swallowed.map((s) => `${s} (in manual)`)] });
