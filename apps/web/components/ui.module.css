@@ -1,7 +1,7 @@
 .page {
   max-width: var(--content);
   margin: 0 auto;
-  padding: 16px var(--gutter) calc(96px + env(safe-area-inset-bottom));
+  padding: 16px var(--gutter) calc(112px + env(safe-area-inset-bottom));
 }
 
 @media (min-width: 900px) {
@@ -25,6 +25,7 @@
 
 .largeTitle {
   font: var(--t-large);
+  font-family: var(--font-display);
   letter-spacing: -0.02em;
 }
 
@@ -42,6 +43,7 @@
 
 .sectionTitle {
   font: var(--t-title);
+  font-family: var(--font-display);
   letter-spacing: -0.01em;
 }
 
@@ -59,8 +61,8 @@
 
 .card {
   background: var(--surface);
+  border: 1px solid var(--tile-border);
   border-radius: var(--r-lg);
-  box-shadow: var(--shadow);
   overflow: hidden;
 }
 
@@ -275,4 +277,297 @@
   .disclaimer {
     display: none;
   }
+}
+
+/* ---- Tiles (UI rework spec section 3) ---- */
+.tileGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+@media (min-width: 900px) {
+  .tileGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+.tile {
+  --a-tint: var(--surface);
+  --a-ink: var(--accent);
+  --a-chip: var(--accent);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 112px;
+  padding: 14px 14px 12px;
+  border: 1px solid var(--tile-border);
+  border-radius: var(--r-tile);
+  background: var(--a-tint);
+  color: var(--text);
+  transition: background var(--fast) ease;
+}
+
+.tile:active {
+  background: var(--surface-pressed);
+}
+
+.tile[data-area="dining"] {
+  --a-tint: var(--tint-dining);
+  --a-ink: var(--ink-dining);
+  --a-chip: var(--chip-dining);
+}
+
+.tile[data-area="study"] {
+  --a-tint: var(--tint-study);
+  --a-ink: var(--ink-study);
+  --a-chip: var(--chip-study);
+}
+
+.tile[data-area="fitness"] {
+  --a-tint: var(--tint-fitness);
+  --a-ink: var(--ink-fitness);
+  --a-chip: var(--chip-fitness);
+}
+
+.tile[data-area="transport"] {
+  --a-tint: var(--tint-transport);
+  --a-ink: var(--ink-transport);
+  --a-chip: var(--chip-transport);
+}
+
+.tileIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--a-ink);
+}
+
+.tileIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.tileText {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.tileName {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.tileSub {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  color: var(--tile-sub);
+  font-size: 12.5px;
+  line-height: 1.35;
+}
+
+.tileSub[data-tone]::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  vertical-align: 0.5px;
+}
+
+.tileSub[data-tone="open"] {
+  color: var(--open);
+}
+
+.tileSub[data-tone="soon"] {
+  color: var(--soon);
+}
+
+.tileSub[data-tone="closed"] {
+  color: var(--text-2);
+}
+
+.tile[data-accent] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-solid);
+}
+
+.tile[data-accent] .tileIcon {
+  background: rgb(255 255 255 / 0.2);
+  color: var(--on-solid);
+}
+
+.tile[data-accent] .tileSub {
+  color: rgb(255 255 255 / 0.85);
+}
+
+.tile[data-wide] {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  min-height: 0;
+}
+
+/* Dark: tiles are graphite, never tinted; the icon sits in a solid chip with a white glyph. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .tile:not([data-accent]) {
+    background: var(--surface);
+  }
+  :root:not([data-theme="light"]) .tile:not([data-accent]) .tileIcon {
+    background: var(--a-chip);
+    color: var(--on-solid);
+  }
+}
+
+:root[data-theme="dark"] .tile:not([data-accent]) {
+  background: var(--surface);
+}
+
+:root[data-theme="dark"] .tile:not([data-accent]) .tileIcon {
+  background: var(--a-chip);
+  color: var(--on-solid);
+}
+
+/* ---- Hero row ---- */
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  min-height: 112px;
+  padding: 16px 18px;
+  border: 1px solid var(--tile-border);
+  border-radius: var(--r-tile);
+  background: var(--hero-bg);
+  color: var(--on-solid);
+}
+
+.heroLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.heroTitle {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.heroSub {
+  font-size: 13px;
+  line-height: 1.35;
+  opacity: 0.9;
+}
+
+.heroStat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  min-height: 112px;
+  padding: 16px 18px;
+  border: 1px solid var(--tile-border);
+  border-radius: var(--r-tile);
+  background: var(--surface);
+}
+
+.heroNumber {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+
+.heroStat[data-small] .heroNumber {
+  font-size: 24px;
+}
+
+.heroStatText {
+  color: var(--text-2);
+  font-size: 12.5px;
+  line-height: 1.3;
+}
+
+/* Wrap Hero + HeroStat in this row: stacked on phones, 1fr 240px on desktop. */
+.heroRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+}
+
+@media (min-width: 900px) {
+  .heroRow {
+    grid-template-columns: 1fr 240px;
+    gap: 12px;
+  }
+}
+
+/* ---- Search field ---- */
+.search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--tile-border);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.searchIcon {
+  flex: none;
+  color: var(--text-3);
+}
+
+.searchPlaceholder {
+  color: var(--text-3);
+  font: var(--t-sub);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 0;
+  min-height: 42px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: var(--t-sub);
+  outline: none;
+}
+
+.searchInput::placeholder {
+  color: var(--text-3);
+}
+
+.search:focus-within {
+  outline: 3px solid var(--accent-tint-2);
+  outline-offset: 2px;
 }

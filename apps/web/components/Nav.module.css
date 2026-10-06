@@ -10,7 +10,7 @@
 
 .wordmark,
 .brand {
-  font: 700 20px/1 var(--font-rounded);
+  font: 700 20px/1 var(--font-display);
   letter-spacing: -0.02em;
   color: var(--text);
 }
@@ -53,11 +53,14 @@
   position: fixed;
   inset: auto 0 0 0;
   z-index: 50;
-  padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
-  background: var(--material);
-  backdrop-filter: saturate(180%) blur(20px);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border-top: 0.5px solid var(--separator);
+  margin: 0 14px calc(10px + env(safe-area-inset-bottom));
+  padding: 8px 6px;
+  border-radius: 28px;
+  background: var(--bar-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--tile-border);
+  box-shadow: var(--bar-shadow);
 }
 
 .brand,
@@ -81,8 +84,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 2px;
-  padding: 4px 0;
+  min-height: 44px;
+  padding: 2px 0;
   color: var(--text-3);
   font: 500 10.5px/1.2 var(--font);
   transition: color var(--fast) ease;
@@ -90,6 +95,10 @@
 
 .tab[data-active="true"] {
   color: var(--accent);
+}
+
+.tab[data-active="true"] svg {
+  stroke-width: 2.25;
 }
 
 @media (hover: hover) {
@@ -109,11 +118,17 @@
   .nav {
     inset: 0 auto 0 0;
     width: 232px;
+    margin: 0;
     padding: 28px 14px;
     display: flex;
     flex-direction: column;
-    border-top: 0;
+    border-radius: 0;
+    background: var(--material);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 0;
     border-right: 0.5px solid var(--separator);
+    box-shadow: none;
   }
 
   .brand {
@@ -138,11 +153,19 @@
   .tab {
     flex-direction: row;
     gap: 12px;
+    justify-content: flex-start;
+    min-height: 44px;
     padding: 9px 12px;
-    border-radius: var(--r-sm);
+    border: 1px solid transparent;
+    border-radius: 14px;
     color: var(--text);
     font: var(--t-sub);
+    font-family: var(--font-display);
     font-weight: 500;
+  }
+
+  .tab[data-active="true"] svg {
+    stroke-width: 1.75;
   }
 
   .tab svg {
@@ -152,7 +175,8 @@
   }
 
   .tab[data-active="true"] {
-    background: var(--accent-tint);
+    background: var(--surface);
+    border-color: var(--tile-border);
     color: var(--accent);
   }
 
@@ -166,7 +190,7 @@
       color: var(--text);
     }
     .tab[data-active="true"]:hover {
-      background: var(--accent-tint);
+      background: var(--surface);
       color: var(--accent);
     }
   }

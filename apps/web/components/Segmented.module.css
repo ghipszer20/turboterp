@@ -1,8 +1,9 @@
 .segmented {
   display: flex;
-  padding: 2px;
-  border-radius: 10px;
-  background: var(--surface-2);
+  padding: 3px;
+  border: 1px solid var(--tile-border);
+  border-radius: 14px;
+  background: var(--surface);
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -14,9 +15,10 @@
 .segment {
   flex: 1;
   min-width: max-content;
+  min-height: 38px;
   padding: 7px 14px;
   border: 0;
-  border-radius: 8px;
+  border-radius: 11px;
   background: transparent;
   color: var(--text);
   font: var(--t-sub);
@@ -24,14 +26,12 @@
   cursor: pointer;
   transition:
     background var(--fast) var(--spring),
-    box-shadow var(--fast) var(--spring);
+    color var(--fast) var(--spring);
 }
 
 .segment[aria-checked="true"] {
-  background: var(--segment-active);
-  box-shadow:
-    0 1px 3px rgb(0 0 0 / 0.1),
-    0 0 0 0.5px rgb(0 0 0 / 0.04);
+  background: var(--accent);
+  color: var(--on-accent);
   font-weight: 600;
 }
 
