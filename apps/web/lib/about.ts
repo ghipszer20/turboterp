@@ -52,23 +52,3 @@ export function resolveAbout(cfg: AboutConfig): ResolvedAbout {
     contactEmail: isPlaceholder(cfg.contactEmail) ? null : cfg.contactEmail,
   };
 }
-
-export type IssueReport = {
-  what: string;
-  page: string;
-  replyTo?: string;
-};
-
-/**
- * Builds a prefilled mailto: link for the "Report an issue" form. Uses
- * encodeURIComponent (not URLSearchParams) so spaces come through as %20,
- * not '+', which mail clients would show literally.
- */
-export function buildReportMailto(email: string, report: IssueReport): string {
-  const subject = `TurboTerp issue: ${report.page || "(page not specified)"}`;
-  const lines = [`What happened: ${report.what}`, `Page: ${report.page}`, report.replyTo ? `Reply to: ${report.replyTo}` : null].filter(
-    (line): line is string => line !== null,
-  );
-  const body = lines.join("\n");
-  return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}

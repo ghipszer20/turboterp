@@ -37,7 +37,17 @@ describe("legal pages", () => {
       "introduction", "what we collect", "browser", "transcripts", "cookies", "location", "used and shared", "other services",
       "donations", "planned", "deleting", "security", "changes", "contact",
     ]) expect(h).toContain(t);
-    for (const service of ["Supabase", "Vercel", "OpenFreeMap", "Venmo"]) expect(text(PRIVACY)).toContain(service);
+    for (const service of ["Supabase", "Vercel", "OpenFreeMap", "Venmo", "Brevo"]) expect(text(PRIVACY)).toContain(service);
+  });
+
+  it("privacy explains server-sent email and the rate-limit record", () => {
+    const t = text(PRIVACY);
+    expect(t).toMatch(/Brevo/);
+    expect(t).toMatch(/issue reports/i);
+    expect(t).toMatch(/only to your own address/i);
+    expect(t).toMatch(/scrambled/i);
+    expect(t).toMatch(/deleted after a day/i);
+    expect(PRIVACY_VERSION).not.toBe("2026-10-04");
   });
 
   it("privacy names every storage key and cookie the app writes", () => {
