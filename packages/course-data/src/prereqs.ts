@@ -340,7 +340,7 @@ export function checkRequirement(req: Requirement, history: Record<string, Cours
   }
   if (req.kind === "dept-level") {
     const ok = Object.entries(history).some(([id, record]) => {
-      const m = /^([A-Z]{4})(d{3})/.exec(id);
+      const m = /^([A-Z]{4})(\d{3})/.exec(id);
       if (!m || m[1] !== req.dept || Number(m[2]) < req.minNumber) return false;
       if (record.concurrent) return !!req.concurrentOk;
       return !(req.minGrade && record.grade && gradeRank(record.grade) < gradeRank(req.minGrade));
