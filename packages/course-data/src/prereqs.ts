@@ -328,7 +328,23 @@ function topLevelTokens(text: string): Token[] {
 const isCommaList = (text: string) => topLevelTokens(text).some((t) => t.type === "comma");
 const hasTopLevelConnector = (text: string) => topLevelTokens(text).some((t) => t.type === "and" || t.type === "or");
 
+// "2 courses from (…)", "two 400-level MATH courses": there is no count kind, so the clause is a manual item.
+const COUNTED = /(?<!take\s)\b(?:2|two)\s+(?:courses\s+from|\d00-level)\b/i;
+
+/** "(…)" around the whole text: dropped. */
+function unwrap(text: string): string {
+  const t = text.trim();
+  if (!t.startsWith("(") || !t.endsWith(")")) return t;
+  let depth = 0;
+  for (let i = 0; i < t.length; i++) {
+    if (t[i] === "(") depth++;
+    else if (t[i] === ")" && --depth === 0 && i < t.length - 1) return t;
+  }
+  return t.slice(1, -1).trim();
+}
+
 function parseClause(text: string): Requirement | null {
+  if (COUNTED.test(text)) return { kind: "manual", text: clean(unwrap(text)) };
   const trailing = TRAILING_MANUAL.exec(text);
   const useTrailing =
     trailing !== null && hasCourse(tokenize(text.slice(0, trailing.index)));
