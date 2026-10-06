@@ -125,3 +125,29 @@ _Avoid_: Approved, certified
 **What-if**:
 An Audit of a hypothetical change (switching majors, adding a minor) that doesn't alter the Plan until the student commits it.
 _Avoid_: Simulation, preview
+
+### Course equivalence
+
+**Twin**:
+A course UMD treats as a repeat of another course with a different number, so a student earns credit for only one of the two. It comes in three kinds: Renumbered, Cross-listed and Credit-only. If either course's Testudo line names the other, they are Twins.
+_Avoid_: Equivalent, duplicate, alias (and not Alternatives, which is one Requirement's own "A or B")
+
+**Renumbered Twin**:
+The same course under its old number (Testudo "Formerly: X").
+_Avoid_: Old code, legacy course
+
+**Cross-listed Twin**:
+The same course offered under another prefix at the same time (Testudo "Cross-listed with" / "Also offered as"), with the same prerequisites.
+_Avoid_: Joint course (Jointly Offered courses are independent, not Twins)
+
+**Credit-only Twin**:
+A course whose content overlaps another's enough that credit is granted for only one (Testudo "Credit only granted for"). It may be a different course, so it never stands in for the other in a Prerequisite.
+_Avoid_: Cross-list (unless Testudo also says Cross-listed)
+
+**Exam Credit**:
+Prior credit from an AP or IB exam (not dual enrollment or transfer courses). It is limited to six of the eight Distributive Studies courses, and it never fills Big Question.
+_Avoid_: Test credit, PLC (Prior Learning Credit also covers CLEP and A-Levels)
+
+**Big Question**:
+The Gen Ed rule (Testudo code SCIS, formerly I-Series) that two of a student's eight Distributive Studies courses carry SCIS. It counts on top of the Distributive Studies category the course fills, never instead of one.
+_Avoid_: I-Series (except when quoting older sources)
