@@ -4,6 +4,10 @@ import { CATEGORY_COLORS, type PlanExport } from "./plan-export";
 
 const data: PlanExport = {
   header: { name: "", date: "2026-09-29", disclaimer: "Unofficial, not affiliated with UMD, verify with your advisor", gradesHidden: false },
+  programsLabel: "",
+  catalogYear: "",
+  creditsPlanned: 7,
+  priorCreditCredits: 0,
   terms: [
     { name: "Fall 2026", credits: 4, courses: [{ id: "CMSC131", title: "OOP I", credits: 4, grade: "A", category: "major" }] },
     { name: "Spring 2027", credits: 3, courses: [{ id: "ART100", title: "", credits: 3, grade: "", category: "elective" }] },

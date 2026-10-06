@@ -4,21 +4,28 @@ import { FOOTER, type PlanExport } from "./plan-export";
 
 const data: PlanExport = {
   header: { name: "Sam", date: "2026-09-29", disclaimer: "Unofficial, not affiliated with UMD, verify with your advisor", gradesHidden: false },
+  programsLabel: "Computer Science",
+  catalogYear: "2026–27",
+  creditsPlanned: 7,
+  priorCreditCredits: 8,
   terms: [
-    { name: "Fall 2026", credits: 4, courses: [{ id: "CMSC131", title: "OOP I", credits: 4, grade: "A", category: "major" }] },
+    { name: "Fall 2026", credits: 4, courses: [{ id: "CMSC131", title: "OOP I", credits: 4, grade: "A", category: "major" }], keyDates: "Add/drop Sep 8" },
     { name: "Spring 2027", credits: 3, courses: [{ id: "ART100", title: "", credits: 3, grade: "", category: "elective" }] },
   ],
 };
 
 describe("buildPdf", () => {
-  it("makes a letter PDF with the header, the plan grid and the disclaimer footer on every page", async () => {
+  it("makes a letter portrait PDF with the header, the plan grid, the disclaimer and a footer on every page", async () => {
     const doc = await buildPdf(data);
     expect(doc.getNumberOfPages()).toBeGreaterThanOrEqual(1);
+    expect(doc.internal.pageSize.getWidth()).toBeLessThan(doc.internal.pageSize.getHeight());
     const out = doc.output();
     expect(out).toContain("4-year plan");
     expect(out).toContain("Sam");
     expect(out).toContain("CMSC131");
+    expect(out).toContain("Year 1");
     expect(out).toContain(FOOTER);
+    expect(out).toContain("turboterp.com");
     expect(out).toContain("Page 1 of");
   }, 60000);
 
