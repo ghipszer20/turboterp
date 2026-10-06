@@ -202,7 +202,7 @@ describe("P6: concurrent phrasing", () => {
         "(BSCI160 and BSCI161) and (BSCI170 and BSCI171); and ENST460 must be completed or in progress; or permission of instructor.",
       ),
     ).toEqual(
-      any(all(all(n("BSCI160"), n("BSCI161")), all(n("BSCI170"), n("BSCI171")), k("ENST460")), man("permission of instructor")),
+      any(all(all(all(n("BSCI160"), n("BSCI161")), all(n("BSCI170"), n("BSCI171"))), k("ENST460")), man("permission of instructor")),
     );
   });
   it("ENVH414", () => {

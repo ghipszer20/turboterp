@@ -296,7 +296,8 @@ const semicolon = (t: string, i: number) => (t[i] === ";" ? 1 : 0);
 const clean = (s: string) => s.replace(/\s+/g, " ").replace(/[\s.;,]+$/, "").trim();
 
 /** One clause: a course expression, or a manual requirement if it names no course. */
-const CONCURRENT = /concurrent(ly)? enroll/i;
+// Also "completed or in progress", "enrolled or completed", "or concurrently be enrolled in".
+const CONCURRENT = /concurrent(?:ly)?\s+(?:be\s+)?enroll|\bin progress\b|\benrolled or completed\b|\bcompleted or enrolled\b/i;
 
 // Clauses that mention a course code but aren't about having taken it.
 const MANUAL_WITH_COURSE = /\beligibility\b|\bplacement\b/i;
