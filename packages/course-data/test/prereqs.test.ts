@@ -321,7 +321,7 @@ describe("parsePrerequisite", () => {
 
     it("reads 'must receive a B- or better' (ENES440)", () => {
       expect(parsePrerequisite("Students must receive a B- or better in ENES240 and take 2 courses from the STEP minor elective list.")).toEqual(
-        course("ENES240", { minGrade: "B-" }),
+        all(course("ENES240", { minGrade: "B-" }), manual("take 2 courses from the STEP minor elective list")),
       );
     });
 

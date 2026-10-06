@@ -31,13 +31,31 @@ type Token =
 
 // Case-sensitive on purpose: department codes are uppercase, so "than 300"
 // never reads as a course. Connectors are matched in either case.
-const TOKEN =
+const BASE_TOKEN =
   /\b([A-Z]{4})\s?(\d{3}[A-Z]?)\b(?!\s*\(?or higher\b)|\b([Aa][Nn][Dd]|[Oo][Rr])\b|(,)|([([])|([)\]])|\b((?:1|[Oo]ne)\s+(?:courses?\b|of the following))|(;)|(\/)|\b(\d{3}[A-Z]?)\b(?![-\w])(?!\s+(?:hours|credits|units|words|points))|\b((?:other\s+\w+\s+)?(?:equivalent|comparable)(?:(?![A-Z]{4}\s?\d{3})[^;,()])*)|\b([A-Z]{4})\s?(\d{3})[A-Z]?\s*\(?or higher\b\)?(?:\s+[A-Z]{4}\s+course\b)?|\b(?:any|an?)\s+(\d)00[- ]level\s+([A-Z]{4})\s+courses?\b|\ban?\s+([A-Z]{4})\s+courses?\s+at\s+the\s+(\d)00[- ]level(?:\s+or\s+higher\b)?|\b(both|either)\b/g;
+
+// Free text up to the next separator: no course code, one level of parentheses allowed.
+const PROSE = "(?:(?![A-Z]{4}\\s?\\d{3})(?:[^;,()]|\\((?:(?![A-Z]{4}\\s?\\d{3})[^()])*\\)))*";
+// Prose that stands for a requirement no course code names. Group 19 of TOKEN; it becomes a manual item.
+const PROSE_ITEMS = [
+  // "X or a minimum of 60 credits", "or approved prior study in Matlab", "or another course that …"
+  "(?<=\\b[Oo]r\\s+)(?:a\\s+minimum\\s+of|(?:an?\\s+)?approved|another|enrolled\\s+in|course\\s+in|other|experience)\\b" + PROSE,
+  // Requirements that name no course: "any statistics course", "at least one KNES core class", …
+  "\\bany\\s+statistics\\s+course\\b",
+  "\\bat\\s+least\\s+one\\s+KNES\\s+core\\s+class\\b",
+  "\\btwo\\s+semesters\\s+of\\s+Chemistry\\b",
+  "\\btake\\s+2\\s+courses\\s+from\\s+the\\s+STEP\\s+minor\\s+elective\\s+list\\b",
+  "\\b(?:must\\s+have\\s+earned\\s+)?a\\s+minimum\\s+of\\s+\\d+\\s+credits\\b",
+  "\\bability\\s+to\\s+write\\s+code\\b" + PROSE,
+];
+const TOKEN = new RegExp(`${BASE_TOKEN.source}|(${PROSE_ITEMS.join("|")})`, "g");
 
 /** `tail`: a manual alternative appended to the end of the clause's list. */
 function tokenize(text: string, tail?: string): Token[] {
   const raw: Token[] = [];
-  for (const m of text.matchAll(TOKEN)) {
+  // "PSYC300-499 course range": the kind has no maximum, so it reads "PSYC300 or higher".
+  const ranged = text.replace(/\b([A-Z]{4})\s?(\d{3})-\d{3}\s+course\s+range\b/g, "$1$2 or higher");
+  for (const m of ranged.matchAll(TOKEN)) {
     const prev = raw.at(-1);
     const before = raw.at(-2);
     if (m[1]) raw.push({ type: "course", value: `${m[1].toUpperCase()}${m[2]}` });
@@ -59,6 +77,7 @@ function tokenize(text: string, tail?: string): Token[] {
     else if (m[14]) raw.push({ type: "level", dept: m[15]!, min: Number(m[14]) * 100 });
     else if (m[16]) raw.push({ type: "level", dept: m[16], min: Number(m[17]) * 100 });
     else if (m[18]) raw.push({ type: m[18].toLowerCase() as "both" | "either" });
+    else if (m[19]) raw.push({ type: "manual", text: clean(m[19]) });
     else raw.push({ type: m[3]!.toLowerCase() as "and" | "or" });
   }
   if (tail) raw.push({ type: "or" }, { type: "manual", text: tail });
@@ -270,20 +289,24 @@ function splitTopLevel(text: string, isSeparator: (text: string, i: number) => n
 }
 
 /** A period that ends a sentence: followed by whitespace and a capital letter (not "2.0"). */
-const sentenceEnd = (t: string, i: number) => (t[i] === "." ? (/^\.\s+(?=[A-Z])/.exec(t.slice(i))?.[0].length ?? 0) : 0);
+// Not after an initial ("Robert H. Smith") or "e.g."/"i.e."/"ex.".
+const ABBREVIATION = /(?:(?<![A-Za-z])[A-Z]|(?<![A-Za-z.])(?:e\.g|i\.e|ex))$/;
+const sentenceEnd = (t: string, i: number) =>
+  t[i] === "." && !ABBREVIATION.test(t.slice(0, i)) ? (/^\.\s+(?=[A-Z])/.exec(t.slice(i))?.[0].length ?? 0) : 0;
 const semicolon = (t: string, i: number) => (t[i] === ";" ? 1 : 0);
 
 const clean = (s: string) => s.replace(/\s+/g, " ").replace(/[\s.;,]+$/, "").trim();
 
 /** One clause: a course expression, or a manual requirement if it names no course. */
-const CONCURRENT = /concurrent(ly)? enroll/i;
+// Also "completed or in progress", "enrolled or completed", "or concurrently be enrolled in".
+const CONCURRENT = /concurrent(?:ly)?\s+(?:be\s+)?enroll|\bin progress\b|\benrolled or completed\b|\bcompleted or enrolled\b/i;
 
 // Clauses that mention a course code but aren't about having taken it.
 const MANUAL_WITH_COURSE = /\beligibility\b|\bplacement\b/i;
 
 // "… MATH340 and permission of …": a trailing non-course requirement inside a clause.
 const TRAILING_MANUAL =
-  /\s+(and|or)\s+((?:permission|must\b|familiarity|approval|junior|senior|sophomore|students?\b)[\s\S]*|(?:other\s+\w+\s+)?(?:equivalent|comparable)(?:\s+\w+){0,2})[\s.)]*$/i;
+  /\s+(and|or)\s+((?:(?:by\s+)?permission|must\b|familiarity|approval|junior|senior|sophomore|students?\b)[\s\S]*|(?:other\s+\w+\s+)?(?:equivalent|comparable)(?:\s+\w+){0,2})[\s.)]*$/i;
 
 // A waiver offers a way around the prerequisite; its course codes are not requirements.
 const WAIVER =
@@ -311,7 +334,30 @@ function topLevelTokens(text: string): Token[] {
 const isCommaList = (text: string) => topLevelTokens(text).some((t) => t.type === "comma");
 const hasTopLevelConnector = (text: string) => topLevelTokens(text).some((t) => t.type === "and" || t.type === "or");
 
+// "2 courses from (…)", "two 400-level MATH courses": there is no count kind, so the clause is a manual item.
+const COUNTED = /(?<!take\s)\b(?:2|two)\s+(?:courses\s+from|\d00-level)\b/i;
+
+const CADETS = /\bcadets? must\b/i;
+const EXAMPLE = /\((?:ex\.|e\.g\.|i\.e\.)[^)]*\)/i;
+
+/** "(…)" around the whole text: dropped. */
+function unwrap(text: string): string {
+  const t = text.trim();
+  if (!t.startsWith("(") || !t.endsWith(")")) return t;
+  let depth = 0;
+  for (let i = 0; i < t.length; i++) {
+    if (t[i] === "(") depth++;
+    else if (t[i] === ")" && --depth === 0 && i < t.length - 1) return t;
+  }
+  return t.slice(1, -1).trim();
+}
+
 function parseClause(text: string): Requirement | null {
+  if (COUNTED.test(text)) return { kind: "manual", text: clean(unwrap(text)) };
+  // "AFROTC cadets must also register for ARSC059": applies to some students only.
+  if (CADETS.test(text)) return { kind: "manual", text: clean(text) };
+  // "Introductory entomology course (ex. BSCI337)": a code that only illustrates the requirement.
+  if (EXAMPLE.test(text) && !hasCourse(tokenize(text.replace(EXAMPLE, " ")))) return { kind: "manual", text: clean(text) };
   const trailing = TRAILING_MANUAL.exec(text);
   const useTrailing =
     trailing !== null && hasCourse(tokenize(text.slice(0, trailing.index)));
@@ -406,6 +452,8 @@ export function parsePrerequisite(text: string | null): Requirement | null {
   for (const sentence of splitTopLevel(text, sentenceEnd)) {
     const m = /^(or|and)\b\s*/i.exec(sentence);
     const body = sentence.slice(m?.[0].length ?? 0);
+    // "Repeatable to 12 credits (if content differs)" is not a requirement.
+    if (/^repeatable\b/i.test(body.trim())) continue;
     const req = parseSemicolonClauses(body);
     if (!req) continue;
     // A waiver sentence is an alternative even with no connector.
