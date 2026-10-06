@@ -73,6 +73,64 @@ describe("General Education 2026–27", () => {
   });
 });
 
+const ds = [
+  g("HIST111", ["DSHS"]),
+  g("ECON200", ["DSHS"]),
+  g("PHIL100", ["DSHU"]),
+  g("ENGL200", ["DSHU"]),
+  g("BSCI105", ["DSNL"]),
+  g("GEOL100", ["DSNS"]),
+  g("CMSC100", ["DSSP"]),
+  g("ARTT100", ["DSSP"]),
+];
+
+describe("Big Question courses must be among the Distributive Studies courses", () => {
+  it("doesn't count a Big Question course the Distributive Studies slots have no room for", async () => {
+    // Only one natsci slot: of two DSNS+SCIS courses, one is outside the eight DS courses.
+    const plan = [...ds.filter((x) => x.id !== "GEOL100"), g("ASTR100", ["DSNS", "SCIS"]), g("AOSC123", ["DSNS", "SCIS"])];
+    const result = await auditProgram(genEd, plan);
+    expect(result.requirements.find((r) => r.id === "scis")!.status).toBe("partial");
+  });
+
+  it("only assigns Big Question to courses that fill a Distributive Studies category", async () => {
+    const plan = [...ds, g("GVPT170", ["DSHS", "SCIS"])];
+    const result = await auditProgram(genEd, plan);
+    const assigned = (id: string) => result.requirements.find((r) => r.id === id)!.assigned;
+    const inDs = ["dshs", "dshu", "dsnl", "natsci", "dssp"].flatMap(assigned);
+    for (const id of assigned("scis")) expect(inDs).toContain(id);
+  });
+
+  it("moves Big Question courses into the Distributive Studies slots when it can", async () => {
+    const plan = [...ds, g("GVPT170", ["DSHS", "SCIS"]), g("ANTH323", ["DSHS", "SCIS"])];
+    expect((await statusOf(plan)).scis).toBe("satisfied");
+  });
+});
+
+const ap = (x: StudentCourse): StudentCourse => ({ ...x, exam: true });
+
+describe("AP and IB credit limits", () => {
+  it("allows six Distributive Studies courses from AP or IB", async () => {
+    const plan = [...ds.slice(0, 6).map(ap), ...ds.slice(6)];
+    for (const [id, status] of Object.entries(await statusOf(plan))) {
+      if (["dshs", "dshu", "dsnl", "natsci", "dssp"].includes(id)) expect(`${id}: ${status}`).toBe(`${id}: satisfied`);
+    }
+  });
+
+  it("leaves a Distributive Studies category short when seven courses are AP or IB", async () => {
+    const plan = [...ds.slice(0, 7).map(ap), ...ds.slice(7)];
+    const statuses = await statusOf(plan);
+    const short = ["dshs", "dshu", "dsnl", "natsci", "dssp"].filter((id) => statuses[id] !== "satisfied");
+    expect(short.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("doesn't let AP or IB credit satisfy Big Question", async () => {
+    const plan = [...ds.slice(0, 4), ap(g("ASTR100", ["DSNS", "SCIS"])), ap(g("HIST110", ["DSHU", "SCIS"]))];
+    expect((await statusOf(plan)).scis).not.toBe("satisfied");
+    const umd = [...ds.slice(0, 4), g("ASTR100", ["DSNS", "SCIS"]), g("HIST110", ["DSHU", "SCIS"])];
+    expect((await statusOf(umd)).scis).toBe("satisfied");
+  });
+});
+
 describe("University rules", () => {
   it("requires 120 credits", async () => {
     const forty = Array.from({ length: 40 }, (_, i) => g(`XXXX${100 + i}`, []));
