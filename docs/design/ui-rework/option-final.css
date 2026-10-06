@@ -1,0 +1,45 @@
+/* FINAL (owner picks, 2026-10-05): B "Widgets" + B1 tinted tiles + B2 flat hairline borders + S1 class blocks.
+   Blocks tier their text by height: tall = course + room, short = course only, tiny = color only. Nothing wraps or clips. */
+@import url("option-b.css");
+
+/* Tiles: area tint, hairline border, no shadow */
+.item { box-shadow: none; background: var(--tile, var(--surface)); border: 1px solid var(--card-border); }
+.item .icon { background: var(--surface); }
+.group[data-cat="dining"] .item { --tile: var(--tint-dining); }
+.group[data-cat="study"] .item { --tile: var(--tint-study); }
+.group[data-cat="fitness"] .item { --tile: var(--tint-fitness); }
+.group[data-cat="transport"] .item { --tile: var(--tint-transport); }
+.group[data-cat="dining"] .item .icon { color: var(--ink-dining); }
+.group[data-cat="study"] .item .icon { color: var(--ink-study); }
+.group[data-cat="fitness"] .item .icon { color: var(--ink-fitness); }
+.group[data-cat="transport"] .item .icon { color: var(--ink-transport); }
+.item .sub { color: rgb(29 29 31 / .62); }
+body.dark .item .sub { color: rgb(245 245 247 / .66); }
+.item.accent { background: var(--accent); color: var(--on-accent); border-color: transparent; }
+.item.accent .icon { background: rgb(255 255 255 / .2); color: #fff; }
+.item.accent .title, .item.accent .sub { color: #fff; }
+.heroSide, .summary, .term, .week, .subTabs { box-shadow: none; border: 1px solid var(--card-border); }
+.heroMain { box-shadow: none; }
+.side .tab.active { box-shadow: none; border: 1px solid var(--card-border); }
+.phone .tabBar { box-shadow: none; border: 1px solid var(--card-border); }
+.btn.primary.wide { box-shadow: none; }
+
+/* S1 class blocks */
+.block.c1 { --solid: #3b82f6; --deep: #1d4ed8; }
+.block.c2 { --solid: #22a35a; --deep: #15803d; }
+.block.c3 { --solid: #f59e0b; --deep: #b45309; }
+.block.c4 { --solid: #8b5cf6; --deep: #6d28d9; }
+body.dark .block.c1 { --deep: #93c5fd; } body.dark .block.c2 { --deep: #86efac; }
+body.dark .block.c3 { --deep: #fcd34d; } body.dark .block.c4 { --deep: #c4b5fd; }
+.week { --sep-grid: rgb(60 60 67 / .09); }
+body.dark .week { --sep-grid: rgb(235 235 245 / .1); }
+.block {
+  left: 2px; right: 2px; padding: 0 2px; border-radius: 7px;
+  background: var(--solid); color: #fff; border: 1.5px solid var(--deep); box-shadow: 0 1px 3px rgb(0 0 0 / .18);
+  container-type: size; justify-content: center; gap: 1px;
+}
+.block b, .block span { display: block; white-space: nowrap; overflow: hidden; line-height: 1.12; text-align: center; }
+/* Text scales with the block (owner, 2026-10-05): both lines always show; a short block gets a smaller font,
+   never a hidden or cut label. cqh = 1% of the block's height, cqw = 1% of its width. */
+.block b { font-size: min(clamp(6px, 30cqh, 9.5px), 15cqw); letter-spacing: -.03em; }
+.block span { font-size: min(clamp(5.5px, 25cqh, 8.5px), 14cqw); color: rgb(255 255 255 / .88); opacity: 1; }

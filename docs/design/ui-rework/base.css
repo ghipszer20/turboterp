@@ -150,7 +150,7 @@ img { display: block; }
 .layoutBar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; font-size: 13px; color: var(--text-2); }
 .layoutName b { color: var(--text); }
 .week { --px: .64px; --sep-grid: var(--sep); }
-.dayHeads, .grid { display: grid; grid-template-columns: 34px repeat(5, 1fr); }
+.dayHeads, .grid { display: grid; grid-template-columns: 30px repeat(5, 1fr); }
 .dayHeads span { font-size: 11px; font-weight: 600; color: var(--text-2); text-align: center; padding-bottom: 4px; }
 .grid { height: calc(480 * var(--px)); }
 .hours { display: flex; flex-direction: column; }
