@@ -131,6 +131,74 @@ describe("AP and IB credit limits", () => {
   });
 });
 
+// One row per Gen Ed code combination in docs/project/gen-ed-audit.md (46): [codes, a course with
+// them, requirement ids it fills for certain, ids of which it fills exactly one (its Distributive
+// Studies category, when it has several or a lab course may go to either natural-science slot)].
+// Big Question (scis) is listed as filled because a lone course sits in a DS slot; the within rule
+// is tested separately above.
+const COMBINATIONS: [string[], string, string[], string[]][] = [
+  [["DSSP"], "ANSC255", [], ["dssp"]],
+  [["DSHU"], "AAAS200", [], ["dshu"]],
+  [["DSHS"], "AAAS101", [], ["dshs"]],
+  [["DSHS", "SCIS"], "AGST130", ["scis"], ["dshs"]],
+  [["DSHS", "DVUP"], "AAAS100", ["diversity", "dvup"], ["dshs"]],
+  [["DSHU", "DVUP"], "AAAS234", ["diversity", "dvup"], ["dshu"]],
+  [["DVCC"], "AAST394", ["diversity"], []],
+  [["DSSP", "SCIS"], "AGNR230", ["scis"], ["dssp"]],
+  [["DSNS"], "AOSC375", [], ["natsci"]],
+  [["DVUP"], "AAAS254", ["diversity", "dvup"], []],
+  [["DSHU", "SCIS"], "CLAS170", ["scis"], ["dshu"]],
+  [["DSNS", "SCIS"], "AOSC123", ["scis"], ["natsci"]],
+  [["FSPW"], "ENGL381", ["fspw"], []],
+  [["DSNL"], "ASTR101", [], ["dsnl", "natsci"]],
+  [["FSAR"], "BIOM301", ["fsar"], []],
+  [["DSHU", "DSSP"], "ARHU275", [], ["dshu", "dssp"]],
+  [["FSOC"], "ARCH403", ["fsoc"], []],
+  [["DSNL", "DSNS"], "BSCI160", [], ["dsnl", "natsci"]],
+  [["DSSP", "DVUP"], "AAST351", ["diversity", "dvup"], ["dssp"]],
+  [["DSHU", "DVUP", "SCIS"], "ARTH261", ["diversity", "dvup", "scis"], ["dshu"]],
+  [["DSHS", "DVUP", "SCIS"], "AAAS187", ["diversity", "dvup", "scis"], ["dshs"]],
+  [["DSHS", "DSHU", "DVUP"], "HIST201", ["diversity", "dvup"], ["dshs", "dshu"]],
+  [["DSSP", "DVCC"], "EDSP220", ["diversity"], ["dssp"]],
+  [["DSHS", "DSSP"], "FMSC302", [], ["dshs", "dssp"]],
+  [["DSHU", "DSSP", "SCIS"], "ARTH260", ["scis"], ["dshu", "dssp"]],
+  [["DSHS", "DSHU"], "CLAS312", [], ["dshs", "dshu"]],
+  [["DSHS", "DVCC"], "CPSP220", ["diversity"], ["dshs"]],
+  [["FSAR", "FSMA"], "DATA100", ["fsar", "fsma"], []],
+  [["FSAW"], "ENGL101", ["fsaw"], []],
+  [["DSHS", "DSSP", "SCIS"], "CCJS225", ["scis"], ["dshs", "dssp"]],
+  [["DSHS", "DVCC", "SCIS"], "ANTH266", ["diversity", "scis"], ["dshs"]],
+  [["DSNL", "SCIS"], "BSCI135", ["scis"], ["dsnl", "natsci"]],
+  [["FSMA"], "MATH107", ["fsma"], []],
+  [["DSHS", "DSHU", "DVUP", "SCIS"], "HIST187", ["diversity", "dvup", "scis"], ["dshs", "dshu"]],
+  [["DSHU", "DSSP", "DVUP"], "AMST320", ["diversity", "dvup"], ["dshu", "dssp"]],
+  [["DSHS", "DSHU", "SCIS"], "PHIL202", ["scis"], ["dshs", "dshu"]],
+  [["DSNL", "DVUP"], "ANTH222", ["diversity", "dvup"], ["dsnl", "natsci"]],
+  [["DSNL", "DSNS", "SCIS"], "AOSC200", ["scis"], ["dsnl", "natsci"]],
+  [["DSNS", "DSSP", "SCIS"], "AREC200", ["scis"], ["natsci", "dssp"]],
+  [["DSNS", "DSSP", "DVUP", "SCIS"], "BSCI151", ["diversity", "dvup", "scis"], ["natsci", "dssp"]],
+  [["DSSP", "DVUP", "SCIS"], "HDCC105", ["diversity", "dvup", "scis"], ["dssp"]],
+  [["DSNS", "DSSP"], "KNES260", [], ["natsci", "dssp"]],
+  [["DSHS", "DSNS", "SCIS"], "PHYS235", ["scis"], ["dshs", "natsci"]],
+  [["DSHS", "DSNS"], "PSYC100", [], ["dshs", "natsci"]],
+  [["DSSP", "DVCC", "SCIS"], "CPSP210", ["diversity", "scis"], ["dssp"]],
+  [["DSHU", "DVCC", "SCIS"], "RELS271", ["diversity", "scis"], ["dshu"]],
+];
+
+describe("every Gen Ed code combination", () => {
+  it("covers all 46 combinations", () => {
+    expect(new Set(COMBINATIONS.map(([codes]) => codes.join("+"))).size).toBe(46);
+  });
+
+  it.each(COMBINATIONS)("%j (%s) fills only what it should", async (codes, id, fills, oneOf) => {
+    const result = await auditProgram(genEd, [g(id, codes)]);
+    const filled = result.requirements.filter((r) => r.assigned.includes(id)).map((r) => r.id);
+    const expected = [...fills, ...(oneOf.length > 0 ? [oneOf.find((o) => filled.includes(o))!] : [])];
+    expect(oneOf.length === 0 || oneOf.some((o) => filled.includes(o))).toBe(true);
+    expect([...filled].sort()).toEqual([...expected].sort());
+  });
+});
+
 describe("University rules", () => {
   it("requires 120 credits", async () => {
     const forty = Array.from({ length: 40 }, (_, i) => g(`XXXX${100 + i}`, []));
