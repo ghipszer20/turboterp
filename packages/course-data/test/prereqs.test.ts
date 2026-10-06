@@ -296,7 +296,8 @@ describe("parsePrerequisite", () => {
     it("reads 'Grades of A- or higher in' (PHYS400)", () => {
       expect(parsePrerequisite("Grades of A- or higher in PHYS272, PHYS273, MATH241, and MATH243 or MATH246, and permission of CMNS-Physics Department.")).toEqual(
         all(
-          any(all(...g("A-", "PHYS272", "PHYS273", "MATH241", "MATH243")), course("MATH246", { minGrade: "A-" })),
+          // P1: "or" binds tighter than "and", so only MATH243 / MATH246 are alternatives.
+          all(...g("A-", "PHYS272", "PHYS273", "MATH241"), any(...g("A-", "MATH243", "MATH246"))),
           manual("permission of CMNS-Physics Department"),
         ),
       );

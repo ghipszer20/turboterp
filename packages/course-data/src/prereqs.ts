@@ -26,12 +26,13 @@ type Token =
   | { type: "course"; value: string }
   | { type: "level"; dept: string; min: number }
   | { type: "manual"; text: string }
-  | { type: "and" | "or" | "comma" | "open" | "close" | "one" | "oneof" | "semi" };
+  | { type: "comma"; dflt: "and" | "or" }
+  | { type: "and" | "or" | "open" | "close" | "one" | "oneof" | "semi" | "both" | "either" };
 
 // Case-sensitive on purpose: department codes are uppercase, so "than 300"
 // never reads as a course. Connectors are matched in either case.
 const TOKEN =
-  /\b([A-Z]{4})\s?(\d{3}[A-Z]?)\b(?!\s*\(?or higher\b)|\b([Aa][Nn][Dd]|[Oo][Rr])\b|(,)|([([])|([)\]])|\b((?:1|[Oo]ne)\s+(?:courses?\b|of the following))|(;)|(\/)|\b(\d{3}[A-Z]?)\b(?![-\w])(?!\s+(?:hours|credits|units|words|points))|\b((?:other\s+\w+\s+)?(?:equivalent|comparable)(?:(?![A-Z]{4}\s?\d{3})[^;,()])*)|\b([A-Z]{4})\s?(\d{3})[A-Z]?\s*\(?or higher\b\)?(?:\s+[A-Z]{4}\s+course\b)?|\b(?:any|an?)\s+(\d)00[- ]level\s+([A-Z]{4})\s+courses?\b|\ban?\s+([A-Z]{4})\s+courses?\s+at\s+the\s+(\d)00[- ]level(?:\s+or\s+higher\b)?/g;
+  /\b([A-Z]{4})\s?(\d{3}[A-Z]?)\b(?!\s*\(?or higher\b)|\b([Aa][Nn][Dd]|[Oo][Rr])\b|(,)|([([])|([)\]])|\b((?:1|[Oo]ne)\s+(?:courses?\b|of the following))|(;)|(\/)|\b(\d{3}[A-Z]?)\b(?![-\w])(?!\s+(?:hours|credits|units|words|points))|\b((?:other\s+\w+\s+)?(?:equivalent|comparable)(?:(?![A-Z]{4}\s?\d{3})[^;,()])*)|\b([A-Z]{4})\s?(\d{3})[A-Z]?\s*\(?or higher\b\)?(?:\s+[A-Z]{4}\s+course\b)?|\b(?:any|an?)\s+(\d)00[- ]level\s+([A-Z]{4})\s+courses?\b|\ban?\s+([A-Z]{4})\s+courses?\s+at\s+the\s+(\d)00[- ]level(?:\s+or\s+higher\b)?|\b(both|either)\b/g;
 
 /** `tail`: a manual alternative appended to the end of the clause's list. */
 function tokenize(text: string, tail?: string): Token[] {
@@ -40,7 +41,7 @@ function tokenize(text: string, tail?: string): Token[] {
     const prev = raw.at(-1);
     const before = raw.at(-2);
     if (m[1]) raw.push({ type: "course", value: `${m[1].toUpperCase()}${m[2]}` });
-    else if (m[4]) raw.push({ type: "comma" });
+    else if (m[4]) raw.push({ type: "comma", dflt: "and" });
     else if (m[5]) raw.push({ type: "open" });
     else if (m[6]) raw.push({ type: "close" });
     else if (m[7]) raw.push({ type: /following/i.test(m[7]) ? "oneof" : "one" });
@@ -57,13 +58,13 @@ function tokenize(text: string, tail?: string): Token[] {
     else if (m[12]) raw.push({ type: "level", dept: m[12], min: Number(m[13]) });
     else if (m[14]) raw.push({ type: "level", dept: m[15]!, min: Number(m[14]) * 100 });
     else if (m[16]) raw.push({ type: "level", dept: m[16], min: Number(m[17]) * 100 });
+    else if (m[18]) raw.push({ type: m[18].toLowerCase() as "both" | "either" });
     else raw.push({ type: m[3]!.toLowerCase() as "and" | "or" });
   }
   if (tail) raw.push({ type: "or" }, { type: "manual", text: tail });
 
-  // "A, B, or C": a list's commas take the connector that ends the list at
-  // the same nesting level. With no connector, commas mean "and", except in a
-  // "1 course from (…)" list, where they mean "or".
+  // Commas only record their group's default connector ("and", or "or" in a
+  // "1 course from (…)" list); parseExpression reads the list's own conjunction.
   const out: Token[] = [];
   const groupDefaults: ("and" | "or")[] = ["and"];
   let pickOne = false;
@@ -87,35 +88,28 @@ function tokenize(text: string, tail?: string): Token[] {
     } else if (t.type === "close" && groupDefaults.length > 1) {
       groupDefaults.pop();
     }
-    if (t.type !== "comma") {
-      out.push(t);
-      return;
-    }
-    const next = raw[i + 1];
-    if (next?.type === "and" || next?.type === "or") return; // Oxford comma
-    let depth = 0;
-    for (const x of raw.slice(i + 1)) {
-      if (x.type === "open") depth++;
-      else if (x.type === "close" && depth-- === 0) break;
-      else if (depth === 0 && (x.type === "and" || x.type === "or")) {
-        out.push({ type: x.type });
-        return;
-      }
-    }
-    out.push({ type: groupDefaults.at(-1)! });
+    out.push(t.type === "comma" ? { type: "comma", dflt: groupDefaults.at(-1)! } : t);
   });
   return out;
 }
 
-/** Recursive descent: or-expression of and-expressions of courses or (groups). */
+/** The same connector "and"/"or" tightness at every level: "or" binds tighter than "and". */
+type Chain = { groups: Requirement[][]; conjs: ("and" | "or")[]; bare: boolean };
+
+const joinReq = (kind: "all" | "any", parts: Requirement[]): Requirement | null =>
+  parts.length === 0 ? null : parts.length === 1 ? parts[0]! : { kind, of: parts };
+
+/**
+ * Recursive descent. A comma list ("A, B, and C or D") holds items; the item
+ * kind follows the list's conjunction. An item is a chain of "and"s over
+ * groups of "or"s ("or" binds tighter), and groups of atoms or (parentheses).
+ */
 function parseExpression(
   tokens: Token[],
   leaf: (course: string) => Requirement,
   levelLeaf: (dept: string, minNumber: number) => Requirement,
 ): Requirement | null {
   let pos = 0;
-  const combine = (kind: "all" | "any", parts: Requirement[]): Requirement | null =>
-    parts.length === 0 ? null : parts.length === 1 ? parts[0]! : { kind, of: parts };
 
   function atom(): Requirement | null {
     const t = tokens[pos];
@@ -138,13 +132,27 @@ function parseExpression(
       if (tokens[pos]?.type === "close") pos++;
       return inner;
     }
+    // "both A and B" and "either A or B" are one group.
+    if (t.type === "both" || t.type === "either") {
+      pos++;
+      const first = atom();
+      const joiner = t.type === "both" ? "and" : "or";
+      if (!first || tokens[pos]?.type !== joiner) return first;
+      const parts = [first];
+      while (tokens[pos]?.type === joiner) {
+        pos++;
+        const next = atom();
+        if (next) parts.push(next);
+      }
+      return joinReq(t.type === "both" ? "all" : "any", parts);
+    }
     return null;
   }
   /** "X; and Y; or Z" inside parentheses: lowest precedence, "and" tighter than "or". */
   function semiExpr(): Requirement | null {
     const groups: Requirement[][] = [[]];
     for (;;) {
-      const a = orExpr();
+      const a = listExpr();
       if (a) groups.at(-1)!.push(a);
       if (tokens[pos]?.type !== "semi") break;
       pos++;
@@ -152,28 +160,72 @@ function parseExpression(
       if (connector === "and" || connector === "or") pos++;
       if (connector === "or" && groups.at(-1)!.length > 0) groups.push([]);
     }
-    return combine("any", groups.map((g) => combine("all", g)).filter((x): x is Requirement => x !== null));
+    return joinReq("any", groups.map((g) => joinReq("all", g)).filter((x): x is Requirement => x !== null));
   }
-  function andExpr(): Requirement | null {
-    const parts: Requirement[] = [];
+  function orGroup(conjs: ("and" | "or")[]): Requirement[] {
+    const atoms: Requirement[] = [];
     for (;;) {
       const a = atom();
-      if (a) parts.push(a);
-      if (tokens[pos]?.type === "and") pos++;
-      else if (!a) break;
+      if (a) atoms.push(a);
+      if (tokens[pos]?.type === "or") {
+        conjs.push("or");
+        pos++;
+      } else break;
+    }
+    return atoms;
+  }
+  function chain(): Chain {
+    const groups: Requirement[][] = [];
+    const conjs: ("and" | "or")[] = [];
+    for (;;) {
+      const group = orGroup(conjs);
+      if (group.length > 0) groups.push(group);
+      if (tokens[pos]?.type === "and") {
+        conjs.push("and");
+        pos++;
+      } else if (group.length === 0) break;
       else if (tokens[pos]?.type !== "course" && tokens[pos]?.type !== "level" && tokens[pos]?.type !== "open") break;
     }
-    return combine("all", parts);
+    return { groups, conjs, bare: groups.length === 1 && groups[0]!.length === 1 && conjs.length === 0 };
   }
-  function orExpr(): Requirement | null {
-    const parts: Requirement[] = [];
-    for (;;) {
-      const a = andExpr();
-      if (a) parts.push(a);
-      if (tokens[pos]?.type === "or") pos++;
-      else break;
+  const groupReq = (g: Requirement[]) => joinReq("any", g)!;
+  /** Comma-separated items; the list's conjunction decides whether they are all or any. */
+  function listExpr(): Requirement | null {
+    const items: Chain[] = [chain()];
+    let oxford: "and" | "or" | undefined;
+    let dflt: "and" | "or" = "and";
+    while (tokens[pos]?.type === "comma") {
+      dflt = (tokens[pos] as { dflt: "and" | "or" }).dflt;
+      pos++;
+      const conj = tokens[pos]?.type;
+      if (conj === "and" || conj === "or") {
+        oxford = conj; // ", and C" / ", or C"
+        pos++;
+      }
+      items.push(chain());
     }
-    return combine("any", parts);
+    const filled = items.filter((it) => it.groups.length > 0);
+    if (filled.length === 0) return null;
+    // "A, B, and C or D" = all of A, B, (C or D); "A and B, or C" = any of (A and B), C;
+    // "A, B or C" with bare codes = any; no final conjunction = all.
+    let op: "all" | "any";
+    if (items.length === 1) op = "all";
+    else if (oxford) op = oxford === "and" ? "all" : "any";
+    else {
+      const last = items.at(-1)!;
+      const firstConj = last.conjs[0];
+      const restBare = items.slice(0, -1).every((it) => it.bare);
+      if (restBare && firstConj) op = firstConj === "or" ? "any" : "all";
+      else if (restBare && !firstConj) op = dflt === "or" ? "any" : "all";
+      else op = "all";
+    }
+    const parts: Requirement[] = [];
+    for (const it of filled) {
+      if (op === "all") parts.push(...it.groups.map(groupReq));
+      else if (it.groups.length === 1) parts.push(...it.groups[0]!);
+      else parts.push(joinReq("all", it.groups.map(groupReq))!);
+    }
+    return joinReq(op, parts);
   }
 
   return semiExpr();
@@ -227,6 +279,22 @@ const EXCLUSION = /\((?:not|excluding|except)\b[^)]*\)/gi;
 const ONE_OF_FOLLOWING = /\bone of the following\b/i;
 const hasCourse = (tokens: Token[]) => tokens.some((t) => t.type === "course" || t.type === "level");
 
+const EQUIVALENT = /^(?:other\s+\w+\s+)?(?:equivalent|comparable)/i;
+
+/** Tokens of a clause body (grade phrases and exclusions removed), at parenthesis depth 0. */
+function topLevelTokens(text: string): Token[] {
+  const out: Token[] = [];
+  let depth = 0;
+  for (const t of tokenize(text.replace(EXCLUSION, " ").replace(MIN_GRADE, " "))) {
+    if (t.type === "open") depth++;
+    else if (t.type === "close") depth = Math.max(0, depth - 1);
+    else if (depth === 0) out.push(t);
+  }
+  return out;
+}
+const isCommaList = (text: string) => topLevelTokens(text).some((t) => t.type === "comma");
+const hasTopLevelConnector = (text: string) => topLevelTokens(text).some((t) => t.type === "and" || t.type === "or");
+
 function parseClause(text: string): Requirement | null {
   const trailing = TRAILING_MANUAL.exec(text);
   const useTrailing =
@@ -243,6 +311,11 @@ function parseClause(text: string): Requirement | null {
     const isOr = trailing[1]!.toLowerCase() === "or" || WAIVER.test(tail);
     // "…, and one of the following: A, B, or equivalent": the alternative joins the list.
     if (isOr && tail && ONE_OF_FOLLOWING.test(headText)) return parseBody(headText, tail);
+    // "A, B, or permission": the tail is the list's last item. "A, B, and C or equivalent":
+    // "or" binds tighter, so the alternative belongs to C alone.
+    if (isOr && tail && isCommaList(headText) && (!hasTopLevelConnector(headText) || EQUIVALENT.test(tail))) {
+      return parseBody(headText, tail);
+    }
     return combine(isOr ? "any" : "all", parseClause(headText), tail ? { kind: "manual", text: tail } : null);
   }
   if (MANUAL_WITH_COURSE.test(text)) {
@@ -278,45 +351,80 @@ const combine = (kind: "all" | "any", left: Requirement | null, right: Requireme
   return { kind, of: [left, right] };
 };
 
+/** A way around everything before it: "or permission of …", "or by permission", "students who … may contact …". */
+const WAIVER_CLAUSE = /^(?:by\s+)?(?:permission|approval)\b/i;
+
+// "and math eligibility is based on the Math Placement Test": explains the manual item before it.
+const EXPLANATION = /^math eligibility is based on\b/i;
+
+type Piece = { connector: "and" | "or"; req: Requirement; waiver: boolean; explains: boolean; text: string };
+
+/**
+ * Joins the pieces of one level (the sentences of a text, or the ";" clauses of a sentence):
+ * "or" binds tighter than "and", so "A; and B; or C" is A and (B or C). A waiver is an
+ * alternative to everything before it. `flat` keeps one list per kind; otherwise pairs nest.
+ */
+function assemble(pieces: Piece[], flat: boolean): Requirement | null {
+  const join = (kind: "all" | "any", parts: Requirement[]): Requirement | null =>
+    flat ? joinReq(kind, parts) : parts.reduce<Requirement | null>((acc, p) => combine(kind, acc, p), null);
+  const runs: Requirement[][] = [];
+  const fold = () => join("all", runs.map((r) => join("any", r)!));
+  for (const p of pieces) {
+    const run = runs.at(-1);
+    const last = run?.at(-1);
+    if (p.explains && last?.kind === "manual") {
+      run![run!.length - 1] = { kind: "manual", text: `${last.text}; and ${p.text}` };
+    } else if (p.connector === "or" && p.waiver && runs.length > 0) {
+      runs.splice(0, runs.length, [fold()!, p.req]);
+    } else if (p.connector === "or" && run) run.push(p.req);
+    else runs.push([p.req]);
+  }
+  return fold();
+}
+
 export function parsePrerequisite(text: string | null): Requirement | null {
   if (!text) return null;
-  // Sentences: "… . Or must be in …" is an alternative to everything before
-  // it; "… . And …" or a sentence with no connector adds to it.
-  let result: Requirement | null = null;
+  // Sentences: "… . Or must be in …" is an alternative to the sentence before it;
+  // "… . And …" or a sentence with no connector adds to it. "or" binds tighter than "and".
+  const pieces: Piece[] = [];
   for (const sentence of splitTopLevel(text, sentenceEnd)) {
     const m = /^(or|and)\b\s*/i.exec(sentence);
     const body = sentence.slice(m?.[0].length ?? 0);
-    const joined = parseSemicolonClauses(body);
+    const req = parseSemicolonClauses(body);
+    if (!req) continue;
     // A waiver sentence is an alternative even with no connector.
     const waiver = !m && WAIVER.test(body) && splitTopLevel(body, semicolon).length === 1;
-    result = combine(m?.[1]?.toLowerCase() === "or" || waiver ? "any" : "all", result, joined);
+    const connector = m?.[1]?.toLowerCase() === "or" || waiver ? "or" : "and";
+    pieces.push({ connector, req, waiver, explains: EXPLANATION.test(body.trim()), text: clean(body) });
   }
-  return result;
+  return assemble(pieces, false);
 }
 
 function parseSemicolonClauses(text: string): Requirement | null {
-  // Semicolon clauses: "X; or Y; and Z". "and" binds tighter than "or";
+  // Semicolon clauses: "X; or Y; and Z". "or" binds tighter than "and";
   // "and/or" reads as "or"; no connector reads as "and".
-  const groups: Requirement[][] = [[]];
-  const segments = splitTopLevel(text, semicolon);
+  // "TRACK I: … or TRACK 2: …": a track label starts a new clause even without a semicolon.
+  const segments = splitTopLevel(text, semicolon).flatMap((s) => s.split(/(?=\s(?:or|and)\s+track\s+\w+\s*:)/i));
   // After "one of the following: A and B; C and D; or E", clauses with no
   // connector of their own take the list's final connector, "or".
   const listDefault = ONE_OF_FOLLOWING.test(segments[0]!) ? "or" : "and";
+  const pieces: Piece[] = [];
   segments.forEach((raw, i) => {
     const bare = raw.replace(LEADING_CONNECTOR, "");
+    const isWaiver = WAIVER.test(bare) || WAIVER_CLAUSE.test(bare.trim());
     const fallback = WAIVER.test(bare) ? "or" : listDefault;
     const connector = i === 0 ? "and" : (LEADING_CONNECTOR.exec(raw)?.[1]?.toLowerCase() ?? fallback);
-    const clause = parseClause(bare);
-    if (!clause) return;
-    if (connector !== "and" && groups.at(-1)!.length > 0) groups.push([]);
-    groups.at(-1)!.push(clause);
+    const req = parseClause(bare);
+    if (!req) return;
+    pieces.push({
+      connector: connector === "and" ? "and" : "or",
+      req,
+      waiver: isWaiver,
+      explains: EXPLANATION.test(bare.trim()),
+      text: clean(bare),
+    });
   });
-
-  const terms = groups
-    .filter((g) => g.length > 0)
-    .map((g): Requirement => (g.length === 1 ? g[0]! : { kind: "all", of: g }));
-  if (terms.length === 0) return null;
-  return terms.length === 1 ? terms[0]! : { kind: "any", of: terms };
+  return assemble(pieces, true);
 }
 
 // ---- checking ----
