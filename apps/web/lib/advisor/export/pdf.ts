@@ -11,7 +11,7 @@ const GRAY = "#6e6e73";
 const INK = "#1c1c1e";
 
 const MARGIN = 36;
-const YEAR_W = 112;
+const YEAR_W = 92;
 const GAP = 12;
 const ROW_H = 15;
 const HEAD_H = 20;
@@ -70,10 +70,10 @@ export async function buildPdf(t: PlanExport) {
       theme: "plain",
       styles: { font: "helvetica", fontSize: 8.5, cellPadding: { top: 1, bottom: 1, left: 2, right: 2 }, textColor: INK, valign: "middle", overflow: "ellipsize", minCellHeight: ROW_H },
       columnStyles: {
-        [cols.code]: { cellWidth: 62, fontStyle: "bold", cellPadding: { top: 1, bottom: 1, left: 12, right: 2 } },
-        [cols.title]: { cellWidth: termW - 62 - 24 - 32 },
-        [cols.cr]: { cellWidth: 24, halign: "right" },
-        [cols.grade]: { cellWidth: 32, halign: "center" },
+        [cols.code]: { cellWidth: 54, fontStyle: "bold", cellPadding: { top: 1, bottom: 1, left: 11, right: 2 } },
+        [cols.title]: { cellWidth: termW - 54 - 20 - 30 },
+        [cols.cr]: { cellWidth: 20, halign: "right" },
+        [cols.grade]: { cellWidth: 30, halign: "center" },
       },
       head: [
         [{ content: term.name, colSpan: 4, styles: { fontStyle: "bold", fontSize: 11.5, textColor: RED, minCellHeight: HEAD_H, halign: "left", cellPadding: { top: 1, bottom: 3, left: 0, right: 0 } } }],
