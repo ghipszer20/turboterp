@@ -93,6 +93,13 @@ describe("checkPlan: twin-repeat warning", () => {
     expect(i).toHaveLength(1);
   });
 
+  it("warns when the earlier Twin is an old code no longer in the catalog (a transcript's HIST157)", () => {
+    const current = catalogOf(c("HIST201", { renumbered: ["HIST157"] }));
+    const p = plan({ A: [{ id: "HIST157", status: "completed", grade: "A" }], B: ["HIST201"] });
+    expect(planCourses(p, current).map((x) => x.id)).toEqual(["HIST157"]);
+    expect(checkPlan(p, current).filter((i) => i.kind === "twin-repeat").map((i) => i.course)).toEqual(["HIST201"]);
+  });
+
   it("does not warn when the earlier Twin was a failed or withdrawn attempt", () => {
     expect(warns(plan({ A: [{ id: "STAT426", status: "completed", grade: "F" }], B: ["CMSC320"] }))).toEqual([]);
   });

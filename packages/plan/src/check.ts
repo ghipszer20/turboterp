@@ -394,7 +394,6 @@ function twinRepeatIssues(plan: Plan, catalog: PlanCatalog, prior: Map<string, P
   const counted = new Set(prior.keys());
   for (const term of plan.terms) {
     for (const course of term.courses) {
-      if (!catalog.has(course.id)) continue;
       if (!counted.has(course.id)) {
         const t = twins(course.id);
         const kind = (["renumbered", "crossListed", "creditOnly"] as const).find((k) => [...t[k]].some((x) => counted.has(x)));
