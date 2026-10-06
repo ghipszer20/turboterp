@@ -2,7 +2,7 @@
 // (docs/project/legal.md). Bump the version whenever the meaning changes.
 
 export const TERMS_VERSION = "2026-10-04";
-export const PRIVACY_VERSION = "2026-10-04";
+export const PRIVACY_VERSION = "2026-10-06";
 
 /** A paragraph, or a list of bullet points. */
 export type LegalBlock = string | string[];
@@ -196,6 +196,7 @@ export const PRIVACY: LegalSection[] = [
     paragraphs: [
       [
         "Supabase runs sign-in and the database, in the United States. It stores your email address and sends the email with your sign-in link.",
+        "Brevo sends email for us: sign-in emails, issue reports and the plan emails you ask for. It sees the address it sends to and the message it carries.",
         "Vercel hosts the website. Like any web host, it may keep short-lived request logs (such as IP address and the page requested) to run and protect the service.",
         "OpenFreeMap serves the map tiles, so it sees your IP address when a map loads, like any site you load images from.",
       ],
@@ -205,7 +206,9 @@ export const PRIVACY: LegalSection[] = [
   {
     heading: "Reports and donations",
     paragraphs: [
-      "Report an issue opens a message in your own email app or on GitHub. We receive what you choose to send, including your email address if you send it by email. Issues filed on GitHub are public.",
+      "Report an issue sends what you type from our server, through Brevo, to us. A report email holds what you wrote, the page you named, your email address only if you typed one, and the time it was sent. Issues filed on GitHub are public.",
+      "Email my plan sends your 4-year plan as a PDF, with a short summary of your audit, only to your own address, the one you signed in with. Nothing is sent to any other address.",
+      "To stop abuse, we keep a rate-limit record for each report or plan email: a scrambled copy of your IP address (reports) or account id (plan emails) and the time. It is deleted after a day.",
       "Donations go through Venmo, under Venmo's own privacy policy. We never see your card or bank details. We see what Venmo shows the person receiving a payment: your Venmo name, the amount and any note.",
     ],
   },
