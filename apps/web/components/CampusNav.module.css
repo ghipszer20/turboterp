@@ -1,9 +1,12 @@
 .bar {
   display: flex;
-  gap: 8px;
-  max-width: var(--content);
-  margin: 0 auto;
-  padding: 14px var(--gutter) 0;
+  gap: 2px;
+  max-width: calc(var(--content) - 2 * var(--gutter));
+  margin: 14px var(--gutter) 0;
+  padding: 3px;
+  border: 1px solid var(--tile-border);
+  border-radius: 14px;
+  background: var(--surface);
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -14,28 +17,32 @@
 
 @media (min-width: 900px) {
   .bar {
-    padding: 32px 40px 0;
+    margin: 32px 40px 0;
+    max-width: 560px;
   }
 }
 
 .link {
-  flex: none;
-  padding: 7px 16px;
-  border-radius: var(--r-pill);
-  background: var(--surface);
-  box-shadow: var(--shadow);
+  flex: 1;
+  min-width: max-content;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 14px;
+  border-radius: 11px;
   color: var(--text);
   font: var(--t-sub);
-  font-weight: 600;
+  font-weight: 500;
   transition:
-    background var(--fast) ease,
-    color var(--fast) ease;
+    background var(--fast) var(--spring),
+    color var(--fast) var(--spring);
 }
 
 .link[aria-current="page"] {
   background: var(--accent);
   color: var(--on-accent);
-  box-shadow: none;
+  font-weight: 600;
 }
 
 @media (hover: hover) {

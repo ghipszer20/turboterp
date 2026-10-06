@@ -2,30 +2,20 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { connection } from "next/server";
 import { addDays, campusDate, campusMinutes, orderLibraries } from "@turboterp/campus-data";
-import { LiveStatus } from "@/components/LiveStatus";
-import { RoomIcon } from "@/components/icons";
-import { Card, IconTile, Notice, Page, Row, Section, SkeletonCard, SourceError } from "@/components/ui";
+import { LibraryIcon, RoomIcon } from "@/components/icons";
+import { Notice, Page, Section, SkeletonCard, SourceError, Tile, TileGrid } from "@/components/ui";
 import { getLibraryHours, safe } from "@/lib/campus";
 import { compactLibraryName } from "@/lib/libraries";
-import { hoursLabel } from "@/lib/status";
+import { hoursStatus } from "@/lib/status";
 
 export const metadata: Metadata = { title: "Libraries" };
 
 export default function LibrariesPage() {
   return (
     <Page title="Libraries" subtitle="Campus">
-      <Card>
-        <Row
-          href="/campus/rooms"
-          leading={
-            <IconTile>
-              <RoomIcon />
-            </IconTile>
-          }
-          title="Study rooms"
-          subtitle="Find an open room at any library and book it"
-        />
-      </Card>
+      <TileGrid>
+        <Tile href="/campus/rooms" icon={<RoomIcon />} area="study" title="Study rooms" sub="Find an open room and book it" accent />
+      </TileGrid>
       <Suspense fallback={<SkeletonCard rows={6} />}>
         <LibraryList />
       </Suspense>
@@ -52,18 +42,22 @@ async function LibraryList() {
   return groups.map((g) =>
     g.items.length === 0 ? null : (
       <Section key={g.title} title={g.title}>
-        <Card>
-          {g.items.map((lib) => (
-            <Row
-              key={lib.id}
-              title={compactLibraryName(lib.name)}
-              subtitle={<LiveStatus hours={lib.days[today]} tomorrow={lib.days[tomorrow]} initialMinutes={minutes} inline />}
-              trailing={hoursLabel(lib.days[today], lib.days[tomorrow])}
-              href={lib.url}
-              external
-            />
-          ))}
-        </Card>
+        <TileGrid>
+          {g.items.map((lib) => {
+            const s = hoursStatus(lib.days[today], minutes, lib.days[tomorrow]);
+            return (
+              <Tile
+                key={lib.id}
+                href={lib.url}
+                icon={<LibraryIcon />}
+                area="study"
+                title={compactLibraryName(lib.name)}
+                sub={s.text}
+                status={s.status}
+              />
+            );
+          })}
+        </TileGrid>
       </Section>
     ),
   );

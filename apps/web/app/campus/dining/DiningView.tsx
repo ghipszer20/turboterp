@@ -1,11 +1,20 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { DietTag, MenuItem, Station } from "@turboterp/campus-data";
 import { Chip, Segmented } from "@/components/Segmented";
 import { ExternalIcon } from "@/components/icons";
-import { Card, EmptyState, Section, SkeletonCard } from "@/components/ui";
-import { resolveMeal, stationDisplayName, type DiningSlice, type SearchMatch } from "@/lib/dining";
+import { Card, EmptyState, SearchField, Section, SkeletonCard } from "@/components/ui";
+import { useRouter } from "next/navigation";
+import {
+  groupSearchHits,
+  parseDiningQuery,
+  resolveMeal,
+  stationDisplayName,
+  type DiningSlice,
+  type SearchMatch,
+} from "@/lib/dining";
 import { FILLER } from "@/lib/status";
 import styles from "./dining.module.css";
 
@@ -18,6 +27,8 @@ type Props = {
   /** The one hall + meal rendered with the page. */
   initial: DiningSlice & { hallId: number };
   preferredMeal: string;
+  /** The `?q=` food search, already parsed (null: show the menu). */
+  query: string | null;
 };
 
 const sliceKey = (hallId: number, meal: string) => `${hallId}|${meal}`;
@@ -47,7 +58,7 @@ function DietTags({ item }: { item: MenuItem }) {
   );
 }
 
-export function DiningView({ date, halls, initial, preferredMeal }: Props) {
+export function DiningView({ date, halls, initial, preferredMeal, query }: Props) {
   const [hallId, setHallId] = useState(initial.hallId);
   const [mealName, setMealName] = useState(preferredMeal);
   const [diets, setDiets] = useState<DietTag[]>([]);
@@ -57,19 +68,14 @@ export function DiningView({ date, halls, initial, preferredMeal }: Props) {
     initial.meal ? { [sliceKey(initial.hallId, initial.meal)]: initial.stations } : {},
   );
   const loading = useRef(new Set<string>());
-  const [query, setQuery] = useState("");
-  const [term, setTerm] = useState("");
+  const router = useRouter();
   const [fetched, setFetched] = useState<{ term: string; state: SearchState } | null>(null);
-  const search: SearchState = fetched?.term === term ? fetched.state : { status: "loading" };
+  const searching = query !== null;
+  const search: SearchState = fetched?.term === query ? fetched.state : { status: "loading" };
 
   useEffect(() => {
-    const t = setTimeout(() => setTerm(query.trim()), 200);
-    return () => clearTimeout(t);
-  }, [query]);
-
-  const searching = query.trim().length >= 2;
-  useEffect(() => {
-    if (term.length < 2) return;
+    if (query === null) return;
+    const term = query;
     const ctrl = new AbortController();
     fetch(`/api/dining/search?${new URLSearchParams({ date, q: term })}`, { signal: ctrl.signal })
       .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
@@ -80,7 +86,7 @@ export function DiningView({ date, halls, initial, preferredMeal }: Props) {
         if (!(e instanceof DOMException && e.name === "AbortError")) setFetched({ term, state: { status: "error" } });
       });
     return () => ctrl.abort();
-  }, [term, date]);
+  }, [query, date]);
 
   const hall = halls.find((h) => h.id === hallId)!;
   const meal = resolveMeal(hall.meals, mealName);
@@ -119,24 +125,19 @@ export function DiningView({ date, halls, initial, preferredMeal }: Props) {
   return (
     <>
       <div className={styles.controls}>
-        <div className={styles.searchBox}>
-          <input
-            type="search"
-            className={styles.searchInput}
-            placeholder="Search for a food"
-            aria-label="Search all dining halls for a food"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            autoComplete="off"
-            enterKeyHint="search"
-          />
-        </div>
-        <Segmented
-          label="Dining hall"
-          options={halls.map((h) => ({ value: h.id, label: h.name }))}
-          value={hallId}
-          onChange={(id) => show(id, mealName)}
+        <SearchField
+          placeholder="Search for a food"
+          onSubmit={(q) => router.push(parseDiningQuery(q) ? `?${new URLSearchParams({ q })}` : "?")}
         />
+        {searching ? null : (
+          <>
+        <div className={styles.chips} role="group" aria-label="Dining hall">
+          {halls.map((h) => (
+            <Chip key={h.id} pressed={h.id === hallId} onClick={() => show(h.id, mealName)}>
+              {h.name}
+            </Chip>
+          ))}
+        </div>
         {hall.meals && hall.meals.length > 0 ? (
           <Segmented
             label="Meal"
@@ -164,19 +165,12 @@ export function DiningView({ date, halls, initial, preferredMeal }: Props) {
             ))}
           </div>
         </details>
+          </>
+        )}
       </div>
 
       {searching ? (
-        <SearchResults
-          query={query.trim()}
-          pending={term !== query.trim()}
-          search={search}
-          onPick={(m) => {
-            setQuery("");
-            setTerm("");
-            show(m.hallId, m.meal);
-          }}
-        />
+        <SearchResults query={query} search={search} />
       ) : hall.meals === null || loaded === "error" ? (
         <Card>
           <EmptyState title={`Couldn’t load ${hall.name}`}>UMD Dining didn&apos;t respond. Try again in a few minutes.</EmptyState>
@@ -221,17 +215,7 @@ export function DiningView({ date, halls, initial, preferredMeal }: Props) {
   );
 }
 
-function SearchResults({
-  query,
-  pending,
-  search,
-  onPick,
-}: {
-  query: string;
-  pending: boolean;
-  search: SearchState;
-  onPick: (m: SearchMatch) => void;
-}) {
+function SearchResults({ query, search }: { query: string; search: SearchState }) {
   if (search.status === "error") {
     return (
       <Card className={styles.results}>
@@ -239,33 +223,41 @@ function SearchResults({
       </Card>
     );
   }
-  if (search.status === "loading" || pending) return <SkeletonCard rows={5} />;
+  if (search.status === "loading") return <SkeletonCard rows={5} />;
+  const clear = (
+    <Link href="?" className={styles.clear}>
+      Clear
+    </Link>
+  );
   if (search.results.length === 0) {
     return (
       <Card className={styles.results}>
-        <EmptyState title={`No food matches “${query}” today`}>Try a shorter or different word.</EmptyState>
+        <EmptyState title={`No foods match “${query}”`}>Try a shorter or different word. {clear}</EmptyState>
       </Card>
     );
   }
+  const groups = groupSearchHits(search.results);
   return (
     <div className={styles.stations} aria-live="polite">
-      <Card className={styles.stationCard}>
-        <ul className={styles.items}>
-          {search.results.map((m, i) => (
-            <li key={`${m.hallId}|${m.meal}|${m.station}|${i}`}>
-              <button type="button" className={`${styles.item} ${styles.resultRow}`} onClick={() => onPick(m)}>
-                <span className={styles.resultText}>
-                  <span className={styles.itemName}>{m.item.name}</span>
-                  <span className={styles.where}>
-                    {m.hall} · {m.meal} · {m.station}
-                  </span>
-                </span>
-                <DietTags item={m.item} />
-              </button>
-            </li>
-          ))}
-        </ul>
-      </Card>
+      <p className={styles.resultsHead}>
+        Foods matching “{query}” today {clear}
+      </p>
+      {groups.map((g) => (
+        <Section key={`${g.hall}|${g.meal}|${g.station}`}>
+          <h2 className={styles.station}>
+            {g.hall} · {g.meal} · {g.station}
+          </h2>
+          <Card className={styles.stationCard}>
+            <ul className={styles.items}>
+              {g.items.map((name, i) => (
+                <li key={`${i}-${name}`} className={styles.item}>
+                  <span className={styles.itemName}>{name}</span>
+                </li>
+              ))}
+            </ul>
+          </Card>
+        </Section>
+      ))}
       {search.capped ? (
         <p className={styles.note}>Showing the first {search.results.length} matches. Type more to narrow it down.</p>
       ) : null}
