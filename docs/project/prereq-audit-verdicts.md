@@ -11,14 +11,24 @@ course in a template parses to the same tree shape (codes abstracted), so one ex
 
 ### P1. and/or precedence (lenient; the biggest class)
 Unparenthesized mixes are read with "and" binding first, so one branch alone satisfies the whole.
-Conservative reading (and the intended one in every reviewed case): **"or" binds tighter than "and"**, at
-clause level (`;`, sentence `. And`/`. Or`) and inside a clause. With these rules:
+Conservative reading (and the intended one in every reviewed case): **"or" binds tighter than "and"** at each
+level, with the levels nested and never flattened: **sentences** (`. And` / `. Or`) contain **`;` clauses**, which
+contain **comma lists**, which contain items. Or-first applies among sentences, among the `;` clauses of one
+sentence, and inside a clause. So "A and B; and permission. Or must be in the CS graduate program" stays
+ANY[ALL[A, B, permission], program] (CMSC417/451), and "X and Y. Or permission of dept; and permission of
+instructor" stays ANY[ALL[X, Y], ALL[dept, instructor]] (ENAE631/633, ENMA464). With these rules:
 - **Comma lists:** the conjunction before the last item sets the list operator: "A, B, and C or D" =
   ALL[A, B, ANY[C, D]]; "A, B, or C" = ANY; "A and B, or C" = ANY[ALL[A, B], C]; no final conjunction:
   ALL (unless every non-last item is a bare code: "A, B or C" = ANY).
 - **"either A or B" / "both A and B"** are one group.
 - **A trailing waiver** ("; or permission of …", "or by permission", "students who have taken courses with
-  comparable content may contact …") is an alternative to everything before it (as today).
+  comparable content may contact …") is an alternative to everything before it **in its own sentence only**
+  (as today). A later required sentence stays required: "MUSC453; or … may contact the department. And
+  permission of the School of Music" = ALL[ANY[MUSC453, waiver], permission] (MUSC454, THET325, THET440, CHIN302,
+  CHIN411).
+- **Grouping phrases keep their own "or"/"and":** "1 course (with a minimum grade of C-) from (A, B)", "1 of the
+  following (…)", "one of (…)" are ANY lists; "must have completed or be concurrently enrolled in", "C- or
+  better/higher", "X or higher" are phrases, not logic.
 - **"one of the following:" semicolon lists** stay lists (GFPL492, as today).
 - **Explanatory sentences** ("and math eligibility is based on the Math Placement Test/Exam …") merge into the
   preceding manual item, never become a separate required item (MATH107/113/115/120/135/140, DATA100).
