@@ -195,8 +195,13 @@ export function Tile({
 }
 
 /** 4 columns on desktop, 2 on phones. */
-export function TileGrid({ children }: { children: ReactNode }) {
-  return <div className={styles.tileGrid}>{children}</div>;
+/** `row`: on desktop, every tile on one line (equal widths) instead of 4 per row. */
+export function TileGrid({ children, row = false }: { children: ReactNode; row?: boolean }) {
+  return (
+    <div className={styles.tileGrid} data-row={row || undefined}>
+      {children}
+    </div>
+  );
 }
 
 /** Next-class hero on the brand gradient. */

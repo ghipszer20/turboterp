@@ -120,7 +120,7 @@ async function Dining({ today, minutes }: { today: string; minutes: number }) {
   const [menus, stamp] = await Promise.all([getAllDiningMenus(today), safe(getStampVenues)]);
   const meal = currentMealName(minutes);
   return (
-    <TileGrid>
+    <TileGrid row>
       {DINING_HALLS.map((hall, i) => {
         const r = menus[i]!;
         const m = r.ok ? (r.data.meals.find((x) => x.name === meal) ?? r.data.meals[0]) : undefined;
