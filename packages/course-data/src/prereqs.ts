@@ -2,6 +2,8 @@
 
 export type Requirement =
   | { kind: "course"; course: string; minGrade?: string; concurrentOk?: boolean }
+  /** Any course in `dept` numbered `minNumber` or above: "MATH115 or higher", "any 400-level STAT course". */
+  | { kind: "dept-level"; dept: string; minNumber: number; minGrade?: string; concurrentOk?: boolean }
   | { kind: "all"; of: Requirement[] }
   | { kind: "any"; of: Requirement[] }
   /** Something a student confirms themselves: permission, placement, program, … */
@@ -22,13 +24,14 @@ const MIN_GRADE = new RegExp(
 
 type Token =
   | { type: "course"; value: string }
+  | { type: "level"; dept: string; min: number }
   | { type: "manual"; text: string }
   | { type: "and" | "or" | "comma" | "open" | "close" | "one" | "oneof" | "semi" };
 
 // Case-sensitive on purpose: department codes are uppercase, so "than 300"
 // never reads as a course. Connectors are matched in either case.
 const TOKEN =
-  /\b([A-Z]{4})\s?(\d{3}[A-Z]?)\b|\b([Aa][Nn][Dd]|[Oo][Rr])\b|(,)|([([])|([)\]])|\b((?:1|[Oo]ne)\s+(?:courses?\b|of the following))|(;)|(\/)|\b(\d{3}[A-Z]?)\b(?![-\w])(?!\s+(?:hours|credits|units|words|points))|\b((?:other\s+\w+\s+)?(?:equivalent|comparable)(?:(?![A-Z]{4}\s?\d{3})[^;,()])*)/g;
+  /\b([A-Z]{4})\s?(\d{3}[A-Z]?)\b(?!\s*\(?or higher\b)|\b([Aa][Nn][Dd]|[Oo][Rr])\b|(,)|([([])|([)\]])|\b((?:1|[Oo]ne)\s+(?:courses?\b|of the following))|(;)|(\/)|\b(\d{3}[A-Z]?)\b(?![-\w])(?!\s+(?:hours|credits|units|words|points))|\b((?:other\s+\w+\s+)?(?:equivalent|comparable)(?:(?![A-Z]{4}\s?\d{3})[^;,()])*)|\b([A-Z]{4})\s?(\d{3})[A-Z]?\s*\(?or higher\b\)?(?:\s+[A-Z]{4}\s+course\b)?|\b(?:any|an?)\s+(\d)00[- ]level\s+([A-Z]{4})\s+courses?\b|\ban?\s+([A-Z]{4})\s+courses?\s+at\s+the\s+(\d)00[- ]level(?:\s+or\s+higher\b)?/g;
 
 /** `tail`: a manual alternative appended to the end of the clause's list. */
 function tokenize(text: string, tail?: string): Token[] {
@@ -51,6 +54,9 @@ function tokenize(text: string, tail?: string): Token[] {
         raw.push({ type: "course", value: `${before.value.slice(0, 4)}${m[10]}` });
       }
     } else if (m[11]) raw.push({ type: "manual", text: clean(m[11]) });
+    else if (m[12]) raw.push({ type: "level", dept: m[12], min: Number(m[13]) });
+    else if (m[14]) raw.push({ type: "level", dept: m[15]!, min: Number(m[14]) * 100 });
+    else if (m[16]) raw.push({ type: "level", dept: m[16], min: Number(m[17]) * 100 });
     else raw.push({ type: m[3]!.toLowerCase() as "and" | "or" });
   }
   if (tail) raw.push({ type: "or" }, { type: "manual", text: tail });
@@ -102,7 +108,11 @@ function tokenize(text: string, tail?: string): Token[] {
 }
 
 /** Recursive descent: or-expression of and-expressions of courses or (groups). */
-function parseExpression(tokens: Token[], leaf: (course: string) => Requirement): Requirement | null {
+function parseExpression(
+  tokens: Token[],
+  leaf: (course: string) => Requirement,
+  levelLeaf: (dept: string, minNumber: number) => Requirement,
+): Requirement | null {
   let pos = 0;
   const combine = (kind: "all" | "any", parts: Requirement[]): Requirement | null =>
     parts.length === 0 ? null : parts.length === 1 ? parts[0]! : { kind, of: parts };
@@ -113,6 +123,10 @@ function parseExpression(tokens: Token[], leaf: (course: string) => Requirement)
     if (t.type === "course") {
       pos++;
       return leaf(t.value);
+    }
+    if (t.type === "level") {
+      pos++;
+      return levelLeaf(t.dept, t.min);
     }
     if (t.type === "manual") {
       pos++;
@@ -147,7 +161,7 @@ function parseExpression(tokens: Token[], leaf: (course: string) => Requirement)
       if (a) parts.push(a);
       if (tokens[pos]?.type === "and") pos++;
       else if (!a) break;
-      else if (tokens[pos]?.type !== "course" && tokens[pos]?.type !== "open") break;
+      else if (tokens[pos]?.type !== "course" && tokens[pos]?.type !== "level" && tokens[pos]?.type !== "open") break;
     }
     return combine("all", parts);
   }
@@ -211,7 +225,7 @@ const WAIVER =
 const EXCLUSION = /\((?:not|excluding|except)\b[^)]*\)/gi;
 
 const ONE_OF_FOLLOWING = /\bone of the following\b/i;
-const hasCourse = (tokens: Token[]) => tokens.some((t) => t.type === "course");
+const hasCourse = (tokens: Token[]) => tokens.some((t) => t.type === "course" || t.type === "level");
 
 function parseClause(text: string): Requirement | null {
   const trailing = TRAILING_MANUAL.exec(text);
@@ -243,13 +257,13 @@ function parseBody(text: string, tail?: string): Requirement | null {
   const grade = [...stripped.matchAll(MIN_GRADE)].map((m) => m[1] ?? m[3])[0];
   const body = stripped.replace(MIN_GRADE, " ");
   const concurrent = CONCURRENT.test(text);
+  const extras = { ...(grade ? { minGrade: grade } : {}), ...(concurrent ? { concurrentOk: true } : {}) };
   const parsed = hasCourse(tokenize(body))
-    ? parseExpression(tokenize(body, tail), (course) => ({
-        kind: "course",
-        course,
-        ...(grade ? { minGrade: grade } : {}),
-        ...(concurrent ? { concurrentOk: true } : {}),
-      }))
+    ? parseExpression(
+        tokenize(body, tail),
+        (course) => ({ kind: "course", course, ...extras }),
+        (dept, minNumber) => ({ kind: "dept-level", dept, minNumber, ...extras }),
+      )
     : null;
   if (parsed) return parsed;
   const rest = clean(text);
@@ -323,6 +337,15 @@ export function checkRequirement(req: Requirement, history: Record<string, Cours
     if (record.concurrent) return req.concurrentOk ? "met" : "unmet";
     if (req.minGrade && record.grade && gradeRank(record.grade) < gradeRank(req.minGrade)) return "unmet";
     return "met";
+  }
+  if (req.kind === "dept-level") {
+    const ok = Object.entries(history).some(([id, record]) => {
+      const m = /^([A-Z]{4})(\d{3})/.exec(id);
+      if (!m || m[1] !== req.dept || Number(m[2]) < req.minNumber) return false;
+      if (record.concurrent) return !!req.concurrentOk;
+      return !(req.minGrade && record.grade && gradeRank(record.grade) < gradeRank(req.minGrade));
+    });
+    return ok ? "met" : "unmet";
   }
   if (req.kind === "manual") return "confirm";
   const results = req.of.map((r) => checkRequirement(r, history));

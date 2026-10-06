@@ -2,7 +2,7 @@
 // trees are written by hand.
 
 import { describe, expect, it } from "vitest";
-import { parsePrerequisite } from "../src/prereqs.ts";
+import { checkRequirement, parsePrerequisite } from "../src/prereqs.ts";
 
 describe("parsePrerequisite", () => {
   it("reads a bare course code", () => {
@@ -393,5 +393,91 @@ describe("parsePrerequisite", () => {
         ),
       );
     });
+  });
+  describe("department-level requirements", () => {
+    const course = (code: string, extra: object = {}) => ({ kind: "course", course: code, ...extra });
+    const level = (dept: string, minNumber: number, extra: object = {}) => ({ kind: "dept-level", dept, minNumber, ...extra });
+    const all = (...of: object[]) => ({ kind: "all", of });
+    const any = (...of: object[]) => ({ kind: "any", of });
+
+    it("reads 'MATH115 or higher' as any MATH course from 115 up (CMSC125)", () => {
+      expect(parsePrerequisite("Must have completed or be concurrently enrolled in MATH115 or higher.")).toEqual(
+        level("MATH", 115, { concurrentOk: true }),
+      );
+    });
+
+    it("applies the grade to a level requirement (KNES300)", () => {
+      expect(parsePrerequisite("Minimum grade of C- in BSCI201; and minimum grade of C- in MATH113 or higher.")).toEqual(
+        all(course("BSCI201", { minGrade: "C-" }), level("MATH", 113, { minGrade: "C-" })),
+      );
+    });
+
+    it("reads '(or higher)' after a list (INST314)", () => {
+      const tree = parsePrerequisite(
+        "Minimum grade of C- in INST126 or GEOG276; and minimum grade of C- in STAT100, and MATH115 (or higher).",
+      ) as { of: object[] };
+      expect(tree.of.at(-1)).toEqual(all(course("STAT100", { minGrade: "C-" }), level("MATH", 115, { minGrade: "C-" })));
+    });
+
+    it("reads 'MATH113 or higher MATH course' (AGST401)", () => {
+      expect(parsePrerequisite("BSCI160; MATH113 or higher MATH course.")).toEqual(all(course("BSCI160"), level("MATH", 113)));
+    });
+
+    it("keeps the comma list intact before 'or higher' (AGST402)", () => {
+      expect(parsePrerequisite("PLSC112 and PLSC113, BSCI160, and BSCI180, MATH113 or higher.")).toEqual(
+        all(course("PLSC112"), course("PLSC113"), course("BSCI160"), course("BSCI180"), level("MATH", 113)),
+      );
+    });
+
+    it("reads 'MATH120 or higher MATH course' (NEUR305)", () => {
+      const tree = JSON.stringify(
+        parsePrerequisite(
+          "Minimum grade of C- in MATH120 or higher MATH course; and a minimum grade of C- in NEUR200 or BSCI353; or equivalent.",
+        ),
+      );
+      expect(tree).toContain(JSON.stringify(level("MATH", 120, { minGrade: "C-" })));
+      expect(tree).toContain(JSON.stringify(course("NEUR200", { minGrade: "C-" })));
+    });
+
+    it("reads 'any 400-level STAT course' (DATA110)", () => {
+      expect(parsePrerequisite("DATA100, STAT100, MATH135, or any 400-level STAT course.")).toEqual(
+        any(course("DATA100"), course("STAT100"), course("MATH135"), level("STAT", 400)),
+      );
+    });
+
+    it("reads 'any 400 level STAT course' without the hyphen (DATA350)", () => {
+      expect(parsePrerequisite("DATA100, or any 400 level STAT course.")).toEqual(any(course("DATA100"), level("STAT", 400)));
+    });
+
+    it("reads 'an ENGL course at the 300-level or higher' (ENGL497)", () => {
+      expect(parsePrerequisite("ENGL301; and an ENGL course at the 300-level or higher.")).toEqual(
+        all(course("ENGL301"), level("ENGL", 300)),
+      );
+    });
+
+    it("leaves placement eligibility manual", () => {
+      expect(JSON.stringify(parsePrerequisite("Must have math eligibility of MATH120 or higher."))).not.toContain("dept-level");
+    });
+  });
+});
+
+describe("checkRequirement with a department level", () => {
+  const req = { kind: "dept-level", dept: "MATH", minNumber: 115, minGrade: "C-" } as const;
+
+  it("is met by a higher course in the department", () => {
+    expect(checkRequirement(req, { MATH140: { grade: "B" } })).toBe("met");
+    expect(checkRequirement(req, { MATH115: {} })).toBe("met");
+  });
+
+  it("is unmet by a lower course, another department, or no history", () => {
+    expect(checkRequirement(req, { MATH113: { grade: "A" } })).toBe("unmet");
+    expect(checkRequirement(req, { STAT400: { grade: "A" } })).toBe("unmet");
+    expect(checkRequirement(req, {})).toBe("unmet");
+  });
+
+  it("applies the minimum grade, and concurrent enrollment only when allowed", () => {
+    expect(checkRequirement(req, { MATH140: { grade: "D" } })).toBe("unmet");
+    expect(checkRequirement(req, { MATH140: { concurrent: true } })).toBe("unmet");
+    expect(checkRequirement({ ...req, concurrentOk: true }, { MATH140: { concurrent: true } })).toBe("met");
   });
 });

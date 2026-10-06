@@ -24,6 +24,7 @@ const codesIn = (s: string) => new Set((s.match(CODE) ?? []).map((c) => c.replac
 
 function treeCourses(r: Requirement, out = new Set<string>()): Set<string> {
   if (r.kind === "course") out.add(r.course);
+  else if (r.kind === "dept-level") out.add(`${r.dept}${r.minNumber}+`);
   else if (r.kind === "all" || r.kind === "any") r.of.forEach((x) => treeCourses(x, out));
   return out;
 }

@@ -49,9 +49,10 @@ export function filterText(filter: CourseFilter, n = 1): string {
 /** A parsed prerequisite in words: "CMSC250 (C- or better) and (CMSC132 or CMSC142)". */
 export function prerequisiteText(req: Prerequisite, nested = false): string {
   if (req.kind === "manual") return req.text;
-  if (req.kind === "course") {
+  if (req.kind === "course" || req.kind === "dept-level") {
+    const name = req.kind === "course" ? req.course : `${req.dept}${req.minNumber} or a higher ${req.dept} course`;
     const notes = [req.minGrade ? `${req.minGrade} or better` : "", req.concurrentOk ? "or in the same term" : ""].filter(Boolean);
-    return notes.length ? `${req.course} (${notes.join(", ")})` : req.course;
+    return notes.length ? `${name} (${notes.join(", ")})` : name;
   }
   const parts = req.of.map((r) => prerequisiteText(r, true));
   const text = listing(parts, req.kind === "all" ? "and" : "or");
