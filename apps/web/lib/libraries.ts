@@ -9,3 +9,6 @@
 export function compactLibraryName(name: string): string {
   return name.replace(/^Michelle Smith\s+/i, "");
 }
+
+/** The libraries Today shows, in order (the rest are one tap away on Libraries). */
+export const MAIN_LIBRARIES: RegExp[] = [/mckeldin/i, /\bstem\b/i, /hornbake/i];

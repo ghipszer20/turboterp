@@ -18,7 +18,7 @@ import {
 import { eventTitle, formatEventDate, nextEvent } from "@/lib/calendar";
 import { stampSummary } from "@/lib/stamp";
 import { gymRowTitle, MAIN_GYMS } from "@/lib/gyms";
-import { compactLibraryName } from "@/lib/libraries";
+import { compactLibraryName, MAIN_LIBRARIES } from "@/lib/libraries";
 import { currentMealName, hoursStatus, mealFoods } from "@/lib/status";
 
 export default function TodayPage() {
@@ -151,7 +151,8 @@ async function Dining({ today, minutes }: { today: string; minutes: number }) {
 
 async function Libraries({ today, minutes }: { today: string; minutes: number }) {
   const res = await safe(getLibraryHours);
-  const libs = res.ok ? orderLibraries(res.data.filter((l) => l.kind === "library")) : [];
+  // The three main libraries (owner-approved mock); "All hours" lists the rest.
+  const libs = res.ok ? pickMain(orderLibraries(res.data.filter((l) => l.kind === "library")), MAIN_LIBRARIES, (l) => l.name) : [];
   return (
     <TileGrid>
       {libs.map((lib) => {
