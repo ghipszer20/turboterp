@@ -57,18 +57,13 @@ export function PlanView({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plan, ready]);
 
-  const catOf = useMemo(() => {
+  const cats = useMemo(() => {
     const kinds = Object.fromEntries(PROGRAM_OPTIONS.map((p) => [p.id, p.kind]));
-    const cache = new Map<string, RowCategory>();
-    return (id: string): RowCategory => {
-      let c = cache.get(id);
-      if (!c) {
-        c = analysis.result ? rowCategory(id, analysis.result, kinds) : "other";
-        cache.set(id, c);
-      }
-      return c;
-    };
-  }, [analysis.result]);
+    const m = new Map<string, RowCategory>();
+    if (analysis.result) for (const t of plan.terms) for (const c of t.courses) m.set(c.id, rowCategory(c.id, analysis.result, kinds));
+    return m;
+  }, [analysis.result, plan.terms]);
+  const catOf = (id: string): RowCategory => cats.get(id) ?? "other";
   const legend = legendCategories(plan.terms.flatMap((t) => t.courses.map((c) => catOf(c.id))));
 
   return (
