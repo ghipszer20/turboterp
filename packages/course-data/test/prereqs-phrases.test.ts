@@ -150,3 +150,16 @@ describe("P3: dropped requirements", () => {
     );
   });
 });
+
+describe("P4: counted lists are manual, not one-of", () => {
+  const TEXT =
+    "(CMSC106, CMSC131, or ENEE150; or equivalent programming experience); and (2 courses from (CMSC330, CMSC351, ENEE324, or ENEE382); or any one of these courses and a 400-level MATH course, or two 400-level MATH courses); and Permission of CMNS-Mathematics department or permission of instructor.";
+  const expected = all(
+    any(any(n("CMSC106"), n("CMSC131"), n("ENEE150")), man("equivalent programming experience")),
+    man("2 courses from (CMSC330, CMSC351, ENEE324, or ENEE382); or any one of these courses and a 400-level MATH course, or two 400-level MATH courses"),
+    man("Permission of CMNS-Mathematics department or permission of instructor"),
+  );
+  for (const id of ["CMSC456", "MATH456", "ENEE456"]) {
+    it(id, () => expect(parsePrerequisite(TEXT)).toEqual(expected));
+  }
+});
