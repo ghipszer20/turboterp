@@ -13,6 +13,7 @@ import {
   meetsBsMsGrade,
   type GradCreditTag,
 } from "./grad-courses.ts";
+import { twinIndex } from "./twins.ts";
 
 /** A course in one term of the Plan: planned by default, or completed (from the transcript). */
 export type PlanCourse = {
@@ -47,6 +48,7 @@ export type IssueKind =
   | "prerequisite"
   | "corequisite"
   | "repeat"
+  | "twin-repeat"
   | "credit-load"
   | "light-load"
   | "unknown-course"
@@ -210,12 +212,24 @@ export function checkPlan(plan: Plan, catalog: PlanCatalog, options: CheckOption
   const prior = new Map((plan.priorCredit ?? []).map((c) => [c.id, c]));
   const creditsOf = (c: PlanCourse) => c.credits ?? catalog.get(c.id)?.credits.min ?? 0;
 
+  // A Renumbered or Cross-listed Twin counts as the course its Twin names (a Credit-only Twin may
+  // be a different course, so it never does). Aliases never replace a record the course has itself.
+  const twins = twinIndex(catalog);
+  const aliasesOf = (id: string) => [...twins(id).renumbered, ...twins(id).crossListed];
+  const withAliases = (history: Record<string, CourseRecord>): Record<string, CourseRecord> => {
+    const out = { ...history };
+    for (const [id, rec] of Object.entries(history)) for (const a of aliasesOf(id)) out[a] ??= rec;
+    return out;
+  };
+
   const placement: Placement = { at: new Map(), termNames: plan.terms.map((t) => t.name) };
   const place = (id: string, term: number, grade?: string) => {
-    const at = placement.at.get(id) ?? { terms: [] };
-    at.terms.push(term);
-    if (grade !== undefined) at.grade = grade;
-    placement.at.set(id, at);
+    for (const key of [id, ...aliasesOf(id)]) {
+      const at = placement.at.get(key) ?? { terms: [] };
+      at.terms.push(term);
+      if (grade !== undefined) at.grade = grade;
+      placement.at.set(key, at);
+    }
   };
   for (const c of prior.values()) place(c.id, -1, c.grade);
   plan.terms.forEach((t, i) => t.courses.forEach((c) => place(c.id, i, c.status === "completed" ? c.grade : undefined)));
@@ -233,6 +247,8 @@ export function checkPlan(plan: Plan, catalog: PlanCatalog, options: CheckOption
       prereqHistory[c.id] ??= { concurrent: true };
       coreqHistory[c.id] ??= {};
     }
+    Object.assign(prereqHistory, withAliases(prereqHistory), prereqHistory);
+    Object.assign(coreqHistory, withAliases(coreqHistory), coreqHistory);
 
     for (const course of term.courses) {
       const info = catalog.get(course.id);
@@ -333,7 +349,7 @@ export function checkPlan(plan: Plan, catalog: PlanCatalog, options: CheckOption
     for (const c of term.courses) before[c.id] = c.status === "completed" && c.grade ? { grade: c.grade } : {};
   });
 
-  issues.push(...repeatIssues(plan, catalog, prior, creditsOf));
+  issues.push(...repeatIssues(plan, catalog, prior, creditsOf), ...twinRepeatIssues(plan, catalog, prior));
   issues.push(...gradCapIssues(plan, creditsOf));
 
   plan.terms.forEach((term) => {
@@ -362,6 +378,44 @@ export function checkPlan(plan: Plan, catalog: PlanCatalog, options: CheckOption
       });
     }
   });
+  return issues;
+}
+
+const TWIN_LINK = { renumbered: "the same course as", crossListed: "the same course as" } as const;
+
+/**
+ * UMD grants credit for only one of a set of Twins (program-sources/course-equivalence.md), so a
+ * later Twin of a course the plan already counts adds no credits. Prior credit comes first, then
+ * terms in order; an earlier Twin that was a completed F or W attempt earns nothing, so it doesn't count.
+ */
+function twinRepeatIssues(plan: Plan, catalog: PlanCatalog, prior: Map<string, PriorCredit>): PlanIssue[] {
+  const issues: PlanIssue[] = [];
+  const twins = twinIndex(catalog);
+  const counted = new Set(prior.keys());
+  for (const term of plan.terms) {
+    for (const course of term.courses) {
+      if (!catalog.has(course.id)) continue;
+      if (!counted.has(course.id)) {
+        const t = twins(course.id);
+        const kind = (["renumbered", "crossListed", "creditOnly"] as const).find((k) => [...t[k]].some((x) => counted.has(x)));
+        if (kind) {
+          const earlier = [...t[kind]].find((x) => counted.has(x))!;
+          issues.push({
+            kind: "twin-repeat",
+            severity: "warning",
+            term: term.name,
+            course: course.id,
+            message:
+              kind === "creditOnly"
+                ? `You already have credit for ${earlier}, and UMD grants credit for only one of ${earlier} and ${course.id}, so ${course.id}'s credits won't add to your total.`
+                : `You already have credit for ${earlier}. ${course.id} is ${TWIN_LINK[kind]} ${earlier}, so ${course.id}'s credits won't add to your total.`,
+          });
+          continue;
+        }
+      }
+      if (!allowsRetake(course)) counted.add(course.id);
+    }
+  }
   return issues;
 }
 
