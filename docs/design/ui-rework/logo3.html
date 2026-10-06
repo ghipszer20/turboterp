@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TurboTerp logo · 110% with three dashes</title>
+<style>
+  body { margin: 0; padding: 32px 40px 48px; background: #e7e8ec; font: 14px/1.4 ui-sans-serif, system-ui, "Segoe UI", sans-serif; color: #1d1d1f; }
+  h2 { margin: 0 0 14px; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: #3f4450; }
+  .row { display: flex; gap: 28px; align-items: flex-start; margin-bottom: 34px; }
+  .opt { text-align: center; width: 220px; }
+  .opt svg.big { width: 200px; height: 200px; display: block; margin: 0 auto 10px; border-radius: 50px; }
+  .opt b { display: block; font-size: 15px; }
+  .opt small { display: block; color: #6e6e73; margin-top: 2px; }
+  .guides line { stroke: rgb(255 255 255 / .5); stroke-width: .6; stroke-dasharray: 2 2; }
+  .guides rect { fill: none; stroke: rgb(255 255 255 / .6); stroke-width: .6; }
+  .ctx .cell { background: #f5f5f7; border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 8px; font: 700 22px/1 ui-rounded, "Segoe UI", sans-serif; letter-spacing: -.02em; width: 220px; box-sizing: border-box; }
+  .ctx .cell em { font-style: normal; color: #ba0c2f; }
+  .ctx .cell svg { width: 26px; height: 26px; border-radius: 6px; }
+  .home .cell { width: 220px; display: flex; justify-content: center; padding: 14px 0; background: #cfd3db; border-radius: 12px; }
+  .home svg { width: 60px; height: 60px; border-radius: 13.5px; }
+  .dark .cell { background: #1c1c1e; color: #f5f5f7; } .dark .cell em { color: #ff4f6d; }
+</style>
+</head>
+<body>
+<h2>Red tile at 220px · terrapin scaled, three dashes, stroke 5.5, 11 apart; dashes scaled to keep 6 units from the edge, whole mark re-centered</h2>
+<div class="row" id="big"></div>
+<h2>Sidebar at 26px, light and dark</h2>
+<div class="row ctx" id="ctx"></div>
+<div class="row ctx dark" id="ctxd"></div>
+<h2>Home-screen icon at 60px</h2>
+<div class="row home" id="home"></div>
+
+<script>
+const BODY = `<g transform="translate(27.2 0) skewX(-14) translate(10.2 12.8) scale(.84)" fill="#fff">
+    <path d="M25 78a37 33 0 0 1 74 0z"/>
+    <rect x="25" y="74" width="74" height="10" rx="5"/>
+    <path d="M92 76c2-9 7-15 14-15a9 9 0 0 1 0 18c-3 0-5 2-7 5H92z"/>
+    <rect x="36" y="76" width="13" height="19" rx="6.500" transform="rotate(28 42.500 80)"/>
+    <rect x="74" y="76" width="13" height="19" rx="6.500" transform="rotate(-28 80.500 80)"/>
+  </g>`;
+// Original dashes: M13 69 H31 and M18 82 H31, stroke 6.5, round caps.
+let DASH = [{ y: 69, len: 18 }, { y: 82, len: 13 }], STROKE = 6.5; const DASH_RIGHT = 31, MARGIN = 6;
+
+const probe = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+probe.setAttribute("viewBox", "0 0 128 128"); probe.style.cssText = "position:absolute;width:128px;height:128px;left:-999px";
+probe.innerHTML = `<g class="b">${BODY}</g>`; document.body.appendChild(probe);
+const b = probe.querySelector(".b").getBBox(); probe.remove();
+const gap = b.x - DASH_RIGHT; // space between dash ends and the shell, in original units
+
+function layout(k) {
+  // Scale the dashes (length, stroke and gap together) by s <= k so the composition fits inside MARGIN.
+  const bodyW = b.width * k, bodyH = b.height * k;
+  const avail = 128 - 2 * MARGIN - bodyW;
+  const s = Math.min(k, avail / (Math.max(...DASH.map((d) => d.len)) + gap + STROKE / 2));
+  const cap = (STROKE * s) / 2;
+  const lens = DASH.map((d) => d.len * s);
+  const longest = Math.max(...lens);
+  const W = bodyW + gap * s + longest + cap;
+  const compLeft = 64 - W / 2;
+  const bodyLeft = compLeft + gap * s + longest + cap;
+  const bodyTop = 64 - bodyH / 2;
+  const tx = bodyLeft - b.x * k, ty = bodyTop - b.y * k;
+  const dashRight = bodyLeft - gap * s;
+  const dashes = DASH.map((d, i) => {
+    const y = bodyTop + (d.y - b.y) * k;
+    return `M${(dashRight - lens[i]).toFixed(2)} ${y.toFixed(2)}H${dashRight.toFixed(2)}`;
+  }).join("");
+  return { tx, ty, k, s, dashes, cap, stroke: STROKE * s, compLeft, compRight: bodyLeft + bodyW, bodyTop, bodyH, lens };
+}
+
+function svg(k, guides, cls, o) {
+  DASH = o.dash; STROKE = o.stroke;
+  const L = layout(k);
+  const g = guides ? `<g class="guides"><line x1="64" y1="0" x2="64" y2="128"/><line x1="0" y1="64" x2="128" y2="64"/><rect x="${L.compLeft}" y="${L.bodyTop}" width="${L.compRight - L.compLeft}" height="${L.bodyH}"/></g>` : "";
+  return `<svg class="${cls}" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D0183C"/><stop offset="1" stop-color="#A80A29"/></linearGradient></defs>
+  <rect width="128" height="128" rx="29" fill="url(#g)"/>
+  <g transform="translate(${L.tx.toFixed(2)} ${L.ty.toFixed(2)}) scale(${k})">${BODY}</g>
+  <path d="${L.dashes}" fill="none" stroke="#fff" stroke-width="${L.stroke.toFixed(2)}" stroke-linecap="round"/>${g}</svg>`;
+}
+
+const opts = [
+  { name: "110%, two dashes (today's)", k: 1.1, dash: [{ y: 69, len: 18 }, { y: 82, len: 13 }], stroke: 6.5 },
+  { name: "110%, three: middle longest", k: 1.1, dash: [{ y: 64, len: 14 }, { y: 75, len: 20 }, { y: 86, len: 12 }], stroke: 5.5 },
+  { name: "110%, three: tapering down", k: 1.1, dash: [{ y: 64, len: 20 }, { y: 75, len: 15 }, { y: 86, len: 10 }], stroke: 5.5 },
+  { name: "110%, three: equal", k: 1.1, dash: [{ y: 64, len: 16 }, { y: 75, len: 16 }, { y: 86, len: 16 }], stroke: 5.5 },
+];
+document.getElementById("big").innerHTML = opts.map((o) => {
+  const L = (DASH = o.dash, STROKE = o.stroke, layout(o.k));
+  return `<div class="opt">${svg(o.k, true, "big", o)}<b>${o.name}</b><small>dashes at ${(L.s * 100).toFixed(0)}% of today (${L.lens.map((l) => l.toFixed(0)).join(" / ")} long, stroke ${L.stroke.toFixed(1)}) · ${L.compLeft.toFixed(1)} from each edge</small></div>`;
+}).join("");
+const cell = (o) => `<div class="cell">${svg(o.k, false, "", o)}<span>Turbo<em>Terp</em></span></div>`;
+document.getElementById("ctx").innerHTML = opts.map(cell).join("");
+document.getElementById("ctxd").innerHTML = opts.map(cell).join("");
+document.getElementById("home").innerHTML = opts.map((o) => `<div class="cell">${svg(o.k, false, "", o)}</div>`).join("");
+
+</script>
+</body>
+</html>
