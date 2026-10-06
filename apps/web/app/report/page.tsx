@@ -12,7 +12,7 @@ export default function ReportPage() {
   return (
     <Page title="Report an issue">
       <Card className={styles.card}>
-        <ReportForm contactEmail={about.contactEmail} issuesUrl={about.issuesUrl} />
+        <ReportForm issuesUrl={about.issuesUrl} />
       </Card>
       {about.issuesUrl ? (
         <Card className={styles.card}>

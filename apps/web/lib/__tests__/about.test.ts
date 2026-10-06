@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ABOUT, buildReportMailto, isPlaceholder, resolveAbout, type AboutConfig } from "../about";
+import { ABOUT, isPlaceholder, resolveAbout, type AboutConfig } from "../about";
 
 const FILLED: AboutConfig = {
   creatorBio: "I'm a UMD student who built this.",
@@ -79,46 +79,5 @@ describe("resolveAbout", () => {
     expect(resolved.githubUrl).toBeNull();
     expect(resolved.issuesUrl).toBeNull();
     expect(resolved.contactEmail).toBe(FILLED.contactEmail);
-  });
-});
-
-describe("buildReportMailto", () => {
-  it("builds a mailto link addressed to the given email", () => {
-    const href = buildReportMailto("hello@example.com", { what: "It broke", page: "Schedule" });
-    expect(href.startsWith("mailto:hello@example.com?")).toBe(true);
-  });
-
-  it("percent-encodes spaces in the subject and body instead of using '+'", () => {
-    const href = buildReportMailto("hello@example.com", { what: "the calendar is blank", page: "Schedule builder" });
-    expect(href).not.toContain("+");
-    expect(href).toContain("Schedule%20builder");
-  });
-
-  it("encodes newlines, ampersands and question marks in the report text", () => {
-    const href = buildReportMailto("hello@example.com", { what: "line one\nline two & three?", page: "Advisor" });
-    const [, query] = href.split("?", 2);
-    expect(query).toBeDefined();
-    // The raw characters must not appear unescaped in the query string.
-    expect(query).not.toMatch(/\n/);
-    const bodyParam = new URLSearchParams(query).get("body");
-    expect(bodyParam).toContain("line one\nline two & three?");
-  });
-
-  it("omits the reply-to line when no reply email is given", () => {
-    const href = buildReportMailto("hello@example.com", { what: "It broke", page: "Schedule" });
-    const body = new URLSearchParams(href.split("?", 2)[1]).get("body") ?? "";
-    expect(body).not.toContain("Reply to:");
-  });
-
-  it("includes the reply-to line when a reply email is given", () => {
-    const href = buildReportMailto("hello@example.com", { what: "It broke", page: "Schedule", replyTo: "me@terpmail.umd.edu" });
-    const body = new URLSearchParams(href.split("?", 2)[1]).get("body") ?? "";
-    expect(body).toContain("Reply to: me@terpmail.umd.edu");
-  });
-
-  it("says which page had the issue in the body", () => {
-    const href = buildReportMailto("hello@example.com", { what: "It broke", page: "Advisor" });
-    const body = new URLSearchParams(href.split("?", 2)[1]).get("body") ?? "";
-    expect(body).toContain("Page: Advisor");
   });
 });

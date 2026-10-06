@@ -74,7 +74,7 @@ describe("handleReport", () => {
   });
 
   it("answers 429 when rate limited, keyed by a hash of the IP", async () => {
-    const count = vi.fn(async () => 5);
+    const count = vi.fn(async (_k: string, _key: string, _s: Date) => 5);
     const d = deps({ store: { count, record: async () => {} } });
     const res = await handleReport(req({ what: "x" }), d);
     expect(res.status).toBe(429);
