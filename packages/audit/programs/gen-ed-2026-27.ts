@@ -33,7 +33,8 @@ export const genEd: Program = {
     one("fspw", "Professional Writing", ["FSPW"]),
     one("fsoc", "Oral Communication", ["FSOC"]),
     one("fsma", "Mathematics", ["FSMA"]),
-    one("fsar", "Analytic Reasoning", ["FSAR"]),
+    // Overlay: a course designated both FSMA and FSAR satisfies both (program-sources/gen-ed.md, Summary Chart).
+    { ...one("fsar", "Analytic Reasoning", ["FSAR"]), overlay: true },
     // Distributive Studies (one course may meet only one category)
     { kind: "choose", id: "dshs", name: "History and Social Sciences (2)", count: 2, from: { genEd: ["DSHS"] } },
     { kind: "choose", id: "dshu", name: "Humanities (2)", count: 2, from: { genEd: ["DSHU"] } },

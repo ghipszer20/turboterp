@@ -52,6 +52,11 @@ describe("General Education 2026–27", () => {
     expect(both.filter((s) => s === "satisfied")).toHaveLength(1);
   });
 
+  it("lets one FSMA+FSAR course fill both Mathematics and Analytic Reasoning", async () => {
+    const statuses = await statusOf([g("MATH140", ["FSMA", "FSAR"])]);
+    expect([statuses.fsma, statuses.fsar]).toEqual(["satisfied", "satisfied"]);
+  });
+
   it("accepts a second lab science in place of the non-lab one", async () => {
     const plan = [...without("ASTR100"), g("CHEM131", ["DSNL", "SCIS"])];
     expect((await statusOf(plan)).natsci).toBe("satisfied");
