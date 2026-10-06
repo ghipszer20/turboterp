@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+﻿import { describe, expect, it } from "vitest";
 import { buildPlanExport, CATEGORY_COLORS, DISCLAIMER, exportFileName } from "./plan-export";
 
 const audit = (id: string, name: string, layer: string | undefined, assigned: string[][]) => ({
@@ -30,7 +30,7 @@ describe("buildPlanExport", () => {
   it("fills a small header and nothing else beyond the grid", () => {
     const e = build(false, "Sam");
     expect(e.header).toEqual({ name: "Sam", date: "2026-09-29", disclaimer: DISCLAIMER, gradesHidden: false });
-    expect(Object.keys(e).sort()).toEqual(["header", "terms"]);
+    expect(Object.keys(e).sort()).toEqual(["catalogYear", "creditsPlanned", "header", "priorCreditCredits", "programsLabel", "terms"]);
     expect(DISCLAIMER).toMatch(/unofficial/i);
   });
   it("categorizes each course by the program it was assigned to (major beats minor beats Gen Ed)", () => {
@@ -48,6 +48,18 @@ describe("buildPlanExport", () => {
     expect(c.find((x) => x.id === "ART100")!.credits).toBe(2);
     expect(c.find((x) => x.id === "CMSC131")).toMatchObject({ credits: 4, title: "OOP I", grade: "A" });
     expect(build(true).terms.flatMap((t) => t.courses).every((x) => x.grade === "")).toBe(true);
+  });
+});
+
+describe("buildPlanExport PDF fields", () => {
+  it("carries programs, catalog year, credits planned, prior credit and per-term key dates", () => {
+    const e = buildPlanExport({
+      plan, analysis, catalog, today: new Date(2026, 8, 29),
+      programsLabel: "Computer Science", catalogYear: "2026-27", priorCreditCredits: 8, keyDates: { "Fall 2026": "Add/drop Sep 8" },
+    } as never);
+    expect(e).toMatchObject({ programsLabel: "Computer Science", catalogYear: "2026\u201327", priorCreditCredits: 8, creditsPlanned: 4 + 4 + 2 });
+    expect(e.terms[0]!.keyDates).toBe("Add/drop Sep 8");
+    expect("keyDates" in e.terms[1]!).toBe(false);
   });
 });
 

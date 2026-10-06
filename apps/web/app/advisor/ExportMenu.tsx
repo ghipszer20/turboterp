@@ -4,7 +4,9 @@ import { useState } from "react";
 import type { AnalysisState } from "./AdvisorApp";
 import type { PlanCatalog } from "@turboterp/plan/catalog";
 import type { AdvisorPlan } from "@/lib/advisor/plan-state";
-import { PROGRAM_OPTIONS } from "@/lib/advisor/programs";
+import { PROGRAM_OPTIONS, programsLabel } from "@/lib/advisor/programs";
+import { formatKeyDates, termKeyDates } from "@/lib/calendar";
+import type { AcademicEvent } from "@turboterp/campus-data";
 import styles from "./advisor.module.css";
 
 function download(blob: Blob, name: string) {
@@ -20,7 +22,7 @@ function download(blob: Blob, name: string) {
 
 /** Export button + menu: the 4-year plan as PDF or Excel. The renderers (ExcelJS, jsPDF)
  * load only when a download is clicked. */
-export function ExportMenu({ plan, analysis, catalog }: { plan: AdvisorPlan; analysis: AnalysisState; catalog: PlanCatalog | null }) {
+export function ExportMenu({ plan, analysis, catalog, calendar = [], priorCredits = 0 }: { plan: AdvisorPlan; analysis: AnalysisState; catalog: PlanCatalog | null; calendar?: AcademicEvent[]; priorCredits?: number }) {
   const [open, setOpen] = useState(false);
   const [hideGrades, setHideGrades] = useState(false);
   const [busy, setBusy] = useState<"xlsx" | "pdf" | null>(null);
@@ -42,6 +44,10 @@ export function ExportMenu({ plan, analysis, catalog }: { plan: AdvisorPlan; ana
         programKinds: Object.fromEntries(PROGRAM_OPTIONS.map((p) => [p.id, p.kind])),
         today,
         hideGrades,
+        programsLabel: programsLabel(plan.programs),
+        catalogYear: plan.catalogYear,
+        priorCreditCredits: priorCredits,
+        keyDates: Object.fromEntries(plan.terms.map((x, i, all) => [x.name, formatKeyDates(termKeyDates(calendar, x.name, i === all.length - 1))])),
       });
       const name = exportFileName(kind, planExport.header.date);
       if (kind === "xlsx") {
