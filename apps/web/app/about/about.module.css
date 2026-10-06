@@ -2,8 +2,10 @@
    ui.module.css's .card has no border (shadows only, and dark mode drops the
    shadow entirely), so every card here adds a real thin border on top. */
 
-.card {
-  border: 1px solid var(--card-border);
+.card.card {
+  border-radius: var(--r-tile);
+  box-shadow: none;
+  border: 1px solid var(--tile-border);
 }
 
 .prose {
@@ -11,6 +13,10 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.prose strong {
+  font-family: var(--font-display);
 }
 
 .prose p {

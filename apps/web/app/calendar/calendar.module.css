@@ -59,3 +59,10 @@
   font: var(--t-sub);
   cursor: pointer;
 }
+
+/* Tile treatment: hairline border, 22px radius, no shadow. */
+.card.card {
+  border: 1px solid var(--tile-border);
+  border-radius: var(--r-tile);
+  box-shadow: none;
+}
