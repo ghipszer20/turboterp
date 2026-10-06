@@ -1,0 +1,36 @@
+/* OPTION B3 — "Bold": B with bigger type, a charcoal hero with the time in red, solid colored icon chips
+   (Apple Fitness / Health feel), big numbers. */
+@import url("option-b.css");
+
+.pageHead h1 { font-size: 40px; letter-spacing: -.03em; }
+.phoneMain .pageHead h1 { font-size: 36px; }
+.groupHead h2 { font-size: 20px; font-weight: 800; letter-spacing: -.02em; }
+
+.heroMain { background: #1c1c1e; color: #fff; box-shadow: 0 10px 30px rgb(0 0 0 / .18); }
+.heroMain .heroLabel { color: rgb(255 255 255 / .6); }
+.heroMain .heroTitle { font-size: 26px; }
+.heroMain .heroTitle::after { content: " · in 3 h"; color: var(--accent); }
+.heroMain .heroSub { color: rgb(255 255 255 / .75); }
+body.dark .heroMain { background: var(--surface); border: .5px solid var(--card-border); }
+.heroSide { border-radius: var(--r-lg); }
+.heroNum { font-size: 40px; }
+.heroSideText { font-size: 15px; font-weight: 600; }
+
+.item { min-height: 118px; gap: 12px; }
+.item .icon { width: 36px; height: 36px; border-radius: 50%; color: #fff !important; }
+.group[data-cat="dining"] .icon { background: #ff6a1f; }
+.group[data-cat="study"] .icon { background: #2f6fed; }
+.group[data-cat="fitness"] .icon { background: #19a85a; }
+.group[data-cat="transport"] .icon { background: #7c4dff; }
+.item .title { font-size: 16.5px; font-weight: 700; letter-spacing: -.01em; }
+.item .sub { font-size: 13px; }
+.item[data-status] .status { font-weight: 600; }
+.item.accent { background: var(--accent); }
+.item.accent .icon { background: rgb(255 255 255 / .22); }
+.item.accent .title, .item.accent .sub { color: #fff; }
+
+/* Advisor: big number in the summary, bolder course ids */
+.summary b { font-size: 28px; font-family: var(--font-display); font-weight: 800; letter-spacing: -.02em; }
+.yearHead h2 { font-size: 22px; font-weight: 800; }
+.termHead h3 { font-size: 17px; font-weight: 700; }
+.cid { font-size: 15px; font-weight: 700; }

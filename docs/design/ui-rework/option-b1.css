@@ -1,0 +1,22 @@
+/* OPTION B1 — "Tinted tiles": B, but every tile takes its area's pastel fill. More color, no shadows on tiles. */
+@import url("option-b.css");
+
+.item { box-shadow: none; background: var(--tile, var(--surface)); }
+.item .icon { background: var(--surface); }
+.group[data-cat="dining"] .item { --tile: var(--tint-dining); }
+.group[data-cat="study"] .item { --tile: var(--tint-study); }
+.group[data-cat="fitness"] .item { --tile: var(--tint-fitness); }
+.group[data-cat="transport"] .item { --tile: var(--tint-transport); }
+.group[data-cat="dining"] .item .icon { color: var(--ink-dining); }
+.group[data-cat="study"] .item .icon { color: var(--ink-study); }
+.group[data-cat="fitness"] .item .icon { color: var(--ink-fitness); }
+.group[data-cat="transport"] .item .icon { color: var(--ink-transport); }
+.item .sub { color: rgb(29 29 31 / .62); }
+body.dark .item .sub { color: rgb(245 245 247 / .66); }
+.item.accent { background: var(--accent); color: var(--on-accent); }
+.item.accent .icon { background: rgb(255 255 255 / .2); color: #fff; }
+.item.accent .title, .item.accent .sub { color: #fff; }
+.heroSide { background: var(--surface-2); box-shadow: none; }
+.summary, .term { box-shadow: none; border: .5px solid var(--card-border); }
+.week { box-shadow: none; border: .5px solid var(--card-border); }
+body.dark .item { border: 0; }
