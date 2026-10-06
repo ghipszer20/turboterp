@@ -142,9 +142,18 @@ state.
 **UI (spec §8):** tile treatment and display font on titles. **Done:** full suite green; `ui-check /calendar`
 phone light and `/about --desktop --dark`.
 
+### Task 7: 4-year plan PDF export — branch `feat/ui-pdf` (owner request 2026-10-05; after the owner picks look A or B)
+
+**Files:** modify `apps/web/lib/advisor/export/pdf.ts`, `pdf.test.ts`, `plan-export.ts` (add `title`, `programs`, `catalogYear`, `creditsPlanned`, per-year `credits` and the course `title` to the export when missing; keep `buildPlanExport` pure), `plan-export.test.ts`.
+**Reference:** `docs/screenshots/ui-rework/pdf-mock.png` (A: red bands, B: light with red rules) and `docs/design/ui-rework/pdf-mock.html`; the CS department's plan (Year rows × Fall/Spring blocks with Course / Credit / Grade and a Total row) is the inspiration, not a copy.
+**Layout (Letter portrait, jsPDF + autotable, lazy-loaded as today):** title "4-year plan"; line 1 programs in bold + catalog year + credits planned; line 2 name, date, disclaimer. One band per academic year: a 112pt left cell ("Year 1 2026–27", credits that year, key dates when present) and one autotable per term (Fall, Spring, plus Winter/Summer only when the plan has them, in a second row). Each term table: term header, columns COURSE (code bold + category dot) / title (ellipsis, never wraps) / CR (right, tabular) / GRADE (center, blank when hidden or none), zebra rows (A) or hairlines (B), bold Total row. Legend of the categories present; footer with the mark, "TurboTerp · turboterp.com" and "Page N of M" on every page. Brand red `#BA0C2F`; category dots: major red, gen-ed blue `#0B63C7`, college green `#1F8A4C`, elective amber `#B08500`, minor/other purple `#6D28D9`.
+**Logic to test first:** `pdfRows(exportData)` → the ordered list of `{ year, term, rows: [{ code, title, credits, grade, category }], total }` with title truncation at 46 chars + "…" and year credit sums; tests: two years with a summer term; grades hidden → "" grades; a 60-char title ends in "…"; totals.
+**Done:** tests green; full suite green; the PDF rendered once from the seeded owner plan (`ExportMenu` in a dev server, or call `buildPdf` in a node script and save `plan.pdf`) and its first page screenshotted (Edge opens PDFs: `<embed>` in a local HTML and `scripts/ui-check.mjs`-style capture) into `docs/screenshots/ui-pdf/`.
+
 ## Order
 
 1. Tasks 1 and 4 in parallel (Task 4 touches only schedule files).
 2. After Task 1 merges: Tasks 2 and 3.
 3. Then Tasks 5 and 6.
-4. Main session after each merge: full suite, screenshots of both themes, `graphify update .`, status log.
+4. Task 7 (PDF) when a builder slot is free and the owner has picked a look.
+5. Main session after each merge: full suite, screenshots of both themes, `graphify update .`, status log.
