@@ -287,7 +287,10 @@ function splitTopLevel(text: string, isSeparator: (text: string, i: number) => n
 }
 
 /** A period that ends a sentence: followed by whitespace and a capital letter (not "2.0"). */
-const sentenceEnd = (t: string, i: number) => (t[i] === "." ? (/^\.\s+(?=[A-Z])/.exec(t.slice(i))?.[0].length ?? 0) : 0);
+// Not after an initial ("Robert H. Smith") or "e.g."/"i.e."/"ex.".
+const ABBREVIATION = /(?:(?<![A-Za-z])[A-Z]|(?<![A-Za-z.])(?:e\.g|i\.e|ex))$/;
+const sentenceEnd = (t: string, i: number) =>
+  t[i] === "." && !ABBREVIATION.test(t.slice(0, i)) ? (/^\.\s+(?=[A-Z])/.exec(t.slice(i))?.[0].length ?? 0) : 0;
 const semicolon = (t: string, i: number) => (t[i] === ";" ? 1 : 0);
 
 const clean = (s: string) => s.replace(/\s+/g, " ").replace(/[\s.;,]+$/, "").trim();
