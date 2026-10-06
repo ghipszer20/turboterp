@@ -9,13 +9,14 @@ import { courseColor } from "@/lib/schedule/colors";
 import type { FilterState } from "@/lib/schedule/filters";
 import { tightWalkLine } from "@/lib/schedule/conflicts";
 import { useBuildings } from "@/lib/schedule/use-buildings";
-import { columnsFor, decodeLayout, visibleRows, type EncodedLayouts } from "@/lib/schedule/gallery";
+import { decodeLayout, visibleRows, type EncodedLayouts } from "@/lib/schedule/gallery";
 import { pickSection } from "@/lib/schedule/sections";
 import { WeekCalendar } from "./WeekCalendar";
 import { TeacherStrip } from "./TeacherStrip";
 import styles from "./builder.module.css";
 
-const MIN_CARD = 250;
+// Owner: three cards per row on desktop, one per row below 900px so block labels stay readable.
+const DESKTOP_MIN = 860;
 const MINI_COL = 170;
 const ZOOM_COL = 360;
 const HOVER_DELAY = 300; // owner: a short pause before the enlarged preview
@@ -93,7 +94,7 @@ export function Gallery({
   const phone = width > 0 && width < 600;
   const colGap = phone ? 16 : 40;
   const rowGap = phone ? 28 : 44;
-  const columns = width ? columnsFor(width, MIN_CARD, colGap) : 1;
+  const columns = width >= DESKTOP_MIN ? 3 : 1;
   const rowHeight = cardHeight(data.courseIds.length, !!data.gpas) + rowGap;
   const rows = Math.ceil(data.layouts.count / columns);
 

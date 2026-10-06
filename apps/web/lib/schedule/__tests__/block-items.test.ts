@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Section } from "@turboterp/course-data/schedules";
-import { sectionBlocks } from "../block-items";
+import { blockLabel, sectionBlocks } from "../block-items";
 
 const stat: Section = {
   id: "0311",
@@ -41,5 +41,27 @@ describe("sectionBlocks", () => {
       "STAT400/0311/1",
       "STAT400/0311/2",
     ]);
+  });
+});
+
+describe("blockLabel", () => {
+  const items = sectionBlocks(stat, { color: 1, size: "large" });
+
+  it("week view: course number over the room", () => {
+    expect(blockLabel(items[0], "week")).toEqual({ top: "STAT400", bottom: "ARM 0135" });
+  });
+
+  it("week view: TBA when the meeting has no room", () => {
+    expect(blockLabel(items[2], "week")).toEqual({ top: "STAT400", bottom: "TBA" });
+  });
+
+  it("gallery view: course number over the section id, never empty", () => {
+    expect(blockLabel(items[0], "gallery")).toEqual({ top: "STAT400", bottom: "0311" });
+    expect(blockLabel(items[2], "gallery")).toEqual({ top: "STAT400", bottom: "0311" });
+  });
+
+  it("a discussion meeting uses the same course number as the lecture", () => {
+    expect(blockLabel(items[1], "week").top).toBe(blockLabel(items[0], "week").top);
+    expect(blockLabel(items[1], "week").bottom).toBe("PHY 2213");
   });
 });
