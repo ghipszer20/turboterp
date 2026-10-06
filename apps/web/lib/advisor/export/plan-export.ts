@@ -45,14 +45,12 @@ export type PlanExportCourse = { id: string; title: string; credits: number; gra
 const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 const layerOf = (p: unknown) => (p as { layer?: string }).layer;
 
-export function buildPlanExport(input: PlanExportInput) {
-  const { plan, catalog, hideGrades } = input;
-
-  // Category: the best-ranked kind of program that assigned the course.
+/** Category per course: the best-ranked kind of program that assigned it. Courses no audit assigned are absent. */
+export function courseCategories(analysis: Pick<Analysis, "audits">, programKinds?: Record<string, string>): Map<string, Category> {
   const best = new Map<string, Category>();
-  for (const a of input.analysis.audits) {
+  for (const a of analysis.audits) {
     const layer = layerOf(a.program);
-    const kind = input.programKinds?.[a.program.id];
+    const kind = programKinds?.[a.program.id];
     const cat: Category = layer === "gen-ed" ? "gen-ed" : layer ? "other" : kind === "major" ? "major" : kind === "minor" ? "minor" : "other";
     for (const r of a.requirements) {
       for (const id of r.result.assigned) {
@@ -61,6 +59,13 @@ export function buildPlanExport(input: PlanExportInput) {
       }
     }
   }
+  return best;
+}
+
+export function buildPlanExport(input: PlanExportInput) {
+  const { plan, catalog, hideGrades } = input;
+
+  const best = courseCategories(input.analysis, input.programKinds);
 
   const order = sortTerms(plan.terms.map((t) => t.name));
   const terms = order.map((name) => {
