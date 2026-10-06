@@ -136,6 +136,11 @@ export const DEGREE_CHOICES: DegreeChoice[] = ["double-major", "double-degree"];
 
 export const emptyPrior = (): PriorInputs => ({ ap: [], ib: [], dual: [], choices: {} });
 
+/** A credit value a UMD course can carry: a whole or half credit from 0 to 20. A transcript GPA ("3.606") is not one. */
+export function isCreditValue(n: number): boolean {
+  return Number.isFinite(n) && n >= 0 && n <= 20 && Number.isInteger(n * 2);
+}
+
 export function newPlan(setup: {
   programs: string[];
   catalogYear: string;

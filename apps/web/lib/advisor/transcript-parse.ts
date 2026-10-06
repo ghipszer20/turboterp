@@ -9,6 +9,8 @@
 // line we can't make sense of -- list it in `unparsed` instead. Every row read from the OCR path is
 // flagged for the student to check, even one that needed no repair.
 
+import { isCreditValue } from "./plan-state";
+
 export type Source = "pdf" | "paste" | "ocr";
 
 export type ParsedCourse = {
@@ -117,6 +119,12 @@ function repairNumber(token: string): { value: number | null; repaired: boolean 
 }
 
 /** The GPA is the last field of "UG Cumulative: attempted; earned; qpoints; GPA". Repairs @/O -> 0 like credit numbers; rejects anything outside 0-4. */
+/** A credit column: like repairNumber, but a value no course can carry (e.g. a GPA OCR put on the line) reads as unknown and flagged. */
+function repairCredits(token: string): { value: number | null; repaired: boolean } {
+  const r = repairNumber(token);
+  return r.value !== null && !isCreditValue(r.value) ? { value: null, repaired: true } : r;
+}
+
 function parseCumulativeGpa(line: string, source: Source): { value: number; flagged: boolean; raw: string } | null {
   const token = line.replace(CUMULATIVE_LINE, "").split(";").pop()!.trim();
   if (!isNumShape(token)) return null;
@@ -147,8 +155,8 @@ function parseCompletedRow(line: string, source: Source): Omit<ParsedCourse, "te
   if (idx === -1) return null;
 
   const gradeInfo = repairGrade(tokens[idx]!);
-  const attempted = repairNumber(tokens[idx + 1]!);
-  const earned = repairNumber(tokens[idx + 2]!);
+  const attempted = repairCredits(tokens[idx + 1]!);
+  const earned = repairCredits(tokens[idx + 2]!);
   const qpoints = repairNumber(tokens[idx + 3]!);
   const genEdRaw = tokens.slice(idx + 4).join(" ");
   const genEd = genEdRaw ? genEdRaw.split(",").map((s) => s.trim()).filter(Boolean) : [];
@@ -181,7 +189,7 @@ function parseInProgressRow(line: string, source: Source): Omit<ParsedCourse, "t
   }
   if (idx === -1) return null;
 
-  const credits = repairNumber(tokens[idx]!);
+  const credits = repairCredits(tokens[idx]!);
   return {
     code: codeInfo.code,
     title: "",

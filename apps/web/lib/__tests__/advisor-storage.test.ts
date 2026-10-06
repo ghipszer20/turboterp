@@ -57,6 +57,13 @@ describe("plan storage", () => {
     expect(parsePlan(JSON.stringify(raw))).not.toHaveProperty("degreeMode");
   });
 
+  it("drops a course credit value no course can have (a GPA misread by transcript OCR), keeping real ones", () => {
+    const raw = JSON.parse(serializePlan(plan()));
+    raw.terms[0].courses = [{ id: "MATH410", credits: 3.606 }, { id: "CMSC131", credits: 4 }, { id: "MUSC129", credits: 0.5 }];
+    const courses = parsePlan(JSON.stringify(raw))!.terms[0]!.courses;
+    expect(courses).toEqual([{ id: "MATH410" }, { id: "CMSC131", credits: 4 }, { id: "MUSC129", credits: 0.5 }]);
+  });
+
   it("returns null for nothing, junk, or another version", () => {
     expect(parsePlan(null)).toBeNull();
     expect(parsePlan("{not json")).toBeNull();

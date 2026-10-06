@@ -102,6 +102,20 @@ describe("parseTranscriptText: in-progress courses", () => {
     expect(cur.attemptedCredits).toBe(3);
   });
 
+  it("rejects a 3-decimal credit number (a GPA OCR put on the course line) and flags the row", () => {
+    const text = CLEAN.replace("CMSC330 0101 3.00 REG", "CMSC330 0101 3.606 REG");
+    const cur = parseTranscriptText(text, "ocr").courses.find((c) => c.code === "CMSC330")!;
+    expect(cur.attemptedCredits).toBeNull();
+    expect(cur.flagged).toBe(true);
+  });
+
+  it("rejects a completed course's credit number that isn't a whole or half credit", () => {
+    const text = CLEAN.replace("STAT400 APPL PROBABLTY&STATIST I A 3.00 3.00 12.00", "STAT400 APPL PROBABLTY&STATIST I A 3.606 3.00 12.00");
+    const row = parseTranscriptText(text, "ocr").courses.find((c) => c.code === "STAT400")!;
+    expect(row.attemptedCredits).toBeNull();
+    expect(row.flagged).toBe(true);
+  });
+
   it("never reads the Grd/Meth column's registration method (REG) as a grade", () => {
     const r = parseTranscriptText(CLEAN, "pdf");
     const cur = r.courses.find((c) => c.code === "CMSC330")!;
