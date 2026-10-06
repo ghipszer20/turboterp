@@ -1,13 +1,13 @@
 /* Week calendars: gallery cards (mini), the enlarged preview (zoom) and the editor (large). */
 
-.course[data-color="0"], .block[data-color="0"] { --bg: var(--course-0-bg); --fg: var(--course-0-fg); }
-.course[data-color="1"], .block[data-color="1"] { --bg: var(--course-1-bg); --fg: var(--course-1-fg); }
-.course[data-color="2"], .block[data-color="2"] { --bg: var(--course-2-bg); --fg: var(--course-2-fg); }
-.course[data-color="3"], .block[data-color="3"] { --bg: var(--course-3-bg); --fg: var(--course-3-fg); }
-.course[data-color="4"], .block[data-color="4"] { --bg: var(--course-4-bg); --fg: var(--course-4-fg); }
-.course[data-color="5"], .block[data-color="5"] { --bg: var(--course-5-bg); --fg: var(--course-5-fg); }
-.course[data-color="6"], .block[data-color="6"] { --bg: var(--course-6-bg); --fg: var(--course-6-fg); }
-.course[data-color="7"], .block[data-color="7"] { --bg: var(--course-7-bg); --fg: var(--course-7-fg); }
+.course[data-color="0"], .block[data-color="0"] { --bg: var(--course-0-bg); --fg: var(--course-0-fg); --solid: var(--course-0-solid); --deep: var(--course-0-deep); }
+.course[data-color="1"], .block[data-color="1"] { --bg: var(--course-1-bg); --fg: var(--course-1-fg); --solid: var(--course-1-solid); --deep: var(--course-1-deep); }
+.course[data-color="2"], .block[data-color="2"] { --bg: var(--course-2-bg); --fg: var(--course-2-fg); --solid: var(--course-2-solid); --deep: var(--course-2-deep); }
+.course[data-color="3"], .block[data-color="3"] { --bg: var(--course-3-bg); --fg: var(--course-3-fg); --solid: var(--course-3-solid); --deep: var(--course-3-deep); }
+.course[data-color="4"], .block[data-color="4"] { --bg: var(--course-4-bg); --fg: var(--course-4-fg); --solid: var(--course-4-solid); --deep: var(--course-4-deep); }
+.course[data-color="5"], .block[data-color="5"] { --bg: var(--course-5-bg); --fg: var(--course-5-fg); --solid: var(--course-5-solid); --deep: var(--course-5-deep); }
+.course[data-color="6"], .block[data-color="6"] { --bg: var(--course-6-bg); --fg: var(--course-6-fg); --solid: var(--course-6-solid); --deep: var(--course-6-deep); }
+.course[data-color="7"], .block[data-color="7"] { --bg: var(--course-7-bg); --fg: var(--course-7-fg); --solid: var(--course-7-solid); --deep: var(--course-7-deep); }
 
 .grid {
   display: grid;
@@ -104,7 +104,7 @@
   right: 0;
   left: 0;
   border-top: 1px solid var(--separator);
-  opacity: 0.5;
+  opacity: 0.35;
 }
 
 /* Discussion and lab blocks look exactly like their course's lecture (owner rule);
@@ -113,28 +113,29 @@
   position: absolute;
   display: flex;
   align-items: center;
+  justify-content: center;
   overflow: hidden;
-  padding: 0 3px;
-  border: 1px solid color-mix(in srgb, var(--fg) 28%, transparent);
+  padding: 0 2px;
+  container-type: size;
+  border: 1px solid var(--deep);
   border-radius: 4px;
-  background: var(--bg);
-  color: var(--fg);
-  font: 700 8px/9px var(--font);
+  background: var(--solid);
+  box-shadow: var(--block-shadow);
+  color: #fff;
+  font-family: var(--font);
+  text-align: center;
   white-space: nowrap;
 }
 
 .grid[data-size="zoom"] .block {
-  padding: 0 6px;
+  padding: 0 3px;
   border-radius: 6px;
-  font-size: 11px;
-  line-height: 13px;
 }
 
 .grid[data-size="large"] .block {
-  padding: 0 7px;
+  padding: 0 3px;
+  border: 1.5px solid var(--deep);
   border-radius: 7px;
-  font-size: 12px;
-  line-height: 14px;
   transition: box-shadow var(--fast) ease;
 }
 
@@ -162,24 +163,50 @@
     color-mix(in srgb, var(--fg) 6%, var(--surface)) 6px 12px
   );
   color: color-mix(in srgb, var(--fg) 85%, transparent);
+  box-shadow: none;
   pointer-events: none;
 }
 
+/* Two centered lines that never wrap, clip or hide: the font scales with the block's
+   height and width (container units); the course number is always the larger line. */
 .label {
   display: flex;
   flex-direction: column;
+  align-items: center;
   min-width: 0;
+  line-height: 1.12;
 }
 
 .labelMain,
 .labelSub {
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.labelMain {
+  font-weight: 700;
+  font-size: min(clamp(6px, 30cqh, 9.5px), 15cqw);
 }
 
 .labelSub {
   font-weight: 500;
-  opacity: 0.85;
+  font-size: min(clamp(5.5px, 25cqh, 8.5px), 14cqw);
+}
+
+.grid[data-size="mini"] .labelMain {
+  font-size: min(clamp(5px, 34cqh, 8px), 15cqw);
+}
+
+.grid[data-size="mini"] .labelSub {
+  font-size: min(clamp(4.5px, 28cqh, 7px), 16cqw);
+}
+
+/* The enlarged gallery preview has roomier blocks: scale up from the week view's range. */
+.grid[data-size="zoom"] .labelMain {
+  font-size: min(clamp(6px, 30cqh, 11px), 15cqw);
+}
+
+.grid[data-size="zoom"] .labelSub {
+  font-size: min(clamp(5.5px, 25cqh, 9.5px), 14cqw);
 }
 
 @keyframes land {
