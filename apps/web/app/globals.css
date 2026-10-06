@@ -77,6 +77,10 @@
   --font-display: var(--font-plus-jakarta, ui-rounded, "SF Pro Rounded"), var(--font);
   --r-tile: 22px;
   --tile-border: rgb(20 24 40 / 0.08);
+  --on-solid: #ffffff;
+  --tile-sub: rgb(29 29 31 / 0.62);
+  --bar-bg: rgb(255 255 255 / 0.92);
+  --bar-shadow: 0 8px 30px rgb(20 24 40 / 0.14);
   /* Area tints for Today / Campus tiles (light only; dark tiles stay graphite with a solid chip). */
   --tint-dining: #fff0e6; --ink-dining: #e8590c; --chip-dining: #ff7a1a;
   --tint-study: #e9f0ff; --ink-study: #1d4ed8; --chip-study: #3b82f6;
@@ -147,6 +151,9 @@
     --rating-none: #636366;
     --card-border: rgb(235 235 245 / 0.16);
     --tile-border: rgb(235 235 245 / 0.14);
+    --tile-sub: rgb(245 245 247 / 0.66);
+    --bar-bg: rgb(28 28 30 / 0.92);
+    --bar-shadow: none;
     --hero-bg: linear-gradient(135deg, #e0244a, #b4102f);
     --course-0-deep: #fda4af; --course-1-deep: #93c5fd; --course-2-deep: #86efac; --course-3-deep: #fcd34d;
     --course-4-deep: #c4b5fd; --course-5-deep: #5eead4; --course-6-deep: #fdba74; --course-7-deep: #cbd5e1;
@@ -202,6 +209,9 @@
     --rating-none: #636366;
     --card-border: rgb(235 235 245 / 0.16);
     --tile-border: rgb(235 235 245 / 0.14);
+    --tile-sub: rgb(245 245 247 / 0.66);
+    --bar-bg: rgb(28 28 30 / 0.92);
+    --bar-shadow: none;
     --hero-bg: linear-gradient(135deg, #e0244a, #b4102f);
     --course-0-deep: #fda4af; --course-1-deep: #93c5fd; --course-2-deep: #86efac; --course-3-deep: #fcd34d;
     --course-4-deep: #c4b5fd; --course-5-deep: #5eead4; --course-6-deep: #fdba74; --course-7-deep: #cbd5e1;

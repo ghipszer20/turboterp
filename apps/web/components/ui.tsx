@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { ChevronIcon } from "./icons";
+import { ChevronIcon, SearchIcon } from "./icons";
+import { clampSub, tileStatusTone } from "../lib/tiles";
 import styles from "./ui.module.css";
 
 export function Page({ title, subtitle, children }: { title: string; subtitle?: ReactNode; children: ReactNode }) {
@@ -145,5 +146,121 @@ export function SourceError({ source }: { source: string }) {
     <Card>
       <EmptyState title={`Couldn't reach ${source}`}>Try again in a few minutes.</EmptyState>
     </Card>
+  );
+}
+
+
+export type TileArea = "dining" | "study" | "fitness" | "transport";
+
+/** Today / Campus tile: icon box, name, a two-line sub. `status` colors the sub with a dot; `accent` makes it solid red. */
+export function Tile({
+  href,
+  icon,
+  area,
+  title,
+  sub,
+  status,
+  accent = false,
+  wide = false,
+}: {
+  href: string;
+  icon: ReactNode;
+  area: TileArea;
+  title: string;
+  sub?: string;
+  status?: Status;
+  accent?: boolean;
+  /** Full-width row layout, for a group with a single tile. */
+  wide?: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className={styles.tile}
+      data-area={area}
+      data-accent={accent || undefined}
+      data-wide={wide || undefined}
+    >
+      <span className={styles.tileIcon}>{icon}</span>
+      <span className={styles.tileText}>
+        <span className={styles.tileName}>{title}</span>
+        {sub ? (
+          <span className={styles.tileSub} data-tone={status ? tileStatusTone(status) : undefined}>
+            {clampSub(sub)}
+          </span>
+        ) : null}
+      </span>
+    </Link>
+  );
+}
+
+/** 4 columns on desktop, 2 on phones. */
+export function TileGrid({ children }: { children: ReactNode }) {
+  return <div className={styles.tileGrid}>{children}</div>;
+}
+
+/** Next-class hero on the brand gradient. */
+export function Hero({ label, title, sub, href }: { label: string; title: string; sub?: string; href?: string }) {
+  const body = (
+    <>
+      <span className={styles.heroLabel}>{label}</span>
+      <span className={styles.heroTitle}>{title}</span>
+      {sub ? <span className={styles.heroSub}>{sub}</span> : null}
+    </>
+  );
+  if (!href) return <div className={styles.hero}>{body}</div>;
+  return (
+    <Link href={href} className={styles.hero}>
+      {body}
+    </Link>
+  );
+}
+
+/** Row for a Hero and its HeroStat: stacked on phones, side by side on desktop. */
+export function HeroRow({ children }: { children: ReactNode }) {
+  return <div className={styles.heroRow}>{children}</div>;
+}
+
+/** White stat tile beside the hero: big accent number over a caption. */
+export function HeroStat({ number, text, small }: { number: ReactNode; text: string; small?: boolean }) {
+  return (
+    <div className={styles.heroStat} data-small={small || undefined}>
+      <span className={styles.heroNumber}>{number}</span>
+      <span className={styles.heroStatText}>{text}</span>
+    </div>
+  );
+}
+
+/** 44px search field: a link to a search page (href) or a submit handler (onSubmit). */
+export function SearchField({
+  placeholder,
+  href,
+  onSubmit,
+}: {
+  placeholder: string;
+  href?: string;
+  onSubmit?: (query: string) => void;
+}) {
+  if (href && !onSubmit) {
+    return (
+      <Link href={href} className={styles.search}>
+        <SearchIcon className={styles.searchIcon} />
+        <span className={styles.searchPlaceholder}>{placeholder}</span>
+      </Link>
+    );
+  }
+  return (
+    <form
+      className={styles.search}
+      role="search"
+      onSubmit={(e) => {
+        e.preventDefault();
+        const q = new FormData(e.currentTarget).get("q");
+        onSubmit?.(typeof q === "string" ? q.trim() : "");
+      }}
+    >
+      <SearchIcon className={styles.searchIcon} />
+      <input className={styles.searchInput} name="q" type="search" placeholder={placeholder} aria-label={placeholder} />
+    </form>
   );
 }

@@ -156,3 +156,10 @@ export const HeartIcon = (p: IconProps) => (
     <path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z" />
   </Icon>
 );
+
+export const SearchIcon = (p: IconProps) => (
+  <Icon size={20} {...p}>
+    <circle cx="11" cy="11" r="6.5" />
+    <path d="m16 16 4.5 4.5" />
+  </Icon>
+);
