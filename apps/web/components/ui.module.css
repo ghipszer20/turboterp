@@ -298,6 +298,18 @@
   grid-column: -2 / -1;
 }
 
+/* Phone: an action tile that would sit alone on the last row spans it instead, as a wide row tile. */
+@media (max-width: 899px) {
+  .tileGrid > .tile[data-accent]:last-child:nth-child(odd):not(:only-child) {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    min-height: 0;
+  }
+}
+
 @media (min-width: 900px) {
   .tileGrid[data-row] {
     grid-template-columns: none;
