@@ -31,8 +31,17 @@ type Token =
 
 // Case-sensitive on purpose: department codes are uppercase, so "than 300"
 // never reads as a course. Connectors are matched in either case.
-const TOKEN =
+const BASE_TOKEN =
   /\b([A-Z]{4})\s?(\d{3}[A-Z]?)\b(?!\s*\(?or higher\b)|\b([Aa][Nn][Dd]|[Oo][Rr])\b|(,)|([([])|([)\]])|\b((?:1|[Oo]ne)\s+(?:courses?\b|of the following))|(;)|(\/)|\b(\d{3}[A-Z]?)\b(?![-\w])(?!\s+(?:hours|credits|units|words|points))|\b((?:other\s+\w+\s+)?(?:equivalent|comparable)(?:(?![A-Z]{4}\s?\d{3})[^;,()])*)|\b([A-Z]{4})\s?(\d{3})[A-Z]?\s*\(?or higher\b\)?(?:\s+[A-Z]{4}\s+course\b)?|\b(?:any|an?)\s+(\d)00[- ]level\s+([A-Z]{4})\s+courses?\b|\ban?\s+([A-Z]{4})\s+courses?\s+at\s+the\s+(\d)00[- ]level(?:\s+or\s+higher\b)?|\b(both|either)\b/g;
+
+// Free text up to the next separator: no course code, one level of parentheses allowed.
+const PROSE = "(?:(?![A-Z]{4}\\s?\\d{3})(?:[^;,()]|\\((?:(?![A-Z]{4}\\s?\\d{3})[^()])*\\)))*";
+// Prose that stands for a requirement no course code names. Group 19 of TOKEN; it becomes a manual item.
+const PROSE_ITEMS = [
+  // "X or a minimum of 60 credits", "or approved prior study in Matlab", "or another course that …"
+  "(?<=\\b[Oo]r\\s+)(?:a\\s+minimum\\s+of|(?:an?\\s+)?approved|another|enrolled\\s+in|course\\s+in|other|experience)\\b" + PROSE,
+];
+const TOKEN = new RegExp(`${BASE_TOKEN.source}|(${PROSE_ITEMS.join("|")})`, "g");
 
 /** `tail`: a manual alternative appended to the end of the clause's list. */
 function tokenize(text: string, tail?: string): Token[] {
@@ -59,6 +68,7 @@ function tokenize(text: string, tail?: string): Token[] {
     else if (m[14]) raw.push({ type: "level", dept: m[15]!, min: Number(m[14]) * 100 });
     else if (m[16]) raw.push({ type: "level", dept: m[16], min: Number(m[17]) * 100 });
     else if (m[18]) raw.push({ type: m[18].toLowerCase() as "both" | "either" });
+    else if (m[19]) raw.push({ type: "manual", text: clean(m[19]) });
     else raw.push({ type: m[3]!.toLowerCase() as "and" | "or" });
   }
   if (tail) raw.push({ type: "or" }, { type: "manual", text: tail });
@@ -283,7 +293,7 @@ const MANUAL_WITH_COURSE = /\beligibility\b|\bplacement\b/i;
 
 // "… MATH340 and permission of …": a trailing non-course requirement inside a clause.
 const TRAILING_MANUAL =
-  /\s+(and|or)\s+((?:permission|must\b|familiarity|approval|junior|senior|sophomore|students?\b)[\s\S]*|(?:other\s+\w+\s+)?(?:equivalent|comparable)(?:\s+\w+){0,2})[\s.)]*$/i;
+  /\s+(and|or)\s+((?:(?:by\s+)?permission|must\b|familiarity|approval|junior|senior|sophomore|students?\b)[\s\S]*|(?:other\s+\w+\s+)?(?:equivalent|comparable)(?:\s+\w+){0,2})[\s.)]*$/i;
 
 // A waiver offers a way around the prerequisite; its course codes are not requirements.
 const WAIVER =
