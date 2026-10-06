@@ -1973,7 +1973,7 @@ Example BSCI442:
 
 > Minimum grade of C- in BSCI170 and (BSCI180 or BSCI171); or minimum grade of C- in PLSC201 and PLSC206; and minimum grade of C- in CHEM231 and CHEM232; or minimum grade of C- in CHEM237.
 
-Parsed: ANY of [ALL of [BSCI170 (min C-); ANY of [BSCI180 (min C-); BSCI171 (min C-)]]; ALL of [ALL of [PLSC201 (min C-); PLSC206 (min C-)]; ALL of [CHEM231 (min C-); CHEM232 (min C-)]]; CHEM237 (min C-)]
+Parsed: ALL of [ANY of [ALL of [BSCI170 (min C-); ANY of [BSCI180 (min C-); BSCI171 (min C-)]]; ALL of [PLSC201 (min C-); PLSC206 (min C-)]]; ANY of [ALL of [CHEM231 (min C-); CHEM232 (min C-)]; CHEM237 (min C-)]]
 
 Verdict:
 
@@ -2053,7 +2053,7 @@ Example BCHM461:
 
 > Minimum grade of C- in CHEM271 and CHEM272; or minimum grade of C- in CHEM276 and CHEM277; and minimum grade of C- in (CHEM241 and CHEM242) or CHEM247.
 
-Parsed: ANY of [ALL of [CHEM271 (min C-); CHEM272 (min C-)]; ALL of [ALL of [CHEM276 (min C-); CHEM277 (min C-)]; ANY of [ALL of [CHEM241 (min C-); CHEM242 (min C-)]; CHEM247 (min C-)]]]
+Parsed: ALL of [ANY of [ALL of [CHEM271 (min C-); CHEM272 (min C-)]; ALL of [CHEM276 (min C-); CHEM277 (min C-)]]; ANY of [ALL of [CHEM241 (min C-); CHEM242 (min C-)]; CHEM247 (min C-)]]
 
 Verdict:
 
@@ -2197,7 +2197,7 @@ Example EDHD442:
 
 > Minimum grade of C- in EDSP423, EDHD431, and EDSP315; and TRACK I: Must have completed EDSP430 and EDSP 433; or TRACK 2: Must have completed EDHD415 and EDHD 424.
 
-Parsed: ANY of [ALL of [ALL of [EDSP423 (min C-); EDHD431 (min C-); EDSP315 (min C-)]; ALL of [EDSP430; EDSP433]]; ALL of [EDHD415; EDHD424]]
+Parsed: ALL of [ALL of [EDSP423 (min C-); EDHD431 (min C-); EDSP315 (min C-)]; ANY of [ALL of [EDSP430; EDSP433]; ALL of [EDHD415; EDHD424]]]
 
 Verdict:
 
@@ -2853,7 +2853,7 @@ Example EDSP321:
 
 > EDSP423, EDHD431, and EDSP315; and track 1: Must have completed EDSP430 and EDSP433; OR Track 2: Must have completed EDHD415 and EDHD424.
 
-Parsed: ANY of [ALL of [ALL of [EDSP423; EDHD431; EDSP315]; ALL of [EDSP430; EDSP433]]; ALL of [EDHD415; EDHD424]]
+Parsed: ALL of [ALL of [EDSP423; EDHD431; EDSP315]; ANY of [ALL of [EDSP430; EDSP433]; ALL of [EDHD415; EDHD424]]]
 
 Verdict:
 
@@ -2869,7 +2869,7 @@ Example EDHD322:
 
 > EDSP423, EDHD431, and EDSP315; and track 1: Must have completed EDSP 430, EDSP 433; OR Track 2: Must have completed EDHD415, EDHD 424.
 
-Parsed: ANY of [ALL of [ALL of [EDSP423; EDHD431; EDSP315]; ALL of [EDSP430; EDSP433]]; ALL of [EDHD415; EDHD424]]
+Parsed: ALL of [ALL of [EDSP423; EDHD431; EDSP315]; ANY of [ALL of [EDSP430; EDSP433]; ALL of [EDHD415; EDHD424]]]
 
 Verdict:
 
@@ -2965,7 +2965,7 @@ Example JWST427:
 
 > JWST225, RELS225, HIST219I, or permission of the instructor.
 
-Parsed: ANY of [ALL of [JWST225; RELS225; HIST219I]; manual: "permission of the instructor"]
+Parsed: ANY of [JWST225; RELS225; HIST219I; manual: "permission of the instructor"]
 
 Verdict:
 
@@ -2997,7 +2997,7 @@ Example PHYS131:
 
 > CHEM131; and (MATH136 or MATH140); and BSCI160, BSCI170, and either BSCI180 or (BSCI161 and BSCI171).
 
-Parsed: ALL of [CHEM131; ANY of [MATH136; MATH140]; ANY of [ALL of [BSCI160; BSCI170; BSCI180]; ALL of [BSCI161; BSCI171]]]
+Parsed: ALL of [CHEM131; ANY of [MATH136; MATH140]; ALL of [BSCI160; BSCI170; ANY of [BSCI180; ALL of [BSCI161; BSCI171]]]]
 
 Verdict:
 
@@ -3317,7 +3317,7 @@ Example AGST400:
 
 > (PLSC110 and PLSC111) OR (PLSC112 and PLSC113), BSCI160 and (BSCI180 or BSCI161), and MATH113 or higher.
 
-Parsed: ANY of [ALL of [PLSC110; PLSC111]; ALL of [ALL of [PLSC112; PLSC113]; BSCI160; ANY of [BSCI180; BSCI161]; any MATH 113+]]
+Parsed: ALL of [ANY of [ALL of [PLSC110; PLSC111]; ALL of [PLSC112; PLSC113]]; BSCI160; ANY of [BSCI180; BSCI161]; any MATH 113+]
 
 Verdict:
 
@@ -3349,7 +3349,7 @@ Example BSCI420:
 
 > (BSCI331 or BSCI330) and (BSCI222 or HLSC322) and CHEM237 or (CHEM231 and CHEM232).
 
-Parsed: ANY of [ALL of [ANY of [BSCI331; BSCI330]; ANY of [BSCI222; HLSC322]; CHEM237]; ALL of [CHEM231; CHEM232]]
+Parsed: ALL of [ANY of [BSCI331; BSCI330]; ANY of [BSCI222; HLSC322]; ANY of [CHEM237; ALL of [CHEM231; CHEM232]]]
 
 Verdict:
 
@@ -3797,7 +3797,7 @@ Example MATH120:
 
 > 1 course with a minimum grade of C- from (MATH113, MATH115). Or must have math eligibility of MATH120 or higher; and math eligibility is based on the Math Placement Test.
 
-Parsed: ANY of [ANY of [MATH113 (min C-); MATH115 (min C-)]; ALL of [manual: "must have math eligibility of MATH120 or higher"; manual: "math eligibility is based on the Math Placement Test"]]
+Parsed: ANY of [ANY of [MATH113 (min C-); MATH115 (min C-)]; manual: "must have math eligibility of MATH120 or higher; and math eligibility is based on the Math Placement Test"]
 
 Verdict:
 
@@ -3861,7 +3861,7 @@ Example EPIB684:
 
 > A minimum grade of B- in EPIB610; or equivalent; and a minimum grade of B- in EPIB697; or previous programming experience in SAS through other courses and/or activities with permission from the instructor.
 
-Parsed: ANY of [EPIB610 (min B-); ALL of [manual: "equivalent"; EPIB697 (min B-)]; manual: "previous programming experience in SAS through other courses and/or activities with permission from the instructor"]
+Parsed: ALL of [ANY of [EPIB610 (min B-); manual: "equivalent"]; ANY of [EPIB697 (min B-); manual: "previous programming experience in SAS through other courses and/or activities with permission from the instructor"]]
 
 Verdict:
 
@@ -4101,7 +4101,7 @@ Example PHYS400:
 
 > Grades of A- or higher in PHYS272, PHYS273, MATH241, and MATH243 or MATH246, and permission of CMNS-Physics Department.
 
-Parsed: ALL of [ANY of [ALL of [PHYS272 (min A-); PHYS273 (min A-); MATH241 (min A-); MATH243 (min A-)]; MATH246 (min A-)]; manual: "permission of CMNS-Physics Department"]
+Parsed: ALL of [ALL of [PHYS272 (min A-); PHYS273 (min A-); MATH241 (min A-); ANY of [MATH243 (min A-); MATH246 (min A-)]]; manual: "permission of CMNS-Physics Department"]
 
 Verdict:
 
@@ -4357,7 +4357,7 @@ Example BSCI410:
 
 > Minimum grade of C- in (BSCI222 or HLSC322) and either CHEM237 or both CHEM231 and CHEM232.
 
-Parsed: ANY of [ALL of [ANY of [BSCI222 (min C-); HLSC322 (min C-)]; CHEM237 (min C-)]; ALL of [CHEM231 (min C-); CHEM232 (min C-)]]
+Parsed: ALL of [ANY of [BSCI222 (min C-); HLSC322 (min C-)]; ANY of [CHEM237 (min C-); ALL of [CHEM231 (min C-); CHEM232 (min C-)]]]
 
 Verdict:
 
@@ -4597,7 +4597,7 @@ Example BSCI401:
 
 > Minimum grade of C- in BSCI160 and (BSCI180 or BSCI161) and CHEM237 or both CHEM231 and CHEM232.
 
-Parsed: ANY of [ALL of [BSCI160 (min C-); ANY of [BSCI180 (min C-); BSCI161 (min C-)]; CHEM237 (min C-)]; ALL of [CHEM231 (min C-); CHEM232 (min C-)]]
+Parsed: ALL of [BSCI160 (min C-); ANY of [BSCI180 (min C-); BSCI161 (min C-)]; ANY of [CHEM237 (min C-); ALL of [CHEM231 (min C-); CHEM232 (min C-)]]]
 
 Verdict:
 
@@ -4645,7 +4645,7 @@ Example BIOE411:
 
 > Minimum grade of C- in BIOE120 and either BSCI330 or (BSCI331 and BSCI332); and must have earned a minimum of 60 credits.
 
-Parsed: ALL of [ANY of [ALL of [BIOE120 (min C-); BSCI330 (min C-)]; ALL of [BSCI331 (min C-); BSCI332 (min C-)]]; manual: "must have earned a minimum of 60 credits"]
+Parsed: ALL of [ALL of [BIOE120 (min C-); ANY of [BSCI330 (min C-); ALL of [BSCI331 (min C-); BSCI332 (min C-)]]]; manual: "must have earned a minimum of 60 credits"]
 
 Verdict:
 
@@ -4741,7 +4741,7 @@ Example PLSC201:
 
 > Minimum grade of C- in PLSC110 and PLSC111 or (PLSC112 and PLSC113); and minimum grade of C- in CHEM131 and CHEM132.
 
-Parsed: ALL of [ANY of [ALL of [PLSC110 (min C-); PLSC111 (min C-)]; ALL of [PLSC112 (min C-); PLSC113 (min C-)]]; ALL of [CHEM131 (min C-); CHEM132 (min C-)]]
+Parsed: ALL of [ALL of [PLSC110 (min C-); ANY of [PLSC111 (min C-); ALL of [PLSC112 (min C-); PLSC113 (min C-)]]]; ALL of [CHEM131 (min C-); CHEM132 (min C-)]]
 
 Verdict:
 
@@ -4757,7 +4757,7 @@ Example PLSC271:
 
 > Minimum grade of C- in PLSC110 and PLSC111 or (PLSC112 and PLSC113); or minimum grade of C- in BSCI170 and (BSCI180 or BSCI171).
 
-Parsed: ANY of [ANY of [ALL of [PLSC110 (min C-); PLSC111 (min C-)]; ALL of [PLSC112 (min C-); PLSC113 (min C-)]]; ALL of [BSCI170 (min C-); ANY of [BSCI180 (min C-); BSCI171 (min C-)]]]
+Parsed: ANY of [ALL of [PLSC110 (min C-); ANY of [PLSC111 (min C-); ALL of [PLSC112 (min C-); PLSC113 (min C-)]]]; ALL of [BSCI170 (min C-); ANY of [BSCI180 (min C-); BSCI171 (min C-)]]]
 
 Verdict:
 
@@ -4885,7 +4885,7 @@ Example AGST275:
 
 > Minimum grade of C- in CHEM131 and CHEM132; and minimum grade of C- in (PLSC110 and PLSC11) or (PLSC112 and PLSC113) or (BSCI160 and BSCI180 or BSCI161) or (BSCI170 and BSCI180 or BSCI171).
 
-Parsed: ALL of [ALL of [CHEM131 (min C-); CHEM132 (min C-)]; ANY of [PLSC110 (min C-); ALL of [PLSC112 (min C-); PLSC113 (min C-)]; ANY of [ALL of [BSCI160 (min C-); BSCI180 (min C-)]; BSCI161 (min C-)]; ANY of [ALL of [BSCI170 (min C-); BSCI180 (min C-)]; BSCI171 (min C-)]]]
+Parsed: ALL of [ALL of [CHEM131 (min C-); CHEM132 (min C-)]; ANY of [PLSC110 (min C-); ALL of [PLSC112 (min C-); PLSC113 (min C-)]; ALL of [BSCI160 (min C-); ANY of [BSCI180 (min C-); BSCI161 (min C-)]]; ALL of [BSCI170 (min C-); ANY of [BSCI180 (min C-); BSCI171 (min C-)]]]]
 
 Verdict:
 
@@ -5077,7 +5077,7 @@ Example BSCI436:
 
 > Minimum grade of C- in BSCI330 OR (BSCI331 and BSCI332) and minimum grade of C- (BSCI222 or HLSC322).
 
-Parsed: ANY of [BSCI330 (min C-); ALL of [ALL of [BSCI331 (min C-); BSCI332 (min C-)]; ANY of [BSCI222 (min C-); HLSC322 (min C-)]]]
+Parsed: ALL of [ANY of [BSCI330 (min C-); ALL of [BSCI331 (min C-); BSCI332 (min C-)]]; ANY of [BSCI222 (min C-); HLSC322 (min C-)]]
 
 Verdict:
 
@@ -5141,7 +5141,7 @@ Example NEUR305:
 
 > Minimum grade of C- in MATH120 or higher MATH course; and a minimum grade of C- in NEUR200 or BSCI353; or equivalent.
 
-Parsed: ANY of [ALL of [any MATH 120+ (min C-); ANY of [NEUR200 (min C-); BSCI353 (min C-)]]; manual: "equivalent"]
+Parsed: ALL of [any MATH 120+ (min C-); ANY of [ANY of [NEUR200 (min C-); BSCI353 (min C-)]; manual: "equivalent"]]
 
 Verdict:
 
@@ -5189,7 +5189,7 @@ Example SDSI496:
 
 > Minimum grade of C- in BSOS326 or SDSB326, INST327, INST366, SURV400 or SDSB340, and INST414 or SDSI414.
 
-Parsed: ANY of [BSOS326 (min C-); SDSB326 (min C-); INST327 (min C-); INST366 (min C-); SURV400 (min C-); ALL of [SDSB340 (min C-); INST414 (min C-)]; SDSI414 (min C-)]
+Parsed: ALL of [ANY of [BSOS326 (min C-); SDSB326 (min C-)]; INST327 (min C-); INST366 (min C-); ANY of [SURV400 (min C-); SDSB340 (min C-)]; ANY of [INST414 (min C-); SDSI414 (min C-)]]
 
 Verdict:
 
@@ -5205,7 +5205,7 @@ Example SDSI492:
 
 > Minimum grade of C- in BSOS326 or SDSB326, INST327, INST366, SURV400, INST462, and INST414 or SDSI414.
 
-Parsed: ANY of [BSOS326 (min C-); ALL of [SDSB326 (min C-); INST327 (min C-); INST366 (min C-); SURV400 (min C-); INST462 (min C-); INST414 (min C-)]; SDSI414 (min C-)]
+Parsed: ALL of [ANY of [BSOS326 (min C-); SDSB326 (min C-)]; INST327 (min C-); INST366 (min C-); SURV400 (min C-); INST462 (min C-); ANY of [INST414 (min C-); SDSI414 (min C-)]]
 
 Verdict:
 
@@ -5397,7 +5397,7 @@ Example CMSC132:
 
 > Minimum grade of C- in CMSC131 or CMSC133; or must have earned a score of 5 on the A Java AP exam; or must have earned a satisfactory score on the departmental placement exam; and minimum grade of C- in MATH140.
 
-Parsed: ANY of [ANY of [CMSC131 (min C-); CMSC133 (min C-)]; manual: "must have earned a score of 5 on the A Java AP exam"; ALL of [manual: "must have earned a satisfactory score on the departmental placement exam"; MATH140 (min C-)]]
+Parsed: ALL of [ANY of [ANY of [CMSC131 (min C-); CMSC133 (min C-)]; manual: "must have earned a score of 5 on the A Java AP exam"; manual: "must have earned a satisfactory score on the departmental placement exam"]; MATH140 (min C-)]
 
 Verdict:
 
@@ -5413,7 +5413,7 @@ Example MATH135:
 
 > Minimum grade of C- in MATH113 or MATH115; or must have math eligibility of MATH120 or higher; and math eligibility is based on the Math Placement Test.
 
-Parsed: ANY of [ANY of [MATH113 (min C-); MATH115 (min C-)]; ALL of [manual: "must have math eligibility of MATH120 or higher"; manual: "math eligibility is based on the Math Placement Test"]]
+Parsed: ANY of [ANY of [MATH113 (min C-); MATH115 (min C-)]; manual: "must have math eligibility of MATH120 or higher; and math eligibility is based on the Math Placement Test"]
 
 Verdict:
 
@@ -5557,7 +5557,7 @@ Example INST427:
 
 > Minimum grade of C- in INST327, INST326, and INST201 or INST301.
 
-Parsed: ANY of [ALL of [INST327 (min C-); INST326 (min C-); INST201 (min C-)]; INST301 (min C-)]
+Parsed: ALL of [INST327 (min C-); INST326 (min C-); ANY of [INST201 (min C-); INST301 (min C-)]]
 
 Verdict:
 
@@ -5701,7 +5701,7 @@ Example EDHD444:
 
 > Minimum grade of C- in EDSP423, EDHD431, and EDSP315; and track 1: Must have completed EDSP430 and EDSP433; OR Track 2: Must have completed EDHD415 and EDHD424.
 
-Parsed: ANY of [ALL of [ALL of [EDSP423 (min C-); EDHD431 (min C-); EDSP315 (min C-)]; ALL of [EDSP430; EDSP433]]; ALL of [EDHD415; EDHD424]]
+Parsed: ALL of [ALL of [EDSP423 (min C-); EDHD431 (min C-); EDSP315 (min C-)]; ANY of [ALL of [EDSP430; EDSP433]; ALL of [EDHD415; EDHD424]]]
 
 Verdict:
 
@@ -6245,7 +6245,7 @@ Example BCHM485:
 
 > Minimum grade of C- in CHEM135; or minimum grade of C- in (CHEM271 or CHEM276) and in (CHEM272 or CHEM277); and minimum grade of C- in MATH141; and minimum grade of C- in (PHYS260 and PHYS261) or C- in PHYS142.
 
-Parsed: ANY of [CHEM135 (min C-); ALL of [ALL of [ANY of [CHEM271 (min C-); CHEM276 (min C-)]; ANY of [CHEM272 (min C-); CHEM277 (min C-)]]; MATH141 (min C-); ANY of [ALL of [PHYS260 (min C-); PHYS261 (min C-)]; PHYS142 (min C-)]]]
+Parsed: ALL of [ANY of [CHEM135 (min C-); ALL of [ANY of [CHEM271 (min C-); CHEM276 (min C-)]; ANY of [CHEM272 (min C-); CHEM277 (min C-)]]]; MATH141 (min C-); ANY of [ALL of [PHYS260 (min C-); PHYS261 (min C-)]; PHYS142 (min C-)]]
 
 Verdict:
 
@@ -6293,7 +6293,7 @@ Example ENEE222:
 
 > Minimum grade of C- in ENEE140; or minimum grade of C- in CMSC131; and permission of ENGR- Electrical & Computer Engineering department.
 
-Parsed: ANY of [ENEE140 (min C-); ALL of [CMSC131 (min C-); manual: "permission of ENGR- Electrical & Computer Engineering department"]]
+Parsed: ALL of [ANY of [ENEE140 (min C-); CMSC131 (min C-)]; manual: "permission of ENGR- Electrical & Computer Engineering department"]
 
 Verdict:
 
@@ -6341,7 +6341,7 @@ Example MATH140:
 
 > Minimum grade of C- in MATH115; or must have math eligibility of MATH140; and math eligibility is based on the Math Placement Test.
 
-Parsed: ANY of [MATH115 (min C-); ALL of [manual: "must have math eligibility of MATH140"; manual: "math eligibility is based on the Math Placement Test"]]
+Parsed: ANY of [MATH115 (min C-); manual: "must have math eligibility of MATH140; and math eligibility is based on the Math Placement Test"]
 
 Verdict:
 
@@ -7509,7 +7509,7 @@ Example MATH107:
 
 > Must have math eligibility of MATH107 or higher; and math eligibility is based on Math Placement Exam or successful completion of MATH003 with appropriate eligibility.
 
-Parsed: ALL of [manual: "Must have math eligibility of MATH107 or higher"; manual: "math eligibility is based on Math Placement Exam or successful completion of MATH003 with appropriate eligibility"]
+Parsed: manual: "Must have math eligibility of MATH107 or higher; and math eligibility is based on Math Placement Exam or successful completion of MATH003 with appropriate eligibility"
 
 Verdict:
 
@@ -7525,7 +7525,7 @@ Example MATH113:
 
 > Must have math eligibility of MATH113 or higher; and math eligibility is based on the Math Placement Exam or the successful completion of MATH 003 with appropriate eligibility.
 
-Parsed: ALL of [manual: "Must have math eligibility of MATH113 or higher"; manual: "math eligibility is based on the Math Placement Exam or the successful completion of MATH 003 with appropriate eligibility"]
+Parsed: manual: "Must have math eligibility of MATH113 or higher; and math eligibility is based on the Math Placement Exam or the successful completion of MATH 003 with appropriate eligibility"
 
 Verdict:
 
@@ -7541,7 +7541,7 @@ Example MATH115:
 
 > Must have math eligibility of MATH115 or higher; and math eligibility is based on the Math Placement Exam or the successful completion of MATH003 with appropriate eligibility. Or MATH113.
 
-Parsed: ANY of [ALL of [manual: "Must have math eligibility of MATH115 or higher"; manual: "math eligibility is based on the Math Placement Exam or the successful completion of MATH003 with appropriate eligibility"]; MATH113]
+Parsed: ANY of [manual: "Must have math eligibility of MATH115 or higher; and math eligibility is based on the Math Placement Exam or the successful completion of MATH003 with appropriate eligibility"; MATH113]
 
 Verdict:
 
@@ -8485,7 +8485,7 @@ Example BSCI222:
 
 > BSCI170 and (BSCI180 or BSCI171); or (BIOE120 and BIOE121); and CHEM131 and CHEM132; and either (CHEM231 and CHEM232) or (BSCI160 and BSCI161 or BSCI180) .
 
-Parsed: ANY of [ALL of [BSCI170; ANY of [BSCI180; BSCI171]]; ALL of [ALL of [BIOE120; BIOE121]; ALL of [CHEM131; CHEM132]; ANY of [ALL of [CHEM231; CHEM232]; ANY of [ALL of [BSCI160; BSCI161]; BSCI180]]]]
+Parsed: ALL of [ANY of [ALL of [BSCI170; ANY of [BSCI180; BSCI171]]; ALL of [BIOE120; BIOE121]]; ALL of [CHEM131; CHEM132]; ANY of [ALL of [CHEM231; CHEM232]; ALL of [BSCI160; ANY of [BSCI161; BSCI180]]]]
 
 Verdict:
 
@@ -8597,7 +8597,7 @@ Example LARC454:
 
 > PLSC253 and LARC220 or LARC620; or permission of instructor.
 
-Parsed: ANY of [ANY of [ALL of [PLSC253; LARC220]; LARC620]; manual: "permission of instructor"]
+Parsed: ANY of [ALL of [PLSC253; ANY of [LARC220; LARC620]]; manual: "permission of instructor"]
 
 Verdict:
 
@@ -8805,7 +8805,7 @@ Example BSCI207:
 
 > BSCI160 and BSCI170; and must have completed or be concurrently enrolled in CHEM131 and either BSCI180 or (BSCI161 and BSCI171).
 
-Parsed: ALL of [ALL of [BSCI160; BSCI170]; ANY of [ALL of [CHEM131 (concurrent ok); BSCI180 (concurrent ok)]; ALL of [BSCI161 (concurrent ok); BSCI171 (concurrent ok)]]]
+Parsed: ALL of [ALL of [BSCI160; BSCI170]; ALL of [CHEM131 (concurrent ok); ANY of [BSCI180 (concurrent ok); ALL of [BSCI161 (concurrent ok); BSCI171 (concurrent ok)]]]]
 
 Verdict:
 
@@ -8917,7 +8917,7 @@ Example ARCH465:
 
 > ARCH464 and PHYS121; and MATH120 or MATH140, or equivalent; or permission of the ARCH-Architecture Program.
 
-Parsed: ANY of [ALL of [ALL of [ARCH464; PHYS121]; ANY of [ANY of [MATH120; MATH140]; manual: "equivalent"]]; manual: "permission of the ARCH-Architecture Program"]
+Parsed: ANY of [ALL of [ALL of [ARCH464; PHYS121]; ANY of [MATH120; MATH140; manual: "equivalent"]]; manual: "permission of the ARCH-Architecture Program"]
 
 Verdict:
 
@@ -9285,7 +9285,7 @@ Example ENTE601:
 
 > ENME472 or equivalent (undergraduate engineering capstone course), basic programming course (Python preferred), ENAE202/ENME202, or equivalent.
 
-Parsed: ANY of [ANY of [ENME472; manual: "equivalent"; ENAE202; ENME202]; manual: "equivalent"]
+Parsed: ANY of [ENME472; manual: "equivalent"; ENAE202; ENME202; manual: "equivalent"]
 
 Verdict:
 
@@ -9509,7 +9509,7 @@ Example GEOL460:
 
 > GEOL100 or GEOL120, MATH141, and (PHYS141, PHYS161, or PHYS171).
 
-Parsed: ANY of [GEOL100; ALL of [GEOL120; MATH141; ANY of [PHYS141; PHYS161; PHYS171]]]
+Parsed: ALL of [ANY of [GEOL100; GEOL120]; MATH141; ANY of [PHYS141; PHYS161; PHYS171]]
 
 Verdict:
 
@@ -9525,7 +9525,7 @@ Example COMM363:
 
 > COMM107 or COMM200, COMM130, and COMM250.
 
-Parsed: ANY of [COMM107; ALL of [COMM200; COMM130; COMM250]]
+Parsed: ALL of [ANY of [COMM107; COMM200]; COMM130; COMM250]
 
 Verdict:
 
@@ -9541,7 +9541,7 @@ Example ENST453:
 
 > MATH120 or MATH140, ENST200, GEOG306 or BIOM301.
 
-Parsed: ANY of [MATH120; MATH140; ENST200; GEOG306; BIOM301]
+Parsed: ALL of [ANY of [MATH120; MATH140]; ENST200; ANY of [GEOG306; BIOM301]]
 
 Verdict:
 
@@ -10181,7 +10181,7 @@ Example ENMA437:
 
 > MATH461, ENMA300, and ENMA165 or equivalent.
 
-Parsed: ANY of [ALL of [MATH461; ENMA300; ENMA165]; manual: "equivalent"]
+Parsed: ALL of [MATH461; ENMA300; ANY of [ENMA165; manual: "equivalent"]]
 
 Verdict:
 
@@ -10261,7 +10261,7 @@ Example ARCH464:
 
 > ARCH462, ARCH463, and PHYS121; and MATH120 or MATH140, or equivalent; or permission of the ARCH-Architecture Program.
 
-Parsed: ANY of [ALL of [ALL of [ARCH462; ARCH463; PHYS121]; ANY of [ANY of [MATH120; MATH140]; manual: "equivalent"]]; manual: "permission of the ARCH-Architecture Program"]
+Parsed: ANY of [ALL of [ALL of [ARCH462; ARCH463; PHYS121]; ANY of [MATH120; MATH140; manual: "equivalent"]]; manual: "permission of the ARCH-Architecture Program"]
 
 Verdict:
 
@@ -10357,7 +10357,7 @@ Example TLPL425:
 
 > TLPL401, TLPL420, or permission of EDUC-Teaching and Learning, Policy and Leadership department.
 
-Parsed: ANY of [ALL of [TLPL401; TLPL420]; manual: "permission of EDUC-Teaching and Learning, Policy and Leadership department"]
+Parsed: ANY of [TLPL401; TLPL420; manual: "permission of EDUC-Teaching and Learning, Policy and Leadership department"]
 
 Verdict:
 
@@ -10581,7 +10581,7 @@ Example ENMA401:
 
 > ENMA362, PHYS270, PHYS271, and MATH246; or equivalent; and ENMA165 or MATH206.
 
-Parsed: ANY of [ALL of [ENMA362; PHYS270; PHYS271; MATH246]; ALL of [manual: "equivalent"; ANY of [ENMA165; MATH206]]]
+Parsed: ALL of [ANY of [ALL of [ENMA362; PHYS270; PHYS271; MATH246]; manual: "equivalent"]; ANY of [ENMA165; MATH206]]
 
 Verdict:
 
@@ -10725,7 +10725,7 @@ Example HLSC322:
 
 > CHEM131, CHEM132, BSCI160, BSCI170, and either BSCI180 or (BSCI161 and BSCI171); or must have completed BSCI170, (BSCI180 or BSCI171), and two semesters of Chemistry.
 
-Parsed: ANY of [ANY of [ALL of [CHEM131; CHEM132; BSCI160; BSCI170; BSCI180]; ALL of [BSCI161; BSCI171]]; ALL of [BSCI170; ANY of [BSCI180; BSCI171]]]
+Parsed: ANY of [ALL of [CHEM131; CHEM132; BSCI160; BSCI170; ANY of [BSCI180; ALL of [BSCI161; BSCI171]]]; ALL of [BSCI170; ANY of [BSCI180; BSCI171]]]
 
 Verdict:
 
@@ -11653,7 +11653,7 @@ Example ENCE215:
 
 > CHEM135; or students who have taken courses with comparable content may contact the department; and permission of ENGR-Civil & Environmental Engineering Department.
 
-Parsed: ANY of [CHEM135; ALL of [manual: "students who have taken courses with comparable content may contact the department"; manual: "permission of ENGR-Civil & Environmental Engineering Department"]]
+Parsed: ALL of [ANY of [CHEM135; manual: "students who have taken courses with comparable content may contact the department"]; manual: "permission of ENGR-Civil & Environmental Engineering Department"]
 
 Verdict:
 
@@ -12087,7 +12087,7 @@ Example EDSP315:
 
 > EDSP423 and EDHD431; and track 1: Must be concurrently enrolled in EDSP430 and EDSP433; OR Track 2: Must be concurrently enrolled in EDHD415 and EDHD424.
 
-Parsed: ANY of [ALL of [ALL of [EDSP423; EDHD431]; ALL of [EDSP430 (concurrent ok); EDSP433 (concurrent ok)]]; ALL of [EDHD415 (concurrent ok); EDHD424 (concurrent ok)]]
+Parsed: ALL of [ALL of [EDSP423; EDHD431]; ANY of [ALL of [EDSP430 (concurrent ok); EDSP433 (concurrent ok)]; ALL of [EDHD415 (concurrent ok); EDHD424 (concurrent ok)]]]
 
 Verdict:
 
@@ -12103,7 +12103,7 @@ Example EDHD431:
 
 > EDSP423 and EDSP315; and TRACK I: Must be concurrently enrolled in EDSP430, EDSP433; or TRACK 2: Must be concurrently enrolled in EDHD415, EDHD424.
 
-Parsed: ANY of [ALL of [ALL of [EDSP423; EDSP315]; ALL of [EDSP430 (concurrent ok); EDSP433 (concurrent ok)]]; ALL of [EDHD415 (concurrent ok); EDHD424 (concurrent ok)]]
+Parsed: ALL of [ALL of [EDSP423; EDSP315]; ANY of [ALL of [EDSP430 (concurrent ok); EDSP433 (concurrent ok)]; ALL of [EDHD415 (concurrent ok); EDHD424 (concurrent ok)]]]
 
 Verdict:
 
