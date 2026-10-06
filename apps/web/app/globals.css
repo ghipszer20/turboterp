@@ -24,6 +24,7 @@
   --accent-hover: #a10a28;
   --accent-tint: rgb(186 12 47 / 0.08);
   --accent-tint-2: rgb(186 12 47 / 0.14);
+  --accent-ring: rgb(186 12 47 / 0.25);
   --on-accent: #ffffff;
 
   /* Status (meaning only) */
@@ -129,6 +130,7 @@
     --accent-hover: #ff6b84;
     --accent-tint: rgb(255 79 109 / 0.14);
     --accent-tint-2: rgb(255 79 109 / 0.22);
+    --accent-ring: rgb(255 79 109 / 0.35);
     --on-accent: #1c0006;
     --open: #30d158;
     --open-tint: rgb(48 209 88 / 0.14);
@@ -185,6 +187,7 @@
     --accent-hover: #ff6b84;
     --accent-tint: rgb(255 79 109 / 0.14);
     --accent-tint-2: rgb(255 79 109 / 0.22);
+    --accent-ring: rgb(255 79 109 / 0.35);
     --on-accent: #1c0006;
 
     --open: #30d158;
