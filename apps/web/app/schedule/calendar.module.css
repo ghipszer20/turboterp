@@ -193,11 +193,11 @@
 }
 
 .grid[data-size="mini"] .labelMain {
-  font-size: min(clamp(5px, 34cqh, 8px), 15cqw);
+  font-size: min(clamp(4px, 34cqh, 8px), 15cqw);
 }
 
 .grid[data-size="mini"] .labelSub {
-  font-size: min(clamp(4.5px, 28cqh, 7px), 16cqw);
+  font-size: min(clamp(3.5px, 28cqh, 7px), 16cqw);
 }
 
 /* The enlarged gallery preview has roomier blocks: scale up from the week view's range. */
