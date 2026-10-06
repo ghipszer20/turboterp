@@ -63,3 +63,33 @@ export function twinsOf(catalog: PlanCatalog, id: string): Record<TwinKind, Set<
   }
   return out;
 }
+
+/**
+ * `twinsOf` for many lookups: one pass over the catalog builds the symmetric view of every
+ * course, so a caller that asks about each course in a plan doesn't rescan the catalog each time.
+ */
+export function twinIndex(catalog: PlanCatalog): (id: string) => Record<TwinKind, Set<string>> {
+  const index = new Map<string, Record<TwinKind, Set<string>>>();
+  const entry = (id: string) => {
+    let e = index.get(id);
+    if (!e) index.set(id, (e = { renumbered: new Set(), crossListed: new Set(), creditOnly: new Set() }));
+    return e;
+  };
+  for (const course of catalog.values()) {
+    if (!course.twins) continue;
+    for (const kind of TWIN_KINDS) {
+      for (const t of course.twins[kind] ?? []) {
+        if (t === course.id) continue;
+        entry(course.id)[kind].add(t);
+        entry(t)[kind].add(course.id);
+      }
+    }
+  }
+  const none = { renumbered: new Set<string>(), crossListed: new Set<string>(), creditOnly: new Set<string>() };
+  return (id) => index.get(id) ?? none;
+}
+
+/** Every Twin id of a course, any kind. */
+export function allTwins(t: Record<TwinKind, Set<string>>): string[] {
+  return TWIN_KINDS.flatMap((k) => [...t[k]]);
+}
