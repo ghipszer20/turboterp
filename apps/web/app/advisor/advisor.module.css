@@ -458,9 +458,11 @@
   justify-content: space-between;
   gap: 10px;
   margin-bottom: 16px;
-  padding: 10px 14px;
-  border-radius: var(--r-md);
-  background: var(--surface-2);
+  flex-wrap: wrap;
+  padding: 14px 16px;
+  border: 1px solid var(--tile-border);
+  border-radius: var(--r-tile);
+  background: var(--surface);
   font: var(--t-sub);
 }
 
@@ -498,12 +500,15 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 12px;
-  border: 0.5px solid var(--separator);
-  border-radius: var(--r-md);
+  padding: 14px;
+  border: 1px solid var(--tile-border);
+  border-radius: var(--r-tile);
   background: var(--surface);
-  box-shadow: var(--shadow);
-  transition: background var(--fast) ease, border-color var(--fast) ease;
+  transition: background var(--fast) ease, border-color var(--fast) ease, box-shadow var(--fast) ease;
+}
+
+.term[data-error] {
+  box-shadow: 0 0 0 2px var(--accent-ring);
 }
 
 .term[data-optional] {
@@ -603,25 +608,50 @@
 }
 
 .courseCard {
-  border-radius: var(--r-sm);
-  border-left: 3px solid transparent;
-  background: var(--surface-2);
+  border-radius: 12px;
+  background: var(--cat-other-bg);
+  box-shadow: inset 3px 0 0 transparent;
 }
+.courseCard[data-cat="major"] { background: var(--cat-major-bg); }
+.courseCard[data-cat="gened"] { background: var(--cat-gened-bg); }
+.courseCard[data-cat="college"] { background: var(--cat-college-bg); }
+.courseCard[data-cat="elective"] { background: var(--cat-elective-bg); }
+.courseCard[data-cat="other"] { background: var(--cat-other-bg); }
+.courseCard[data-cat="major"] .courseId { color: var(--cat-major-fg); }
+.courseCard[data-cat="gened"] .courseId { color: var(--cat-gened-fg); }
+.courseCard[data-cat="college"] .courseId { color: var(--cat-college-fg); }
+.courseCard[data-cat="elective"] .courseId { color: var(--cat-elective-fg); }
+.courseCard[data-cat="other"] .courseId { color: var(--cat-other-fg); }
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin: 4px 0 16px;
+  color: var(--text-2);
+  font: var(--t-foot);
+}
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 10px; height: 10px; border-radius: 50%; background: var(--cat-other-fg); }
+.legend [data-cat="major"] i { background: var(--cat-major-fg); }
+.legend [data-cat="gened"] i { background: var(--cat-gened-fg); }
+.legend [data-cat="college"] i { background: var(--cat-college-fg); }
+.legend [data-cat="elective"] i { background: var(--cat-elective-fg); }
 
 .courseCard[data-severity="error"] {
-  border-left-color: var(--accent);
+  box-shadow: inset 3px 0 0 var(--accent);
 }
 
 .courseCard[data-severity="warning"] {
-  border-left-color: var(--soon);
+  box-shadow: inset 3px 0 0 var(--soon);
 }
 
 .courseCard[data-severity="confirm"] {
-  border-left-color: var(--text-3);
+  box-shadow: inset 3px 0 0 var(--text-3);
 }
 
 .courseCard[data-severity="info"] {
-  border-left-color: var(--open);
+  box-shadow: inset 3px 0 0 var(--open);
 }
 
 .courseButton {
@@ -650,13 +680,13 @@
 }
 
 .courseCredits {
-  color: var(--text-2);
+  color: color-mix(in srgb, var(--text) 62%, transparent);
   font: var(--t-foot);
   font-variant-numeric: tabular-nums;
 }
 
 .courseTitle {
-  color: var(--text-2);
+  color: color-mix(in srgb, var(--text) 62%, transparent);
   font: var(--t-foot);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -682,10 +712,10 @@
 }
 
 .addCourse {
-  padding: 8px;
-  border: 0.5px dashed var(--separator);
-  border-radius: var(--r-sm);
-  background: none;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--surface-2);
   color: var(--accent);
   font: var(--t-sub);
   font-weight: 500;
@@ -694,10 +724,10 @@
 
 .addTerm {
   margin-top: 4px;
-  padding: 10px;
-  border: 0.5px dashed var(--separator);
-  border-radius: var(--r-md);
-  background: none;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--surface-2);
   color: var(--accent);
   font: var(--t-sub);
   font-weight: 600;
@@ -815,7 +845,10 @@
 }
 
 .issueRow[data-severity="error"] {
-  border-left-color: var(--accent);
+  border-left: 0;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: var(--accent-tint);
 }
 
 .issueRow[data-severity="warning"] {

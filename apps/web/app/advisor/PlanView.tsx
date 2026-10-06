@@ -10,6 +10,8 @@ import { cardNote, courseKey, type IssueGroups, type Severity } from "@/lib/advi
 import type { AdvisorPlan, PlanTermState } from "@/lib/advisor/plan-state";
 import type { PriorCreditResult } from "@/lib/advisor/prior-credit";
 import { formatKeyDates, termKeyDates } from "@/lib/calendar";
+import { PROGRAM_OPTIONS } from "@/lib/advisor/programs";
+import { legendCategories, rowCategory, type RowCategory } from "@/lib/advisor/row-category";
 import { searchCourses } from "@/lib/advisor/search";
 import { academicYears, parseTerm } from "@/lib/advisor/terms";
 import type { AnalysisState, OpenCourse } from "./AdvisorApp";
@@ -55,6 +57,20 @@ export function PlanView({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plan, ready]);
 
+  const catOf = useMemo(() => {
+    const kinds = Object.fromEntries(PROGRAM_OPTIONS.map((p) => [p.id, p.kind]));
+    const cache = new Map<string, RowCategory>();
+    return (id: string): RowCategory => {
+      let c = cache.get(id);
+      if (!c) {
+        c = analysis.result ? rowCategory(id, analysis.result, kinds) : "other";
+        cache.set(id, c);
+      }
+      return c;
+    };
+  }, [analysis.result]);
+  const legend = legendCategories(plan.terms.flatMap((t) => t.courses.map((c) => catOf(c.id))));
+
   return (
     <div>
       <div>
@@ -86,6 +102,7 @@ export function PlanView({
                   catalog={catalog}
                   groups={checked?.groups ?? null}
                   creditsOf={creditsOf}
+                  catOf={catOf}
                   keyDates={formatKeyDates(termKeyDates(calendar, name, name === lastTerm))}
                   difficulty={difficulty.get(name)}
                   onOpenCourse={onOpenCourse}
@@ -114,11 +131,29 @@ export function PlanView({
             ) : null}
           </div>
         ) : null}
+        {legend.length ? (
+          <div className={styles.legend} aria-label="Course colors">
+            {legend.map((c) => (
+              <span key={c} data-cat={c}>
+                <i aria-hidden="true" />
+                {LEGEND_LABELS[c]}
+              </span>
+            ))}
+          </div>
+        ) : null}
         <PlanTips checked={checked} analysis={analysis} />
       </div>
     </div>
   );
 }
+
+const LEGEND_LABELS: Record<RowCategory, string> = {
+  major: "Major",
+  gened: "Gen Ed",
+  college: "College",
+  elective: "Elective",
+  other: "Other",
+};
 
 function nextMainTerm(last: string): string {
   const t = parseTerm(last)!;
@@ -154,6 +189,7 @@ function TermColumn({
   catalog,
   groups,
   creditsOf,
+  catOf,
   keyDates,
   difficulty,
   onOpenCourse,
@@ -162,6 +198,7 @@ function TermColumn({
   catalog: CatalogState;
   groups: IssueGroups | null;
   creditsOf: (id: string, own?: number) => number | null;
+  catOf: (id: string) => RowCategory;
   keyDates: string;
   difficulty: TermDifficulty | undefined;
   onOpenCourse: (c: OpenCourse) => void;
@@ -189,6 +226,7 @@ function TermColumn({
     <div
       className={styles.term}
       data-optional={optional || undefined}
+      data-error={termIssues.some((i) => i.severity === "error") || undefined}
       data-over={over || undefined}
       onDragOver={(e) => {
         if (e.dataTransfer.types.includes(DRAG_TYPE)) {
@@ -245,6 +283,7 @@ function TermColumn({
               key={c.id}
               className={styles.courseCard}
               data-severity={worst}
+              data-cat={catOf(c.id)}
               draggable
               onDragStart={(e) => {
                 e.dataTransfer.setData(DRAG_TYPE, JSON.stringify({ id: c.id, from: term.name }));
