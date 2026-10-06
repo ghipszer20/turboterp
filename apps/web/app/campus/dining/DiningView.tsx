@@ -29,6 +29,9 @@ type Props = {
   preferredMeal: string;
   /** The `?q=` food search, already parsed (null: show the menu). */
   query: string | null;
+  /** Hall and meal the `?q=` search is limited to (null: all). */
+  searchHallId: number | null;
+  searchMeal: string | null;
 };
 
 const sliceKey = (hallId: number, meal: string) => `${hallId}|${meal}`;
@@ -58,7 +61,7 @@ function DietTags({ item }: { item: MenuItem }) {
   );
 }
 
-export function DiningView({ date, halls, initial, preferredMeal, query }: Props) {
+export function DiningView({ date, halls, initial, preferredMeal, query, searchHallId, searchMeal }: Props) {
   const [hallId, setHallId] = useState(initial.hallId);
   const [mealName, setMealName] = useState(preferredMeal);
   const [diets, setDiets] = useState<DietTag[]>([]);
@@ -77,7 +80,7 @@ export function DiningView({ date, halls, initial, preferredMeal, query }: Props
     if (query === null) return;
     const term = query;
     const ctrl = new AbortController();
-    fetch(`/api/dining/search?${new URLSearchParams({ date, q: term })}`, { signal: ctrl.signal })
+    fetch(`/api/dining/search?${new URLSearchParams({ date, q: term, ...(searchHallId ? { hall: String(searchHallId) } : {}), ...(searchMeal ? { meal: searchMeal } : {}) })}`, { signal: ctrl.signal })
       .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
       .then((d: { results: SearchMatch[]; capped: boolean }) =>
         setFetched({ term, state: { status: "done", results: d.results, capped: d.capped } }),
@@ -86,7 +89,7 @@ export function DiningView({ date, halls, initial, preferredMeal, query }: Props
         if (!(e instanceof DOMException && e.name === "AbortError")) setFetched({ term, state: { status: "error" } });
       });
     return () => ctrl.abort();
-  }, [query, date]);
+  }, [query, date, searchHallId, searchMeal]);
 
   const hall = halls.find((h) => h.id === hallId)!;
   const meal = resolveMeal(hall.meals, mealName);
@@ -127,7 +130,7 @@ export function DiningView({ date, halls, initial, preferredMeal, query }: Props
       <div className={styles.controls}>
         <SearchField
           placeholder="Search for a food"
-          onSubmit={(q) => router.push(parseDiningQuery(q) ? `?${new URLSearchParams({ q })}` : "?")}
+          onSubmit={(q) => router.push(parseDiningQuery(q) ? `?${new URLSearchParams({ q, ...(searchHallId ? { hall: String(searchHallId) } : {}), ...(searchMeal ? { meal: searchMeal } : {}) })}` : "?")}
         />
         {searching ? null : (
           <>
@@ -170,7 +173,7 @@ export function DiningView({ date, halls, initial, preferredMeal, query }: Props
       </div>
 
       {searching ? (
-        <SearchResults query={query} search={search} />
+        <SearchResults query={query} search={search} scope={[halls.find((h) => h.id === searchHallId)?.name, searchMeal].filter(Boolean).join(" · ")} />
       ) : hall.meals === null || loaded === "error" ? (
         <Card>
           <EmptyState title={`Couldn’t load ${hall.name}`}>UMD Dining didn&apos;t respond. Try again in a few minutes.</EmptyState>
@@ -215,7 +218,7 @@ export function DiningView({ date, halls, initial, preferredMeal, query }: Props
   );
 }
 
-function SearchResults({ query, search }: { query: string; search: SearchState }) {
+function SearchResults({ query, search, scope }: { query: string; search: SearchState; scope: string }) {
   if (search.status === "error") {
     return (
       <Card className={styles.results}>
@@ -232,7 +235,7 @@ function SearchResults({ query, search }: { query: string; search: SearchState }
   if (search.results.length === 0) {
     return (
       <Card className={styles.results}>
-        <EmptyState title={`No foods match “${query}”`}>Try a shorter or different word. {clear}</EmptyState>
+        <EmptyState title={`No foods match “${query}”${scope ? ` at ${scope}` : ""}`}>Try a shorter or different word. {clear}</EmptyState>
       </Card>
     );
   }
@@ -240,7 +243,7 @@ function SearchResults({ query, search }: { query: string; search: SearchState }
   return (
     <div className={styles.stations} aria-live="polite">
       <p className={styles.resultsHead}>
-        Foods matching “{query}” today {clear}
+        Foods matching “{query}” {scope ? `at ${scope}` : "today"} {clear}
       </p>
       {groups.map((g) => (
         <Section key={`${g.hall}|${g.meal}|${g.station}`}>

@@ -5,14 +5,14 @@ import { addDays, campusDate, campusMinutes, DINING_HALLS } from "@turboterp/cam
 import { LiveStatus } from "@/components/LiveStatus";
 import { Card, Notice, Page, Row, Section, SkeletonCard } from "@/components/ui";
 import { getAllDiningMenus, getStampVenues, safe } from "@/lib/campus";
-import { diningSlice, hallFromQuery, parseDiningQuery } from "@/lib/dining";
+import { diningSlice, hallFromQuery, mealFromQuery, mealsServed, parseDiningQuery } from "@/lib/dining";
 import { OTHER_STAMP_VENUES } from "@/lib/stamp";
 import { currentMealName, hoursLabel } from "@/lib/status";
 import { DiningView } from "./DiningView";
 
 export const metadata: Metadata = { title: "Dining" };
 
-export default function DiningPage({ searchParams }: { searchParams: Promise<{ hall?: string | string[]; q?: string | string[] }> }) {
+export default function DiningPage({ searchParams }: { searchParams: Promise<{ hall?: string | string[]; q?: string | string[]; meal?: string | string[] }> }) {
   return (
     <Page title="Dining" subtitle="Campus">
       <Suspense fallback={<SkeletonCard rows={8} />}>
@@ -58,7 +58,7 @@ async function Stamp() {
 
 // One hall's current meal ships with the page: the hall a link asked for (?hall=16, from Today's
 // rows), else the first. Other halls and meals load from /api/dining when tapped.
-async function Menus({ searchParams }: { searchParams: Promise<{ hall?: string | string[]; q?: string | string[] }> }) {
+async function Menus({ searchParams }: { searchParams: Promise<{ hall?: string | string[]; q?: string | string[]; meal?: string | string[] }> }) {
   await connection();
   const params = await searchParams;
   const query = parseDiningQuery(params.q);
@@ -71,7 +71,8 @@ async function Menus({ searchParams }: { searchParams: Promise<{ hall?: string |
     const r = results[i]!;
     return { id: h.id, name: h.short, meals: r.ok ? r.data.meals.map((m) => m.name) : null };
   });
+  const searchMeal = mealFromQuery(params.meal, mealsServed(results.map((r) => (r.ok ? r.data : null))));
   const first = results[index]!;
   const initial = { hallId: DINING_HALLS[index]!.id, ...diningSlice(first.ok ? first.data : null, preferredMeal) };
-  return <DiningView date={today} halls={halls} initial={initial} preferredMeal={preferredMeal} query={query} />;
+  return <DiningView date={today} halls={halls} initial={initial} preferredMeal={preferredMeal} query={query} searchHallId={asked} searchMeal={searchMeal} />;
 }
