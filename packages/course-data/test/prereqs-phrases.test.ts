@@ -163,3 +163,24 @@ describe("P4: counted lists are manual, not one-of", () => {
     it(id, () => expect(parsePrerequisite(TEXT)).toEqual(expected));
   }
 });
+
+describe("P5: no sentence split after an initial or abbreviation", () => {
+  const PERM = "permission of BMGT-Robert H. Smith School of Business";
+  it("BMGT302", () => {
+    expect(parsePrerequisite(`BMGT301; or ${PERM}.`)).toEqual(any(n("BMGT301"), man(PERM)));
+  });
+  it("BUFN710", () => {
+    expect(parsePrerequisite(`BUFN610; or ${PERM}.`)).toEqual(any(n("BUFN610"), man(PERM)));
+  });
+  it("BULM701", () => {
+    expect(parsePrerequisite(`BULM700; or ${PERM}.`)).toEqual(any(n("BULM700"), man(PERM)));
+  });
+  for (const id of ["BMGT843", "BMSO600", "BUMO790"]) {
+    it(id, () => expect(parsePrerequisite(`Permission of BMGT-Robert H. Smith School of Business.`)).toEqual(man("Permission of BMGT-Robert H. Smith School of Business")));
+  }
+  it("does not split after e.g. / ex.", () => {
+    expect(parsePrerequisite("Programming course, e.g. Python; and BSCI105.")).toEqual(
+      all(man("Programming course, e.g. Python"), n("BSCI105")),
+    );
+  });
+});
