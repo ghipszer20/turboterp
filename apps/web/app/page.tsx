@@ -1,15 +1,25 @@
 import { Suspense } from "react";
+import Link from "next/link";
 import { connection } from "next/server";
 import { addDays, campusDate, campusMinutes, DINING_HALLS, orderLibraries, recWellOnDate } from "@turboterp/campus-data";
 import { BusIcon, DiningIcon, GymIcon, LibraryIcon, RoomIcon } from "@/components/icons";
+import { NextClassHero, type UpNext } from "@/app/NextClassHero";
 import { RegistrationCountdown } from "@/app/RegistrationCountdown";
-import { LiveStatus } from "@/components/LiveStatus";
-import { Card, IconTile, Page, Row, Section, SkeletonCard } from "@/components/ui";
-import { getAllDiningMenus, getLibraryHours, getRecWellAreas, getRoutesOn, getStampVenues, safe } from "@/lib/campus";
+import { HeroRow, Page, Section, SearchField, SkeletonCard, Tile, TileGrid } from "@/components/ui";
+import {
+  getAcademicCalendar,
+  getAllDiningMenus,
+  getLibraryHours,
+  getRecWellAreas,
+  getRoutesOn,
+  getStampVenues,
+  safe,
+} from "@/lib/campus";
+import { eventTitle, formatEventDate, nextEvent } from "@/lib/calendar";
 import { stampSummary } from "@/lib/stamp";
 import { gymRowTitle, MAIN_GYMS } from "@/lib/gyms";
 import { compactLibraryName } from "@/lib/libraries";
-import { currentMealName, mealHighlights } from "@/lib/status";
+import { currentMealName, hoursStatus, mealFoods } from "@/lib/status";
 
 export default function TodayPage() {
   return (
@@ -22,13 +32,19 @@ export default function TodayPage() {
 function TodaySkeleton() {
   return (
     <Page title="Today">
-      <SkeletonCard rows={3} />
+      <SkeletonCard rows={2} />
       <Section>
-        <SkeletonCard rows={4} />
+        <TileGrid>
+          {Array.from({ length: 4 }, (_, i) => (
+            <SkeletonCard key={i} rows={2} />
+          ))}
+        </TileGrid>
       </Section>
     </Page>
   );
 }
+
+const sectionLink = { color: "var(--accent)", font: "var(--t-sub)", textDecoration: "none" } as const;
 
 async function Today() {
   await connection();
@@ -44,19 +60,29 @@ async function Today() {
 
   return (
     <Page title="Today" subtitle={dateLabel}>
-      <RegistrationCountdown />
-      <Section title="Dining">
-        <Suspense fallback={<SkeletonCard rows={3} />}>
+      <Suspense fallback={<SkeletonCard rows={2} />}>
+        <Hero today={today} />
+      </Suspense>
+      <Section
+        title="Dining"
+        action={
+          <Link href="/campus/dining" style={sectionLink}>
+            All menus
+          </Link>
+        }
+      >
+        <SearchField placeholder="Search for a food across all dining halls" href="/campus/dining?q=" />
+        <Suspense fallback={<SkeletonGrid />}>
           <Dining today={today} minutes={minutes} />
         </Suspense>
       </Section>
       <Section title="Study">
-        <Suspense fallback={<SkeletonCard rows={3} />}>
+        <Suspense fallback={<SkeletonGrid />}>
           <Libraries today={today} minutes={minutes} />
         </Suspense>
       </Section>
       <Section title="Fitness">
-        <Suspense fallback={<SkeletonCard rows={2} />}>
+        <Suspense fallback={<SkeletonGrid />}>
           <Gyms today={today} minutes={minutes} />
         </Suspense>
       </Section>
@@ -69,41 +95,57 @@ async function Today() {
   );
 }
 
+function SkeletonGrid() {
+  return (
+    <TileGrid>
+      {Array.from({ length: 4 }, (_, i) => (
+        <SkeletonCard key={i} rows={2} />
+      ))}
+    </TileGrid>
+  );
+}
+
+async function Hero({ today }: { today: string }) {
+  const res = await safe(getAcademicCalendar);
+  const event = res.ok ? nextEvent(res.data, today) : undefined;
+  const upNext: UpNext | null = event ? { title: eventTitle(event), sub: formatEventDate(event) } : null;
+  return (
+    <HeroRow>
+      <NextClassHero upNext={upNext} />
+      <RegistrationCountdown />
+    </HeroRow>
+  );
+}
+
 async function Dining({ today, minutes }: { today: string; minutes: number }) {
   const [menus, stamp] = await Promise.all([getAllDiningMenus(today), safe(getStampVenues)]);
   const meal = currentMealName(minutes);
   return (
-    <Card>
+    <TileGrid>
       {DINING_HALLS.map((hall, i) => {
         const r = menus[i]!;
         const m = r.ok ? (r.data.meals.find((x) => x.name === meal) ?? r.data.meals[0]) : undefined;
         return (
-          <Row
+          <Tile
             key={hall.id}
             href={`/campus/dining?hall=${hall.id}`}
-            leading={
-              <IconTile>
-                <DiningIcon />
-              </IconTile>
-            }
+            icon={<DiningIcon />}
+            area="dining"
             title={hall.short}
-            subtitle={!r.ok ? "Menu unavailable" : m ? `${m.name}: ${mealHighlights(m)}` : "No menu posted today"}
+            sub={!r.ok ? "Menu unavailable" : m ? mealFoods(m) : "No menu posted today"}
           />
         );
       })}
       {stamp.ok && (
-        <Row
+        <Tile
           href="/campus/dining"
-          leading={
-            <IconTile>
-              <DiningIcon />
-            </IconTile>
-          }
+          icon={<DiningIcon />}
+          area="dining"
           title="Stamp"
-          subtitle={stampSummary(stamp.data, today, minutes)}
+          sub={stampSummary(stamp.data, today, minutes)}
         />
       )}
-    </Card>
+    </TileGrid>
   );
 }
 
@@ -111,31 +153,30 @@ async function Libraries({ today, minutes }: { today: string; minutes: number })
   const res = await safe(getLibraryHours);
   const libs = res.ok ? orderLibraries(res.data.filter((l) => l.kind === "library")) : [];
   return (
-    <Card>
-      {libs.map((lib) => (
-        <Row
-          key={lib.id}
-          href="/campus/libraries"
-          leading={
-            <IconTile tone="neutral">
-              <LibraryIcon />
-            </IconTile>
-          }
-          title={compactLibraryName(lib.name)}
-          subtitle={<LiveStatus hours={lib.days[today]} tomorrow={lib.days[addDays(today, 1)]} initialMinutes={minutes} inline />}
-        />
-      ))}
-      <Row
+    <TileGrid>
+      {libs.map((lib) => {
+        const s = hoursStatus(lib.days[today], minutes, lib.days[addDays(today, 1)]);
+        return (
+          <Tile
+            key={lib.id}
+            href="/campus/libraries"
+            icon={<LibraryIcon />}
+            area="study"
+            title={compactLibraryName(lib.name)}
+            sub={s.text}
+            status={s.status}
+          />
+        );
+      })}
+      <Tile
         href="/campus/rooms"
-        leading={
-          <IconTile>
-            <RoomIcon />
-          </IconTile>
-        }
+        icon={<RoomIcon />}
+        area="study"
         title="Find a study room"
-        subtitle="Open rooms at every library, right now"
+        sub="Open rooms at every library"
+        accent
       />
-    </Card>
+    </TileGrid>
   );
 }
 
@@ -145,25 +186,26 @@ async function Gyms({ today, minutes }: { today: string; minutes: number }) {
     ? pickMain(recWellOnDate(res.data, today), MAIN_GYMS, (a) => `${a.group} | ${a.name}`)
     : [];
   return (
-    <Card>
+    <TileGrid>
       {buildings.length === 0 ? (
-        <Row href="/campus/gym" title="Gyms & Rec" subtitle="See today's hours" />
+        <Tile href="/campus/gym" icon={<GymIcon />} area="fitness" title="Gyms & Rec" sub="See today's hours" />
       ) : (
-        buildings.map((b) => (
-          <Row
-            key={`${b.group}-${b.name}`}
-            href="/campus/gym"
-            leading={
-              <IconTile tone="neutral">
-                <GymIcon />
-              </IconTile>
-            }
-            title={gymRowTitle(b.group, b.name)}
-            subtitle={<LiveStatus hours={b.hours} tomorrow={b.tomorrow} initialMinutes={minutes} inline />}
-          />
-        ))
+        buildings.map((b) => {
+          const s = hoursStatus(b.hours, minutes, b.tomorrow);
+          return (
+            <Tile
+              key={`${b.group}-${b.name}`}
+              href="/campus/gym"
+              icon={<GymIcon />}
+              area="fitness"
+              title={gymRowTitle(b.group, b.name)}
+              sub={s.text}
+              status={s.status}
+            />
+          );
+        })
       )}
-    </Card>
+    </TileGrid>
   );
 }
 
@@ -171,18 +213,14 @@ async function Buses({ today }: { today: string }) {
   const res = await safe(() => getRoutesOn(today));
   const count = res.ok ? res.data.routes.length : null;
   return (
-    <Card>
-      <Row
-        href="/campus/transport"
-        leading={
-          <IconTile>
-            <BusIcon />
-          </IconTile>
-        }
-        title="Shuttle-UM"
-        subtitle={count === null ? "Departures near you" : `${count} routes running today · departures near you`}
-      />
-    </Card>
+    <Tile
+      wide
+      href="/campus/transport"
+      icon={<BusIcon />}
+      area="transport"
+      title="Shuttle-UM"
+      sub={count === null ? "Departures near you" : `${count} routes running today · departures near you`}
+    />
   );
 }
 

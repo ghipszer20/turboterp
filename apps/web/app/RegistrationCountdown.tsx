@@ -3,12 +3,10 @@
 // Today card: counts down to the registration appointment the student typed in, only while it
 // is stored and still in the future. Links to the checklist on the Schedule tab.
 
-import Link from "next/link";
 import { useMemo, useSyncExternalStore } from "react";
-import { Card, Section } from "@/components/ui";
+import { HeroStat } from "@/components/ui";
 import { easternToDate, parsePrep } from "@/lib/schedule/registration";
 import { prepStore } from "@/lib/schedule/registration-store";
-import styles from "./schedule/registration.module.css";
 
 export function countdownText(ms: number): string {
   const mins = Math.floor(ms / 60_000);
@@ -45,14 +43,6 @@ export function RegistrationCountdown() {
     hour: "numeric",
     minute: "2-digit",
   });
-  return (
-    <Section title="Registration">
-      <Card>
-        <Link href="/schedule#register" className={styles.countdown}>
-          <strong>{countdownText(next.getTime() - now)}</strong>
-          <div className={styles.muted}>Registration appointment {when}. Get ready to register</div>
-        </Link>
-      </Card>
-    </Section>
-  );
+  const [num, ...unit] = countdownText(next.getTime() - now).replace(" to go", "").split(" ");
+  return <HeroStat number={num} text={`${unit.join(" ")} to registration (${when})`} />;
 }
