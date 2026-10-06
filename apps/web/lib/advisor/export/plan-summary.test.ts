@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { planSummaryLines } from "./plan-summary";
+import { earnedCredits, planSummaryLines } from "./plan-summary";
 
 describe("planSummaryLines", () => {
   it("lists credits and requirement progress per program", () => {
@@ -15,5 +15,21 @@ describe("planSummaryLines", () => {
     const lines = planSummaryLines({ creditsEarned: 0, creditsPlanned: 0, programs });
     expect(lines.length).toBeLessThanOrEqual(40);
     expect(lines.every((l) => l.length <= 200)).toBe(true);
+  });
+});
+
+describe("earnedCredits", () => {
+  it("counts completed courses that earn credit, not F/W or planned ones", () => {
+    const terms = [
+      { courses: [
+        { id: "A", status: "completed" as const, grade: "A" },
+        { id: "F", status: "completed" as const, grade: "F" },
+        { id: "W", status: "completed" as const, grade: " w " },
+        { id: "AP", status: "completed" as const },
+        { id: "P", status: "planned" as const, grade: "B" },
+        { id: "N" },
+      ] },
+    ];
+    expect(earnedCredits(terms, () => 3)).toBe(6);
   });
 });

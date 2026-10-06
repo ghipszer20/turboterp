@@ -58,12 +58,12 @@ export function ExportMenu({ plan, analysis, catalog, calendar = [], priorCredit
     try {
       const planExport = await makePlanExport();
       const { buildPdf } = await import("@/lib/advisor/export/pdf");
-      const { planSummaryLines } = await import("@/lib/advisor/export/plan-summary");
+      const { earnedCredits, planSummaryLines } = await import("@/lib/advisor/export/plan-summary");
       const doc = await buildPdf(planExport);
       const bytes = new Uint8Array(doc.output("arraybuffer") as ArrayBuffer);
       let bin = "";
       for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
-      const earned = plan.terms.reduce((sum, t) => sum + t.courses.filter((c) => c.grade).reduce((s2, c) => s2 + (c.credits ?? catalog.get(c.id)?.credits.min ?? 0), 0), 0);
+      const earned = earnedCredits(plan.terms, (c) => c.credits ?? catalog.get(c.id)?.credits.min ?? 0);
       const summary = planSummaryLines({
         creditsEarned: earned + priorCredits,
         creditsPlanned: planExport.creditsPlanned,
