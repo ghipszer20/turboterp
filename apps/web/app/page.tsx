@@ -5,7 +5,7 @@ import { addDays, campusDate, campusMinutes, DINING_HALLS, orderLibraries, recWe
 import { BusIcon, DiningIcon, GymIcon, LibraryIcon, RoomIcon } from "@/components/icons";
 import { NextClassHero, type UpNext } from "@/app/NextClassHero";
 import { RegistrationCountdown } from "@/app/RegistrationCountdown";
-import { HeroRow, Page, Section, SearchField, SkeletonCard, Tile, TileGrid } from "@/components/ui";
+import { HeroRow, Page, Section, SkeletonCard, Tile, TileGrid } from "@/components/ui";
 import {
   getAcademicCalendar,
   getAllDiningMenus,
@@ -16,6 +16,8 @@ import {
   safe,
 } from "@/lib/campus";
 import { eventTitle, formatEventDate, nextEvent } from "@/lib/calendar";
+import { FoodSearch } from "@/app/FoodSearch";
+import { mealsServed } from "@/lib/dining";
 import { stampSummary } from "@/lib/stamp";
 import { gymRowTitle, MAIN_GYMS } from "@/lib/gyms";
 import { compactLibraryName, MAIN_LIBRARIES } from "@/lib/libraries";
@@ -71,9 +73,13 @@ async function Today() {
           </Link>
         }
       >
-        <SearchField placeholder="Search for a food across all dining halls" href="/campus/dining?q=" />
         <Suspense fallback={<SkeletonGrid />}>
           <Dining today={today} minutes={minutes} />
+        </Suspense>
+      </Section>
+      <Section title="Find a food">
+        <Suspense fallback={<SkeletonCard rows={2} />}>
+          <FindFood today={today} />
         </Suspense>
       </Section>
       <Section title="Study">
@@ -114,6 +120,18 @@ async function Hero({ today }: { today: string }) {
       <NextClassHero upNext={upNext} />
       <RegistrationCountdown />
     </HeroRow>
+  );
+}
+
+async function FindFood({ today }: { today: string }) {
+  await connection();
+  const menus = (await getAllDiningMenus(today)).map((m) => (m.ok ? m.data : null));
+  return (
+    <FoodSearch
+      date={today}
+      halls={DINING_HALLS.map((h) => ({ id: h.id, name: h.short }))}
+      meals={mealsServed(menus)}
+    />
   );
 }
 
