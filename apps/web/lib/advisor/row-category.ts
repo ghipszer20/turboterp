@@ -9,6 +9,8 @@ const ORDER: RowCategory[] = ["major", "gened", "college", "elective", "other"];
 
 export function rowCategory(courseId: string, analysis: Pick<Analysis, "audits">, programKinds?: Record<string, string>): RowCategory {
   const cat = courseCategories(analysis, programKinds).get(courseId);
+  // No requirement claimed it: it's a free elective (amber), never an uncolored row.
+  if (cat === undefined) return "elective";
   if (cat === "major") return "major";
   if (cat === "gen-ed") return "gened";
   if (cat === "other") {

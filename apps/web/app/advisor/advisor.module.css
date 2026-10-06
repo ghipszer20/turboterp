@@ -607,21 +607,20 @@
   gap: 6px;
 }
 
+/* Every row is filled with its category's pastel and outlined in the same hue, like the Schedule's course chips. */
 .courseCard {
+  --row-bg: var(--cat-elective-bg);
+  --row-fg: var(--cat-elective-fg);
   border-radius: 12px;
-  background: var(--cat-other-bg);
-  box-shadow: inset 3px 0 0 transparent;
+  background: var(--row-bg);
+  border: 1px solid color-mix(in srgb, var(--row-fg) 30%, transparent);
 }
-.courseCard[data-cat="major"] { background: var(--cat-major-bg); }
-.courseCard[data-cat="gened"] { background: var(--cat-gened-bg); }
-.courseCard[data-cat="college"] { background: var(--cat-college-bg); }
-.courseCard[data-cat="elective"] { background: var(--cat-elective-bg); }
-.courseCard[data-cat="other"] { background: var(--cat-other-bg); }
-.courseCard[data-cat="major"] .courseId { color: var(--cat-major-fg); }
-.courseCard[data-cat="gened"] .courseId { color: var(--cat-gened-fg); }
-.courseCard[data-cat="college"] .courseId { color: var(--cat-college-fg); }
-.courseCard[data-cat="elective"] .courseId { color: var(--cat-elective-fg); }
-.courseCard[data-cat="other"] .courseId { color: var(--cat-other-fg); }
+.courseCard[data-cat="major"] { --row-bg: var(--cat-major-bg); --row-fg: var(--cat-major-fg); }
+.courseCard[data-cat="gened"] { --row-bg: var(--cat-gened-bg); --row-fg: var(--cat-gened-fg); }
+.courseCard[data-cat="college"] { --row-bg: var(--cat-college-bg); --row-fg: var(--cat-college-fg); }
+.courseCard[data-cat="elective"] { --row-bg: var(--cat-elective-bg); --row-fg: var(--cat-elective-fg); }
+.courseCard[data-cat="other"] { --row-bg: var(--cat-other-bg); --row-fg: var(--cat-other-fg); }
+.courseCard .courseId { color: var(--row-fg); }
 
 .legend {
   display: flex;
@@ -638,20 +637,13 @@
 .legend [data-cat="college"] i { background: var(--cat-college-fg); }
 .legend [data-cat="elective"] i { background: var(--cat-elective-fg); }
 
+/* A problem shows as the outline's color; "confirm" and "info" rows explain themselves in text. */
 .courseCard[data-severity="error"] {
-  box-shadow: inset 3px 0 0 var(--accent);
+  border: 1.5px solid var(--accent);
 }
 
 .courseCard[data-severity="warning"] {
-  box-shadow: inset 3px 0 0 var(--soon);
-}
-
-.courseCard[data-severity="confirm"] {
-  box-shadow: inset 3px 0 0 var(--text-3);
-}
-
-.courseCard[data-severity="info"] {
-  box-shadow: inset 3px 0 0 var(--open);
+  border: 1.5px solid var(--soon);
 }
 
 .courseButton {

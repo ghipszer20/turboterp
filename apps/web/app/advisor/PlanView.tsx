@@ -63,7 +63,7 @@ export function PlanView({
     if (analysis.result) for (const t of plan.terms) for (const c of t.courses) m.set(c.id, rowCategory(c.id, analysis.result, kinds));
     return m;
   }, [analysis.result, plan.terms]);
-  const catOf = (id: string): RowCategory => cats.get(id) ?? "other";
+  const catOf = (id: string): RowCategory => cats.get(id) ?? "elective";
   const legend = legendCategories(plan.terms.flatMap((t) => t.courses.map((c) => catOf(c.id))));
 
   return (
@@ -147,7 +147,7 @@ const LEGEND_LABELS: Record<RowCategory, string> = {
   gened: "Gen Ed",
   college: "College",
   elective: "Elective",
-  other: "Other",
+  other: "Minor / other program",
 };
 
 function nextMainTerm(last: string): string {
