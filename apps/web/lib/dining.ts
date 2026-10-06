@@ -51,15 +51,19 @@ export const SEARCH_LIMIT = 60;
 export function searchMenus(
   menus: readonly (DiningMenu | null)[],
   query: string,
+  filters: { hallId?: number | null; meal?: string | null } = {},
 ): { results: SearchMatch[]; capped: boolean } {
   const q = query.trim().toLowerCase();
   if (q.length < 2) return { results: [], capped: false };
   const words = q.split(/\s+/);
+  const wantMeal = filters.meal?.trim().toLowerCase() || null;
   const results: SearchMatch[] = [];
   for (const menu of menus) {
     if (!menu) continue;
+    if (filters.hallId != null && menu.hallId !== filters.hallId) continue;
     const hall = DINING_HALLS.find((h) => h.id === menu.hallId)?.short ?? String(menu.hallId);
     for (const meal of menu.meals) {
+      if (wantMeal && meal.name.trim().toLowerCase() !== wantMeal) continue;
       for (const station of meal.stations) {
         const seen = new Set<string>();
         for (const item of station.items) {
@@ -73,6 +77,28 @@ export function searchMenus(
     }
   }
   return { results, capped: false };
+}
+
+const MEAL_ORDER = ["breakfast", "brunch", "lunch", "dinner", "late night"];
+
+/** Distinct meal names across the loaded menus, in day order (unknown names last, in first-seen order). */
+export function mealsServed(menus: readonly (DiningMenu | null)[]): string[] {
+  const names: string[] = [];
+  for (const menu of menus) {
+    for (const m of menu?.meals ?? []) if (!names.includes(m.name)) names.push(m.name);
+  }
+  const rank = (n: string) => {
+    const i = MEAL_ORDER.indexOf(n.trim().toLowerCase());
+    return i === -1 ? MEAL_ORDER.length : i;
+  };
+  return names.map((n, i) => ({ n, i })).sort((a, b) => rank(a.n) - rank(b.n) || a.i - b.i).map((x) => x.n);
+}
+
+/** The `?meal=` filter: the matching known meal (canonical case), or null when absent or unknown. */
+export function mealFromQuery(raw: string | string[] | undefined, meals: readonly string[]): string | null {
+  const first = (Array.isArray(raw) ? raw[0] : raw)?.trim().toLowerCase();
+  if (!first) return null;
+  return meals.find((m) => m.trim().toLowerCase() === first) ?? null;
 }
 
 export function hallFromQuery(raw: string | string[] | undefined, hallIds: readonly number[]): number | null {

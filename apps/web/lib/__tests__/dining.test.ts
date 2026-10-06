@@ -4,6 +4,8 @@ import {
   diningSlice,
   groupSearchHits,
   hallFromQuery,
+  mealFromQuery,
+  mealsServed,
   parseDiningQuery,
   resolveMeal,
   searchMenus,
@@ -134,6 +136,65 @@ describe("hallFromQuery", () => {
     expect(hallFromQuery(undefined, [19, 16, 51])).toBeNull();
     expect(hallFromQuery("abc", [19, 16, 51])).toBeNull();
     expect(hallFromQuery("99", [19, 16, 51])).toBeNull();
+  });
+});
+
+describe("searchMenus filters", () => {
+  const yah: DiningMenu = {
+    hallId: 19,
+    date: "d",
+    meals: [
+      { name: "Brunch", stations: [{ name: "Grill", items: [item("Chicken Waffle")] }] },
+      { name: "Dinner", stations: [{ name: "Woks", items: [item("Orange Chicken")] }] },
+    ],
+  };
+  const south: DiningMenu = {
+    hallId: 16,
+    date: "d",
+    meals: [
+      { name: "Lunch", stations: [{ name: "Deli", items: [item("Chicken Club")] }] },
+      { name: "Dinner", stations: [{ name: "Grill", items: [item("Chicken Tenders")] }] },
+    ],
+  };
+  const all = [yah, south, null];
+
+  it("keeps only the chosen hall", () => {
+    const { results } = searchMenus(all, "chicken", { hallId: 16 });
+    expect(results.map((r) => r.item.name)).toEqual(["Chicken Club", "Chicken Tenders"]);
+  });
+  it("matches the meal name case-insensitively", () => {
+    const { results } = searchMenus(all, "chicken", { meal: "dinner" });
+    expect(results.map((r) => r.item.name)).toEqual(["Orange Chicken", "Chicken Tenders"]);
+  });
+  it("combines hall and meal", () => {
+    const { results } = searchMenus(all, "chicken", { hallId: 19, meal: "Brunch" });
+    expect(results.map((r) => r.item.name)).toEqual(["Chicken Waffle"]);
+  });
+});
+
+describe("mealsServed", () => {
+  it("lists meal names across halls in day order, once each", () => {
+    const m = (name: string) => ({ name, stations: [] });
+    const menus: (DiningMenu | null)[] = [
+      { hallId: 19, date: "d", meals: [m("Brunch"), m("Dinner")] },
+      null,
+      { hallId: 16, date: "d", meals: [m("Breakfast"), m("Lunch"), m("Dinner")] },
+    ];
+    expect(mealsServed(menus)).toEqual(["Breakfast", "Brunch", "Lunch", "Dinner"]);
+  });
+  it("is empty with no menus", () => {
+    expect(mealsServed([null])).toEqual([]);
+  });
+});
+
+describe("mealFromQuery", () => {
+  it("returns a known meal, canonical case", () => {
+    expect(mealFromQuery("dinner", ["Lunch", "Dinner"])).toBe("Dinner");
+  });
+  it("is null when absent or unknown", () => {
+    expect(mealFromQuery(undefined, ["Lunch"])).toBeNull();
+    expect(mealFromQuery("Supper", ["Lunch"])).toBeNull();
+    expect(mealFromQuery("", ["Lunch"])).toBeNull();
   });
 });
 
