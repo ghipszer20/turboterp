@@ -3,7 +3,8 @@
 import { useMemo, useState } from "react";
 import { formatMinutes } from "@turboterp/campus-data/hours";
 import { Chip, Segmented } from "@/components/Segmented";
-import { Card, EmptyState, Section, StatusPill } from "@/components/ui";
+import { RoomIcon } from "@/components/icons";
+import { Card, EmptyState, Section, Tile, TileGrid } from "@/components/ui";
 import { roomFitsSize } from "@/lib/rooms";
 import { useCampusMinutes } from "@/lib/useCampusMinutes";
 import styles from "./rooms.module.css";
@@ -91,33 +92,23 @@ export function RoomsView({
             <EmptyState title="No open rooms">Try another library, a smaller group, or later today.</EmptyState>
           </Card>
         ) : (
-          <Card>
+          <TileGrid>
             {list.map((r) => (
-              <div key={r.id} className={styles.room}>
-                <div className={styles.roomText}>
-                  <p className={styles.roomName}>
-                    {r.name}
-                    {r.capacity ? <span className={styles.cap}> · {r.capacity} {r.capacity === 1 ? "seat" : "seats"}</span> : null}
-                  </p>
-                  <p className={styles.roomSub}>
-                    {r.library} · {r.category.replace(/^.*?Library\s*/i, "") || "Study space"}
-                  </p>
-                  <div className={styles.status}>
-                    {r.current ? (
-                      <StatusPill status="open">Free until {formatMinutes(r.current.end)}</StatusPill>
-                    ) : (
-                      <StatusPill status="closed">
-                        Free {formatMinutes(r.next!.start)}–{formatMinutes(r.next!.end)}
-                      </StatusPill>
-                    )}
-                  </div>
-                </div>
-                <a className={styles.book} href={r.bookingUrl} target="_blank" rel="noreferrer">
-                  Book
-                </a>
-              </div>
+              <Tile
+                key={r.id}
+                href={r.bookingUrl}
+                icon={<RoomIcon />}
+                area="study"
+                title={r.capacity ? `${r.name} · ${r.capacity} ${r.capacity === 1 ? "seat" : "seats"}` : r.name}
+                sub={
+                  r.current
+                    ? `Free until ${formatMinutes(r.current.end)} · ${r.library}`
+                    : `Free ${formatMinutes(r.next!.start)}–${formatMinutes(r.next!.end)} · ${r.library}`
+                }
+                status={r.current ? "open" : "closed"}
+              />
             ))}
-          </Card>
+          </TileGrid>
         )}
       </Section>
     </>

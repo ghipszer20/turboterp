@@ -79,3 +79,24 @@ export function hallFromQuery(raw: string | string[] | undefined, hallIds: reado
   const id = typeof raw === "string" && raw !== "" ? Number(raw) : NaN;
   return hallIds.includes(id) ? id : null;
 }
+
+/** The `?q=` food search from the URL: trimmed, spaces collapsed; null when under 2 characters. */
+export function parseDiningQuery(raw: string | string[] | undefined): string | null {
+  const first = Array.isArray(raw) ? raw[0] : raw;
+  const q = (first ?? "").trim().replace(/\s+/g, " ");
+  return q.length >= 2 ? q : null;
+}
+
+export type SearchGroup = { hall: string; meal: string; station: string; items: string[] };
+
+/** Groups search hits by hall + meal + station, in order of first appearance (hall, then meal), keeping item order. */
+export function groupSearchHits(hits: readonly SearchMatch[]): SearchGroup[] {
+  const groups = new Map<string, SearchGroup>();
+  for (const h of hits) {
+    const key = `${h.hall}|${h.meal}|${h.station}`;
+    const g = groups.get(key);
+    if (g) g.items.push(h.item.name);
+    else groups.set(key, { hall: h.hall, meal: h.meal, station: h.station, items: [h.item.name] });
+  }
+  return [...groups.values()];
+}

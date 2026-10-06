@@ -61,14 +61,17 @@
 }
 
 .stationCard {
-  border: 1px solid var(--card-border);
+  border: 1px solid var(--tile-border);
+  background: var(--tint-dining);
   overflow: hidden;
 }
 
 .station {
-  padding: 0 16px 6px;
-  font: var(--t-sub);
+  padding: 0 4px 6px;
+  font-size: 12.5px;
   font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--text-2);
 }
 
@@ -176,4 +179,31 @@
   padding: 0 16px;
   color: var(--text-3);
   font: var(--t-caption);
+}
+
+.resultsHead {
+  margin: 0;
+  padding: 0 4px;
+  color: var(--text-2);
+  font: var(--t-sub);
+}
+
+.clear {
+  color: var(--accent);
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .stationCard {
+    background: var(--surface);
+  }
+}
+
+:root[data-theme="dark"] .stationCard {
+  background: var(--surface);
+}
+
+.items li.item + li.item {
+  box-shadow: inset 0 1px 0 var(--separator);
 }

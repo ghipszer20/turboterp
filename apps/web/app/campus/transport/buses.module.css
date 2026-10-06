@@ -56,7 +56,7 @@
   padding: 6px;
   list-style: none;
   background: var(--surface);
-  border: 1px solid var(--card-border);
+  border: 1px solid var(--tile-border);
   border-radius: var(--r-md);
   box-shadow: 0 8px 30px rgb(0 0 0 / 0.14);
 }
@@ -171,10 +171,9 @@
   align-items: center;
   gap: 8px;
   padding: 5px 12px 5px 5px;
-  border: 1px solid var(--card-border);
+  border: 1px solid var(--tile-border);
   border-radius: var(--r-pill);
   background: var(--surface);
-  box-shadow: var(--shadow);
   font: var(--t-sub);
 }
 

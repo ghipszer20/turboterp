@@ -18,7 +18,7 @@
 .routeChip {
   flex: none;
   padding: 6px 14px;
-  border: 1px solid var(--card-border);
+  border: 1px solid var(--tile-border);
   border-radius: var(--r-pill);
   background: var(--surface);
   color: var(--text);
@@ -64,7 +64,7 @@
 }
 
 .mapCard {
-  border: 1px solid var(--card-border);
+  border: 1px solid var(--tile-border);
 }
 
 .mapContainer {
@@ -133,7 +133,7 @@
 
 .stopCard {
   margin-top: 14px;
-  border: 1px solid var(--card-border);
+  border: 1px solid var(--tile-border);
 }
 
 .stopHead {

@@ -1,6 +1,55 @@
 import { describe, expect, it } from "vitest";
 import type { DiningMenu } from "@turboterp/campus-data";
-import { diningSlice, hallFromQuery, resolveMeal, searchMenus, stationDisplayName } from "../dining";
+import {
+  diningSlice,
+  groupSearchHits,
+  hallFromQuery,
+  parseDiningQuery,
+  resolveMeal,
+  searchMenus,
+  stationDisplayName,
+  type SearchMatch,
+} from "../dining";
+
+describe("parseDiningQuery", () => {
+  it("trims and collapses spaces", () => {
+    expect(parseDiningQuery("  orange   chicken ")).toBe("orange chicken");
+  });
+  it("is null under 2 characters or absent", () => {
+    expect(parseDiningQuery("a")).toBeNull();
+    expect(parseDiningQuery(" a ")).toBeNull();
+    expect(parseDiningQuery(undefined)).toBeNull();
+  });
+  it("takes the first of repeated params", () => {
+    expect(parseDiningQuery(["xx", "yy"])).toBe("xx");
+  });
+});
+
+describe("groupSearchHits", () => {
+  const hit = (hall: string, meal: string, station: string, name: string): SearchMatch => ({
+    hallId: 1,
+    hall,
+    meal,
+    station,
+    item: { name, labelUrl: null, diets: [], contains: [] },
+  });
+  it("groups by hall, meal and station, keeping item order", () => {
+    const groups = groupSearchHits([
+      hit("Yahentamitsi", "Lunch", "Grill", "Chicken Burger"),
+      hit("Yahentamitsi", "Lunch", "Grill", "Chicken Wrap"),
+      hit("Yahentamitsi", "Dinner", "Woks", "Orange Chicken"),
+      hit("South", "Lunch", "Deli", "Chicken Club"),
+    ]);
+    expect(groups).toEqual([
+      { hall: "Yahentamitsi", meal: "Lunch", station: "Grill", items: ["Chicken Burger", "Chicken Wrap"] },
+      { hall: "Yahentamitsi", meal: "Dinner", station: "Woks", items: ["Orange Chicken"] },
+      { hall: "South", meal: "Lunch", station: "Deli", items: ["Chicken Club"] },
+    ]);
+  });
+  it("is empty for no hits", () => {
+    expect(groupSearchHits([])).toEqual([]);
+  });
+});
 
 const item = (name: string) => ({ name, labelUrl: null, diets: [], contains: [] });
 const menu: DiningMenu = {

@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { connection } from "next/server";
 import { campusDate, campusMinutes, recWellOnDate, type RecWellAreaToday } from "@turboterp/campus-data";
-import { LiveStatus } from "@/components/LiveStatus";
-import { Card, Notice, Page, Row, Section, SkeletonCard, SourceError, SubHeading } from "@/components/ui";
+import { GymIcon } from "@/components/icons";
+import { Notice, Page, Section, SkeletonCard, SourceError, SubHeading, Tile, TileGrid } from "@/components/ui";
 import { getRecWellAreas, safe } from "@/lib/campus";
 import { EPPLEY_SUBSECTION_FALLBACK, regroupEppleyAreas, type RegroupedArea } from "@/lib/gyms";
-import { hoursLabel } from "@/lib/status";
+import { hoursStatus } from "@/lib/status";
 
 export const metadata: Metadata = { title: "Gyms & Rec" };
 
@@ -52,22 +52,22 @@ async function GymList() {
     }
     return (
       <Section key={group} title={group}>
-        {base.length > 0 ? <Card>{base.map((a) => areaRow(a, group, minutes))}</Card> : null}
+        {base.length > 0 ? <TileGrid>{base.map((a) => areaRow(a, group, minutes))}</TileGrid> : null}
         {group === "Eppley Recreation Center"
           ? Object.entries(EPPLEY_SUBSECTION_FALLBACK).map(([label, fallback]) => {
               const subItems = bySubsection.get(label);
               return (
                 <div key={label}>
                   <SubHeading>{label}</SubHeading>
-                  <Card>
+                  <TileGrid>
                     {subItems && subItems.length > 0 ? (
                       subItems.map((a) => areaRow(a, group, minutes))
                     ) : (
                       // No hours for this sub-section in today's sheet -- don't invent them,
                       // just point to the official page.
-                      <Row title={label} subtitle={fallback.description} href={fallback.url} external />
+                      <Tile href={fallback.url} icon={<GymIcon />} area="fitness" title={label} sub={fallback.description} />
                     )}
-                  </Card>
+                  </TileGrid>
                 </div>
               );
             })
@@ -78,14 +78,16 @@ async function GymList() {
 }
 
 function areaRow(a: RecWellAreaToday, group: string, minutes: number) {
+  const s = hoursStatus(a.hours, minutes, a.tomorrow);
   return (
-    <Row
+    <Tile
       key={`${a.group}-${a.name}`}
+      href={a.url ?? "https://recwell.umd.edu"}
+      icon={<GymIcon />}
+      area="fitness"
       title={a.name === group ? "Building" : a.name}
-      subtitle={<LiveStatus hours={a.hours} tomorrow={a.tomorrow} initialMinutes={minutes} inline />}
-      trailing={hoursLabel(a.hours, a.tomorrow)}
-      href={a.url ?? undefined}
-      external
+      sub={s.text}
+      status={s.status}
     />
   );
 }
