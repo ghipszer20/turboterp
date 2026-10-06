@@ -78,7 +78,7 @@ export function CalendarView({ events, today }: { events: AcademicEvent[]; today
       />
       {next ? (
         <Section title="Next up">
-          <Card>
+          <Card className={styles.card}>
             <DateRow e={next} today={today} />
           </Card>
         </Section>
@@ -90,7 +90,7 @@ export function CalendarView({ events, today }: { events: AcademicEvent[]; today
       ) : null}
       {groupByMonth(shown).map((g) => (
         <Section key={g.key} title={g.title}>
-          <Card>
+          <Card className={styles.card}>
             {g.events.map((e) => (
               <DateRow key={`${e.term}-${e.kind}-${e.label}-${e.start}`} e={e} today={today} />
             ))}

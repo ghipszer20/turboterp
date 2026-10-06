@@ -1,7 +1,9 @@
 /* Report an issue page. Cards add a real thin border (ui.module.css cards have shadows only). */
 
-.card {
-  border: 1px solid var(--card-border);
+.card.card {
+  border-radius: var(--r-tile);
+  box-shadow: none;
+  border: 1px solid var(--tile-border);
 }
 
 .form {
