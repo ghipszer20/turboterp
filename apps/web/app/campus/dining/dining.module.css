@@ -193,3 +193,17 @@
   font-weight: 600;
   margin-left: 6px;
 }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .stationCard {
+    background: var(--surface);
+  }
+}
+
+:root[data-theme="dark"] .stationCard {
+  background: var(--surface);
+}
+
+.items li.item + li.item {
+  box-shadow: inset 0 1px 0 var(--separator);
+}
