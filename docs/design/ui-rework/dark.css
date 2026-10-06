@@ -1,0 +1,32 @@
+/* Dark palette for the widget options (body.dark). Mirrors apps/web/app/globals.css dark tokens:
+   OLED black page, #1c1c1e tiles, brighter red, dark pastels for courses. */
+body.dark {
+  background: #26272c;
+  --bg: #000000; --surface: #1c1c1e; --surface-2: #2c2c2e; --sep: rgb(84 84 88 / .5);
+  --text: #f5f5f7; --text-2: #a1a1a6; --text-3: #8e8e93;
+  --accent: #ff4f6d; --accent-tint: rgb(255 79 109 / .14); --accent-tint-2: rgb(255 79 109 / .22); --on-accent: #1c0006;
+  --open: #30d158; --soon: #ff9f0a; --closed: #8e8e93;
+  --shadow: none; --card-border: rgb(235 235 245 / .16);
+  --cat-major-bg: #4a1522; --cat-gened-bg: #10304f; --cat-college-bg: #173a1c; --cat-elective-bg: #3f2e0b;
+  --tint-dining: #3a2314; --ink-dining: #ffb27a;
+  --tint-study: #16243f; --ink-study: #8db4ff;
+  --tint-fitness: #14301f; --ink-fitness: #6fdc8c;
+  --tint-transport: #2a1d44; --ink-transport: #c4a6ff;
+}
+body.dark .boardTitle { color: #c3c6cf; }
+body.dark .frame.phone { border-color: #3a3a3c; }
+body.dark .tabBar { background: rgb(28 28 30 / .92); }
+body.dark .seg button.on { background: #3a3a3c; }
+body.dark .course[data-cat="major"] .cid { color: #ffc2cf; }
+body.dark .course[data-cat="gened"] .cid { color: #b9d9ff; }
+body.dark .course[data-cat="college"] .cid { color: #bfe8b8; }
+body.dark .course .ctitle, body.dark .course .ccr { color: rgb(245 245 247 / .62); }
+body.dark .heroMain { box-shadow: none; }
+body.dark .heroSide { border: .5px solid var(--card-border); }
+body.dark .item, body.dark .term, body.dark .summary, body.dark .week, body.dark .subTabs { border: .5px solid var(--card-border); }
+body.dark .item.accent { border-color: transparent; }
+body.dark .side .tab.active { background: var(--surface-2); }
+body.dark .subTabs a.on { background: var(--accent); color: var(--on-accent); }
+body.dark .mustFix { background: var(--accent-tint); }
+body.dark .extraTerms button { background: var(--surface-2); }
+body.dark .btn.primary.wide { box-shadow: none; }

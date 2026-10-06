@@ -57,6 +57,25 @@ describe("prerequisites", () => {
     expect(of(checkPlan(plan({ "Fall 2026": ["MATH240"] }, AP_CALC), catalog), "prerequisite")).toEqual([]);
   });
 
+it("accepts any higher course in the department for 'MATH115 or higher' (CMSC125)", () => {
+    expect(errors(checkPlan(plan({ "Fall 2026": ["MATH140"], "Spring 2027": ["CMSC125"] }), catalog), "prerequisite")).toEqual([]);
+    const [issue] = of(checkPlan(plan({ "Fall 2026": ["CMSC125"] }), catalog), "prerequisite");
+    expect(issue?.message).toMatch(/^CMSC125 \(Fall 2026\) needs MATH115 or a higher MATH course/);
+  });
+
+  it("accepts any 400-level STAT course for DATA110", () => {
+    expect(errors(checkPlan(plan({ "Fall 2026": ["STAT400"], "Spring 2027": ["DATA110"] }), catalog), "prerequisite")).toEqual([]);
+    const [issue] = errors(checkPlan(plan({ "Fall 2026": ["DATA110"] }), catalog), "prerequisite");
+    expect(issue?.message).toBe(
+      "DATA110 (Fall 2026) needs one of DATA100, STAT100, MATH135 or STAT400 or a higher STAT course finished in an earlier term. None of them is in your plan.",
+    );
+  });
+
+  it("says when a qualifying course in the department is planned too late", () => {
+    const [issue] = errors(checkPlan(plan({ "Fall 2026": ["DATA110"], "Spring 2027": ["STAT400"] }), catalog), "prerequisite");
+    expect(issue?.message).toContain("STAT400 is planned for Spring 2027, which is too late.");
+  });
+
   it("lists every missing piece and each alternative", () => {
     // CMSC351: minimum grade of C- in CMSC250 and CMSC216.
     const issues = checkPlan(plan({ "Fall 2026": ["CMSC351"], "Spring 2027": ["CMSC216"] }), catalog);
@@ -98,6 +117,7 @@ describe("prerequisites", () => {
         course: "CMSC420",
         message:
           "CMSC420 (Spring 2027) also needs something TurboTerp can't check. Confirm it yourself: permission of CMNS-Computer Science department.",
+        short: "Confirm: permission of CMNS-Computer Science department",
       },
     ]);
   });

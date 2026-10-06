@@ -5,6 +5,14 @@ import type { BlockInput } from "./calendar";
 
 export type BlockLabel = { courseId: string; sectionId: string; color: number; label: string; sub?: string };
 
+/** The two lines every block shows, never empty: week view = course + room, gallery = course + section. */
+export function blockLabel(item: BlockInput<BlockLabel>, view: "week" | "gallery"): { top: string; bottom: string } {
+  const d = item.data!;
+  if (view === "gallery") return { top: d.courseId, bottom: d.sectionId };
+  const room = [item.meeting.building, item.meeting.room].filter(Boolean).join(" ");
+  return { top: d.courseId, bottom: room || "TBA" };
+}
+
 export function sectionBlocks(
   s: Section,
   o: { color: number; size: "mini" | "zoom" | "large"; ghost?: boolean },

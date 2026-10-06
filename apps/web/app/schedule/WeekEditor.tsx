@@ -45,6 +45,7 @@ export function WeekEditor({
   scale,
   gradesFor,
   loadGrades,
+  seatsUpdatedAt,
   header,
   initialOpen = null,
 }: {
@@ -58,6 +59,7 @@ export function WeekEditor({
   scale: TimeScale;
   gradesFor: (courseId: string) => Record<string, CourseGrades> | null | undefined;
   loadGrades: (courseId: string) => void;
+  seatsUpdatedAt?: (courseId: string) => string | null;
   header: ReactNode;
   initialOpen?: string | null;
 }) {
@@ -168,6 +170,7 @@ export function WeekEditor({
             preview={preview}
             ratings={ratings}
             grades={gradesFor(open)}
+            seatsUpdatedAt={seatsUpdatedAt?.(open) ?? null}
             overlaps={mode === "own" ? (s) => overlapsWith(s, placed) : undefined}
             onPreview={(s) => setPreview(s && s.id !== current?.id ? s : null)}
             onCommit={(s) => {

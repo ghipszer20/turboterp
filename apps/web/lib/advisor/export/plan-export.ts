@@ -38,6 +38,14 @@ export type PlanExportInput = {
   name?: string;
   today: Date;
   hideGrades?: boolean;
+  /** Shown on the PDF's first line, e.g. "Computer Science"; the Advisor's own programsLabel. */
+  programsLabel?: string;
+  /** e.g. "2026-27". */
+  catalogYear?: string;
+  /** Credits earned before the plan (AP/IB/transfer), for the "(N from prior credit)" note. */
+  priorCreditCredits?: number;
+  /** Formatted key dates by term name (see lib/calendar formatKeyDates). */
+  keyDates?: Record<string, string>;
 };
 
 export type PlanExportCourse = { id: string; title: string; credits: number; grade: string; category: Category };
@@ -45,14 +53,12 @@ export type PlanExportCourse = { id: string; title: string; credits: number; gra
 const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 const layerOf = (p: unknown) => (p as { layer?: string }).layer;
 
-export function buildPlanExport(input: PlanExportInput) {
-  const { plan, catalog, hideGrades } = input;
-
-  // Category: the best-ranked kind of program that assigned the course.
+/** Category per course: the best-ranked kind of program that assigned it. Courses no audit assigned are absent. */
+export function courseCategories(analysis: Pick<Analysis, "audits">, programKinds?: Record<string, string>): Map<string, Category> {
   const best = new Map<string, Category>();
-  for (const a of input.analysis.audits) {
+  for (const a of analysis.audits) {
     const layer = layerOf(a.program);
-    const kind = input.programKinds?.[a.program.id];
+    const kind = programKinds?.[a.program.id];
     const cat: Category = layer === "gen-ed" ? "gen-ed" : layer ? "other" : kind === "major" ? "major" : kind === "minor" ? "minor" : "other";
     for (const r of a.requirements) {
       for (const id of r.result.assigned) {
@@ -61,6 +67,13 @@ export function buildPlanExport(input: PlanExportInput) {
       }
     }
   }
+  return best;
+}
+
+export function buildPlanExport(input: PlanExportInput) {
+  const { plan, catalog, hideGrades } = input;
+
+  const best = courseCategories(input.analysis, input.programKinds);
 
   const order = sortTerms(plan.terms.map((t) => t.name));
   const terms = order.map((name) => {
@@ -72,11 +85,16 @@ export function buildPlanExport(input: PlanExportInput) {
       grade: hideGrades ? "" : (c.grade ?? ""),
       category: best.get(c.id) ?? "elective",
     }));
-    return { name, courses, credits: courses.reduce((s, c) => s + c.credits, 0) };
+    const keyDates = input.keyDates?.[name];
+    return { name, courses, credits: courses.reduce((s, c) => s + c.credits, 0), ...(keyDates ? { keyDates } : {}) };
   });
 
   return {
     header: { name: input.name ?? "", date: iso(input.today), disclaimer: DISCLAIMER, gradesHidden: !!hideGrades },
+    programsLabel: input.programsLabel ?? "",
+    catalogYear: (input.catalogYear ?? "").replace("-", "\u2013"),
+    creditsPlanned: terms.reduce((s, t) => s + t.credits, 0),
+    priorCreditCredits: input.priorCreditCredits ?? 0,
     terms,
   };
 }

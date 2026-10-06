@@ -2,7 +2,7 @@ import { connection } from "next/server";
 import { scheduleDataKey } from "@/lib/schedule/data-keys";
 import { readScheduleFile } from "@/lib/schedule-data";
 
-// GET /api/schedule/current | /<term>/index | /<term>/sections/<DEPT> | /<term>/grades/<DEPT>
+// GET /api/schedule/current | /<term>/index | /<term>/sections/<DEPT> | /<term>/grades/<DEPT> | /<term>/reviews/<instructor-key>
 // Pre-built files (packages/course-data/SCHEDULE_FILES.md), identical for every student,
 // so CDNs cache them; schedule generation itself runs in the browser.
 export async function GET(_request: Request, { params }: { params: Promise<{ path: string[] }> }) {

@@ -11,6 +11,7 @@
     "./credit-caps": "./src/credit-caps.ts",
     "./catalog": "./src/catalog.ts",
     "./catalog-file": "./src/catalog-file.ts",
+    "./twins": "./src/twins.ts",
     "./notices": "./src/notices.ts",
     "./what-if": "./src/what-if.ts",
     "./degrees": "./src/degrees.ts",

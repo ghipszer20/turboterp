@@ -42,6 +42,7 @@ import { useLayouts } from "@/lib/schedule/use-layouts";
 import { useScheduleData } from "@/lib/schedule/use-schedule-data";
 import { CoursePicker } from "./CoursePicker";
 import { Gallery } from "./Gallery";
+import { ReviewsContext } from "./InstructorReviews";
 import { RegistrationPanel } from "./RegistrationPanel";
 import { WeekEditor } from "./WeekEditor";
 import { WeekFilters } from "./WeekFilters";
@@ -395,6 +396,8 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
     );
   }
 
+  const reviewsCtx = data.term ? { term: data.term, names: data.reviewed } : null;
+
   const picker = (
     <CoursePicker
       courses={data.indexState.index.courses}
@@ -407,6 +410,7 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
   );
 
   return (
+    <ReviewsContext.Provider value={reviewsCtx}>
     <div className={styles.builder}>
       {termName ? (
         <p className={styles.termLine}>
@@ -473,6 +477,7 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
           scale={ownScale}
           gradesFor={data.gradesFor}
           loadGrades={data.loadGrades}
+          seatsUpdatedAt={data.seatsUpdatedAt}
           initialOpen={courses.find((c) => !ownPicks[c]) ?? null}
           header={planHeader(saved.own, <h2 className={styles.editorTitle}>Your week</h2>)}
         />
@@ -488,6 +493,7 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
           scale={result?.scale ?? ownScale}
           gradesFor={data.gradesFor}
           loadGrades={data.loadGrades}
+          seatsUpdatedAt={data.seatsUpdatedAt}
           header={planHeader(
             idsOf(view.picks),
             <button type="button" className={styles.back} onClick={() => setView({ kind: "gallery" })}>
@@ -547,5 +553,6 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
         />
       ) : null}
     </div>
+    </ReviewsContext.Provider>
   );
 }

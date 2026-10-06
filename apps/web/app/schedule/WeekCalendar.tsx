@@ -1,26 +1,18 @@
 "use client";
 
 import type { Weekday } from "@turboterp/course-data/schedules";
-import { blockLines, DAY_SHORT, dayBlocks, hourLabel, pct, WEEKDAYS, type BlockInput, type TimeScale } from "@/lib/schedule/calendar";
-import type { BlockLabel } from "@/lib/schedule/block-items";
+import { DAY_SHORT, dayBlocks, hourLabel, pct, WEEKDAYS, type BlockInput, type TimeScale } from "@/lib/schedule/calendar";
+import { blockLabel, type BlockLabel } from "@/lib/schedule/block-items";
 import type { FilterState } from "@/lib/schedule/filters";
 import styles from "./calendar.module.css";
 
 export type BlockData = BlockLabel;
 
 type Size = "mini" | "zoom" | "large";
-
-// Label metrics per size (px): line height and vertical padding, matching calendar.module.css.
-const METRICS: Record<Size, { line: number; pad: number }> = {
-  mini: { line: 9, pad: 2 },
-  zoom: { line: 13, pad: 4 },
-  large: { line: 14, pad: 6 },
-};
-
 /**
  * One week, Monday to Friday, on the shared time scale with an hour label every hour.
- * Blocks show their course (and on large calendars a second line) only when the text fits;
- * otherwise the label is hidden, never clipped. Ghosts (previews) are striped and dashed.
+ * Blocks always show two lines (course, then room or section) and scale the font to fit.
+ * Ghosts (previews) are striped and dashed.
  */
 export function WeekCalendar({
   size,
@@ -43,7 +35,6 @@ export function WeekCalendar({
   onBlockClick?: (courseId: string) => void;
 }) {
   const byDay = dayBlocks(items, scale);
-  const metrics = METRICS[size];
   return (
     <div className={styles.grid} data-size={size}>
       <div className={styles.hours} style={{ height }} aria-hidden="true">
@@ -69,8 +60,7 @@ export function WeekCalendar({
                 <div key={t} className={styles.line} style={{ top: `${pct(scale, t)}%` }} />
               ))}
               {byDay[d].map((b) => {
-                const px = (b.height / 100) * height;
-                const lines = blockLines(size, px, metrics);
+                const label = blockLabel(b, size === "large" ? "week" : "gallery");
                 const data = b.data!;
                 const clickable = onBlockClick && !b.ghost;
                 return (
@@ -101,12 +91,10 @@ export function WeekCalendar({
                       width: `calc(${100 / b.lanes}% - ${size === "mini" ? 4 : 6}px)`,
                     }}
                   >
-                    {lines !== "none" ? (
-                      <span className={styles.label}>
-                        <span className={styles.labelMain}>{data.label}</span>
-                        {lines === "two" && data.sub ? <span className={styles.labelSub}>{data.sub}</span> : null}
-                      </span>
-                    ) : null}
+                    <span className={styles.label}>
+                      <span className={styles.labelMain}>{label.top}</span>
+                      <span className={styles.labelSub}>{label.bottom}</span>
+                    </span>
                   </div>
                 );
               })}

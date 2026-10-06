@@ -188,3 +188,35 @@ describe("runAnalysis: tracks", () => {
     });
   });
 });
+
+// Gen Ed display (program-sources/gen-ed.md): what the Audit tab lists as "Counted" per requirement.
+describe("Gen Ed counting in the Audit tab", () => {
+  const genEdOf = async (p: typeof plan, c: typeof catalog) => {
+    const a = await runAnalysis({ plan: p, catalog: c, priorCourses: computePriorCredit(p.prior, (id) => c.get(id)?.genEd ?? []).courses });
+    const audit = a.audits.find((x) => x.program.id === "gen-ed")!;
+    return (id: string) => audit.requirements.find((r) => r.requirement.id === id)!.result.assigned;
+  };
+
+  it("counts AP MATH140 (FSMA and FSAR) for both Fundamental Studies requirements", async () => {
+    const counted = await genEdOf(plan, catalog);
+    expect([counted("fsma"), counted("fsar")]).toEqual([["MATH140"], ["MATH140"]]);
+  });
+
+  it("shows PHYS235 (DSHS, DSNS, SCIS) under one Distributive Studies category and under Big Question", async () => {
+    // PHYS235 isn't in the Spring 2027 fixture; Testudo (Fall 2026) tags it DSHS, DSNS, SCIS.
+    const withPhys = new Map(catalog).set("PHYS235", {
+      id: "PHYS235",
+      title: "Physics for a Changing World",
+      credits: { min: 3, max: 3 },
+      genEd: ["DSHS", "DSNS", "SCIS"],
+      prerequisite: null,
+      corequisite: null,
+      repeat: { kind: "unknown" },
+    });
+    const p = { ...plan, terms: plan.terms.map((t, i) => (i === 0 ? { ...t, courses: [...t.courses, { id: "PHYS235" }] } : t)) };
+    const counted = await genEdOf(p, withPhys);
+    const ds = ["dshs", "natsci"].filter((id) => counted(id).includes("PHYS235"));
+    expect(ds).toHaveLength(1);
+    expect(counted("scis")).toContain("PHYS235");
+  });
+});

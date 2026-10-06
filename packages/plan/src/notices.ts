@@ -74,6 +74,8 @@ export function planCourses(plan: Plan, catalog: PlanCatalog): StudentCourse[] {
       status: "completed",
       ...(c.grade ? { grade: c.grade } : {}),
       genEd: c.genEd ?? catalog.get(c.id)?.genEd ?? [],
+      // AP and IB credit (source labels from @turboterp/credit); dual enrollment isn't exam credit.
+      ...(/^(AP|IB) /.test(c.source ?? "") ? { exam: true as const } : {}),
     });
   }
   for (const term of plan.terms) {

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>4-year plan PDF · two looks</title>
+<style>
+  body { margin: 0; padding: 30px 40px 50px; background: #d9dbe1; font: 11px/1.3 Helvetica, Arial, sans-serif; color: #1d1d1f; }
+  h2 { margin: 0 0 14px; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: #3f4450; }
+  .pages { display: flex; gap: 40px; align-items: flex-start; }
+  .page { width: 816px; height: 1056px; background: #fff; box-shadow: 0 20px 60px rgb(0 0 0 / .2); padding: 44px 48px 40px; box-sizing: border-box; position: relative; }
+  .title { font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+  .meta { margin-top: 4px; color: #555; font-size: 10.5px; }
+  .meta b { color: #1d1d1f; font-weight: 600; }
+  .year { display: grid; grid-template-columns: 112px minmax(0, 1fr) minmax(0, 1fr); gap: 0 10px; margin-top: 16px; }
+  .ylabel { display: flex; flex-direction: column; }
+  .yname { font-weight: 700; font-size: 13px; padding: 6px 8px; }
+  .ynote { padding: 6px 8px; font-size: 9.5px; color: #555; line-height: 1.35; }
+  table { width: 100%; border-collapse: collapse; font-size: 10px; }
+  th, td { padding: 3px 6px; text-align: left; vertical-align: top; }
+  th.term { font-size: 11.5px; font-weight: 700; padding: 5px 8px; }
+  th.col { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: #666; border-bottom: 1px solid #c7c7cc; }
+  td.id { font-weight: 700; white-space: nowrap; width: 62px; }
+  td.ttl { color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 0; width: 100%; }
+  td.cr, th.cr { text-align: right; width: 24px; font-variant-numeric: tabular-nums; }
+  td.gr, th.gr { text-align: center; width: 34px; }
+  tr.total td { font-weight: 700; border-top: 1px solid #c7c7cc; padding-top: 4px; }
+  tr.total td.ttl { text-align: right; color: #1d1d1f; }
+  .cat { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 5px; vertical-align: 1px; }
+  .cat.major { background: #ba0c2f; } .cat.gened { background: #0b63c7; } .cat.college { background: #1f8a4c; } .cat.elective { background: #b08500; }
+  .legend { margin-top: 16px; font-size: 9.5px; color: #555; display: flex; gap: 16px; }
+  .legend b { color: #1d1d1f; font-weight: 600; }
+  .foot { position: absolute; left: 48px; right: 48px; bottom: 22px; display: flex; justify-content: space-between; font-size: 8.5px; color: #777; }
+  .mark { display: inline-flex; align-items: center; gap: 6px; }
+  .mark img { width: 16px; height: 16px; border-radius: 4px; }
+
+  /* Look A: solid red bands */
+  .a .yname { background: #ba0c2f; color: #fff; border-radius: 4px 4px 0 0; }
+  .a .ylabel { border: 1px solid #ba0c2f; border-radius: 4px; }
+  .a th.term { background: #ba0c2f; color: #fff; }
+  .a table { border: 1px solid #c7c7cc; }
+  .a tbody tr:nth-child(even) td { background: #f5f5f7; }
+  .a tr.total td { background: #fbe6ea; }
+
+  /* Look B: light, red text and hairlines */
+  .b .yname { color: #ba0c2f; border-bottom: 2px solid #ba0c2f; }
+  .b th.term { color: #ba0c2f; border-bottom: 2px solid #ba0c2f; }
+  .b tbody td { border-bottom: 1px solid #e5e5ea; }
+  .b tr.total td { border-top: 1px solid #ba0c2f; border-bottom: 0; }
+  .b .ylabel { border-right: 1px solid #e5e5ea; }
+</style>
+</head>
+<body>
+<h2>4-year plan PDF · A: red bands (left) · B: light with red rules (right) · Letter portrait</h2>
+<div class="pages" id="pages"></div>
+<script>
+const Y = [
+  { name: "Year 1", ay: "2026–27", note: "30 credits · Fall: Pass/fail Sep 14, drop with W Nov 11, finals Dec 14–21 · Spring: finals May 13–20", terms: [
+    ["Fall 2026", [["CMSC131","Object-Oriented Programming I",4,"A","major"],["MATH240","Introduction to Linear Algebra",4,"A","major"],["ENGL101","Academic Writing",3,"A-","gened"],["CMNS100","Becoming a Science Terp",1,"P","college"],["HIST200","Interpreting American History: Beginnings to 1877",3,"B+","gened"]]],
+    ["Spring 2027", [["CMSC132","Object-Oriented Programming II",4,"","major"],["MATH241","Calculus III",4,"","major"],["COMM107","Oral Communication: Principles and Practices",3,"","gened"],["PHIL140","Contemporary Moral Issues",3,"","gened"],["CHEM131","Chemistry I · Fundamentals of General Chemistry",3,"","major"],["CHEM132","General Chemistry I Laboratory",1,"","major"]]],
+  ]},
+  { name: "Year 2", ay: "2027–28", note: "29 credits", terms: [
+    ["Fall 2027", [["CMSC216","Introduction to Computer Systems",4,"","major"],["CMSC250","Discrete Structures",4,"","major"],["MATH246","Differential Equations for Scientists and Engineers",3,"","major"],["MATH310","Introduction to Mathematical Proof",3,"","major"]]],
+    ["Spring 2028", [["CMSC330","Organization of Programming Languages",3,"","major"],["CMSC351","Algorithms",3,"","major"],["STAT410","Introduction to Probability Theory",3,"","major"],["ARTH200","Art and Society in Ancient and Medieval Europe",3,"","gened"],["AAAS100","Introduction to African American and Africana Studies",3,"","gened"]]],
+  ]},
+  { name: "Year 3", ay: "2028–29", note: "30 credits", terms: [
+    ["Fall 2028", [["CMSC320","Introduction to Data Science",3,"","major"],["MATH410","Advanced Calculus I",3,"","major"],["MATH401","Applications of Linear Algebra",3,"","major"],["AMSC460","Computational Methods",3,"","major"],["ECON200","Principles of Microeconomics",3,"","gened"]]],
+    ["Spring 2029", [["CMSC420","Advanced Data Structures",3,"","major"],["CMSC335","Web Application Development with JavaScript",3,"","major"],["MATH411","Advanced Calculus II",3,"","major"],["STAT401","Applied Probability and Statistics II",3,"","major"],["ENGL394","Business Writing",3,"","gened"]]],
+  ]},
+  { name: "Year 4", ay: "2029–30", note: "28 credits", terms: [
+    ["Fall 2029", [["CMSC414","Computer and Network Security",3,"","major"],["CMSC451","Design and Analysis of Computer Algorithms",3,"","major"],["MATH420","Mathematical Modeling",3,"","major"],["MATH462","Partial Differential Equations",3,"","major"],["PSYC100","Introduction to Psychology",3,"","gened"]]],
+    ["Spring 2030", [["CMSC412","Operating Systems",4,"","major"],["CMSC421","Introduction to Artificial Intelligence",3,"","major"],["SOCY100","Introduction to Sociology",3,"","gened"],["ANTH260","Introduction to Sociocultural Anthropology and Linguistics",3,"","elective"]]],
+  ]},
+];
+function term([name, courses]) {
+  const total = courses.reduce((s, c) => s + c[2], 0);
+  const rows = courses.map((c) => `<tr><td class="id"><span class="cat ${c[4]}"></span>${c[0]}</td><td class="ttl">${c[1]}</td><td class="cr">${c[2]}</td><td class="gr">${c[3]}</td></tr>`).join("");
+  return `<table><thead><tr><th class="term" colspan="4">${name}</th></tr><tr><th class="col" colspan="2">Course</th><th class="col cr">Cr</th><th class="col gr">Grade</th></tr></thead><tbody>${rows}<tr class="total"><td class="id"></td><td class="ttl">Total</td><td class="cr">${total}</td><td class="gr"></td></tr></tbody></table>`;
+}
+function page(cls) {
+  const years = Y.map((y) => `<div class="year"><div class="ylabel"><div class="yname">${y.name} <span style="font-weight:400;font-size:11px;opacity:.85">${y.ay}</span></div><div class="ynote">${y.note}</div></div>${y.terms.map(term).join("")}</div>`).join("");
+  return `<div class="page ${cls}">
+    <div class="title">4-year plan</div>
+    <div class="meta"><b>Mathematics (Applied) and Computer Science, double major</b> · Catalog 2026–27 · 128 credits planned (8 from prior credit)</div>
+    <div class="meta">Sam Terp · October 5, 2026 · Unofficial: not affiliated with the University of Maryland. Verify with your advisor and UMD's official degree audit.</div>
+    ${years}
+    <div class="legend"><span><span class="cat major"></span><b>Major</b></span><span><span class="cat gened"></span><b>Gen Ed</b></span><span><span class="cat college"></span><b>College requirement</b></span><span><span class="cat elective"></span><b>Elective</b></span></div>
+    <div class="foot"><span class="mark"><img src="icon.svg" alt="">TurboTerp · turboterp.com</span><span>Page 1 of 1</span></div>
+  </div>`;
+}
+document.getElementById("pages").innerHTML = page("a") + page("b");
+</script>
+</body>
+</html>

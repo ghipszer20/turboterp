@@ -1,6 +1,6 @@
 import type { PlanIssue } from "@turboterp/plan/check";
 import { describe, expect, it } from "vitest";
-import { courseKey, groupIssues, SEVERITY } from "../advisor/issues";
+import { cardNote, courseKey, groupIssues, planTips, SEVERITY } from "../advisor/issues";
 
 const issue = (p: Partial<PlanIssue>): PlanIssue => ({ kind: "prerequisite", severity: "error", term: "Fall 2026", message: "m", ...p });
 
@@ -29,6 +29,10 @@ describe("groupIssues", () => {
     expect(g.summary.map((i) => i.message)).toEqual(["needs 216", "too many", "coreq", "already have", "fsaw", "light"]);
   });
 
+  it("keeps only what needs action (errors and warnings) for the Checks list", () => {
+    expect(g.checks.map((i) => i.message)).toEqual(["needs 216", "too many", "coreq", "already have"]);
+  });
+
   it("counts each severity", () => {
     expect(g.counts).toEqual({ error: 3, warning: 1, confirm: 1, info: 1 });
   });
@@ -46,5 +50,38 @@ describe("SEVERITY", () => {
     expect(SEVERITY.warning.label).toBe("Check");
     expect(SEVERITY.confirm.label).toBe("Confirm yourself");
     expect(SEVERITY.info.label).toBe("Good to know");
+  });
+});
+
+describe("cardNote", () => {
+  it("uses an issue's short form on the course card", () => {
+    expect(cardNote([issue({ severity: "confirm", message: "long sentence", short: "Confirm: permission of the department" })])).toBe(
+      "Confirm: permission of the department",
+    );
+  });
+
+  it("falls back to the message, and counts the rest", () => {
+    expect(cardNote([issue({ message: "needs 216" }), issue({ message: "coreq" })])).toBe("needs 216 (+1 more)");
+  });
+});
+
+describe("planTips", () => {
+  const light = (term: string) => issue({ severity: "info", kind: "light-load", term, message: `${term} is light` });
+
+  it("gives the full-time rule once, however many terms are light", () => {
+    expect(planTips([light("Fall 2027"), light("Spring 2028")], [])).toEqual([
+      "Full-time is at least 12 credits in a fall or spring term. Fewer can affect financial aid, housing and your graduation date.",
+    ]);
+  });
+
+  it("adds other notes (double major, dual degree) after it, without repeats", () => {
+    expect(planTips([light("Fall 2027")], ["Declare your double major by Spring 2029.", "Declare your double major by Spring 2029."])).toEqual([
+      "Full-time is at least 12 credits in a fall or spring term. Fewer can affect financial aid, housing and your graduation date.",
+      "Declare your double major by Spring 2029.",
+    ]);
+  });
+
+  it("has nothing to say about a plan with no light term and no notes", () => {
+    expect(planTips([issue({})], [])).toEqual([]);
   });
 });

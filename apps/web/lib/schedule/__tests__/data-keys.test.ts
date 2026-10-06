@@ -7,18 +7,24 @@ describe("scheduleDataKey", () => {
   });
 
   it("maps a term's course index", () => {
-    expect(scheduleDataKey(["202701", "index"])).toEqual({ key: "schedule/202701/index", maxAge: 86400 });
+    expect(scheduleDataKey(["202701", "index"])).toEqual({ key: "schedule/202701/index", maxAge: 3600 });
   });
 
-  it("maps a department's sections (seats change, so an hour)", () => {
+  it("maps a department's sections (seats change every 15 minutes, so 2 minutes)", () => {
     expect(scheduleDataKey(["202701", "sections", "CMSC"])).toEqual({
       key: "schedule/202701/sections/CMSC",
-      maxAge: 3600,
+      maxAge: 120,
     });
   });
 
   it("maps a department's grades", () => {
     expect(scheduleDataKey(["202701", "grades", "STAT"])).toEqual({ key: "schedule/202701/grades/STAT", maxAge: 86400 });
+  });
+
+  it("maps one instructor's review summary", () => {
+    expect(scheduleDataKey(["202701", "reviews", "jose-a-nunez"])).toEqual({ key: "schedule/202701/reviews/jose-a-nunez", maxAge: 86400 });
+    expect(scheduleDataKey(["202701", "reviews", "../x"])).toBeNull();
+    expect(scheduleDataKey(["202701", "reviews", "Jose"])).toBeNull();
   });
 
   it.each([

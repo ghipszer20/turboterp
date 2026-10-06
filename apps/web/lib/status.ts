@@ -79,3 +79,23 @@ export function mealHighlights(meal: MealLike, count = 3): string {
   const rest = pick.length - count;
   return rest > 0 ? `${shown} +${rest} more` : shown;
 }
+
+type FoodMeal = { name: string; stations: { name: string; items: { name: string }[] }[] };
+
+/** "Lunch: Orange chicken, Margherita pizza, Chicken shawarma": the first foods on the menu, not station names. */
+// Stations and items that are toppings, not dishes (owner, 2026-10-05: "actual food", not "American Cheese Sliced").
+const TOPPING_STATION = /topping|condiment|sauces?\b|dressing|fixing|garnish|build[ -]?your[ -]?own|add[ -]?ons?/i;
+const CONDIMENT_ITEM = /^(sliced|shredded|diced|chopped)\b|\b(sliced|shredded|diced)$|\b(sauce|dressing|ketchup|mustard|mayo|mayonnaise|relish|pickles?|peppers|jalape[nñ]os?)$/i;
+
+export function mealFoods(meal: FoodMeal, count = 3): string {
+  const isBreakfast = /breakfast/i.test(meal.name);
+  const main = meal.stations.filter(
+    (s) => !FILLER.test(s.name) && !TOPPING_STATION.test(s.name) && (isBreakfast || !/breakfast/i.test(s.name)),
+  );
+  const foods = main
+    .flatMap((s) => s.items.map((i) => i.name))
+    .filter((name) => !CONDIMENT_ITEM.test(name))
+    .slice(0, count);
+  if (foods.length > 0) return `${meal.name}: ${foods.join(", ")}`;
+  return `${meal.name}: ${mealHighlights(meal) || "No menu posted"}`;
+}

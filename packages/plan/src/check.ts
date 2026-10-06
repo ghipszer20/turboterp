@@ -68,6 +68,8 @@ export type PlanIssue = {
   course?: string;
   /** Plain language, for the student. */
   message: string;
+  /** A few words for the course card, when the message is too long for it (confirm items). */
+  short?: string;
 };
 
 export type Season = "Fall" | "Winter" | "Spring" | "Summer";
@@ -101,10 +103,23 @@ function seasonOf(termName: string): Season | null {
 /** Where each course sits: -1 for prior credit, else the index of every term it's in. */
 type Placement = { at: Map<string, { terms: number[]; grade?: string }>; termNames: string[] };
 
+/** Ids in the plan that satisfy a leaf's course or level, whatever the term. */
+function plannedFor(leaf: CourseLeaf, placement: Placement): string[] {
+  if (leaf.kind === "course") return placement.at.has(leaf.course) ? [leaf.course] : [];
+  return [...placement.at.keys()].filter((id) => inLevel(id, leaf.dept, leaf.minNumber));
+}
+
+const inLevel = (id: string, dept: string, min: number) => {
+  const m = /^([A-Z]{4})(\d{3})/.exec(id);
+  return m !== null && m[1] === dept && Number(m[2]) >= min;
+};
+
 const withGrade = (id: string, minGrade?: string) => (minGrade ? `${id} (${minGrade} or better)` : id);
 
-function courseLeaves(req: Requirement): Extract<Requirement, { kind: "course" }>[] {
-  if (req.kind === "course") return [req];
+type CourseLeaf = Extract<Requirement, { kind: "course" | "dept-level" }>;
+
+function courseLeaves(req: Requirement): CourseLeaf[] {
+  if (req.kind === "course" || req.kind === "dept-level") return [req];
   if (req.kind === "manual") return [];
   return req.of.flatMap(courseLeaves);
 }
@@ -112,6 +127,7 @@ function courseLeaves(req: Requirement): Extract<Requirement, { kind: "course" }
 /** What's still missing from an unmet requirement, in words: "CMSC250 (C- or better) and CMSC216". */
 function describeMissing(req: Requirement, history: Record<string, CourseRecord>, nested = false): string {
   if (req.kind === "course") return withGrade(req.course, req.minGrade);
+  if (req.kind === "dept-level") return withGrade(`${req.dept}${req.minNumber} or a higher ${req.dept} course`, req.minGrade);
   if (req.kind === "manual") return req.text;
   if (req.kind === "all") {
     const parts = req.of.filter((r) => checkRequirement(r, history) === "unmet").map((r) => describeMissing(r, history, true));
@@ -135,6 +151,18 @@ function listing(items: string[], word: "and" | "or"): string {
 /** Why each missing course doesn't count yet: later, same term, low grade, or absent. */
 function whereNotes(req: Requirement, history: Record<string, CourseRecord>, placement: Placement, term: number): string[] {
   if (req.kind === "manual") return [];
+  if (req.kind === "dept-level") {
+    const ids = plannedFor(req, placement);
+    const graded = ids.find((id) => placement.at.get(id)?.terms.some((t) => t < term) && placement.at.get(id)?.grade);
+    if (graded) return [`Your grade in ${graded} was ${placement.at.get(graded)!.grade}.`];
+    const same = ids.find((id) => placement.at.get(id)!.terms.includes(term));
+    if (same) return [`${same} is in the same term; it has to come first.`];
+    for (const id of ids) {
+      const later = placement.at.get(id)!.terms.find((t) => t > term);
+      if (later !== undefined) return [`${id} is planned for ${placement.termNames[later]}, which is too late.`];
+    }
+    return [`A ${req.dept} course numbered ${req.minNumber} or higher isn't in your plan.`];
+  }
   if (req.kind === "course") {
     const at = placement.at.get(req.course);
     const earlier = at?.terms.some((t) => t < term);
@@ -145,7 +173,7 @@ function whereNotes(req: Requirement, history: Record<string, CourseRecord>, pla
     return [`${req.course} isn't in your plan.`];
   }
   const unmet = req.of.filter((r) => checkRequirement(r, history) === "unmet");
-  if (req.kind === "any" && courseLeaves(req).every((leaf) => !placement.at.has(leaf.course))) {
+  if (req.kind === "any" && courseLeaves(req).every((leaf) => plannedFor(leaf, placement).length === 0)) {
     return ["None of them is in your plan."];
   }
   const notes = unmet.flatMap((r) => whereNotes(r, history, placement, term));
@@ -156,7 +184,7 @@ function whereNotes(req: Requirement, history: Record<string, CourseRecord>, pla
 function confirmTexts(req: Requirement, history: Record<string, CourseRecord>): string[] {
   // Lowercase the first letter: the text continues a sentence ("Confirm it yourself: must have…").
   if (req.kind === "manual") return [req.text.charAt(0).toLowerCase() + req.text.slice(1)];
-  if (req.kind === "course") return [];
+  if (req.kind === "course" || req.kind === "dept-level") return [];
   const confirming = req.of.filter((r) => checkRequirement(r, history) === "confirm");
   if (req.kind === "any") {
     const withCourses = confirming.filter((r) => courseLeaves(r).length > 0);
@@ -274,6 +302,7 @@ export function checkPlan(plan: Plan, catalog: PlanCatalog, options: CheckOption
             severity: "confirm",
             ...at,
             message: `${where} also needs something TurboTerp can't check. Confirm it yourself: ${confirmTexts(info.prerequisite, prereqHistory).join("; ")}.`,
+            short: `Confirm: ${confirmTexts(info.prerequisite, prereqHistory).join("; ")}`,
           });
         }
       }
@@ -295,6 +324,7 @@ export function checkPlan(plan: Plan, catalog: PlanCatalog, options: CheckOption
             severity: "confirm",
             ...at,
             message: `${where} also has a corequisite TurboTerp can't check. Confirm it yourself: ${confirmTexts(info.corequisite, coreqHistory).join("; ")}.`,
+            short: `Confirm: ${confirmTexts(info.corequisite, coreqHistory).join("; ")}`,
           });
         }
       }

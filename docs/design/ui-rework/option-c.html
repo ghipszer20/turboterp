@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TurboTerp UI rework · Option C · Editorial</title>
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="option-c.css">
+<link rel="stylesheet" href="dark.css">
+</head>
+<body class="">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-today" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2.5 12h2M19.5 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></symbol>
+    <symbol id="i-campus" viewBox="0 0 24 24"><path d="M3 10.5 12 5l9 5.5"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8"/><path d="M3 20.5h18"/></symbol>
+    <symbol id="i-schedule" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h3M8 17h6"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 17.5h.01M12 17.5h.01" stroke-width="2.4"/></symbol>
+    <symbol id="i-advisor" viewBox="0 0 24 24"><path d="M2.5 9 12 4.5 21.5 9 12 13.5z"/><path d="M6 11.2V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.8"/><path d="M21.5 9v5"/></symbol>
+    <symbol id="i-dining" viewBox="0 0 24 24"><path d="M6 3v7a2.5 2.5 0 0 0 5 0V3M8.5 3v18"/><path d="M17.5 3c-2 1.5-3 4-3 7h3v11"/></symbol>
+    <symbol id="i-library" viewBox="0 0 24 24"><path d="M4 4.5h4v15H4zM10 4.5h4v15h-4z"/><path d="m15.5 5.5 3.8-1 3.7 14.5-3.8 1z"/></symbol>
+    <symbol id="i-gym" viewBox="0 0 24 24"><path d="M6.5 8v8M17.5 8v8M3.5 10v4M20.5 10v4M6.5 12h11"/></symbol>
+    <symbol id="i-bus" viewBox="0 0 24 24"><rect x="4" y="3.5" width="16" height="15" rx="3"/><path d="M4 10h16M8 18.5v2M16 18.5v2M8 14.5h.01M16 14.5h.01" stroke-width="2.2"/></symbol>
+    <symbol id="i-room" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="3"/><path d="M3.5 9h17M9 9v11"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-walk" viewBox="0 0 24 24"><circle cx="13" cy="4.5" r="1.8"/><path d="M9.5 21 11 15l-2.5-2.5 1-5 3-1 2.5 3 3 1.5M12.5 15.5 15 18l1 4M8.5 12.5 6 15"/></symbol>
+  </defs>
+</svg>
+
+<!-- ============ BOARD 1: TODAY (desktop + phone) ============ -->
+<section class="board">
+  <h2 class="boardTitle">Option C · Editorial · Today</h2>
+  <div class="frames">
+    <div class="frame desktop">
+      <aside class="side">
+        <a class="brand" href="#"><img src="icon.svg" alt="" width="26" height="26"><span>Turbo<em>Terp</em></span></a>
+        <nav class="tabs">
+          <a class="tab active" href="#"><svg><use href="#i-today"/></svg><span>Today</span></a>
+          <a class="tab" href="#"><svg><use href="#i-campus"/></svg><span>Campus</span></a>
+          <a class="tab" href="#"><svg><use href="#i-schedule"/></svg><span>Schedule</span></a>
+          <a class="tab" href="#"><svg><use href="#i-calendar"/></svg><span>Calendar</span></a>
+          <a class="tab" href="#"><svg><use href="#i-advisor"/></svg><span>Advisor</span></a>
+        </nav>
+        <div class="sideFoot">
+          <a href="#">About</a><a href="#">Report an issue</a><a href="#">Donate</a>
+          <a href="#" class="legal">Terms of Use</a><a href="#" class="legal">Privacy Policy</a>
+          <div class="seg"><button class="on">Light</button><button>Dark</button></div>
+          <p class="fine">Unofficial. Not affiliated with the University of Maryland.</p>
+        </div>
+      </aside>
+      <main class="content" id="today-main">
+        <header class="pageHead">
+          <p class="eyebrow">Monday, October 5</p>
+          <h1>Today</h1>
+        </header>
+
+        <div class="hero">
+          <a class="heroMain" href="#">
+            <span class="heroLabel">Next class</span>
+            <span class="heroTitle">CMSC132 · 2:00 PM</span>
+            <span class="heroSub">Iribe Center 0324 · leave by 1:46 from McKeldin</span>
+          </a>
+          <a class="heroSide" href="#">
+            <span class="heroNum">29</span>
+            <span class="heroSideText">days until you register<br><small>Tue, Nov 3 · 9:00 AM</small></span>
+          </a>
+        </div>
+
+        <section class="group" data-cat="dining">
+          <div class="groupHead"><h2>Dining</h2><a class="more" href="#">All menus</a></div>
+          <div class="list">
+            <a class="item" href="#"><span class="icon"><svg><use href="#i-dining"/></svg></span><span class="text"><span class="title">Yahentamitsi</span><span class="sub">Lunch: Grill, Pasta Bar, Sprouts, Good Food Gluten Free</span></span><span class="chev"></span></a>
+            <a class="item" href="#"><span class="icon"><svg><use href="#i-dining"/></svg></span><span class="text"><span class="title">South Campus</span><span class="sub">Lunch: Broiler Works, Chef's Table, Bagel Bar +1 more</span></span><span class="chev"></span></a>
+            <a class="item" href="#"><span class="icon"><svg><use href="#i-dining"/></svg></span><span class="text"><span class="title">251 North</span><span class="sub">Lunch: Smash Burger, Harvest Vegan, Noodle Bar +2 more</span></span><span class="chev"></span></a>
+            <a class="item" href="#"><span class="icon"><svg><use href="#i-dining"/></svg></span><span class="text"><span class="title">Stamp</span><span class="sub">11 of 14 open · Subway closes at 7pm</span></span><span class="chev"></span></a>
+          </div>
+        </section>
+
+        <section class="group" data-cat="study">
+          <div class="groupHead"><h2>Study</h2><a class="more" href="#">All hours</a></div>
+          <div class="list">
+            <a class="item" data-status="open" href="#"><span class="icon"><svg><use href="#i-library"/></svg></span><span class="text"><span class="title">McKeldin</span><span class="sub status">Open 24 hours</span></span><span class="chev"></span></a>
+            <a class="item" data-status="open" href="#"><span class="icon"><svg><use href="#i-library"/></svg></span><span class="text"><span class="title">STEM Library</span><span class="sub status">Open until 11pm</span></span><span class="chev"></span></a>
+            <a class="item" data-status="soon" href="#"><span class="icon"><svg><use href="#i-library"/></svg></span><span class="text"><span class="title">Hornbake</span><span class="sub status">Closes at 6pm</span></span><span class="chev"></span></a>
+            <a class="item accent" href="#"><span class="icon"><svg><use href="#i-room"/></svg></span><span class="text"><span class="title">Find a study room</span><span class="sub">23 rooms open right now</span></span><span class="chev"></span></a>
+          </div>
+        </section>
+
+        <section class="group" data-cat="fitness">
+          <div class="groupHead"><h2>Fitness</h2><a class="more" href="#">All gyms</a></div>
+          <div class="list">
+            <a class="item" data-status="open" href="#"><span class="icon"><svg><use href="#i-gym"/></svg></span><span class="text"><span class="title">Eppley</span><span class="sub status">Open until 11pm</span></span><span class="chev"></span></a>
+            <a class="item" data-status="open" href="#"><span class="icon"><svg><use href="#i-gym"/></svg></span><span class="text"><span class="title">Ritchie Coliseum</span><span class="sub status">Open until 9pm</span></span><span class="chev"></span></a>
+            <a class="item" data-status="closed" href="#"><span class="icon"><svg><use href="#i-gym"/></svg></span><span class="text"><span class="title">School of Public Health</span><span class="sub status">Closed · opens 7am</span></span><span class="chev"></span></a>
+          </div>
+        </section>
+
+        <section class="group" data-cat="transport">
+          <div class="groupHead"><h2>Transport</h2><a class="more" href="#">Map</a></div>
+          <div class="list">
+            <a class="item" href="#"><span class="icon"><svg><use href="#i-bus"/></svg></span><span class="text"><span class="title">Shuttle-UM</span><span class="sub">12 routes running · 104 Lot 1 in 4 min at Stamp</span></span><span class="chev"></span></a>
+          </div>
+        </section>
+
+        <p class="disclaimer">Unofficial. Not affiliated with the University of Maryland.<br>Terms of Use · Privacy Policy</p>
+      </main>
+    </div>
+
+    <div class="frame phone">
+      <header class="topBar">
+        <a class="wordmark" href="#"><img src="icon.svg" alt="" width="24" height="24"><span>Turbo<em>Terp</em></span></a>
+        <span class="topIcons"><i></i><i></i><i></i><i></i></span>
+      </header>
+      <main class="content phoneMain" data-clone="today-main"></main>
+      <nav class="tabBar">
+        <a class="tab" href="#"><svg><use href="#i-campus"/></svg><span>Campus</span></a>
+        <a class="tab" href="#"><svg><use href="#i-schedule"/></svg><span>Schedule</span></a>
+        <a class="tab" href="#"><svg><use href="#i-calendar"/></svg><span>Calendar</span></a>
+        <a class="tab" href="#"><svg><use href="#i-advisor"/></svg><span>Advisor</span></a>
+      </nav>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOARD 2: ADVISOR PLAN (desktop) + SCHEDULE (phone) ============ -->
+<section class="board">
+  <h2 class="boardTitle">Option C · Editorial · Advisor plan and Schedule builder</h2>
+  <div class="frames">
+    <div class="frame desktop">
+      <aside class="side">
+        <a class="brand" href="#"><img src="icon.svg" alt="" width="26" height="26"><span>Turbo<em>Terp</em></span></a>
+        <nav class="tabs">
+          <a class="tab" href="#"><svg><use href="#i-today"/></svg><span>Today</span></a>
+          <a class="tab" href="#"><svg><use href="#i-campus"/></svg><span>Campus</span></a>
+          <a class="tab" href="#"><svg><use href="#i-schedule"/></svg><span>Schedule</span></a>
+          <a class="tab" href="#"><svg><use href="#i-calendar"/></svg><span>Calendar</span></a>
+          <a class="tab active" href="#"><svg><use href="#i-advisor"/></svg><span>Advisor</span></a>
+        </nav>
+        <div class="sideFoot">
+          <a href="#">About</a><a href="#">Report an issue</a><a href="#">Donate</a>
+          <a href="#" class="legal">Terms of Use</a><a href="#" class="legal">Privacy Policy</a>
+          <div class="seg"><button class="on">Light</button><button>Dark</button></div>
+          <p class="fine">Unofficial. Not affiliated with the University of Maryland.</p>
+        </div>
+      </aside>
+      <main class="content advisor">
+        <header class="pageHead withActions">
+          <div>
+            <p class="eyebrow">Math (Applied) + Computer Science · Catalog 2026–27</p>
+            <h1>Advisor</h1>
+          </div>
+          <div class="actions">
+            <button class="btn">Import transcript</button>
+            <button class="btn">Edit setup</button>
+            <button class="btn primary">Export</button>
+          </div>
+        </header>
+        <div class="subTabs"><a class="on" href="#">Plan</a><a href="#">Prior credit</a><a href="#">Audit</a><a href="#">What if</a></div>
+
+        <div class="summary">
+          <span class="sumMain"><b>128</b> credits planned <span class="muted">(8 from prior credit)</span></span>
+          <span class="badge fix">1 to fix</span>
+          <span class="sumMeter"><i style="--p:62%"></i></span>
+          <span class="muted">62% of the degree audit met</span>
+        </div>
+
+        <div class="year">
+          <div class="yearHead"><h2>Year 1</h2><span class="muted">2026–27</span></div>
+          <div class="terms">
+            <section class="term">
+              <div class="termHead"><h3>Fall 2026</h3><span class="termMeta"><b>15 cr</b><span class="pill">Difficulty 6/10</span></span></div>
+              <p class="termNote">Pass/fail Sep 14 · Drop with W Nov 11 · Finals Dec 14–21</p>
+              <div class="courses">
+                <a class="course" data-cat="major" href="#"><span class="cid">CMSC131</span><span class="ctitle">Object-Oriented Programming I</span><span class="ccr">4 cr</span></a>
+                <a class="course" data-cat="major" href="#"><span class="cid">MATH240</span><span class="ctitle">Introduction to Linear Algebra</span><span class="ccr">4 cr</span></a>
+                <a class="course" data-cat="gened" href="#"><span class="cid">ENGL101</span><span class="ctitle">Academic Writing</span><span class="ccr">3 cr</span></a>
+                <a class="course" data-cat="college" href="#"><span class="cid">CMNS100</span><span class="ctitle">Becoming a Science Terp</span><span class="ccr">1 cr</span></a>
+                <a class="course" data-cat="gened" href="#"><span class="cid">HIST200</span><span class="ctitle">Interpreting American History: Beginnings to 1877</span><span class="ccr">3 cr</span></a>
+              </div>
+              <button class="addCourse">+ Add course</button>
+            </section>
+            <section class="term warn">
+              <div class="termHead"><h3>Spring 2027</h3><span class="termMeta"><b class="over">18 cr</b><span class="pill">Difficulty 7/10</span></span></div>
+              <p class="termNote">Pass/fail Feb 9 · Drop with W Apr 13 · Finals May 13–20</p>
+              <div class="mustFix"><b>Must fix</b> 18 credits is over the 17-credit spring limit for CMNS students. Going over needs your dean's approval.</div>
+              <div class="courses">
+                <a class="course" data-cat="major" href="#"><span class="cid">CMSC132</span><span class="ctitle">Object-Oriented Programming II</span><span class="ccr">4 cr</span></a>
+                <a class="course" data-cat="major" href="#"><span class="cid">MATH241</span><span class="ctitle">Calculus III</span><span class="ccr">4 cr</span></a>
+                <a class="course" data-cat="gened" href="#"><span class="cid">COMM107</span><span class="ctitle">Oral Communication: Principles and Practices</span><span class="ccr">3 cr</span></a>
+                <a class="course" data-cat="gened" href="#"><span class="cid">PHIL140</span><span class="ctitle">Contemporary Moral Issues</span><span class="ccr">3 cr</span></a>
+                <a class="course flag" data-cat="major" href="#"><span class="cid">CHEM131</span><span class="ctitle">Chemistry I · Fundamentals of General Chemistry</span><span class="ccr">3 cr</span><span class="cflag">Confirm: math eligibility of MATH120 or higher</span></a>
+                <a class="course" data-cat="major" href="#"><span class="cid">CHEM132</span><span class="ctitle">General Chemistry I Laboratory</span><span class="ccr">1 cr</span></a>
+              </div>
+              <button class="addCourse">+ Add course</button>
+            </section>
+          </div>
+          <div class="extraTerms"><button>+ Winter 2027</button><button>+ Summer 2027</button></div>
+        </div>
+
+        <div class="year">
+          <div class="yearHead"><h2>Year 2</h2><span class="muted">2027–28</span></div>
+          <div class="terms">
+            <section class="term">
+              <div class="termHead"><h3>Fall 2027</h3><span class="termMeta"><b>14 cr</b><span class="pill">Difficulty 6/10</span></span></div>
+              <div class="courses">
+                <a class="course" data-cat="major" href="#"><span class="cid">CMSC216</span><span class="ctitle">Introduction to Computer Systems</span><span class="ccr">4 cr</span></a>
+                <a class="course" data-cat="major" href="#"><span class="cid">CMSC250</span><span class="ctitle">Discrete Structures</span><span class="ccr">4 cr</span></a>
+                <a class="course" data-cat="major" href="#"><span class="cid">MATH246</span><span class="ctitle">Differential Equations for Scientists and Engineers</span><span class="ccr">3 cr</span></a>
+                <a class="course" data-cat="major" href="#"><span class="cid">MATH310</span><span class="ctitle">Introduction to Mathematical Proof</span><span class="ccr">3 cr</span></a>
+              </div>
+              <button class="addCourse">+ Add course</button>
+            </section>
+            <section class="term">
+              <div class="termHead"><h3>Spring 2028</h3><span class="termMeta"><b>15 cr</b><span class="pill">Difficulty 5/10</span></span></div>
+              <div class="courses">
+                <a class="course" data-cat="major" href="#"><span class="cid">CMSC330</span><span class="ctitle">Organization of Programming Languages</span><span class="ccr">3 cr</span></a>
+                <a class="course" data-cat="major" href="#"><span class="cid">CMSC351</span><span class="ctitle">Algorithms</span><span class="ccr">3 cr</span></a>
+                <a class="course" data-cat="major" href="#"><span class="cid">STAT410</span><span class="ctitle">Introduction to Probability Theory</span><span class="ccr">3 cr</span></a>
+                <a class="course" data-cat="gened" href="#"><span class="cid">ARTH200</span><span class="ctitle">Art and Society in Ancient and Medieval Europe</span><span class="ccr">3 cr</span></a>
+                <a class="course" data-cat="gened" href="#"><span class="cid">AAAS100</span><span class="ctitle">Introduction to African American and Africana Studies</span><span class="ccr">3 cr</span></a>
+              </div>
+              <button class="addCourse">+ Add course</button>
+            </section>
+          </div>
+        </div>
+        <div class="legend"><span data-cat="major">Major</span><span data-cat="gened">Gen Ed</span><span data-cat="college">College</span><span data-cat="elective">Elective</span></div>
+      </main>
+    </div>
+
+    <div class="frame phone">
+      <header class="topBar">
+        <a class="wordmark" href="#"><img src="icon.svg" alt="" width="24" height="24"><span>Turbo<em>Terp</em></span></a>
+        <span class="topIcons"><i></i><i></i><i></i><i></i></span>
+      </header>
+      <main class="content phoneMain schedule">
+        <header class="pageHead">
+          <p class="eyebrow">Spring 2027 · 15 credits</p>
+          <h1>Schedule</h1>
+        </header>
+        <div class="subTabs"><a href="#">Pick courses</a><a class="on" href="#">Browse layouts</a><a href="#">Build my own</a></div>
+        <div class="layoutBar"><button class="btn small">‹</button><span class="layoutName"><b>Layout 3</b> of 48 · no Friday classes</span><button class="btn small">›</button></div>
+
+        <div class="week">
+          <div class="dayHeads"><span></span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span></div>
+          <div class="grid">
+            <div class="hours"><span>9am</span><span>10</span><span>11</span><span>12pm</span><span>1</span><span>2</span><span>3</span><span>4</span></div>
+            <div class="day">
+              <i class="block c1" style="--s:60;--d:50"><b>CMSC132</b><span>IRB 0324</span></i>
+              <i class="block c3" style="--s:300;--d:75"><b>COMM107</b><span>SKN 0104</span></i>
+            </div>
+            <div class="day">
+              <i class="block c2" style="--s:30;--d:75"><b>MATH241</b><span>MTH 0401</span></i>
+              <i class="block c4" style="--s:210;--d:75"><b>CHEM131</b><span>CHM 1402</span></i>
+            </div>
+            <div class="day">
+              <i class="block c1" style="--s:60;--d:50"><b>CMSC132</b><span>IRB 0324</span></i>
+              <i class="block c1" style="--s:120;--d:50"><b>CMSC132</b><span>Dis · CSI 2107</span></i>
+              <i class="block c3" style="--s:300;--d:75"><b>COMM107</b><span>SKN 0104</span></i>
+            </div>
+            <div class="day">
+              <i class="block c2" style="--s:30;--d:75"><b>MATH241</b><span>MTH 0401</span></i>
+              <i class="block c4" style="--s:210;--d:75"><b>CHEM131</b><span>CHM 1402</span></i>
+              <i class="block c4" style="--s:360;--d:110"><b>CHEM132</b><span>Lab · CHM 2301</span></i>
+            </div>
+            <div class="day">
+              <i class="block c1" style="--s:60;--d:50"><b>CMSC132</b><span>IRB 0324</span></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="teachers">
+          <span class="t c1"><i></i>CMSC132 · Nelson Padua-Perez <b>4.6</b></span>
+          <span class="t c2"><i></i>MATH241 · Wiseley Wong <b>4.2</b></span>
+          <span class="t c3"><i></i>COMM107 · Staff <b>–</b></span>
+          <span class="t c4"><i></i>CHEM131 · Jason Kahn <b>3.1</b></span>
+        </div>
+        <p class="tight"><svg><use href="#i-walk"/></svg>Tight walk Tue: ~14 min, MATH241 → CHEM131</p>
+        <button class="btn primary wide">Save as Plan A</button>
+      </main>
+      <nav class="tabBar">
+        <a class="tab" href="#"><svg><use href="#i-campus"/></svg><span>Campus</span></a>
+        <a class="tab active" href="#"><svg><use href="#i-schedule"/></svg><span>Schedule</span></a>
+        <a class="tab" href="#"><svg><use href="#i-calendar"/></svg><span>Calendar</span></a>
+        <a class="tab" href="#"><svg><use href="#i-advisor"/></svg><span>Advisor</span></a>
+      </nav>
+    </div>
+  </div>
+</section>
+
+<script>
+  // The phone Today frame shows the same page as the desktop one.
+  for (const el of document.querySelectorAll("[data-clone]")) {
+    el.innerHTML = document.getElementById(el.dataset.clone).innerHTML;
+  }
+</script>
+</body>
+</html>

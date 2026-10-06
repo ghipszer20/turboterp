@@ -122,3 +122,42 @@ describe("applyTranscriptImport: cumulative GPA", () => {
     expect(applyTranscriptImport(basePlan(), { courses: [], ap: [], gpa: null }).gpa).toBeUndefined();
   });
 });
+
+describe("applyTranscriptImport: plan length", () => {
+  const mainTerms = (plan: AdvisorPlan) => plan.terms.map((t) => t.name).filter((n) => /^(Fall|Spring)/.test(n));
+
+  it("stays a four-year plan when the transcript starts before the plan did", () => {
+    const plan = basePlan(); // Fall 2024 to Spring 2028
+    const courses: SelectedCourse[] = [
+      { term: "Fall 2022", code: "MATH140", grade: "A", credits: 4, status: "completed" },
+      { term: "Spring 2023", code: "MATH141", grade: "A", credits: 4, status: "completed" },
+      { term: "Fall 2023", code: "MATH241", grade: "A", credits: 4, status: "completed" },
+      { term: "Spring 2024", code: "MATH240", grade: "A", credits: 4, status: "completed" },
+    ];
+    const next = applyTranscriptImport(plan, { courses, ap: [] });
+    expect(mainTerms(next)).toEqual(["Fall 2022", "Spring 2023", "Fall 2023", "Spring 2024", "Fall 2024", "Spring 2025", "Fall 2025", "Spring 2026"]);
+  });
+
+  it("keeps a later term that already has courses, even past four years", () => {
+    let plan = basePlan();
+    plan = { ...plan, terms: plan.terms.map((t) => (t.name === "Spring 2028" ? { ...t, courses: [{ id: "CMSC351" }] } : t)) };
+    const courses: SelectedCourse[] = [{ term: "Fall 2023", code: "MATH140", grade: "A", credits: 4, status: "completed" }];
+    const next = applyTranscriptImport(plan, { courses, ap: [] });
+    expect(mainTerms(next).at(-1)).toBe("Spring 2028");
+    expect(mainTerms(next)).toHaveLength(9);
+  });
+
+  it("doesn't shorten a plan the transcript didn't lengthen", () => {
+    const plan = basePlan();
+    const courses: SelectedCourse[] = [{ term: "Fall 2024", code: "CMSC131", grade: "A", credits: 4, status: "completed" }];
+    expect(mainTerms(applyTranscriptImport(plan, { courses, ap: [] }))).toHaveLength(8);
+  });
+
+  it("drops an empty summer or winter left after the new last term", () => {
+    let plan = basePlan();
+    plan = { ...plan, terms: [...plan.terms, { name: "Summer 2028", courses: [] }] };
+    const courses: SelectedCourse[] = [{ term: "Fall 2023", code: "MATH140", grade: "A", credits: 4, status: "completed" }];
+    const next = applyTranscriptImport(plan, { courses, ap: [] });
+    expect(next.terms.at(-1)!.name).toBe("Fall 2027");
+  });
+});

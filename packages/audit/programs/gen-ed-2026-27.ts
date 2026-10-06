@@ -2,10 +2,13 @@
 // Source: academiccatalog.umd.edu/undergraduate/general-education-requirements/
 // UNVERIFIED until the owner signs off.
 //
-// Double-counting (catalog): Diversity courses may double-count with Distributive
-// Studies; one course may not meet more than one Distributive Studies category;
-// Big Question courses are two of the eight Distributive Studies courses.
-// Gen Ed courses may also count toward majors (separate programs share freely).
+// Rules and quotes: program-sources/gen-ed.md (Summary Chart and Distributive Studies page).
+// Double-counting: Diversity courses may double-count with Distributive Studies; one course
+// may meet only one Distributive Studies category; Big Question courses must be among the
+// eight Distributive Studies courses; a course designated both FSMA and FSAR satisfies both;
+// at most 6 of the 8 Distributive Studies courses may be AP or IB credit, and AP (read as AP
+// or IB) credit can't satisfy Big Question. Gen Ed courses may also count toward majors
+// (separate programs share freely).
 
 import type { Program } from "../src/audit.ts";
 
@@ -23,9 +26,13 @@ export const genEd: Program = {
     "Fundamental Studies must be attempted by 30 credits and completed by 60; the timing rule isn't checked yet.",
     "CMNS majors: FSMA and FSAR are satisfied by the first major's math requirement (CS tracking sheet). Not modeled; the audit uses course Gen Ed tags.",
     "DSSP: one of the two must be outside the student's major requirements. Not enforced yet (needs cross-program check).",
-    "Big Question (SCIS) is modeled as two SCIS-tagged courses anywhere; the catalog says they must be among the eight Distributive Studies courses.",
     "Pass/fail courses don't count toward Gen Ed; the audit doesn't know grading basis yet.",
     "Exemptions (FSAW/FSMA by exam, AP credit) come in through transfer/AP credit import.",
+  ],
+  // AP/IB limits (program-sources/gen-ed.md, "AP / IB limits"): 6 of the 8 DS courses; none for Big Question.
+  examLimits: [
+    { requirements: ["dshs", "dshu", "dsnl", "natsci", "dssp"], courses: 6 },
+    { requirements: ["scis"], courses: 0 },
   ],
   requirements: [
     // Fundamental Studies
@@ -33,15 +40,17 @@ export const genEd: Program = {
     one("fspw", "Professional Writing", ["FSPW"]),
     one("fsoc", "Oral Communication", ["FSOC"]),
     one("fsma", "Mathematics", ["FSMA"]),
-    one("fsar", "Analytic Reasoning", ["FSAR"]),
+    // Overlay: a course designated both FSMA and FSAR satisfies both (program-sources/gen-ed.md, Summary Chart).
+    { ...one("fsar", "Analytic Reasoning", ["FSAR"]), overlay: true },
     // Distributive Studies (one course may meet only one category)
     { kind: "choose", id: "dshs", name: "History and Social Sciences (2)", count: 2, from: { genEd: ["DSHS"] } },
     { kind: "choose", id: "dshu", name: "Humanities (2)", count: 2, from: { genEd: ["DSHU"] } },
     one("dsnl", "Natural Sciences with lab", ["DSNL"]),
     one("natsci", "Natural Sciences (or a second lab science)", ["DSNS", "DSNL"]),
     { kind: "choose", id: "dssp", name: "Scholarship in Practice (2)", count: 2, from: { genEd: ["DSSP"] } },
-    // Big Question: two courses (overlay: they also count as Distributive Studies)
-    { kind: "choose", id: "scis", name: "Big Question courses (2)", count: 2, overlay: true, from: { genEd: ["SCIS"] } },
+    // Big Question: two courses that must also fill a Distributive Studies category (program-sources/gen-ed.md,
+    // "Big Question (SCIS) is within the 8 DS courses"), so an overlay counted only while within one.
+    { kind: "choose", id: "scis", name: "Big Question courses (2)", count: 2, overlay: true, within: ["dshs", "dshu", "dsnl", "natsci", "dssp"], from: { genEd: ["SCIS"] } },
     // Diversity: two DVUP, or one DVUP and one DVCC (overlay: may double-count with Distributive Studies)
     { kind: "choose", id: "diversity", name: "Diversity (2)", count: 2, overlay: true, from: { genEd: ["DVUP", "DVCC"] } },
     { kind: "choose", id: "dvup", name: "Understanding Plural Societies", count: 1, overlay: true, from: { genEd: ["DVUP"] } },

@@ -6,7 +6,7 @@
 import { COLLEGES, type College } from "@turboterp/plan/credit-caps";
 import { GRAD_CREDIT_TAGS, type GradCreditTag } from "@turboterp/plan/grad-courses";
 import { TRACKS } from "@turboterp/tracks/list";
-import { DEGREE_CHOICES, type AdvisorPlan, type ApInput, type DegreeChoice, type DualInput, type IbInput, type PlannedCourse, type PlanTermState, type PriorInputs } from "./plan-state";
+import { DEGREE_CHOICES, isCreditValue, type AdvisorPlan, type ApInput, type DegreeChoice, type DualInput, type IbInput, type PlannedCourse, type PlanTermState, type PriorInputs } from "./plan-state";
 import { parseTerm } from "./terms";
 
 export const PLAN_STORAGE_KEY = "turboterp-advisor-plan";
@@ -25,7 +25,7 @@ const KNOWN_GRAD_TAGS = new Set<string>(GRAD_CREDIT_TAGS);
 function course(x: unknown): PlannedCourse | null {
   if (!isObj(x) || !str(x.id) || !COURSE.test(x.id)) return null;
   const out: PlannedCourse = { id: x.id };
-  if (num(x.credits)) out.credits = x.credits;
+  if (num(x.credits) && isCreditValue(x.credits)) out.credits = x.credits;
   if (x.status === "planned" || x.status === "completed") out.status = x.status;
   if (str(x.grade)) out.grade = x.grade;
   if (str(x.gradTag) && KNOWN_GRAD_TAGS.has(x.gradTag)) out.gradTag = x.gradTag as GradCreditTag;

@@ -1,7 +1,7 @@
 // Plan checker issues → where the UI shows them: on the course card, on the term header, and in
 // the summary list (worst first).
 
-import type { PlanIssue } from "@turboterp/plan/check";
+import { FULL_TIME_CREDITS, type PlanIssue } from "@turboterp/plan/check";
 
 export type Severity = PlanIssue["severity"];
 
@@ -22,6 +22,9 @@ export type IssueGroups = {
   worstByCourse: Map<string, Severity>;
   worstByTerm: Map<string, Severity>;
   summary: PlanIssue[];
+  /** The summary's errors and warnings: what the Checks list shows. Confirm items sit on their
+   * course card and info becomes a tip (planTips), so neither is repeated there. */
+  checks: PlanIssue[];
   counts: Record<Severity, number>;
 };
 
@@ -36,6 +39,7 @@ export function groupIssues(issues: PlanIssue[], termOrder: string[]): IssueGrou
     worstByCourse: new Map(),
     worstByTerm: new Map(),
     summary: [],
+    checks: [],
     counts: { error: 0, warning: 0, confirm: 0, info: 0 },
   };
   for (const issue of issues) {
@@ -57,5 +61,21 @@ export function groupIssues(issues: PlanIssue[], termOrder: string[]): IssueGrou
     .map((issue, i) => ({ issue, i }))
     .sort((a, b) => rank(a.issue.severity) - rank(b.issue.severity) || termIndex(a.issue.term) - termIndex(b.issue.term) || a.i - b.i)
     .map((x) => x.issue);
+  g.checks = g.summary.filter((i) => i.severity === "error" || i.severity === "warning");
   return g;
+}
+
+/** The one line a course card has room for: the first issue (its short form if it has one). */
+export function cardNote(issues: PlanIssue[]): string {
+  const first = issues[0]!;
+  return `${first.short ?? first.message}${issues.length > 1 ? ` (+${issues.length - 1} more)` : ""}`;
+}
+
+/** Small print under Checks: things most students know, said once. `notes` are the program
+ * notices and info-level degree notes (double major, dual degree, declaration deadlines). */
+export function planTips(issues: PlanIssue[], notes: string[]): string[] {
+  const tips = issues.some((i) => i.kind === "light-load")
+    ? [`Full-time is at least ${FULL_TIME_CREDITS} credits in a fall or spring term. Fewer can affect financial aid, housing and your graduation date.`]
+    : [];
+  return [...new Set([...tips, ...notes])];
 }

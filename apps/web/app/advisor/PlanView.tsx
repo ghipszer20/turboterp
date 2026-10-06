@@ -6,14 +6,16 @@ import { isGraduateCourse } from "@turboterp/plan/grad-courses";
 import type { TermDifficulty } from "@turboterp/plan/difficulty";
 import { useEffect, useMemo, useState } from "react";
 import { planDifficulty } from "@/lib/advisor/difficulty";
-import { courseKey, type IssueGroups, type Severity } from "@/lib/advisor/issues";
+import { cardNote, courseKey, type IssueGroups, type Severity } from "@/lib/advisor/issues";
 import type { AdvisorPlan, PlanTermState } from "@/lib/advisor/plan-state";
 import type { PriorCreditResult } from "@/lib/advisor/prior-credit";
 import { formatKeyDates, termKeyDates } from "@/lib/calendar";
+import { PROGRAM_OPTIONS } from "@/lib/advisor/programs";
+import { legendCategories, rowCategory, type RowCategory } from "@/lib/advisor/row-category";
 import { searchCourses } from "@/lib/advisor/search";
 import { academicYears, parseTerm } from "@/lib/advisor/terms";
 import type { AnalysisState, OpenCourse } from "./AdvisorApp";
-import { ChecksPanel, Notices } from "./ChecksPanel";
+import { CheckCounts, Notices, PlanTips, ProgramChecks, TermIssue } from "./ChecksPanel";
 import { loadCourseGrades, type CatalogState } from "./data";
 import { dispatchPlan, openView } from "./store";
 import styles from "./advisor.module.css";
@@ -55,23 +57,32 @@ export function PlanView({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plan, ready]);
 
-  return (
-    <div className={styles.planLayout}>
-      <div className={styles.planSide}>
-        <Notices analysis={analysis} />
-        <ChecksPanel checked={checked} catalogStatus={catalog.status} analysis={analysis} onOpenCourse={onOpenCourse} />
-      </div>
+  const cats = useMemo(() => {
+    const kinds = Object.fromEntries(PROGRAM_OPTIONS.map((p) => [p.id, p.kind]));
+    const m = new Map<string, RowCategory>();
+    if (analysis.result) for (const t of plan.terms) for (const c of t.courses) m.set(c.id, rowCategory(c.id, analysis.result, kinds));
+    return m;
+  }, [analysis.result, plan.terms]);
+  const catOf = (id: string): RowCategory => cats.get(id) ?? "other";
+  const legend = legendCategories(plan.terms.flatMap((t) => t.courses.map((c) => catOf(c.id))));
 
-      <div className={styles.planMain}>
+  return (
+    <div>
+      <div>
         <div className={styles.summaryBar}>
-          <span>
-            <strong>{total + prior.totalCredits}</strong> credits planned
-            {prior.totalCredits > 0 ? ` (${prior.totalCredits} from prior credit)` : ""}
+          <span className={styles.summaryMain}>
+            <span>
+              <strong>{total + prior.totalCredits}</strong> credits planned
+              {prior.totalCredits > 0 ? ` (${prior.totalCredits} from prior credit)` : ""}
+            </span>
+            <CheckCounts checked={checked} />
           </span>
           <button type="button" className={styles.linkButton} onClick={() => openView("credit")}>
             {prior.entries.length ? "Edit prior credit" : "Add AP, IB or college credit"}
           </button>
         </div>
+        <Notices analysis={analysis} />
+        <ProgramChecks analysis={analysis} onOpenCourse={onOpenCourse} />
 
         {years.map((year, i) => (
           <section key={year.label} className={styles.year} aria-label={`Year ${i + 1}, ${year.label}`}>
@@ -86,6 +97,7 @@ export function PlanView({
                   catalog={catalog}
                   groups={checked?.groups ?? null}
                   creditsOf={creditsOf}
+                  catOf={catOf}
                   keyDates={formatKeyDates(termKeyDates(calendar, name, name === lastTerm))}
                   difficulty={difficulty.get(name)}
                   onOpenCourse={onOpenCourse}
@@ -96,14 +108,47 @@ export function PlanView({
           </section>
         ))}
         {lastTerm ? (
-          <button type="button" className={styles.addTerm} onClick={() => dispatchPlan({ type: "add-term", name: nextMainTerm(lastTerm) })}>
-            + Add {nextMainTerm(lastTerm)}
-          </button>
+          <div className={styles.optionalTerms}>
+            <button type="button" className={styles.addTerm} onClick={() => dispatchPlan({ type: "add-term", name: nextMainTerm(lastTerm) })}>
+              + Add {nextMainTerm(lastTerm)}
+            </button>
+            {plan.terms.length > 1 ? (
+              <button
+                type="button"
+                className={styles.smallButton}
+                onClick={() => {
+                  const n = byName.get(lastTerm)!.courses.length;
+                  if (n === 0 || confirm(`Are you sure you want to delete ${lastTerm} and its ${n} course(s)?`)) dispatchPlan({ type: "remove-term", name: lastTerm });
+                }}
+              >
+                Remove {lastTerm}
+              </button>
+            ) : null}
+          </div>
         ) : null}
+        {legend.length ? (
+          <div className={styles.legend} aria-label="Course colors">
+            {legend.map((c) => (
+              <span key={c} data-cat={c}>
+                <i aria-hidden="true" />
+                {LEGEND_LABELS[c]}
+              </span>
+            ))}
+          </div>
+        ) : null}
+        <PlanTips checked={checked} analysis={analysis} />
       </div>
     </div>
   );
 }
+
+const LEGEND_LABELS: Record<RowCategory, string> = {
+  major: "Major",
+  gened: "Gen Ed",
+  college: "College",
+  elective: "Elective",
+  other: "Other",
+};
 
 function nextMainTerm(last: string): string {
   const t = parseTerm(last)!;
@@ -139,6 +184,7 @@ function TermColumn({
   catalog,
   groups,
   creditsOf,
+  catOf,
   keyDates,
   difficulty,
   onOpenCourse,
@@ -147,6 +193,7 @@ function TermColumn({
   catalog: CatalogState;
   groups: IssueGroups | null;
   creditsOf: (id: string, own?: number) => number | null;
+  catOf: (id: string) => RowCategory;
   keyDates: string;
   difficulty: TermDifficulty | undefined;
   onOpenCourse: (c: OpenCourse) => void;
@@ -156,7 +203,8 @@ function TermColumn({
   const optional = season === "Winter" || season === "Summer";
   const credits = term.courses.reduce((t, c) => t + (creditsOf(c.id, c.credits) ?? 0), 0);
   const unknown = term.courses.some((c) => creditsOf(c.id, c.credits) === null);
-  const termIssues = groups?.byTerm.get(term.name) ?? [];
+  // Info (a light term) is a tip in the Checks card, not a banner on every term.
+  const termIssues = (groups?.byTerm.get(term.name) ?? []).filter((i) => i.severity !== "info");
   const ready = catalog.status === "ready" ? catalog : null;
 
   const drop = (e: React.DragEvent, index?: number) => {
@@ -173,6 +221,7 @@ function TermColumn({
     <div
       className={styles.term}
       data-optional={optional || undefined}
+      data-error={termIssues.some((i) => i.severity === "error") || undefined}
       data-over={over || undefined}
       onDragOver={(e) => {
         if (e.dataTransfer.types.includes(DRAG_TYPE)) {
@@ -204,7 +253,7 @@ function TermColumn({
             className={styles.iconButton}
             aria-label={`Remove ${term.name}`}
             onClick={() => {
-              if (term.courses.length === 0 || confirm(`Remove ${term.name} and its ${term.courses.length} course(s)?`))
+              if (term.courses.length === 0 || confirm(`Are you sure you want to delete ${term.name} and its ${term.courses.length} course(s)?`))
                 dispatchPlan({ type: "remove-term", name: term.name });
             }}
           >
@@ -215,9 +264,7 @@ function TermColumn({
       {keyDates ? <p className={styles.keyDates}>Key dates: {keyDates}</p> : null}
       {difficulty ? <p className={styles.difficultyText}>{difficulty.sentence}</p> : null}
       {termIssues.map((issue, i) => (
-        <p key={i} className={styles.inlineIssue} data-severity={issue.severity}>
-          {issue.message}
-        </p>
+        <TermIssue key={i} issue={issue} />
       ))}
       <ul className={styles.courseList}>
         {term.courses.map((c, index) => {
@@ -231,6 +278,7 @@ function TermColumn({
               key={c.id}
               className={styles.courseCard}
               data-severity={worst}
+              data-cat={catOf(c.id)}
               draggable
               onDragStart={(e) => {
                 e.dataTransfer.setData(DRAG_TYPE, JSON.stringify({ id: c.id, from: term.name }));
@@ -249,8 +297,7 @@ function TermColumn({
                 <span className={styles.courseTitle}>{info?.title ?? (ready ? "Not in TurboTerp's course data" : " ")}</span>
                 {issues.length > 0 ? (
                   <span className={styles.courseIssue} data-severity={worst}>
-                    {issues[0]!.message}
-                    {issues.length > 1 ? ` (+${issues.length - 1} more)` : ""}
+                    {cardNote(issues)}
                   </span>
                 ) : null}
               </button>

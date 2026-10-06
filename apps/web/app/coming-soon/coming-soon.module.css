@@ -19,7 +19,7 @@
 
 .title {
   margin: 0;
-  font: 700 34px/1.1 var(--font-rounded);
+  font: 700 34px/1.1 var(--font-display);
   letter-spacing: -0.02em;
   color: var(--text);
 }
@@ -30,7 +30,7 @@
 
 .soon {
   margin: 4px 0 0;
-  font: 600 20px/1.3 var(--font-rounded);
+  font: 600 20px/1.3 var(--font-display);
   color: var(--text-2);
 }
 

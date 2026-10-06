@@ -24,6 +24,7 @@
   --accent-hover: #a10a28;
   --accent-tint: rgb(186 12 47 / 0.08);
   --accent-tint-2: rgb(186 12 47 / 0.14);
+  --accent-ring: rgb(186 12 47 / 0.25);
   --on-accent: #ffffff;
 
   /* Status (meaning only) */
@@ -72,6 +73,39 @@
   /* A real border on every card, so cards stay distinct when shadows are flattened (dark-mode extensions). */
   --card-border: rgb(60 60 67 / 0.18);
 
+  /* UI rework (owner, 2026-10-05; spec docs/project/ui-rework.md). Display face for titles and
+     big numbers; tiles are 22px-rounded, hairline-bordered, no shadow. */
+  --font-display: var(--font-plus-jakarta, ui-rounded, "SF Pro Rounded"), var(--font);
+  --r-tile: 22px;
+  --tile-border: rgb(20 24 40 / 0.08);
+  --on-solid: #ffffff;
+  --tile-sub: rgb(29 29 31 / 0.62);
+  --bar-bg: rgb(255 255 255 / 0.92);
+  --bar-shadow: 0 8px 30px rgb(20 24 40 / 0.14);
+  /* Area tints for Today / Campus tiles (light only; dark tiles stay graphite with a solid chip). */
+  --tint-dining: #fff0e6; --ink-dining: #e8590c; --chip-dining: #ff7a1a;
+  --tint-study: #e9f0ff; --ink-study: #1d4ed8; --chip-study: #3b82f6;
+  --tint-fitness: #e6f7ee; --ink-fitness: #15803d; --chip-fitness: #22a35a;
+  --tint-transport: #f1e9ff; --ink-transport: #6d28d9; --chip-transport: #8b5cf6;
+  /* Hero widget (next class): the brand red gradient. */
+  --hero-bg: linear-gradient(135deg, #d0183c, #a80a29);
+  /* Schedule class blocks, "S1": solid fill, 1.5px deeper edge, white text. One pair per course slot. */
+  --course-0-solid: #e11d48; --course-0-deep: #9f1239;
+  --course-1-solid: #3b82f6; --course-1-deep: #1d4ed8;
+  --course-2-solid: #22a35a; --course-2-deep: #15803d;
+  --course-3-solid: #f59e0b; --course-3-deep: #b45309;
+  --course-4-solid: #8b5cf6; --course-4-deep: #6d28d9;
+  --course-5-solid: #0d9488; --course-5-deep: #0f766e;
+  --course-6-solid: #f97316; --course-6-deep: #c2410c;
+  --course-7-solid: #64748b; --course-7-deep: #334155;
+  --block-shadow: 0 1px 3px rgb(0 0 0 / 0.18);
+  /* Plan rows: one pastel per requirement category (fill / ink). */
+  --cat-major-bg: #ffe1e6; --cat-major-fg: #8a0a24;
+  --cat-gened-bg: #dcecff; --cat-gened-fg: #0b4a8f;
+  --cat-college-bg: #e3f5e1; --cat-college-fg: #1f6b2a;
+  --cat-elective-bg: #fff0d1; --cat-elective-fg: #7a4a00;
+  --cat-other-bg: #e6e9f0; --cat-other-fg: #374151;
+
   /* Motion */
   --spring: cubic-bezier(0.32, 0.72, 0, 1);
   --fast: 160ms;
@@ -96,6 +130,7 @@
     --accent-hover: #ff6b84;
     --accent-tint: rgb(255 79 109 / 0.14);
     --accent-tint-2: rgb(255 79 109 / 0.22);
+    --accent-ring: rgb(255 79 109 / 0.35);
     --on-accent: #1c0006;
     --open: #30d158;
     --open-tint: rgb(48 209 88 / 0.14);
@@ -117,6 +152,19 @@
     --rating-low: #d0453a;
     --rating-none: #636366;
     --card-border: rgb(235 235 245 / 0.16);
+    --tile-border: rgb(235 235 245 / 0.14);
+    --tile-sub: rgb(245 245 247 / 0.66);
+    --bar-bg: rgb(28 28 30 / 0.92);
+    --bar-shadow: none;
+    --hero-bg: linear-gradient(135deg, #e0244a, #b4102f);
+    --course-0-deep: #fda4af; --course-1-deep: #93c5fd; --course-2-deep: #86efac; --course-3-deep: #fcd34d;
+    --course-4-deep: #c4b5fd; --course-5-deep: #5eead4; --course-6-deep: #fdba74; --course-7-deep: #cbd5e1;
+    --block-shadow: none;
+    --cat-major-bg: #4a1522; --cat-major-fg: #ffc2cf;
+    --cat-gened-bg: #10304f; --cat-gened-fg: #b9d9ff;
+    --cat-college-bg: #173a1c; --cat-college-fg: #bfe8b8;
+    --cat-elective-bg: #3f2e0b; --cat-elective-fg: #ffd98a;
+    --cat-other-bg: #282d38; --cat-other-fg: #d1d6e0;
   }
 }
 
@@ -139,6 +187,7 @@
     --accent-hover: #ff6b84;
     --accent-tint: rgb(255 79 109 / 0.14);
     --accent-tint-2: rgb(255 79 109 / 0.22);
+    --accent-ring: rgb(255 79 109 / 0.35);
     --on-accent: #1c0006;
 
     --open: #30d158;
@@ -162,6 +211,19 @@
     --rating-low: #d0453a;
     --rating-none: #636366;
     --card-border: rgb(235 235 245 / 0.16);
+    --tile-border: rgb(235 235 245 / 0.14);
+    --tile-sub: rgb(245 245 247 / 0.66);
+    --bar-bg: rgb(28 28 30 / 0.92);
+    --bar-shadow: none;
+    --hero-bg: linear-gradient(135deg, #e0244a, #b4102f);
+    --course-0-deep: #fda4af; --course-1-deep: #93c5fd; --course-2-deep: #86efac; --course-3-deep: #fcd34d;
+    --course-4-deep: #c4b5fd; --course-5-deep: #5eead4; --course-6-deep: #fdba74; --course-7-deep: #cbd5e1;
+    --block-shadow: none;
+    --cat-major-bg: #4a1522; --cat-major-fg: #ffc2cf;
+    --cat-gened-bg: #10304f; --cat-gened-fg: #b9d9ff;
+    --cat-college-bg: #173a1c; --cat-college-fg: #bfe8b8;
+    --cat-elective-bg: #3f2e0b; --cat-elective-fg: #ffd98a;
+    --cat-other-bg: #282d38; --cat-other-fg: #d1d6e0;
 }
 
 *,
