@@ -55,7 +55,7 @@ export const genEd: Program = {
     // Cultural Competence course are required. Diversity courses may also fulfill a Distributive
     // Studies category." (overlay: may double-count with Distributive Studies)
     {
-      kind: "sets", id: "diversity", name: "Diversity: 2 Understanding Plural Societies, or 1 and 1 Cultural Competence", overlay: true,
+      kind: "sets", id: "diversity", name: "Diversity (2)", overlay: true,
       options: [[{ count: 2, from: { genEd: ["DVUP"] } }], [{ count: 1, from: { genEd: ["DVUP"] } }, { count: 1, from: { genEd: ["DVCC"] } }]],
     },
   ],
