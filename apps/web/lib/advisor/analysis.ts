@@ -29,16 +29,20 @@ import type { AdvisorPlan } from "./plan-state";
 import { AUTOMATIC_PROGRAMS, auditedPrograms, collegeLayers, degreeModeOf, noticeCandidates, studentDegrees } from "./programs";
 import { describeGap, type ChoiceAward, type Gap } from "./requirements";
 import { matriculationTermId } from "./terms";
+import { displayStatus, type DisplayStatus } from "./req-status";
 import { resolvedPlan } from "./track-plan";
 
 type ProgramAudit = {
   program: Program;
-  requirements: { requirement: Requirement; result: RequirementResult; gap: Gap | null }[];
+  requirements: { requirement: Requirement; result: RequirementResult; display: DisplayStatus; gap: Gap | null }[];
   /** The program-wide GPA check (Program.minGpa), shown after the requirements; null without one. */
   gpa: RequirementResult | null;
   /** Rows shown: the requirements, plus the GPA check if any. */
   total: number;
+  /** Fully satisfied rows only (every counted course completed). */
   satisfied: number;
+  /** Rows the audit calls satisfied that still count a planned course. */
+  inProgress: number;
 };
 
 /** A chosen Track's audit, plain-language issues and requirement status -- never a degree
@@ -47,8 +51,9 @@ type ProgramAudit = {
 type TrackAudit = {
   track: Track;
   result: TrackCheckResult;
-  requirements: { requirement: Requirement; result: RequirementResult; gap: Gap | null }[];
+  requirements: { requirement: Requirement; result: RequirementResult; display: DisplayStatus; gap: Gap | null }[];
   satisfied: number;
+  inProgress: number;
   /** Each milestone's timing on the plan's own timeline (see trackMilestoneTimings). */
   milestones: MilestoneTiming[];
 };
@@ -107,11 +112,12 @@ export async function runAnalysis(input: { plan: AdvisorPlan; catalog: PlanCatal
   const audits = programs.map((program, p): ProgramAudit => {
     const requirements = program.requirements.map((requirement, r) => {
       const result = results[p]!.requirements[r]!;
-      return { requirement, result, gap: describeGap(requirement, result, gapContext) };
+      return { requirement, result, display: displayStatus(result, courses), gap: describeGap(requirement, result, gapContext) };
     });
     const gpa = results[p]!.requirements.find((x) => x.id === PROGRAM_GPA_ID) ?? null;
-    const satisfied = requirements.filter((x) => x.result.status === "satisfied").length + (gpa?.status === "satisfied" ? 1 : 0);
-    return { program, requirements, gpa, total: requirements.length + (gpa ? 1 : 0), satisfied };
+    const satisfied = requirements.filter((x) => x.display === "satisfied").length + (gpa?.status === "satisfied" ? 1 : 0);
+    const inProgress = requirements.filter((x) => x.display === "in-progress").length;
+    return { program, requirements, gpa, total: requirements.length + (gpa ? 1 : 0), satisfied, inProgress };
   });
 
   const term = matriculationTermId(input.plan.startTerm);
@@ -132,13 +138,14 @@ export async function runAnalysis(input: { plan: AdvisorPlan; catalog: PlanCatal
       const program = trackProgram(track);
       const requirements = program.requirements.map((requirement, r) => {
         const reqResult = result.audit.requirements[r]!;
-        return { requirement, result: reqResult, gap: describeGap(requirement, reqResult, gapContext) };
+        return { requirement, result: reqResult, display: displayStatus(reqResult, courses), gap: describeGap(requirement, reqResult, gapContext) };
       });
       return {
         track,
         result,
         requirements,
-        satisfied: requirements.filter((x) => x.result.status === "satisfied").length,
+        satisfied: requirements.filter((x) => x.display === "satisfied").length,
+        inProgress: requirements.filter((x) => x.display === "in-progress").length,
         milestones: trackMilestoneTimings(trackPlan, track),
       };
     }),
