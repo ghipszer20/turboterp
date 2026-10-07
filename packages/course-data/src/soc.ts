@@ -11,6 +11,7 @@
 import * as cheerio from "cheerio";
 import type { Element } from "domhandler";
 import { fetchText, SourceError } from "@turboterp/campus-data/http";
+import { labPairOf } from "./gen-ed.ts";
 
 const SOC = "https://app.testudo.umd.edu/soc";
 
@@ -162,12 +163,6 @@ function parseTexts($: cheerio.CheerioAPI, course: cheerio.Cheerio<Element>) {
     });
   });
   return { texts, description: descriptions.join("\n\n") };
-}
-
-/** "DSNL (if taken with CHEM132), DSNS" -> the DSNL condition, kept out of the flat genEd list. */
-function labPairOf(genEdText: string): { labPair?: { code: "DSNL"; with: string } } {
-  const m = /\bDSNL\s*\(\s*if taken with\s+([A-Z]{4}\d{3}[A-Z]?)\s*\)/i.exec(genEdText);
-  return m ? { labPair: { code: "DSNL", with: m[1]!.toUpperCase() } } : {};
 }
 
 export function parseCourses(html: string, department: string): Course[] {

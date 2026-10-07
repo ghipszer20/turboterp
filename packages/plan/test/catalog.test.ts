@@ -41,3 +41,12 @@ describe("buildCatalog", () => {
     expect(buildCatalog(SPRING_2027, [{ ...fall[0]!, id: "CMSC131" }]).get("CMSC131")!.title).not.toBe("Fall-only course");
   });
 });
+
+describe("buildCatalog: lab pairs from older snapshots", () => {
+  it("reads the lab pair from genEdText when the snapshot predates the labPair field", () => {
+    const base = SPRING_2027.find((x) => x.genEd.length > 0)!;
+    const old = { ...base, id: "CHEM131", genEd: ["DSNL", "DSNS"], genEdText: "DSNL (if taken with CHEM132), DSNS" };
+    delete (old as { labPair?: unknown }).labPair;
+    expect(buildCatalog([old]).get("CHEM131")!.labPair).toEqual({ code: "DSNL", with: "CHEM132" });
+  });
+});

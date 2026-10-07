@@ -61,3 +61,12 @@ describe("lab pair in the catalog file", () => {
     expect(decodeCatalogFile(file).catalog.get("CHEM131")?.labPair).toEqual({ code: "DSNL", with: "CHEM132" });
   });
 });
+
+describe("lab-science pairs: review fixes", () => {
+  it("doesn't pair a lab withdrawn from or failed in that term", () => {
+    const p: Plan = { terms: [{ name: "Fall", courses: [{ id: "CHEM131", status: "completed", grade: "A" }, { id: "CHEM132", status: "completed", grade: "W" }] }] };
+    const lecture = planCourses(p, catalog).find((x) => x.id === "CHEM131");
+    expect(lecture?.genEd).toEqual(["DSNS"]);
+    expect(lecture?.genEdCredits).toBeUndefined();
+  });
+});

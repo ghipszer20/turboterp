@@ -8,6 +8,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./prereqs": "./src/prereqs.ts",
+    "./gen-ed": "./src/gen-ed.ts",
     "./schedules": "./src/schedules.ts",
     "./sort": "./src/sort.ts",
     "./explain": "./src/explain.ts",

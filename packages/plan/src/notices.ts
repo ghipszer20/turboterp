@@ -127,7 +127,10 @@ function labScience(info: CatalogCourse | undefined, term: Plan["terms"][number]
     for (const other of catalog.values()) if (other.labPair?.with === info.id) return { genEd: [] };
     return { genEd: info.genEd };
   }
-  const lab = term.courses.find((x) => x.id === pair.with && x.gradTag !== "graduate-only");
+  // A withdrawn or failed lab doesn't make the pair (earnsCredit: F and W earn nothing).
+  const lab = term.courses.find(
+    (x) => x.id === pair.with && x.gradTag !== "graduate-only" && earnsCredit({ status: x.status === "completed" ? "completed" : "planned", ...(x.grade ? { grade: x.grade } : {}) }),
+  );
   if (!lab) return { genEd: withoutUnpairedLab(info) };
   const own = term.courses.find((x) => x.id === info.id)?.credits ?? info.credits.min;
   const labCredits = lab.credits ?? catalog.get(lab.id)?.credits.min ?? 0;
