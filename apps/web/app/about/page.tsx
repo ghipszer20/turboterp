@@ -15,8 +15,8 @@ export default function AboutPage() {
         <Card className={styles.card}>
           <div className={styles.prose}>
             <p>
-              TurboTerp is an all-in-one app for UMD students: campus info like dining, libraries, gyms and buses, a
-              schedule builder, and a four-year plan and degree audit, all in one place.
+              TurboTerp is a website and app for UMD students. Check what the dining halls are serving, plan your
+              degree, and handle everything in between, all in one place.
             </p>
             <p>It&apos;s free and open source. Not affiliated with the University of Maryland.</p>
             <p>
