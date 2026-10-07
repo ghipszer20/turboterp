@@ -47,7 +47,8 @@ describe("double major", () => {
   });
 
   it("says nothing about a major the plan doesn't come close to", async () => {
-    const plan = without(ownerPlan(), "CMSC330", "CMSC351", "CMSC420");
+    // AMSC460 now counts as CMSC460 (cross-listed), so the plan needs one more course dropped to be out of reach.
+    const plan = without(ownerPlan(), "CMSC330", "CMSC351", "CMSC420", "CMSC414");
     const notices = await programNotices(plan, catalog, [
       { program: mathMajorApplied, declared: true },
       { program: cmscMajor, declared: false },

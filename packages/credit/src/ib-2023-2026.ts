@@ -5,7 +5,7 @@
 // The chart prints per-course credits and Gen Ed, so no splits were inferred here.
 // "Standard" is SL and "Higher" is HL. A level with no rows is "Credit is not awarded for the exam".
 
-import { course, elective, genEdOnly, oneOf, row } from "./chart.ts";
+import { course, elective, labLecture, genEdOnly, oneOf, row } from "./chart.ts";
 import type { IbExam } from "./types.ts";
 
 const LANGUAGE_NOTE =
@@ -53,9 +53,9 @@ export const IB_EXAMS: IbExam[] = [
           [6, 7],
           8,
           "BSCI160 and BSCI161 and BSCI170 and BSCI171",
-          course("BSCI160", 3, "DSNL"),
+          labLecture("BSCI160", 3, "BSCI161", "DSNL"),
           course("BSCI161", 1),
-          course("BSCI170", 3, "DSNL"),
+          labLecture("BSCI170", 3, "BSCI171", "DSNL"),
           course("BSCI171", 1),
         ),
       ],
@@ -73,10 +73,10 @@ export const IB_EXAMS: IbExam[] = [
     aliases: [],
     levels: {
       // The chart prints "CHEM131 and CHEM132 and" for SL 6, 7, with no third course.
-      SL: [row([5], 4, NDE, genEdOnly(NDE, 4, "DSNL")), row([6, 7], 4, "CHEM131 and CHEM132", course("CHEM131", 3, "DSNL"), course("CHEM132", 1))],
+      SL: [row([5], 4, NDE, genEdOnly(NDE, 4, "DSNL")), row([6, 7], 4, "CHEM131 and CHEM132", labLecture("CHEM131", 3, "CHEM132", "DSNL"), course("CHEM132", 1))],
       HL: [
-        row([5], 4, "CHEM131 and CHEM132", course("CHEM131", 3, "DSNL"), course("CHEM132", 1)),
-        row([6, 7], 6, "CHEM131 and CHEM132 and CHEM271", course("CHEM131", 3, "DSNL"), course("CHEM132", 1), course("CHEM271", 2)),
+        row([5], 4, "CHEM131 and CHEM132", labLecture("CHEM131", 3, "CHEM132", "DSNL"), course("CHEM132", 1)),
+        row([6, 7], 6, "CHEM131 and CHEM132 and CHEM271", labLecture("CHEM131", 3, "CHEM132", "DSNL"), course("CHEM132", 1), course("CHEM271", 2)),
       ],
     },
   },

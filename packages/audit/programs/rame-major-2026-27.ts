@@ -160,12 +160,15 @@ export const rameMajorLanguageTrack: Program = {
     ...foundations(),
     {
       kind: "choose",
-      id: "language-track",
+      // Posted (owner, 2026-10-07): "Other languages such as Aramaic, Akkadian or Syriac taken through
+      // CourseShare or the Consortium ... may be substituted", so other languages count with advisor approval.
+      id: "language-track", advisorMayApprove: true,
       name:
         "Six credits in Hebrew, Arabic, Greek, or another approved language beyond the first-year " +
         "level",
       credits: 6,
-      from: { departments: ["HEBR", "ARAB", "GREK"], minNumber: 200, maxNumber: 499 },
+      // Department page: "Courses at the 600-, 700- and 800-levels are reserved for graduate students."
+      from: { departments: ["HEBR", "ARAB", "GREK"], minNumber: 200, maxNumber: 499, noGraduateCourses: true },
     },
   ],
 };

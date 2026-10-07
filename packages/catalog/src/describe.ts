@@ -1,7 +1,7 @@
 // A Requirement in plain language: "One of: CMSC131, CMSC133", "Choose 2 of: …,
 // at most one of CMSC460 / CMSC466". Framework-free.
 
-import type { CourseFilter, Requirement, SetMember } from "@turboterp/audit";
+import { rangeTakesGraduateCourses, type CourseFilter, type Requirement, type SetMember } from "@turboterp/audit";
 
 export type Described = {
   /** The rule in one line. */
@@ -15,8 +15,9 @@ export type Described = {
 const list = (codes: string[]) => codes.join(", ");
 const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
 
-function numberRange(min?: number, max?: number): string | null {
-  if (min !== undefined && max !== undefined) return `${min}–${max}`;
+function numberRange(min?: number, max?: number, noGraduateCourses?: boolean): string | null {
+  const grad = max !== undefined && max < 999 && rangeTakesGraduateCourses(min, max, noGraduateCourses) ? " or 600+" : "";
+  if (min !== undefined && max !== undefined) return `${min}–${max}${grad}`;
   if (min !== undefined) return `${min}+`;
   if (max !== undefined) return `up to ${max}`;
   return null;
@@ -27,7 +28,8 @@ export function describeFilter(filter: CourseFilter): string {
   if (filter.anyCourse) return "any course";
   const parts: string[] = [];
   if (filter.courses?.length) parts.push(list(filter.courses));
-  const range = numberRange(filter.minNumber, filter.maxNumber);
+  // Graduate courses only match through a department (audit's matchesFilter), so a department-free range doesn't mention them.
+  const range = numberRange(filter.minNumber, filter.maxNumber, filter.noGraduateCourses || !filter.departments?.length);
   if (filter.departments?.length) parts.push([filter.departments.join("/"), range].filter(Boolean).join(" "));
   else if (range) parts.push(`any department ${range}`);
   if (filter.genEd?.length) parts.push(`courses with Gen Ed ${filter.genEd.join(" or ")}`);
@@ -64,7 +66,7 @@ function describeRule(r: Requirement): Pick<Described, "text" | "details"> {
     }
     case "concentration": {
       const not = r.excludeDepartments?.length ? ` (not ${r.excludeDepartments.join(", ")})` : "";
-      return { text: `${r.credits} credits of ${r.minNumber}–${r.maxNumber} courses, all from one department${not}`, details: [] };
+      return { text: `${r.credits} credits of ${numberRange(r.minNumber, r.maxNumber, r.noGraduateCourses)} courses, all from one department${not}`, details: [] };
     }
     case "sets": {
       if (r.options.length === 1) return { text: `All of: ${r.options[0]!.map(member).join(", ")}`, details: [] };

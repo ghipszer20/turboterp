@@ -6,6 +6,7 @@
 
 import type { Program, ProgramMeta } from "../src/audit.ts";
 
+const PSYC_IDS = ["psyc-major-ba", "psyc-major-bs"];
 const coreCourses = ["EDHD411", "EDHD412", "EDHD413", "EDHD440", "EDHD460"];
 const edhdElectives = [
   "EDHD221", "EDHD230", "EDHD231", "EDHD241", "EDHD251", "EDHD310", "EDHD400", "EDHD405",
@@ -39,10 +40,11 @@ export const hdevMajor: Program = {
   minGrade: "C-",
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Students may, at the invitation of individual faculty, substitute EDHD489 OR EDHD498, for three of the required 12 credit elective component.' The substitute isn't a fixed course list, so hdev-electives carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     "Department page not checked: the source file has only the catalog requirements and the College of Education four-year-plans page, which is a general page with no Human Development requirements or plan text. Encoded from the catalog alone.",
     "The College of Education page says a C- or better is required in pre-professional and professional coursework; the catalog gives no grade rule for this major. minGrade C- is applied on that college-wide statement. Confirm it applies to Human Development.",
     "The four electives are one pool: the 14 listed EDHD electives, the five core courses (footnote: a core course not credited as core may be an elective), the listed Psychology, Sociology and Family Science electives, and every course in the 16 'Other Possible Electives' departments (AAAS, AAST, AMST, ANTH, BMGT, CCJS, ECON, GVPT, HESP, HLTH, LING, RELS, SLLC, SPHL, STAT, WGSS; the catalog's run-together 'HLTH - Health LING - Linguistics' is read as two departments). The catalog says those departments' electives are 'approved by program advisor', which is not encodable, so the whole department is accepted. Advisor approval is a manual gate.",
-    "Not encoded (manual): the double-major substitutions (Family Health majors FMSC302 for EDHD306; Psychology majors PSYC300 for EDHD306 and PSYC200 for QMMS251); the optional EDHD489 or EDHD498 substitution for 3 elective credits at faculty invitation; 43 total credits.",
+    "Double-major substitutions are gated on the other major being audited alongside (Requirement.substitutes): FMSC302 for EDHD306 (Family Health majors), PSYC300 for EDHD306 and PSYC200 for QMMS251 (Psychology majors). Not encoded (manual): the optional EDHD489 or EDHD498 substitution for 3 elective credits at faculty invitation; 43 total credits.",
     "Internship: EDHD398 (6 credits, one or two semesters) or, per footnotes, six credits of 400-level electives instead, or EDHD398 for 3 credits plus a 400-level elective for 3. Encoded as a 6-credit pool of EDHD398 plus the 400-level named electives; 400-level courses in the other departments are not included in the pool (a course filter cannot combine named courses with a level-limited department range), so a student using one of those for the internship substitute shows a gap here. EDHD390 is required either way.",
     "The catalog four-year plan section only links out to the College of Education roadmaps, and the COE page lists 'Human Development' as a link with no plan text, so the sample plan is CONSTRUCTED, not official.",
   ],
@@ -50,12 +52,27 @@ export const hdevMajor: Program = {
     { kind: "course", id: "edhd200", name: "Paradigms and Perspectives in Human Development (EDHD200)", options: ["EDHD200"] },
     { kind: "course", id: "edhd201", name: "Learning How to Learn (EDHD201)", options: ["EDHD201"] },
     { kind: "course", id: "edhd320", name: "Human Development Through the Life Span (EDHD320)", options: ["EDHD320"] },
-    { kind: "course", id: "edhd306", name: "Research Methods in Human Development (EDHD306)", options: ["EDHD306"] },
-    { kind: "course", id: "qmms251", name: "Introduction to Educational Statistics (QMMS251)", options: ["QMMS251"] },
+    {
+      kind: "course",
+      id: "edhd306",
+      name: "Research Methods in Human Development (EDHD306)",
+      options: ["EDHD306"],
+      substitutes: [
+        { course: "FMSC302", onlyFor: ["fmsc-major"], reason: "Family Health majors may substitute FMSC302 for EDHD306 (posted double-major substitution)." },
+        { course: "PSYC300", onlyFor: PSYC_IDS, reason: "Psychology majors may substitute PSYC300 for EDHD306 (posted double-major substitution)." },
+      ],
+    },
+    {
+      kind: "course",
+      id: "qmms251",
+      name: "Introduction to Educational Statistics (QMMS251)",
+      options: ["QMMS251"],
+      substitutes: [{ course: "PSYC200", onlyFor: PSYC_IDS, reason: "Psychology majors may substitute PSYC200 for QMMS251 (posted double-major substitution)." }],
+    },
     { kind: "choose", id: "hdev-core", name: "Core courses (select three of five)", count: 3, from: { courses: coreCourses } },
     {
       kind: "choose",
-      id: "hdev-electives",
+      id: "hdev-electives", advisorMayApprove: true,
       name: "Elective courses (four)",
       count: 4,
       from: { courses: [...coreCourses, ...edhdElectives, ...listedElectives], departments: otherDepartments },

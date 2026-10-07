@@ -16,10 +16,11 @@ import {
   type PendingChoice,
 } from "@turboterp/credit";
 import type { PriorInputs } from "./plan-state";
+import type { ChoiceAward } from "./requirements";
 
 export type Earn =
   | { kind: "course"; id: string; credits: number; genEd: string[] }
-  | { kind: "choice"; credits: number; options: string[]; picked: string | null }
+  | { kind: "choice"; credits: number; options: { id: string; genEd: string[] }[]; picked: string | null; auto?: boolean }
   | { kind: "generic"; label: string; credits: number; genEd: string[] };
 
 type EntryStatus = "counted" | "no-credit" | "not-counted" | "overkill" | "error";
@@ -50,13 +51,16 @@ export type PriorCreditResult = {
 
 const message = (e: unknown) => (e instanceof Error ? e.message : String(e));
 
-function earnsOf(award: CreditAward, choices: Record<string, string>): Earn[] {
+function earnsOf(award: CreditAward, choices: Record<string, string>, auto: Record<string, string>): Earn[] {
   return award.parts.map((part): Earn => {
     if (part.kind === "course") return { kind: "course", id: part.id, credits: part.credits, genEd: part.genEd };
     if (part.kind === "choice") {
-      const options = part.options.map((o) => o.id);
-      const picked = choices[award.source];
-      return { kind: "choice", credits: part.credits, options, picked: picked && options.includes(picked) ? picked : null };
+      const options = part.options.map((o) => ({ id: o.id, genEd: o.genEd }));
+      const own = choices[award.source];
+      if (own && options.some((o) => o.id === own)) return { kind: "choice", credits: part.credits, options, picked: own };
+      const chosen = auto[award.source];
+      if (chosen && options.some((o) => o.id === chosen)) return { kind: "choice", credits: part.credits, options, picked: chosen, auto: true };
+      return { kind: "choice", credits: part.credits, options, picked: null };
     }
     return { kind: "generic", label: part.label === "Lower Level Elective" ? "Elective credit" : `${part.label}`, credits: part.credits, genEd: part.genEd };
   });
@@ -66,7 +70,8 @@ function earnsOf(award: CreditAward, choices: Record<string, string>): Earn[] {
 const courseIdsOf = (earns: Earn[]) =>
   earns.flatMap((e) => (e.kind === "course" ? [e.id] : e.kind === "choice" && e.picked ? [e.picked] : []));
 
-export function computePriorCredit(inputs: PriorInputs, genEdOf: (id: string) => string[]): PriorCreditResult {
+/** `autoChoices`: courses the Advisor picked for awards the student left unpicked (runAnalysis); the student's own picks win. */
+export function computePriorCredit(inputs: PriorInputs, genEdOf: (id: string) => string[], autoChoices: Record<string, string> = {}): PriorCreditResult {
   const entries: PriorEntry[] = [];
   const awards: { key: string; award: CreditAward }[] = [];
 
@@ -80,7 +85,7 @@ export function computePriorCredit(inputs: PriorInputs, genEdOf: (id: string) =>
         source: award.source,
         status: award.parts.length === 0 ? "no-credit" : "counted",
         credits: award.credits,
-        earns: earnsOf(award, inputs.choices),
+        earns: earnsOf(award, inputs.choices, autoChoices),
         notes: award.notes,
       });
     } catch (e) {
@@ -165,6 +170,13 @@ export function computePriorCredit(inputs: PriorInputs, genEdOf: (id: string) =>
     notCounted,
     totalCredits: merged.courses.reduce((t, c) => t + c.credits, 0),
   };
+}
+
+/** The exam awards that offer a choice of courses, for the audit's "it could be ..." hints. */
+export function choiceAwardsOf(entries: PriorEntry[]): ChoiceAward[] {
+  return entries.flatMap((e) =>
+    e.earns.flatMap((earn) => (earn.kind === "choice" ? [{ source: e.source, picked: earn.picked, options: earn.options, ...(earn.auto ? { auto: true } : {}) }] : [])),
+  );
 }
 
 export function ibLevelsFor(exam: string): IbLevel[] {

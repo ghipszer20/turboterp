@@ -10,7 +10,7 @@ import { parseDiningMenu, type DiningMenu } from "../src/dining.ts";
 import { parseLibCalHours, type LibCalHoursFeed } from "../src/libraries.ts";
 import { parseStampVenues } from "../src/stamp-dining.ts";
 import { parseRecWellTab } from "../src/recwell.ts";
-import { applyAvailability, parseRoomLocations, parseRooms, type Room } from "../src/rooms.ts";
+import { applyAvailability, openWindows, parseRoomLocations, parseRooms, roomRangeEnd, type Room } from "../src/rooms.ts";
 import {
   buildSnapshots,
   pruneSnapshots,
@@ -324,5 +324,26 @@ describe("academic calendar snapshot", () => {
     const report = await buildSnapshots(store, minutesAfter(60), fakeSources({ academicCalendar: true }).sources);
     expect(report.results.find((r) => r.key === "calendar/academic")).toMatchObject({ ok: false });
     expect(await store.get("calendar/academic")).toEqual(before);
+  });
+});
+
+describe("room availability range", () => {
+  it("asks LibCal for today through today+14 (end date is +15, one request)", () => {
+    expect(roomRangeEnd("2026-09-25")).toBe("2026-10-10");
+  });
+
+  it("never merges slots across midnight, so each day's windows stand alone", () => {
+    const slot = (start: string, end: string) => ({ start, end, itemId: 7 });
+    const windows = openWindows(
+      [
+        slot("2026-09-25 23:30:00", "2026-09-26 00:00:00"),
+        slot("2026-09-26 00:00:00", "2026-09-26 00:30:00"),
+      ],
+      7,
+    );
+    expect(windows).toEqual([
+      { start: "2026-09-25 23:30:00", end: "2026-09-26 00:00:00" },
+      { start: "2026-09-26 00:00:00", end: "2026-09-26 00:30:00" },
+    ]);
   });
 });

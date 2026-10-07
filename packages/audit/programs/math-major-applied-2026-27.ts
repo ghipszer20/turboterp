@@ -35,10 +35,11 @@ export const mathMajorApplied: Program = {
   minGpa: 2.0,
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Students with a strong interest in applied mathematics may, with the approval of the Undergraduate Office, substitute two courses (with strong mathematics content) from outside the Mathematics Department for one upper-level elective course.' The substitute isn't a fixed course list, so eight carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     "Honors sequence (footnote 1): 'MATH340 satisfies MATH241; MATH340–MATH341 satisfies MATH240–MATH241–MATH246.' Approximated as in the Traditional track: MATH340 counts for MATH240 (overlay) and MATH241; MATH341 counts for the MATH246/462 slot. MATH340 alone would wrongly satisfy MATH240 too.",
     "Eight 400-level MATH/AMSC/STAT courses: encoded as an overlay count of 8 that the specific requirements (MATH410, STAT410, STAT4xx, MATH401/405/423, AMSC460/466, the applied list, depth) also count toward. MATH462 used for the introductory MATH246 slot still counts toward the eight.",
     "Footnote 3's exclusions (MATH461, 478, 480–484, STAT464) are attached to the electives in the catalog but applied here to all eight, and STAT400/STAT410/STAT464 are also excluded from the STAT4xx course (both the catalog row and the department page's item (3)(c) say 'other than STAT400, STAT410, STAT464').",
-    "'400-level or higher' is capped at 499: 500+ graduate courses don't count toward the eight.",
+    "'400-level or higher': graduate courses (600–897, not 799) count toward the eight, and as the STAT4xx course, when the student has permission to take them (owner, 2026-10-07; the audit's grad-course rule). 500-level courses don't.",
     "The depth sequence is an overlay: its courses may also fill MATH410, STAT410, STAT4xx or the applied-list course. So STAT410–STAT420 alone fills stat410, stat4xx and depth, and MATH462–MATH463 may fill both the applied list and depth.",
     "Department-vs-catalog difference (owner ruling: follow the department page): department page item (1) lists only 'MATH 246 requirement may be fulfilled by MATH 462 instead' for the Applied track, while the academic catalog's Applied table also offers MATH436 for the same slot. MATH436 is dropped from intro3 here; it remains an option in the Traditional track, where both sources list it.",
     "Department-vs-catalog difference (owner ruling: follow the department page): department page items (1) and (3)(f) say 'If MATH 462 is used to fulfill the MATH 246 requirement, it may also be used as one of the upper level math requirements in (3)(f)'; the academic catalog's footnote 3 is silent on reuse. The applied-list requirement is an overlay so a MATH462 used for intro3 can also satisfy it; previously this was (wrongly) forbidden. Side effect: like every overlay here, a course an overlay requirement reuses also escapes the audit's cross-program sharing limit (auditPrograms' maxSharedCourses only restricts non-overlay requirements); no caller currently audits Math Applied with a sharing limit (grepped maxSharedCourses call sites 2026-09-26), so this doesn't bite today.",
@@ -51,7 +52,7 @@ export const mathMajorApplied: Program = {
     "Sequence Nine (BSCI170, BSCI160, BSCI180, CHEM131–132 or CHEM146–177; 'BSCI171 and BSCI161 may count for BSCI180') is expanded into four sets, all courses required. The department page's own Applied item 5 defers to the Traditional track's supporting-sequence list for its stale BSCI105/106 wording, but the catalog's Applied table spells out this sequence directly with current codes (BSCI170/160/180, with BSCI171/161 as the lab substitute); the catalog's own current numbering is followed here.",
     "Sequence Ten (ASTR130, ASTR131, ASTR232) uses the catalog's current codes, straight from this Applied table's own row; the department page's Traditional list (which Applied's item 5 defers to for its supporting sequences) has the stale 'ASTR120, 121' and a parenthetical 'starting Fall 206 this sequence becomes ASTR130, 131, and 132' -- likely a typo for a past year, and for ASTR132 where this catalog table says ASTR232. Flagged for the owner to confirm ASTR232 (not ASTR132) is still current.",
     "Sequence Eleven (GEOL100–GEOL110 plus two of GEOL322/340/341/375) is expanded into six sets.",
-    "Sequence Twelve (AOSC200–AOSC201 plus two additional 400-level AOSC courses) is encoded as a set with a filter part: AOSC200, AOSC201 and any two AOSC courses numbered 400–499. 'Additional' is read as two courses other than AOSC200/201 (automatic, since those are 200-level); 500+ graduate AOSC courses don't count.",
+    "Sequence Twelve (AOSC200–AOSC201 plus two additional 400-level AOSC courses) is encoded as a set with a filter part: AOSC200, AOSC201 and any two AOSC courses numbered 400–499. 'Additional' is read as two courses other than AOSC200/201 (automatic, since those are 200-level); graduate AOSC courses (600+) count too, per the audit's grad-course rule (owner, 2026-10-07).",
     "Footnote 2 (at least four of the 400-level courses taken at College Park) and footnote 4 (other sequences approved by the Undergraduate Office) are not enforced.",
     "Footnote 5 (ASTR121 restricted to Astronomy majors) is cited by no row of the Applied table; ASTR121 is not in any Applied sequence. Ignored.",
   ],
@@ -91,7 +92,7 @@ export const mathMajorApplied: Program = {
       ],
     },
     // Electives (footnote 3) fill out the eight.
-    { kind: "choose", id: "eight", name: "Eight 400-level MATH/AMSC/STAT courses", count: 8, overlay: true, from: { ...MATH_400_LEVEL, exclude: NOT_ELECTIVES } },
+    { kind: "choose", id: "eight", advisorMayApprove: true, name: "Eight 400-level MATH/AMSC/STAT courses", count: 8, overlay: true, from: { ...MATH_400_LEVEL, exclude: NOT_ELECTIVES } },
     // Computer programming requirement
     {
       kind: "course",

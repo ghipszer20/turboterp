@@ -2,6 +2,7 @@
 // checking a Plan on every edit does no text parsing.
 
 import type { Course } from "@turboterp/course-data";
+import { labPairOf } from "@turboterp/course-data/gen-ed";
 import { parsePrerequisite, type Requirement } from "@turboterp/course-data/prereqs";
 import { parseCourseTwins, type Twins } from "./twins.ts";
 
@@ -17,6 +18,8 @@ export type CatalogCourse = {
   title: string;
   credits: { min: number; max: number };
   genEd: string[];
+  /** DSNL only when taken with this lab, in the same term: Testudo's "DSNL (if taken with CHEM132)". */
+  labPair?: { code: "DSNL"; with: string };
   prerequisite: Requirement | null;
   corequisite: Requirement | null;
   repeat: Repeatability;
@@ -56,6 +59,8 @@ export function buildCatalog(...lists: Course[][]): PlanCatalog {
       title: course.title,
       credits: course.credits,
       genEd: course.genEd,
+      // Snapshots parsed before the labPair field still carry the text it comes from.
+      ...(course.labPair ? { labPair: course.labPair } : labPairOf(course.genEdText ?? "")),
       prerequisite: parsePrerequisite(course.texts.prerequisite),
       corequisite: parsePrerequisite(course.texts.corequisite),
       repeat: repeatability(course),

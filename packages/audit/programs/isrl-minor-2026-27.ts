@@ -20,6 +20,7 @@ export const isrlMinor: Program = {
   verified: false,
   maxSharedWith: [{ courses: 2 }],
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'A comparable course at another university may substitute for this; consult the Minor Advisor' and 'This list is not complete; other courses may be substituted with the approval of the Advisor.' The substitute isn't a fixed course list, so history, middle-east carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     "Department-vs-catalog difference (owner ruling: follow the department page): the department page's elective list gives HEBR211 and HEBR212, while the catalog lists HEBR106, HEBR107 and HEBR212 (no HEBR211). Encoded per the department page, so HEBR106/HEBR107 are not accepted.",
     "Department-vs-catalog difference: the department page's introductory paragraph says the minor includes 'ISRL349Z: History of Zionism and Israel' and 4 other ISRL courses, but its own 'Minor Requirements' list (and the catalog) name ISRL342/HIST376 as the required history course. Encoded per the requirements list (ISRL342/HIST376); ISRL349Z is not required. Please confirm.",
     "The catalog also lists ISRL448 (Seminar, sections A/B) as an elective row; it is already the required core course, and a course counts once, so it isn't repeated in the elective list.",
@@ -28,9 +29,9 @@ export const isrlMinor: Program = {
     "Not encoded (manual): at least 9 credits at 3xx/4xx level (6 taken at UMD, including UM Study Abroad); no more than 3 credits of language below the 3xx level; up to 2 courses may be taken elsewhere with advisor approval; application rules (30 credits completed, ISRL342 grade of C or higher before applying, admission before the final six credits); other courses by petition.",
   ],
   requirements: [
-    { kind: "course", id: "history", name: "History of Modern Israel", options: ["ISRL342", "HIST376"] },
+    { kind: "course", id: "history", advisorMayApprove: true, name: "History of Modern Israel", options: ["ISRL342", "HIST376"] },
     { kind: "course", id: "seminar", name: "Seminar in Israel Studies", options: ["ISRL448"] },
-    { kind: "course", id: "middle-east", name: "Middle East Studies course", options: ["HIST120", "HIST491"] },
+    { kind: "course", id: "middle-east", advisorMayApprove: true, name: "Middle East Studies course", options: ["HIST120", "HIST491"] },
     {
       kind: "choose",
       id: "electives",

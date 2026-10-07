@@ -24,6 +24,7 @@ export const anthMajorBs: Program = {
   minGrade: "C-",
   verified: false,
   reviewNotes: [
+    "Posted substitution (owner, 2026-10-07): footnotes 2 and 3 say 'For students taking BSCI160, BSCI161 may count for BSCI180' and 'For students taking BSCI170, BSCI171 may count for BSCI180', so the supporting list also has the rows BSCI160 & BSCI161 and BSCI170 & BSCI171.",
     "No department-vs-catalog disagreement found on degree requirements: the department page only describes the admission process (meet the undergraduate advisor, complete an academic planning workshop, submit a graduation plan for approval, up to 15 business days) -- an admission gate, not a degree-completion rule, so it isn't encoded.",
     "Foundational Courses ('select three of the following: ANTH210, ANTH222, ANTH240, ANTH260') and Method and Theory Courses ('select two of: ANTH310, ANTH322, ANTH340, ANTH360') are encoded as `choose` requirements with `count`, not `credits`, since ANTH222 (4 credits) makes the pool's total credits variable (9-10) depending which three are picked.",
     "Applied Field Methods ('select a minimum of 3 credits' from a named list) is encoded as a `choose` requirement with `credits: 3` over that course list.",
@@ -95,7 +96,7 @@ export const anthMajorBs: Program = {
       count: 3,
       options: [
         ["AGNR301"], ["AREC241"], ["AREC326"], ["AREC345"], ["AREC365"], ["AREC433"], ["AREC453"],
-        ["AOSC123"], ["BSCI103"], ["BSCI160", "BSCI180"], ["BSCI170", "BSCI180"], ["BSCI135"], ["BSCI189"],
+        ["AOSC123"], ["BSCI103"], ["BSCI160", "BSCI180"], ["BSCI160", "BSCI161"], ["BSCI170", "BSCI180"], ["BSCI170", "BSCI171"], ["BSCI135"], ["BSCI189"],
         ["BSCI201"], ["BSCI202"], ["BSCI222"], ["BSCI223"], ["BSCI360"], ["BSCI361"], ["BSCI363"], ["BSCI370"],
         ["BSCI462"], ["BSCI471"], ["CMSC131"], ["CMSC132"], ["ENST233"], ["ENST440"], ["GEOL100", "GEOL110"],
         ["GEOL340"], ["GEOL342"], ["GEOL446"], ["GEOG330"], ["GEOG332"], ["GEOG372"], ["GEOG373"], ["GEOG416"],

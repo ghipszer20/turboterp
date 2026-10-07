@@ -15,6 +15,7 @@ export const enstMajorSoilWatershedScience: Program = {
   minGpa: 2.0,
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Under some circumstances, other 300 or 400 level electives can be substituted with advisor's approval.' The substitute isn't a fixed course list, so technical-electives carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     ...enstCommonReviewNotes,
     "Concentration Depth - Soil Sciences ('4 classes; at least 13 credits') is a 4-course choose over the five listed courses plus an overlay 13-credit choose over the same list. The catalog gives no credits for ENST411 (13 = 4 + 3 + 3 + 3 implies 4); the sample plan uses 4.",
     "Concentration Depth - Field Experiences (3 credits) is a 3-credit choose over its seven courses; the source gives no credits for ENST301/302/303/309.",
@@ -50,7 +51,7 @@ export const enstMajorSoilWatershedScience: Program = {
     },
     {
       kind: "choose",
-      id: "technical-electives",
+      id: "technical-electives", advisorMayApprove: true,
       name: "Soil and Watershed Science Technical Electives (12 credits)",
       credits: 12,
       from: {

@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import { ABOUT, isPlaceholder, resolveAbout, type AboutConfig } from "../about";
 
 const FILLED: AboutConfig = {
-  creatorBio: "I'm a UMD student who built this.",
   githubUrl: "https://github.com/example/turboterp",
   donationUrl: "https://venmo.com/u/example",
   venmoHandle: "@example",
@@ -10,7 +9,6 @@ const FILLED: AboutConfig = {
 };
 
 const PLACEHOLDER_CONFIG: AboutConfig = {
-  creatorBio: "__OWNER_FILL_IN__",
   githubUrl: "__OWNER_FILL_IN__",
   donationUrl: "__OWNER_FILL_IN__",
   venmoHandle: "__OWNER_FILL_IN__",
@@ -39,7 +37,6 @@ describe("resolveAbout", () => {
   it("resolves every field to null when the config is all placeholders", () => {
     const resolved = resolveAbout(PLACEHOLDER_CONFIG);
     expect(resolved).toEqual({
-      bio: null,
       githubUrl: null,
       issuesUrl: null,
       donationUrl: null,
@@ -48,9 +45,8 @@ describe("resolveAbout", () => {
     });
   });
 
-  it("passes through a real bio, donation link and contact email unchanged", () => {
+  it("passes through a real donation link and contact email unchanged", () => {
     const resolved = resolveAbout(FILLED);
-    expect(resolved.bio).toBe(FILLED.creatorBio);
     expect(resolved.donationUrl).toBe(FILLED.donationUrl);
     expect(resolved.venmoHandle).toBe(FILLED.venmoHandle);
     expect(resolved.contactEmail).toBe(FILLED.contactEmail);

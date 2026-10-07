@@ -11,6 +11,7 @@
 import * as cheerio from "cheerio";
 import type { Element } from "domhandler";
 import { fetchText, SourceError } from "@turboterp/campus-data/http";
+import { labPairOf } from "./gen-ed.ts";
 
 const SOC = "https://app.testudo.umd.edu/soc";
 
@@ -36,6 +37,8 @@ export type Course = {
   genEd: string[];
   /** Gen Ed as Testudo writes it, e.g. "DSHS or DSSP, DVUP" (the "or" matters for audits). */
   genEdText: string;
+  /** Testudo marks some lab-science lectures DSNL only together with their lab ("DSNL (if taken with CHEM132)"). */
+  labPair?: { code: "DSNL"; with: string };
   permissionRequired: boolean;
   texts: CourseTexts;
   description: string;
@@ -189,6 +192,7 @@ export function parseCourses(html: string, department: string): Course[] {
         credits: { min, max: maxText ? int(maxText) : min },
         genEd: [...new Set(genEdText.match(/\b[A-Z]{4}\b/g) ?? [])],
         genEdText,
+        ...labPairOf(genEdText),
         permissionRequired: course.find(".perm-req-message").length > 0,
         texts,
         description,

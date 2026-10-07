@@ -13,16 +13,14 @@ export type SortContext = {
   gpas?: Readonly<Record<string, number | null | undefined>>;
 };
 
-/** Weights of the "Recommended" score (sum to 1). Change them here. */
-export const RECOMMEND_WEIGHTS = { rating: 0.4, gpa: 0.4, seats: 0.2 } as const;
-/** Open seats at or above this count as "plenty": more adds nothing. */
-export const SEATS_SATURATION = 10;
+/** Weights of the "Best Teachers" score (sort key "recommended"; sum to 1). Open seats don't count (owner, 2026-10-07). */
+export const RECOMMEND_WEIGHTS = { rating: 0.5, gpa: 0.5 } as const;
 /** Score of a missing input (unrated, no grade data): neutral, so it neither helps nor hurts. */
 export const NEUTRAL_SCORE = 0.5;
 
 export const gpaKey = (courseId: string, instructor: string) => `${courseId}|${instructor}`;
 
-/** One section's 0–1 "Recommended" score: professor rating, that professor's GPA in the course, open seats. */
+/** One section's 0–1 "Best Teachers" score: professor rating and that professor's GPA in the course. */
 export function sectionScore(s: Section, context: SortContext = {}): number {
   let rating = -1;
   let gpa = -1;
@@ -32,11 +30,9 @@ export function sectionScore(s: Section, context: SortContext = {}): number {
     const g = context.gpas?.[gpaKey(s.courseId, name)];
     if (g != null) gpa = Math.max(gpa, Math.max(0, (g - 2) / 2)); // 2.0 -> 0, 3.0 -> 0.5 (neutral), 4.0 -> 1
   }
-  const seats = Math.min(Math.max(s.seats.open, 0), SEATS_SATURATION) / SEATS_SATURATION;
   return (
     RECOMMEND_WEIGHTS.rating * (rating < 0 ? NEUTRAL_SCORE : Math.min(rating, 1)) +
-    RECOMMEND_WEIGHTS.gpa * (gpa < 0 ? NEUTRAL_SCORE : Math.min(gpa, 1)) +
-    RECOMMEND_WEIGHTS.seats * seats
+    RECOMMEND_WEIGHTS.gpa * (gpa < 0 ? NEUTRAL_SCORE : Math.min(gpa, 1))
   );
 }
 
@@ -173,7 +169,7 @@ function metricsWith(layout: Layout, rate: (group: Group) => number, score?: (gr
 }
 
 /**
- * THE definition of "Best first". Change the order here to change what "best" means.
+ * THE definition of "Default" (sort key "best"; labeled "Best first" before 2026-10-07). Change the order here to change what it means.
  *   1. Higher average PlanetTerp rating of each course's best available instructor (unrated = NEUTRAL_RATING).
  *   2. Fewer idle minutes between classes on the same day.
  *   3. More condensed and toward midday: shorter days (first start to last end), plus a mild
@@ -185,7 +181,7 @@ export function compareBest(a: LayoutMetrics, b: LayoutMetrics): number {
   return b.rating - a.rating || a.gapMinutes - b.gapMinutes || a.condensed - b.condensed;
 }
 
-/** "Recommended": higher summed section score first (rating, GPA, open seats), then the best-first order. */
+/** "Best Teachers" (sort key "recommended"): higher summed section score first (rating, GPA), then the Default order. */
 export function compareRecommended(a: LayoutMetrics, b: LayoutMetrics): number {
   return b.score - a.score || compareBest(a, b);
 }

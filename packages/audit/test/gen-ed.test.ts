@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { auditProgram, type StudentCourse } from "../src/audit.ts";
 import { genEd, university } from "../programs/gen-ed-2026-27.ts";
 
-const g = (id: string, codes: string[], grade = "B"): StudentCourse => ({ id, credits: 3, status: "completed", grade, genEd: codes });
+const g = (id: string, codes: string[], grade = "B"): StudentCourse => ({ id, credits: codes.includes("DSNL") ? 4 : 3, status: "completed", grade, genEd: codes });
 
 const complete: StudentCourse[] = [
   g("ENGL101", ["FSAW"]),
@@ -41,7 +41,7 @@ describe("General Education 2026–27", () => {
   it("lets a Diversity course also count toward Distributive Studies", async () => {
     // HIST111 is both DSHS and DVUP.
     const statuses = await statusOf(complete);
-    expect([statuses.dshs, statuses.dvup]).toEqual(["satisfied", "satisfied"]);
+    expect([statuses.dshs, statuses.diversity]).toEqual(["satisfied", "satisfied"]);
   });
 
   it("doesn't let one course meet two Distributive Studies categories", async () => {
@@ -67,9 +67,27 @@ describe("General Education 2026–27", () => {
     expect((await statusOf(plan)).scis).toBe("partial");
   });
 
-  it("requires at least one Understanding Plural Societies course in the Diversity pair", async () => {
-    const plan = [...without("HIST111"), g("ECON201", ["DSHS"]), g("ANTH240", ["DVCC"])];
-    expect((await statusOf(plan)).dvup).not.toBe("satisfied");
+  describe("Diversity", () => {
+    const div = async (...cs: StudentCourse[]) => (await statusOf(cs)).diversity;
+    it("is not met by two Cultural Competence courses", async () => {
+      expect(await div(g("AAAS1", ["DVCC"]), g("AAAS2", ["DVCC"]))).not.toBe("satisfied");
+    });
+    it("is met by one DVUP and one DVCC", async () => {
+      expect(await div(g("AAAS1", ["DVUP"]), g("AAAS2", ["DVCC"]))).toBe("satisfied");
+    });
+    it("is met by two DVUP", async () => {
+      expect(await div(g("AAAS1", ["DVUP"]), g("AAAS2", ["DVUP"]))).toBe("satisfied");
+    });
+    it("is not met by one DVUP alone", async () => {
+      expect(await div(g("AAAS1", ["DVUP"]))).not.toBe("satisfied");
+    });
+    it("counts a course tagged both DVUP and DVCC only once", async () => {
+      expect(await div(g("AAAS1", ["DVUP", "DVCC"]))).not.toBe("satisfied");
+    });
+    it("lets a DVUP course also fill a Distributive Studies category", async () => {
+      const r = await statusOf([...without("ANTH222"), g("ANTH300", ["DVCC"])]);
+      expect([r.dshs, r.diversity]).toEqual(["satisfied", "satisfied"]);
+    });
   });
 });
 
@@ -86,8 +104,8 @@ const ds = [
 
 describe("Big Question courses must be among the Distributive Studies courses", () => {
   it("doesn't count a Big Question course the Distributive Studies slots have no room for", async () => {
-    // Only one natsci slot: of two DSNS+SCIS courses, one is outside the eight DS courses.
-    const plan = [...ds.filter((x) => x.id !== "GEOL100"), g("ASTR100", ["DSNS", "SCIS"]), g("AOSC123", ["DSNS", "SCIS"])];
+    // A SCIS course with no Distributive Studies code fills no DS category, so it cannot count for Big Question.
+    const plan = [...ds.filter((x) => x.id !== "GEOL100"), g("ASTR100", ["DSNS", "SCIS"]), g("AOSC123", ["SCIS"])];
     const result = await auditProgram(genEd, plan);
     expect(result.requirements.find((r) => r.id === "scis")!.status).toBe("partial");
   });
@@ -141,24 +159,24 @@ const COMBINATIONS: [string[], string, string[], string[]][] = [
   [["DSHU"], "AAAS200", [], ["dshu"]],
   [["DSHS"], "AAAS101", [], ["dshs"]],
   [["DSHS", "SCIS"], "AGST130", ["scis"], ["dshs"]],
-  [["DSHS", "DVUP"], "AAAS100", ["diversity", "dvup"], ["dshs"]],
-  [["DSHU", "DVUP"], "AAAS234", ["diversity", "dvup"], ["dshu"]],
+  [["DSHS", "DVUP"], "AAAS100", ["diversity"], ["dshs"]],
+  [["DSHU", "DVUP"], "AAAS234", ["diversity"], ["dshu"]],
   [["DVCC"], "AAST394", ["diversity"], []],
   [["DSSP", "SCIS"], "AGNR230", ["scis"], ["dssp"]],
   [["DSNS"], "AOSC375", [], ["natsci"]],
-  [["DVUP"], "AAAS254", ["diversity", "dvup"], []],
+  [["DVUP"], "AAAS254", ["diversity"], []],
   [["DSHU", "SCIS"], "CLAS170", ["scis"], ["dshu"]],
   [["DSNS", "SCIS"], "AOSC123", ["scis"], ["natsci"]],
   [["FSPW"], "ENGL381", ["fspw"], []],
-  [["DSNL"], "ASTR101", [], ["dsnl", "natsci"]],
+  [["DSNL"], "ASTR101", ["dsnl"], ["natsci"]],
   [["FSAR"], "BIOM301", ["fsar"], []],
   [["DSHU", "DSSP"], "ARHU275", [], ["dshu", "dssp"]],
   [["FSOC"], "ARCH403", ["fsoc"], []],
-  [["DSNL", "DSNS"], "BSCI160", [], ["dsnl", "natsci"]],
-  [["DSSP", "DVUP"], "AAST351", ["diversity", "dvup"], ["dssp"]],
-  [["DSHU", "DVUP", "SCIS"], "ARTH261", ["diversity", "dvup", "scis"], ["dshu"]],
-  [["DSHS", "DVUP", "SCIS"], "AAAS187", ["diversity", "dvup", "scis"], ["dshs"]],
-  [["DSHS", "DSHU", "DVUP"], "HIST201", ["diversity", "dvup"], ["dshs", "dshu"]],
+  [["DSNL", "DSNS"], "BSCI160", ["dsnl"], ["natsci"]],
+  [["DSSP", "DVUP"], "AAST351", ["diversity"], ["dssp"]],
+  [["DSHU", "DVUP", "SCIS"], "ARTH261", ["diversity", "scis"], ["dshu"]],
+  [["DSHS", "DVUP", "SCIS"], "AAAS187", ["diversity", "scis"], ["dshs"]],
+  [["DSHS", "DSHU", "DVUP"], "HIST201", ["diversity"], ["dshs", "dshu"]],
   [["DSSP", "DVCC"], "EDSP220", ["diversity"], ["dssp"]],
   [["DSHS", "DSSP"], "FMSC302", [], ["dshs", "dssp"]],
   [["DSHU", "DSSP", "SCIS"], "ARTH260", ["scis"], ["dshu", "dssp"]],
@@ -168,16 +186,16 @@ const COMBINATIONS: [string[], string, string[], string[]][] = [
   [["FSAW"], "ENGL101", ["fsaw"], []],
   [["DSHS", "DSSP", "SCIS"], "CCJS225", ["scis"], ["dshs", "dssp"]],
   [["DSHS", "DVCC", "SCIS"], "ANTH266", ["diversity", "scis"], ["dshs"]],
-  [["DSNL", "SCIS"], "BSCI135", ["scis"], ["dsnl", "natsci"]],
+  [["DSNL", "SCIS"], "BSCI135", ["scis", "dsnl"], ["natsci"]],
   [["FSMA"], "MATH107", ["fsma"], []],
-  [["DSHS", "DSHU", "DVUP", "SCIS"], "HIST187", ["diversity", "dvup", "scis"], ["dshs", "dshu"]],
-  [["DSHU", "DSSP", "DVUP"], "AMST320", ["diversity", "dvup"], ["dshu", "dssp"]],
+  [["DSHS", "DSHU", "DVUP", "SCIS"], "HIST187", ["diversity", "scis"], ["dshs", "dshu"]],
+  [["DSHU", "DSSP", "DVUP"], "AMST320", ["diversity"], ["dshu", "dssp"]],
   [["DSHS", "DSHU", "SCIS"], "PHIL202", ["scis"], ["dshs", "dshu"]],
-  [["DSNL", "DVUP"], "ANTH222", ["diversity", "dvup"], ["dsnl", "natsci"]],
-  [["DSNL", "DSNS", "SCIS"], "AOSC200", ["scis"], ["dsnl", "natsci"]],
+  [["DSNL", "DVUP"], "ANTH222", ["diversity", "dsnl"], ["natsci"]],
+  [["DSNL", "DSNS", "SCIS"], "AOSC200", ["scis", "dsnl"], ["natsci"]],
   [["DSNS", "DSSP", "SCIS"], "AREC200", ["scis"], ["natsci", "dssp"]],
-  [["DSNS", "DSSP", "DVUP", "SCIS"], "BSCI151", ["diversity", "dvup", "scis"], ["natsci", "dssp"]],
-  [["DSSP", "DVUP", "SCIS"], "HDCC105", ["diversity", "dvup", "scis"], ["dssp"]],
+  [["DSNS", "DSSP", "DVUP", "SCIS"], "BSCI151", ["diversity", "scis"], ["natsci", "dssp"]],
+  [["DSSP", "DVUP", "SCIS"], "HDCC105", ["diversity", "scis"], ["dssp"]],
   [["DSNS", "DSSP"], "KNES260", [], ["natsci", "dssp"]],
   [["DSHS", "DSNS", "SCIS"], "PHYS235", ["scis"], ["dshs", "natsci"]],
   [["DSHS", "DSNS"], "PSYC100", [], ["dshs", "natsci"]],

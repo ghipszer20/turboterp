@@ -8,6 +8,8 @@
 // turns this into PlanIssues term by term; planCourses (./notices.ts) uses it to leave
 // graduate-only credits out of the degree-audit totals.
 
+import { isGraduateCourseNumber } from "@turboterp/audit";
+
 /** How a planned graduate course's credits count. `undefined` on a PlanCourse means "undergrad
  * credit" (the default): it counts toward the 120 and program requirements as usual. */
 export type GradCreditTag = "graduate-only" | "bs-ms";
@@ -22,10 +24,10 @@ function courseNumber(id: string): number | null {
 }
 
 /** 600-897, except 799 (thesis research): the range an undergrad may plan, with an advisor's
- * permission. */
+ * permission. The audit's own definition, so the plan warning and requirement matching agree. */
 export function isGraduateCourse(id: string): boolean {
   const n = courseNumber(id);
-  return n !== null && n >= 600 && n <= 897 && n !== 799;
+  return n !== null && isGraduateCourseNumber(n);
 }
 
 /** 799 (thesis research), 898 or 899: never allowed on an undergrad's plan. */

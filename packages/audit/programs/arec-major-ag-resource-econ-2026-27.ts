@@ -28,6 +28,7 @@ export const arecMajorAgResourceEcon: Program = {
   minGpa: 2.0,
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Substitutions to the above listed courses may be made with the permission of advisor.' The substitute isn't a fixed course list, so ag-resource-econ-select-five carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     ...arecCommonReviewNotes,
     "This specialization shares its name with the major itself in the catalog ('Agricultural and " +
       "Resource Economics'); the program id/short name here use 'ag-resource-econ' to disambiguate " +
@@ -41,7 +42,7 @@ export const arecMajorAgResourceEcon: Program = {
     ...arecFoundational,
     {
       kind: "choose",
-      id: "ag-resource-econ-select-five",
+      id: "ag-resource-econ-select-five", advisorMayApprove: true,
       name: "Agricultural and Resource Economics Specialization: Select Five of the Following Courses",
       count: 5,
       credits: 15,

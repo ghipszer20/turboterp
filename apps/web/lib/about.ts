@@ -1,12 +1,11 @@
-// Config for the About page. The owner hasn't supplied a bio, donation link,
-// contact email, or public GitHub URL yet -- every field below is a
-// placeholder until an owner (see the OWNER comments) fills it in.
+// Config for the About page. The owner hasn't supplied a public GitHub
+// URL yet -- that field is a placeholder until an owner (see the OWNER
+// comments) fills it in.
 //
 // A page or link that depends on a placeholder must never render as a dead
 // link/button: use resolveAbout() and check for null before showing it.
 
 export type AboutConfig = {
-  creatorBio: string;
   githubUrl: string;
   donationUrl: string;
   venmoHandle: string;
@@ -16,15 +15,13 @@ export type AboutConfig = {
 const PLACEHOLDER = "__OWNER_FILL_IN__";
 
 export const ABOUT: AboutConfig = {
-  // OWNER: replace with a short bio for the "About the creator" section.
-  creatorBio: PLACEHOLDER,
   // OWNER: replace with the public GitHub repo URL, e.g. "https://github.com/you/turboterp".
   githubUrl: PLACEHOLDER,
   // OWNER (Venmo account "turboterp", owner 2026-10-04): donations go to Venmo.
   donationUrl: "https://venmo.com/u/turboterp",
   venmoHandle: "@turboterp",
-  // OWNER: replace with the contact email once it's created.
-  contactEmail: PLACEHOLDER,
+  // OWNER (2026-10-07): the public contact email.
+  contactEmail: "turboterpadmin@gmail.com",
 };
 
 export function isPlaceholder(value: string): boolean {
@@ -32,7 +29,6 @@ export function isPlaceholder(value: string): boolean {
 }
 
 export type ResolvedAbout = {
-  bio: string | null;
   githubUrl: string | null;
   issuesUrl: string | null;
   donationUrl: string | null;
@@ -44,7 +40,6 @@ export type ResolvedAbout = {
 export function resolveAbout(cfg: AboutConfig): ResolvedAbout {
   const githubUrl = isPlaceholder(cfg.githubUrl) ? null : cfg.githubUrl;
   return {
-    bio: isPlaceholder(cfg.creatorBio) ? null : cfg.creatorBio,
     githubUrl,
     issuesUrl: githubUrl ? `${githubUrl.replace(/\/+$/, "")}/issues/new` : null,
     donationUrl: isPlaceholder(cfg.donationUrl) ? null : cfg.donationUrl,

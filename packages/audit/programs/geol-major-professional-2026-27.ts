@@ -21,6 +21,7 @@ export const geolMajorProfessional: Program = {
   minGrade: "C-",
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): '... or appropriate substitution with the approval of the department.' The substitute isn't a fixed course list, so geol-elective carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     "The catalog and the current department page (majorproftrack2308.php) agree closely on this track's course list and structure; no department-vs-catalog disagreement found worth flagging.",
     "'Geologic Core Disciplines: choose one course from each of [the department page says four, but prints five] groups' -- encoded as five separate choose-one requirements (Quantitative Reasoning, Surface Processes, Geophysics, Geochemistry, Geobiology); the department page's own group count in its summary sentence doesn't match the five groups it then lists, a source inconsistency rather than a department-vs-catalog one.",
     "The 'Geology Elective (3-4 credits, any 300-400 level GEOL course)' is encoded as a `choose` pool over the GEOL department at the 300-400 level, excluding every course already used by a flat or choose-one requirement above (so it can't be double-counted against itself).",
@@ -45,7 +46,7 @@ export const geolMajorProfessional: Program = {
     { kind: "choose", id: "core-geobiology", name: "Geobiology core discipline", count: 1, from: { courses: ["GEOL331", "GEOL435", "GEOL436", "GEOL437"] } },
     {
       kind: "choose",
-      id: "geol-elective",
+      id: "geol-elective", advisorMayApprove: true,
       name: "Geology elective (300-400 level)",
       credits: 3,
       from: {

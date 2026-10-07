@@ -9,9 +9,14 @@ import loadHighs from "highs";
 export type CourseFilter = {
   courses?: string[];
   departments?: string[];
-  /** Inclusive course-number bounds, e.g. 400–499 for "400-level". */
+  /**
+   * Inclusive course-number bounds, e.g. 400–499 for "400-level". A range that reaches 499 also
+   * takes graduate courses (see `inNumberRange`).
+   */
   minNumber?: number;
   maxNumber?: number;
+  /** Graduate courses never count, e.g. a program that reserves 600+ courses for graduate students. */
+  noGraduateCourses?: boolean;
   exclude?: string[];
   /** Courses carrying any of these Gen Ed codes, e.g. ["DSHU"]. */
   genEd?: string[];
@@ -52,6 +57,14 @@ export type Requirement = RequirementRule & {
    * student that other courses may count with advisor approval (owner ruling, rulings.md "Minors").
    */
   advisorMayApprove?: true;
+  /**
+   * Posted substitutions that apply only to students in a named major: `course` counts in place of
+   * the course(s) listed here, but only when the student is also auditing one of the programs in
+   * `onlyFor` (program ids; list every track). `reason` quotes the source. `replaces` is the course
+   * it stands in for, on a choose: the two then count as one (an alternatives group). Derived from
+   * the `programs` passed to auditStudent, so no caller passes anything extra.
+   */
+  substitutes?: { course: string; onlyFor: string[]; reason: string; replaces?: string }[];
 };
 
 export type RequirementRule =
@@ -62,7 +75,7 @@ export type RequirementRule =
    * Alternatives are "or" groups among the courses: at most one course of each group
    * counts, e.g. "Select two of: CMSC426, CMSC460 or CMSC466, …" has [["CMSC460", "CMSC466"]].
    */
-  | { kind: "choose"; id: string; name: string; count?: number; credits?: number; from: CourseFilter; alternatives?: string[][] }
+  | { kind: "choose"; id: string; name: string; count?: number; credits?: number; minCredits?: number; from: CourseFilter; alternatives?: string[][] }
   /** N courses spread over areas, e.g. "five courses from at least three areas, at most three per area". */
   | { kind: "distribution"; id: string; name: string; count: number; minAreas: number; maxPerArea: number; areas: Area[] }
   /** N credits in a number range, all from ONE department, e.g. CS's "12 credits of 300–400 level courses from one discipline outside CMSC". */
@@ -73,6 +86,7 @@ export type RequirementRule =
       credits: number;
       minNumber: number;
       maxNumber: number;
+      noGraduateCourses?: boolean;
       excludeDepartments?: string[];
       /** Individually-ineligible courses, e.g. a course "credit only granted for" one in the excluded department. */
       exclude?: string[];
@@ -189,9 +203,28 @@ export type StudentCourse = {
   grade?: string;
   /** Gen Ed codes the course carries (from the Schedule of Classes). */
   genEd?: string[];
+  /** Credits this course brings to Gen Ed credit minimums when it differs from `credits`: a lab-science lecture whose paired lab is on record carries both. */
+  genEdCredits?: number;
   /** The credit comes from an AP or IB exam (see Program.examLimits). */
   exam?: true;
+  /**
+   * The same course under another prefix (MATH456 is CMSC456; owner ruling 2026-10-07). It counts
+   * everywhere the course's own id does. Credit-only twins are never listed here.
+   */
+  crossListed?: string[];
+  /**
+   * The course's "Formerly" numbers. They count only where a requirement names the course
+   * explicitly (a course list), never in a department or number-range filter.
+   */
+  renumbered?: string[];
 };
+
+type Aliased = Pick<StudentCourse, "id" | "genEd" | "crossListed" | "renumbered">;
+
+/** The course's id and cross-listed codes: what department and number-range filters see. */
+const filterCodes = (course: Aliased): string[] => [course.id, ...(course.crossListed ?? [])];
+/** Also the renumbered codes: what a requirement that names courses explicitly sees. */
+const namedCodes = (course: Aliased): string[] => [...filterCodes(course), ...(course.renumbered ?? [])];
 
 /** Every literal course id one requirement mentions -- never a department/number-range filter's
  * courses, since matching those needs the filter machinery, not a fixed id list. */
@@ -242,6 +275,32 @@ function meetsGrade(course: StudentCourse, minGrade: string | undefined): boolea
   return rank >= 0 && rank >= gradeRank(minGrade);
 }
 
+/** Programs with each requirement's `substitutes` whose `onlyFor` names a declared program added as options. */
+function withSubstitutes(programs: Program[]): Program[] {
+  const ids = new Set(programs.map((p) => p.id));
+  return programs.map((program) => {
+    if (!program.requirements.some((req) => req.substitutes)) return program;
+    const requirements = program.requirements.map((req): Requirement => {
+      const live = (req.substitutes ?? []).filter((s) => s.onlyFor.some((id) => ids.has(id)));
+      if (live.length === 0) return req;
+      const extra = [...new Set(live.map((s) => s.course))];
+      if (req.kind === "course") return { ...req, options: [...req.options, ...extra.filter((c) => !req.options.includes(c))] };
+      if (req.kind === "choose") {
+        const have = req.from.courses ?? [];
+        // The substitute and the course it replaces fill one slot: at most one of them counts.
+        const pairs = live.filter((s) => s.replaces).map((s) => [s.replaces!, s.course]);
+        return {
+          ...req,
+          from: { ...req.from, courses: [...have, ...extra.filter((c) => !have.includes(c))] },
+          alternatives: [...(req.alternatives ?? []), ...pairs],
+        };
+      }
+      return req;
+    });
+    return { ...program, requirements };
+  });
+}
+
 /** Id of the synthetic result a program with `minGpa` gets; it is not one of `program.requirements`. */
 export const PROGRAM_GPA_ID = "program-gpa";
 
@@ -268,23 +327,47 @@ const getSolver = () => (solver ??= loadHighs());
 
 const COURSE_ID = /^([A-Z]{4})(\d{3})[A-Z]?$/;
 
-export function matchesFilter(filter: CourseFilter, course: Pick<StudentCourse, "id" | "genEd">): boolean {
-  const courseId = course.id;
-  if (filter.exclude?.includes(courseId)) return false;
+/** 600–897, except 799 (thesis research): a graduate course an undergrad may take with permission. */
+export function isGraduateCourseNumber(n: number): boolean {
+  return n >= 600 && n <= 897 && n !== 799;
+}
+
+/**
+ * Grad courses as an undergrad (owner, 2026-10-07; docs/project/rulings.md): with permission, a
+ * graduate course counts toward any range that reaches the top of the 400 level ("400-level",
+ * "upper level"), unless the program opts out. Narrower bands ("300-level") don't take them.
+ */
+export function rangeTakesGraduateCourses(min = 0, max = 999, noGraduateCourses = false): boolean {
+  return !noGraduateCourses && min <= 499 && max >= 499;
+}
+
+/** Whether course number `n` is in a requirement's range, graduate courses included (above). */
+function inNumberRange(n: number, min: number, max: number, noGraduateCourses = false): boolean {
+  if (!isGraduateCourseNumber(n)) return n >= min && n <= max;
+  if (noGraduateCourses) return false;
+  return (n >= min && n <= max) || rangeTakesGraduateCourses(min, max);
+}
+
+export function matchesFilter(filter: CourseFilter, course: Aliased): boolean {
+  const codes = filterCodes(course);
+  // An excluded code rules the course out whichever code it carries (the ML "mathxxx" exclusion).
+  if (filter.exclude && codes.some((code) => filter.exclude!.includes(code))) return false;
   if (filter.anyCourse) return true;
-  if (filter.courses?.includes(courseId)) return true;
+  if (filter.courses && namedCodes(course).some((code) => filter.courses!.includes(code))) return true;
   if (filter.genEd) return filter.genEd.some((code) => course.genEd?.includes(code));
-  const m = COURSE_ID.exec(courseId);
-  if (!m) return false;
-  if (!filter.departments) return false;
-  if (!filter.departments.includes(m[1]!)) return false;
-  const n = Number(m[2]);
-  return n >= (filter.minNumber ?? 0) && n <= (filter.maxNumber ?? 999);
+  const departments = filter.departments;
+  if (!departments) return false;
+  return codes.some((code) => {
+    const m = COURSE_ID.exec(code);
+    if (!m || !departments.includes(m[1]!)) return false;
+    return inNumberRange(Number(m[2]), filter.minNumber ?? 0, filter.maxNumber ?? 999, filter.noGraduateCourses);
+  });
 }
 
 /** Whether a course belongs to a distribution area: it is in the area's list or matches its filter. */
-export function inArea(area: Area, course: Pick<StudentCourse, "id" | "genEd">): boolean {
-  return (area.courses?.includes(course.id) ?? false) || (area.from ? matchesFilter(area.from, course) : false);
+export function inArea(area: Area, course: Aliased): boolean {
+  const codes = namedCodes(course);
+  return codes.some((code) => area.courses?.includes(code)) || (area.from ? matchesFilter(area.from, course) : false);
 }
 
 /** How many courses completing a set takes. */
@@ -323,13 +406,16 @@ function pairsFor(req: Requirement, p: number, r: number, course: StudentCourse,
   const base = `x_${p}_${c}_${r}`;
   const plain = (weight: number): Pair[] => [{ p, c, r, area: null, department: null, name: base, weight }];
   if (req.kind === "openSlot") return [];
-  if (req.kind === "course") return req.options.includes(course.id) ? plain(1) : [];
+  if (req.kind === "course") return namedCodes(course).some((code) => req.options.includes(code)) ? plain(1) : [];
   if (req.kind === "choose") return matchesFilter(req.from, course) ? plain(req.credits ? course.credits : 1) : [];
   if (req.kind === "concentration") {
     const m = COURSE_ID.exec(course.id);
-    if (!m || req.excludeDepartments?.includes(m[1]!) || req.exclude?.includes(course.id)) return [];
+    if (!m) return [];
+    // A course cross-listed with an excluded department (AMSC460 = CMSC460) is out, whichever code it carries.
+    const barred = filterCodes(course).some((code) => req.exclude?.includes(code) || req.excludeDepartments?.includes(COURSE_ID.exec(code)?.[1] ?? ""));
+    if (barred) return [];
     const n = Number(m[2]);
-    if (n < req.minNumber || n > req.maxNumber) return [];
+    if (!inNumberRange(n, req.minNumber, req.maxNumber, req.noGraduateCourses)) return [];
     const dept = m[1]!;
     // Departments in the same disciplineGroup share one "discipline" key, so the one-department
     // pick below (onedept_) treats them as interchangeable instead of two separate disciplines.
@@ -341,7 +427,7 @@ function pairsFor(req: Requirement, p: number, r: number, course: StudentCourse,
   if (req.kind === "sets") {
     return req.options.flatMap((option, k) =>
       option.flatMap((m, j): Pair[] => {
-        if (typeof m === "string") return m === course.id ? [{ p, c, r, area: k, member: j, department: null, name: `${base}_${k}`, weight: 1 }] : [];
+        if (typeof m === "string") return namedCodes(course).includes(m) ? [{ p, c, r, area: k, member: j, department: null, name: `${base}_${k}`, weight: 1 }] : [];
         return matchesFilter(m.from, course) ? [{ p, c, r, area: k, member: j, department: null, name: `${base}_${k}_f${j}`, weight: 1 }] : [];
       }),
     );
@@ -367,6 +453,8 @@ function belowMinimumFor(program: Program, req: Requirement, p: number, r: numbe
   return found;
 }
 
+/** Credits a course brings to a Gen Ed credit minimum. */
+const genEdCredits = (course: StudentCourse) => course.genEdCredits ?? course.credits;
 const sum = (ps: Pair[]) => ps.map((q) => `${q.weight} ${q.name}`).join(" + ");
 
 export type AuditOptions = {
@@ -423,10 +511,11 @@ export async function auditPrograms(
  *   u[g]     = 1 when degree g has at least minUniqueCredits of those credits
  */
 export async function auditStudent(
-  programs: Program[],
+  declared: Program[],
   courses: StudentCourse[],
   options: AuditOptions = {},
 ): Promise<StudentAudit> {
+  const programs = withSubstitutes(declared);
   const pairs = programs.flatMap((program, p) =>
     courses.flatMap((course, c) =>
       meetsGrade(course, program.minGrade)
@@ -437,6 +526,8 @@ export async function auditStudent(
   const y = (p: number, r: number) => `y_${p}_${r}`;
   const binaries = [...programs.flatMap((pr, p) => pr.requirements.map((_, r) => y(p, r))), ...pairs.map((q) => q.name)];
   const constraints: string[] = [];
+  /** Courses past `count` on a minCredits row: penalized in the objective. */
+  const extras: string[] = [];
 
   // Overlay requirements count courses without using them up, so they're left
   // out of the "once" and sharing limits below.
@@ -448,6 +539,17 @@ export async function auditStudent(
       const mine = pairs.filter((q) => q.p === p && q.c === c && consumes(q));
       if (mine.length > 1) constraints.push(` once_${p}_${c}: ${mine.map((q) => q.name).join(" + ")} <= 1`);
     }),
+  );
+
+  // A course counts at most once toward one requirement, through any code or area (an overlay
+  // distribution can list a course in two areas, or match it through two cross-listed codes).
+  programs.forEach((program, p) =>
+    program.requirements.forEach((_, r) =>
+      courses.forEach((_, c) => {
+        const mine = pairs.filter((q) => q.p === p && q.r === r && q.c === c);
+        if (mine.length > 1) constraints.push(` onceReq_${p}_${r}_${c}: ${mine.map((q) => q.name).join(" + ")} <= 1`);
+      }),
+    ),
   );
 
   // An overlay with `within` counts a course only if it also fills one of those requirements.
@@ -599,13 +701,28 @@ export async function auditStudent(
       }
       // A credit requirement may overshoot by less than one course (e.g. 4 credits toward the last 3).
       const slack = Math.max(0, ...mine.map((q) => q.weight)) - 1;
-      constraints.push(` cap_${id}: ${sum(mine)} <= ${n + slack}`);
+      if (!(req.kind === "choose" && req.minCredits !== undefined && !req.credits)) constraints.push(` cap_${id}: ${sum(mine)} <= ${n + slack}`);
       constraints.push(` sat_${id}: ${sum(mine)} - ${n} ${y(p, r)} >= 0`);
+
+      if (req.kind === "choose" && req.minCredits !== undefined && !req.credits) {
+        // `count` courses AND `minCredits` credits (Gen Ed: "2 courses, 6 credits"). More than `count` courses
+        // may be assigned to reach the credits, but never past the credits plus one course.
+        const cr = (q: Pair) => genEdCredits(courses[q.c]!);
+        const credit = mine.map((q) => `${cr(q)} ${q.name}`).join(" + ");
+        const least = Math.max(1, Math.min(...mine.map(cr)));
+        constraints.push(` mincr_${id}: ${credit} - ${req.minCredits} ${y(p, r)} >= 0`);
+        constraints.push(` mincap_${id}: ${credit} <= ${req.minCredits + Math.max(...mine.map(cr)) - 1}`);
+        constraints.push(` cap_${id}_n: ${sum(mine)} <= ${Math.max(n, Math.ceil(req.minCredits / least))}`);
+        // Each course past `count` costs more than its course-use reward, so one is added only when
+        // the credits need it (never two 3-credit courses plus a redundant third).
+        constraints.push(` extra_${id}: ${sum(mine)} - e_${id} <= ${n}`);
+        extras.push(`e_${id}`);
+      }
 
       if (req.kind === "choose") {
         // At most one course of each "or" group counts.
         req.alternatives?.forEach((group, g) => {
-          const inGroup = mine.filter((q) => group.includes(courses[q.c]!.id));
+          const inGroup = mine.filter((q) => namedCodes(courses[q.c]!).some((code) => group.includes(code)));
           if (inGroup.length > 1) constraints.push(` alt_${id}_${g}: ${inGroup.map((q) => q.name).join(" + ")} <= 1`);
         });
       }
@@ -649,7 +766,9 @@ export async function auditStudent(
     }),
     // Below a requirement (1000), above any course-use tie-break: never give up a requirement for it.
     ...uniqueGoal.map((u) => `500 ${u}`),
-  ].join(" + ");
+  ]
+    .join(" + ")
+    .concat(extras.map((e) => ` - 2 ${e}`).join(""));
   const model = ["Maximize", ` obj: ${objective || "0 y_0_0"}`, "Subject To", ...constraints, "Binary", ` ${binaries.join(" ")}`, "End"];
 
   const highs = await getSolver();
@@ -686,6 +805,7 @@ export async function auditStudent(
       assigned.forEach((q) => used.add(q.c));
       const progress = assigned.reduce((t, q) => t + q.weight, 0);
       let satisfied = chosen(y(p, r)) && progress >= need(req);
+      if (req.kind === "choose" && req.minCredits !== undefined && !req.credits && assigned.reduce((t, q) => t + genEdCredits(courses[q.c]!), 0) < req.minCredits) satisfied = false;
       const check = req.minGpa === undefined ? undefined : gpaCheck(assigned, req.minGpa);
       if (check?.failed) satisfied = false;
       const gpa = check?.gpa;

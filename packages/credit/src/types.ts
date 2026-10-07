@@ -3,7 +3,7 @@
 /** One piece of credit a chart row awards. */
 export type AwardPart =
   /** A specific UMD course, e.g. MATH140 (4 credits, FSMA and FSAR). */
-  | { kind: "course"; id: string; credits: number; genEd: string[] }
+  | { kind: "course"; id: string; credits: number; genEd: string[]; lab?: string }
   /** One of several UMD courses, e.g. "HIST200 or HIST201"; the student's record gets one. */
   | { kind: "choice"; credits: number; options: { id: string; genEd: string[] }[] }
   /**

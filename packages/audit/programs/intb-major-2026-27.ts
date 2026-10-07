@@ -24,6 +24,7 @@ export const intbMajor: Program = {
   minGpa: 2.0,
   verified: false,
   reviewNotes: [
+    "Posted substitutions (owner, 2026-10-07): the Smith IB electives list 'BMGT485 Project Management (INST453 Project Management for Information Science can substitute)'; INST453 is accepted, paired with BMGT485 so only one counts.",
     ...bmgtCoreReviewNotes,
     "Like Accounting and Information Systems (unlike Finance), the International Business major's own " +
       "page names no course for the College Requirements table's 'Economics Requirement' line; not " +
@@ -69,6 +70,7 @@ export const intbMajor: Program = {
         ["BMGT446", "BMGT448", "ECON305", "ECON306"],
         ["BMGT466", "BMGT469"],
         ["BMGT477", "BMGT478"],
+        ["BMGT485", "INST453"],
         [
           "ARAB304",
           "CHIN301",
@@ -103,6 +105,7 @@ export const intbMajor: Program = {
           "BMGT477",
           "BMGT478",
           "BMGT485",
+          "INST453",
           "ARAB304",
           "CHIN301",
           "FREN301",

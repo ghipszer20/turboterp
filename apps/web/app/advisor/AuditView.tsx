@@ -10,13 +10,14 @@ import type { GatewayCourseStatus, GatewayOverallStatus, Requirement, Requiremen
 import type { MilestoneTiming } from "@turboterp/tracks";
 import type { AdvisorPlan } from "@/lib/advisor/plan-state";
 import { blockedNotice } from "@/lib/advisor/programs";
+import { metText, REQ_STATUS_LABEL } from "@/lib/advisor/req-status";
 import { showsScienceGpa } from "@/lib/advisor/tracks";
 import { gatewayAttemptLimitNote } from "@/lib/advisor/what-if-display";
 import type { AnalysisState, OpenCourse } from "./AdvisorApp";
 import { dispatchPlan } from "./store";
 import styles from "./advisor.module.css";
 
-const REQ_STATUS: Record<RequirementResult["status"], string> = { satisfied: "Satisfied", partial: "In progress", missing: "Missing" };
+const REQ_STATUS = REQ_STATUS_LABEL;
 
 type OpenSlot = Extract<Requirement, { kind: "openSlot" }>;
 
@@ -74,18 +75,18 @@ export function AuditView({
             {!audit.program.verified ? <span className={styles.unverified}>Unverified</span> : null}
           </div>
           <p className={styles.cardNote}>
-            {blockedNotice(audit.program.id, plan.programs) ?? `${audit.satisfied} of ${audit.total} requirements met`}
+            {blockedNotice(audit.program.id, plan.programs) ?? metText(audit.satisfied, audit.total, audit.inProgress)}
           </p>
           <ul className={styles.reqList}>
-            {audit.requirements.map(({ requirement, result, gap }) =>
+            {audit.requirements.map(({ requirement, result, display, gap }) =>
               requirement.kind === "openSlot" ? (
                 <OpenSlotRow key={requirement.id} programId={audit.program.id} slot={requirement} confirmed={result.status === "satisfied"} />
               ) : (
               <li key={requirement.id} className={styles.reqRow}>
                 <div className={styles.reqHead}>
                   <span className={styles.reqName}>{requirement.name}</span>
-                  <span className={styles.reqStatus} data-status={result.status}>
-                    {REQ_STATUS[result.status]}
+                  <span className={styles.reqStatus} data-status={display}>
+                    {REQ_STATUS[display]}
                   </span>
                 </div>
                 <GradeNotes result={result} />
@@ -180,7 +181,7 @@ export function AuditView({
           <p className={styles.cardNote}>
             Prerequisites for applying to a professional school, on top of any major -- never a UMD graduation requirement.
           </p>
-          {tracks.map(({ track, requirements, satisfied, milestones }) => {
+          {tracks.map(({ track, requirements, satisfied, inProgress, milestones }) => {
             const manual = track.categories.filter((c) => !c.requirement);
             return (
               <section key={track.id} className={styles.card}>
@@ -192,15 +193,15 @@ export function AuditView({
                 {requirements.length > 0 ? (
                   <>
                     <p className={styles.cardNote}>
-                      {satisfied} of {requirements.length} requirements met
+                      {metText(satisfied, requirements.length, inProgress)}
                     </p>
                     <ul className={styles.reqList}>
-                      {requirements.map(({ requirement, result, gap }) => (
+                      {requirements.map(({ requirement, result, display, gap }) => (
                         <li key={requirement.id} className={styles.reqRow}>
                           <div className={styles.reqHead}>
                             <span className={styles.reqName}>{requirement.name}</span>
-                            <span className={styles.reqStatus} data-status={result.status}>
-                              {REQ_STATUS[result.status]}
+                            <span className={styles.reqStatus} data-status={display}>
+                              {REQ_STATUS[display]}
                             </span>
                           </div>
                           <GradeNotes result={result} />

@@ -121,7 +121,7 @@ export function conflictPairs(placed: Section[]): [string, string][] {
   return out;
 }
 
-/** Why "Recommended" liked a pick, in plain words: "4.6★ · avg GPA 3.4 · 12 open". Missing data is left out. */
+/** Why "Best Teachers" liked a pick, in plain words: "4.6★ · avg GPA 3.4". Missing data is left out. */
 export function recommendReason(
   s: Section,
   ratings: Readonly<Record<string, number>>,
@@ -132,7 +132,6 @@ export function recommendReason(
   if (rating !== undefined) parts.push(`${rating.toFixed(1)}★`);
   const g = s.instructors.map((n) => gpas[gpaKey(s.courseId, n)]).filter((x): x is number => x !== undefined);
   if (g.length) parts.push(`avg GPA ${Math.max(...g).toFixed(1)}`);
-  parts.push(`${s.seats.open} open`);
   return parts.join(" · ");
 }
 

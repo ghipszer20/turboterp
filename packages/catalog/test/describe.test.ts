@@ -49,14 +49,14 @@ describe("describeRequirement", () => {
 
   it("describes a choice over a filter by count and by credits", () => {
     expect(text({ kind: "choose", id: "x", name: "x", count: 1, from: { departments: ["STAT"], minNumber: 400, maxNumber: 499 } })).toBe(
-      "1 course from STAT 400–499",
+      "1 course from STAT 400–499 or 600+",
     );
     expect(text({ kind: "choose", id: "x", name: "x", count: 3, from: { departments: ["STAT"], minNumber: 400, maxNumber: 499 } })).toBe(
-      "3 courses from STAT 400–499",
+      "3 courses from STAT 400–499 or 600+",
     );
     expect(
       text({ kind: "choose", id: "x", name: "x", credits: 6, from: { departments: ["CMSC"], minNumber: 300, maxNumber: 499, exclude: ["CMSC330", "CMSC351"] } }),
-    ).toBe("6 credits from CMSC 300–499, except CMSC330, CMSC351");
+    ).toBe("6 credits from CMSC 300–499 or 600+, except CMSC330, CMSC351");
   });
 
   it("reads a Gen Ed choice as courses 'with' the code", () => {
@@ -91,7 +91,7 @@ describe("describeRequirement", () => {
 
   it("describes a concentration", () => {
     const r: Requirement = { kind: "concentration", id: "c", name: "x", credits: 12, minNumber: 300, maxNumber: 499, excludeDepartments: ["CMSC"] };
-    expect(text(r)).toBe("12 credits of 300–499 courses, all from one department (not CMSC)");
+    expect(text(r)).toBe("12 credits of 300–499 or 600+ courses, all from one department (not CMSC)");
   });
 
   it("reads a single set as 'All of', with filter members", () => {
@@ -101,7 +101,7 @@ describe("describeRequirement", () => {
       name: "x",
       options: [["AOSC200", "AOSC201", { count: 2, from: { departments: ["AOSC"], minNumber: 400, maxNumber: 499 } }]],
     };
-    expect(describeRequirement(r)).toEqual({ text: "All of: AOSC200, AOSC201, 2 courses from AOSC 400–499", details: [], notes: [] });
+    expect(describeRequirement(r)).toEqual({ text: "All of: AOSC200, AOSC201, 2 courses from AOSC 400–499 or 600+", details: [], notes: [] });
   });
 
   it("lists several sets as details, one or N of them", () => {
@@ -141,6 +141,8 @@ describe("describeFilter", () => {
   it("joins several departments and open-ended number bounds", () => {
     expect(describeFilter({ departments: ["MATH", "AMSC", "STAT"], minNumber: 240 })).toBe("MATH/AMSC/STAT 240+");
     expect(describeFilter({ departments: ["ENGL"], maxNumber: 199 })).toBe("ENGL up to 199");
+    expect(describeFilter({ departments: ["MATH"], minNumber: 300, maxNumber: 399 })).toBe("MATH 300–399");
+    expect(describeFilter({ departments: ["HEBR"], minNumber: 200, maxNumber: 499, noGraduateCourses: true })).toBe("HEBR 200–499");
   });
 
   it("describes Gen Ed, any-course and department-free filters", () => {
@@ -150,6 +152,6 @@ describe("describeFilter", () => {
   });
 
   it("combines listed courses with a pattern", () => {
-    expect(describeFilter({ courses: ["MATH246"], departments: ["MATH"], minNumber: 400, maxNumber: 499 })).toBe("MATH246 or MATH 400–499");
+    expect(describeFilter({ courses: ["MATH246"], departments: ["MATH"], minNumber: 400, maxNumber: 499 })).toBe("MATH246 or MATH 400–499 or 600+");
   });
 });

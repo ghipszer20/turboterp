@@ -92,8 +92,8 @@ export const bioeMajorBiotech: Program = {
       name: "Breadth Elective (select one)",
       count: 1,
       minGrade: "C-",
-      from: { courses: ["BSCI222", "BSCI223", "CHEM241", "CHEM242", "CHEM271", "CHEM272"], departments: ["BIOE"], minNumber: 300, maxNumber: 499, exclude: ["BIOE413", "BIOE461", "BIOE462"] },
-      alternatives: [["CHEM241", "CHEM242"], ["CHEM271", "CHEM272"]],
+      from: { courses: ["BSCI222", "HLSC322", "BSCI223", "CHEM241", "CHEM242", "CHEM271", "CHEM272"], departments: ["BIOE"], minNumber: 300, maxNumber: 499, exclude: ["BIOE413", "BIOE461", "BIOE462"] },
+      alternatives: [["BSCI222", "HLSC322"], ["CHEM241", "CHEM242"], ["CHEM271", "CHEM272"]],
     },
     {
       kind: "choose",
@@ -101,8 +101,8 @@ export const bioeMajorBiotech: Program = {
       name: "Biological Science Elective I (select two, at least one 300-level or above)",
       count: 1,
       minGrade: "C-",
-      from: { courses: ["BSCI222", "BSCI223", "BSCI338", "BSCI339", "BSCI353", "BSCI370", "BSCI374", "BSCI404", "BSCI410", "BSCI411", "BSCI412", "BSCI414", "BSCI416", "BSCI417", "BSCI421", "BSCI422", "BSCI424", "BSCI430", "BSCI433", "BSCI437", "BSCI443", "BSCI447", "BSCI471", "CHEM481", "CHEM482", "BCHM463"] },
-      alternatives: [["BSCI338", "BSCI339"]],
+      from: { courses: ["BSCI222", "HLSC322", "BSCI223", "BSCI338", "BSCI339", "BSCI353", "BSCI370", "BSCI374", "BSCI404", "BSCI410", "BSCI411", "BSCI412", "BSCI414", "BSCI416", "BSCI417", "BSCI421", "BSCI422", "BSCI424", "BSCI430", "BSCI433", "BSCI437", "BSCI443", "BSCI447", "BSCI471", "CHEM481", "CHEM482", "BCHM463"] },
+      alternatives: [["BSCI222", "HLSC322"], ["BSCI338", "BSCI339"]],
     },
     {
       kind: "choose",
@@ -141,6 +141,7 @@ export const bioeMajorBiomechanics: Program = {
     "Fischell Department of Bioengineering, Tracks page, https://bioe.umd.edu/undergraduate/tracks (fetched 2026-09-28)",
   verified: false,
   reviewNotes: [
+    "Posted substitution (owner, 2026-10-07): the electives page's footnote 'HLSC322 can stand in place of BSCI222 as a breadth or lower level biosci elective' -- every track's Breadth Elective and Biological Science Elective I list accepts HLSC322, paired with BSCI222 so only one counts (as in bioe-major).",
     ...REVIEW_NOTES_COMMON,
     "Unlike the Biotechnology and Pre-Health tracks, this track's page lists 'BIOE Foundationals: BIOE404 | BIOE453' with no '(Select Two)' wording -- both are required outright, encoded as two `course` requirements rather than a `choose`.",
   ],
@@ -177,8 +178,8 @@ export const bioeMajorBiomechanics: Program = {
       name: "Biological Science Elective I (select two, at least one 300-level or above)",
       count: 1,
       minGrade: "C-",
-      from: { courses: ["BSCI222", "BSCI223", "BSCI338", "BSCI339", "BSCI353", "BSCI370", "BSCI404", "BSCI410", "BCHM463", "KNES360", "KNES370"] },
-      alternatives: [["BSCI338", "BSCI339"]],
+      from: { courses: ["BSCI222", "HLSC322", "BSCI223", "BSCI338", "BSCI339", "BSCI353", "BSCI370", "BSCI404", "BSCI410", "BCHM463", "KNES360", "KNES370"] },
+      alternatives: [["BSCI222", "HLSC322"], ["BSCI338", "BSCI339"]],
     },
     {
       kind: "choose",
@@ -252,8 +253,8 @@ export const bioeMajorInstrumentation: Program = {
       name: "Biological Science Elective I (select two, at least one 300-level or above)",
       count: 1,
       minGrade: "C-",
-      from: { courses: ["BSCI222", "BSCI223", "BSCI338", "BSCI339", "BSCI353", "BSCI410", "BSCI433", "BSCI446", "BCHM463"] },
-      alternatives: [["BSCI338", "BSCI339"]],
+      from: { courses: ["BSCI222", "HLSC322", "BSCI223", "BSCI338", "BSCI339", "BSCI353", "BSCI410", "BSCI433", "BSCI446", "BCHM463"] },
+      alternatives: [["BSCI222", "HLSC322"], ["BSCI338", "BSCI339"]],
     },
     {
       kind: "choose",
@@ -321,8 +322,8 @@ export const bioeMajorPreHealth: Program = {
       name: "Biological Science Elective I (select two, at least one 300-level or above)",
       count: 1,
       minGrade: "C-",
-      from: { courses: ["BSCI222", "BSCI223", "CHEM271", "CHEM272", "BCHM463"] },
-      alternatives: [["CHEM271", "CHEM272"]],
+      from: { courses: ["BSCI222", "HLSC322", "BSCI223", "CHEM271", "CHEM272", "BCHM463"] },
+      alternatives: [["BSCI222", "HLSC322"], ["CHEM271", "CHEM272"]],
     },
     {
       kind: "choose",

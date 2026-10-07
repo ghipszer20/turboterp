@@ -33,7 +33,7 @@ const SHOTS = [
   ["Campus", "Transport (buses, map, trip planner)", "/campus/transport"],
   ["Campus", "Libraries", "/campus/libraries"],
   ["Campus", "Study rooms", "/campus/rooms"],
-  ["Campus", "Gyms", "/campus/gym"],
+  ["Campus", "Fitness", "/campus/gym"],
   ["Schedule", "Schedule builder (empty)", "/schedule"],
   ["Schedule", "Schedule gallery (4 courses)", `/schedule?${COURSES}`],
   ["Schedule", "Build my own", `/schedule?${COURSES}&view=own`],

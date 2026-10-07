@@ -4,7 +4,7 @@
 // The chart gives one credit total per row; where a row names several courses, the split
 // between them comes from the IB chart or UMD's catalog (SOURCES.md lists each one).
 
-import { course, elective, genEdOnly, oneOf, row } from "./chart.ts";
+import { course, elective, labLecture, genEdOnly, oneOf, row } from "./chart.ts";
 import type { ApExam } from "./types.ts";
 
 const LANGUAGE_NOTE =
@@ -67,9 +67,9 @@ export const AP_EXAMS: ApExam[] = [
         [4, 5],
         8,
         "BSCI 160, BSCI 161 (DSNL), and BSCI 170, BSCI 171 (DSNL)",
-        course("BSCI160", 3, "DSNL"),
+        labLecture("BSCI160", 3, "BSCI161", "DSNL"),
         course("BSCI161", 1),
-        course("BSCI170", 3, "DSNL"),
+        labLecture("BSCI170", 3, "BSCI171", "DSNL"),
         course("BSCI171", 1),
       ),
     ],
@@ -79,8 +79,8 @@ export const AP_EXAMS: ApExam[] = [
     aliases: [],
     rows: [
       row([3], 3, "Lower Level Elective", elective(3)),
-      row([4], 4, "CHEM 131 and CHEM 132 (DSNL)", course("CHEM131", 3, "DSNL"), course("CHEM132", 1)),
-      row([5], 6, "CHEM 131 and CHEM 132 (DSNL); CHEM 271", course("CHEM131", 3, "DSNL"), course("CHEM132", 1), course("CHEM271", 2)),
+      row([4], 4, "CHEM 131 and CHEM 132 (DSNL)", labLecture("CHEM131", 3, "CHEM132", "DSNL"), course("CHEM132", 1)),
+      row([5], 6, "CHEM 131 and CHEM 132 (DSNL); CHEM 271", labLecture("CHEM131", 3, "CHEM132", "DSNL"), course("CHEM132", 1), course("CHEM271", 2)),
     ],
   },
   {
@@ -306,7 +306,7 @@ export const AP_EXAMS: ApExam[] = [
         [4, 5],
         4,
         "PHYS 161 and PHYS 261 (DSNL) [PHYS majors-consult advisor for more information]",
-        course("PHYS161", 3, "DSNL"),
+        labLecture("PHYS161", 3, "PHYS261", "DSNL"),
         course("PHYS261", 1),
       ),
     ],
@@ -320,7 +320,7 @@ export const AP_EXAMS: ApExam[] = [
         [4, 5],
         4,
         "PHYS 260 and PHYS 271 (DSNL) [PHYS majors-consult advisor for more information]",
-        course("PHYS260", 3, "DSNL"),
+        labLecture("PHYS260", 3, "PHYS271", "DSNL"),
         course("PHYS271", 1),
       ),
     ],

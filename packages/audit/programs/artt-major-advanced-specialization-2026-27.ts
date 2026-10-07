@@ -24,6 +24,7 @@ export const arttMajorAdvancedSpecialization: Program = {
   minGpa: 2.0,
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Students in Department Honors Program may substitute the Honors Seminar for this course.' (The seminar's course number isn't posted.) The substitute isn't a fixed course list, so artt481 carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     "This track (48 credits in Track 1 plus 12 in an Advanced Specialization) restricted to students admitted by competitive portfolio review after completing at least two 3xx-level courses and one 400-level ARTT course (or enrollment in one); students may re-apply once. Not encoded -- an admission gate, not a course requirement. See docs/project/owner-review.md.",
     "Same Printmaking-area and 'Art Theory = ARTT' treatment as the Studio Art track (see its reviewNotes): the bare 'ARTT340' line is a PDF artifact and left out; 'Art Theory' electives are encoded as ARTH-or-ARTT.",
     "The five Advanced Specialization areas (Digital Media, Painting, Printmaking, Sculpture, Intermedia) are mutually exclusive 9-credit studio combinations (beyond the shared ARTT481 seminar), encoded as a `sets` requirement, one set per area. Footnotes allow substituting up to 3 credits of ARTT498 for the area's repeatable studio course in each area (the Painting/Printmaking/Sculpture footnotes literally say '...substituted for ARTT479', a copy-paste artifact from the Digital Media footnote; normalized here to mean each area's own primary repeatable course, per the department's evident intent) -- ARTT498 is added as an alternative in every area's repeatable-course filter.",
@@ -94,7 +95,7 @@ export const arttMajorAdvancedSpecialization: Program = {
       count: 2,
       from: { departments: ["ARTH", "ARTT"], minNumber: 300, maxNumber: 499, exclude: REQUIRED_ELSEWHERE },
     },
-    { kind: "course", id: "artt481", name: "Advanced Specialization Seminar", options: ["ARTT481"] },
+    { kind: "course", id: "artt481", advisorMayApprove: true, name: "Advanced Specialization Seminar", options: ["ARTT481"] },
     {
       kind: "sets",
       id: "specialization",

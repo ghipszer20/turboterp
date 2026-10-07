@@ -67,7 +67,7 @@ export function ExportMenu({ plan, analysis, catalog, calendar = [], priorCredit
       const summary = planSummaryLines({
         creditsEarned: earned + priorCredits,
         creditsPlanned: planExport.creditsPlanned,
-        programs: result.audits.map((a) => ({ name: a.program.name, satisfied: a.satisfied, total: a.total })),
+        programs: result.audits.map((a) => ({ name: a.program.name, satisfied: a.satisfied, total: a.total, inProgress: a.inProgress })),
       });
       const client = await getAuthClient();
       const { data } = await client.auth.getSession();

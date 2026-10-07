@@ -13,6 +13,7 @@ export const enstMajorAppliedEcologyNaturalResources: Program = {
   minGpa: 2.0,
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Under some circumstances, other 300 or 400 level electives can be substituted with advisor's approval.' The substitute isn't a fixed course list, so technical-electives carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     ...enstCommonReviewNotes,
     "Concentration Depth (3 courses) is one course from each of three groups (Wildlife and Habitats; Wetlands and Waterways; Urban Sustainability), encoded as three single-course requirements.",
     "Technical Electives (15 credits) is one 15-credit choose over the union of the three blocks. 'GEOG331 or GEOG333' is one alternatives group. 'ENSP330 or GVPT273' is not grouped because GVPT273 is also listed on its own in Wildlife and Habitats (so both can count). A course in both depth and electives (ENST410, ENST450, ENST453, ENST430, ENST460) can count once only.",
@@ -29,7 +30,7 @@ export const enstMajorAppliedEcologyNaturalResources: Program = {
     enstC("depth-urban", "Depth - Urban Sustainability (ENST410, AREC240 or AREC241)", "ENST410", "AREC240", "AREC241"),
     {
       kind: "choose",
-      id: "technical-electives",
+      id: "technical-electives", advisorMayApprove: true,
       name: "Technical Electives (15 credits)",
       credits: 15,
       from: {

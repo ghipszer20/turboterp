@@ -36,6 +36,7 @@ export const educWorldLanguageMajor: Program = {
   minGrade: "C-",
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Any substitutions for the above must be pre-approved by a WL Education Advisor.' The substitute isn't a fixed course list, so educ-wl-primary-area carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     ...educSharedReviewNotes,
     "Department pages checked: the MCERT page describes a graduate certification program, terrapinteachers.umd.edu is a STEM-only landing page and the four-year-plans page only links out (it lists Chinese, French, German, Italian, Latin, Russian and Spanish, with no requirements). None adds or contradicts a requirement, so the catalog is encoded alone.",
     "The language content is not encoded: the catalog gives the Primary World Language (WL) area as generic rows with no course lists ('pre-professional courses vary by subject area; consult the academic department'), and no per-language tracks are defined. Encoded here is the education component only, plus the internship.",
@@ -64,7 +65,7 @@ export const educWorldLanguageMajor: Program = {
     ),
     {
       kind: "openSlot",
-      id: "educ-wl-primary-area",
+      id: "educ-wl-primary-area", advisorMayApprove: true,
       name: "Primary World Language Area courses",
       credits: 36,
       note: "Intermediate (200 level) 6, Reading Strategies 3, Grammar and Composition (300-400) 6, Survey of Literature (300-400) 6, Conversation (300-400) 3, Literature (400+) 6, Culture and Civilization 6. No course list is published; get the per-language list from your language department and confirm with your advisor.",

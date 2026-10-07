@@ -70,8 +70,28 @@ DS page: "A Diversity requirement may be fulfilled by a course that is approved 
 a Distributive Studies category."
 Catalog: "Courses fulfilling the Diversity requirement may double-count in an approved Distributive Studies category."
 
+## Credit minimums (Summary Chart, re-read 2026-10-07)
+Text extracted with pdfjs from the Summary Chart (revised April 2, 2024):
+> FUNDAMENTAL STUDIES 15 credits/5 courses … Academic Writing FSAW … 3 credits; Professional Writing FSPW 3 credits;
+> Oral Communication FSOC 3 credits; Math FSMA … 3 credits; Analytic Reasoning FSAR … 3 credits
+
+> DISTRIBUTIVE STUDIES 25 credits/8 courses • 2 courses must be from each area. … Natural Sciences DSNS/DSNL • At least
+> one course must have lab component. 7 credits; History and Social Sciences DSHS 6 credits; Humanities DSHU 6 credits;
+> Scholarship in Practice DSSP … 6 credits
+
+> TOTALS: 40-46 credits
+
+Reading (2026-10-07): each area needs both its course count and its credits. The catalog has DSSP courses of 1–2
+credits (CPGH200, TLPL102) and of 6 credits (ARCH402, ENGL388M), so neither rule alone can stand in for the other.
+
+## Lab pairs
+Testudo's Gen Ed text makes 20 lectures a lab science only together with their lab, e.g. CHEM131 "DSNL (if taken with
+CHEM132), DSNS", PHYS260 "DSNL (if taken with PHYS261)", PHYS161 "General Education Natural Sciences Lab (DSNL) Course
+only when taken concurrently with PHYS275." The AP chart grants the pair together ("CHEM 131 and CHEM 132 (DSNL)"), and
+UMD's degree audit lists BSCI160 + BSCI161 together under DSNL for 4 credits. Reading: DSNL needs the lab in the same
+term, and the lecture brings the lecture + lab credits to the 7-credit Natural Sciences minimum.
+
 ## Other lines (not modeled here)
-- Summary Chart: "Natural Sciences DSNS/DSNL • At least one course must have lab component. 7 credits."
 - Summary Chart, DSSP: "At least one course must be outside the major and all major requirements."
 - Summary Chart: "Students may receive up to 3 credits toward a Distributive Studies category from an approved
   outside-the-classroom learning experience."

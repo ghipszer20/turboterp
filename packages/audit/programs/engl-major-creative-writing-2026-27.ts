@@ -22,6 +22,7 @@ export const englMajorCreativeWriting: Program = {
   minGpa: 2.0,
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Students may substitute one approved UMD workshop course taught outside of the English department for their 3xx-level creative writing workshop.' The substitute isn't a fixed course list, so track-creative-writing carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     "Element 3 (Creative Writing Track, 12 credits / 4 courses): the catalog names three distinct " +
       "course types (a 2xx-level Creative Writing Workshop; a 3xx-level Creative Writing Workshop; a " +
       "Creative Form and Theory course) plus one open creative-writing-workshop course, but gives no " +
@@ -44,7 +45,7 @@ export const englMajorCreativeWriting: Program = {
     englHistoricalStudies,
     {
       kind: "choose",
-      id: "track-creative-writing",
+      id: "track-creative-writing", advisorMayApprove: true,
       name: "Element 3: Creative Writing Track (a 2xx-level workshop, a 3xx-level workshop, a Creative " +
         "Form and Theory course, plus one open creative-writing-workshop course)",
       count: 4,

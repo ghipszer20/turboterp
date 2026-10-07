@@ -42,9 +42,9 @@ async function Rooms() {
     library: catalog.locations.find((l) => l.id === room.locationId)?.name ?? "",
     locationId: room.locationId,
     category: room.categoryName,
-    // Built from the room's own id, not the snapshotted bookingUrl, so a
-    // stale snapshot can't leak a link without today's date on it.
-    bookingUrl: roomBookingUrl(room.id, today),
+    // Built from the room's own id, not the snapshotted bookingUrl; the
+    // view fills {date} with the day the student is looking at.
+    bookingUrl: roomBookingUrl(room.id, "{date}"),
     open: room.open,
   }));
 

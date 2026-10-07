@@ -19,6 +19,7 @@ export const physMajorBiophysics: Program = {
   minGrade: "C-",
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Students completing a second major from a CMNS or Engineering department may use an upper-level course from that program in place of one of the Advanced Physics Electives.' The substitute isn't a fixed course list, so advanced-elective carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     "Department-vs-catalog difference (owner ruling: follow the department page): the catalog offers 'BSCI180 (Principles Biology Laboratory) or BSCI171 (Principles of Molecular & Cellular Biology Laboratory)'; the department page's own list names only BSCI171. The department's single course (BSCI171) is required here, not the catalog's either/or.",
     "Math methods is a `sets` choice per both sources: MATH243, or MATH240 + MATH246, same as the Physics specialization.",
     "The catalog lists PHYS313 at 3 credits for this specialization, vs. 4 credits everywhere else (including the department page's own Biophysics list); credit counts aren't modeled on individual requirements here, so this doesn't change the encoding -- PHYS313 either way.",
@@ -56,7 +57,7 @@ export const physMajorBiophysics: Program = {
     { kind: "course", id: "phys483", name: "Biophysics", options: ["PHYS483"] },
     {
       kind: "choose",
-      id: "advanced-elective",
+      id: "advanced-elective", advisorMayApprove: true,
       name: "Advanced Physics Elective",
       count: 1,
       from: {

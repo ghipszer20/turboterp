@@ -34,6 +34,28 @@ export type ParsedApLine = {
   termCode: string | null;
   flagged: boolean;
   raw: string;
+  /** From the Equivalences columns, when printed: credits posted, the UMD course posted (the
+   * student's pick when the award offers a choice), and Gen Ed tags. */
+  credits?: number | null;
+  posted?: string | null;
+  genEd?: string[];
+};
+
+export type ParsedIbLine = ParsedApLine & { level: "SL" | "HL" | null };
+
+export type ParsedDualLine = {
+  institution: string;
+  termCode: string | null;
+  /** The external course code as printed, e.g. "MATH181". */
+  course: string;
+  title: string;
+  grade: string | null;
+  credits: number | null;
+  /** The UMD course it transferred as; null for a generic, blank or "No Credit" equivalence. */
+  umd: string | null;
+  genEd: string[];
+  flagged: boolean;
+  raw: string;
 };
 
 type UnparsedLine = { raw: string; reason: string };
@@ -42,6 +64,8 @@ export type ParsedTranscript = {
   studentName: string | null;
   courses: ParsedCourse[];
   apLines: ParsedApLine[];
+  ibLines: ParsedIbLine[];
+  dualLines: ParsedDualLine[];
   unparsed: UnparsedLine[];
   /** The last printed "UG Cumulative" GPA (0-4); null when none is printed or it is impossible. */
   cumulativeGpa: { value: number; flagged: boolean; raw: string } | null;
@@ -61,7 +85,9 @@ const normalizeTermName = (season: string, year: string) => `${SEASON_NAMES[seas
 
 const TERM_HEADER = /^(Fall|Winter|Spring|Summer)(?:\s+I{1,2})?\s+(\d{4})$/i;
 const CURRENT_TERM_HEADER = /^(Fall|Winter|Spring|Summer)(?:\s+I{1,2})?\s+(\d{4})\s+Course\s+Sec\b/i;
-const AP_LINE = /^(?:(\d{4})\s+)?(.+?)\/?SCR\s+(\d)$/i;
+const AP_LINE = /^(?:(\d{4})\s+)?(.+?)\/?SCR\s+(\d+)\b(.*)$/i;
+const DUAL_LINE = /^(?:(\d{4})\s+)?([A-Za-z]{2,5}\s?\d{2,4}[A-Za-z]?)\s+(.+?)(?:\s+([A-Z]{1,2}[+-]?))?\s+(\d+\.\d{1,2})(?:\s+(.*))?$/;
+const UMD_CODE = /^[A-Z]{3,4}\d{3}[A-Z]?$/;
 const STUDENT_NAME = /^[A-Za-z.'-]+,\s*[A-Za-z.'-]+$/;
 
 /** Front-matter, per-term metadata and footer lines that carry nothing to import: recognized and
@@ -84,12 +110,14 @@ const SKIP_PATTERNS: RegExp[] = [
   /^Current Status:/i,
   /^Fundamental Requirement Satisfied/i,
   /^Transcripts received from/i,
-  /^Advanced Placement Exam$/i,
   /^Historic Course Information/i,
   /^Course, Title, Grade,/i,
   /^\*\*\s*Semester Academic Honors\s*\*\*$/i,
   /^Semester:\s*Attempted/i,
   /^UG Cumulative/i,
+  /^(Acceptable|Applicable)\b.*\bCredits/i,
+  /^Total UG Credits/i,
+  /^=+(\s+=+)*$/,
   /^Meth\b/i,
   /^https?:\/\//i,
 ];
@@ -133,10 +161,54 @@ function parseCumulativeGpa(line: string, source: Source): { value: number; flag
   return { value, flagged: source === "ocr" || repaired, raw: line };
 }
 
-function parseApLine(line: string): { termCode: string | null; examRaw: string; score: number } | null {
+type EquivCols = { credits: number | null; posted: string | null; genEd: string[] };
+
+/** The Equivalences columns after a score: [grade] credits [UMD course | "No Credit"] [gen eds]. */
+function equivTail(credits: number | null, tail: string[]): EquivCols {
+  if (/^no$/i.test(tail[0] ?? "") && /^credit$/i.test(tail[1] ?? "")) return { credits, posted: null, genEd: [] };
+  let posted: string | null = null;
+  if (tail[0] && UMD_CODE.test(tail[0].toUpperCase())) {
+    posted = tail[0].toUpperCase();
+    tail = tail.slice(1);
+  }
+  const genEd = tail.join(" ").split(",").map((g) => g.trim()).filter(Boolean);
+  return { credits, posted, genEd };
+}
+
+function parseEquivalences(rest: string): EquivCols | null {
+  const tokens = rest.split(/\s+/).filter(Boolean);
+  let i = 0;
+  if (tokens[i] && !isNumShape(tokens[i]!) && GRADE_SHAPE.test(tokens[i]!)) i++;
+  if (i >= tokens.length || !isNumShape(tokens[i]!)) return null;
+  return equivTail(repairNumber(tokens[i]!).value, tokens.slice(i + 1));
+}
+
+function parseExamLine(line: string): { termCode: string | null; examRaw: string; score: number; equiv: EquivCols | null } | null {
   const m = AP_LINE.exec(line);
   if (!m) return null;
-  return { termCode: m[1] ?? null, examRaw: m[2]!.trim().toUpperCase(), score: Number.parseInt(m[3]!, 10) };
+  const rest = m[4]!.trim();
+  const equiv = rest ? parseEquivalences(rest) : null;
+  if (rest && !equiv) return null;
+  return { termCode: m[1] ?? null, examRaw: m[2]!.trim().toUpperCase(), score: Number.parseInt(m[3]!, 10), equiv };
+}
+
+const equivFields = (e: EquivCols | null) => (e ? { credits: e.credits, posted: e.posted, genEd: e.genEd } : {});
+
+function parseDualLine(line: string, institution: string): Omit<ParsedDualLine, "flagged"> | null {
+  const m = DUAL_LINE.exec(line);
+  if (!m) return null;
+  const equiv = equivTail(repairNumber(m[5]!).value, (m[6] ?? "").trim().split(/\s+/).filter(Boolean));
+  return {
+    institution,
+    termCode: m[1] ?? null,
+    course: m[2]!.toUpperCase().replace(/\s+/g, ""),
+    title: m[3]!.trim(),
+    grade: m[4] ?? null,
+    credits: equiv.credits,
+    umd: equiv.posted,
+    genEd: equiv.genEd,
+    raw: line,
+  };
 }
 
 function parseCompletedRow(line: string, source: Source): Omit<ParsedCourse, "term"> | null {
@@ -174,7 +246,8 @@ function parseCompletedRow(line: string, source: Source): Omit<ParsedCourse, "te
   };
 }
 
-function parseInProgressRow(line: string, source: Source): Omit<ParsedCourse, "term"> | null {
+/** "dropped": the Drop/Add column says D, so the section was dropped and is not a course to import. */
+function parseInProgressRow(line: string, source: Source): Omit<ParsedCourse, "term"> | "dropped" | null {
   const tokens = line.split(/\s+/);
   if (tokens.length < 3) return null;
   const codeInfo = repairCode(tokens[0]!);
@@ -189,6 +262,7 @@ function parseInProgressRow(line: string, source: Source): Omit<ParsedCourse, "t
   }
   if (idx === -1) return null;
 
+  if (/^D$/i.test(tokens[idx + 2] ?? "")) return "dropped";
   const credits = repairCredits(tokens[idx]!);
   return {
     code: codeInfo.code,
@@ -211,7 +285,11 @@ export function parseTranscriptText(text: string, source: Source): ParsedTranscr
 
   const courses: ParsedCourse[] = [];
   const apLines: ParsedApLine[] = [];
+  const ibLines: ParsedIbLine[] = [];
+  const dualLines: ParsedDualLine[] = [];
   const unparsed: UnparsedLine[] = [];
+  let transferKind: "ap" | "ib" | "dual" = "ap";
+  let institution = "Transfer credit";
   let studentName: string | null = null;
   let mode: "front" | "ap" | "terms" = "front";
   let section: "completed" | "current" = "completed";
@@ -224,8 +302,9 @@ export function parseTranscriptText(text: string, source: Source): ParsedTranscr
       studentName = line;
       continue;
     }
-    if (/^\*\*\s*Transfer Credit Information\s*\*\*$/i.test(line)) {
+    if (/^\*\*\s*Transfer Credit Information\s*\*\*/i.test(line)) {
       mode = "ap";
+      transferKind = "ap";
       continue;
     }
     if (/^\*\*\s*Current Course Information\s*\*\*$/i.test(line)) {
@@ -255,19 +334,58 @@ export function parseTranscriptText(text: string, source: Source): ParsedTranscr
     }
 
     if (mode === "ap") {
-      const ap = parseApLine(line);
-      if (ap) {
-        const termCode = ap.termCode ?? lastApTermCode;
-        if (ap.termCode) lastApTermCode = ap.termCode;
-        apLines.push({ examRaw: ap.examRaw, score: ap.score, termCode, flagged: source === "ocr", raw: line });
+      // Sub-headers pick what the rows below are: AP exams, IB exams, or dual enrollment (an
+      // institution name). The block ends at the first term header (handled above).
+      if (/^Advanced Placement Exam\b/i.test(line)) {
+        transferKind = "ap";
         continue;
       }
-      unparsed.push({ raw: line, reason: "Couldn't read as an AP exam line" });
+      if (/International Baccalaureate/i.test(line)) {
+        transferKind = "ib";
+        continue;
+      }
+      const exam = parseExamLine(line);
+      if (exam) {
+        const termCode = exam.termCode ?? lastApTermCode;
+        if (exam.termCode) lastApTermCode = exam.termCode;
+        const base = { score: exam.score, termCode, flagged: source === "ocr", raw: line, ...equivFields(exam.equiv) };
+        if (transferKind === "ib") {
+          if (exam.score < 1 || exam.score > 7) {
+            unparsed.push({ raw: line, reason: "IB scores run 1-7" });
+            continue;
+          }
+          const lm = /\b(HL|SL)\b/i.exec(exam.examRaw);
+          const level = lm ? (lm[1]!.toUpperCase() as "HL" | "SL") : null;
+          const examRaw = exam.examRaw.replace(/[\s/-]*\b(HL|SL)\b/i, "").trim();
+          ibLines.push({ ...base, examRaw, level });
+        } else {
+          if (exam.score < 1 || exam.score > 5) {
+            unparsed.push({ raw: line, reason: "AP scores run 1-5" });
+            continue;
+          }
+          apLines.push({ ...base, examRaw: exam.examRaw });
+        }
+        continue;
+      }
+      const dual = parseDualLine(line, institution);
+      if (dual && transferKind === "dual") {
+        dualLines.push({ ...dual, flagged: source === "ocr" });
+        continue;
+      }
+      // An unreadable line with no numbers is an institution name; anything else is shown to the student.
+      if (!/\d/.test(line.replace(/\bon\s+\d{1,2}\/\d{1,2}\/\d{2,4}\s*$/i, "")) && /[A-Za-z]/.test(line) && !line.startsWith("**")) {
+        transferKind = "dual";
+        institution = line.replace(/\s+on\s+\d{1,2}\/\d{1,2}\/\d{2,4}\s*$/i, "").trim();
+        continue;
+      }
+      if (line.startsWith("**")) continue;
+      unparsed.push({ raw: line, reason: "Couldn't read as a transfer credit line (add it in Prior credit)" });
       continue;
     }
 
     if (mode === "terms" && currentTerm) {
       const row = section === "current" ? parseInProgressRow(line, source) : parseCompletedRow(line, source);
+      if (row === "dropped") continue;
       if (row) {
         courses.push({ ...row, term: currentTerm });
         continue;
@@ -283,5 +401,5 @@ export function parseTranscriptText(text: string, source: Source): ParsedTranscr
     unparsed.push({ raw: line, reason: "Unrecognized line" });
   }
 
-  return { studentName, courses, apLines, unparsed, cumulativeGpa };
+  return { studentName, courses, apLines, ibLines, dualLines, unparsed, cumulativeGpa };
 }

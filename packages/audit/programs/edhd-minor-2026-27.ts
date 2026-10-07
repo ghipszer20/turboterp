@@ -20,11 +20,16 @@ export const edhdMinor: Program = {
     "No grade floor is stated by the catalog; C- applied per the owner ruling for minors whose siblings state one.",
     "The catalog gives no cap on overlap with the major; no maxSharedWith set.",
     "'Select courses from at least two areas, 9-18 credits' is encoded as a distribution rule (3 courses from at least two areas). The 9-18 credit range and the 15-24 credit total are not checked beyond the 9-credit minimum; non-3-credit courses are not credit-weighted.",
-    "EDHD306 footnote: only Family Health majors may substitute FMSC302, and only Psychology or Neuroscience majors PSYC300. The engine has no declared-major gate, so FMSC302 and PSYC300 are accepted for everyone; the major restriction is manual. Flagged.",
+    "EDHD306 footnote: only Family Health majors may substitute FMSC302, and only Psychology or Neuroscience majors PSYC300. Encoded as Requirement.substitutes: FMSC302 counts only with the Family Health major (fmsc-major) audited alongside, PSYC300 only with a Psychology (BA or BS) or Neuroscience major.",
     "The catalog lists areas 1 Cognitive, 2 Social, 3 Research (QMMS251) and 4 Lifespan, but the table says 'at least two of Cognitive, Social, Lifespan'. QMMS251 and the footnote's directed-study courses (EDHD228, EDHD319, EDHD386, EDHD489, EDHD498: 'course selections might include three credits of') are encoded together as one extra area 'Research and directed study', so they count as a course and as an area. Please confirm. Directed study is with a faculty advisor.",
   ],
   requirements: [
-    { kind: "course", id: "edhd306", name: "EDHD306 Research Methods in Human Development", options: ["EDHD306", "FMSC302", "PSYC300"] },
+    { kind: "course", id: "edhd306", name: "EDHD306 Research Methods in Human Development", options: ["EDHD306"],
+      substitutes: [
+        { course: "FMSC302", onlyFor: ["fmsc-major"], reason: "Only Family Health majors may substitute FMSC302 for EDHD306." },
+        { course: "PSYC300", onlyFor: ["psyc-major-ba", "psyc-major-bs", "neur-major"], reason: "Only Psychology or Neuroscience majors may substitute PSYC300 for EDHD306." },
+      ],
+    },
     { kind: "course", id: "edhd200", name: "EDHD200 Paradigms and Perspectives in Human Development", options: ["EDHD200"] },
     {
       kind: "distribution",

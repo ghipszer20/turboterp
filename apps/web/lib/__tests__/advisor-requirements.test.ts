@@ -3,7 +3,37 @@ import { cmscMajor } from "@turboterp/audit/programs/cmsc-major-2026-27.ts";
 import { genEd } from "@turboterp/audit/programs/gen-ed-2026-27.ts";
 import { mathMajorApplied } from "@turboterp/audit/programs/math-major-applied-2026-27.ts";
 import { describe, expect, it } from "vitest";
+import { emptyPrior, type PriorInputs } from "../advisor/plan-state";
+import { choiceAwardsOf, computePriorCredit } from "../advisor/prior-credit";
 import { describeGap, filterText, genEdName, prerequisiteText } from "../advisor/requirements";
+
+describe("describeGap: exam credit that offers a choice", () => {
+  // The Gen Ed Diversity row: a `sets` row whose members are Gen Ed filters (2 DVUP, or 1 DVUP + 1 DVCC).
+  const plural = genEd.requirements.find((r) => r.id === "diversity")!;
+  const inputs = (pick?: string): PriorInputs => ({
+    ...emptyPrior(),
+    ap: [{ key: "a", exam: "United States History", score: 4 }],
+    choices: pick ? { "AP United States History (4)": pick } : {},
+  });
+  const gapFor = (pick?: string) => {
+    const credit = computePriorCredit(inputs(pick), () => []);
+    return describeGap(plural, { id: plural.id, name: plural.name, status: "missing", assigned: [] }, { courses: credit.courses, catalog: [], choiceAwards: choiceAwardsOf(credit.entries) });
+  };
+
+  it("points to the other option when the picked course lacks the code", () => {
+    const text = JSON.stringify(gapFor("HIST200"));
+    expect(text).toContain("HIST201");
+    expect(text).toContain("AP United States History (4)");
+  });
+
+  it("says the same while the choice is unpicked", () => {
+    expect(JSON.stringify(gapFor())).toContain("HIST201");
+  });
+
+  it("has no hint when the pick already carries the code", () => {
+    expect(JSON.stringify(gapFor("HIST201"))).not.toContain("HIST20");
+  });
+});
 
 const req = (program: { requirements: Requirement[] }, id: string) => program.requirements.find((r) => r.id === id)!;
 const result = (r: Requirement, status: RequirementResult["status"], assigned: string[] = []): RequirementResult => ({
@@ -61,7 +91,7 @@ describe("describeGap", () => {
     // CMSC, so stat4xx no longer excludes it (see CONCENTRATION_CREDIT_ONLY_FOR_CMSC in
     // cmsc-major-2026-27.ts -- it's excluded only from the Upper Level Concentration now).
     expect(describeGap(r, result(r, "missing"), ctx(taken("STAT400")))).toEqual({
-      need: "1 more STAT course numbered 400–499.",
+      need: "1 more STAT course numbered 400–499 (grad courses count too).",
       suggestions: ["STAT401", "STAT410", "STAT420", "STAT464"],
     });
   });
@@ -74,7 +104,7 @@ describe("describeGap", () => {
   it("counts credits still needed", () => {
     const r = req(cmscMajor, "electives");
     const gap = describeGap(r, result(r, "partial", ["CMSC433"]), ctx(taken("CMSC433")))!;
-    expect(gap.need).toBe("3 more credits: CMSC courses numbered 300–499 (not CMSC330 or CMSC351).");
+    expect(gap.need).toBe("3 more credits: CMSC courses numbered 300–499 (grad courses count too) (not CMSC330 or CMSC351).");
     expect(gap.suggestions).toEqual(["CMSC420", "CMSC421", "CMSC451", "CMSC412", "CMSC460"]);
   });
 
@@ -83,6 +113,31 @@ describe("describeGap", () => {
     const gap = describeGap(r, result(r, "partial", ["CMSC420", "CMSC421", "CMSC451"]), ctx(taken("CMSC420", "CMSC421", "CMSC451")))!;
     expect(gap.need).toBe("2 more courses from the listed areas, using at least 3 areas and at most 3 from any one.");
     expect(gap.suggestions.slice(0, 2)).toEqual(["CMSC412", "CMSC433"]);
+  });
+
+  it("10. doesn't suggest CMSC460 to a student who holds its cross-listed AMSC460, and counts MATH456 in Area 4", () => {
+    const r = req(cmscMajor, "electives");
+    const held: StudentCourse[] = [{ id: "AMSC460", credits: 3, status: "planned", genEd: [], crossListed: ["CMSC460"] }];
+    const gap = describeGap(r, result(r, "partial", ["AMSC460"]), ctx(held))!;
+    expect(gap.suggestions).not.toContain("CMSC460");
+    expect(gap.suggestions).toContain("CMSC420");
+
+    const areas: Requirement = {
+      kind: "distribution",
+      id: "areas",
+      name: "areas",
+      count: 3,
+      minAreas: 3,
+      maxPerArea: 1,
+      areas: [
+        { name: "Area 2", courses: ["CMSC420", "CMSC421"] },
+        { name: "Area 4", courses: ["CMSC451", "CMSC456"] },
+      ],
+    };
+    const math456: StudentCourse = { id: "MATH456", credits: 3, status: "planned", genEd: [], crossListed: ["CMSC456"] };
+    const areaGap = describeGap(areas, result(areas, "partial", ["MATH456"]), ctx([math456]))!;
+    expect(areaGap.suggestions).toContain("CMSC420");
+    expect(areaGap.suggestions).not.toContain("CMSC451");
   });
 
   it("still suggests a required course whose only completed attempt was graded F (it earns no credit)", () => {
@@ -113,7 +168,7 @@ describe("describeGap", () => {
     // Department page ("Upper Level Concentration", "Not Eligible for ULC"): Data Science,
     // Honors, Information Science and College Park Scholars are also never the ULC discipline.
     expect(describeGap(r, result(r, "partial", ["ECON305"]), ctx(taken("ECON305")))).toEqual({
-      need: "9 more credits of courses numbered 300–499, all in one department (not CMSC, DATA, HONR, HNUH, INST or CPSP).",
+      need: "9 more credits of courses numbered 300–499 (grad courses count too), all in one department (not CMSC, DATA, HONR, HNUH, INST or CPSP).",
       suggestions: [],
     });
   });
@@ -130,7 +185,7 @@ describe("describeGap", () => {
     const r = req(mathMajorApplied, "supporting");
     const courses = taken("AOSC200", "AOSC201");
     const gap = describeGap(r, result(r, "partial", ["AOSC200", "AOSC201"]), ctx(courses))!;
-    expect(gap.need).toBe("Finish a set: AOSC200, AOSC201 and 2 AOSC courses numbered 400–499 (or another listed set).");
+    expect(gap.need).toBe("Finish a set: AOSC200, AOSC201 and 2 AOSC courses numbered 400–499 (grad courses count too) (or another listed set).");
   });
 });
 
@@ -138,7 +193,9 @@ describe("filterText", () => {
   it("writes filters in words", () => {
     expect(filterText({ anyCourse: true })).toBe("any course");
     expect(filterText({ genEd: ["DSNS", "DSNL"] })).toBe("Natural Sciences (DSNS) or Natural Science Lab (DSNL) course");
-    expect(filterText({ departments: ["MATH", "AMSC", "STAT"], minNumber: 240, maxNumber: 499 })).toBe("MATH, AMSC or STAT course numbered 240–499");
+    expect(filterText({ departments: ["MATH", "AMSC", "STAT"], minNumber: 240, maxNumber: 499 })).toBe("MATH, AMSC or STAT course numbered 240–499 (grad courses count too)");
+    expect(filterText({ departments: ["MATH"], minNumber: 300, maxNumber: 399 })).toBe("MATH course numbered 300–399");
+    expect(filterText({ departments: ["HEBR"], minNumber: 200, maxNumber: 499, noGraduateCourses: true })).toBe("HEBR course numbered 200–499");
   });
 });
 
@@ -179,5 +236,40 @@ describe("describeGap: advisor approval", () => {
 
   it("says nothing extra for a closed list", () => {
     expect(describeGap(listed, result(listed, "missing"), ctx)!.note).toBeUndefined();
+  });
+});
+
+describe("describeGap for Diversity", () => {
+  const diversity = req(genEd, "diversity");
+  const tagged = (...codes: string[][]): StudentCourse[] => codes.map((genEd, i) => ({ id: `XXXX${i}`, credits: 3, status: "completed", grade: "B", genEd }));
+
+  it("asks for a DVUP course, not 'DVUP or DVCC', when two DVCC courses are already counted", () => {
+    const gap = describeGap(diversity, result(diversity, "partial"), ctx(tagged(["DVCC"], ["DVCC"])))!;
+    expect(gap.need).toBe("Finish a set: 1 Understanding Plural Societies (DVUP) course (or another listed set).");
+  });
+
+  it("asks for just the one missing course when one DVUP course is counted", () => {
+    const gap = describeGap(diversity, result(diversity, "partial"), ctx(tagged(["DVUP"])))!;
+    expect(gap.need).toBe("Finish a set: 1 more Understanding Plural Societies (DVUP) course (or another listed set).");
+  });
+});
+
+describe("describeGap: Gen Ed credit minimums", () => {
+  it("asks for the credits still needed once the course count is met", () => {
+    const r = req(genEd, "natsci");
+    const courses: StudentCourse[] = [
+      { id: "LAB100", credits: 3, status: "completed", genEd: ["DSNL"] },
+      { id: "SCI100", credits: 3, status: "completed", genEd: ["DSNS"] },
+    ];
+    expect(describeGap(r, result(r, "partial", ["LAB100", "SCI100"]), ctx(courses))!.need).toMatch(/^1 more credit/);
+  });
+
+  it("counts a lecture's lab credits (genEdCredits) toward the minimum", () => {
+    const r = req(genEd, "dssp");
+    const courses: StudentCourse[] = [
+      { id: "SP100", credits: 1, status: "completed", genEd: ["DSSP"] },
+      { id: "SP200", credits: 2, status: "completed", genEd: ["DSSP"], genEdCredits: 4 },
+    ];
+    expect(describeGap(r, result(r, "partial", ["SP100", "SP200"]), ctx(courses))!.need).toMatch(/^1 more credit/);
   });
 });

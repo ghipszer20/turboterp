@@ -9,7 +9,7 @@ const SECTIONS = [
   { href: "/campus/dining", label: "Dining", match: ["/campus/dining"] },
   { href: "/campus/transport", label: "Transport", match: ["/campus/transport"] },
   { href: "/campus/libraries", label: "Libraries", match: ["/campus/libraries", "/campus/rooms"] },
-  { href: "/campus/gym", label: "Gyms", match: ["/campus/gym"] },
+  { href: "/campus/gym", label: "Fitness", match: ["/campus/gym"] },
 ] as const;
 
 export function CampusNav() {
