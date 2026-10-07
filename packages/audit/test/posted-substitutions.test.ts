@@ -4,6 +4,7 @@
 
 import { describe, expect, it } from "vitest";
 import { auditProgram, type Program, type StudentCourse } from "../src/audit.ts";
+import { eeMajor } from "../programs/ee-major-2026-27.ts";
 import { finMajor } from "../programs/fin-major-2026-27.ts";
 import { infsMajor } from "../programs/infs-major-2026-27.ts";
 import { intbMajor } from "../programs/intb-major-2026-27.ts";
@@ -26,6 +27,13 @@ describe("posted substitutions", () => {
 
   it("ME: ENME202 is required unless acceptable programming credit has been earned (advisor decides)", () => {
     expect(requirement(meMajor, "enme202")?.advisorMayApprove).toBe(true);
+  });
+
+  it("EE: a second Capstone Design course may substitute for the Advanced Theory and Applications course", async () => {
+    // MATH410 fills the General Technical Elective, which would otherwise take a capstone just as well.
+    const r = await auditProgram(eeMajor, took("ENEE408A", "ENEE408C", "MATH410"));
+    const status = (id: string) => r.requirements.find((x) => x.id === id)?.status;
+    expect([status("tech-elective-a"), status("tech-elective-c")]).toEqual(["satisfied", "satisfied"]);
   });
 
   it("Information Systems: INST377 can substitute for BMGT406 (List A)", async () => {
