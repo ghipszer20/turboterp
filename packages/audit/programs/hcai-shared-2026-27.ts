@@ -37,7 +37,7 @@ export const hcaiEthicalSocialCore: Requirement[] = [
  */
 export const hcaiCapstone: Requirement = {
   kind: "course",
-  id: "hcai490",
+  id: "hcai490", advisorMayApprove: true,
   name: "Human-Centered Artificial Intelligence Capstone (HCAI490)",
   options: ["HCAI490"],
 };
@@ -45,6 +45,7 @@ export const hcaiCapstone: Requirement = {
 /** reviewNotes common to all seven specializations (catalog-wide rules, engine gaps). Each track
  * file appends its own specialization-specific notes to this array. */
 export const hcaiCommonReviewNotes: string[] = [
+  "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Students may replace this course [the capstone seminar] with an internship.' No internship course is named, so hcai490 carries advisorMayApprove.",
   "The official Four Year Academic Plan PDF for this major (program-sources/human-centered-" +
     "artificial-intelligence-major.md, same source fetch as the catalog text) decoded to garbled " +
     "binary/glyph characters, not readable plan text -- there is no department-page plan to check " +

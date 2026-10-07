@@ -35,12 +35,13 @@ export const spanMinorHeritageLanguageLatinoCulture: Program = {
   source: source("spanish-heritage-language-latino-culture-minor"),
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Native speakers and all others with the ability to begin coursework at a higher level should speak with the Spanish Undergraduate Advisor for course substitutions.' The substitute isn't a fixed course list, so span206, span207, span301 carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     ...commonNotes,
     "The catalog table's last 'Select one' is garbled (it lists a 3xx/4xx Language, Culture, and Professional Contexts course, a 3xx/4xx Spanish or Latin American Literature, Culture, and Media course, and SPAN425 or SPAN426; the 18-credit total leaves room for one course). Encoded as one course from the whole SPAN 300-499 range, which contains every named option; broader than the named lists, flagged.",
     "The catalog says 'Cross-listed with USLT and Bilingual Courses'; no course numbers are given, so cross-listed USLT courses are not encoded.",
   ],
   requirements: [
-    { kind: "course", id: "span206", name: "SPAN206 Spanish for Heritage Speakers I", options: ["SPAN206"] },
+    { kind: "course", id: "span206", advisorMayApprove: true, name: "SPAN206 Spanish for Heritage Speakers I", options: ["SPAN206"] },
     { kind: "course", id: "span306", name: "SPAN306 Spanish for Heritage Speakers II", options: ["SPAN306"] },
     {
       kind: "course",
@@ -89,8 +90,8 @@ export const spanMinorLanguageCultureProfessional: Program = {
     "The 'Language, Culture, and Professional Contexts' list here omits SPAN372 (Spanish and the Law), which the Heritage minor and the Spanish major list, although the footnote names Law as an area. Encoded as the catalog lists it here (SPAN318, 370, 371, 373, 374, 375, 422, 480); flagged.",
   ],
   requirements: [
-    { kind: "course", id: "span207", name: "SPAN207 Reading and Writing in Spanish", options: ["SPAN207"] },
-    { kind: "course", id: "span301", name: "SPAN301 Advanced Grammar and Composition I", options: ["SPAN301"] },
+    { kind: "course", id: "span207", advisorMayApprove: true, name: "SPAN207 Reading and Writing in Spanish", options: ["SPAN207"] },
+    { kind: "course", id: "span301", advisorMayApprove: true, name: "SPAN301 Advanced Grammar and Composition I", options: ["SPAN301"] },
     {
       kind: "course",
       id: "span303",
@@ -138,8 +139,8 @@ export const spanMinorLiteratureLinguisticsCulture: Program = {
     "'One 4xx-level course in Spanish or Latin American Literature, Culture, and Media' names no course list; encoded as the whole SPAN 4xx range minus the professional-contexts courses SPAN422 and SPAN480 (the same pool the Spanish major uses), which also contains the alternative SPAN425/SPAN426. Flagged.",
   ],
   requirements: [
-    { kind: "course", id: "span207", name: "SPAN207 Reading and Writing in Spanish", options: ["SPAN207"] },
-    { kind: "course", id: "span301", name: "SPAN301 Advanced Grammar and Composition I", options: ["SPAN301"] },
+    { kind: "course", id: "span207", advisorMayApprove: true, name: "SPAN207 Reading and Writing in Spanish", options: ["SPAN207"] },
+    { kind: "course", id: "span301", advisorMayApprove: true, name: "SPAN301 Advanced Grammar and Composition I", options: ["SPAN301"] },
     {
       kind: "course",
       id: "span303",

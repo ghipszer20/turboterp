@@ -17,6 +17,7 @@ export const gtstMinor: Program = {
   minGpa: 2.0,
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Upon approval from the Director, students may substitute a relevant course outside BSST.' The substitute isn't a fixed course list, so electives carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     "Catalog and department page agree on the 17 credits: BSST200, BSST331 or BSST335 (Innovative Ideas), BSST377, BSST386, 6 BSST elective credits, and one Global Perspectives course.",
     "Not encoded: program GPA 2.0 across the minor's courses is encoded as minGpa; separate application to START (12 earned credits, UMD undergraduates only, deadlines each fall and spring).",
     "Electives: 'six credits within BSST' accepts any BSST course; BSST200, 377, 386 and the Innovative Ideas course cannot double-count (each course counts toward one requirement). Taking both BSST331 and BSST335 lets the second count as an elective, per both sources. The catalog footnote that the Director may approve a relevant course outside BSST is a manual substitution, not encoded.",
@@ -31,7 +32,7 @@ export const gtstMinor: Program = {
     { kind: "course", id: "experiential", name: "Experiential Learning in Terrorism Studies", options: ["BSST386"] },
     {
       kind: "choose",
-      id: "electives",
+      id: "electives", advisorMayApprove: true,
       name: "Terrorism Studies (BSST) electives",
       credits: 6,
       from: { departments: ["BSST"] },

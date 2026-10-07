@@ -21,6 +21,7 @@ export const geolMajorEarthEnvironmental: Program = {
   minGrade: "C-",
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): '... or appropriate substitution with the approval of the department.' The substitute isn't a fixed course list, so earth-sciences-elective carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     "The department page's 'Supporting Courses' names one slot only as 'One atmospheric/astronomy/teaching course -- 3 cr' without listing options; the catalog's own extraction of this track names the three options explicitly (AOSC123, AOSC200, or ASTR120). Used the catalog's explicit list here since the department page is silent on the specific codes, not because the two disagree.",
     "'Earth Sciences Core Disciplines: choose one from each of five groups' -- encoded as five separate choose-one requirements (Analytic Methods, Environmental Geosciences, Geophysics, Earth Materials, Geobiology). GEOL437 appears in both the Environmental Geosciences and Geobiology lists; the department page notes it 'cannot double-count' across them, which the engine already guarantees for non-overlay requirements (a course counts toward at most one requirement), so no extra encoding is needed.",
     "'Earth Sciences Electives: two additional 300-400 level GEOL courses' is encoded as a `choose` pool over the GEOL department at the 300-400 level, excluding every course already used by a flat or choose-one requirement above.",
@@ -44,7 +45,7 @@ export const geolMajorEarthEnvironmental: Program = {
     { kind: "choose", id: "core-geobiology", name: "Geobiology core discipline", count: 1, from: { courses: ["GEOL331", "GEOL391", "GEOL431", "GEOL435", "GEOL436", "GEOL437"] } },
     {
       kind: "choose",
-      id: "earth-sciences-elective",
+      id: "earth-sciences-elective", advisorMayApprove: true,
       name: "Earth Sciences electives (2 courses, 300-400 level)",
       credits: 6,
       from: {

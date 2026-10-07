@@ -160,7 +160,9 @@ export const rameMajorLanguageTrack: Program = {
     ...foundations(),
     {
       kind: "choose",
-      id: "language-track",
+      // Posted (owner, 2026-10-07): "Other languages such as Aramaic, Akkadian or Syriac taken through
+      // CourseShare or the Consortium ... may be substituted", so other languages count with advisor approval.
+      id: "language-track", advisorMayApprove: true,
       name:
         "Six credits in Hebrew, Arabic, Greek, or another approved language beyond the first-year " +
         "level",

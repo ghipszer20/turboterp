@@ -73,3 +73,65 @@ describe("posted substitutions", () => {
     expect(await assigned(finMajor, "fin-select-one", took("BMGT394H"))).toEqual(["BMGT394H"]);
   });
 });
+
+// Pages that post a substitution "with approval" without listing the substitute: the requirement
+// carries advisorMayApprove, so the Advisor says another course may count with approval.
+describe("posted advisor-approved substitutions", () => {
+  const FLAGGED: [string, string[]][] = [
+    ["arec-major-ag-resource-econ", ["ag-resource-econ-select-five"]],
+    ["arab-major", ["foundation-electives", "remaining-electives"]],
+    ["cmsc-minor", ["electives"]],
+    ["engl-major-creative-writing", ["track-creative-writing"]],
+    ["gtst-minor", ["electives"]],
+    ["isrl-minor", ["history", "middle-east"]],
+    ["lacs-minor", ["experiential"]],
+    ["math-major", ["eight"]],
+    ["math-major-applied", ["eight"]],
+    ["pers-major", ["foundation-requirements", "electives"]],
+    ["pers-minor", ["pers103", "pers104", "pers201", "pers202", "electives"]],
+    ["neur-major", ["track"]],
+    ["hdev-major", ["hdev-electives"]],
+    ["educ-world-language-major", ["educ-wl-primary-area"]],
+    ["rame-major", ["language-track"]],
+    ["hcai-shared", ["hcai490"]],
+    ["enst-major-applied-ecology-natural-resources", ["technical-electives"]],
+    ["enst-major-ecological-technology-design", ["technical-electives"]],
+    ["enst-major-ecosystem-health", ["concentration-depth", "technical-electives"]],
+    ["enst-major-soil-watershed-science", ["technical-electives"]],
+    ["geol-major-earth-environmental", ["earth-sciences-elective"]],
+    ["geol-major-professional", ["geol-elective"]],
+    ["phys-major", ["advanced-elective"]],
+    ["phys-major-applied", ["advanced-elective"]],
+    ["phys-major-biophysics", ["advanced-elective"]],
+    ["phys-major-education", ["advanced-elective"]],
+    ["span-minors", ["span206", "span207", "span301"]],
+    ["span-shared", ["span207-or-206", "span301-or-306"]],
+    ["artt-major-advanced-specialization", ["artt481"]],
+    ["me-major", ["enme202"]],
+  ];
+
+  // Every exported Program (or Requirement / Requirement[]) in the file, so shared modules count too.
+  async function requirementsIn(file: string) {
+    const mod: Record<string, unknown> = await import(`../programs/${file}-2026-27.ts`);
+    const out: { id: string; advisorMayApprove?: true }[] = [];
+    const add = (x: unknown): void => {
+      if (Array.isArray(x)) return x.forEach(add);
+      if (x && typeof x === "object") {
+        const o = x as { id?: unknown; kind?: unknown; requirements?: unknown };
+        if (Array.isArray(o.requirements)) return add(o.requirements);
+        if (typeof o.id === "string" && typeof o.kind === "string") out.push(o as { id: string });
+      }
+    };
+    Object.values(mod).forEach(add);
+    return out;
+  }
+
+  it.each(FLAGGED)("%s: %j carry advisorMayApprove", async (file, ids) => {
+    const reqs = await requirementsIn(file);
+    for (const id of ids) {
+      const found = reqs.filter((r) => r.id === id);
+      expect(found.length, `${file}/${id}`).toBeGreaterThan(0);
+      for (const r of found) expect(r.advisorMayApprove, `${file}/${id}`).toBe(true);
+    }
+  });
+});

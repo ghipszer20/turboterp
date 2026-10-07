@@ -19,6 +19,7 @@ export const cmscMinor: Program = {
   verified: false,
   maxSharedWith: [{ credits: 6 }],
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'With prior permission of the Undergraduate Director ... at most one section (3 credits) of CMSC498, Independent Study, may substitute for one of the two core Computer Science electives.' The substitute isn't a fixed course list, so electives carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     "Department-vs-catalog difference (owner ruling: follow the department page): the catalog lists 'Required Courses (12 credits): CMSC132, CMSC216, CMSC250' as the minor's own requirements, with CMSC131/MATH140 as mere prerequisites to enter. The department page (effective Spring 2025 admission) instead treats CMSC131/133/141 and CMSC132/142 and MATH140 as a gateway students must clear (with a B- minimum each and a 3.0 UMD GPA) BEFORE applying, and lists the minor's own 'Required Coursework' as MATH141, CMSC216, CMSC250, CMSC330, CMSC351, plus two 400-level electives -- adding MATH141 (absent from the catalog's list) and excluding CMSC132 as a minor requirement (it's a gateway course instead). Encoded per the department: the three gateway courses are kept as their own Requirements with minGrade 'B-' (so a plan can show them explicitly), MATH141 is added, and CMSC132 is NOT counted separately from the CMSC132/CMSC142 gateway pair.",
     "The 3.0 cumulative UMD GPA gateway requirement has no GPA-average concept in the engine; not encoded (manual check), same treatment as the CS major's LEP benchmarks.",
     "Electives: the department page just says 'two 400-level CMSC electives from the approved list' without naming it; the catalog's list (CMSC411 through CMSC474) is used since it isn't contradicted. 'Cannot use both CMSC460 and CMSC466' (department) is encoded as an alternatives pair.",
@@ -37,7 +38,7 @@ export const cmscMinor: Program = {
     { kind: "course", id: "cmsc351", name: "Algorithms", options: ["CMSC351"], minGrade: "C-" },
     {
       kind: "choose",
-      id: "electives",
+      id: "electives", advisorMayApprove: true,
       name: "Two 400-level CMSC electives",
       count: 2,
       from: {

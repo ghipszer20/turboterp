@@ -19,6 +19,7 @@ export const lacsMinor: Program = {
   minGrade: "C-",
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'LACS369 may be substituted with an approved 3-credit study abroad course with permission of department.' The substitute isn't a fixed course list, so experiential carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     "Department page not checked: the fetched lacs.umd.edu page is the center's homepage with no minor requirements, so this is encoded from the catalog alone.",
     "The catalog names the minor 'Latin American and Caribbean Studies Minor' at a 'latin-american-studies-minor' URL; the brief calls it Latin American Studies. Encoded once.",
     "Catalog rows: LACS/SPAN234 or LACS/SPAN235; HIST/LACS250 or HIST251; one of LACS486, LACS369 or LACS499; two 300/400 electives. LACS369 may be replaced by an approved 3-credit study abroad course with department permission (manual, not encoded). Cross-listings beyond those the catalog names (e.g. LACS251) are not added.",
@@ -29,7 +30,7 @@ export const lacsMinor: Program = {
   requirements: [
     { kind: "course", id: "issues", name: "LACS/SPAN234 or LACS/SPAN235 Issues in Latin American and Caribbean Studies", options: ["LACS234", "SPAN234", "LACS235", "SPAN235"] },
     { kind: "course", id: "history", name: "HIST/LACS250 or HIST251 Latin American history", options: ["LACS250", "HIST250", "HIST251"] },
-    { kind: "course", id: "experiential", name: "LACS486 internship, LACS369 study abroad or LACS499 independent study", options: ["LACS486", "LACS369", "LACS499"] },
+    { kind: "course", id: "experiential", advisorMayApprove: true, name: "LACS486 internship, LACS369 study abroad or LACS499 independent study", options: ["LACS486", "LACS369", "LACS499"] },
     {
       kind: "distribution",
       id: "electives",

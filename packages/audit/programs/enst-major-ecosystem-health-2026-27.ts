@@ -13,6 +13,7 @@ export const enstMajorEcosystemHealth: Program = {
   minGpa: 2.0,
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Under some circumstances, other 300 or 400 level electives can be substituted with advisor's approval.' The substitute isn't a fixed course list, so concentration-depth, technical-electives carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     ...enstCommonReviewNotes,
     "Concentration Depth is '3 Courses, 9 credits' over BSCI222, ENST403, ENST423 and 'ENST432 or BSCI223'; encoded as a 3-course choose with ENST432/BSCI223 as one alternatives group (the catalog does not say which three).",
     "Technical Electives (15 credits) is one 15-credit choose over the union of the six blocks (advising groupings only). Courses listed in both depth and electives (ENST403, ENST423) can count once only.",
@@ -25,7 +26,7 @@ export const enstMajorEcosystemHealth: Program = {
     enstC("enst436", "Emerging Environmental Threats (ENST436)", "ENST436"),
     {
       kind: "choose",
-      id: "concentration-depth",
+      id: "concentration-depth", advisorMayApprove: true,
       name: "Concentration Depth (3 courses)",
       count: 3,
       from: { courses: ["BSCI222", "ENST403", "ENST423", "ENST432", "BSCI223"] },
@@ -33,7 +34,7 @@ export const enstMajorEcosystemHealth: Program = {
     },
     {
       kind: "choose",
-      id: "technical-electives",
+      id: "technical-electives", advisorMayApprove: true,
       name: "Ecosystem Health Technical Electives (15 credits)",
       credits: 15,
       from: {
