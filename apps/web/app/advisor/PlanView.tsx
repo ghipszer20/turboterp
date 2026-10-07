@@ -15,7 +15,7 @@ import { legendCategories, rowCategory, type RowCategory } from "@/lib/advisor/r
 import { searchCourses } from "@/lib/advisor/search";
 import { academicYears, parseTerm } from "@/lib/advisor/terms";
 import type { AnalysisState, OpenCourse } from "./AdvisorApp";
-import { CheckCounts, Notices, PlanTips, ProgramChecks, TermIssue } from "./ChecksPanel";
+import { CheckCounts, Notices, PlanTips, ProgramChecks, TermIssue, UngradedQuestions } from "./ChecksPanel";
 import { loadCourseGrades, type CatalogState } from "./data";
 import { dispatchPlan, openView } from "./store";
 import styles from "./advisor.module.css";
@@ -83,6 +83,7 @@ export function PlanView({
         </div>
         <Notices analysis={analysis} />
         <ProgramChecks analysis={analysis} onOpenCourse={onOpenCourse} />
+        <UngradedQuestions plan={plan} onOpenCourse={onOpenCourse} />
 
         {years.map((year, i) => (
           <section key={year.label} className={styles.year} aria-label={`Year ${i + 1}, ${year.label}`}>
