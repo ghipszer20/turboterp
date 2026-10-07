@@ -53,6 +53,17 @@ describe("department page", () => {
     expect(hist[1]!.genEd).toEqual(["DSHU", "SCIS"]);
   });
 
+  it("keeps the lab condition on lab-science lectures, leaving genEd flat", () => {
+    const page = (genEd: string) =>
+      `<div id="courses-page"><div class="course" id="CHEM131"><span class="course-min-credits">3</span><div class="course-title">X</div>` +
+      `<div class="gen-ed-codes-group"><span class="course-subcategory">${genEd}</span></div></div></div>`;
+    const one = (genEd: string) => parseCourses(page(genEd), "CHEM")[0]!;
+    expect(one("DSNL (if taken with CHEM132)")).toMatchObject({ genEd: ["DSNL"], labPair: { code: "DSNL", with: "CHEM132" } });
+    expect(one("DSNL (if taken with PHYS261), DSNS")).toMatchObject({ genEd: ["DSNL", "DSNS"], labPair: { code: "DSNL", with: "PHYS261" } });
+    expect(one("DSNL (if taken with CHEM132), DSNS, SCIS")).toMatchObject({ genEd: ["DSNL", "DSNS", "SCIS"], labPair: { code: "DSNL", with: "CHEM132" } });
+    expect(one("DSNL, DSNS")).not.toHaveProperty("labPair");
+  });
+
   it("reads variable credits", () => {
     expect(hist.find((c) => c.id === "HIST299")!.credits).toEqual({ min: 1, max: 3 });
   });

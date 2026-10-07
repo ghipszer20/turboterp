@@ -50,8 +50,8 @@ export function toStudentCourses(
   const { kept: awards, notCounted } = oneCalculusAward(allAwards);
   const courses: CreditCourse[] = [];
   const needsChoice: PendingChoice[] = [];
-  const add = (id: string, credits: number, genEd: string[], source: string) => {
-    if (!courses.some((c) => c.id === id)) courses.push({ id, credits, status: "completed", genEd, source });
+  const add = (id: string, credits: number, genEd: string[], source: string, genEdCredits?: number) => {
+    if (!courses.some((c) => c.id === id)) courses.push({ id, credits, status: "completed", genEd, source, ...(genEdCredits === undefined ? {} : { genEdCredits }) });
   };
 
   const addPlaceholder = (genEd: string[], credits: number, source: string, name: string) => {
@@ -64,7 +64,11 @@ export function toStudentCourses(
   for (const award of awards) {
     const placeholderBase = award.source.replace(/ \(\d+\)$/, "");
     for (const part of award.parts) {
-      if (part.kind === "course") add(part.id, part.credits, part.genEd, award.source);
+      if (part.kind === "course") {
+        // A lab-science lecture awarded with its lab counts the pair as one lab course (UMD: "CHEM 131 and CHEM 132 (DSNL)").
+        const lab = part.lab === undefined ? undefined : award.parts.find((p) => p.kind === "course" && p.id === part.lab);
+        add(part.id, part.credits, part.genEd, award.source, lab ? part.credits + lab.credits : undefined);
+      }
       else if (part.kind === "choice") {
         const picked = choices[award.source];
         if (picked === undefined) {

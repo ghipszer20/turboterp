@@ -36,6 +36,8 @@ export type Course = {
   genEd: string[];
   /** Gen Ed as Testudo writes it, e.g. "DSHS or DSSP, DVUP" (the "or" matters for audits). */
   genEdText: string;
+  /** Testudo marks some lab-science lectures DSNL only together with their lab ("DSNL (if taken with CHEM132)"). */
+  labPair?: { code: "DSNL"; with: string };
   permissionRequired: boolean;
   texts: CourseTexts;
   description: string;
@@ -162,6 +164,12 @@ function parseTexts($: cheerio.CheerioAPI, course: cheerio.Cheerio<Element>) {
   return { texts, description: descriptions.join("\n\n") };
 }
 
+/** "DSNL (if taken with CHEM132), DSNS" -> the DSNL condition, kept out of the flat genEd list. */
+function labPairOf(genEdText: string): { labPair?: { code: "DSNL"; with: string } } {
+  const m = /\bDSNL\s*\(\s*if taken with\s+([A-Z]{4}\d{3}[A-Z]?)\s*\)/i.exec(genEdText);
+  return m ? { labPair: { code: "DSNL", with: m[1]!.toUpperCase() } } : {};
+}
+
 export function parseCourses(html: string, department: string): Course[] {
   const $ = cheerio.load(html);
   if ($("#courses-page, .courses-container, div.course").length === 0 && !/No courses matched/i.test(html)) {
@@ -189,6 +197,7 @@ export function parseCourses(html: string, department: string): Course[] {
         credits: { min, max: maxText ? int(maxText) : min },
         genEd: [...new Set(genEdText.match(/\b[A-Z]{4}\b/g) ?? [])],
         genEdText,
+        ...labPairOf(genEdText),
         permissionRequired: course.find(".perm-req-message").length > 0,
         texts,
         description,

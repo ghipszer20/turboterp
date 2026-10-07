@@ -17,6 +17,8 @@ export type CatalogCourse = {
   title: string;
   credits: { min: number; max: number };
   genEd: string[];
+  /** DSNL only when taken with this lab, in the same term: Testudo's "DSNL (if taken with CHEM132)". */
+  labPair?: { code: "DSNL"; with: string };
   prerequisite: Requirement | null;
   corequisite: Requirement | null;
   repeat: Repeatability;
@@ -56,6 +58,7 @@ export function buildCatalog(...lists: Course[][]): PlanCatalog {
       title: course.title,
       credits: course.credits,
       genEd: course.genEd,
+      ...(course.labPair ? { labPair: course.labPair } : {}),
       prerequisite: parsePrerequisite(course.texts.prerequisite),
       corequisite: parsePrerequisite(course.texts.corequisite),
       repeat: repeatability(course),

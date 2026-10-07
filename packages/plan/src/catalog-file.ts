@@ -19,6 +19,8 @@ export type CompactCourse = {
   c: number | [number, number];
   /** Gen Ed codes */
   g?: string[];
+  /** DSNL only with this lab course in the same term, e.g. "CHEM132" */
+  nl?: string;
   /** parsed prerequisite */
   p?: Requirement;
   /** parsed corequisite */
@@ -42,6 +44,7 @@ export function encodeCatalogFile(catalog: PlanCatalog, meta: { term: string; ge
     const { min, max } = course.credits;
     const out: CompactCourse = { i: course.id, t: course.title, c: min === max ? min : [min, max] };
     if (course.genEd.length > 0) out.g = course.genEd;
+    if (course.labPair) out.nl = course.labPair.with;
     if (course.prerequisite) out.p = course.prerequisite;
     if (course.corequisite) out.q = course.corequisite;
     if (course.repeat.kind === "repeatable") out.r = course.repeat.maxCredits ?? 0;
@@ -70,6 +73,7 @@ export function decodeCatalogFile(data: unknown): { term: string; generatedAt: s
       title: c.t,
       credits: { min, max },
       genEd: c.g ?? [],
+      ...(c.nl ? { labPair: { code: "DSNL" as const, with: c.nl } } : {}),
       prerequisite: c.p ?? null,
       corequisite: c.q ?? null,
       repeat: c.r === undefined ? { kind: "unknown" } : c.r === 0 ? { kind: "repeatable" } : { kind: "repeatable", maxCredits: c.r },

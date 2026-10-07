@@ -197,6 +197,7 @@ export type StudentCourse = {
   genEd?: string[];
   /** The credit comes from an AP or IB exam (see Program.examLimits). */
   exam?: true;
+  /** Credits this course brings to Gen Ed credit minimums when it differs from `credits`: a lab-science lecture whose paired lab is on record carries both. */ genEdCredits?: number;
 };
 
 /** Every literal course id one requirement mentions -- never a department/number-range filter's

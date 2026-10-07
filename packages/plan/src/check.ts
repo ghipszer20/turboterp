@@ -33,7 +33,7 @@ export type PlanTerm = { name: string; courses: PlanCourse[] };
  * Credit the student has before the first term: AP/IB exams or dual enrollment. `CreditCourse`
  * records from @turboterp/credit fit this shape.
  */
-export type PriorCredit = { id: string; credits: number; grade?: string; genEd?: string[]; source?: string };
+export type PriorCredit = { id: string; credits: number; grade?: string; genEd?: string[]; genEdCredits?: number; source?: string };
 
 /** Terms in order, first to last. */
 export type Plan = {

@@ -4,6 +4,9 @@ import type { AwardPart, ChartRow } from "./types.ts";
 
 export const course = (id: string, credits: number, ...genEd: string[]): AwardPart => ({ kind: "course", id, credits, genEd });
 
+/** A lab-science lecture whose lab is awarded in the same row ("CHEM 131 and CHEM 132 (DSNL)"): the pair counts as one lab course. */
+export const labLecture = (id: string, credits: number, lab: string, ...genEd: string[]): AwardPart => ({ kind: "course", id, credits, genEd, lab });
+
 /** UMD's "Lower Level Elective" (L1): counts toward total credits only. */
 export const elective = (credits: number): AwardPart => ({ kind: "generic", label: "Lower Level Elective", credits, genEd: [] });
 
