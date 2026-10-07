@@ -10,6 +10,7 @@
 //     className "s-lc-eq-checkout" means booked, no className means open.
 
 import * as cheerio from "cheerio";
+import { addDays } from "./dates.ts";
 import { fetchJson, fetchText, SourceError } from "./http.ts";
 
 const LIBCAL = "https://umd.libcal.com";
@@ -93,7 +94,15 @@ export function roomBookingUrl(roomId: number, isoDate: string): string {
   return `${LIBCAL}/space/${roomId}?date=${isoDate}`;
 }
 
-/** Merge a room's open half-hour slots into contiguous windows. */
+/** How many days past today the availability refresh asks for. */
+export const ROOM_LOOKAHEAD_DAYS = 14;
+
+/** The grid request's (exclusive) end date for a fetch on `isoDate`: today through today+14. */
+export function roomRangeEnd(isoDate: string): string {
+  return addDays(isoDate, ROOM_LOOKAHEAD_DAYS + 1);
+}
+
+/** Merge a room's open half-hour slots into contiguous windows; never across midnight. */
 export function openWindows(slots: GridSlot[], roomId: number): OpenWindow[] {
   const open = slots
     .filter((s) => s.itemId === roomId && !s.className)
@@ -101,7 +110,7 @@ export function openWindows(slots: GridSlot[], roomId: number): OpenWindow[] {
   const windows: OpenWindow[] = [];
   for (const s of open) {
     const last = windows.at(-1);
-    if (last && last.end === s.start) last.end = s.end;
+    if (last && last.end === s.start && last.start.slice(0, 10) === s.start.slice(0, 10)) last.end = s.end;
     else windows.push({ start: s.start, end: s.end });
   }
   return windows;

@@ -20,6 +20,7 @@ import { fetchRecWellAreas, recWellWindow, type RecWellArea } from "../recwell.t
 import {
   fetchCategoryAvailability,
   fetchRoomCatalog,
+  roomRangeEnd,
   studyRoomCategories,
   type Room,
   type RoomAvailability,
@@ -48,7 +49,7 @@ export type CampusSources = {
 export const liveSources: CampusSources = {
   roomCatalog: fetchRoomCatalog,
   roomAvailability: (rooms, locationId, categoryId, isoDate) =>
-    fetchCategoryAvailability(rooms, locationId, categoryId, isoDate, addDays(isoDate, 1)),
+    fetchCategoryAvailability(rooms, locationId, categoryId, isoDate, roomRangeEnd(isoDate)),
   diningMenu: fetchDiningMenu,
   libraryHours: () => fetchLibraryHours(2),
   stampVenues: fetchStampVenues,
