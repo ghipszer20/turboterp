@@ -51,9 +51,13 @@ export const genEd: Program = {
     // Big Question: two courses that must also fill a Distributive Studies category (program-sources/gen-ed.md,
     // "Big Question (SCIS) is within the 8 DS courses"), so an overlay counted only while within one.
     { kind: "choose", id: "scis", name: "Big Question courses (2)", count: 2, overlay: true, within: ["dshs", "dshu", "dsnl", "natsci", "dssp"], from: { genEd: ["SCIS"] } },
-    // Diversity: two DVUP, or one DVUP and one DVCC (overlay: may double-count with Distributive Studies)
-    { kind: "choose", id: "diversity", name: "Diversity (2)", count: 2, overlay: true, from: { genEd: ["DVUP", "DVCC"] } },
-    { kind: "choose", id: "dvup", name: "Understanding Plural Societies", count: 1, overlay: true, from: { genEd: ["DVUP"] } },
+    // UMD: "2 Understanding Plural Societies courses or 1 Understanding Plural Societies course AND 1
+    // Cultural Competence course are required. Diversity courses may also fulfill a Distributive
+    // Studies category." (overlay: may double-count with Distributive Studies)
+    {
+      kind: "sets", id: "diversity", name: "Diversity: 2 Understanding Plural Societies, or 1 and 1 Cultural Competence", overlay: true,
+      options: [[{ count: 2, from: { genEd: ["DVUP"] } }], [{ count: 1, from: { genEd: ["DVUP"] } }, { count: 1, from: { genEd: ["DVCC"] } }]],
+    },
   ],
 };
 
