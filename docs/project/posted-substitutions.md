@@ -18,6 +18,8 @@ one class:
 
 Tests: `packages/audit/test/posted-substitutions.test.ts`.
 
+Scope: the fetched `program-sources/*.md` files (each program's catalog page plus its department page), not every UMD page. Graduation-plan PDFs, advising FAQs and college pages weren't swept. Spot check for ME (the case that started this): the Clark School fall 2026 ME graduation plan has no ENME202 footnote, and meugrad.umd.edu's "ENME202 Credit by Exam" page grants ENME202 itself (nothing to encode). So CMSC131 + a MATLAB course for ENME202 isn't posted.
+
 ## A: encoded this sweep
 
 | Program | Requirement | Posted sentence (short) | Change |
