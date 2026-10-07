@@ -24,7 +24,7 @@ Supabase dashboard → project `turboterp`:
    - Sender email `noreply@turboterp.com`, sender name `TurboTerp`
    - Host `smtp-relay.brevo.com`, port `587`
    - Username = the Brevo SMTP login, password = the SMTP key
-2. **Authentication → Rate Limits** → "Rate limit for sending emails": raise it to about 30 per hour.
+2. **Authentication → Rate Limits** → "Rate limit for sending emails": set it to 100 per hour (see roadmap "Email volume at launch").
 3. **Authentication → URL Configuration**:
    - Site URL `https://turboterp.com`
    - Redirect URLs: `https://turboterp.com/**`, `https://www.turboterp.com/**`, and `http://localhost:3000/**` for local dev
