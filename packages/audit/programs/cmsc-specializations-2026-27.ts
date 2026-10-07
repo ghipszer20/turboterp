@@ -13,17 +13,30 @@
 // Encoded by hand. UNVERIFIED until the owner signs off.
 
 import type { Program, Requirement, ProgramMeta } from "../src/audit.ts";
-import { AREAS, CONCENTRATION_REQUIREMENT, ELECTIVES_GENERIC, LOWER_LEVEL, STAT4XX_GENERIC } from "./cmsc-major-2026-27.ts";
+import { AREAS, CONCENTRATION_REQUIREMENT, LOWER_LEVEL, STAT4XX_GENERIC } from "./cmsc-major-2026-27.ts";
 
-// Owner ruling (kept for every specialization): "Regardless of track, all CS students must
-// complete 5 Distributive Area courses from at least 3 different areas." Encoded as an overlay
-// (doesn't use up a course's ability to also satisfy a specialization's own required/choose
-// courses below, e.g. Cybersecurity's CMSC414 is both a specific requirement and an Area 1
-// course) -- see each specialization's own required/choose lists, which don't always themselves
-// force 3-area coverage (e.g. Machine Learning's own required + choose-two could, in principle,
-// stay entirely within Area 2), so this is a real, independently-checked requirement, not just
-// documentation of something the specific lists already guarantee.
-const AREAS_CHECK: Requirement = { kind: "distribution", id: "areas-check", name: "Five 400-level CMSC courses across three areas", count: 5, minAreas: 3, maxPerArea: 3, areas: AREAS, overlay: true, minGrade: "C-" };
+// Specializations don't take the General Track's "5 Distributive Area courses". UMD's official
+// audit (the owner's, 2026-10-07) has, for every specialization, one line: "Students must fulfill
+// their computer science upper level course requirements from at least 3 areas. Students may
+// fulfill an area requirement under the Upper Level Elective Courses requirements." -- three
+// area sub-groups, one course each. Word for word the department page's line
+// (program-sources/cmsc-major.md:52). Encoded as an overlay (a course keeps counting toward the
+// specialization's own required/choose courses, e.g. Cybersecurity's CMSC414 is both a specific
+// requirement and an Area 1 course) whose `within` is that specialization's own upper-level CMSC
+// requirements, so a course the CS major doesn't use can't be the third area. A cross-listed
+// course counts under each code (MATH456 is CMSC456 in Area 4, AMSC460 is CMSC460 in Area 5).
+const areasCheck = (within: string[]): Requirement => ({
+  kind: "distribution",
+  id: "areas-check",
+  name: "Upper-level courses from three areas",
+  count: 3,
+  minAreas: 3,
+  maxPerArea: 1,
+  areas: AREAS,
+  overlay: true,
+  within,
+  minGrade: "C-",
+});
 
 // Data Science, Machine Learning and Quantum Information all replace the General Track's generic
 // "MATH/AMSC/STAT xxx" elective with a specific Linear Algebra course (department page footnote,
@@ -67,7 +80,7 @@ export const cmscCybersecurity: Program = {
       minGrade: "C-",
     },
     { kind: "choose", id: "cyber-elective", name: "Upper Level Elective Course (3 credits)", credits: 3, from: { departments: ["CMSC"], minNumber: 300, maxNumber: 499, exclude: ["CMSC330", "CMSC351"] }, minGrade: "C-" },
-    AREAS_CHECK,
+    areasCheck(["cmsc414", "cmsc456", "cyber-choose4", "cyber-elective"]),
     CONCENTRATION_REQUIREMENT,
   ],
 };
@@ -115,7 +128,7 @@ export const cmscDataScience: Program = {
       from: { courses: ["CMSC411", "CMSC412", "CMSC414", "CMSC417", "CMSC430", "CMSC431", "CMSC433", "CMSC434", "CMSC435", "CMSC471"] },
       minGrade: "C-",
     },
-    AREAS_CHECK,
+    areasCheck(["cmsc320", "cmsc422", "cmsc424", "ds-choose-ai", "ds-choose-theory", "ds-choose-systems"]),
     CONCENTRATION_REQUIREMENT,
   ],
 };
@@ -142,13 +155,22 @@ export const cmscMachineLearning: Program = {
     {
       kind: "choose",
       id: "ml-choose2",
-      name: "Choose two: CMSC426, CMSC/AMSC460, CMSC/AMSC466, MATH401, CMSC470, CMSC472, CMSC473, or CMSC474",
+      name: "Choose two: CMSC426, one of CMSC/AMSC460 or CMSC/AMSC466, MATH401, CMSC470, CMSC472, CMSC473, CMSC474, or CMSC498F",
       count: 2,
-      from: { courses: ["CMSC426", "CMSC460", "AMSC460", "CMSC466", "AMSC466", "MATH401", "CMSC470", "CMSC472", "CMSC473", "CMSC474"] },
+      from: { courses: ["CMSC426", "CMSC460", "AMSC460", "CMSC466", "AMSC466", "MATH401", "CMSC470", "CMSC472", "CMSC473", "CMSC474", "CMSC498F"] },
+      // The official audit lists "460 OR AMSC460 OR CMSC466 OR AMSC466" as one option.
+      alternatives: [["CMSC460", "AMSC460", "CMSC466", "AMSC466"]],
       minGrade: "C-",
     },
-    ELECTIVES_GENERIC,
-    AREAS_CHECK,
+    {
+      kind: "choose",
+      id: "electives",
+      name: "Upper-level CMSC electives (6 credits)",
+      credits: 6,
+      from: { departments: ["CMSC"], minNumber: 300, maxNumber: 499, exclude: ["CMSC320", "CMSC330", "CMSC351", "CMSC421", "CMSC422"] },
+      minGrade: "C-",
+    },
+    areasCheck(["cmsc320", "cmsc421", "cmsc422", "ml-choose2", "electives"]),
     CONCENTRATION_REQUIREMENT,
   ],
 };
@@ -180,7 +202,7 @@ export const cmscQuantumInformation: Program = {
     cmscCourse("PHYS467", "Introduction to Quantum Technology"),
     { kind: "choose", id: "qi-choose4", name: "Choose four courses across the five Distributive Areas", count: 4, from: { courses: QI_CHOOSE4_POOL }, minGrade: "C-" },
     { kind: "choose", id: "qi-elective", name: "Upper Level Elective Course(s) (3 credits)", credits: 3, from: { departments: ["CMSC"], minNumber: 300, maxNumber: 499, exclude: ["CMSC330", "CMSC351"] }, minGrade: "C-" },
-    AREAS_CHECK,
+    areasCheck(["cmsc457", "qi-choose4", "qi-elective"]),
     CONCENTRATION_REQUIREMENT,
   ],
 };
