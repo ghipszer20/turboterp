@@ -9,7 +9,8 @@ import { hasConsent } from "@/lib/advisor/consent";
 import { AccountLine } from "./SignInGate";
 import { groupIssues } from "@/lib/advisor/issues";
 import type { AdvisorPlan } from "@/lib/advisor/plan-state";
-import { computePriorCredit } from "@/lib/advisor/prior-credit";
+import { choiceAwardsOf, computePriorCredit } from "@/lib/advisor/prior-credit";
+import type { ChoiceAward } from "@/lib/advisor/requirements";
 import { collegeOf, programsLabel } from "@/lib/advisor/programs";
 import { termFromMatriculationId } from "@/lib/advisor/terms";
 import { AuditView } from "./AuditView";
@@ -76,7 +77,8 @@ function Planner({ plan, catalog, signedBy, signedAt, calendar }: { plan: Adviso
     return { issues, groups: groupIssues(issues, plan.terms.map((x) => x.name)) };
   }, [plan, prior.courses, ready]);
 
-  const analysis = useAnalysis(plan, ready, prior.courses);
+  const choiceAwards = useMemo(() => choiceAwardsOf(prior.entries), [prior.entries]);
+  const analysis = useAnalysis(plan, ready, prior.courses, choiceAwards);
 
   if (editing) return <SetupView plan={plan} onDone={(next) => (savePlan(next), setEditing(false))} onCancel={() => setEditing(false)} />;
   if (importing) return <ImportTranscriptView plan={plan} onDone={(next) => (savePlan(next), setImporting(false))} onCancel={() => setImporting(false)} />;
@@ -172,7 +174,7 @@ function initialImport(): boolean {
 export type AnalysisState = { status: "idle" | "running" | "ready" | "error"; result: Analysis | null };
 
 /** Audit + notices after edits settle; a newer edit always wins over an older, slower run. */
-function useAnalysis(plan: AdvisorPlan, ready: Extract<CatalogState, { status: "ready" }> | null, priorCourses: Parameters<typeof checkerPlan>[1]) {
+function useAnalysis(plan: AdvisorPlan, ready: Extract<CatalogState, { status: "ready" }> | null, priorCourses: Parameters<typeof checkerPlan>[1], choiceAwards: ChoiceAward[]) {
   const [state, setState] = useState<AnalysisState>({ status: "idle", result: null });
   const run = useRef(0);
   useEffect(() => {
@@ -182,13 +184,13 @@ function useAnalysis(plan: AdvisorPlan, ready: Extract<CatalogState, { status: "
       setState((s) => ({ ...s, status: "running" }));
       try {
         const { runAnalysis } = await import("@/lib/advisor/analysis");
-        const result = await runAnalysis({ plan, catalog: ready.catalog, priorCourses });
+        const result = await runAnalysis({ plan, catalog: ready.catalog, priorCourses, choiceAwards });
         if (id === run.current) setState({ status: "ready", result });
       } catch {
         if (id === run.current) setState((s) => ({ status: "error", result: s.result }));
       }
     }, ANALYSIS_DELAY_MS);
     return () => clearTimeout(timer);
-  }, [plan, ready, priorCourses]);
+  }, [plan, ready, priorCourses, choiceAwards]);
   return state;
 }

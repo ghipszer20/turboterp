@@ -140,17 +140,18 @@ function EarnRow({ earn, source, onPick }: { earn: Earn; source: string; onPick:
       {earn.credits} cr:{" "}
       <select className={styles.input} value={earn.picked ?? ""} onChange={(e) => onPick(source, e.target.value)}>
         <option value="">Choose one…</option>
-        {earn.options.map((id) => (
-          <option key={id} value={id}>
-            {id}
+        {earn.options.map((o) => (
+          <option key={o.id} value={o.id}>
+            {o.genEd.length ? `${o.id} · ${o.genEd.join(", ")}` : o.id}
           </option>
         ))}
       </select>
       {!earn.picked ? (
         <span className={styles.issueSeverity} data-severity="confirm">
-          Pick one to count this credit
+          Pick one to count all of this credit
         </span>
       ) : null}
+      <div className={styles.fieldLabel}>Pick the course UMD posted for this exam. Your degree audit or transcript lists it.</div>
     </li>
   );
 }
