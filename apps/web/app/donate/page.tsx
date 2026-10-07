@@ -5,14 +5,8 @@ import styles from "./donate.module.css";
 
 export const metadata: Metadata = { title: "Donate" };
 
-// The owner's own words (2026-10-04); change them only on the owner's say.
-const PARAGRAPHS = [
-  "Thank you for considering a donation to TurboTerp.",
-  "We invite you to think about how many times you opened TurboTerp this semester: to build a schedule, check your degree progress, or see what the dining hall was serving. If it saved you time, please consider chipping in. Any amount helps: $3, $5, $10, or whatever feels right to you today.",
-  "College already costs enough. The tools you need to plan your classes and get around campus should not cost extra, and they should not be scattered across a dozen websites. TurboTerp brings them together in one place, built by a student, with no ads and no paid tier.",
-  "TurboTerp will never make money. Donations go only toward the cost of keeping it running, so it stays free for every student.",
-  "If TurboTerp has made your semester easier, please consider giving back. There are no small contributions: every friend told counts, every bug report counts, every donation counts.",
-];
+// The owner's own words (2026-10-07); change them only on the owner's say.
+const PARAGRAPHS = ["If you've found this resource useful, consider donating to support the project."];
 
 export default function DonatePage() {
   const about = resolveAbout(ABOUT);
