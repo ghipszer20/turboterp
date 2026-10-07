@@ -8,10 +8,8 @@ import { choiceAwardsOf, computePriorCredit } from "../advisor/prior-credit";
 import { describeGap, filterText, genEdName, prerequisiteText } from "../advisor/requirements";
 
 describe("describeGap: exam credit that offers a choice", () => {
-  // The Gen Ed row for Understanding Plural Societies, found by its code so a row rename can't break this.
-  const plural =
-    genEd.requirements.find((r) => r.kind === "choose" && r.from.genEd?.length === 1 && r.from.genEd[0] === "DVUP") ??
-    genEd.requirements.find((r) => /plural/i.test(r.name))!;
+  // The Gen Ed Diversity row: a `sets` row whose members are Gen Ed filters (2 DVUP, or 1 DVUP + 1 DVCC).
+  const plural = genEd.requirements.find((r) => r.id === "diversity")!;
   const inputs = (pick?: string): PriorInputs => ({
     ...emptyPrior(),
     ap: [{ key: "a", exam: "United States History", score: 4 }],

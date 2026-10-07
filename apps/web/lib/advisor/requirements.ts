@@ -32,8 +32,9 @@ export type ChoiceAward = { source: string; picked: string | null; options: { id
 
 /** Says when another option of a choice award would count toward `req` and the pick doesn't. */
 function choiceHints(req: Requirement, awards: ChoiceAward[]): string[] {
-  const codes = "from" in req && req.from.genEd ? req.from.genEd : [];
-  const listed = req.kind === "course" ? req.options : [];
+  const filters = "from" in req ? [req.from] : req.kind === "sets" ? req.options.flat().flatMap((m) => (typeof m === "string" ? [] : [m.from])) : [];
+  const codes = filters.flatMap((f) => f.genEd ?? []);
+  const listed = req.kind === "course" ? req.options : req.kind === "sets" ? req.options.flat().filter((m): m is string => typeof m === "string") : [];
   return awards.flatMap((award) => {
     const pick = award.options.find((o) => o.id === award.picked);
     // Unpicked, only what every option shares counts, so an option offering more is worth naming.
