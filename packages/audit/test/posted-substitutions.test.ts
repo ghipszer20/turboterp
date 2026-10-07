@@ -4,6 +4,7 @@
 
 import { describe, expect, it } from "vitest";
 import { auditProgram, type Program, type StudentCourse } from "../src/audit.ts";
+import { anthMajorBs } from "../programs/anth-major-bs-2026-27.ts";
 import { bioeMajorBiomechanics, bioeMajorBiotech, bioeMajorInstrumentation, bioeMajorPreHealth } from "../programs/bioe-major-tracks-2026-27.ts";
 import { eeMajor } from "../programs/ee-major-2026-27.ts";
 import { finMajor } from "../programs/fin-major-2026-27.ts";
@@ -28,6 +29,11 @@ describe("posted substitutions", () => {
 
   it("ME: ENME202 is required unless acceptable programming credit has been earned (advisor decides)", () => {
     expect(requirement(meMajor, "enme202")?.advisorMayApprove).toBe(true);
+  });
+
+  it("Anthropology B.S.: BSCI161 may count for BSCI180 with BSCI160, and BSCI171 with BSCI170", async () => {
+    const r = await auditProgram(anthMajorBs, took("BSCI160", "BSCI161", "BSCI170", "BSCI171", "BSCI103"));
+    expect(r.requirements.find((x) => x.id === "supporting-coursework-bs")?.status).toBe("satisfied");
   });
 
   it("Bioengineering tracks: HLSC322 can stand in place of BSCI222 as a breadth or lower-level biosci elective", async () => {
