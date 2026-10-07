@@ -8,11 +8,11 @@ import { getRecWellAreas, safe } from "@/lib/campus";
 import { EPPLEY_SUBSECTION_FALLBACK, regroupEppleyAreas, type RegroupedArea } from "@/lib/gyms";
 import { hoursStatus } from "@/lib/status";
 
-export const metadata: Metadata = { title: "Gyms & Rec" };
+export const metadata: Metadata = { title: "Fitness" };
 
 export default function GymPage() {
   return (
-    <Page title="Gyms & Rec" subtitle="Campus">
+    <Page title="Fitness" subtitle="Campus">
       <Suspense fallback={<SkeletonCard rows={6} />}>
         <GymList />
       </Suspense>

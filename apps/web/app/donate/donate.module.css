@@ -1,6 +1,9 @@
 /* Donate page: the owner's text and one main action. */
 
+/* Sized to its content, so the box holds the sentence on one line with no empty half (owner, 2026-10-07). */
 .card.card {
+  width: fit-content;
+  max-width: 100%;
   border-radius: var(--r-tile);
   box-shadow: none;
   border: 1px solid var(--tile-border);
@@ -19,7 +22,6 @@
   gap: 14px;
   font: var(--t-body);
   color: var(--text);
-  max-width: 60ch;
 }
 
 .text p {

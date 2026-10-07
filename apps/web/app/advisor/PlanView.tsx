@@ -84,6 +84,17 @@ export function PlanView({
         <Notices analysis={analysis} />
         <ProgramChecks analysis={analysis} onOpenCourse={onOpenCourse} />
 
+        {/* The color key sits right above the first term (owner, 2026-10-07). */}
+        {legend.length ? (
+          <div className={styles.legend} aria-label="Course colors">
+            {legend.map((c) => (
+              <span key={c} data-cat={c}>
+                <i aria-hidden="true" />
+                {LEGEND_LABELS[c]}
+              </span>
+            ))}
+          </div>
+        ) : null}
         {years.map((year, i) => (
           <section key={year.label} className={styles.year} aria-label={`Year ${i + 1}, ${year.label}`}>
             <h2 className={styles.yearTitle}>
@@ -124,16 +135,6 @@ export function PlanView({
                 Remove {lastTerm}
               </button>
             ) : null}
-          </div>
-        ) : null}
-        {legend.length ? (
-          <div className={styles.legend} aria-label="Course colors">
-            {legend.map((c) => (
-              <span key={c} data-cat={c}>
-                <i aria-hidden="true" />
-                {LEGEND_LABELS[c]}
-              </span>
-            ))}
           </div>
         ) : null}
         <PlanTips checked={checked} analysis={analysis} />

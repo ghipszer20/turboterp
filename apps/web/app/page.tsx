@@ -196,7 +196,7 @@ async function Gyms({ today, minutes }: { today: string; minutes: number }) {
   return (
     <TileGrid>
       {buildings.length === 0 ? (
-        <Tile href="/campus/gym" icon={<GymIcon />} area="fitness" title="Gyms & Rec" sub="See today's hours" />
+        <Tile href="/campus/gym" icon={<GymIcon />} area="fitness" title="Fitness" sub="See today's hours" />
       ) : (
         buildings.map((b) => {
           const s = hoursStatus(b.hours, minutes, b.tomorrow);
