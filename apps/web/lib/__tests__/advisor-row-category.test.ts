@@ -20,7 +20,7 @@ describe("rowCategory", () => {
   it("Gen Ed layer", () => expect(rowCategory("DSHU101", analysis, kinds)).toBe("gened"));
   it("college layer", () => expect(rowCategory("CMNS100", analysis, kinds)).toBe("college"));
   it("minor maps to other", () => expect(rowCategory("MATH140", analysis, kinds)).toBe("other"));
-  it("unassigned is other", () => expect(rowCategory("ART100", analysis, kinds)).toBe("other"));
+  it("unassigned counts as an elective, so every row gets a color", () => expect(rowCategory("ART100", analysis, kinds)).toBe("elective"));
 });
 describe("legendCategories", () => {
   it("keeps fixed order and drops absent", () => {

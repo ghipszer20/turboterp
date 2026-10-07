@@ -7,6 +7,7 @@ import { auditPrograms, earnsCredit, matchesFilter, type AuditResult, type Progr
 import { allowsRetake } from "./check.ts";
 import type { PlanCatalog } from "./catalog.ts";
 import type { Plan } from "./check.ts";
+import { allTwins, twinIndex } from "./twins.ts";
 
 /** Double Degree minimums (CONTEXT.md; docs/project/feature-modules.md). */
 export const DUAL_DEGREE_CREDITS = 150;
@@ -64,9 +65,13 @@ export function planCourses(plan: Plan, catalog: PlanCatalog): StudentCourse[] {
   const courses: StudentCourse[] = [];
   const seen = new Set<string>();
   const retakable = new Set<string>();
+  // UMD grants credit for only one of a set of Twins: a later Twin of a course already counted is
+  // left out, unless the earlier one was a completed F or W attempt (the same exception as a retake).
+  const twinsOf = twinIndex(catalog);
+  const twinCounted = (id: string) => allTwins(twinsOf(id)).some((t) => seen.has(t) && !retakable.has(t));
 
   for (const c of plan.priorCredit ?? []) {
-    if (seen.has(c.id)) continue; // Prior credit is never a retake of an earlier attempt here.
+    if (seen.has(c.id) || twinCounted(c.id)) continue; // Prior credit is never a retake of an earlier attempt here.
     seen.add(c.id);
     courses.push({
       id: c.id,
@@ -81,6 +86,7 @@ export function planCourses(plan: Plan, catalog: PlanCatalog): StudentCourse[] {
   for (const term of plan.terms) {
     for (const c of term.courses) {
       if (seen.has(c.id) && !retakable.has(c.id)) continue;
+      if (!seen.has(c.id) && twinCounted(c.id)) continue;
       retakable.delete(c.id);
       seen.add(c.id);
       // Graduate-only credit (grad-courses.ts) is master's credit only: it never counts toward

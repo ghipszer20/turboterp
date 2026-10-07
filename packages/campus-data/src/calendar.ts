@@ -1,6 +1,7 @@
 // UMD registrar's standard registration dates and deadlines, one page per term.
 
 import * as cheerio from "cheerio";
+import { addDays } from "./dates.ts";
 import { fetchText } from "./http.ts";
 
 export type AcademicEventKind =
@@ -125,4 +126,33 @@ export async function fetchAcademicCalendar(today: string = isoToday()): Promise
   }
   if (loaded === 0) throw lastError instanceof Error ? lastError : new Error("calendar: no term loaded");
   return events;
+}
+
+const SHORT_MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const shortDate = (iso: string) => `${SHORT_MONTHS[Number(iso.slice(5, 7)) - 1]} ${Number(iso.slice(8, 10))}`;
+
+/**
+ * The registrar's "Winter Break - University closed" row is only the holiday closure (Dec 25 – Jan 3).
+ * For students the break runs from the day after fall finals to the day before spring classes, with
+ * winter term inside it, so that row is replaced by the student break, closure dates kept in the
+ * description. Needs both terms loaded; otherwise the events come back unchanged.
+ */
+export function withWinterBreak(events: AcademicEvent[]): AcademicEvent[] {
+  const closure = events.find((e) => /^winter break\b/i.test(e.label) && !e.derived);
+  if (!closure) return events;
+  const fallYear = Number(closure.start.slice(0, 4));
+  const finals = events.find((e) => e.kind === "finals" && e.term === `Fall ${fallYear}`);
+  const spring = events.find((e) => e.kind === "first-day" && e.term === `Spring ${fallYear + 1}`);
+  if (!finals || !spring) return events;
+  const closed = `University closed ${shortDate(closure.start)}${closure.end ? ` – ${shortDate(closure.end)}` : ""}.`;
+  const winterBreak: AcademicEvent = {
+    term: closure.term,
+    kind: "other",
+    label: "Winter Break",
+    start: addDays(finals.end ?? finals.start, 1),
+    end: addDays(spring.start, -1),
+    description: `No fall or spring classes; Winter term runs during the break. ${closed}`,
+    derived: true,
+  };
+  return events.map((e) => (e === closure ? winterBreak : e));
 }
