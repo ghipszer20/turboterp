@@ -22,6 +22,35 @@
   display: none;
 }
 
+.times {
+  display: flex;
+  gap: 8px;
+}
+
+.time {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 0.5px solid var(--separator);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  color: var(--text-2, var(--text));
+  font: var(--t-sub);
+}
+
+.time select {
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-weight: 500;
+  text-align: right;
+}
+
 .partial {
   margin: 4px 4px 0;
   color: var(--soon);

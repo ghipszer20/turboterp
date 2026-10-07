@@ -35,9 +35,19 @@ export function Segmented<T extends string | number>({
 }
 
 /** Toggleable filter chip. */
-export function Chip({ pressed, onClick, children }: { pressed: boolean; onClick: () => void; children: string }) {
+export function Chip({
+  pressed,
+  onClick,
+  children,
+  disabled = false,
+}: {
+  pressed: boolean;
+  onClick: () => void;
+  children: string;
+  disabled?: boolean;
+}) {
   return (
-    <button type="button" aria-pressed={pressed} className={styles.chip} onClick={onClick}>
+    <button type="button" aria-pressed={pressed} className={styles.chip} onClick={onClick} disabled={disabled}>
       {children}
     </button>
   );
