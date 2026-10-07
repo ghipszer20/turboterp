@@ -1,7 +1,7 @@
 // What would satisfy an unmet Requirement (a Gap), in words, with example courses. Used by the
 // audit view, which loads with the solver, so importing @turboterp/audit here is fine.
 
-import { earnsCredit, inArea, matchesFilter, type Area, type Requirement, type RequirementResult, type SetMember, type StudentCourse } from "@turboterp/audit";
+import { earnsCredit, inArea, matchesFilter, rangeTakesGraduateCourses, type Area, type Requirement, type RequirementResult, type SetMember, type StudentCourse } from "@turboterp/audit";
 import { filterText, listing } from "./words";
 
 export { filterText, genEdName, prerequisiteText } from "./words";
@@ -75,7 +75,7 @@ function gapFor(req: Requirement, result: RequirementResult, ctx: GapContext): G
       const done = result.assigned.reduce((t, id) => t + (credits.get(id) ?? 0), 0);
       const n = Math.max(1, req.credits - done);
       const not = req.excludeDepartments?.length ? ` (not ${listing(req.excludeDepartments, "or")})` : "";
-      return { need: `${more(n, "credit", "credits")} of courses numbered ${req.minNumber}–${req.maxNumber}, all in one department${not}.`, suggestions: [] };
+      return { need: `${more(n, "credit", "credits")} of courses numbered ${req.minNumber}–${req.maxNumber}${rangeTakesGraduateCourses(req.minNumber, req.maxNumber, req.noGraduateCourses) ? " (grad courses count too)" : ""}, all in one department${not}.`, suggestions: [] };
     }
     case "sets": {
       const gaps = req.options.map((set) => {

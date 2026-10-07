@@ -165,7 +165,8 @@ export const rameMajorLanguageTrack: Program = {
         "Six credits in Hebrew, Arabic, Greek, or another approved language beyond the first-year " +
         "level",
       credits: 6,
-      from: { departments: ["HEBR", "ARAB", "GREK"], minNumber: 200, maxNumber: 499 },
+      // Department page: "Courses at the 600-, 700- and 800-levels are reserved for graduate students."
+      from: { departments: ["HEBR", "ARAB", "GREK"], minNumber: 200, maxNumber: 499, noGraduateCourses: true },
     },
   ],
 };

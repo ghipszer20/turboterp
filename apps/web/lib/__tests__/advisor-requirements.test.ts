@@ -61,7 +61,7 @@ describe("describeGap", () => {
     // CMSC, so stat4xx no longer excludes it (see CONCENTRATION_CREDIT_ONLY_FOR_CMSC in
     // cmsc-major-2026-27.ts -- it's excluded only from the Upper Level Concentration now).
     expect(describeGap(r, result(r, "missing"), ctx(taken("STAT400")))).toEqual({
-      need: "1 more STAT course numbered 400–499.",
+      need: "1 more STAT course numbered 400–499 (grad courses count too).",
       suggestions: ["STAT401", "STAT410", "STAT420", "STAT464"],
     });
   });
@@ -74,7 +74,7 @@ describe("describeGap", () => {
   it("counts credits still needed", () => {
     const r = req(cmscMajor, "electives");
     const gap = describeGap(r, result(r, "partial", ["CMSC433"]), ctx(taken("CMSC433")))!;
-    expect(gap.need).toBe("3 more credits: CMSC courses numbered 300–499 (not CMSC330 or CMSC351).");
+    expect(gap.need).toBe("3 more credits: CMSC courses numbered 300–499 (grad courses count too) (not CMSC330 or CMSC351).");
     expect(gap.suggestions).toEqual(["CMSC420", "CMSC421", "CMSC451", "CMSC412", "CMSC460"]);
   });
 
@@ -113,7 +113,7 @@ describe("describeGap", () => {
     // Department page ("Upper Level Concentration", "Not Eligible for ULC"): Data Science,
     // Honors, Information Science and College Park Scholars are also never the ULC discipline.
     expect(describeGap(r, result(r, "partial", ["ECON305"]), ctx(taken("ECON305")))).toEqual({
-      need: "9 more credits of courses numbered 300–499, all in one department (not CMSC, DATA, HONR, HNUH, INST or CPSP).",
+      need: "9 more credits of courses numbered 300–499 (grad courses count too), all in one department (not CMSC, DATA, HONR, HNUH, INST or CPSP).",
       suggestions: [],
     });
   });
@@ -130,7 +130,7 @@ describe("describeGap", () => {
     const r = req(mathMajorApplied, "supporting");
     const courses = taken("AOSC200", "AOSC201");
     const gap = describeGap(r, result(r, "partial", ["AOSC200", "AOSC201"]), ctx(courses))!;
-    expect(gap.need).toBe("Finish a set: AOSC200, AOSC201 and 2 AOSC courses numbered 400–499 (or another listed set).");
+    expect(gap.need).toBe("Finish a set: AOSC200, AOSC201 and 2 AOSC courses numbered 400–499 (grad courses count too) (or another listed set).");
   });
 });
 
@@ -138,7 +138,9 @@ describe("filterText", () => {
   it("writes filters in words", () => {
     expect(filterText({ anyCourse: true })).toBe("any course");
     expect(filterText({ genEd: ["DSNS", "DSNL"] })).toBe("Natural Sciences (DSNS) or Natural Science Lab (DSNL) course");
-    expect(filterText({ departments: ["MATH", "AMSC", "STAT"], minNumber: 240, maxNumber: 499 })).toBe("MATH, AMSC or STAT course numbered 240–499");
+    expect(filterText({ departments: ["MATH", "AMSC", "STAT"], minNumber: 240, maxNumber: 499 })).toBe("MATH, AMSC or STAT course numbered 240–499 (grad courses count too)");
+    expect(filterText({ departments: ["MATH"], minNumber: 300, maxNumber: 399 })).toBe("MATH course numbered 300–399");
+    expect(filterText({ departments: ["HEBR"], minNumber: 200, maxNumber: 499, noGraduateCourses: true })).toBe("HEBR course numbered 200–499");
   });
 });
 

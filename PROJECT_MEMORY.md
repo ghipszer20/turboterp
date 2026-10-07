@@ -1,7 +1,7 @@
 # TurboTerp — Project Memory
 
 > Single source of truth for project context. Update this file whenever a decision changes.
-> Last updated: 2026-10-05 (UI rework mockups).
+> Last updated: 2026-10-07 (grad courses count toward undergrad requirements).
 > Read by the main session at the start of every session (builders don't read it; CLAUDE.md), so keep it under ~20 KB (section 18).
 
 ## 1. Vision
@@ -123,7 +123,7 @@ Feature-specific rulings (schedule builder design, plan checker, tracks, campus 
 Code comments that cite "PROJECT_MEMORY section 17" (e.g. "open question 1") refer to the same text, now in `docs/project/rulings.md`.
 - **Superpowers TDD applies strictly** (owner, 2026-09-25), including deleting code written before a failing test and redoing it test-first. Exception: code written before the superpowers plugin was installed (e.g. the SOC course parser) is kept and fixed. Outside that rule, don't rebuild working code unless absolutely necessary; fix it first.
 - **Scale:** the site must support thousands of simultaneous users. Heavy work (schedule generation) runs in the browser; campus and course data are pre-built, CDN-cached snapshots; servers do no per-request scraping.
-- **Degree rules confirmed by the owner:** CMSC141 counts for CMSC131 and CMSC142 for CMSC132. CS gateway: Fall 2024+ entrants need B- in gateway courses and a 3.0 GPA, earlier entrants C- and 2.7. The owner is in Math **Applied** (verification target: Math Applied + CS; Traditional is the default track); C- minimum for Math major courses; CMSC131 may count for both the programming requirement and Sequence Four. A course may be retaken only after an F or a W.
+- **Degree rules confirmed by the owner:** CMSC141 counts for CMSC131 and CMSC142 for CMSC132. CS gateway: Fall 2024+ entrants need B- in gateway courses and a 3.0 GPA, earlier entrants C- and 2.7. The owner is in Math **Applied** (verification target: Math Applied + CS; Traditional is the default track); C- minimum for Math major courses; CMSC131 may count for both the programming requirement and Sequence Four. A course may be retaken only after an F or a W. **Grad courses (600–897, not 799) count toward any 400-level or upper-level range in every program** when the student has permission (owner, 2026-10-07; rulings.md).
 - **Deleting something important takes two taps** (owner, 2026-10-04): a confirmation first, worded "Are you sure you want to delete ...?" and naming what is deleted (account data, a saved plan, a term with courses). Small, easily redone removals (one course, one filter) stay one tap.
 - **Verification is local only** (owner, 2026-09-28; GitHub Actions CI disabled): the full test, typecheck, lint and build run locally after every merge into the working branch. The web `typecheck` script runs `next typegen` first.
 

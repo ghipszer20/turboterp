@@ -9,9 +9,14 @@ import loadHighs from "highs";
 export type CourseFilter = {
   courses?: string[];
   departments?: string[];
-  /** Inclusive course-number bounds, e.g. 400–499 for "400-level". */
+  /**
+   * Inclusive course-number bounds, e.g. 400–499 for "400-level". A range that reaches 499 also
+   * takes graduate courses (see `inNumberRange`).
+   */
   minNumber?: number;
   maxNumber?: number;
+  /** Graduate courses never count, e.g. a program that reserves 600+ courses for graduate students. */
+  noGraduateCourses?: boolean;
   exclude?: string[];
   /** Courses carrying any of these Gen Ed codes, e.g. ["DSHU"]. */
   genEd?: string[];
@@ -73,6 +78,7 @@ export type RequirementRule =
       credits: number;
       minNumber: number;
       maxNumber: number;
+      noGraduateCourses?: boolean;
       excludeDepartments?: string[];
       /** Individually-ineligible courses, e.g. a course "credit only granted for" one in the excluded department. */
       exclude?: string[];
@@ -268,6 +274,27 @@ const getSolver = () => (solver ??= loadHighs());
 
 const COURSE_ID = /^([A-Z]{4})(\d{3})[A-Z]?$/;
 
+/** 600–897, except 799 (thesis research): a graduate course an undergrad may take with permission. */
+export function isGraduateCourseNumber(n: number): boolean {
+  return n >= 600 && n <= 897 && n !== 799;
+}
+
+/**
+ * Grad courses as an undergrad (owner, 2026-10-07; docs/project/rulings.md): with permission, a
+ * graduate course counts toward any range that reaches the top of the 400 level ("400-level",
+ * "upper level"), unless the program opts out. Narrower bands ("300-level") don't take them.
+ */
+export function rangeTakesGraduateCourses(min = 0, max = 999, noGraduateCourses = false): boolean {
+  return !noGraduateCourses && min <= 499 && max >= 499;
+}
+
+/** Whether course number `n` is in a requirement's range, graduate courses included (above). */
+function inNumberRange(n: number, min: number, max: number, noGraduateCourses = false): boolean {
+  if (!isGraduateCourseNumber(n)) return n >= min && n <= max;
+  if (noGraduateCourses) return false;
+  return (n >= min && n <= max) || rangeTakesGraduateCourses(min, max);
+}
+
 export function matchesFilter(filter: CourseFilter, course: Pick<StudentCourse, "id" | "genEd">): boolean {
   const courseId = course.id;
   if (filter.exclude?.includes(courseId)) return false;
@@ -279,7 +306,7 @@ export function matchesFilter(filter: CourseFilter, course: Pick<StudentCourse, 
   if (!filter.departments) return false;
   if (!filter.departments.includes(m[1]!)) return false;
   const n = Number(m[2]);
-  return n >= (filter.minNumber ?? 0) && n <= (filter.maxNumber ?? 999);
+  return inNumberRange(n, filter.minNumber ?? 0, filter.maxNumber ?? 999, filter.noGraduateCourses);
 }
 
 /** Whether a course belongs to a distribution area: it is in the area's list or matches its filter. */
@@ -329,7 +356,7 @@ function pairsFor(req: Requirement, p: number, r: number, course: StudentCourse,
     const m = COURSE_ID.exec(course.id);
     if (!m || req.excludeDepartments?.includes(m[1]!) || req.exclude?.includes(course.id)) return [];
     const n = Number(m[2]);
-    if (n < req.minNumber || n > req.maxNumber) return [];
+    if (!inNumberRange(n, req.minNumber, req.maxNumber, req.noGraduateCourses)) return [];
     const dept = m[1]!;
     // Departments in the same disciplineGroup share one "discipline" key, so the one-department
     // pick below (onedept_) treats them as interchangeable instead of two separate disciplines.

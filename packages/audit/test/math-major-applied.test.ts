@@ -76,6 +76,11 @@ describe("Math major, Applied Mathematics Track, 2026–27", () => {
     expect((await statusOf(plan)).eight).toBe("partial");
   });
 
+  it("counts graduate STAT600 and STAT610 toward the eight, and as the STAT4xx course (owner, 2026-10-07)", async () => {
+    const statuses = await statusOf([...without("MATH403", "STAT420"), c("STAT600"), c("STAT610")]);
+    expect([statuses.stat4xx, statuses.eight]).toEqual(["satisfied", "satisfied"]);
+  });
+
   it("flags a missing depth sequence", async () => {
     // Without MATH411 and STAT420 neither MATH410–MATH411 nor STAT410–STAT420 is complete;
     // MATH405 and MATH452 keep the count at eight, but pair with nothing.
