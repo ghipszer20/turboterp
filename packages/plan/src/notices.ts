@@ -69,6 +69,15 @@ export function planCourses(plan: Plan, catalog: PlanCatalog): StudentCourse[] {
   // left out, unless the earlier one was a completed F or W attempt (the same exception as a retake).
   const twinsOf = twinIndex(catalog);
   const twinCounted = (id: string) => allTwins(twinsOf(id)).some((t) => seen.has(t) && !retakable.has(t));
+  // The audit counts a cross-listed course under each code, a renumbered one only where a requirement
+  // names it (owner, 2026-10-07). Credit-only Twins are never aliases.
+  const aliases = (id: string): Pick<StudentCourse, "crossListed" | "renumbered"> => {
+    const t = twinsOf(id);
+    return {
+      ...(t.crossListed.size > 0 ? { crossListed: [...t.crossListed] } : {}),
+      ...(t.renumbered.size > 0 ? { renumbered: [...t.renumbered] } : {}),
+    };
+  };
 
   for (const c of plan.priorCredit ?? []) {
     if (seen.has(c.id) || twinCounted(c.id)) continue; // Prior credit is never a retake of an earlier attempt here.
@@ -83,6 +92,7 @@ export function planCourses(plan: Plan, catalog: PlanCatalog): StudentCourse[] {
       ...(c.genEdCredits !== undefined ? { genEdCredits: c.genEdCredits } : {}),
       // AP and IB credit (source labels from @turboterp/credit); dual enrollment isn't exam credit.
       ...(/^(AP|IB) /.test(c.source ?? "") ? { exam: true as const } : {}),
+      ...aliases(c.id),
     });
   }
   for (const term of plan.terms) {
@@ -102,6 +112,7 @@ export function planCourses(plan: Plan, catalog: PlanCatalog): StudentCourse[] {
         status: c.status === "completed" ? "completed" : "planned",
         ...(c.grade ? { grade: c.grade } : {}),
         ...labScience(info, term, catalog),
+        ...aliases(c.id),
       });
       if (allowsRetake(c)) retakable.add(c.id);
     }
