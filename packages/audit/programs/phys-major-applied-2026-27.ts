@@ -19,6 +19,7 @@ export const physMajorApplied: Program = {
   minGrade: "C-",
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Students completing a second major from a CMNS or Engineering department may use an upper-level course from that program in place of one of the Advanced Physics Electives.' The substitute isn't a fixed course list, so advanced-elective carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     "The catalog and the department page agree closely on course codes and credits for this specialization; no disagreement found worth flagging. Both list ENME272 (Introduction to Computer Aided Design), a full course list of PHYS313/371/375/401/404/413/456/474, a 'one of PHYS485 or PHYS487' choice, and a separate 'PHYS4XY Advanced Physics Elective' slot on top of those.",
     "Math methods is a `sets` choice per both sources: MATH243, or MATH240 + MATH246, same as the Physics specialization.",
     "'One of PHYS485 (Electronic Circuits) or PHYS487 (Computerized Instrumentation)' is encoded as a `choose` of 1 from those two courses.",
@@ -55,7 +56,7 @@ export const physMajorApplied: Program = {
     },
     {
       kind: "choose",
-      id: "advanced-elective",
+      id: "advanced-elective", advisorMayApprove: true,
       name: "Advanced Physics Elective",
       count: 1,
       from: {

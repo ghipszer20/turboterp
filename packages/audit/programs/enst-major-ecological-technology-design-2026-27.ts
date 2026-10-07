@@ -13,6 +13,7 @@ export const enstMajorEcologicalTechnologyDesign: Program = {
   minGpa: 2.0,
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Under some circumstances, other 300 or 400 level electives can be substituted with advisor's approval.' The substitute isn't a fixed course list, so technical-electives carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     ...enstCommonReviewNotes,
     "Concentration Depth - Design is '3 Courses, 9 credits' over five rows (ENST282 or ENST283, ENST405, ENST415, ENST456/GEOG272/GEOG373/INAG237, ENST485); encoded as a 3-course choose with the two 'or' rows as alternatives groups. The catalog does not say which three, so any three rows count.",
     "Technical Electives (12 credits) is one 12-credit choose over the union of the four blocks; the blocks are only advising groupings ('any combination of electives can be taken'). 'ENST361 or PLSC480' is one alternatives group. A course listed in both Depth - Ecology and the electives (ENST450, GEOL453) can count once only.",
@@ -44,7 +45,7 @@ export const enstMajorEcologicalTechnologyDesign: Program = {
     },
     {
       kind: "choose",
-      id: "technical-electives",
+      id: "technical-electives", advisorMayApprove: true,
       name: "Ecological Technology Design Technical Electives (12 credits)",
       credits: 12,
       from: {

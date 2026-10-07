@@ -23,6 +23,7 @@ export const physMajor: Program = {
   minGrade: "C-",
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Students completing a second major from a CMNS or Engineering department may use an upper-level course from that program in place of one of the Advanced Physics Electives.' (Which course is the department's call.) The substitute isn't a fixed course list, so advanced-elective carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     "The catalog and the current department requirements page agree closely on course codes and credits for the core and the Physics specialization; no department-vs-catalog disagreement found worth flagging. (An older department PDF found via search, 'Physics_Major_Requirements_NEW.pdf', still used pre-Fall-2024 course numbers -- PHYS165/174/274, PHYS411 instead of PHYS313/413 -- and was not used, since the live department page states an effective date of Fall 2024 and gives different, current codes.)",
     "Math methods is a `sets` choice per both sources: MATH243, or MATH240 + MATH246.",
     "PHYS405 (Advanced Experiments lab) or PHYS407 (Undergraduate Experimental Research) is a `course` choice between the two, per both sources.",
@@ -52,7 +53,7 @@ export const physMajor: Program = {
     { kind: "course", id: "phys413", name: "Electricity and Magnetism II", options: ["PHYS413"] },
     {
       kind: "choose",
-      id: "advanced-elective",
+      id: "advanced-elective", advisorMayApprove: true,
       name: "Advanced Physics Electives (2 courses)",
       count: 2,
       from: {

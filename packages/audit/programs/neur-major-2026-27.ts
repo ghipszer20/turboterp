@@ -36,6 +36,7 @@ export const neurMajor: Program = {
   minGrade: "C-",
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'BSCI399(H, L) or PSYC489(H) may be substituted with permission' (for NEUR379/NEUR479 research credits). The substitute isn't a fixed course list, so track carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     "Department-vs-catalog difference (owner ruling: follow the department page): a first WebFetch pass at the catalog page rendered the Chemistry supporting row as an OR of CHEM241&242, CHEM271&272 or MATH243. The department's own requirements sheet (a tabular, unambiguous PDF) and its current Pre-Med sample graduation plan (updated 9/30/25) both list CHEM241&242 (a Benchmark 2 gateway requirement) and CHEM271&272 (a NEUR Supporting requirement) as two SEPARATE required course pairs, with MATH243 appearing only as a Behavioral & Cognitive track elective option, never as a chemistry alternative. The department's clearer tabular sheet is used; both pairs are required flat requirements here.",
     "CMNS100 ('or similar seminar') is listed on the department sheet as 'expected of all first semester freshmen', distinct from the hard C-or-better Benchmark rows around it, and the catalog extraction didn't surface it as a requirement at all -- not encoded as a program requirement (advising expectation, not a graduation requirement per either source's own wording).",
     "Physics is a `course` choice per course-slot, not a `sets` pair, since each slot independently allows the old or new physics-sequence codes per the department's own footnote ('Prior Learning Credit for PHYS141/142 or 161, 260/262 may be substituted'): PHYS131/141/161, then PHYS132/142/260.",
@@ -73,7 +74,7 @@ export const neurMajor: Program = {
     },
     {
       kind: "choose",
-      id: "track",
+      id: "track", advisorMayApprove: true,
       name: "NEUR Track courses (15 credits)",
       credits: 15,
       from: { courses: NEUR_TRACK_ALL },

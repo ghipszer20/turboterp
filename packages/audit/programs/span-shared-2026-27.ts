@@ -19,13 +19,15 @@ import type { Requirement } from "../src/audit.ts";
 export const spanCoreRequired: Requirement[] = [
   {
     kind: "course",
-    id: "span207-or-206",
+    // Posted (owner, 2026-10-07): "Native speakers and all others with the ability to begin coursework at a
+    // higher level should speak with the undergraduate advisor for course substitutions."
+    id: "span207-or-206", advisorMayApprove: true,
     name: "SPAN207 Reading and Writing in Spanish, or SPAN206 Spanish for Heritage Speakers I",
     options: ["SPAN207", "SPAN206"],
   },
   {
     kind: "course",
-    id: "span301-or-306",
+    id: "span301-or-306", advisorMayApprove: true,
     name: "SPAN301 Advanced Grammar and Composition I, or SPAN306 Spanish for Heritage Speakers II",
     options: ["SPAN301", "SPAN306"],
   },

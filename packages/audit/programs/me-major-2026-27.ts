@@ -23,6 +23,7 @@ export const meMajor: Program = {
     "https://eng.umd.edu/sites/clark.umd.edu/files/resource_documents/mechanical_fall_2026_gradplan.pdf (fetched 2026-09-28)",
   verified: false,
   reviewNotes: [
+    "Posted substitutions (owner, 2026-10-07): the department's course list says students 'may substitute ENME 414 in place of ENME 272', so enme272 accepts both. ENME 202 is required 'unless acceptable programming course credit has been earned. Contact a Mechanical Engineering advisor for more information on accepted programming credit', and the accepted credit isn't listed, so enme202 is advisorMayApprove.",
     "Chemistry: the department Bachelor of Science page's Basic Science Requirements list states 'CHEM 135 or CHEM 131 + 134 | General Chemistry for Engineers'; the catalog's own four-year table only ever shows CHEM135, and neither source lists a separate CHEM136 lab for this major (unlike chbe-major/mse-major). Not a real conflict, same treatment as mse-major: encoded as a `sets` requirement, options [['CHEM135'], ['CHEM131','CHEM134']].",
     "Technology and Consequences / Engineering Ethics: the catalog's four-year table lists 'ENES200 or ENEE 200' as its own row (Sophomore first semester, 3 credits), distinct from the generic Gen Ed rows in the same table; the official graduation plan also prints it in its Major Requirements column. Encoded as a `course` requirement with both options (same treatment as civil-major/aero-major/bioe-major/ee-major/mse-major).",
     "Professional Writing / ENGL393 -- NOT encoded, flagged for owner confirmation: the department Bachelor of Science page's 'Major Requirements - 56 Credits' list opens with 'ENGL 393 | Technical Writing', and the other 13 named ENME courses (202,272,331,332,350,351,361,371,382,392,400,462,472) plus 5 Technical Elective slots sum to exactly 56 credits only when ENGL393 is included (41 + 15 = 56), mirroring how biocomp-major's ENGL393 was confirmed by its own credit-sum check. However, the official Fall 2026 graduation plan's own two-column overview prints 'Professional Writing (PW) ENGL 39X' paired with the General Education column's other Fundamental Studies rows (ENGL101/AW, Oral Communication), not with any Major Requirements row -- the same placement civil-major/ee-major/bioe-major used to justify leaving Professional Writing to the Gen Ed layer. Left to Gen Ed here (majority precedent, covered by gen-ed-2026-27.ts); please confirm which source should win.",
@@ -58,8 +59,8 @@ export const meMajor: Program = {
       name: "Chemistry (CHEM135, or CHEM131 and CHEM134)",
       options: [["CHEM135"], ["CHEM131", "CHEM134"]],
     },
-    { kind: "course", id: "enme202", name: "Computing Fundamentals for Engineers", options: ["ENME202"] },
-    { kind: "course", id: "enme272", name: "Introduction to Computer Aided Design", options: ["ENME272"] },
+    { kind: "course", id: "enme202", name: "Computing Fundamentals for Engineers", options: ["ENME202"], advisorMayApprove: true },
+    { kind: "course", id: "enme272", name: "Introduction to Computer Aided Design (or ENME414)", options: ["ENME272", "ENME414"] },
     { kind: "course", id: "enme331", name: "Fluid Mechanics", options: ["ENME331"] },
     { kind: "course", id: "enme332", name: "Transfer Processes", options: ["ENME332"] },
     { kind: "course", id: "enme350", name: "Electronics and Instrumentation I", options: ["ENME350"] },

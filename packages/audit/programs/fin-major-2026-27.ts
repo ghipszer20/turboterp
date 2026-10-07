@@ -22,6 +22,7 @@ export const finMajor: Program = {
   minGpa: 2.0,
   verified: false,
   reviewNotes: [
+    "Posted substitutions (owner, 2026-10-07): the Smith page names 'BMGT394H (formerly BMGT438A) Applied Quantitative Analysis' as an approved substitute, so BMGT394H is accepted beside BMGT438A.",
     ...bmgtCoreReviewNotes,
     "Unlike Accounting (see the bmgtCoreReviewNotes note above about no named economics course being " +
       "found), Finance's own requirements page DOES name an 'Upper Level Economics Requirements for the " +
@@ -86,7 +87,7 @@ export const finMajor: Program = {
       kind: "course",
       id: "fin-select-one",
       name: "Accounting/Quantitative Elective (BMGT310, BMGT313, BMGT332, BMGT430, or approved substitute)",
-      options: ["BMGT310", "BMGT313", "BMGT332", "BMGT430", "BMGT438A", "ECON423"],
+      options: ["BMGT310", "BMGT313", "BMGT332", "BMGT430", "BMGT438A", "BMGT394H", "ECON423"],
     },
     {
       kind: "course",

@@ -38,6 +38,7 @@ export const mathMajorTraditional: Program = {
   minGpa: 2.0,
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Students with a strong interest in applied mathematics may, with the approval of the Undergraduate Office, substitute two courses (with strong mathematics content) from outside the Mathematics Department for one upper-level elective course.' The substitute isn't a fixed course list, so eight carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     "Honors sequence (footnote 1): 'MATH340 satisfies MATH241; MATH340–MATH341 satisfies MATH240–MATH241–MATH246.' Approximated: MATH340 counts for MATH240 (overlay) and MATH241; MATH341 counts for the MATH246/436/462 slot. MATH340 alone would wrongly satisfy MATH240 too.",
     "Eight 400-level MATH/AMSC/STAT courses: encoded as an overlay count of 8 that the specific requirements (MATH410, algebra, AMSC, STAT, depth) also count toward. Footnote 4's exclusions (MATH461, 478, 480–484, STAT464) are applied to all eight, not only the electives.",
     "The depth sequence is an overlay: its courses may also be MATH410 / the algebra course.",
@@ -76,7 +77,7 @@ export const mathMajorTraditional: Program = {
         ["STAT410", "STAT420"],
       ],
     },
-    { kind: "choose", id: "eight", name: "Eight 400-level MATH/AMSC/STAT courses", count: 8, overlay: true, from: { ...MATH_400_LEVEL, exclude: NOT_ELECTIVES } },
+    { kind: "choose", id: "eight", advisorMayApprove: true, name: "Eight 400-level MATH/AMSC/STAT courses", count: 8, overlay: true, from: { ...MATH_400_LEVEL, exclude: NOT_ELECTIVES } },
     // Computer programming requirement
     {
       kind: "course",

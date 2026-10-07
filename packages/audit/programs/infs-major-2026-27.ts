@@ -24,6 +24,7 @@ export const infsMajor: Program = {
   minGpa: 2.0,
   verified: false,
   reviewNotes: [
+    "Posted substitutions (owner, 2026-10-07): the Smith IS requirements list 'BMGT406 - AI Augmented App Development (INST377 Dynamic Web Applications can substitute)' beside the CMSC320 and INST453 substitutes already encoded; each substitute and its course form an `alternatives` pair so only one of the two counts.",
     ...bmgtCoreReviewNotes,
     "Like Accounting (see the bmgtCoreReviewNotes note above about no named economics course being " +
       "found), the Information Systems major's own requirements page names no 'Upper Level Economics " +
@@ -77,6 +78,8 @@ export const infsMajor: Program = {
       id: "infs-list-a-or-b",
       name: "Select two courses from List A, or one from List A and one from List B",
       count: 2,
+      // Each posted substitute stands in for its course, so at most one of each pair counts.
+      alternatives: [["BMGT404", "CMSC320"], ["BMGT406", "INST377"], ["BMGT485", "INST453"]],
       from: {
         courses: [
           // List A
@@ -85,6 +88,7 @@ export const infsMajor: Program = {
           "BMGT404",
           "CMSC320",
           "BMGT406",
+          "INST377",
           "BMGT408",
           "BMGT485",
           "INST453",
@@ -104,7 +108,7 @@ export const infsMajor: Program = {
       overlay: true,
       count: 1,
       from: {
-        courses: ["BMGT400", "BMGT401", "BMGT404", "CMSC320", "BMGT406", "BMGT408", "BMGT485", "INST453"],
+        courses: ["BMGT400", "BMGT401", "BMGT404", "CMSC320", "BMGT406", "INST377", "BMGT408", "BMGT485", "INST453"],
       },
     },
   ],

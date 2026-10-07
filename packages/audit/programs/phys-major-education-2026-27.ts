@@ -19,6 +19,7 @@ export const physMajorEducation: Program = {
   minGrade: "C-",
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Students completing a second major from a CMNS or Engineering department may use an upper-level course from that program in place of one of the Advanced Physics Electives.' The substitute isn't a fixed course list, so advanced-elective carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     "The 'Introductory Education Courses' rows are named slightly differently between sources -- catalog: 'TLPL101 Inquiry Approach to Teaching STEM (Step 1)' and 'TLPL102 Inquiry Teaching of STEM in Middle School'; department page: 'TLPL101 Inquiry Teaching of STEM in Elementary School' and 'TLPL102 Inquiry Teaching of STEM in Middle School'. Same course codes and credits, not a real disagreement; the department page's titles are used.",
     "Math methods is a `sets` choice per both sources: MATH243, or MATH240 + MATH246, same as the Physics specialization.",
     "'One of PHYS401, PHYS404, PHYS410, PHYS413' (3-4 credits) is encoded as a `choose` of 1 from those four courses, per both sources.",
@@ -57,7 +58,7 @@ export const physMajorEducation: Program = {
     },
     {
       kind: "choose",
-      id: "advanced-elective",
+      id: "advanced-elective", advisorMayApprove: true,
       name: "Advanced Physics Elective",
       count: 1,
       from: {

@@ -39,6 +39,7 @@ export const hdevMajor: Program = {
   minGrade: "C-",
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Students may, at the invitation of individual faculty, substitute EDHD489 OR EDHD498, for three of the required 12 credit elective component.' The substitute isn't a fixed course list, so hdev-electives carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     "Department page not checked: the source file has only the catalog requirements and the College of Education four-year-plans page, which is a general page with no Human Development requirements or plan text. Encoded from the catalog alone.",
     "The College of Education page says a C- or better is required in pre-professional and professional coursework; the catalog gives no grade rule for this major. minGrade C- is applied on that college-wide statement. Confirm it applies to Human Development.",
     "The four electives are one pool: the 14 listed EDHD electives, the five core courses (footnote: a core course not credited as core may be an elective), the listed Psychology, Sociology and Family Science electives, and every course in the 16 'Other Possible Electives' departments (AAAS, AAST, AMST, ANTH, BMGT, CCJS, ECON, GVPT, HESP, HLTH, LING, RELS, SLLC, SPHL, STAT, WGSS; the catalog's run-together 'HLTH - Health LING - Linguistics' is read as two departments). The catalog says those departments' electives are 'approved by program advisor', which is not encodable, so the whole department is accepted. Advisor approval is a manual gate.",
@@ -55,7 +56,7 @@ export const hdevMajor: Program = {
     { kind: "choose", id: "hdev-core", name: "Core courses (select three of five)", count: 3, from: { courses: coreCourses } },
     {
       kind: "choose",
-      id: "hdev-electives",
+      id: "hdev-electives", advisorMayApprove: true,
       name: "Elective courses (four)",
       count: 4,
       from: { courses: [...coreCourses, ...edhdElectives, ...listedElectives], departments: otherDepartments },

@@ -39,6 +39,7 @@ export const persMajor: Program = {
   minGrade: "C-",
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Foundation Requirements may be substituted with the approval of the Undergraduate Advisor' and '*Foundation Courses may be substituted with permission.' The substitute isn't a fixed course list, so electives, foundation-requirements carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     "Department page vs. catalog: no numeric or course-list disagreement found. The college's four-year " +
       "plan's own checklist section restates the catalog's Core Language Sequence (PERS103/104/201/202, " +
       "12 credits), Foundation Requirements ('Select three (3) courses from: PERS 251, 252, 283, 371', 9 " +
@@ -74,14 +75,14 @@ export const persMajor: Program = {
     { kind: "course", id: "pers202", name: "Intermediate Persian II", options: ["PERS202"] },
     {
       kind: "choose",
-      id: "foundation-requirements",
+      id: "foundation-requirements", advisorMayApprove: true,
       name: "Foundation Requirements (choose 9 credits)",
       credits: 9,
       from: { courses: FOUNDATION_COURSES },
     },
     {
       kind: "choose",
-      id: "electives",
+      id: "electives", advisorMayApprove: true,
       name: "Electives (choose 15 credits)",
       credits: 15,
       from: { courses: ELECTIVE_COURSES },

@@ -36,6 +36,7 @@ export const arabMajor: Program = {
   minGpa: 2.0,
   verified: false,
   reviewNotes: [
+    "Posted advisor-approved substitution (owner, 2026-10-07: posted alternatives are encoded): 'Certain courses in Middle Eastern Studies taught in English in other departments ... can be substituted with the approval of the Undergraduate Advisor and Program Director.' The substitute isn't a fixed course list, so foundation-electives, remaining-electives carry advisorMayApprove (the Advisor tells the student another course may count with approval).",
     "Department page vs. catalog: no numeric disagreement found. The college's four-year plan's own " +
       "checklist places exactly 3 named Foundation-elective slots ('One ARAB Foundation Elective' + " +
       "'Two ARAB Foundation Electives', filled in the plan with ARAB222, ARAB325 and ARAB317) -- 9 " +
@@ -88,14 +89,14 @@ export const arabMajor: Program = {
     },
     {
       kind: "choose",
-      id: "foundation-electives",
+      id: "foundation-electives", advisorMayApprove: true,
       name: "Foundation Electives (minimum 9 credits)",
       credits: 9,
       from: { courses: FOUNDATION_ELECTIVES },
     },
     {
       kind: "choose",
-      id: "remaining-electives",
+      id: "remaining-electives", advisorMayApprove: true,
       name: "Remaining Elective Credits (9 credits, from Foundation and/or Optional Electives; " +
         "at most 9 of the 18 total elective credits may be Optional Electives)",
       credits: 9,
