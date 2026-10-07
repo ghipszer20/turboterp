@@ -11,7 +11,6 @@ import { groupIssues } from "@/lib/advisor/issues";
 import type { AdvisorPlan } from "@/lib/advisor/plan-state";
 import { computePriorCredit } from "@/lib/advisor/prior-credit";
 import { collegeOf, programsLabel } from "@/lib/advisor/programs";
-import { termFromMatriculationId } from "@/lib/advisor/terms";
 import { AuditView } from "./AuditView";
 import { CourseSheet } from "./CourseSheet";
 import { useCatalog, type CatalogState } from "./data";
@@ -45,7 +44,7 @@ export function AdvisorApp({ calendar }: { calendar: AcademicEvent[] }) {
   if (store === null) return <Shell />;
   if (!store.consent || !hasConsent(store.consent)) return <DisclaimerGate />;
   if (!store.plan) return <SetupView plan={null} onDone={(plan) => savePlan(plan)} />;
-  return <Planner plan={store.plan} catalog={catalog} signedBy={store.consent.name} signedAt={store.consent.acceptedAt} calendar={calendar} />;
+  return <Planner plan={store.plan} catalog={catalog} calendar={calendar} />;
 }
 
 function Shell() {
@@ -59,7 +58,7 @@ function Shell() {
   );
 }
 
-function Planner({ plan, catalog, signedBy, signedAt, calendar }: { plan: AdvisorPlan; catalog: CatalogState; signedBy: string; signedAt: string; calendar: AcademicEvent[] }) {
+function Planner({ plan, catalog, calendar }: { plan: AdvisorPlan; catalog: CatalogState; calendar: AcademicEvent[] }) {
   const view = useView();
   const [editing, setEditing] = useState(() => initialSetup());
   const [importing, setImporting] = useState(() => initialImport());
@@ -88,7 +87,6 @@ function Planner({ plan, catalog, signedBy, signedAt, calendar }: { plan: Adviso
   if (editing) return <SetupView plan={plan} onDone={(next) => (savePlan(next), setEditing(false))} onCancel={() => setEditing(false)} />;
   if (importing) return <ImportTranscriptView plan={plan} onDone={(next) => (savePlan(next), setImporting(false))} onCancel={() => setImporting(false)} />;
 
-  const date = new Date(signedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
   return (
     <main className={styles.page}>
       <header className={styles.header}>
@@ -142,20 +140,10 @@ function Planner({ plan, catalog, signedBy, signedAt, calendar }: { plan: Adviso
           Unofficial. Not affiliated with the University of Maryland. Not academic advising: confirm your plan with your advisor
           and UMD&apos;s official degree audit.
         </p>
-        <p>
-          Agreement signed by {signedBy} on {date}.
-          {ready ? ` Course data: ${termsLabel(ready.terms)} Schedule${ready.terms.length > 1 ? "s" : ""} of Classes; courses in none of those terms show as unknown.` : ""}
-        </p>
       </footer>
     </main>
   );
 }
-
-const termLabel = (id: string) => termFromMatriculationId(id) ?? "";
-const termsLabel = (ids: string[]) => {
-  const names = [...ids].sort().map(termLabel);
-  return names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names.at(-1)}` : (names[0] ?? "");
-};
 
 /** ?course=CMSC351 opens that course's sheet (a deep link; also used by screenshots). */
 function initialCourse(): OpenCourse | null {
