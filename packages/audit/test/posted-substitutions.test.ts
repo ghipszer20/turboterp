@@ -1,0 +1,56 @@
+// Substitutions UMD pages post next to a required or listed course count wherever that page posts
+// them (owner, 2026-10-07: "if there are any alternatives for any course at umd posted online, the
+// advisor should account for that"). Inventory: docs/project/posted-substitutions.md.
+
+import { describe, expect, it } from "vitest";
+import { auditProgram, type Program, type StudentCourse } from "../src/audit.ts";
+import { finMajor } from "../programs/fin-major-2026-27.ts";
+import { infsMajor } from "../programs/infs-major-2026-27.ts";
+import { intbMajor } from "../programs/intb-major-2026-27.ts";
+import { meMajor } from "../programs/me-major-2026-27.ts";
+import { ombaMajor } from "../programs/omba-major-2026-27.ts";
+
+const took = (...ids: string[]): StudentCourse[] => ids.map((id) => ({ id, credits: 3, status: "completed", grade: "B" }));
+
+async function assigned(program: Program, requirementId: string, courses: StudentCourse[]) {
+  const r = await auditProgram(program, courses);
+  return r.requirements.find((x) => x.id === requirementId)?.assigned ?? [];
+}
+
+const requirement = (program: Program, id: string) => program.requirements.find((r) => r.id === id);
+
+describe("posted substitutions", () => {
+  it("ME: ENME414 may be substituted in place of ENME272", async () => {
+    expect(await assigned(meMajor, "enme272", took("ENME414"))).toEqual(["ENME414"]);
+  });
+
+  it("ME: ENME202 is required unless acceptable programming credit has been earned (advisor decides)", () => {
+    expect(requirement(meMajor, "enme202")?.advisorMayApprove).toBe(true);
+  });
+
+  it("Information Systems: INST377 can substitute for BMGT406 (List A)", async () => {
+    expect(await assigned(infsMajor, "infs-list-a-minimum", took("INST377"))).toEqual(["INST377"]);
+  });
+
+  it("Information Systems: a course and its posted substitute count once between them", async () => {
+    expect(await assigned(infsMajor, "infs-list-a-or-b", took("BMGT406", "INST377", "BMGT485", "INST453"))).toHaveLength(2);
+    const r = await auditProgram(infsMajor, took("BMGT406", "INST377"));
+    expect(r.requirements.find((x) => x.id === "infs-list-a-or-b")?.status).not.toBe("satisfied");
+  });
+
+  it("International Business: INST453 can substitute for BMGT485", async () => {
+    expect(await assigned(intbMajor, "intb-electives", took("INST453"))).toEqual(["INST453"]);
+  });
+
+  it("International Business: BMGT485 and INST453 count once between them", async () => {
+    expect(await assigned(intbMajor, "intb-electives", took("BMGT485", "INST453"))).toHaveLength(1);
+  });
+
+  it("Operations Management & Business Analytics: CMSC320 for BMGT404 and INST453 for BMGT485", async () => {
+    expect(await assigned(ombaMajor, "omba-electives", took("CMSC320", "INST453"))).toEqual(["CMSC320", "INST453"]);
+  });
+
+  it("Finance: BMGT394H (formerly BMGT438A) is an approved substitute", async () => {
+    expect(await assigned(finMajor, "fin-select-one", took("BMGT394H"))).toEqual(["BMGT394H"]);
+  });
+});

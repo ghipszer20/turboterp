@@ -22,6 +22,7 @@ export const ombaMajor: Program = {
   minGpa: 2.0,
   verified: false,
   reviewNotes: [
+    "Posted substitutions (owner, 2026-10-07): the Smith OMBA List B says 'BMGT404 ... (CMSC/DATA320 Introduction to Data Science can substitute)' and 'BMGT485 ... (INST453 Project Management for Information Science can substitute)'; both are accepted, each paired with its course so only one counts.",
     ...bmgtCoreReviewNotes,
     "The Smith School's 'Economics Requirement' line (0-3 credits of approved upper-level economics) names no " +
       "course on this major's page; not encoded (undecidable, matching the other BMGT majors' precedent).",
@@ -44,7 +45,8 @@ export const ombaMajor: Program = {
       id: "omba-electives",
       name: "Two courses from List A, or one from List A and one from List B",
       count: 2,
-      from: { courses: ["BMGT434", "BMGT490", "BMGT435", "BMGT400", "BMGT401", "BMGT404", "BMGT485"] },
+      from: { courses: ["BMGT434", "BMGT490", "BMGT435", "BMGT400", "BMGT401", "BMGT404", "CMSC320", "BMGT485", "INST453"] },
+      alternatives: [["BMGT404", "CMSC320"], ["BMGT485", "INST453"]],
     },
     {
       kind: "choose",
