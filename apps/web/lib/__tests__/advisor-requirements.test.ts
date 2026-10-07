@@ -183,3 +183,18 @@ describe("describeGap: advisor approval", () => {
     expect(describeGap(listed, result(listed, "missing"), ctx)!.note).toBeUndefined();
   });
 });
+
+describe("describeGap for Diversity", () => {
+  const diversity = req(genEd, "diversity");
+  const tagged = (...codes: string[][]): StudentCourse[] => codes.map((genEd, i) => ({ id: `XXXX${i}`, credits: 3, status: "completed", grade: "B", genEd }));
+
+  it("asks for a DVUP course, not 'DVUP or DVCC', when two DVCC courses are already counted", () => {
+    const gap = describeGap(diversity, result(diversity, "partial"), ctx(tagged(["DVCC"], ["DVCC"])))!;
+    expect(gap.need).toBe("Finish a set: 1 Understanding Plural Societies (DVUP) course (or another listed set).");
+  });
+
+  it("asks for just the one missing course when one DVUP course is counted", () => {
+    const gap = describeGap(diversity, result(diversity, "partial"), ctx(tagged(["DVUP"])))!;
+    expect(gap.need).toBe("Finish a set: 1 more Understanding Plural Societies (DVUP) course (or another listed set).");
+  });
+});

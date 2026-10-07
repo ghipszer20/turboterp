@@ -81,16 +81,23 @@ function gapFor(req: Requirement, result: RequirementResult, ctx: GapContext): G
       const gaps = req.options.map((set) => {
         const fixed = new Set(set.filter((m): m is string => typeof m === "string"));
         let size = [...fixed].filter((id) => !have.has(id)).length;
+        // What is still needed: missing fixed courses, and filter members with the count left.
+        const left: string[] = [];
         for (const m of set) {
-          if (typeof m === "string") continue;
+          if (typeof m === "string") {
+            left.push(m);
+            continue;
+          }
           const matching = ctx.courses.filter((c) => !fixed.has(c.id) && earnsCredit(c) && matchesFilter(m.from, c)).length;
-          size += Math.max(0, m.count - matching);
+          const n = Math.max(0, m.count - matching);
+          size += n;
+          if (n > 0) left.push(matching > 0 ? `${n} more ${filterText(m.from, n)}` : memberText(m));
         }
-        return { set, size, missing: [...fixed].filter((id) => !have.has(id)) };
+        return { size, left, missing: [...fixed].filter((id) => !have.has(id)) };
       });
       const best = gaps.reduce((a, b) => (b.size < a.size ? b : a));
       const others = req.options.length > 1 ? " (or another listed set)" : "";
-      return { need: `Finish a set: ${listing(best.set.map(memberText), "and")}${others}.`, suggestions: best.missing };
+      return { need: `Finish a set: ${listing(best.left, "and")}${others}.`, suggestions: best.missing };
     }
     case "openSlot":
       return { need: "Confirm with your advisor, then tick it below.", suggestions: [] };
