@@ -5,7 +5,7 @@
 
 import { auditPrograms, earnsCredit, matchesFilter, type AuditResult, type Program, type StudentCourse } from "@turboterp/audit";
 import { allowsRetake } from "./check.ts";
-import type { PlanCatalog } from "./catalog.ts";
+import type { CatalogCourse, PlanCatalog } from "./catalog.ts";
 import type { Plan } from "./check.ts";
 import { allTwins, twinIndex } from "./twins.ts";
 
@@ -78,7 +78,9 @@ export function planCourses(plan: Plan, catalog: PlanCatalog): StudentCourse[] {
       credits: c.credits,
       status: "completed",
       ...(c.grade ? { grade: c.grade } : {}),
-      genEd: c.genEd ?? catalog.get(c.id)?.genEd ?? [],
+      // Without a term to pair a lab in, a lab-science lecture's DSNL can't be confirmed, so it's dropped.
+      genEd: c.genEd ?? withoutUnpairedLab(catalog.get(c.id)),
+      ...(c.genEdCredits !== undefined ? { genEdCredits: c.genEdCredits } : {}),
       // AP and IB credit (source labels from @turboterp/credit); dual enrollment isn't exam credit.
       ...(/^(AP|IB) /.test(c.source ?? "") ? { exam: true as const } : {}),
     });
@@ -99,12 +101,37 @@ export function planCourses(plan: Plan, catalog: PlanCatalog): StudentCourse[] {
         credits: c.credits ?? info?.credits.min ?? 0,
         status: c.status === "completed" ? "completed" : "planned",
         ...(c.grade ? { grade: c.grade } : {}),
-        genEd: info?.genEd ?? [],
+        ...labScience(info, term, catalog),
       });
       if (allowsRetake(c)) retakable.add(c.id);
     }
   }
   return courses;
+}
+
+/** A catalog course's Gen Ed codes without DSNL, when Testudo makes DSNL depend on a lab ("DSNL (if taken with CHEM132)"). */
+function withoutUnpairedLab(info: CatalogCourse | undefined): string[] {
+  const genEd = info?.genEd ?? [];
+  return info?.labPair ? genEd.filter((g) => g !== info.labPair!.code) : genEd;
+}
+
+/**
+ * The genEd (and genEdCredits) of a course taken in a term. A lab-science lecture keeps DSNL only
+ * when its paired lab is on record in the same term ("only when taken concurrently"), and then
+ * brings the lab's credits too. The lab course itself carries no Gen Ed codes.
+ */
+function labScience(info: CatalogCourse | undefined, term: Plan["terms"][number], catalog: PlanCatalog): Pick<StudentCourse, "genEd" | "genEdCredits"> {
+  if (!info) return { genEd: [] };
+  const pair = info.labPair;
+  if (!pair) {
+    for (const other of catalog.values()) if (other.labPair?.with === info.id) return { genEd: [] };
+    return { genEd: info.genEd };
+  }
+  const lab = term.courses.find((x) => x.id === pair.with && x.gradTag !== "graduate-only");
+  if (!lab) return { genEd: withoutUnpairedLab(info) };
+  const own = term.courses.find((x) => x.id === info.id)?.credits ?? info.credits.min;
+  const labCredits = lab.credits ?? catalog.get(lab.id)?.credits.min ?? 0;
+  return { genEd: info.genEd, genEdCredits: own + labCredits };
 }
 
 const complete = (result: AuditResult) => result.requirements.every((r) => r.status === "satisfied");

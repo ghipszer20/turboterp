@@ -21,6 +21,15 @@ describe("toStudentCourses", () => {
     });
   });
 
+  it("counts a lab-science lecture awarded with its lab as one lab course (lecture + lab credits)", () => {
+    const chem = toStudentCourses([creditForAp("Chemistry", 4)]).courses;
+    expect(chem.find((x) => x.id === "CHEM131")).toMatchObject({ genEd: ["DSNL"], genEdCredits: 4 });
+    expect(chem.find((x) => x.id === "CHEM132")?.genEdCredits).toBeUndefined();
+    const bio = toStudentCourses([creditForAp("Biology", 5)]).courses;
+    expect(bio.find((x) => x.id === "BSCI160")).toMatchObject({ genEd: ["DSNL"], genEdCredits: 4 });
+    expect(bio.find((x) => x.id === "BSCI170")).toMatchObject({ genEd: ["DSNL"], genEdCredits: 4 });
+  });
+
   it("gives credit with no UMD course a placeholder id no course requirement can match", () => {
     const { courses } = toStudentCourses([creditForAp("Computer Science A", 4), creditForAp("Biology", 3), creditForIb("Psychology", "HL", 5)]);
     expect(courses).toEqual([
