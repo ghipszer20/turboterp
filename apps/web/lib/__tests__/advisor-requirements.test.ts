@@ -228,3 +228,23 @@ describe("describeGap for Diversity", () => {
     expect(gap.need).toBe("Finish a set: 1 more Understanding Plural Societies (DVUP) course (or another listed set).");
   });
 });
+
+describe("describeGap: Gen Ed credit minimums", () => {
+  it("asks for the credits still needed once the course count is met", () => {
+    const r = req(genEd, "natsci");
+    const courses: StudentCourse[] = [
+      { id: "LAB100", credits: 3, status: "completed", genEd: ["DSNL"] },
+      { id: "SCI100", credits: 3, status: "completed", genEd: ["DSNS"] },
+    ];
+    expect(describeGap(r, result(r, "partial", ["LAB100", "SCI100"]), ctx(courses))!.need).toMatch(/^1 more credit/);
+  });
+
+  it("counts a lecture's lab credits (genEdCredits) toward the minimum", () => {
+    const r = req(genEd, "dssp");
+    const courses: StudentCourse[] = [
+      { id: "SP100", credits: 1, status: "completed", genEd: ["DSSP"] },
+      { id: "SP200", credits: 2, status: "completed", genEd: ["DSSP"], genEdCredits: 4 },
+    ];
+    expect(describeGap(r, result(r, "partial", ["SP100", "SP200"]), ctx(courses))!.need).toMatch(/^1 more credit/);
+  });
+});

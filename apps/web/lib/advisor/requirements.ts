@@ -78,6 +78,12 @@ function gapFor(req: Requirement, result: RequirementResult, ctx: GapContext): G
         return { need, suggestions: req.from.anyCourse ? [] : suggestions };
       }
       const n = Math.max(1, (req.count ?? 1) - result.assigned.length);
+      if (req.minCredits !== undefined && result.assigned.length >= (req.count ?? 1)) {
+        // Enough courses, too few credits (Gen Ed's "2 courses, 6 credits"); a lecture brings its lab's credits too.
+        const gened = new Map(ctx.courses.map((c) => [c.id, c.genEdCredits ?? c.credits]));
+        const short = Math.max(1, req.minCredits - result.assigned.reduce((t, id) => t + (gened.get(id) ?? 0), 0));
+        return { need: `${more(short, "credit", "credits")}: ${filterText(req.from, 2)}.`, suggestions };
+      }
       return { need: `${n} more ${filterText(req.from, n)}.`, suggestions };
     }
     case "distribution": {
