@@ -19,7 +19,7 @@
 
 import { cacheLife } from "next/cache";
 import {
-  addDays,
+  roomRangeEnd,
   DINING_HALLS,
   fetchAcademicCalendar,
   fetchBuildings,
@@ -206,7 +206,7 @@ async function liveRoomAvailability(locationId: number, categoryId: number, isoD
   "use cache";
   cacheLife({ stale: 60, revalidate: 120, expire: 3600 });
   const { rooms } = await liveRoomCatalog();
-  return fetchCategoryAvailability(rooms, locationId, categoryId, isoDate, addDays(isoDate, 1));
+  return fetchCategoryAvailability(rooms, locationId, categoryId, isoDate, roomRangeEnd(isoDate));
 }
 
 // ---- buses ----

@@ -49,6 +49,7 @@ async function LibraryList() {
               <Tile
                 key={lib.id}
                 href={lib.url}
+                external
                 icon={<LibraryIcon />}
                 area="study"
                 title={compactLibraryName(lib.name)}

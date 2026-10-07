@@ -51,6 +51,11 @@
     color var(--fast) ease;
 }
 
+.chip:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
 .chip[aria-pressed="true"] {
   border-color: transparent;
   background: var(--accent);

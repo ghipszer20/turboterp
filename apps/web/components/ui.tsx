@@ -162,6 +162,7 @@ export function Tile({
   status,
   accent = false,
   wide = false,
+  external = false,
 }: {
   href: string;
   icon: ReactNode;
@@ -172,10 +173,14 @@ export function Tile({
   accent?: boolean;
   /** Full-width row layout, for a group with a single tile. */
   wide?: boolean;
+  /** An off-site link: opens in a new tab. */
+  external?: boolean;
 }) {
+  const Anchor = external ? "a" : Link;
   return (
-    <Link
+    <Anchor
       href={href}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       className={styles.tile}
       data-area={area}
       data-accent={accent || undefined}
@@ -190,7 +195,7 @@ export function Tile({
           </span>
         ) : null}
       </span>
-    </Link>
+    </Anchor>
   );
 }
 
