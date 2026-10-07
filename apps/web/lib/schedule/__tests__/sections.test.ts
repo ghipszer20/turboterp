@@ -188,7 +188,16 @@ describe("recommendation helpers", () => {
 
   it("recommendReason is plain words and leaves out missing data", () => {
     const s = sec("0101", ["Ann Lee"], [MWF10], 12);
-    expect(recommendReason(s, { "Ann Lee": 4.6 }, { "STAT400|Ann Lee": 3.4 })).toBe("4.6★ · avg GPA 3.4 · 12 open");
-    expect(recommendReason(s, {}, {})).toBe("12 open");
+    expect(recommendReason(s, { "Ann Lee": 4.6 }, { "STAT400|Ann Lee": 3.4 })).toBe("4.6★ · avg GPA 3.4");
+    expect(recommendReason(s, {}, {})).toBe("");
+  });
+});
+
+describe("sort labels (owner, 2026-10-07)", () => {
+  it("are Default and Best Teachers", async () => {
+    const { SORT_OPTIONS } = await import("../filters");
+    const labels = Object.fromEntries(SORT_OPTIONS.map((o: { value: string; label: string }) => [o.value, o.label]));
+    expect(labels.best).toBe("Default");
+    expect(labels.recommended).toBe("Best Teachers");
   });
 });

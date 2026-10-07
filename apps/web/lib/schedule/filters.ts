@@ -16,8 +16,9 @@ export type FilterState = {
 export const DEFAULT_FILTERS: FilterState = { days: {}, sort: "best" };
 
 export const SORT_OPTIONS: { value: SortKey; label: string }[] = [
-  { value: "best", label: "Best first" },
-  { value: "recommended", label: "Recommended" },
+  // Labels renamed by the owner (2026-10-07); the keys stay so saved schedules and shared links keep working.
+  { value: "best", label: "Default" },
+  { value: "recommended", label: "Best Teachers" },
   { value: "fewestDays", label: "Fewest days on campus" },
   { value: "latestStart", label: "Latest start" },
   { value: "earliestFinish", label: "Earliest finish" },

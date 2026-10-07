@@ -164,16 +164,13 @@ describe("sortLayouts: recommended", () => {
   const t = at(["M"], "11:00", "11:50");
   const gpas = { [gpaKey("A", "Ada Good")]: 3.8, [gpaKey("A", "Di Bad")]: 2.0 };
 
-  it("weights sum to 1, rating and GPA count double the seats", () => {
-    const { rating, gpa, seats } = RECOMMEND_WEIGHTS;
-    expect(rating + gpa + seats).toBeCloseTo(1);
-    expect(rating).toBeGreaterThan(seats);
-    expect(gpa).toBeGreaterThan(seats);
+  it("weights are rating and GPA only, 50/50 (owner, 2026-10-07)", () => {
+    expect(RECOMMEND_WEIGHTS).toEqual({ rating: 0.5, gpa: 0.5 });
   });
 
   it("counts missing rating and GPA as neutral (0.5)", () => {
     const s = sec("A", ["Nobody"], 0, t);
-    expect(sectionScore(s, { ratings, gpas })).toBeCloseTo(0.4 * 0.5 + 0.4 * 0.5);
+    expect(sectionScore(s, { ratings, gpas })).toBeCloseTo(0.5);
   });
 
   it("scores missing grade data like a typical 3.0 GPA, not a 2.0", () => {
@@ -181,12 +178,8 @@ describe("sortLayouts: recommended", () => {
     expect(sectionScore(sec("A", ["Nobody"], 0, t))).toBeCloseTo(sectionScore(sec("A", ["Mid"], 0, t), { gpas: typical }));
   });
 
-  it("saturates open seats at 10", () => {
-    const ten = sec("A", ["Nobody"], 10, t);
-    const fifty = sec("A", ["Nobody"], 50, t);
-    const five = sec("A", ["Nobody"], 5, t);
-    expect(sectionScore(ten)).toBeCloseTo(sectionScore(fifty));
-    expect(sectionScore(ten)).toBeGreaterThan(sectionScore(five));
+  it("ignores open seats", () => {
+    expect(sectionScore(sec("A", ["Nobody"], 1, t))).toBeCloseTo(sectionScore(sec("A", ["Nobody"], 50, t)));
   });
 
   it("uses a group's best section", () => {
@@ -194,13 +187,13 @@ describe("sortLayouts: recommended", () => {
     expect(groupScore(g, { ratings, gpas })).toBeCloseTo(sectionScore(g[1]!, { ratings, gpas }));
   });
 
-  it("ranks by rating + GPA + seats, and leaves 'best' alone", () => {
+  it("ranks by rating + GPA only; open seats never reorder (owner, 2026-10-07)", () => {
     const easy = layout("easy", [sec("A", ["Di Bad"], 30, t)]);
     const loved = layout("loved", [sec("A", ["Ada Good"], 4, t)]);
     expect(names(sortLayouts([easy, loved], "recommended", { ratings, gpas }))).toEqual(["loved", "easy"]);
-    // seats separate otherwise equal layouts; "best" ignores seats and keeps input order
+    // same teacher, more seats: a tie, so the input (Default) order stands in both sorts
     const roomy = layout("roomy", [sec("A", ["Ada Good"], 12, t)]);
-    expect(names(sortLayouts([loved, roomy], "recommended", { ratings, gpas }))).toEqual(["roomy", "loved"]);
+    expect(names(sortLayouts([loved, roomy], "recommended", { ratings, gpas }))).toEqual(["loved", "roomy"]);
     expect(names(sortLayouts([loved, roomy], "best", { ratings, gpas }))).toEqual(["loved", "roomy"]);
   });
 
