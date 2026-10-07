@@ -1,6 +1,6 @@
-// Config for the About page. The owner hasn't supplied a bio, donation link,
-// contact email, or public GitHub URL yet -- every field below is a
-// placeholder until an owner (see the OWNER comments) fills it in.
+// Config for the About page. The owner hasn't supplied a bio or public
+// GitHub URL yet -- those fields are placeholders until an owner (see the
+// OWNER comments) fills them in.
 //
 // A page or link that depends on a placeholder must never render as a dead
 // link/button: use resolveAbout() and check for null before showing it.
@@ -23,8 +23,8 @@ export const ABOUT: AboutConfig = {
   // OWNER (Venmo account "turboterp", owner 2026-10-04): donations go to Venmo.
   donationUrl: "https://venmo.com/u/turboterp",
   venmoHandle: "@turboterp",
-  // OWNER: replace with the contact email once it's created.
-  contactEmail: PLACEHOLDER,
+  // OWNER (2026-10-07): the public contact email.
+  contactEmail: "turboterpadmin@gmail.com",
 };
 
 export function isPlaceholder(value: string): boolean {
