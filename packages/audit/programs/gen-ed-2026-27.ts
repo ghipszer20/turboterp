@@ -15,6 +15,9 @@ import type { Program } from "../src/audit.ts";
 const one = (id: string, name: string, codes: string[]) =>
   ({ kind: "choose", id, name, count: 1, from: { genEd: codes } }) as const;
 
+// Summary Chart (gened.umd.edu, revised 2024-04-02): each Fundamental Studies category "3 credits".
+const fs3 = (id: string, name: string, codes: string[]) => ({ ...one(id, name, codes), minCredits: 3 }) as const;
+
 export const genEd: Program = {
   id: "gen-ed",
   name: "General Education",
@@ -31,26 +34,30 @@ export const genEd: Program = {
   ],
   // AP/IB limits (program-sources/gen-ed.md, "AP / IB limits"): 6 of the 8 DS courses; none for Big Question.
   examLimits: [
-    { requirements: ["dshs", "dshu", "dsnl", "natsci", "dssp"], courses: 6 },
+    { requirements: ["dshs", "dshu", "natsci", "dssp"], courses: 6 },
     { requirements: ["scis"], courses: 0 },
   ],
   requirements: [
     // Fundamental Studies
-    { ...one("fsaw", "Academic Writing", ["FSAW"]), minGrade: "C-" },
-    one("fspw", "Professional Writing", ["FSPW"]),
-    one("fsoc", "Oral Communication", ["FSOC"]),
-    one("fsma", "Mathematics", ["FSMA"]),
+    { ...fs3("fsaw", "Academic Writing", ["FSAW"]), minGrade: "C-" },
+    fs3("fspw", "Professional Writing", ["FSPW"]),
+    fs3("fsoc", "Oral Communication", ["FSOC"]),
+    fs3("fsma", "Mathematics", ["FSMA"]),
     // Overlay: a course designated both FSMA and FSAR satisfies both (program-sources/gen-ed.md, Summary Chart).
-    { ...one("fsar", "Analytic Reasoning", ["FSAR"]), overlay: true },
+    { ...fs3("fsar", "Analytic Reasoning", ["FSAR"]), overlay: true },
     // Distributive Studies (one course may meet only one category)
-    { kind: "choose", id: "dshs", name: "History and Social Sciences (2)", count: 2, from: { genEd: ["DSHS"] } },
-    { kind: "choose", id: "dshu", name: "Humanities (2)", count: 2, from: { genEd: ["DSHU"] } },
-    one("dsnl", "Natural Sciences with lab", ["DSNL"]),
-    one("natsci", "Natural Sciences (or a second lab science)", ["DSNS", "DSNL"]),
-    { kind: "choose", id: "dssp", name: "Scholarship in Practice (2)", count: 2, from: { genEd: ["DSSP"] } },
+    // "25 credits/8 courses • 2 courses must be from each area." "History and Social Sciences DSHS 6 credits",
+    // "Humanities DSHU 6 credits", "Scholarship in Practice DSSP 6 credits". Some DSSP courses carry 1-2 credits
+    // and some 6, so each row needs both a course count and a credit minimum.
+    { kind: "choose", id: "dshs", name: "History and Social Sciences (2 courses, 6 credits)", count: 2, minCredits: 6, from: { genEd: ["DSHS"] } },
+    { kind: "choose", id: "dshu", name: "Humanities (2 courses, 6 credits)", count: 2, minCredits: 6, from: { genEd: ["DSHU"] } },
+    // "Natural Sciences DSNS/DSNL • At least one course must have lab component. 7 credits"
+    { kind: "choose", id: "natsci", name: "Natural Sciences (7 credits)", count: 2, minCredits: 7, from: { genEd: ["DSNS", "DSNL"] } },
+    { kind: "choose", id: "dsnl", name: "Natural Sciences: one lab course", count: 1, overlay: true, within: ["natsci"], from: { genEd: ["DSNL"] } },
+    { kind: "choose", id: "dssp", name: "Scholarship in Practice (2 courses, 6 credits)", count: 2, minCredits: 6, from: { genEd: ["DSSP"] } },
     // Big Question: two courses that must also fill a Distributive Studies category (program-sources/gen-ed.md,
     // "Big Question (SCIS) is within the 8 DS courses"), so an overlay counted only while within one.
-    { kind: "choose", id: "scis", name: "Big Question courses (2)", count: 2, overlay: true, within: ["dshs", "dshu", "dsnl", "natsci", "dssp"], from: { genEd: ["SCIS"] } },
+    { kind: "choose", id: "scis", name: "Big Question courses (2)", count: 2, overlay: true, within: ["dshs", "dshu", "natsci", "dssp"], from: { genEd: ["SCIS"] } },
     // UMD: "2 Understanding Plural Societies courses or 1 Understanding Plural Societies course AND 1
     // Cultural Competence course are required. Diversity courses may also fulfill a Distributive
     // Studies category." (overlay: may double-count with Distributive Studies)

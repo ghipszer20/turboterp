@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { auditProgram, type StudentCourse } from "../src/audit.ts";
 import { genEd, university } from "../programs/gen-ed-2026-27.ts";
 
-const g = (id: string, codes: string[], grade = "B"): StudentCourse => ({ id, credits: 3, status: "completed", grade, genEd: codes });
+const g = (id: string, codes: string[], grade = "B"): StudentCourse => ({ id, credits: codes.includes("DSNL") ? 4 : 3, status: "completed", grade, genEd: codes });
 
 const complete: StudentCourse[] = [
   g("ENGL101", ["FSAW"]),
@@ -104,8 +104,8 @@ const ds = [
 
 describe("Big Question courses must be among the Distributive Studies courses", () => {
   it("doesn't count a Big Question course the Distributive Studies slots have no room for", async () => {
-    // Only one natsci slot: of two DSNS+SCIS courses, one is outside the eight DS courses.
-    const plan = [...ds.filter((x) => x.id !== "GEOL100"), g("ASTR100", ["DSNS", "SCIS"]), g("AOSC123", ["DSNS", "SCIS"])];
+    // A SCIS course with no Distributive Studies code fills no DS category, so it cannot count for Big Question.
+    const plan = [...ds.filter((x) => x.id !== "GEOL100"), g("ASTR100", ["DSNS", "SCIS"]), g("AOSC123", ["SCIS"])];
     const result = await auditProgram(genEd, plan);
     expect(result.requirements.find((r) => r.id === "scis")!.status).toBe("partial");
   });
@@ -168,11 +168,11 @@ const COMBINATIONS: [string[], string, string[], string[]][] = [
   [["DSHU", "SCIS"], "CLAS170", ["scis"], ["dshu"]],
   [["DSNS", "SCIS"], "AOSC123", ["scis"], ["natsci"]],
   [["FSPW"], "ENGL381", ["fspw"], []],
-  [["DSNL"], "ASTR101", [], ["dsnl", "natsci"]],
+  [["DSNL"], "ASTR101", ["dsnl"], ["natsci"]],
   [["FSAR"], "BIOM301", ["fsar"], []],
   [["DSHU", "DSSP"], "ARHU275", [], ["dshu", "dssp"]],
   [["FSOC"], "ARCH403", ["fsoc"], []],
-  [["DSNL", "DSNS"], "BSCI160", [], ["dsnl", "natsci"]],
+  [["DSNL", "DSNS"], "BSCI160", ["dsnl"], ["natsci"]],
   [["DSSP", "DVUP"], "AAST351", ["diversity"], ["dssp"]],
   [["DSHU", "DVUP", "SCIS"], "ARTH261", ["diversity", "scis"], ["dshu"]],
   [["DSHS", "DVUP", "SCIS"], "AAAS187", ["diversity", "scis"], ["dshs"]],
@@ -186,13 +186,13 @@ const COMBINATIONS: [string[], string, string[], string[]][] = [
   [["FSAW"], "ENGL101", ["fsaw"], []],
   [["DSHS", "DSSP", "SCIS"], "CCJS225", ["scis"], ["dshs", "dssp"]],
   [["DSHS", "DVCC", "SCIS"], "ANTH266", ["diversity", "scis"], ["dshs"]],
-  [["DSNL", "SCIS"], "BSCI135", ["scis"], ["dsnl", "natsci"]],
+  [["DSNL", "SCIS"], "BSCI135", ["scis", "dsnl"], ["natsci"]],
   [["FSMA"], "MATH107", ["fsma"], []],
   [["DSHS", "DSHU", "DVUP", "SCIS"], "HIST187", ["diversity", "scis"], ["dshs", "dshu"]],
   [["DSHU", "DSSP", "DVUP"], "AMST320", ["diversity"], ["dshu", "dssp"]],
   [["DSHS", "DSHU", "SCIS"], "PHIL202", ["scis"], ["dshs", "dshu"]],
-  [["DSNL", "DVUP"], "ANTH222", ["diversity"], ["dsnl", "natsci"]],
-  [["DSNL", "DSNS", "SCIS"], "AOSC200", ["scis"], ["dsnl", "natsci"]],
+  [["DSNL", "DVUP"], "ANTH222", ["diversity", "dsnl"], ["natsci"]],
+  [["DSNL", "DSNS", "SCIS"], "AOSC200", ["scis", "dsnl"], ["natsci"]],
   [["DSNS", "DSSP", "SCIS"], "AREC200", ["scis"], ["natsci", "dssp"]],
   [["DSNS", "DSSP", "DVUP", "SCIS"], "BSCI151", ["diversity", "scis"], ["natsci", "dssp"]],
   [["DSSP", "DVUP", "SCIS"], "HDCC105", ["diversity", "scis"], ["dssp"]],
