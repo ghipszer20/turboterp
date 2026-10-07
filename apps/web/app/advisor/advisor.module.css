@@ -1423,15 +1423,3 @@
 .exportHint { margin: 0; color: var(--text-3); font: var(--t-foot); }
 
 .exportSwitch { display: flex; align-items: center; gap: 8px; color: var(--text-2); font: var(--t-sub); }
-
-/* Past-term courses with no grade: one question each, its three answers in a row. */
-.questions {
-  padding-top: 12px;
-}
-
-.questionActions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 6px;
-}
