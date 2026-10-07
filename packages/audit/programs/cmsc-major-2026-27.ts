@@ -123,7 +123,7 @@ export const MATHXXX_GENERIC: Requirement = {
 export const AREAS_REQUIREMENT: Requirement = {
   kind: "distribution",
   id: "areas",
-  name: "Five 400-level CMSC courses across three areas",
+  name: "Five Distributive Area courses across three areas",
   count: 5,
   minAreas: 3,
   maxPerArea: 3,

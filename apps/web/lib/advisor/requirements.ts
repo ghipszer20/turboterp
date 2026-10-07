@@ -60,7 +60,8 @@ export function describeGap(req: Requirement, result: RequirementResult, ctx: Ga
 function gapFor(req: Requirement, result: RequirementResult, ctx: GapContext): Gap {
   // A failed/withdrawn attempt earns no credit, so it's never "have" here -- the student still
   // needs a passing attempt of it, and it shouldn't count toward filling a filter member below.
-  const have = new Set(ctx.courses.filter(earnsCredit).map((c) => c.id));
+  // A course also stands for its cross-listed and renumbered codes (AMSC460 is CMSC460).
+  const have = new Set(ctx.courses.filter(earnsCredit).flatMap((c) => [c.id, ...(c.crossListed ?? []), ...(c.renumbered ?? [])]));
   const credits = new Map(ctx.courses.map((c) => [c.id, c.credits]));
   const fromCatalog = (test: (c: { id: string; genEd: string[] }) => boolean) =>
     ctx.catalog.filter((c) => !have.has(c.id) && test(c)).slice(0, MAX_SUGGESTIONS).map((c) => c.id);
@@ -90,7 +91,7 @@ function gapFor(req: Requirement, result: RequirementResult, ctx: GapContext): G
     }
     case "distribution": {
       const n = Math.max(1, req.count - result.assigned.length);
-      const used = (area: Area) => result.assigned.filter((id) => inArea(area, { id })).length;
+      const used = (area: Area) => result.assigned.filter((id) => inArea(area, ctx.courses.find((c) => c.id === id) ?? { id })).length;
       const open = req.areas.filter((a) => used(a) < req.maxPerArea).sort((a, b) => used(a) - used(b));
       const inCatalog = new Set(ctx.catalog.map((c) => c.id));
       const lists = open.map((a) => (a.courses ?? []).filter((id) => !have.has(id) && inCatalog.has(id)));

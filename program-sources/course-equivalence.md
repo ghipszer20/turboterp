@@ -53,7 +53,9 @@ reading is the one that can't mark something met wrongly (owner rule, PROJECT_ME
   later one from the audit, the same as a same-number repeat. The exception is when the first attempt was an F or W:
   then both stay, and the audit can use the passing one (owner ruling, rulings.md: a course may be retaken only after an F
   or W). The plan checker warns that the later one adds no credits.
-- **Requirement matching is not widened:** a requirement that names only one twin isn't changed globally. Each program
-  is fixed from its department's sources (`alternatives` / options in the program file), because a department can
-  treat a cross-list differently (CS: STAT426 is "credit only granted for" with CMSC320 but not a CMSC course; owner
-  ruling, rulings.md "CS department-page answers").
+- **Requirement matching counts every code of a cross-listed course (owner, 2026-10-07; replaces "not widened"):**
+  a cross-listed course is the same course (VPAC), so the audit matches it under each code everywhere (named lists,
+  department and level filters, areas): MATH456 counts as CMSC456. A "Formerly" number matches only where a requirement
+  names the course, never a level range. Credit-only twins are never matched (CS: STAT426 is not a CMSC course). An
+  exclusion of any code excludes the course (CS ULC: no course cross-listed with CMSC). `StudentCourse.crossListed` /
+  `renumbered`, fed by `planCourses`.
