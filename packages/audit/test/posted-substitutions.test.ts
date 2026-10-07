@@ -4,6 +4,7 @@
 
 import { describe, expect, it } from "vitest";
 import { auditProgram, type Program, type StudentCourse } from "../src/audit.ts";
+import { bioeMajorBiomechanics, bioeMajorBiotech, bioeMajorInstrumentation, bioeMajorPreHealth } from "../programs/bioe-major-tracks-2026-27.ts";
 import { eeMajor } from "../programs/ee-major-2026-27.ts";
 import { finMajor } from "../programs/fin-major-2026-27.ts";
 import { infsMajor } from "../programs/infs-major-2026-27.ts";
@@ -27,6 +28,16 @@ describe("posted substitutions", () => {
 
   it("ME: ENME202 is required unless acceptable programming credit has been earned (advisor decides)", () => {
     expect(requirement(meMajor, "enme202")?.advisorMayApprove).toBe(true);
+  });
+
+  it("Bioengineering tracks: HLSC322 can stand in place of BSCI222 as a breadth or lower-level biosci elective", async () => {
+    for (const track of [bioeMajorBiotech, bioeMajorBiomechanics, bioeMajorInstrumentation, bioeMajorPreHealth]) {
+      for (const r of track.requirements) {
+        if (r.kind === "choose" && r.from.courses?.includes("BSCI222")) expect(r.from.courses, `${track.id}/${r.id}`).toContain("HLSC322");
+      }
+    }
+    expect(await assigned(bioeMajorPreHealth, "bio-science-elective-1", took("HLSC322"))).toEqual(["HLSC322"]);
+    expect(await assigned(bioeMajorPreHealth, "bio-science-elective-1", took("BSCI222", "HLSC322"))).toHaveLength(1);
   });
 
   it("EE: a second Capstone Design course may substitute for the Advanced Theory and Applications course", async () => {
