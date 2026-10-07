@@ -1,7 +1,7 @@
 # TurboTerp — Project Memory
 
 > Single source of truth for project context. Update this file whenever a decision changes.
-> Last updated: 2026-10-07 (grad courses count toward undergrad requirements).
+> Last updated: 2026-10-07 (cross-listed courses count under every code; CS specializations need 3 areas).
 > Read by the main session at the start of every session (builders don't read it; CLAUDE.md), so keep it under ~20 KB (section 18).
 
 ## 1. Vision
@@ -105,6 +105,7 @@ Moved to `docs/project/legal.md`. Read it before building the disclaimer, accoun
 - **Email (2026-10-06):** live on turboterp.com (`dpl_HgKHConiJFT6Lkserf7KbNxcC6uG`): Brevo sign-in mail (Supabase custom SMTP, 100/hour), issue reports to `REPORT_TO_EMAIL`, "Email my plan"; migration 0006 applied. Brevo free = 300/day (roadmap "Email volume at launch"). Emailed agreement records are still a known to-do.
 - **Gen Ed audit fixes (2026-10-07, owner report):** exam-credit course choices (shared codes until picked, hint at the other option), one exact Diversity row, Summary Chart credit minimums (3/6/7 credits), and Testudo lab pairs (DSNL only with the lab in the same term). Merged into `feat/ui-rework` (`de7b1b9`), not deployed; the deploy needs `npm run advisor-data -w @turboterp/web` first (new catalog key `nl`). 72-test boundary suite merged, all rules pass (status log).
 - **Grad courses count (2026-10-07):** 600–897 (not 799) courses count toward any range reaching 499 in every program (`dbad417`; RAME opts out; 500-level stays excluded, rulings.md). Deployed to turboterp.com by the owner (`dpl_Bc6ii9aSMBVQpeJeEFsuzTaPFHGP`, from `626cbbb`); that deploy also shipped the Gen Ed fixes and the study-room filters.
+- **Cross-listed courses (2026-10-07, owner report):** the audit counts a cross-listed course under every code in every program (MATH456 = CMSC456, AMSC460 = CMSC460); CS specializations need upper-level courses from 3 areas (official UMD audit), not 5 area courses. `fix/cross-listed-aliases` merged into `feat/ui-rework`; advisor-data rebuilt; not deployed. Owner's plan: CS (Machine Learning) 17 of 17.
 - **Waiting on the owner:** see `docs/project/owner-review.md` (include it in every progress report; add new items there).
 - **Known to-dos:** see `docs/project/roadmap.md` "Known to-dos" (add new ones there).
 
@@ -126,6 +127,7 @@ Code comments that cite "PROJECT_MEMORY section 17" (e.g. "open question 1") ref
 - **Superpowers TDD applies strictly** (owner, 2026-09-25), including deleting code written before a failing test and redoing it test-first. Exception: code written before the superpowers plugin was installed (e.g. the SOC course parser) is kept and fixed. Outside that rule, don't rebuild working code unless absolutely necessary; fix it first.
 - **Scale:** the site must support thousands of simultaneous users. Heavy work (schedule generation) runs in the browser; campus and course data are pre-built, CDN-cached snapshots; servers do no per-request scraping.
 - **Degree rules confirmed by the owner:** CMSC141 counts for CMSC131 and CMSC142 for CMSC132. CS gateway: Fall 2024+ entrants need B- in gateway courses and a 3.0 GPA, earlier entrants C- and 2.7. The owner is in Math **Applied** (verification target: Math Applied + CS; Traditional is the default track); C- minimum for Math major courses; CMSC131 may count for both the programming requirement and Sequence Four. A course may be retaken only after an F or a W. **Grad courses (600–897, not 799) count toward any 400-level or upper-level range in every program** when the student has permission (owner, 2026-10-07; rulings.md).
+- **Cross-listed courses count under every code** in every program (owner, 2026-10-07; rulings.md); "credit only granted for" twins never do.
 - **Deleting something important takes two taps** (owner, 2026-10-04): a confirmation first, worded "Are you sure you want to delete ...?" and naming what is deleted (account data, a saved plan, a term with courses). Small, easily redone removals (one course, one filter) stay one tap.
 - **Verification is local only** (owner, 2026-09-28; GitHub Actions CI disabled): the full test, typecheck, lint and build run locally after every merge into the working branch. The web `typecheck` script runs `next typegen` first.
 
