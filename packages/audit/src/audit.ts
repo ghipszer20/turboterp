@@ -67,7 +67,7 @@ export type RequirementRule =
    * Alternatives are "or" groups among the courses: at most one course of each group
    * counts, e.g. "Select two of: CMSC426, CMSC460 or CMSC466, …" has [["CMSC460", "CMSC466"]].
    */
-  | { kind: "choose"; id: string; name: string; count?: number; credits?: number; from: CourseFilter; alternatives?: string[][] }
+  | { kind: "choose"; id: string; name: string; count?: number; credits?: number; minCredits?: number; from: CourseFilter; alternatives?: string[][] }
   /** N courses spread over areas, e.g. "five courses from at least three areas, at most three per area". */
   | { kind: "distribution"; id: string; name: string; count: number; minAreas: number; maxPerArea: number; areas: Area[] }
   /** N credits in a number range, all from ONE department, e.g. CS's "12 credits of 300–400 level courses from one discipline outside CMSC". */
@@ -195,6 +195,8 @@ export type StudentCourse = {
   grade?: string;
   /** Gen Ed codes the course carries (from the Schedule of Classes). */
   genEd?: string[];
+  /** Credits this course brings to Gen Ed credit minimums when it differs from `credits`: a lab-science lecture whose paired lab is on record carries both. */
+  genEdCredits?: number;
   /** The credit comes from an AP or IB exam (see Program.examLimits). */
   exam?: true;
 };
@@ -394,6 +396,8 @@ function belowMinimumFor(program: Program, req: Requirement, p: number, r: numbe
   return found;
 }
 
+/** Credits a course brings to a Gen Ed credit minimum. */
+const genEdCredits = (course: StudentCourse) => course.genEdCredits ?? course.credits;
 const sum = (ps: Pair[]) => ps.map((q) => `${q.weight} ${q.name}`).join(" + ");
 
 export type AuditOptions = {
@@ -626,8 +630,19 @@ export async function auditStudent(
       }
       // A credit requirement may overshoot by less than one course (e.g. 4 credits toward the last 3).
       const slack = Math.max(0, ...mine.map((q) => q.weight)) - 1;
-      constraints.push(` cap_${id}: ${sum(mine)} <= ${n + slack}`);
+      if (!(req.kind === "choose" && req.minCredits !== undefined && !req.credits)) constraints.push(` cap_${id}: ${sum(mine)} <= ${n + slack}`);
       constraints.push(` sat_${id}: ${sum(mine)} - ${n} ${y(p, r)} >= 0`);
+
+      if (req.kind === "choose" && req.minCredits !== undefined && !req.credits) {
+        // `count` courses AND `minCredits` credits (Gen Ed: "2 courses, 6 credits"). More than `count` courses
+        // may be assigned to reach the credits, but never past the credits plus one course.
+        const cr = (q: Pair) => genEdCredits(courses[q.c]!);
+        const credit = mine.map((q) => `${cr(q)} ${q.name}`).join(" + ");
+        const least = Math.max(1, Math.min(...mine.map(cr)));
+        constraints.push(` mincr_${id}: ${credit} - ${req.minCredits} ${y(p, r)} >= 0`);
+        constraints.push(` mincap_${id}: ${credit} <= ${req.minCredits + Math.max(...mine.map(cr)) - 1}`);
+        constraints.push(` cap_${id}_n: ${sum(mine)} <= ${Math.max(n, Math.ceil(req.minCredits / least))}`);
+      }
 
       if (req.kind === "choose") {
         // At most one course of each "or" group counts.
@@ -713,6 +728,7 @@ export async function auditStudent(
       assigned.forEach((q) => used.add(q.c));
       const progress = assigned.reduce((t, q) => t + q.weight, 0);
       let satisfied = chosen(y(p, r)) && progress >= need(req);
+      if (req.kind === "choose" && req.minCredits !== undefined && !req.credits && assigned.reduce((t, q) => t + genEdCredits(courses[q.c]!), 0) < req.minCredits) satisfied = false;
       const check = req.minGpa === undefined ? undefined : gpaCheck(assigned, req.minGpa);
       if (check?.failed) satisfied = false;
       const gpa = check?.gpa;
