@@ -28,7 +28,7 @@ function memberText(m: SetMember): string {
 }
 
 /** An exam award offering "this course or that one": its source label, the pick (if made) and the options. */
-export type ChoiceAward = { source: string; picked: string | null; options: { id: string; genEd: string[] }[] };
+export type ChoiceAward = { source: string; picked: string | null; auto?: boolean; options: { id: string; genEd: string[] }[] };
 
 /** Says when another option of a choice award would count toward `req` and the pick doesn't. */
 function choiceHints(req: Requirement, awards: ChoiceAward[]): string[] {
@@ -36,6 +36,8 @@ function choiceHints(req: Requirement, awards: ChoiceAward[]): string[] {
   const codes = filters.flatMap((f) => f.genEd ?? []);
   const listed = req.kind === "course" ? req.options : req.kind === "sets" ? req.options.flat().filter((m): m is string => typeof m === "string") : [];
   return awards.flatMap((award) => {
+    // Picked by the Advisor, not the student: the solver already chose the best option.
+    if (award.auto) return [];
     const pick = award.options.find((o) => o.id === award.picked);
     // Unpicked, only what every option shares counts, so an option offering more is worth naming.
     const base = pick ? pick.genEd : award.options.reduce<string[]>((s, o, i) => (i === 0 ? [...o.genEd] : s.filter((g) => o.genEd.includes(g))), []);

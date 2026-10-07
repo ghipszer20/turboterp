@@ -36,7 +36,11 @@ const commitPrior = (prior: PriorInputs) => dispatchPlan({ type: "set-prior", pr
 
 export function PriorCreditView({ plan, prior, catalog }: { plan: AdvisorPlan; prior: PriorCreditResult; catalog: CatalogState }) {
   const remove = (kind: "ap" | "ib" | "dual", key: string) => commitPrior(removePriorEntry(plan.prior, kind, key));
-  const pick = (source: string, id: string) => commitPrior({ ...plan.prior, choices: { ...plan.prior.choices, [source]: id } });
+  // An empty id goes back to automatic: the pick is removed.
+  const pick = (source: string, id: string) => {
+    const { [source]: _removed, ...rest } = plan.prior.choices;
+    commitPrior({ ...plan.prior, choices: id ? { ...rest, [source]: id } : rest });
+  };
 
   return (
     <div className={styles.creditLayout}>
@@ -135,23 +139,24 @@ function EarnRow({ earn, source, onPick }: { earn: Earn; source: string; onPick:
       </li>
     );
   }
+  const label = (o: { id: string; genEd: string[] }) => (o.genEd.length ? `${o.id} · ${o.genEd.join(", ")}` : o.id);
+  const autoOption = earn.auto ? earn.options.find((o) => o.id === earn.picked) : undefined;
   return (
     <li>
       {earn.credits} cr:{" "}
-      <select className={styles.input} value={earn.picked ?? ""} onChange={(e) => onPick(source, e.target.value)}>
-        <option value="">Choose one…</option>
+      <select className={styles.input} value={earn.auto ? "" : (earn.picked ?? "")} onChange={(e) => onPick(source, e.target.value)}>
+        <option value="">{autoOption ? `${label(autoOption)} (picked to fit your plan)` : "Automatic"}</option>
         {earn.options.map((o) => (
           <option key={o.id} value={o.id}>
-            {o.genEd.length ? `${o.id} · ${o.genEd.join(", ")}` : o.id}
+            {label(o)}
           </option>
         ))}
       </select>
-      {!earn.picked ? (
-        <span className={styles.issueSeverity} data-severity="confirm">
-          Pick one to count all of this credit
-        </span>
-      ) : null}
-      <div className={styles.fieldLabel}>Pick the course UMD posted for this exam. Your degree audit or transcript lists it.</div>
+      {earn.auto ? (
+        <div className={styles.fieldLabel}>TurboTerp picked this to fit your plan. If UMD posted the other course, choose it.</div>
+      ) : (
+        <div className={styles.fieldLabel}>Pick the course UMD posted for this exam. Your degree audit or transcript lists it.</div>
+      )}
     </li>
   );
 }

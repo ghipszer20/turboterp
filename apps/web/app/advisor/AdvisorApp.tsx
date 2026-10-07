@@ -9,8 +9,7 @@ import { hasConsent } from "@/lib/advisor/consent";
 import { AccountLine } from "./SignInGate";
 import { groupIssues } from "@/lib/advisor/issues";
 import type { AdvisorPlan } from "@/lib/advisor/plan-state";
-import { choiceAwardsOf, computePriorCredit } from "@/lib/advisor/prior-credit";
-import type { ChoiceAward } from "@/lib/advisor/requirements";
+import { computePriorCredit } from "@/lib/advisor/prior-credit";
 import { collegeOf, programsLabel } from "@/lib/advisor/programs";
 import { termFromMatriculationId } from "@/lib/advisor/terms";
 import { AuditView } from "./AuditView";
@@ -67,9 +66,17 @@ function Planner({ plan, catalog, signedBy, signedAt, calendar }: { plan: Adviso
   const [open, setOpen] = useState<OpenCourse | null>(() => initialCourse());
   const ready = catalog.status === "ready" ? catalog : null;
 
-  const prior = useMemo(
+  // The student's own picks only: the analysis chooses for the awards left unpicked, and `prior`
+  // below adds those picks (never saved in the plan, since they change as the plan changes).
+  const ownPrior = useMemo(
     () => computePriorCredit(plan.prior, (id) => ready?.catalog.get(id)?.genEd ?? []),
     [plan.prior, ready],
+  );
+  const analysis = useAnalysis(plan, ready, ownPrior.courses);
+  const autoChoices = analysis.result?.autoChoices;
+  const prior = useMemo(
+    () => (autoChoices && Object.keys(autoChoices).length ? computePriorCredit(plan.prior, (id) => ready?.catalog.get(id)?.genEd ?? [], autoChoices) : ownPrior),
+    [plan.prior, ready, autoChoices, ownPrior],
   );
   const checked = useMemo(() => {
     if (!ready) return null;
@@ -77,8 +84,6 @@ function Planner({ plan, catalog, signedBy, signedAt, calendar }: { plan: Adviso
     return { issues, groups: groupIssues(issues, plan.terms.map((x) => x.name)) };
   }, [plan, prior.courses, ready]);
 
-  const choiceAwards = useMemo(() => choiceAwardsOf(prior.entries), [prior.entries]);
-  const analysis = useAnalysis(plan, ready, prior.courses, choiceAwards);
 
   if (editing) return <SetupView plan={plan} onDone={(next) => (savePlan(next), setEditing(false))} onCancel={() => setEditing(false)} />;
   if (importing) return <ImportTranscriptView plan={plan} onDone={(next) => (savePlan(next), setImporting(false))} onCancel={() => setImporting(false)} />;
@@ -174,7 +179,7 @@ function initialImport(): boolean {
 export type AnalysisState = { status: "idle" | "running" | "ready" | "error"; result: Analysis | null };
 
 /** Audit + notices after edits settle; a newer edit always wins over an older, slower run. */
-function useAnalysis(plan: AdvisorPlan, ready: Extract<CatalogState, { status: "ready" }> | null, priorCourses: Parameters<typeof checkerPlan>[1], choiceAwards: ChoiceAward[]) {
+function useAnalysis(plan: AdvisorPlan, ready: Extract<CatalogState, { status: "ready" }> | null, priorCourses: Parameters<typeof checkerPlan>[1]) {
   const [state, setState] = useState<AnalysisState>({ status: "idle", result: null });
   const run = useRef(0);
   useEffect(() => {
@@ -184,13 +189,13 @@ function useAnalysis(plan: AdvisorPlan, ready: Extract<CatalogState, { status: "
       setState((s) => ({ ...s, status: "running" }));
       try {
         const { runAnalysis } = await import("@/lib/advisor/analysis");
-        const result = await runAnalysis({ plan, catalog: ready.catalog, priorCourses, choiceAwards });
+        const result = await runAnalysis({ plan, catalog: ready.catalog, priorCourses });
         if (id === run.current) setState({ status: "ready", result });
       } catch {
         if (id === run.current) setState((s) => ({ status: "error", result: s.result }));
       }
     }, ANALYSIS_DELAY_MS);
     return () => clearTimeout(timer);
-  }, [plan, ready, priorCourses, choiceAwards]);
+  }, [plan, ready, priorCourses]);
   return state;
 }
