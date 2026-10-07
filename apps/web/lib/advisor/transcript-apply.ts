@@ -3,6 +3,7 @@
 // place a transcript import ever touches an AdvisorPlan, and only ever with rows the student has
 // already reviewed and confirmed -- never the raw parse result.
 
+import { creditForAp } from "@turboterp/credit";
 import { planReducer, type AdvisorPlan } from "./plan-state";
 import { parseTerm } from "./terms";
 
@@ -14,7 +15,10 @@ export type SelectedCourse = {
   status: "completed" | "in-progress";
 };
 
-export type SelectedAp = { exam: string; score: number };
+/** `pick` is the course UMD posted for an award that offers a choice. */
+export type SelectedAp = { exam: string; score: number; pick?: string };
+export type SelectedIb = { exam: string; level: "SL" | "HL"; score: number };
+export type SelectedDual = { institution: string; course: string; credits: number; umd: string; elective: boolean };
 
 const uid = () => (typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `t${Math.random().toString(36).slice(2)}`);
 
@@ -38,7 +42,7 @@ function trimToFourYears(before: AdvisorPlan, after: AdvisorPlan): AdvisorPlan {
   return next;
 }
 
-export function applyTranscriptImport(plan: AdvisorPlan, selection: { courses: SelectedCourse[]; ap: SelectedAp[]; gpa?: number | null }): AdvisorPlan {
+export function applyTranscriptImport(plan: AdvisorPlan, selection: { courses: SelectedCourse[]; ap: SelectedAp[]; ib?: SelectedIb[]; dual?: SelectedDual[]; gpa?: number | null }): AdvisorPlan {
   let next = plan;
   // The transcript's printed cumulative GPA replaces any earlier value (the student can still edit it); none printed leaves it alone.
   if (selection.gpa !== undefined && selection.gpa !== null) next = planReducer(next, { type: "set-gpa", gpa: selection.gpa });
@@ -78,6 +82,41 @@ export function applyTranscriptImport(plan: AdvisorPlan, selection: { courses: S
       prior: {
         ...next.prior,
         ap: [...next.prior.ap, ...newAp.map((a) => ({ key: uid(), exam: a.exam, score: a.score }))],
+      },
+    };
+  }
+
+  // A posted pick (the course UMD put on the record) wins over the automatic pick.
+  const choices = { ...next.prior.choices };
+  for (const a of selection.ap) {
+    if (!a.pick) continue;
+    try {
+      choices[creditForAp(a.exam, a.score).source] = a.pick;
+    } catch {
+      // an exam the chart doesn't know has no choice to record
+    }
+  }
+  if (Object.entries(choices).some(([k, v]) => next.prior.choices[k] !== v)) {
+    next = { ...next, prior: { ...next.prior, choices } };
+  }
+
+  const newIb = (selection.ib ?? []).filter(
+    (b, i, all) => !next.prior.ib.some((x) => x.exam === b.exam && x.level === b.level) && all.findIndex((x) => x.exam === b.exam && x.level === b.level) === i,
+  );
+  const dualKey = (d: { institution: string; course: string }) => `${d.institution}|${d.course}`.toUpperCase();
+  const haveDual = new Set(next.prior.dual.map(dualKey));
+  const newDual = (selection.dual ?? []).filter((d) => {
+    if (haveDual.has(dualKey(d))) return false;
+    haveDual.add(dualKey(d));
+    return true;
+  });
+  if (newIb.length > 0 || newDual.length > 0) {
+    next = {
+      ...next,
+      prior: {
+        ...next.prior,
+        ib: [...next.prior.ib, ...newIb.map((b) => ({ key: uid(), exam: b.exam, level: b.level, score: b.score }))],
+        dual: [...next.prior.dual, ...newDual.map((d) => ({ key: uid(), ...d }))],
       },
     };
   }
