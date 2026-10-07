@@ -52,6 +52,14 @@ export type Requirement = RequirementRule & {
    * student that other courses may count with advisor approval (owner ruling, rulings.md "Minors").
    */
   advisorMayApprove?: true;
+  /**
+   * Posted substitutions that apply only to students in a named major: `course` counts in place of
+   * the course(s) listed here, but only when the student is also auditing one of the programs in
+   * `onlyFor` (program ids; list every track). `reason` quotes the source. `replaces` is the course
+   * it stands in for, on a choose: the two then count as one (an alternatives group). Derived from
+   * the `programs` passed to auditStudent, so no caller passes anything extra.
+   */
+  substitutes?: { course: string; onlyFor: string[]; reason: string; replaces?: string }[];
 };
 
 export type RequirementRule =
@@ -242,6 +250,32 @@ function meetsGrade(course: StudentCourse, minGrade: string | undefined): boolea
   return rank >= 0 && rank >= gradeRank(minGrade);
 }
 
+/** Programs with each requirement's `substitutes` whose `onlyFor` names a declared program added as options. */
+function withSubstitutes(programs: Program[]): Program[] {
+  const ids = new Set(programs.map((p) => p.id));
+  return programs.map((program) => {
+    if (!program.requirements.some((req) => req.substitutes)) return program;
+    const requirements = program.requirements.map((req): Requirement => {
+      const live = (req.substitutes ?? []).filter((s) => s.onlyFor.some((id) => ids.has(id)));
+      if (live.length === 0) return req;
+      const extra = [...new Set(live.map((s) => s.course))];
+      if (req.kind === "course") return { ...req, options: [...req.options, ...extra.filter((c) => !req.options.includes(c))] };
+      if (req.kind === "choose") {
+        const have = req.from.courses ?? [];
+        // The substitute and the course it replaces fill one slot: at most one of them counts.
+        const pairs = live.filter((s) => s.replaces).map((s) => [s.replaces!, s.course]);
+        return {
+          ...req,
+          from: { ...req.from, courses: [...have, ...extra.filter((c) => !have.includes(c))] },
+          alternatives: [...(req.alternatives ?? []), ...pairs],
+        };
+      }
+      return req;
+    });
+    return { ...program, requirements };
+  });
+}
+
 /** Id of the synthetic result a program with `minGpa` gets; it is not one of `program.requirements`. */
 export const PROGRAM_GPA_ID = "program-gpa";
 
@@ -423,10 +457,11 @@ export async function auditPrograms(
  *   u[g]     = 1 when degree g has at least minUniqueCredits of those credits
  */
 export async function auditStudent(
-  programs: Program[],
+  declared: Program[],
   courses: StudentCourse[],
   options: AuditOptions = {},
 ): Promise<StudentAudit> {
+  const programs = withSubstitutes(declared);
   const pairs = programs.flatMap((program, p) =>
     courses.flatMap((course, c) =>
       meetsGrade(course, program.minGrade)

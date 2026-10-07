@@ -22,9 +22,11 @@ const SHARED_NOTES = [
 const src = (name: string) =>
   `UMD Academic Catalog 2026–27, ${name}; Robert H. Smith School of Business, ${DEPT} (fetched 2026-09-28)`;
 
+const ECON_IDS = ["econ-major-ba", "econ-major-bs"];
+const CS_320 = [{ course: "CMSC320", onlyFor: ["cmsc-major"], replaces: "BMGT404", reason: "CMSC320 for BMGT404, Computer Science majors only (catalog footnote)." }];
 const BA_LIST_A = [
   "BMGT302", "BMGT332", "BMGT385", "BMGT400", "BMGT401", "BMGT404",
-  "CMSC132", "INST326", "CMSC320",
+  "CMSC132", "INST326",
 ];
 
 export const bmgtMinorBusinessAnalytics: Program = {
@@ -39,7 +41,7 @@ export const bmgtMinorBusinessAnalytics: Program = {
     ...SHARED_NOTES,
     "Department page requires C- in all minor courses; the catalog says nothing. The department page's 3.0 GPA to apply, 45 credits earned and four semesters remaining are admission rules, not encoded. The department page says 'three required courses and two approved electives' and gives no course lists beyond the prerequisites, so the catalog lists are used.",
     "Prerequisites (BMGT110, BMGT230 with B-, MATH120 or MATH140) are encoded as requirements: the department page says they must be complete to graduate with the minor (BMGT110 may follow application). 'Or equivalent' for BMGT230 and MATH120: only the listed courses are accepted; other courses may count with advisor approval. Marked advisorMayApprove (bmgt230, calculus): other courses may count with advisor approval; only the listed courses count.",
-    "Catalog footnote substitutes are accepted: CMSC424 or INST327 for BMGT402; ECON422 or ECON424 for BMGT430 (Economics majors only); CMSC132 or INST326 for BMGT302; CMSC320 for BMGT404 (Computer Science majors only). The major restrictions (also CMSC422 CS-only, ECON414 Economics-only, ENCE402 Civil and Environmental Engineering-only, ENEE436 ECE-only, INST414 Information Science-only) are eligibility gates, not enforced (no declared-major check); flagged.",
+    "Catalog footnote substitutes are accepted: CMSC424 or INST327 for BMGT402; CMSC132 or INST326 for BMGT302. Gated on the other major being audited alongside (Requirement.substitutes): ECON422 or ECON424 for BMGT430 (Economics majors), CMSC320 for BMGT404 (Computer Science majors). Other major restrictions ( CMSC422 CS-only, ECON414 Economics-only, ENCE402 Civil and Environmental Engineering-only, ENEE436 ECE-only, INST414 Information Science-only) are eligibility gates, not enforced; flagged.",
     "Electives: 6 credits, 'minimum 3-6 credits' from the first list and 'maximum 3 credits' from the second. Encoded as two courses from both lists plus an overlay requiring at least one from the first list (so at most one comes from the second). BMGT447 has no title in the source; kept as listed.",
   ],
   requirements: [
@@ -47,12 +49,15 @@ export const bmgtMinorBusinessAnalytics: Program = {
     { kind: "course", id: "bmgt230", name: "Business Statistics (minimum B-)", options: ["BMGT230"], minGrade: "B-", advisorMayApprove: true },
     { kind: "course", id: "calculus", name: "Elementary Calculus I or Calculus I", options: ["MATH120", "MATH140"], advisorMayApprove: true },
     { kind: "course", id: "bmgt402", name: "AI Augmented Database Systems", options: ["BMGT402", "CMSC424", "INST327"] },
-    { kind: "course", id: "bmgt430", name: "Data Modeling in Business", options: ["BMGT430", "ECON422", "ECON424"] },
+    { kind: "course", id: "bmgt430", name: "Data Modeling in Business", options: ["BMGT430"],
+      substitutes: ["ECON422", "ECON424"].map((course) => ({ course, onlyFor: ECON_IDS, reason: "ECON422 or ECON424 for BMGT430, Economics majors only (catalog footnote)." })),
+    },
     { kind: "course", id: "bmgt431", name: "Data Analytics and AI for Business", options: ["BMGT431"] },
     {
       kind: "choose",
       id: "electives",
       name: "Two electives (6 credits)",
+      substitutes: CS_320,
       count: 2,
       from: {
         courses: [
@@ -69,6 +74,7 @@ export const bmgtMinorBusinessAnalytics: Program = {
       overlay: true,
       count: 1,
       from: { courses: BA_LIST_A },
+      substitutes: CS_320,
     },
   ],
 };
@@ -103,6 +109,7 @@ export const bmgtMinorEntrepreneurialLeadership: Program = {
       kind: "choose",
       id: "electives",
       name: "Two electives (6 credits)",
+      substitutes: CS_320,
       count: 2,
       from: {
         courses: [
