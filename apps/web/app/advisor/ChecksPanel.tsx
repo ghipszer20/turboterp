@@ -11,6 +11,9 @@ import type { PlanIssue } from "@turboterp/plan/check";
 import type { TrackIssue } from "@turboterp/tracks";
 import type { AnalysisState, OpenCourse } from "./AdvisorApp";
 import { planTips, SEVERITY, SEVERITY_ORDER, type IssueGroups, type Severity } from "@/lib/advisor/issues";
+import { ungradedPastTermQuestions } from "@/lib/advisor/past-terms";
+import type { AdvisorPlan } from "@/lib/advisor/plan-state";
+import { dispatchPlan } from "./store";
 import styles from "./advisor.module.css";
 
 type Checked = { issues: PlanIssue[]; groups: IssueGroups } | null;
@@ -151,6 +154,37 @@ function TrackIssueRow({ issue, onOpenCourse }: { issue: TrackIssue; onOpenCours
         {body}
       </button>
     </li>
+  );
+}
+
+/** One question per ungraded course in a term that has ended. Finished settles it with no grade;
+ * Dropped records a W (the course no longer counts); Add grade opens the course sheet. Grades are
+ * never required (owner ruling 2026-10-07). */
+export function UngradedQuestions({ plan, onOpenCourse }: { plan: AdvisorPlan; onOpenCourse: (c: OpenCourse) => void }) {
+  const questions = ungradedPastTermQuestions(plan, new Date());
+  if (questions.length === 0) return null;
+  return (
+    <section className={styles.programChecks} aria-label="Courses to confirm">
+      <ul className={styles.issueList}>
+        {questions.map((q) => (
+          <li key={`${q.term}|${q.course}`} className={styles.issueRow} data-severity={q.severity}>
+            <span className={styles.issueSeverity} data-severity={q.severity}>
+              {SEVERITY[q.severity].label}
+            </span>
+            <span className={styles.issueText}>{q.message}</span>
+            <button type="button" className={styles.smallButton} onClick={() => dispatchPlan({ type: "set-course", term: q.term, id: q.course, status: "completed" })}>
+              Finished
+            </button>
+            <button type="button" className={styles.smallButton} onClick={() => dispatchPlan({ type: "set-course", term: q.term, id: q.course, status: "completed", grade: "W" })}>
+              Dropped (W)
+            </button>
+            <button type="button" className={styles.smallButton} onClick={() => onOpenCourse({ id: q.course, term: q.term })}>
+              Add grade
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
