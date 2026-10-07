@@ -164,7 +164,7 @@ export function UngradedQuestions({ plan, onOpenCourse }: { plan: AdvisorPlan; o
   const questions = ungradedPastTermQuestions(plan, new Date());
   if (questions.length === 0) return null;
   return (
-    <section className={styles.programChecks} aria-label="Courses to confirm">
+    <section className={`${styles.programChecks} ${styles.questions}`} aria-label="Courses to confirm">
       <ul className={styles.issueList}>
         {questions.map((q) => (
           <li key={`${q.term}|${q.course}`} className={styles.issueRow} data-severity={q.severity}>
@@ -172,15 +172,17 @@ export function UngradedQuestions({ plan, onOpenCourse }: { plan: AdvisorPlan; o
               {SEVERITY[q.severity].label}
             </span>
             <span className={styles.issueText}>{q.message}</span>
-            <button type="button" className={styles.smallButton} onClick={() => dispatchPlan({ type: "set-course", term: q.term, id: q.course, status: "completed" })}>
-              Finished
-            </button>
-            <button type="button" className={styles.smallButton} onClick={() => dispatchPlan({ type: "set-course", term: q.term, id: q.course, status: "completed", grade: "W" })}>
-              Dropped (W)
-            </button>
-            <button type="button" className={styles.smallButton} onClick={() => onOpenCourse({ id: q.course, term: q.term })}>
-              Add grade
-            </button>
+            <span className={styles.questionActions}>
+              <button type="button" className={styles.smallButton} onClick={() => dispatchPlan({ type: "set-course", term: q.term, id: q.course, status: "completed" })}>
+                Finished
+              </button>
+              <button type="button" className={styles.smallButton} onClick={() => dispatchPlan({ type: "set-course", term: q.term, id: q.course, status: "completed", grade: "W" })}>
+                Dropped (W)
+              </button>
+              <button type="button" className={styles.smallButton} onClick={() => onOpenCourse({ id: q.course, term: q.term })}>
+                Add grade
+              </button>
+            </span>
           </li>
         ))}
       </ul>
