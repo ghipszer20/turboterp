@@ -12,6 +12,7 @@ export function checkerPlan(plan: AdvisorPlan, priorCourses: CreditCourse[]): Pl
       credits: c.credits,
       ...(c.grade ? { grade: c.grade } : {}),
       genEd: c.genEd ?? [],
+      ...(c.genEdCredits !== undefined ? { genEdCredits: c.genEdCredits } : {}),
       source: c.source,
     })),
     ...(plan.mastersCredits !== undefined ? { mastersCredits: plan.mastersCredits } : {}),
