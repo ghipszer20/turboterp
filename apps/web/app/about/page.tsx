@@ -26,14 +26,6 @@ export default function AboutPage() {
         </Card>
       </Section>
 
-      <Section title="About the creator">
-        <Card className={styles.card}>
-          <div className={styles.prose}>
-            <p>{about.bio ?? "Bio coming soon."}</p>
-          </div>
-        </Card>
-      </Section>
-
       <Section title="Open source">
         <Card className={styles.card}>
           {about.githubUrl ? (
