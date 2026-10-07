@@ -37,3 +37,14 @@ describe("labels and header text", () => {
     expect(metText(5, 8, 0)).toBe("5 of 8 requirements met");
   });
 });
+
+describe("displayStatus: a failed or withdrawn attempt isn't done", () => {
+  it("a course failed, then retaken in a planned term, is in progress", () => {
+    const failed: StudentCourse = { id: "A", credits: 3, status: "completed", grade: "F" };
+    expect(displayStatus(result("satisfied", ["A"]), [failed, course("A", "planned")])).toBe("in-progress");
+  });
+  it("a W, then a planned retake, is in progress", () => {
+    const withdrew: StudentCourse = { id: "A", credits: 3, status: "completed", grade: "W" };
+    expect(displayStatus(result("satisfied", ["A"]), [withdrew, course("A", "planned")])).toBe("in-progress");
+  });
+});
