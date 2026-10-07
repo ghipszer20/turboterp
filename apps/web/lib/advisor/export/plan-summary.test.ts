@@ -10,6 +10,10 @@ describe("planSummaryLines", () => {
     });
     expect(lines).toEqual(["Credits earned: 45", "Credits planned: 120", "Computer Science, B.S.: 7 of 10 requirements met, 3 left"]);
   });
+  it("adds the in-progress count when some met rows still count a planned course", () => {
+    const lines = planSummaryLines({ creditsEarned: 0, creditsPlanned: 0, programs: [{ name: "CS", satisfied: 5, total: 10, inProgress: 2 }] });
+    expect(lines[2]).toBe("CS: 5 of 10 requirements met, 2 in progress, 3 left");
+  });
   it("caps lines at 200 characters and 40 lines", () => {
     const programs = Array.from({ length: 60 }, () => ({ name: "x".repeat(300), satisfied: 0, total: 1 }));
     const lines = planSummaryLines({ creditsEarned: 0, creditsPlanned: 0, programs });
