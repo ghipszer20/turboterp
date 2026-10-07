@@ -61,21 +61,19 @@ minor).
 Not encoded because they're posted only in another program's section: CMSC132/INST326 for BMGT302 and
 CMSC424/INST327 for BMGT402 are posted under Information Systems, not Supply Chain or Accounting.
 
-## C: conditional on another program (open)
+## C: conditional on another program (encoded 2026-10-07, `feat/conditional-substitutes`)
 
-These are posted but limited to students in a named program. The engine has no gate for that yet, so the
-ones marked "accepted for everyone" over-accept today:
+`Requirement.substitutes` (`packages/audit/src/audit.ts`): a substitute counts only when one of its `onlyFor`
+program ids is in the same audit (derived from the audited programs, so every call site gets it). Tests:
+`packages/audit/test/conditional-substitutes.test.ts`.
 
-| Program | Substitute | Condition | Today |
+| Program | Substitute | Only for | Before |
 |---|---|---|---|
-| hdev-major | PSYC300 for EDHD306, PSYC200 for QMMS251 | Psychology double majors | accepted for everyone |
-| hdev-major | FMSC302 for EDHD306 | Family Health double majors | not accepted |
-| edhd-minor | FMSC302 for EDHD306 | Family Health majors | accepted for everyone |
-| edhd-minor | PSYC300 for EDHD306 | Psychology or Neuroscience majors | accepted for everyone |
-| bmgt-minors (business analytics) | ECON422/424 for BMGT430 | Economics majors | accepted for everyone |
-| bmgt-minors (business analytics) | CMSC320 for BMGT404 | Computer Science majors | accepted for everyone |
-| bmgt-core | MATH136 for MATH120/140 | taken for a previous major | accepted for everyone (past majors aren't recorded) |
+| hdev-major | PSYC300 for EDHD306, PSYC200 for QMMS251 | psyc-major-ba/bs | not accepted (only in the elective pool) |
+| hdev-major | FMSC302 for EDHD306 | fmsc-major | not accepted |
+| edhd-minor | FMSC302 for EDHD306 | fmsc-major | accepted for everyone |
+| edhd-minor | PSYC300 for EDHD306 | psyc-major-ba/bs, neur-major | accepted for everyone |
+| bmgt-minors (business analytics) | ECON422/424 for BMGT430 | econ-major-ba/bs | accepted for everyone |
+| bmgt-minors (business analytics) | CMSC320 for BMGT404 | cmsc-major | accepted for everyone |
 
-Plan: a builder adds a per-requirement conditional substitute (course, replaces, `onlyFor` in the same shape
-as `ProgramMeta.onlyOpenTo`), the web app passes the student's declared majors into `AuditOptions`, and the
-rows above move onto it. MATH136's "previous major" stays as it is (unknowable from the plan).
+Left as is: bmgt-core's MATH136 for MATH120/140 ("taken for a previous major"; past majors aren't recorded).
