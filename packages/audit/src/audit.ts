@@ -199,7 +199,6 @@ export type StudentCourse = {
   genEdCredits?: number;
   /** The credit comes from an AP or IB exam (see Program.examLimits). */
   exam?: true;
-  /** Credits this course brings to Gen Ed credit minimums when it differs from `credits`: a lab-science lecture whose paired lab is on record carries both. */ genEdCredits?: number;
 };
 
 /** Every literal course id one requirement mentions -- never a department/number-range filter's
@@ -469,6 +468,8 @@ export async function auditStudent(
   const y = (p: number, r: number) => `y_${p}_${r}`;
   const binaries = [...programs.flatMap((pr, p) => pr.requirements.map((_, r) => y(p, r))), ...pairs.map((q) => q.name)];
   const constraints: string[] = [];
+  /** Courses past `count` on a minCredits row: penalized in the objective. */
+  const extras: string[] = [];
 
   // Overlay requirements count courses without using them up, so they're left
   // out of the "once" and sharing limits below.
@@ -643,6 +644,10 @@ export async function auditStudent(
         constraints.push(` mincr_${id}: ${credit} - ${req.minCredits} ${y(p, r)} >= 0`);
         constraints.push(` mincap_${id}: ${credit} <= ${req.minCredits + Math.max(...mine.map(cr)) - 1}`);
         constraints.push(` cap_${id}_n: ${sum(mine)} <= ${Math.max(n, Math.ceil(req.minCredits / least))}`);
+        // Each course past `count` costs more than its course-use reward, so one is added only when
+        // the credits need it (never two 3-credit courses plus a redundant third).
+        constraints.push(` extra_${id}: ${sum(mine)} - e_${id} <= ${n}`);
+        extras.push(`e_${id}`);
       }
 
       if (req.kind === "choose") {
@@ -692,7 +697,9 @@ export async function auditStudent(
     }),
     // Below a requirement (1000), above any course-use tie-break: never give up a requirement for it.
     ...uniqueGoal.map((u) => `500 ${u}`),
-  ].join(" + ");
+  ]
+    .join(" + ")
+    .concat(extras.map((e) => ` - 2 ${e}`).join(""));
   const model = ["Maximize", ` obj: ${objective || "0 y_0_0"}`, "Subject To", ...constraints, "Binary", ` ${binaries.join(" ")}`, "End"];
 
   const highs = await getSolver();

@@ -64,3 +64,20 @@ describe("other rules", () => {
     expect(await status([c("FFFF100", 3, ["SCIS"]), c("FFFF101", 3, ["SCIS"])], "scis")).not.toBe("satisfied");
   });
 });
+
+describe("credit-minimum rows take no more courses than they need", () => {
+  const assigned = async (courses: StudentCourse[], id: string) =>
+    (await auditProgram(genEd, courses)).requirements.find((r) => r.id === id)!.assigned;
+  it("Natural Sciences: a 4-credit lab course and one 3-credit course, not a third", async () => {
+    const got = await assigned([c("LABS100", 3, ["DSNL"], 4), c("NATS100", 3, ["DSNS"]), c("NATS200", 3, ["DSNS"])], "natsci");
+    expect(got).toHaveLength(2);
+  });
+  it("Scholarship in Practice: two 3-credit courses, not a third", async () => {
+    const got = await assigned([c("AAAA100", 3, ["DSSP"]), c("AAAA101", 3, ["DSSP"]), c("AAAA102", 3, ["DSSP"])], "dssp");
+    expect(got).toHaveLength(2);
+  });
+  it("still takes a third course when two fall short of the credits", async () => {
+    const got = await assigned([c("AAAA100", 1, ["DSSP"]), c("AAAA101", 2, ["DSSP"]), c("AAAA102", 3, ["DSSP"])], "dssp");
+    expect(got).toHaveLength(3);
+  });
+});
