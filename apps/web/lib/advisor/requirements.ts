@@ -16,6 +16,8 @@ export type GapContext = {
   courses: StudentCourse[];
   /** Courses in the catalog, to suggest from. */
   catalog: { id: string; genEd: string[] }[];
+  /** Exam awards that offer a choice of courses, to hint at an option that would count here. */
+  choiceAwards?: ChoiceAward[];
 };
 
 const MAX_SUGGESTIONS = 6;
@@ -25,10 +27,31 @@ function memberText(m: SetMember): string {
   return typeof m === "string" ? m : `${m.count} ${filterText(m.from, m.count)}`;
 }
 
+/** An exam award offering "this course or that one": its source label, the pick (if made) and the options. */
+export type ChoiceAward = { source: string; picked: string | null; options: { id: string; genEd: string[] }[] };
+
+/** Says when another option of a choice award would count toward `req` and the pick doesn't. */
+function choiceHints(req: Requirement, awards: ChoiceAward[]): string[] {
+  const codes = "from" in req && req.from.genEd ? req.from.genEd : [];
+  const listed = req.kind === "course" ? req.options : [];
+  return awards.flatMap((award) => {
+    const pick = award.options.find((o) => o.id === award.picked);
+    // Unpicked, only what every option shares counts, so an option offering more is worth naming.
+    const base = pick ? pick.genEd : award.options.reduce<string[]>((s, o, i) => (i === 0 ? [...o.genEd] : s.filter((g) => o.genEd.includes(g))), []);
+    const better = award.options.filter(
+      (o) => o.id !== award.picked && ((!pick || !listed.includes(pick.id)) && listed.includes(o.id) || o.genEd.some((g) => codes.includes(g) && !base.includes(g))),
+    );
+    if (better.length === 0) return [];
+    return [`Your ${award.source} credit could be ${listing(better.map((o) => o.id), "or")}, which also counts here. Check which course UMD posted.`];
+  });
+}
+
 export function describeGap(req: Requirement, result: RequirementResult, ctx: GapContext): Gap | null {
   if (result.status === "satisfied") return null;
   const gap = gapFor(req, result, ctx);
-  return req.advisorMayApprove ? { ...gap, note: ADVISOR_NOTE } : gap;
+  const hints = choiceHints(req, ctx.choiceAwards ?? []);
+  const note = [...hints, ...(req.advisorMayApprove ? [ADVISOR_NOTE] : [])].join(" ");
+  return note ? { ...gap, note } : gap;
 }
 
 function gapFor(req: Requirement, result: RequirementResult, ctx: GapContext): Gap {

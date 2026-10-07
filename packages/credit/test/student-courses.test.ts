@@ -46,7 +46,9 @@ describe("toStudentCourses", () => {
   it("holds back a choice until the student picks a course", () => {
     const history = creditForAp("United States History", 4);
     expect(toStudentCourses([history])).toEqual({
-      courses: [],
+      courses: [
+        { id: "DSHS:AP United States History", credits: 3, status: "completed", genEd: ["DSHS", "DSHU"], source: "AP United States History (4)" },
+      ],
       needsChoice: [{ source: "AP United States History (4)", credits: 3, options: ["HIST200", "HIST201"] }],
       notCounted: [],
     });

@@ -3,7 +3,39 @@ import { cmscMajor } from "@turboterp/audit/programs/cmsc-major-2026-27.ts";
 import { genEd } from "@turboterp/audit/programs/gen-ed-2026-27.ts";
 import { mathMajorApplied } from "@turboterp/audit/programs/math-major-applied-2026-27.ts";
 import { describe, expect, it } from "vitest";
+import { emptyPrior, type PriorInputs } from "../advisor/plan-state";
+import { choiceAwardsOf, computePriorCredit } from "../advisor/prior-credit";
 import { describeGap, filterText, genEdName, prerequisiteText } from "../advisor/requirements";
+
+describe("describeGap: exam credit that offers a choice", () => {
+  // The Gen Ed row for Understanding Plural Societies, found by its code so a row rename can't break this.
+  const plural =
+    genEd.requirements.find((r) => r.kind === "choose" && r.from.genEd?.length === 1 && r.from.genEd[0] === "DVUP") ??
+    genEd.requirements.find((r) => /plural/i.test(r.name))!;
+  const inputs = (pick?: string): PriorInputs => ({
+    ...emptyPrior(),
+    ap: [{ key: "a", exam: "United States History", score: 4 }],
+    choices: pick ? { "AP United States History (4)": pick } : {},
+  });
+  const gapFor = (pick?: string) => {
+    const credit = computePriorCredit(inputs(pick), () => []);
+    return describeGap(plural, { id: plural.id, name: plural.name, status: "missing", assigned: [] }, { courses: credit.courses, catalog: [], choiceAwards: choiceAwardsOf(credit.entries) });
+  };
+
+  it("points to the other option when the picked course lacks the code", () => {
+    const text = JSON.stringify(gapFor("HIST200"));
+    expect(text).toContain("HIST201");
+    expect(text).toContain("AP United States History (4)");
+  });
+
+  it("says the same while the choice is unpicked", () => {
+    expect(JSON.stringify(gapFor())).toContain("HIST201");
+  });
+
+  it("has no hint when the pick already carries the code", () => {
+    expect(JSON.stringify(gapFor("HIST201"))).not.toContain("HIST20");
+  });
+});
 
 const req = (program: { requirements: Requirement[] }, id: string) => program.requirements.find((r) => r.id === id)!;
 const result = (r: Requirement, status: RequirementResult["status"], assigned: string[] = []): RequirementResult => ({

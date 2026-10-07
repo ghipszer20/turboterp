@@ -27,7 +27,7 @@ import {
 import { checkerPlan } from "./checker";
 import type { AdvisorPlan } from "./plan-state";
 import { AUTOMATIC_PROGRAMS, auditedPrograms, collegeLayers, degreeModeOf, noticeCandidates, studentDegrees } from "./programs";
-import { describeGap, type Gap } from "./requirements";
+import { describeGap, type ChoiceAward, type Gap } from "./requirements";
 import { matriculationTermId } from "./terms";
 import { resolvedPlan } from "./track-plan";
 
@@ -78,7 +78,7 @@ function gradedCourses(plan: Plan): GradedCourse[] {
   return [...prior, ...term];
 }
 
-export async function runAnalysis(input: { plan: AdvisorPlan; catalog: PlanCatalog; priorCourses: CreditCourse[] }): Promise<Analysis> {
+export async function runAnalysis(input: { plan: AdvisorPlan; catalog: PlanCatalog; priorCourses: CreditCourse[]; choiceAwards?: ChoiceAward[] }): Promise<Analysis> {
   const t = performance.now();
   const plan = checkerPlan(input.plan, input.priorCourses);
   const courses = planCourses(plan, input.catalog);
@@ -103,10 +103,11 @@ export async function runAnalysis(input: { plan: AdvisorPlan; catalog: PlanCatal
   // programs first, then Gen Ed and the university layers -- the order `programs` is already in.
   const results = degrees ? programs.map((p) => degrees.audits.find((a) => a.program.id === p.id)!.result) : solveResults!;
   const catalogList = [...input.catalog.values()].map((c) => ({ id: c.id, genEd: c.genEd }));
+  const gapContext = { courses, catalog: catalogList, choiceAwards: input.choiceAwards ?? [] };
   const audits = programs.map((program, p): ProgramAudit => {
     const requirements = program.requirements.map((requirement, r) => {
       const result = results[p]!.requirements[r]!;
-      return { requirement, result, gap: describeGap(requirement, result, { courses, catalog: catalogList }) };
+      return { requirement, result, gap: describeGap(requirement, result, gapContext) };
     });
     const gpa = results[p]!.requirements.find((x) => x.id === PROGRAM_GPA_ID) ?? null;
     const satisfied = requirements.filter((x) => x.result.status === "satisfied").length + (gpa?.status === "satisfied" ? 1 : 0);
@@ -131,7 +132,7 @@ export async function runAnalysis(input: { plan: AdvisorPlan; catalog: PlanCatal
       const program = trackProgram(track);
       const requirements = program.requirements.map((requirement, r) => {
         const reqResult = result.audit.requirements[r]!;
-        return { requirement, result: reqResult, gap: describeGap(requirement, reqResult, { courses, catalog: catalogList }) };
+        return { requirement, result: reqResult, gap: describeGap(requirement, reqResult, gapContext) };
       });
       return {
         track,

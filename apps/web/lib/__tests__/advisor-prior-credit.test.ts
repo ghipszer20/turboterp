@@ -56,11 +56,15 @@ describe("computePriorCredit: AP", () => {
     const inputs = prior({ ap: [{ key: "a", exam: "Art History", score: 5 }] });
     const before = computePriorCredit(inputs, noGenEd);
     expect(before.needsChoice).toEqual([{ source: "AP Art History (5)", credits: 3, options: ["ARTH200", "ARTH201"] }]);
-    expect(before.entries[0]!.earns).toEqual([{ kind: "choice", credits: 3, options: ["ARTH200", "ARTH201"], picked: null }]);
+    const options = [
+      { id: "ARTH200", genEd: expect.any(Array) },
+      { id: "ARTH201", genEd: expect.any(Array) },
+    ];
+    expect(before.entries[0]!.earns).toEqual([{ kind: "choice", credits: 3, options, picked: null }]);
     const after = computePriorCredit({ ...inputs, choices: { "AP Art History (5)": "ARTH201" } }, noGenEd);
     expect(after.needsChoice).toEqual([]);
     expect(after.courses.map((c) => c.id)).toEqual(["ARTH201"]);
-    expect(after.entries[0]!.earns).toEqual([{ kind: "choice", credits: 3, options: ["ARTH200", "ARTH201"], picked: "ARTH201" }]);
+    expect(after.entries[0]!.earns).toEqual([{ kind: "choice", credits: 3, options, picked: "ARTH201" }]);
   });
 
   it("keeps a row's error to that row", () => {

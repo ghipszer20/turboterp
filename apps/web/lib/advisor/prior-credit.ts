@@ -16,10 +16,11 @@ import {
   type PendingChoice,
 } from "@turboterp/credit";
 import type { PriorInputs } from "./plan-state";
+import type { ChoiceAward } from "./requirements";
 
 export type Earn =
   | { kind: "course"; id: string; credits: number; genEd: string[] }
-  | { kind: "choice"; credits: number; options: string[]; picked: string | null }
+  | { kind: "choice"; credits: number; options: { id: string; genEd: string[] }[]; picked: string | null }
   | { kind: "generic"; label: string; credits: number; genEd: string[] };
 
 type EntryStatus = "counted" | "no-credit" | "not-counted" | "overkill" | "error";
@@ -54,9 +55,9 @@ function earnsOf(award: CreditAward, choices: Record<string, string>): Earn[] {
   return award.parts.map((part): Earn => {
     if (part.kind === "course") return { kind: "course", id: part.id, credits: part.credits, genEd: part.genEd };
     if (part.kind === "choice") {
-      const options = part.options.map((o) => o.id);
+      const options = part.options.map((o) => ({ id: o.id, genEd: o.genEd }));
       const picked = choices[award.source];
-      return { kind: "choice", credits: part.credits, options, picked: picked && options.includes(picked) ? picked : null };
+      return { kind: "choice", credits: part.credits, options, picked: picked && options.some((o) => o.id === picked) ? picked : null };
     }
     return { kind: "generic", label: part.label === "Lower Level Elective" ? "Elective credit" : `${part.label}`, credits: part.credits, genEd: part.genEd };
   });
@@ -165,6 +166,13 @@ export function computePriorCredit(inputs: PriorInputs, genEdOf: (id: string) =>
     notCounted,
     totalCredits: merged.courses.reduce((t, c) => t + c.credits, 0),
   };
+}
+
+/** The exam awards that offer a choice of courses, for the audit's "it could be ..." hints. */
+export function choiceAwardsOf(entries: PriorEntry[]): ChoiceAward[] {
+  return entries.flatMap((e) =>
+    e.earns.flatMap((earn) => (earn.kind === "choice" ? [{ source: e.source, picked: earn.picked, options: earn.options }] : [])),
+  );
 }
 
 export function ibLevelsFor(exam: string): IbLevel[] {
