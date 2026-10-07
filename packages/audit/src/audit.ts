@@ -199,7 +199,24 @@ export type StudentCourse = {
   genEdCredits?: number;
   /** The credit comes from an AP or IB exam (see Program.examLimits). */
   exam?: true;
+  /**
+   * The same course under another prefix (MATH456 is CMSC456; owner ruling 2026-10-07). It counts
+   * everywhere the course's own id does. Credit-only twins are never listed here.
+   */
+  crossListed?: string[];
+  /**
+   * The course's "Formerly" numbers. They count only where a requirement names the course
+   * explicitly (a course list), never in a department or number-range filter.
+   */
+  renumbered?: string[];
 };
+
+type Aliased = Pick<StudentCourse, "id" | "genEd" | "crossListed" | "renumbered">;
+
+/** The course's id and cross-listed codes: what department and number-range filters see. */
+const filterCodes = (course: Aliased): string[] => [course.id, ...(course.crossListed ?? [])];
+/** Also the renumbered codes: what a requirement that names courses explicitly sees. */
+const namedCodes = (course: Aliased): string[] => [...filterCodes(course), ...(course.renumbered ?? [])];
 
 /** Every literal course id one requirement mentions -- never a department/number-range filter's
  * courses, since matching those needs the filter machinery, not a fixed id list. */
@@ -297,23 +314,26 @@ function inNumberRange(n: number, min: number, max: number, noGraduateCourses = 
   return (n >= min && n <= max) || rangeTakesGraduateCourses(min, max);
 }
 
-export function matchesFilter(filter: CourseFilter, course: Pick<StudentCourse, "id" | "genEd">): boolean {
-  const courseId = course.id;
-  if (filter.exclude?.includes(courseId)) return false;
+export function matchesFilter(filter: CourseFilter, course: Aliased): boolean {
+  const codes = filterCodes(course);
+  // An excluded code rules the course out whichever code it carries (the ML "mathxxx" exclusion).
+  if (filter.exclude && codes.some((code) => filter.exclude!.includes(code))) return false;
   if (filter.anyCourse) return true;
-  if (filter.courses?.includes(courseId)) return true;
+  if (filter.courses && namedCodes(course).some((code) => filter.courses!.includes(code))) return true;
   if (filter.genEd) return filter.genEd.some((code) => course.genEd?.includes(code));
-  const m = COURSE_ID.exec(courseId);
-  if (!m) return false;
-  if (!filter.departments) return false;
-  if (!filter.departments.includes(m[1]!)) return false;
-  const n = Number(m[2]);
-  return inNumberRange(n, filter.minNumber ?? 0, filter.maxNumber ?? 999, filter.noGraduateCourses);
+  const departments = filter.departments;
+  if (!departments) return false;
+  return codes.some((code) => {
+    const m = COURSE_ID.exec(code);
+    if (!m || !departments.includes(m[1]!)) return false;
+    return inNumberRange(Number(m[2]), filter.minNumber ?? 0, filter.maxNumber ?? 999, filter.noGraduateCourses);
+  });
 }
 
 /** Whether a course belongs to a distribution area: it is in the area's list or matches its filter. */
-export function inArea(area: Area, course: Pick<StudentCourse, "id" | "genEd">): boolean {
-  return (area.courses?.includes(course.id) ?? false) || (area.from ? matchesFilter(area.from, course) : false);
+export function inArea(area: Area, course: Aliased): boolean {
+  const codes = namedCodes(course);
+  return codes.some((code) => area.courses?.includes(code)) || (area.from ? matchesFilter(area.from, course) : false);
 }
 
 /** How many courses completing a set takes. */
@@ -352,11 +372,14 @@ function pairsFor(req: Requirement, p: number, r: number, course: StudentCourse,
   const base = `x_${p}_${c}_${r}`;
   const plain = (weight: number): Pair[] => [{ p, c, r, area: null, department: null, name: base, weight }];
   if (req.kind === "openSlot") return [];
-  if (req.kind === "course") return req.options.includes(course.id) ? plain(1) : [];
+  if (req.kind === "course") return namedCodes(course).some((code) => req.options.includes(code)) ? plain(1) : [];
   if (req.kind === "choose") return matchesFilter(req.from, course) ? plain(req.credits ? course.credits : 1) : [];
   if (req.kind === "concentration") {
     const m = COURSE_ID.exec(course.id);
-    if (!m || req.excludeDepartments?.includes(m[1]!) || req.exclude?.includes(course.id)) return [];
+    if (!m) return [];
+    // A course cross-listed with an excluded department (AMSC460 = CMSC460) is out, whichever code it carries.
+    const barred = filterCodes(course).some((code) => req.exclude?.includes(code) || req.excludeDepartments?.includes(COURSE_ID.exec(code)?.[1] ?? ""));
+    if (barred) return [];
     const n = Number(m[2]);
     if (!inNumberRange(n, req.minNumber, req.maxNumber, req.noGraduateCourses)) return [];
     const dept = m[1]!;
@@ -370,7 +393,7 @@ function pairsFor(req: Requirement, p: number, r: number, course: StudentCourse,
   if (req.kind === "sets") {
     return req.options.flatMap((option, k) =>
       option.flatMap((m, j): Pair[] => {
-        if (typeof m === "string") return m === course.id ? [{ p, c, r, area: k, member: j, department: null, name: `${base}_${k}`, weight: 1 }] : [];
+        if (typeof m === "string") return namedCodes(course).includes(m) ? [{ p, c, r, area: k, member: j, department: null, name: `${base}_${k}`, weight: 1 }] : [];
         return matchesFilter(m.from, course) ? [{ p, c, r, area: k, member: j, department: null, name: `${base}_${k}_f${j}`, weight: 1 }] : [];
       }),
     );
@@ -481,6 +504,17 @@ export async function auditStudent(
       const mine = pairs.filter((q) => q.p === p && q.c === c && consumes(q));
       if (mine.length > 1) constraints.push(` once_${p}_${c}: ${mine.map((q) => q.name).join(" + ")} <= 1`);
     }),
+  );
+
+  // A course counts at most once toward one requirement, through any code or area (an overlay
+  // distribution can list a course in two areas, or match it through two cross-listed codes).
+  programs.forEach((program, p) =>
+    program.requirements.forEach((_, r) =>
+      courses.forEach((_, c) => {
+        const mine = pairs.filter((q) => q.p === p && q.r === r && q.c === c);
+        if (mine.length > 1) constraints.push(` onceReq_${p}_${r}_${c}: ${mine.map((q) => q.name).join(" + ")} <= 1`);
+      }),
+    ),
   );
 
   // An overlay with `within` counts a course only if it also fills one of those requirements.
@@ -653,7 +687,7 @@ export async function auditStudent(
       if (req.kind === "choose") {
         // At most one course of each "or" group counts.
         req.alternatives?.forEach((group, g) => {
-          const inGroup = mine.filter((q) => group.includes(courses[q.c]!.id));
+          const inGroup = mine.filter((q) => namedCodes(courses[q.c]!).some((code) => group.includes(code)));
           if (inGroup.length > 1) constraints.push(` alt_${id}_${g}: ${inGroup.map((q) => q.name).join(" + ")} <= 1`);
         });
       }

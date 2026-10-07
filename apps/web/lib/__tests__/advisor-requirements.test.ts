@@ -115,6 +115,31 @@ describe("describeGap", () => {
     expect(gap.suggestions.slice(0, 2)).toEqual(["CMSC412", "CMSC433"]);
   });
 
+  it("10. doesn't suggest CMSC460 to a student who holds its cross-listed AMSC460, and counts MATH456 in Area 4", () => {
+    const r = req(cmscMajor, "electives");
+    const held: StudentCourse[] = [{ id: "AMSC460", credits: 3, status: "planned", genEd: [], crossListed: ["CMSC460"] }];
+    const gap = describeGap(r, result(r, "partial", ["AMSC460"]), ctx(held))!;
+    expect(gap.suggestions).not.toContain("CMSC460");
+    expect(gap.suggestions).toContain("CMSC420");
+
+    const areas: Requirement = {
+      kind: "distribution",
+      id: "areas",
+      name: "areas",
+      count: 3,
+      minAreas: 3,
+      maxPerArea: 1,
+      areas: [
+        { name: "Area 2", courses: ["CMSC420", "CMSC421"] },
+        { name: "Area 4", courses: ["CMSC451", "CMSC456"] },
+      ],
+    };
+    const math456: StudentCourse = { id: "MATH456", credits: 3, status: "planned", genEd: [], crossListed: ["CMSC456"] };
+    const areaGap = describeGap(areas, result(areas, "partial", ["MATH456"]), ctx([math456]))!;
+    expect(areaGap.suggestions).toContain("CMSC420");
+    expect(areaGap.suggestions).not.toContain("CMSC451");
+  });
+
   it("still suggests a required course whose only completed attempt was graded F (it earns no credit)", () => {
     const r = req(cmscMajor, "cmsc351");
     const failed: StudentCourse[] = [{ id: "CMSC351", credits: 3, status: "completed", grade: "F" }];
