@@ -9,6 +9,7 @@
 import { apExamNames } from "@turboterp/credit";
 import { useMemo, useState } from "react";
 import { selectApLines } from "@/lib/advisor/transcript-ap-select";
+import { selectDualLines, selectIbLines } from "@/lib/advisor/transcript-ib-select";
 import { applyTranscriptImport, type SelectedAp, type SelectedCourse } from "@/lib/advisor/transcript-apply";
 import type { AdvisorPlan } from "@/lib/advisor/plan-state";
 import { parseTranscriptText, type ParsedCourse, type ParsedTranscript, type Source } from "@/lib/advisor/transcript-parse";
@@ -160,6 +161,13 @@ function ReviewStage({
   const gpaFound = parsed.cumulativeGpa;
   const [gpaChecked, setGpaChecked] = useState(true);
   const [apChecked, setApChecked] = useState<boolean[]>(() => matchedAp.map(() => true));
+  const ibSelection = useMemo(() => selectIbLines(parsed.ibLines), [parsed.ibLines]);
+  const dualSelection = useMemo(() => selectDualLines(parsed.dualLines), [parsed.dualLines]);
+  const matchedIb = ibSelection.matched;
+  const matchedDual = dualSelection.matched;
+  const [ibChecked, setIbChecked] = useState<boolean[]>(() => matchedIb.map(() => true));
+  const [dualChecked, setDualChecked] = useState<boolean[]>(() => matchedDual.map(() => true));
+  const notRecognized = [...unmatchedAp, ...ibSelection.unmatched, ...dualSelection.unmatched];
 
   const termGroups = useMemo(() => {
     const order: string[] = [];
@@ -174,7 +182,7 @@ function ReviewStage({
     return order.map((term) => ({ term, rows: byTerm.get(term)! }));
   }, [parsed.courses]);
 
-  const anyChecked = courseChecked.some(Boolean) || apChecked.some(Boolean) || (gpaFound !== null && gpaChecked);
+  const anyChecked = courseChecked.some(Boolean) || apChecked.some(Boolean) || ibChecked.some(Boolean) || dualChecked.some(Boolean) || (gpaFound !== null && gpaChecked);
 
   const confirm = () => {
     const courses: SelectedCourse[] = parsed.courses
@@ -186,8 +194,12 @@ function ReviewStage({
         credits: c.earnedCredits ?? c.attemptedCredits,
         status: c.status,
       }));
-    const ap: SelectedAp[] = matchedAp.filter((_, i) => apChecked[i]).map((a) => ({ exam: a.exam, score: a.score }));
-    onDone(applyTranscriptImport(plan, { courses, ap, gpa: gpaFound && gpaChecked ? gpaFound.value : null }));
+    const ap: SelectedAp[] = matchedAp.filter((_, i) => apChecked[i]).map((a) => ({ exam: a.exam, score: a.score, ...(a.pick ? { pick: a.pick } : {}) }));
+    const ib = matchedIb.filter((_, i) => ibChecked[i]).map((b) => ({ exam: b.exam, level: b.level, score: b.score }));
+    const dual = matchedDual
+      .filter((_, i) => dualChecked[i])
+      .map((d) => ({ institution: d.institution, course: d.course, credits: d.credits, umd: d.umd, elective: d.elective }));
+    onDone(applyTranscriptImport(plan, { courses, ap, ib, dual, gpa: gpaFound && gpaChecked ? gpaFound.value : null }));
   };
 
   const toggle = (arr: boolean[], set: (v: boolean[]) => void, i: number) => set(arr.map((v, j) => (i === j ? !v : v)));
@@ -206,7 +218,7 @@ function ReviewStage({
         text layer) and repaired automatically -- worth a second look. Nothing is added to your plan until you confirm below.
       </p>
 
-      {termGroups.length === 0 && matchedAp.length === 0 && unmatchedAp.length === 0 ? (
+      {termGroups.length === 0 && matchedAp.length === 0 && matchedIb.length === 0 && matchedDual.length === 0 && notRecognized.length === 0 ? (
         <p className={styles.cardNote}>Nothing recognizable was found in that text.</p>
       ) : null}
 
@@ -283,6 +295,56 @@ function ReviewStage({
         </section>
       ) : null}
 
+      {matchedIb.length > 0 ? (
+        <section className={styles.card}>
+          <h2 className={styles.cardTitle}>IB exams</h2>
+          <ul className={styles.entryList}>
+            {matchedIb.map((b, i) => (
+              <li key={i} className={styles.entryRow}>
+                <label className={styles.checkRow}>
+                  <input type="checkbox" checked={ibChecked[i]} onChange={() => toggle(ibChecked, setIbChecked, i)} />
+                  <div className={styles.entryHead}>
+                    <span className={styles.entrySource}>
+                      IB {b.exam} {b.level} ({b.score})
+                    </span>
+                    {b.flagged ? (
+                      <span className={styles.issueSeverity} data-severity="confirm">
+                        Check this
+                      </span>
+                    ) : null}
+                  </div>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      {matchedDual.length > 0 ? (
+        <section className={styles.card}>
+          <h2 className={styles.cardTitle}>College credit</h2>
+          <ul className={styles.entryList}>
+            {matchedDual.map((d, i) => (
+              <li key={i} className={styles.entryRow}>
+                <label className={styles.checkRow}>
+                  <input type="checkbox" checked={dualChecked[i]} onChange={() => toggle(dualChecked, setDualChecked, i)} />
+                  <div className={styles.entryHead}>
+                    <span className={styles.entrySource}>
+                      {d.institution}: {d.course} {d.title} ({d.credits} credits, {d.elective ? "elective" : d.umd})
+                    </span>
+                    {d.flagged ? (
+                      <span className={styles.issueSeverity} data-severity="confirm">
+                        Check this
+                      </span>
+                    ) : null}
+                  </div>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
       {infoAp.length > 0 ? (
         <section className={styles.card} aria-label="AP exam information">
           <h2 className={styles.cardTitle}>Also on the transcript</h2>
@@ -304,15 +366,15 @@ function ReviewStage({
         </section>
       ) : null}
 
-      {unmatchedAp.length > 0 ? (
-        <section className={styles.card} aria-label="AP exams not recognized">
+      {notRecognized.length > 0 ? (
+        <section className={styles.card} aria-label="Credit not recognized">
           <h2 className={styles.cardTitle}>Not recognized</h2>
           <p className={styles.cardNote}>
-            Couldn&apos;t match these to an exam on UMD&apos;s AP chart -- add them by hand in Prior credit if they&apos;re
-            real.
+            Couldn&apos;t match these to UMD&apos;s AP or IB charts, or they carry no credit -- add them by hand in Prior
+            credit if they&apos;re real.
           </p>
           <ul className={styles.entryList}>
-            {unmatchedAp.map((a, i) => (
+            {notRecognized.map((a, i) => (
               <li key={i} className={styles.entryRow}>
                 {a.raw}
               </li>
