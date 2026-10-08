@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi, type Mock } from "vitest";
 import { createSyncEngine } from "../engine";
 import type { DocKind, Remote, SaveResult } from "../remote";
 import type { MetaStore, SyncMeta } from "../meta";
@@ -41,7 +41,10 @@ function setup(opts: { local?: Partial<Record<DocKind, string>>; server?: Partia
         validate: vi.fn(() => valid.value),
       },
     ]),
-  ) as Record<DocKind, { read(): string | null; replace: ReturnType<typeof vi.fn>; validate: ReturnType<typeof vi.fn> }>;
+  ) as unknown as Record<
+    DocKind,
+    { read(): string | null; replace: Mock<(raw: string | null) => void>; validate: Mock<(raw: string) => boolean> }
+  >;
 
   let onlineCb: (() => void) | null = null;
   const onAsk = vi.fn();
