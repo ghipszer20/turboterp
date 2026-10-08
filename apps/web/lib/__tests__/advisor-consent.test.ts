@@ -38,3 +38,11 @@ describe("hasConsent", () => {
     expect(hasConsent(parseConsent(JSON.stringify({ ...record, name: "" })))).toBe(false);
   });
 });
+
+describe("parseConsent extra fields", () => {
+  it("keeps deviceId and recorded and still accepts old records", () => {
+    const base = { name: "Ada Lovelace", acceptedAt: "2026-10-08T00:00:00Z", version: CONSENT_VERSION };
+    expect(parseConsent(JSON.stringify({ ...base, deviceId: "d", recorded: true }))).toEqual({ ...base, deviceId: "d", recorded: true });
+    expect(parseConsent(JSON.stringify(base))).toEqual(base);
+  });
+});
