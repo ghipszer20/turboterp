@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Nav } from "@/components/Nav";
+import { SyncProvider } from "@/lib/sync/SyncProvider";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import "./globals.css";
 
@@ -36,8 +37,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body>
-        <Nav />
-        <div className="app-content">{children}</div>
+        <SyncProvider>
+          <Nav />
+          <div className="app-content">{children}</div>
+        </SyncProvider>
       </body>
     </html>
   );

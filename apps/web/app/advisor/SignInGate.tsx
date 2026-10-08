@@ -5,6 +5,9 @@ import { authConfigured, getAuthClient } from "@/lib/auth/client";
 import { emailProblem, sendProblem } from "@/lib/auth/email";
 import { accountControl } from "@/lib/auth/session-state";
 import { useSession } from "@/lib/auth/use-session";
+import { getAppSync } from "@/lib/sync/app-sync";
+import { statusText } from "@/lib/sync/status";
+import { useSaveStatus } from "@/lib/sync/use-sync";
 import styles from "./advisor.module.css";
 
 /** Optional sign-in by emailed link, opened from the Advisor header. Any email address works. */
@@ -80,6 +83,16 @@ function SignInCard({ onClose }: { onClose: () => void }) {
   );
 }
 
+/** "Saved to your account" / "Saving…" / the could-not-save note, shown next to the account email. */
+function SaveStatusLine() {
+  const status = useSaveStatus();
+  return (
+    <p className={styles.fine} role="status">
+      {statusText(status)}
+    </p>
+  );
+}
+
 /** Advisor header account UI: a quiet "Sign in" (opens the card below) or the signed-in address and "Sign out". */
 export function AccountLine() {
   const session = useSession();
@@ -87,14 +100,18 @@ export function AccountLine() {
   const control = accountControl(authConfigured(), session.status);
   if (control === "none") return null;
   if (control === "account") {
-    const signOut = () => void getAuthClient().then((c) => c.auth.signOut());
+    // The synced copies leave this browser before the session ends (shared computers).
+    const signOut = () => void getAppSync().signOutAndClear();
     return (
-      <p className={styles.fine}>
-        {session.email}{" "}
-        <button type="button" className={styles.linkButton} onClick={signOut}>
-          Sign out
-        </button>
-      </p>
+      <>
+        <p className={styles.fine}>
+          {session.email}{" "}
+          <button type="button" className={styles.linkButton} onClick={signOut}>
+            Sign out
+          </button>
+        </p>
+        <SaveStatusLine />
+      </>
     );
   }
   return open ? (
