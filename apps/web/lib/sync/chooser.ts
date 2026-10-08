@@ -11,7 +11,9 @@ const NOUN: Record<DocKind, string> = { plan: "plan", schedule: "schedule", regi
 export function chooserCopy(kind: DocKind, noRemote: boolean) {
   const n = NOUN[kind];
   return {
-    title: `Your ${n} is different on this device and in your account.`,
+    title: noRemote
+      ? `This device has a ${n} that isn't saved to your account. It may belong to someone who used this browser before.`
+      : `Your ${n} is different on this device and in your account.`,
     keepLocal: `Keep this device's ${n}`,
     keepRemote: noRemote ? "Remove it from this device" : `Use the ${n} saved to your account`,
     confirm: (choice: Choice) =>

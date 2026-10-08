@@ -36,6 +36,9 @@ describe("chooser flow", () => {
     expect(chooserCopy("schedule", false).confirm("local")).toBe("Are you sure you want to delete the other copy of your schedule?");
     expect(chooserCopy("registration", false).confirm("remote")).toBe("Are you sure you want to delete the other copy of your registration prep?");
     expect(chooserCopy("plan", false).title).toBe("Your plan is different on this device and in your account.");
+    expect(chooserCopy("plan", true).title).toBe(
+      "This device has a plan that isn't saved to your account. It may belong to someone who used this browser before.",
+    );
     expect(chooserCopy("plan", false).keepLocal).toBe("Keep this device's plan");
     expect(chooserCopy("plan", false).keepRemote).toBe("Use the plan saved to your account");
     expect(chooserCopy("plan", true).keepRemote).toBe("Remove it from this device");
