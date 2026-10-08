@@ -42,6 +42,18 @@ export const emptySaved = (term: string): SavedSchedule => ({
 const isPicks = (x: unknown): x is SectionPicks =>
   typeof x === "object" && x !== null && Object.values(x).every((v) => typeof v === "string");
 
+/** True when `raw` is a saved schedule in the current format (parseSaved silently falls back to an empty one). */
+export function isValidSaved(raw: string): boolean {
+  try {
+    const s = JSON.parse(raw) as Partial<SavedSchedule> | null;
+    if (!s || s.v !== 1 || typeof s.term !== "string") return false;
+    if (s.courses !== null && s.courses !== undefined && !Array.isArray(s.courses)) return false;
+    return isPicks(s.own ?? {});
+  } catch {
+    return false;
+  }
+}
+
 export function parseSaved(raw: string | null, term: string): SavedSchedule {
   if (!raw) return emptySaved(term);
   try {

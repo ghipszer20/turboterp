@@ -1,6 +1,7 @@
 // The registration prep state in localStorage as an external store, shared by the Schedule
 // panel and the Today countdown card.
 
+import { localChanged } from "@/lib/sync/hooks";
 import { PREP_KEY, parsePrep, serializePrep, type Prep } from "./registration";
 
 const listeners = new Set<() => void>();
@@ -34,10 +35,15 @@ export const prepStore = {
   },
   getServerSnapshot: (): string | null => null,
   update(fn: (p: Prep) => Prep): void {
-    const raw = serializePrep(fn(parsePrep(prepStore.getSnapshot())));
+    prepStore.replace(serializePrep(fn(parsePrep(prepStore.getSnapshot()))));
+    localChanged("registration");
+  },
+  /** Set or (with null) remove the stored prep without counting it as a student edit; account sync uses this. */
+  replace(raw: string | null): void {
     cache = raw;
     try {
-      window.localStorage.setItem(PREP_KEY, raw);
+      if (raw === null) window.localStorage.removeItem(PREP_KEY);
+      else window.localStorage.setItem(PREP_KEY, raw);
     } catch {
       // storage blocked: kept in memory for this page
     }

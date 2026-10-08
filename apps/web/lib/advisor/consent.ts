@@ -44,6 +44,8 @@ export type ConsentRecord = {
   deviceId?: string;
   /** True once the server has stored the agreement record. Absent on old records. */
   recorded?: boolean;
+  /** The user id the record was sent with after sign-in. Absent until linked. */
+  linkedTo?: string;
 };
 
 export const CONSENT_STORAGE_KEY = "turboterp-advisor-consent";
@@ -71,6 +73,7 @@ export function parseConsent(raw: string | null): ConsentRecord | null {
       version: r.version,
       ...(typeof r.deviceId === "string" ? { deviceId: r.deviceId } : {}),
       ...(typeof r.recorded === "boolean" ? { recorded: r.recorded } : {}),
+      ...(typeof r.linkedTo === "string" ? { linkedTo: r.linkedTo } : {}),
     };
   } catch {
     return null;
