@@ -21,6 +21,7 @@ export const STORAGE_KEYS = [
   "turboterp-registration",
   "turboterp-leave-origin",
   "turboterp-theme",
+  "turboterp-sync",
 ] as const;
 
 export const TERMS: LegalSection[] = [
@@ -159,6 +160,7 @@ export const PRIVACY: LegalSection[] = [
         "turboterp-registration: your registration checklist and the registration appointment time you typed in.",
         "turboterp-leave-origin: the building you chose as your starting point for leave-by times.",
         "turboterp-theme: your light or dark choice.",
+        "turboterp-sync: which version of your plan and schedules this browser last saved to your account, when you're signed in.",
       ],
       "If you are signed in, our sign-in provider's code also keeps a sign-in token there, so you stay signed in on that device.",
       "Clearing your site data in the browser deletes all of it.",

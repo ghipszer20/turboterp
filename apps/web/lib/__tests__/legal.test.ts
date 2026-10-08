@@ -52,7 +52,7 @@ describe("legal pages", () => {
 
   it("privacy names every storage key and cookie the app writes", () => {
     expect([...STORAGE_KEYS].sort()).toEqual(
-      [PLAN_STORAGE_KEY, CONSENT_STORAGE_KEY, SAVED_KEY, PREP_KEY, "turboterp-leave-origin", THEME_STORAGE_KEY].sort(),
+      [PLAN_STORAGE_KEY, CONSENT_STORAGE_KEY, SAVED_KEY, PREP_KEY, "turboterp-leave-origin", THEME_STORAGE_KEY, "turboterp-sync"].sort(),
     );
     for (const k of STORAGE_KEYS) expect(text(PRIVACY)).toContain(k);
     expect(text(PRIVACY)).toContain(ACCESS_COOKIE);
