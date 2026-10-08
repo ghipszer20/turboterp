@@ -128,7 +128,7 @@ Topics, in order: TDD and rebuild rules; CMSC141/142; CS gateway; schedule build
 ## Accounts and sync (owner, 2026-10-08)
 Plan: `docs/project/account-sync-plan.md`.
 - Signed-in students' plan, schedule and registration prep sync to their account (Supabase `user_documents`); the site stays usable signed out (local only).
-- Agreement records: database + one daily digest email (supersedes the per-signature email of 2026-09-26).
+- Agreement records: database + one daily digest email (supersedes the per-signature email of 2026-09-26). **The typed name is stored encrypted** (owner, 2026-10-08: readable for legal purposes): AES-256-GCM, key derived from `CONSENT_NAME_SECRET` (migration 0008, `lib/consent/name-crypto.ts`); the keyed hash stays for matching. The owner reads records with `npm run agreements -w @turboterp/web` (needs the secret in `apps/web/.env.local`). The daily email never contains names.
 - Sign-in at scale: add "Continue with Google" next to the email link.
 - Supabase Pro ($25/month, from donations) is fine if a limit gets close. Owner: UMD has ~44k students, so the 50k monthly-user cap won't be hit; database size and egress are the limits to watch (daily usage email warns at 70%).
 - Account deletion: plans, schedules and email are deleted; the agreement record stays, unlinked from the account, and the privacy page says so.

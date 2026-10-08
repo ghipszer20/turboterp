@@ -17,7 +17,7 @@ TurboTerp went public on 2026-10-08. Accounts exist, but the plan, saved schedul
 
 ## Owner decisions (2026-10-08, this session)
 
-- **Agreement records:** stored in the database (version, time, account or device, keyed hash of the typed name); **one daily digest email** with a CSV goes to the records address. This replaces the per-signature email from 2026-09-26.
+- **Agreement records:** stored in the database (version, time, account or device, keyed hash of the typed name, and the typed name encrypted so the owner can read it: owner follow-up 2026-10-08, migration 0008); **one daily digest email** with a CSV goes to the records address. This replaces the per-signature email from 2026-09-26.
 - **Sign-in at scale:** add **"Continue with Google"** next to the email link.
 - **Supabase Pro ($25/month from donations)** is fine if a limit gets close. The owner notes that UMD has about 44k students, so the 50k monthly-user cap won't be reached. Database size (500 MB) and downloads (5 GB a month) are the limits that matter, and the design keeps both low.
 - **Account deletion:** plans, schedules and email are deleted. The agreement record stays, **unlinked from the account**, and the privacy page says so.

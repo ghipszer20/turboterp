@@ -217,7 +217,7 @@ export const PRIVACY: LegalSection[] = [
   {
     heading: "Coming next: your plan on every device (planned)",
     paragraphs: [
-      "Storing your plan and your signed agreement on our server is planned, not built yet. The plan is to keep them (version, time, account and a scrambled copy of the typed name) on our server, tied to your account, so they follow you between devices.",
+      "Storing your plan and your signed agreement on our server is planned, not built yet. The plan is to keep them on our server, tied to your account, so they follow you between devices. For the agreement that means its version, the time, your account and the name you typed, stored encrypted so that only we can read it, and only if it is needed as a legal record.",
       "You will be able to delete it all yourself, after confirming that you mean it. This page will be updated before that starts.",
     ],
   },

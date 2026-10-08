@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { CONSENT_VERSION } from "../../advisor/consent";
 import type { SendStore } from "../../email/rate-limit";
+import { decryptName } from "../name-crypto";
 import { handleConsentRecord, nameHash, type ConsentDeps, type ConsentRow } from "../record";
 
 const NOW = new Date("2026-10-08T12:00:00Z");
@@ -47,7 +48,7 @@ describe("handleConsentRecord", () => {
     ];
     for (const b of bads) expect((await handleConsentRecord(req(b), deps())).status).toBe(400);
   });
-  it("stores the hash, never the raw name", async () => {
+  it("stores the name encrypted (readable with the secret) plus its hash, never in plain text", async () => {
     const d = deps();
     const res = await handleConsentRecord(req(good()), d);
     expect(res.status).toBe(200);
@@ -55,6 +56,7 @@ describe("handleConsentRecord", () => {
     const row = d.store.insert.mock.calls[0]![0];
     expect(JSON.stringify(row)).not.toContain("Lovelace");
     expect(row.nameHash).toBe(nameHash("Ada Lovelace", "s3cret"));
+    expect(decryptName(row.nameEncrypted, "s3cret")).toBe("Ada Lovelace");
   });
   it("signed out inserts with a null user", async () => {
     const d = deps();

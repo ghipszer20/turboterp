@@ -12,7 +12,8 @@
     "ui-check": "node scripts/ui-check.mjs",
     "ui-gallery": "node scripts/ui-gallery.mjs",
     "test": "vitest run",
-    "advisor-data": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/advisor-data.mts"
+    "advisor-data": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/advisor-data.mts",
+    "agreements": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --env-file=.env.local scripts/read-agreements.mts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.2",

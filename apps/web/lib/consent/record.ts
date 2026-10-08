@@ -1,9 +1,10 @@
 import { createHmac } from "node:crypto";
 import { CONSENT_VERSION } from "../advisor/consent";
 import { checkAndRecord, hashKey, type SendStore, type SupabaseEnv } from "../email/rate-limit";
+import { encryptName } from "./name-crypto";
 
 // Server-only handler for POST /api/consent, with its dependencies injected.
-// Stores a keyed hash of the typed name, never the name itself.
+// Stores the typed name encrypted (readable only with CONSENT_NAME_SECRET) and a keyed hash for matching.
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const DAY_MS = 86_400_000;
@@ -13,7 +14,14 @@ const normalise = (name: string) => name.trim().replace(/\s+/g, " ").toLowerCase
 /** HMAC-SHA256 hex of the name (trimmed, spaces collapsed, lowercased). Keyed so guessing names can't reverse it. */
 export const nameHash = (name: string, secret: string) => createHmac("sha256", secret).update(normalise(name)).digest("hex");
 
-export type ConsentRow = { userId: string | null; deviceId: string; version: string; acceptedAt: string; nameHash: string };
+export type ConsentRow = {
+  userId: string | null;
+  deviceId: string;
+  version: string;
+  acceptedAt: string;
+  nameHash: string;
+  nameEncrypted: string;
+};
 
 export type ConsentStore = {
   /** Attaches the user to an existing unlinked row for this device and version. True when a row was linked. */
@@ -70,6 +78,7 @@ export async function handleConsentRecord(request: Request, deps: ConsentDeps, i
       version,
       acceptedAt: accepted.toISOString(),
       nameHash: nameHash(name, deps.secret),
+      nameEncrypted: encryptName(name.trim(), deps.secret),
     });
   } catch {
     return json({ error: "unavailable" }, 503);
@@ -103,6 +112,7 @@ export function supabaseConsentStore(env: SupabaseEnv, fetchFn: typeof fetch = f
           version: row.version,
           accepted_at: row.acceptedAt,
           name_hash: row.nameHash,
+          name_encrypted: row.nameEncrypted,
         }),
       });
       if (!res.ok) throw new Error(`consent_records insert failed: ${res.status}`);
