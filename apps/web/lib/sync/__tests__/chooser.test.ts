@@ -51,10 +51,14 @@ describe("summarize", () => {
     expect(summarize("plan", raw).lines).toEqual(["Programs: cs-bs", "2 terms"]);
   });
   it("schedule and registration", () => {
-    expect(summarize("schedule", JSON.stringify({ v: 1, term: "202701", courses: ["CMSC131", "MATH140"] })).lines).toEqual(["Term 202701", "2 courses"]);
+    expect(summarize("schedule", JSON.stringify({ v: 1, term: "202701", courses: ["CMSC131", "MATH140"] })).lines).toEqual(["Spring 2027", "2 courses"]);
     expect(summarize("registration", JSON.stringify({ "202701": { checked: [] } })).lines).toEqual(["1 term"]);
   });
   it("bad input gives an empty summary", () => {
+    expect(summarize("plan", JSON.stringify({ programs: ["cs-bs", "x"], terms: [] }), (id) => (id === "cs-bs" ? "Computer Science" : id)).lines).toEqual([
+      "Programs: Computer Science, x",
+      "0 terms",
+    ]);
     expect(summarize("plan", "nope").lines).toEqual([]);
     expect(summarize("plan", null).lines).toEqual([]);
   });

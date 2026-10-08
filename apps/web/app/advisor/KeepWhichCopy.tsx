@@ -1,17 +1,19 @@
 "use client";
 
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { getAppSync, type Ask } from "@/lib/sync/app-sync";
 import { chooserCopy, createChooserFlow } from "@/lib/sync/chooser";
 import { summarize } from "@/lib/sync/summary";
 import { useSyncAsks } from "@/lib/sync/use-sync";
 import styles from "./advisor.module.css";
 
-function CopyCard({ heading, raw, kind, children }: { heading: string; raw: string | null; kind: Ask["kind"]; children: React.ReactNode }) {
+type NameOf = (id: string) => string;
+
+function CopyCard({ heading, raw, kind, nameOf, children }: { heading: string; raw: string | null; kind: Ask["kind"]; nameOf: NameOf; children: React.ReactNode }) {
   return (
     <div className={styles.card}>
       <p className={styles.gateTitle}>{heading}</p>
-      {summarize(kind, raw).lines.map((line) => (
+      {summarize(kind, raw, nameOf).lines.map((line) => (
         <p key={line} className={styles.gateIntro}>
           {line}
         </p>
@@ -28,19 +30,30 @@ function Chooser({ ask }: { ask: Ask }) {
   const [, rerender] = useReducer((n: number) => n + 1, 0);
   const act = (fn: () => void) => () => (fn(), rerender());
   const { step, choice } = flow.state();
+  // Program names come from the registry, loaded only when the chooser opens (it's on every page).
+  const [nameOf, setNameOf] = useState<NameOf>(() => (id: string) => id);
+  useEffect(() => {
+    let live = true;
+    void import("@turboterp/programs").then(({ findProgram }) => {
+      if (live) setNameOf(() => (id: string) => findProgram(id)?.name ?? id);
+    });
+    return () => {
+      live = false;
+    };
+  }, []);
 
   return (
-    <div className={styles.overlay} role="dialog" aria-modal="true" aria-label={copy.title}>
-      <div className={styles.gate} style={{ padding: 16, background: "var(--bg)", overflowY: "auto", maxHeight: "100%" }}>
+    <div className={styles.overlay} role="presentation">
+      <div className={styles.sheet} role="dialog" aria-modal="true" aria-label={copy.title}>
         <h2 className={styles.gateTitle}>{copy.title}</h2>
         {step === "pick" || !choice ? (
           <>
-            <CopyCard heading="On this device" raw={ask.local} kind={ask.kind}>
+            <CopyCard heading="On this device" raw={ask.local} kind={ask.kind} nameOf={nameOf}>
               <button type="button" className={styles.primaryButton} onClick={act(() => flow.choose("local"))}>
                 {copy.keepLocal}
               </button>
             </CopyCard>
-            <CopyCard heading="In your account" raw={ask.remote} kind={ask.kind}>
+            <CopyCard heading="In your account" raw={ask.remote} kind={ask.kind} nameOf={nameOf}>
               {noRemote ? <p className={styles.gateIntro}>Nothing is saved to your account yet.</p> : null}
               <button type="button" className={noRemote ? styles.dangerButton : styles.primaryButton} onClick={act(() => flow.choose("remote"))}>
                 {copy.keepRemote}
