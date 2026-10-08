@@ -13,8 +13,6 @@ export const metadata: Metadata = {
   description:
     "Dining menus, library and gym hours, study rooms and Shuttle-UM buses for UMD students. Unofficial; not affiliated with the University of Maryland.",
   applicationName: "TurboTerp",
-  // Pre-launch (owner, 2026-10-04): ask search engines not to list any page. Remove at launch, with robots.ts.
-  robots: { index: false, follow: false },
   appleWebApp: { capable: true, title: "TurboTerp", statusBarStyle: "default" },
   formatDetection: { telephone: false },
 };
