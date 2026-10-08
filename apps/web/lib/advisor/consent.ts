@@ -36,7 +36,15 @@ export const CONSENT_POINTS: { title: string; body: string }[] = [
 
 export const CONSENT_CHECKBOX = "I've read this and understand TurboTerp is not official advising.";
 
-export type ConsentRecord = { name: string; acceptedAt: string; version: string };
+export type ConsentRecord = {
+  name: string;
+  acceptedAt: string;
+  version: string;
+  /** Random id of this browser; ties the server-side record to the device. Absent on old records. */
+  deviceId?: string;
+  /** True once the server has stored the agreement record. Absent on old records. */
+  recorded?: boolean;
+};
 
 export const CONSENT_STORAGE_KEY = "turboterp-advisor-consent";
 
@@ -57,7 +65,13 @@ export function parseConsent(raw: string | null): ConsentRecord | null {
     const r = JSON.parse(raw) as Partial<ConsentRecord> | null;
     if (!r || typeof r.name !== "string" || r.name.trim().length < 2) return null;
     if (typeof r.acceptedAt !== "string" || typeof r.version !== "string") return null;
-    return { name: r.name, acceptedAt: r.acceptedAt, version: r.version };
+    return {
+      name: r.name,
+      acceptedAt: r.acceptedAt,
+      version: r.version,
+      ...(typeof r.deviceId === "string" ? { deviceId: r.deviceId } : {}),
+      ...(typeof r.recorded === "boolean" ? { recorded: r.recorded } : {}),
+    };
   } catch {
     return null;
   }

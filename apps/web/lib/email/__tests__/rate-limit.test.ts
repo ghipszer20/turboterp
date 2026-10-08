@@ -84,3 +84,9 @@ describe("supabaseSendStore", () => {
     await expect(supabaseSendStore(env, fetchFn as never).count("report", "a", NOW)).rejects.toThrow();
   });
 });
+
+describe("consent limit", () => {
+  it("allows 10 per hour", () => {
+    expect(LIMITS.consent).toEqual({ max: 10, windowMs: 3600_000 });
+  });
+});

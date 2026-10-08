@@ -3,6 +3,18 @@ import { connection } from "next/server";
 import { buildSnapshots, openSnapshotStore, pruneSnapshots, refreshFast } from "@turboterp/campus-data/snapshots";
 import { liveRefreshDeps, refreshCourses, refreshSeats } from "@turboterp/course-data/soc-refresh";
 import { authorizeCron, cronJob } from "@/lib/cron";
+import { runDailyDigest, supabaseDigestSource } from "@/lib/consent/digest";
+import { supabaseEnv } from "@/lib/email/rate-limit";
+import { sendEmail } from "@/lib/email/send";
+
+/** The agreement-records email. Never fails the snapshot job; skipped when RECORDS_EMAIL or Supabase is unset. */
+async function sendDailyDigest(now: Date) {
+  const env = supabaseEnv();
+  const recordsEmail = process.env.RECORDS_EMAIL;
+  if (!env || !recordsEmail) return;
+  const result = await runDailyDigest({ recordsEmail, ...supabaseDigestSource(env), send: (m) => sendEmail(m), now: () => now });
+  if (result === "failed") console.error("daily records digest failed");
+}
 
 // Scheduled refresh, called by Supabase cron (supabase/migrations/0003_cron_refresh.sql)
 // with `Authorization: Bearer $CRON_SECRET`. See packages/campus-data/SNAPSHOTS.md.
@@ -30,7 +42,10 @@ async function run(request: NextRequest, context: { params: Promise<{ job: strin
       );
     }
     const report = await (job === "daily" ? buildSnapshots : refreshFast)(store, now);
-    if (job === "daily") await pruneSnapshots(store, now);
+    if (job === "daily") {
+      await pruneSnapshots(store, now);
+      await sendDailyDigest(now);
+    }
     const failures = report.results.flatMap((r) => (r.ok ? [] : [{ key: r.key, error: r.error }]));
     return Response.json(
       {
