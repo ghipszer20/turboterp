@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { CONSENT_VERSION } from "../../advisor/consent";
 import type { SendStore } from "../../email/rate-limit";
-import { handleConsentRecord, nameHash, type ConsentDeps } from "../record";
+import { handleConsentRecord, nameHash, type ConsentDeps, type ConsentRow } from "../record";
 
 const NOW = new Date("2026-10-08T12:00:00Z");
 const DEVICE = "3f2b8c1e-5d4a-4e6f-9a1b-2c3d4e5f6a7b";
@@ -14,7 +14,10 @@ const req = (body: unknown, auth: string | null = null) =>
   });
 
 function deps(over: Partial<ConsentDeps> = {}) {
-  const store = { link: vi.fn(async () => false), insert: vi.fn(async () => {}) };
+  const store = {
+    link: vi.fn(async (_d: string, _v: string, _u: string) => false),
+    insert: vi.fn(async (_row: ConsentRow) => {}),
+  };
   const limits: SendStore = { count: async () => 0, record: vi.fn(async () => {}) };
   const getUser = vi.fn(async (t: string) => (t === "tok" ? { id: "u1", email: "a@b.test" } : null));
   return { getUser, store, limits, secret: "s3cret", now: () => NOW, ...over } as unknown as ConsentDeps & {

@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import type { EmailMessage } from "../../email/send";
 import { buildConsentDigest, previousUtcDay, runDailyDigest, type DigestRow, type Usage } from "../digest";
 
 const usage = (over: Partial<Usage> = {}): Usage => ({ db_bytes: 50e6, documents: 3, consents: 5, accounts: 2, ...over });
@@ -53,17 +54,17 @@ describe("runDailyDigest", () => {
     recordsEmail: "owner@x.test",
     fetchRows: vi.fn(async () => [row()]),
     fetchUsage: vi.fn(async () => usage()),
-    send: vi.fn(async () => ({ ok: true as const })),
+    send: vi.fn(async (_m: EmailMessage) => ({ ok: true as const })),
     now: () => new Date("2026-10-08T03:00:00Z"),
     ...over,
   });
   it("sends the digest with the csv attached", async () => {
     const d = deps();
     expect(await runDailyDigest(d)).toBe("sent");
-    const msg = d.send.mock.calls[0]![0] as { to: string; attachment: { name: string; base64: string } };
+    const msg = d.send.mock.calls[0]![0];
     expect(msg.to).toBe("owner@x.test");
-    expect(msg.attachment.name).toBe("agreements-2026-10-07.csv");
-    expect(Buffer.from(msg.attachment.base64, "base64").toString()).toContain("recorded_at,");
+    expect(msg.attachment!.name).toBe("agreements-2026-10-07.csv");
+    expect(Buffer.from(msg.attachment!.base64, "base64").toString()).toContain("recorded_at,");
     expect(d.fetchRows).toHaveBeenCalledWith("2026-10-07T00:00:00.000Z", "2026-10-08T00:00:00.000Z");
   });
   it("skips quietly when RECORDS_EMAIL is unset", async () => {
