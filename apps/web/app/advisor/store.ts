@@ -9,7 +9,7 @@ import { CONSENT_STORAGE_KEY, parseConsent, type ConsentRecord } from "@/lib/adv
 import { planReducer, type AdvisorPlan, type PlanAction } from "@/lib/advisor/plan-state";
 import { seedFromUrl } from "@/lib/advisor/seed";
 import { parsePlan, PLAN_STORAGE_KEY, serializePlan } from "@/lib/advisor/storage";
-import { localChanged } from "@/lib/sync/hooks";
+import { localChanged } from "../../lib/sync/hooks";
 
 export type AdvisorSnapshot = { consent: ConsentRecord | null; plan: AdvisorPlan | null };
 

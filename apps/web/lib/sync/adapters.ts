@@ -1,11 +1,11 @@
 // The three documents as the sync engine sees them: raw text in, raw text out, validated with the
 // app's own parsers. `replace` does not count as a student edit, so it never triggers a re-save.
-import { parsePlan } from "@/lib/advisor/storage";
-import { isValidSaved } from "@/lib/schedule/saved";
-import { parsePrep } from "@/lib/schedule/registration";
-import { prepStore } from "@/lib/schedule/registration-store";
-import { savedStore } from "@/lib/schedule/saved-store";
-import { readPlanRaw, replacePlanFromRemote } from "@/app/advisor/store";
+import { parsePlan } from "../advisor/storage";
+import { isValidSaved } from "../schedule/saved";
+import { parsePrep } from "../schedule/registration";
+import { prepStore } from "../schedule/registration-store";
+import { savedStore } from "../schedule/saved-store";
+import { readPlanRaw, replacePlanFromRemote } from "../../app/advisor/store";
 import type { Deps } from "./engine";
 
 const isPrep = (raw: string) => {

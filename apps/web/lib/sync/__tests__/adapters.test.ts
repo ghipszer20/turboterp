@@ -20,7 +20,7 @@ function stubBrowser(blocked = false) {
   return ls;
 }
 
-const PLAN = JSON.stringify({ v: 1, programs: [], catalogYear: "2025", startTerm: "Fall 2025", terms: [{ term: "Fall 2025", courses: [] }] });
+const PLAN = JSON.stringify({ v: 1, programs: [], catalogYear: "2025", startTerm: "Fall 2025", terms: [{ name: "Fall 2025", courses: [] }] });
 
 beforeEach(() => vi.resetModules());
 afterEach(() => vi.unstubAllGlobals());
@@ -31,9 +31,9 @@ describe("store change hooks", () => {
     const hooks = await import("../hooks");
     const spy = vi.fn();
     hooks.setLocalChangedListener(spy);
-    const { savePlan, replacePlanFromRemote } = await import("@/app/advisor/store");
-    const { savedStore } = await import("@/lib/schedule/saved-store");
-    const { prepStore } = await import("@/lib/schedule/registration-store");
+    const { savePlan, replacePlanFromRemote } = await import("../../../app/advisor/store");
+    const { savedStore } = await import("../../schedule/saved-store");
+    const { prepStore } = await import("../../schedule/registration-store");
     replacePlanFromRemote(PLAN);
     savePlan(JSON.parse(PLAN));
     savedStore.write(JSON.stringify({ v: 1, term: "202701" }));
@@ -45,8 +45,8 @@ describe("store change hooks", () => {
     const hooks = await import("../hooks");
     const spy = vi.fn();
     hooks.setLocalChangedListener(spy);
-    const { replacePlanFromRemote } = await import("@/app/advisor/store");
-    const { savedStore } = await import("@/lib/schedule/saved-store");
+    const { replacePlanFromRemote } = await import("../../../app/advisor/store");
+    const { savedStore } = await import("../../schedule/saved-store");
     replacePlanFromRemote(PLAN);
     savedStore.replace(JSON.stringify({ v: 1, term: "202701" }));
     expect(spy).not.toHaveBeenCalled();
@@ -57,13 +57,13 @@ describe("app adapters", () => {
   it("sign-out clearing removes the three keys and tells subscribers", async () => {
     const ls = stubBrowser();
     const { createDocAdapters } = await import("../adapters");
-    const { PLAN_STORAGE_KEY } = await import("@/lib/advisor/storage");
+    const { PLAN_STORAGE_KEY } = await import("../../advisor/storage");
     const docs = createDocAdapters();
     docs.plan.replace(PLAN);
     docs.schedule.replace(JSON.stringify({ v: 1, term: "202701" }));
     docs.registration.replace(JSON.stringify({ "202701": { checked: [] } }));
     expect(ls.m.has(PLAN_STORAGE_KEY) && ls.m.has("turboterp-schedule") && ls.m.has("turboterp-registration")).toBe(true);
-    const { savedStore } = await import("@/lib/schedule/saved-store");
+    const { savedStore } = await import("../../schedule/saved-store");
     const notified = vi.fn();
     savedStore.subscribe(notified);
     for (const k of ["plan", "schedule", "registration"] as const) docs[k].replace(null);

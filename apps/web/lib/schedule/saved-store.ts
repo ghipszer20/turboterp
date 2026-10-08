@@ -1,7 +1,7 @@
 // The saved schedule in localStorage, as an external store (useSyncExternalStore), so every
 // component sees the same value and other tabs' changes arrive too.
 
-import { localChanged } from "@/lib/sync/hooks";
+import { localChanged } from "../sync/hooks";
 import { SAVED_KEY } from "./saved";
 
 /** What the server (and the first client render) sees: storage isn't readable yet. */

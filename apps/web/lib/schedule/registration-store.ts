@@ -1,7 +1,7 @@
 // The registration prep state in localStorage as an external store, shared by the Schedule
 // panel and the Today countdown card.
 
-import { localChanged } from "@/lib/sync/hooks";
+import { localChanged } from "../sync/hooks";
 import { PREP_KEY, parsePrep, serializePrep, type Prep } from "./registration";
 
 const listeners = new Set<() => void>();
