@@ -3,10 +3,18 @@
 export type DocKind = "plan" | "schedule" | "registration";
 export const DOC_KINDS: readonly DocKind[] = ["plan", "schedule", "registration"];
 
-/** Canonical form so formatting differences don't count as a difference. */
+/** Object keys sorted at every level: Postgres jsonb doesn't keep key order. */
+const sortKeys = (x: unknown): unknown =>
+  Array.isArray(x)
+    ? x.map(sortKeys)
+    : x !== null && typeof x === "object"
+      ? Object.fromEntries(Object.keys(x).sort().map((k) => [k, sortKeys((x as Record<string, unknown>)[k])]))
+      : x;
+
+/** Canonical form so formatting and key-order differences don't count as a difference. */
 function canon(raw: string): string {
   try {
-    return JSON.stringify(JSON.parse(raw));
+    return JSON.stringify(sortKeys(JSON.parse(raw)));
   } catch {
     return raw;
   }

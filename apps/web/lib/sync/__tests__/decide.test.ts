@@ -8,6 +8,9 @@ describe("decideOnSignIn", () => {
   it("does nothing when equal JSON, whatever the formatting", () =>
     expect(decideOnSignIn('{"a": 1,"b":2}', '{"a":1,"b":2}')).toBe("nothing"));
   it("asks when they differ", () => expect(decideOnSignIn('{"a":1}', '{"a":2}')).toBe("ask"));
+  it("does nothing when only key order differs (Postgres jsonb reorders keys)", () =>
+    expect(decideOnSignIn('{"v":1,"terms":[{"name":"F","courses":[]}]}', '{"terms":[{"courses":[],"name":"F"}],"v":1}')).toBe("nothing"));
+  it("still asks when array order differs", () => expect(decideOnSignIn('{"a":[1,2]}', '{"a":[2,1]}')).toBe("ask"));
 });
 
 describe("decideOnFocus", () => {
