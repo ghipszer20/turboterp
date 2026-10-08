@@ -11,3 +11,14 @@ export function setLocalChangedListener(fn: ((kind: DocKind) => void) | null): v
 export function localChanged(kind: DocKind): void {
   listener?.(kind);
 }
+
+let consentListener: (() => void) | null = null;
+
+export function setConsentSavedListener(fn: (() => void) | null): void {
+  consentListener = fn;
+}
+
+/** Called after the student signs the agreement, so the record can be sent. */
+export function consentSaved(): void {
+  consentListener?.();
+}

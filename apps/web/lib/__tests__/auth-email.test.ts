@@ -44,9 +44,9 @@ describe("sendProblem", () => {
 
 describe("decideSession", () => {
   it("maps loading, signed-out and signed-in", () => {
-    expect(decideSession(undefined)).toEqual({ status: "loading", email: null });
-    expect(decideSession(null)).toEqual({ status: "signed-out", email: null });
-    expect(decideSession({ user: { email: "a@terpmail.umd.edu" } })).toEqual({ status: "signed-in", email: "a@terpmail.umd.edu" });
-    expect(decideSession({ user: {} })).toEqual({ status: "signed-in", email: null });
+    expect(decideSession(undefined)).toEqual({ status: "loading", email: null, userId: null });
+    expect(decideSession(null)).toEqual({ status: "signed-out", email: null, userId: null });
+    expect(decideSession({ user: { id: "u1", email: "a@terpmail.umd.edu" } })).toEqual({ status: "signed-in", email: "a@terpmail.umd.edu", userId: "u1" });
+    expect(decideSession({ user: { id: "u2" } })).toEqual({ status: "signed-in", email: null, userId: "u2" });
   });
 });
