@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import type { EmailMessage } from "../../email/send";
-import { buildConsentDigest, previousUtcDay, runDailyDigest, type DigestRow, type Usage } from "../digest";
+import { buildConsentDigest, previousUtcDay, runDailyDigest, supabaseDigestSource, type DigestRow, type Usage } from "../digest";
 
 const usage = (over: Partial<Usage> = {}): Usage => ({ db_bytes: 50e6, documents: 3, consents: 5, accounts: 2, ...over });
 const row = (over: Partial<DigestRow> = {}): DigestRow => ({
@@ -75,5 +75,20 @@ describe("runDailyDigest", () => {
   it("never throws when something fails", async () => {
     expect(await runDailyDigest(deps({ fetchRows: async () => { throw new Error("db"); } }))).toBe("failed");
     expect(await runDailyDigest(deps({ send: async () => ({ ok: false as const, reason: "rejected" as const }) }))).toBe("failed");
+  });
+});
+
+describe("supabaseDigestSource", () => {
+  it("pages past the API's 1000-row cap so a busy day isn't cut short", async () => {
+    const urls: string[] = [];
+    const fetchFn = vi.fn(async (url: string | URL | Request) => {
+      urls.push(String(url));
+      const offset = Number(/offset=(\d+)/.exec(String(url))?.[1] ?? 0);
+      const n = offset === 0 ? 1000 : 5;
+      return Response.json(Array.from({ length: n }, (_, i) => row({ device_id: `d${offset + i}` })));
+    }) as unknown as typeof fetch;
+    const rows = await supabaseDigestSource({ url: "https://x.supabase.co", serviceKey: "k" }, fetchFn).fetchRows("a", "b");
+    expect(rows).toHaveLength(1005);
+    expect(urls).toHaveLength(2);
   });
 });

@@ -46,3 +46,4 @@ create or replace function public.usage_stats() returns jsonb language sql secur
     'accounts', (select count(*) from auth.users));
 $$;
 revoke all on function public.usage_stats() from public, anon, authenticated;
+grant execute on function public.usage_stats() to service_role;

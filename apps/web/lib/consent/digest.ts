@@ -16,6 +16,7 @@ export type Usage = { db_bytes: number; documents: number; consents: number; acc
 const DB_LIMIT_BYTES = 500e6;
 const WARN_AT = 0.7;
 const DAY_MS = 86_400_000;
+const PAGE = 1000;
 const HEADER = "recorded_at,accepted_at,version,account_id,device_id,name_hash";
 
 const cell = (v: string | null) => {
@@ -80,12 +81,17 @@ export function supabaseDigestSource(env: SupabaseEnv, fetchFn: typeof fetch = f
   const headers = { apikey: env.serviceKey, Authorization: `Bearer ${env.serviceKey}`, "content-type": "application/json" };
   return {
     async fetchRows(fromIso: string, toIso: string): Promise<DigestRow[]> {
-      const q = `recorded_at=gte.${encodeURIComponent(fromIso)}&recorded_at=lt.${encodeURIComponent(toIso)}&order=recorded_at.asc&select=recorded_at,accepted_at,version,user_id,device_id,name_hash`;
-      const res = await fetchFn(`${env.url}/rest/v1/consent_records?${q}`, { headers });
-      if (!res.ok) throw new Error(`consent_records ${res.status}`);
-      const rows = (await res.json()) as unknown;
-      if (!Array.isArray(rows)) throw new Error("consent_records: unexpected answer");
-      return rows as DigestRow[];
+      // The API returns at most PAGE rows per request, so a busy day is read page by page.
+      const q = `recorded_at=gte.${encodeURIComponent(fromIso)}&recorded_at=lt.${encodeURIComponent(toIso)}&order=recorded_at.asc,id.asc&select=recorded_at,accepted_at,version,user_id,device_id,name_hash`;
+      const all: DigestRow[] = [];
+      for (let offset = 0; ; offset += PAGE) {
+        const res = await fetchFn(`${env.url}/rest/v1/consent_records?${q}&limit=${PAGE}&offset=${offset}`, { headers });
+        if (!res.ok) throw new Error(`consent_records ${res.status}`);
+        const rows = (await res.json()) as unknown;
+        if (!Array.isArray(rows)) throw new Error("consent_records: unexpected answer");
+        all.push(...(rows as DigestRow[]));
+        if (rows.length < PAGE) return all;
+      }
     },
     async fetchUsage(): Promise<Usage> {
       const res = await fetchFn(`${env.url}/rest/v1/rpc/usage_stats`, { method: "POST", headers, body: "{}" });
