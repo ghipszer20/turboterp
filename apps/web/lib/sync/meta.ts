@@ -5,7 +5,8 @@ import type { DocKind } from "./decide";
 
 export const SYNC_KEY = "turboterp-sync";
 
-export type SyncMeta = { userId: string | null; revs: Partial<Record<DocKind, number>> };
+/** `dirty`: documents edited here but not yet saved to the account (kept so a reload doesn't lose the fact). */
+export type SyncMeta = { userId: string | null; revs: Partial<Record<DocKind, number>>; dirty?: DocKind[] };
 export type MetaStore = { load(): SyncMeta; save(m: SyncMeta): void; clear(): void };
 
 const KINDS: DocKind[] = ["plan", "schedule", "registration"];
@@ -20,7 +21,10 @@ function parse(raw: string | null): SyncMeta {
       const r = v.revs?.[k];
       if (typeof r === "number" && Number.isFinite(r)) revs[k] = r;
     }
-    return { userId: typeof v.userId === "string" ? v.userId : null, revs };
+    const dirty = Array.isArray((v as { dirty?: unknown }).dirty)
+      ? KINDS.filter((k) => ((v as { dirty: unknown[] }).dirty).includes(k))
+      : [];
+    return { userId: typeof v.userId === "string" ? v.userId : null, revs, ...(dirty.length ? { dirty } : {}) };
   } catch {
     return empty();
   }
