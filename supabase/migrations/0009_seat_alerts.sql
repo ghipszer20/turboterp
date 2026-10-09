@@ -15,7 +15,7 @@ alter table public.seat_watches enable row level security; -- no policies: servi
 
 create or replace function public.seat_watches_limit() returns trigger language plpgsql as $$
 begin
-  if new.done_at is null and (select count(*) from public.seat_watches where user_id = new.user_id and done_at is null) >= 20 then
+  if new.done_at is null and (select count(*) from public.seat_watches where user_id = new.user_id and term = new.term and done_at is null) >= 20 then
     raise exception 'seat watch limit' using errcode = 'P0001';
   end if;
   return new;
