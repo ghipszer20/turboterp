@@ -9,7 +9,7 @@ export function HallResults({ halls }: { halls: HallResultGroup[] }) {
     <div className={styles.halls}>
       {halls.map((h) => (
         <section key={h.hall} className={styles.hall}>
-          <h2 className={diningStyles.station}>{h.hall}</h2>
+          <h2 className={styles.hallName}>{h.hall}</h2>
           <Card className={diningStyles.stationCard}>
             {h.rows.map((r) => (
               <div key={`${r.meal}|${r.station}`} className={styles.row}>

@@ -83,8 +83,8 @@ export function DiningView({ date, halls, initial, preferredMeal, query, searchH
     const ctrl = new AbortController();
     fetch(`/api/dining/search?${new URLSearchParams({ date, q: term, ...(searchHallId ? { hall: String(searchHallId) } : {}), ...(searchMeal ? { meal: searchMeal } : {}) })}`, { signal: ctrl.signal })
       .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
-      .then((d: { results: SearchMatch[]; cappedHalls: string[] }) =>
-        setFetched({ term, state: { status: "done", results: d.results, cappedHalls: d.cappedHalls } }),
+      .then((d: { results: SearchMatch[]; cappedHalls?: string[] }) =>
+        setFetched({ term, state: { status: "done", results: d.results, cappedHalls: d.cappedHalls ?? [] } }),
       )
       .catch((e: unknown) => {
         if (!(e instanceof DOMException && e.name === "AbortError")) setFetched({ term, state: { status: "error" } });

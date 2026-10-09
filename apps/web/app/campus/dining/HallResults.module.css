@@ -8,6 +8,14 @@
   margin: 0;
 }
 
+/* Halls are the top level of the results, so their names outrank the meal · station rows. */
+.hallName {
+  margin: 0;
+  padding: 0 4px 8px;
+  font: var(--t-title);
+  color: var(--text);
+}
+
 .row {
   padding: 10px 16px;
   border-top: 0.5px solid var(--separator);

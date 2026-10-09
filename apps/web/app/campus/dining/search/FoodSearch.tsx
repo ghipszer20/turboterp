@@ -28,7 +28,7 @@ export function FoodSearch({ date, halls, meals }: { date: string; halls: Hall[]
     if (meal) params.set("meal", meal);
     fetch(`/api/dining/search?${params}`, { signal: ctrl.signal })
       .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
-      .then((d: { results: SearchMatch[]; cappedHalls: string[] }) => setState({ key, status: "done", results: d.results, cappedHalls: d.cappedHalls }))
+      .then((d: { results: SearchMatch[]; cappedHalls?: string[] }) => setState({ key, status: "done", results: d.results, cappedHalls: d.cappedHalls ?? [] }))
       .catch((e: unknown) => {
         if (!(e instanceof DOMException && e.name === "AbortError")) setState({ key, status: "error" });
       });
