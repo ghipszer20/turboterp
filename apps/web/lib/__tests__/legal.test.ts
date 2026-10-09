@@ -35,7 +35,7 @@ describe("legal pages", () => {
     const h = headings(PRIVACY).join("|");
     for (const t of [
       "introduction", "what we collect", "browser", "transcripts", "cookies", "location", "used and shared", "other services",
-      "donations", "planned", "deleting", "security", "changes", "contact",
+      "donations", "every device", "deleting", "security", "changes", "contact",
     ]) expect(h).toContain(t);
     for (const service of ["Supabase", "Vercel", "OpenFreeMap", "Venmo", "Brevo"]) expect(text(PRIVACY)).toContain(service);
   });
@@ -48,6 +48,19 @@ describe("legal pages", () => {
     expect(t).toMatch(/scrambled/i);
     expect(t).toMatch(/deleted after a day/i);
     expect(PRIVACY_VERSION).not.toBe("2026-10-04");
+  });
+
+  it("privacy explains sync, encrypted name storage, Google and in-app deletion", () => {
+    const t = text(PRIVACY);
+    expect(t).not.toMatch(/planned, not built yet/i);
+    expect(t).toMatch(/encrypted/i);
+    expect(t).toMatch(/name you typed/i);
+    expect(t).toMatch(/Google/);
+    expect(t).toMatch(/newest change wins/i);
+    expect(t).toMatch(/Delete account/);
+    expect(text(TERMS)).toMatch(/Delete account/);
+    expect(PRIVACY_VERSION).toBe("2026-10-09");
+    expect(TERMS_VERSION).toBe("2026-10-09");
   });
 
   it("privacy names every storage key and cookie the app writes", () => {
