@@ -62,3 +62,13 @@ progress report.
 - **Main session:** merge; run `npm run advisor-data -w @turboterp/web`, then check that a summer-only
   course (e.g. ANTH221) is in the catalog with `"o":"U"`; run the full suite; take screenshots of the
   lab and term-offering warnings for the owner.
+
+## Built (2026-10-09)
+
+Merged `feat/term-offerings` (Builder W, about 86k tokens). The advisor catalog now has 9,261
+courses, up from 6,852; `catalog.json` is 233 KB gzipped. `withOfferings` also sets `notScheduled`
+(see `lab-pairs.md` section 7). Spot checks on real data:
+
+- HLTH432 planned in Fall: "only offered in winter and summer".
+- CMSC131 planned in Winter: "isn't offered in winter".
+- ANTH221: offered `U` (summer only).

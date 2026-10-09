@@ -166,3 +166,27 @@ component, but the wording is a UI change, so the owner sees a screenshot before
 ## 6. Work split
 
 See `docs/project/lab-pairs-plan.md`.
+
+## 7. Changes made during the build (2026-10-09, overtime mode)
+
+- **Labs that follow the lecture.** UMD's current BSCI180 needs "minimum grade of C- in BSCI160 or
+  BSCI170", so it comes *after* the lecture. Its predecessor BSCI171 was a same-term corequisite of
+  BSCI170, which is the owner's example. Changes:
+  - A lab whose prerequisite needs the lecture finished first doesn't count as a same-term lab, so
+    lab-missing doesn't suggest it.
+  - For DSNL, such a lab completes the lecture's lab-science credit from a later term
+    (`labScience`). Before, a student taking BSCI170 and then BSCI180 never got DSNL for BSCI170.
+- **Season-aware names.** Warnings name only labs or lectures a student can take that term:
+  - fall or spring: on a current term's Schedule of Classes. The new `CatalogCourse.notScheduled`
+    flag (key `ns`) marks courses with no current sections. BSCI171 has none in Fall 2026 or Spring
+    2027, though it is still an approved course (owner: "BSCI171 is not a past course").
+  - winter or summer: offered in that season. BSCI170 planned for summer names BSCI171, which ran in
+    Summer 2025 and Summer 2026.
+  - When no lab or lecture qualifies, there's no warning.
+- **Derived corequisite pairs stay within one department.** PHYS174's corequisite MATH140 and
+  ENST200's CHEM132 had made wrong pairs: every MATH140 student would have been told to add PHYS174.
+  PHYS174 is now standalone, and cross-department pairs (BSCI392 with GEOL392) are hand-written.
+- **Course cards show their most severe issue** (`cardNote`). Before, a "Confirm" note could hide a
+  warning even though the card was already colored as a warning.
+- **Final counts:** 388 lab courses: 227 covered by rules, 46 derived pairs, 22 hand-written pairs,
+  and the rest standalone. 0 unclassified.
