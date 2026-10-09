@@ -9,5 +9,6 @@ export * from "./http.ts";
 export * from "./libraries.ts";
 export * from "./stamp-dining.ts";
 export * from "./recwell.ts";
+export * from "./recwell-reserve.ts";
 export * from "./rooms.ts";
 export * from "./trip.ts";
