@@ -60,6 +60,14 @@ describe("lab pair in the catalog file", () => {
     expect(file.courses.find((x) => x.i === "CHEM132")?.nl).toBeUndefined();
     expect(decodeCatalogFile(file).catalog.get("CHEM131")?.labPair).toEqual({ code: "DSNL", with: "CHEM132" });
   });
+  it("round-trips labs through the short key lb, absent when empty", () => {
+    const withLabs: PlanCatalog = new Map([...catalog, ["BSCI170", c("BSCI170", 3, { labs: ["BSCI180", "BSCI171"] })]]);
+    const file = encodeCatalogFile(withLabs, { term: "202701", generatedAt: "x" });
+    expect(file.courses.find((x) => x.i === "BSCI170")?.lb).toEqual(["BSCI180", "BSCI171"]);
+    expect(file.courses.find((x) => x.i === "CHEM132")?.lb).toBeUndefined();
+    expect(decodeCatalogFile(file).catalog.get("BSCI170")?.labs).toEqual(["BSCI180", "BSCI171"]);
+    expect(decodeCatalogFile(file).catalog.get("CHEM132")?.labs).toBeUndefined();
+  });
 });
 
 describe("lab-science pairs: review fixes", () => {

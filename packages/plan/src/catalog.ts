@@ -3,6 +3,7 @@
 
 import type { Course } from "@turboterp/course-data";
 import { labPairOf } from "@turboterp/course-data/gen-ed";
+import { DERIVED_PAIRS, LAB_PAIRS, labsByLecture } from "@turboterp/course-data/lab-pairs";
 import { parsePrerequisite, type Requirement } from "@turboterp/course-data/prereqs";
 import { parseCourseTwins, type Twins } from "./twins.ts";
 
@@ -20,6 +21,8 @@ export type CatalogCourse = {
   genEd: string[];
   /** DSNL only when taken with this lab, in the same term: Testudo's "DSNL (if taken with CHEM132)". */
   labPair?: { code: "DSNL"; with: string };
+  /** Labs usually taken in the same term as this lecture, current lab first, e.g. ["BSCI180", "BSCI171"]. */
+  labs?: string[];
   prerequisite: Requirement | null;
   corequisite: Requirement | null;
   repeat: Repeatability;
@@ -51,6 +54,7 @@ function repeatability(course: Course): Repeatability {
  */
 export function buildCatalog(...lists: Course[][]): PlanCatalog {
   const catalog = new Map<string, CatalogCourse>();
+  const labs = labsByLecture(lists.flat(), [...DERIVED_PAIRS, ...LAB_PAIRS]);
   for (const course of lists.flat()) {
     if (catalog.has(course.id)) continue;
     const { twins } = parseCourseTwins(course);
@@ -61,6 +65,7 @@ export function buildCatalog(...lists: Course[][]): PlanCatalog {
       genEd: course.genEd,
       // Snapshots parsed before the labPair field still carry the text it comes from.
       ...(course.labPair ? { labPair: course.labPair } : labPairOf(course.genEdText ?? "")),
+      ...(labs.get(course.id)?.length ? { labs: labs.get(course.id)! } : {}),
       prerequisite: parsePrerequisite(course.texts.prerequisite),
       corequisite: parsePrerequisite(course.texts.corequisite),
       repeat: repeatability(course),

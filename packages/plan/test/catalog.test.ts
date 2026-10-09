@@ -50,3 +50,11 @@ describe("buildCatalog: lab pairs from older snapshots", () => {
     expect(buildCatalog([old]).get("CHEM131")!.labPair).toEqual({ code: "DSNL", with: "CHEM132" });
   });
 });
+
+describe("labs", () => {
+  it("stores each lecture's labs and leaves the field off other courses", () => {
+    expect(catalog.get("CHEM131")!.labs?.[0]).toBe("CHEM132");
+    expect(catalog.get("CHEM132")!.labs).toBeUndefined();
+    expect(catalog.get("CMSC131")!.labs).toBeUndefined();
+  });
+});
