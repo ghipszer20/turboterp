@@ -13,13 +13,17 @@
     "./sort": "./src/sort.ts",
     "./explain": "./src/explain.ts",
     "./schedule-files": "./src/schedule-files.ts",
-    "./soc-refresh": "./src/soc-refresh.ts"
+    "./soc-refresh": "./src/soc-refresh.ts",
+    "./lab-pairs": "./src/lab-pairs.ts",
+    "./catalog-courses": "./src/catalog-courses.ts"
   },
   "scripts": {
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "snapshot": "node scripts/snapshot.ts",
-    "schedule-data": "node scripts/build-schedule-data.ts"
+    "schedule-data": "node scripts/build-schedule-data.ts",
+    "lab-coverage": "node scripts/lab-coverage.ts",
+    "catalog-courses": "node scripts/catalog-courses.ts"
   },
   "devDependencies": {
     "@types/node": "^22.20.4",
