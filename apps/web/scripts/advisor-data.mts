@@ -78,7 +78,7 @@ const write = (path: string, data: unknown) => {
 };
 
 const t = performance.now();
-const catalog = withOfferings(buildCatalog(courses), snapshots);
+const catalog = withOfferings(buildCatalog(courses), snapshots, [...currentTerms]);
 const catalogSize = write(join(termDir, "catalog.json"), encodeCatalogFile(catalog, { term, generatedAt: newest.fetchedAt }));
 
 let detailBytes = 0;

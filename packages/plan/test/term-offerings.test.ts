@@ -53,3 +53,25 @@ describe("catalog file key o", () => {
     expect("offered" in decodeCatalogFile(file).catalog.get("A")!).toBe(false);
   });
 });
+
+describe("courses not on the current schedules", () => {
+  const base = cat(c("A"), c("B"), c("C"));
+  const snapshots = [
+    { term: "202505", courses: [{ id: "A" }, { id: "B" }] },
+    { term: "202608", courses: [{ id: "A" }] },
+  ];
+  it("marks notScheduled when the course is on none of the current terms' schedules", () => {
+    const out = withOfferings(base, snapshots, ["202608", "202701"]);
+    expect(out.get("A")?.notScheduled).toBeUndefined();
+    expect(out.get("B")?.notScheduled).toBe(true);
+    expect(out.get("C")?.notScheduled).toBeUndefined();
+  });
+  it("marks nothing when no current terms are given", () => expect(withOfferings(base, snapshots).get("B")?.notScheduled).toBeUndefined());
+  it("round-trips through the catalog file as ns", () => {
+    const file = encodeCatalogFile(cat(c("B", { notScheduled: true }), c("A")), { term: "202701", generatedAt: "x" });
+    expect(file.courses.map((x) => x.ns)).toEqual([1, undefined]);
+    const back = decodeCatalogFile(JSON.parse(JSON.stringify(file))).catalog;
+    expect(back.get("B")?.notScheduled).toBe(true);
+    expect("notScheduled" in back.get("A")!).toBe(false);
+  });
+});

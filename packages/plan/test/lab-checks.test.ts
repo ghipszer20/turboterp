@@ -47,8 +47,43 @@ describe("lab-missing", () => {
     expect(i?.message).toBe("CHEM135 is usually taken with one of its labs, CHEM136 or CHEM177, in the same term.");
     expect(i?.short).toBe("Usually taken with CHEM136 or CHEM177");
   });
-  it("names the first lab listed when none is in the catalog", () =>
-    expect(lab({ terms: [term("Fall 2026", "PHYS999")] })[0]?.message).toBe("PHYS999 is usually taken with its lab, PHYS998, in the same term."));
+  it("is quiet when no lab is offered for that term (not in the catalog, or not on the current schedules)", () => {
+    expect(lab({ terms: [term("Fall 2026", "PHYS999")] })).toEqual([]);
+    const offLab: PlanCatalog = new Map([...catalog, ["PHYS998", c("PHYS998", 1, { notScheduled: true })]]);
+    expect(checkPlan({ terms: [term("Fall 2026", "PHYS999")] }, offLab).filter((x) => x.kind === "lab-missing")).toEqual([]);
+  });
+  it("names only labs on the current schedules for a fall or spring term", () => {
+    const withPast: PlanCatalog = new Map([...catalog, ["BSCI171", c("BSCI171", 1, { notScheduled: true })]]);
+    const [i] = checkPlan({ terms: [term("Fall 2026", "BSCI170")] }, withPast).filter((x) => x.kind === "lab-missing");
+    expect(i?.message).toBe("BSCI170 is usually taken with its lab, BSCI180, in the same term.");
+  });
+  it("doesn't count a lab whose prerequisite requires the lecture finished first (BSCI180 today)", () => {
+    const after = { kind: "any" as const, of: [req("BSCI160"), req("BSCI170")] };
+    const sequential: PlanCatalog = new Map([...catalog, ["BSCI180", c("BSCI180", 1, { prerequisite: after })], ["BSCI171", c("BSCI171", 1, { notScheduled: true })]]);
+    expect(checkPlan({ terms: [term("Fall 2026", "BSCI170")] }, sequential).filter((x) => x.kind === "lab-missing")).toEqual([]);
+    // CHEM177 stays a same-term lab for CHEM135 when another lab of CHEM135 is sequential.
+    const mixed: PlanCatalog = new Map([...catalog, ["CHEM136", c("CHEM136", 1, { prerequisite: req("CHEM135") })]]);
+    const [i] = checkPlan({ terms: [term("Fall 2026", "CHEM135")] }, mixed).filter((x) => x.kind === "lab-missing");
+    expect(i?.message).toBe("CHEM135 is usually taken with its lab, CHEM177, in the same term.");
+  });
+  it("names only lectures on the current schedules for a fall or spring term", () => {
+    const withPast: PlanCatalog = new Map([...catalog, ["BSCI160", c("BSCI160", 3, { labs: ["BSCI180", "BSCI161"], notScheduled: true })]]);
+    const [i] = checkPlan({ terms: [term("Fall 2026", "BSCI180")] }, withPast).filter((x) => x.kind === "lecture-missing");
+    expect(i?.message).toBe("BSCI180 is a lab, usually taken in the same term as its lecture, BSCI170.");
+  });
+  it("names labs offered in that season for a winter or summer term (BSCI171 in summer)", () => {
+    const after = { kind: "any" as const, of: [req("BSCI160"), req("BSCI170")] };
+    const today: PlanCatalog = new Map([
+      ...catalog,
+      ["BSCI170", c("BSCI170", 3, { labs: ["BSCI180", "BSCI171"], offered: ["Fall", "Winter", "Spring", "Summer"] })],
+      ["BSCI180", c("BSCI180", 1, { prerequisite: after, offered: ["Fall", "Spring"] })],
+      ["BSCI171", c("BSCI171", 1, { notScheduled: true, offered: ["Fall", "Spring", "Summer"] })],
+    ]);
+    const labIn = (season: string) => checkPlan({ terms: [term(season, "BSCI170")] }, today).filter((x) => x.kind === "lab-missing");
+    expect(labIn("Summer 2027")[0]?.message).toBe("BSCI170 is usually taken with its lab, BSCI171, in the same term.");
+    expect(labIn("Fall 2027")).toEqual([]); // BSCI180 comes after; BSCI171 isn't on the fall schedule
+    expect(labIn("Winter 2027")).toEqual([]); // no lab is offered in winter
+  });
   it("warns when the lab is planned for a different term", () => expect(lab({ terms: [term("Fall 2026", "BSCI170"), term("Spring 2027", "BSCI180")] })).toHaveLength(1));
   it("is quiet when the lab was completed earlier", () => expect(lab({ terms: [term("Fall 2026", done("BSCI180")), term("Spring 2027", "BSCI170")] })).toEqual([]));
   it("is quiet when the lab is prior credit", () =>

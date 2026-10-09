@@ -78,3 +78,23 @@ describe("lab-science pairs: review fixes", () => {
     expect(lecture?.genEdCredits).toBeUndefined();
   });
 });
+
+describe("lab-science pairs taken in order (BSCI170 then BSCI180)", () => {
+  // BSCI180's prerequisite needs BSCI170 finished first, so Testudo's "DSNL (if taken with BSCI180)"
+  // can only be met in a later term.
+  const after = { kind: "any" as const, of: [{ kind: "course" as const, course: "BSCI160" }, { kind: "course" as const, course: "BSCI170" }] };
+  const seq: PlanCatalog = new Map(
+    [
+      c("BSCI170", 3, { genEd: ["DSNL", "DSNS"], labPair: { code: "DSNL", with: "BSCI180" } }),
+      c("BSCI180", 1, { prerequisite: after }),
+    ].map((x) => [x.id, x]),
+  );
+  it("keeps DSNL when the lab comes in a later term", () => {
+    const lecture = planCourses(plan(["BSCI170"], ["BSCI180"]), seq).find((x) => x.id === "BSCI170");
+    expect(lecture?.genEd).toEqual(["DSNL", "DSNS"]);
+    expect(lecture?.genEdCredits).toBe(4);
+  });
+  it("still drops DSNL when the lab never comes", () => {
+    expect(planCourses(plan(["BSCI170"]), seq).find((x) => x.id === "BSCI170")?.genEd).toEqual(["DSNS"]);
+  });
+});

@@ -141,6 +141,20 @@ const orList = (items: string[]) => (items.length <= 1 ? (items[0] ?? "") : `${i
 /** Whether a requirement names one of these courses. */
 const names = (req: Requirement | null, ids: string[]) => req !== null && courseLeaves(req).some((l) => l.kind === "course" && ids.includes(l.course));
 
+/** The courses a student can take in a term of this season: in the catalog, and on a current schedule
+ * for fall or spring, or offered in that season for winter or summer (BSCI171: summer, not Fall 2026). */
+const offeredFor = (ids: string[], catalog: PlanCatalog, season: Season | null) =>
+  ids.filter((id) => {
+    const x = catalog.get(id);
+    if (!x) return false;
+    if (season === "Winter" || season === "Summer") return !x.offered || x.offered.includes(season);
+    return !x.notScheduled;
+  });
+
+/** Whether a requirement needs `id` finished in an earlier term (a course leaf without concurrent enrollment). */
+export const needsFirst = (req: Requirement | null, id: string) =>
+  req !== null && courseLeaves(req).some((l) => l.kind === "course" && l.course === id && !l.concurrentOk);
+
 /** Each lab's lectures, from every lecture's `labs`; a section variant (BSCI180S) finds its base lab's. */
 function lectureIndex(catalog: PlanCatalog): (id: string) => string[] {
   const byLab = new Map<string, string[]>();
@@ -405,9 +419,10 @@ export function checkPlan(plan: Plan, catalog: PlanCatalog, options: CheckOption
         const isLab = (id: string) => labs.some((l) => sameOrVariant(id, l));
         const together = term.courses.some((x) => isLab(x.id) && counts(x));
         const earlier = priorFor(isLab) || plan.terms.slice(0, i).some((t) => t.courses.some((x) => isLab(x.id) && x.status === "completed" && counts(x)));
-        if (!together && !earlier) {
-          const current = labs.filter((l) => catalog.has(l));
-          const named = current.length > 0 ? current : labs.slice(0, 1);
+        // Name only labs offered for this term that go alongside the lecture: a lab whose prerequisite
+        // needs this lecture finished first (BSCI180 after BSCI170) comes after it, not with it.
+        const named = offeredFor(labs, catalog, seasonOf(term.name)).filter((l) => !needsFirst(catalog.get(l)!.prerequisite, course.id));
+        if (!together && !earlier && named.length > 0) {
           issues.push({
             kind: "lab-missing",
             severity: "warning",
@@ -424,9 +439,8 @@ export function checkPlan(plan: Plan, catalog: PlanCatalog, options: CheckOption
         const together = term.courses.some((x) => isLecture(x.id) && counts(x));
         // A lecture planned earlier already gets lab-missing, so the lab doesn't warn too.
         const earlier = priorFor(isLecture) || plan.terms.slice(0, i).some((t) => t.courses.some((x) => isLecture(x.id) && counts(x)));
-        if (!together && !earlier) {
-          const current = lectures.filter((l) => catalog.has(l));
-          const named = current.length > 0 ? current : lectures.slice(0, 1);
+        const named = offeredFor(lectures, catalog, seasonOf(term.name));
+        if (!together && !earlier && named.length > 0) {
           issues.push({
             kind: "lecture-missing",
             severity: "warning",

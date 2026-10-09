@@ -33,6 +33,10 @@ export type CatalogCourse = {
   /** Seasons this course appeared in across the cached Schedule of Classes terms. Left out when the
    * course came from no dated term. */
   offered?: Season[];
+  /** Has no sections on any current term's Schedule of Classes, though it ran in a cached past term
+   * (BSCI171: last scheduled Summer 2026, not in Fall 2026 or Spring 2027). Still a real course; checks
+   * just don't suggest it for a fall or spring term. Left out otherwise. */
+  notScheduled?: true;
 };
 
 export type PlanCatalog = ReadonlyMap<string, CatalogCourse>;
@@ -87,8 +91,14 @@ export function seasonOfTerm(term: string): Season | undefined {
   return SEASON_BY_MONTH[term.slice(4, 6)];
 }
 
-/** A copy of the catalog with each course's `offered` seasons, from the terms whose snapshots list it. */
-export function withOfferings(catalog: PlanCatalog, snapshots: { term: string; courses: { id: string }[] }[]): PlanCatalog {
+/** A copy of the catalog with each course's `offered` seasons, from the terms whose snapshots list it,
+ * and `notScheduled` for courses on none of the `current` terms' schedules (when any are given). */
+export function withOfferings(
+  catalog: PlanCatalog,
+  snapshots: { term: string; courses: { id: string }[] }[],
+  current: readonly string[] = [],
+): PlanCatalog {
+  const inCurrent = new Set(snapshots.filter((s) => current.includes(s.term)).flatMap((s) => s.courses.map((c) => c.id)));
   const seen = new Map<string, Set<Season>>();
   for (const { term, courses } of snapshots) {
     const season = seasonOfTerm(term);
@@ -101,7 +111,8 @@ export function withOfferings(catalog: PlanCatalog, snapshots: { term: string; c
   const out = new Map<string, CatalogCourse>();
   for (const [id, course] of catalog) {
     const seasons = seen.get(id);
-    out.set(id, seasons ? { ...course, offered: SEASON_ORDER.filter((s) => seasons.has(s)) } : course);
+    const notScheduled = seasons !== undefined && current.length > 0 && !inCurrent.has(id);
+    out.set(id, seasons ? { ...course, offered: SEASON_ORDER.filter((s) => seasons.has(s)), ...(notScheduled ? { notScheduled: true as const } : {}) } : course);
   }
   return out;
 }

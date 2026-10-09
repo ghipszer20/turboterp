@@ -65,9 +65,10 @@ export function groupIssues(issues: PlanIssue[], termOrder: string[]): IssueGrou
   return g;
 }
 
-/** The one line a course card has room for: the first issue (its short form if it has one). */
+/** The one line a course card has room for: its most severe issue (the short form if it has one). */
 export function cardNote(issues: PlanIssue[]): string {
-  const first = issues[0]!;
+  // The most severe issue, so the text matches the card's color (the first one wins a tie).
+  const first = issues.reduce((a, b) => (rank(b.severity) < rank(a.severity) ? b : a));
   return `${first.short ?? first.message}${issues.length > 1 ? ` (+${issues.length - 1} more)` : ""}`;
 }
 

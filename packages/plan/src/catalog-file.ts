@@ -34,6 +34,8 @@ export type CompactCourse = {
   e?: { f?: string[]; x?: string[]; co?: string[] };
   /** seasons offered, as letters: F Fall, W Winter, S Spring, U Summer */
   o?: string;
+  /** 1: on none of the current terms' schedules */
+  ns?: 1;
 };
 
 const SEASON_LETTER: Record<Season, string> = { Fall: "F", Winter: "W", Spring: "S", Summer: "U" };
@@ -58,6 +60,7 @@ export function encodeCatalogFile(catalog: PlanCatalog, meta: { term: string; ge
     if (course.corequisite) out.q = course.corequisite;
     if (course.repeat.kind === "repeatable") out.r = course.repeat.maxCredits ?? 0;
     if (course.offered?.length) out.o = course.offered.map((x) => SEASON_LETTER[x]).join("");
+    if (course.notScheduled) out.ns = 1;
     const t = course.twins;
     if (t) {
       out.e = {};
@@ -88,6 +91,7 @@ export function decodeCatalogFile(data: unknown): { term: string; generatedAt: s
       prerequisite: c.p ?? null,
       corequisite: c.q ?? null,
       repeat: c.r === undefined ? { kind: "unknown" } : c.r === 0 ? { kind: "repeatable" } : { kind: "repeatable", maxCredits: c.r },
+      ...(c.ns === 1 ? { notScheduled: true as const } : {}),
       ...(c.o ? { offered: [...c.o].flatMap((l) => (LETTER_SEASON[l] ? [LETTER_SEASON[l]!] : [])) } : {}),
       ...(c.e ? { twins: { ...(c.e.f && { renumbered: c.e.f }), ...(c.e.x && { crossListed: c.e.x }), ...(c.e.co && { creditOnly: c.e.co }) } } : {}),
     });
