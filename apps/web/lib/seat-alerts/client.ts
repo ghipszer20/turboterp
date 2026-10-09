@@ -85,7 +85,7 @@ async function call<T>(path: string, init: { method?: string; body?: unknown } =
 
 export const listWatches = () => call<WatchesResponse>("/api/seat-alerts/watches");
 export const addWatch = (courseId: string, sectionId: string | null) =>
-  call<WatchRow>("/api/seat-alerts/watches", { method: "POST", body: { courseId, sectionId } });
+  call<{ watch: WatchRow }>("/api/seat-alerts/watches", { method: "POST", body: { courseId, sectionId } });
 export const finishWatch = (id: string) => call<unknown>(`/api/seat-alerts/watches/${id}/done`, { method: "POST" });
 export const removeWatch = (id: string) => call<unknown>(`/api/seat-alerts/watches/${id}`, { method: "DELETE" });
 export const sendTestAlert = () => call<{ sent: number; gone: number }>("/api/seat-alerts/test", { method: "POST" });

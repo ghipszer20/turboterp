@@ -19,8 +19,8 @@ export function AddClass({ state }: { state: WatchesState }) {
   const [course, setCourse] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const data = useScheduleData(course ? [course] : []);
-  const courses = data.indexState.status === "ready" ? data.indexState.index.courses : [];
-  const results = useMemo(() => (query.trim() ? searchCourses(courses, query, 6) : []), [courses, query]);
+  const index = data.indexState.status === "ready" ? data.indexState.index : null;
+  const results = useMemo(() => (query.trim() && index ? searchCourses(index.courses, query, 6) : []), [index, query]);
   const sections = useMemo(
     () => data.sections.filter((s) => s.courseId === course).sort((a, b) => a.id.localeCompare(b.id)),
     [data.sections, course],

@@ -31,7 +31,10 @@ export function StatusCard({ mock }: { mock: boolean }) {
       const sub = s === "supported" ? await currentSubscription() : null;
       if (!live) return;
       setSupport(s);
-      if (s === "supported") (setPermission(permissionStatus()), setSubscribed(!!sub));
+      if (s === "supported") {
+        setPermission(permissionStatus());
+        setSubscribed(!!sub);
+      }
     });
     return () => {
       live = false;

@@ -58,7 +58,11 @@ export function useWatches(): WatchesState {
           ? "signed-out"
           : (remote?.phase ?? "loading");
   const data = mock ? (mockData ?? mockInitial) : (remote?.data ?? EMPTY);
-  const setData = (f: (d: WatchesResponse) => WatchesResponse) => (mock ? setMockData(f(mockData ?? mockInitial)) : setRemote((r) => ({ phase: "ready", data: f(r?.data ?? EMPTY) })));
+  const setData = useCallback(
+    (f: (d: WatchesResponse) => WatchesResponse) =>
+      mock ? setMockData((m) => f(m ?? mockInitial)) : setRemote((r) => ({ phase: "ready", data: f(r?.data ?? EMPTY) })),
+    [mock, mockInitial],
+  );
 
   const reload = useCallback(async () => {
     const r = await listWatches();
@@ -77,7 +81,7 @@ export function useWatches(): WatchesState {
       if (r.ok) await reload();
       return r.ok ? null : r.error;
     },
-    [mock, data, reload],
+    [mock, data, reload, setData],
   );
   const gone = useCallback(
     async (id: string, call: typeof finishWatch, toDone: boolean) => {
@@ -91,7 +95,7 @@ export function useWatches(): WatchesState {
       await call(id);
       await reload();
     },
-    [mock, reload],
+    [mock, reload, setData],
   );
 
   return {
