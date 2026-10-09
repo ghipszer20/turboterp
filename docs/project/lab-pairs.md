@@ -71,8 +71,8 @@ New `IssueKind` `"lab-missing"`, severity **warning**.
 The check fires for a course in a term when all of these are true:
 
 - the course has `labs`;
-- the course earns credit in that term (planned, or completed with a passing grade; same
-  `earnsCredit` rule as `labScience`);
+- the course is planned, not completed (changed 2026-10-09 while planning: `checkPlan` already skips
+  completed courses, and a warning about a finished term gives the student nothing to do);
 - no lab option in the same term earns credit;
 - no lab option is already credited: completed in an earlier term with credit, or in
   `plan.priorCredit` (AP, IB or transfer, e.g. CHEM132 from AP Chemistry 5);
@@ -108,7 +108,8 @@ new UI component. Wording is a UI change, so the owner sees a screenshot before 
 
 ## 4. Work split (PROJECT_MEMORY section 18)
 
-Two Sonnet builders, one after the other, each in its own worktree and branch:
+Superseded by `docs/project/lab-pairs-plan.md`: three Sonnet builders, because the code and the
+classification of about 71 labs are split into separate tasks. Original split: two Sonnet builders, one after the other, each in its own worktree and branch:
 
 - **A, `feat/lab-pairs-data`:** the `labs` field, `buildCatalog` merge, `lb` key, `lab-pairs.ts` with
   sourced pairs and standalone labs, the coverage script and test. Builders don't do research: the
