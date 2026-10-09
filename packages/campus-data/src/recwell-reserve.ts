@@ -10,7 +10,8 @@
 export const RESERVE_AS_OF = "2026-10-09";
 
 const COURT_RESERVATIONS = "https://recwell.umd.edu/facilities/court-reservations";
-const RECWELL_HOME = "https://recwell.umd.edu";
+const CLIMBING_WALL = "https://recwell.umd.edu/programs-activities/adventure-program/climbing-wall-bouldering-grotto";
+const BOULDERING_ZONE = "https://recwell.umd.edu/programs-activities/adventure-program/bouldering-zone";
 
 export type ReserveLink = { label: string; url: string };
 
@@ -53,7 +54,7 @@ export const RESERVE_CARDS: ReserveCard[] = [
     summary: "The indoor bouldering area. Book on ActiveTerp.",
     rules: "Reservations open 24 hours ahead.",
     links: [{ label: "Book on ActiveTerp", url: "https://activeterp.umd.edu/booking" }],
-    sourceUrl: COURT_RESERVATIONS,
+    sourceUrl: BOULDERING_ZONE,
     asOf: RESERVE_AS_OF,
   },
   {
@@ -71,8 +72,8 @@ export const RESERVE_CARDS: ReserveCard[] = [
     summary: "Run by the Adventure Program. No booking for regular use.",
     rules:
       "Check in with your UMD ID. A private rental is by request form at least 3 weeks ahead, from $250.",
-    links: [{ label: "RecWell Adventure Program", url: RECWELL_HOME }],
-    sourceUrl: RECWELL_HOME,
+    links: [{ label: "Climbing wall and rental form", url: CLIMBING_WALL }],
+    sourceUrl: CLIMBING_WALL,
     asOf: RESERVE_AS_OF,
   },
   {
@@ -81,7 +82,7 @@ export const RESERVE_CARDS: ReserveCard[] = [
     summary: "For organizations only.",
     rules: "Individuals can't reserve fields. Organizations book through RecWell's scheduling system.",
     links: [{ label: "RecWell scheduling (organizations)", url: "https://scheduling.crs.umd.edu" }],
-    sourceUrl: RECWELL_HOME,
+    sourceUrl: "https://scheduling.crs.umd.edu",
     asOf: RESERVE_AS_OF,
   },
 ];
