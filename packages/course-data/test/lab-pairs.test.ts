@@ -1,5 +1,18 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { isLabCourse, labsByLecture, ruleFor, sameOrVariant, unclassifiedLabs, type LabPair, type LabSourceCourse } from "../src/lab-pairs.ts";
+import {
+  DERIVED_PAIRS,
+  isLabCourse,
+  LAB_PAIRS,
+  labsByLecture,
+  ruleFor,
+  sameOrVariant,
+  STANDALONE_LABS,
+  STANDALONE_RULES,
+  unclassifiedLabs,
+  type LabPair,
+  type LabSourceCourse,
+} from "../src/lab-pairs.ts";
 
 const c = (id: string, title: string, extra: { coreq?: string; genEdText?: string; labOnly?: boolean } = {}): LabSourceCourse => ({
   id,
@@ -84,5 +97,34 @@ describe("unclassifiedLabs", () => {
       rules: [{ prefix: "KNES1", reason: "activity class", source: "test" }],
     };
     expect(unclassifiedLabs(courses, opts).map((x) => x.id)).toEqual(["ENEE445", "PHYS276"]);
+  });
+});
+
+// Every lab from every source (current and past Testudo terms, both UMD catalogs), written by
+// `npm run lab-coverage -w @turboterp/course-data -- --write`.
+const fixture = (JSON.parse(readFileSync(new URL("./fixtures/lab-courses.json", import.meta.url), "utf8")) as { courses: LabSourceCourse[] }).courses;
+const unclassifiedIn = (from: string, to: string) => unclassifiedLabs(fixture).filter((x) => x.department >= from && x.department <= to).map((x) => `${x.id} ${x.title}`);
+
+describe("lab coverage (every source)", () => {
+  // Turned on by the builders who classify each half (docs/project/lab-pairs-plan.md Task 4).
+  it.skip("accounts for every lab in departments A–L", () => expect(unclassifiedIn("A", "LZZZ")).toEqual([]));
+  it.skip("accounts for every lab in departments M–Z", () => expect(unclassifiedIn("M", "ZZZZ")).toEqual([]));
+
+  it("cites a source for every hand-written entry, with valid course ids", () => {
+    const id = /^[A-Z]{4}\d{3}[A-Z]?$/;
+    for (const p of [...LAB_PAIRS, ...DERIVED_PAIRS]) {
+      expect(p.source.trim(), p.lecture).not.toBe("");
+      expect(p.lecture).toMatch(id);
+      for (const lab of p.labs) expect(lab).toMatch(id);
+    }
+    for (const s of STANDALONE_LABS) expect([s.source.trim(), s.reason.trim()].every(Boolean), s.id).toBe(true);
+    for (const r of STANDALONE_RULES) expect([r.source.trim(), r.reason.trim()].every(Boolean), r.prefix).toBe(true);
+  });
+
+  // BSCI171's newest record (Testudo) doesn't name BSCI170, so it needs a hand pair (C1 turns this on).
+  it.skip("keeps BSCI171 and BSCI161 as labs of BSCI170 and BSCI160", () => {
+    const m = labsByLecture(fixture, [...DERIVED_PAIRS, ...LAB_PAIRS]);
+    expect(m.get("BSCI170")).toEqual(expect.arrayContaining(["BSCI180", "BSCI171"]));
+    expect(m.get("BSCI160")).toEqual(expect.arrayContaining(["BSCI180", "BSCI161"]));
   });
 });
