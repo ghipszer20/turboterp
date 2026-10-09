@@ -107,7 +107,7 @@ const unclassifiedIn = (from: string, to: string) => unclassifiedLabs(fixture).f
 
 describe("lab coverage (every source)", () => {
   // Turned on by the builders who classify each half (docs/project/lab-pairs-plan.md Task 4).
-  it.skip("accounts for every lab in departments A–L", () => expect(unclassifiedIn("A", "LZZZ")).toEqual([]));
+  it("accounts for every lab in departments A–L", () => expect(unclassifiedIn("A", "LZZZ")).toEqual([]));
   it.skip("accounts for every lab in departments M–Z", () => expect(unclassifiedIn("M", "ZZZZ")).toEqual([]));
 
   it("cites a source for every hand-written entry, with valid course ids", () => {
@@ -122,7 +122,7 @@ describe("lab coverage (every source)", () => {
   });
 
   // BSCI171's newest record (Testudo) doesn't name BSCI170, so it needs a hand pair (C1 turns this on).
-  it.skip("keeps BSCI171 and BSCI161 as labs of BSCI170 and BSCI160", () => {
+  it("keeps BSCI171 and BSCI161 as labs of BSCI170 and BSCI160", () => {
     const m = labsByLecture(fixture, [...DERIVED_PAIRS, ...LAB_PAIRS]);
     expect(m.get("BSCI170")).toEqual(expect.arrayContaining(["BSCI180", "BSCI171"]));
     expect(m.get("BSCI160")).toEqual(expect.arrayContaining(["BSCI180", "BSCI161"]));
