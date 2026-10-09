@@ -5,13 +5,13 @@ import { summarize } from "../summary";
 describe("chooser copy", () => {
   it("words the question and buttons per document", () => {
     expect(chooserCopy("plan")).toEqual({
-      title: "Replace the plan saved in your account with this one?",
+      title: "Your account already has a saved plan. Would you like to replace that with this one?",
       replace: "Replace it",
       keep: "Keep my saved plan",
     });
-    expect(chooserCopy("schedule").title).toBe("Replace the schedule saved in your account with this one?");
+    expect(chooserCopy("schedule").title).toBe("Your account already has a saved schedule. Would you like to replace that with this one?");
     expect(chooserCopy("schedule").keep).toBe("Keep my saved schedule");
-    expect(chooserCopy("registration").title).toBe("Replace the registration checklist saved in your account with this one?");
+    expect(chooserCopy("registration").title).toBe("Your account already has a saved registration checklist. Would you like to replace that with this one?");
     expect(chooserCopy("registration").keep).toBe("Keep my saved checklist");
   });
   it("one muted line comparing the two copies", () => {

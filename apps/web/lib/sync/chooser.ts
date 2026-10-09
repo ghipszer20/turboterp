@@ -12,7 +12,7 @@ const NOUN: Record<DocKind, { title: string; keep: string }> = {
 export function chooserCopy(kind: DocKind) {
   const n = NOUN[kind];
   return {
-    title: `Replace the ${n.title} saved in your account with this one?`,
+    title: `Your account already has a saved ${n.title}. Would you like to replace that with this one?`,
     replace: "Replace it",
     keep: `Keep my saved ${n.keep}`,
   };
