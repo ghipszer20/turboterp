@@ -3,7 +3,7 @@
 
 import { describe, expect, it } from "vitest";
 import type { Layout } from "../src/schedules.ts";
-import { gpaKey, groupScore, layoutMetrics, RECOMMEND_WEIGHTS, sectionScore, sortLayouts } from "../src/sort.ts";
+import { compareBest, DEFAULT_WEIGHTS, gpaKey, groupScore, layoutMetrics, RECOMMEND_WEIGHTS, sectionScore, sortLayouts } from "../src/sort.ts";
 import type { Meeting, Section } from "../src/soc.ts";
 
 const mins = (t: string) => Number(t.split(":")[0]) * 60 + Number(t.split(":")[1]);
@@ -32,8 +32,8 @@ const names = (layouts: Layout[]) => layouts.map((l) => (l as { name?: string })
 const ratings = { "Ada Good": 4.5, "Bo Fine": 3.5, "Cy Meh": 2.5, "Di Bad": 2.0 };
 
 describe("sortLayouts: best", () => {
-  it("ranks by the average rating of each course's best instructor, first of all", () => {
-    const great = layout("great", [sec("A", ["Ada Good"], 5, at(["M"], "08:00", "08:50"), at(["M"], "15:00", "15:50"))]);
+  it("ranks by the average rating of each course's best instructor when timing is equal", () => {
+    const great = layout("great", [sec("A", ["Ada Good"], 5, at(["M"], "11:00", "11:50"))]);
     const ok = layout("ok", [sec("A", ["Bo Fine"], 5, at(["M"], "11:00", "11:50"))]);
     expect(names(sortLayouts([ok, great], "best", { ratings }))).toEqual(["great", "ok"]);
   });
@@ -66,20 +66,19 @@ describe("sortLayouts: best", () => {
     expect(layoutMetrics(l, { ratings }).rating).toBe(3.5);
   });
 
-  it("breaks rating ties by fewer gap minutes between classes on the same day", () => {
+  it("measures idle gap minutes between classes on the same day", () => {
     const gappy = layout(
       "gappy",
       [sec("A", [], 5, at(["M"], "11:00", "11:50"))],
-      [sec("B", [], 5, at(["M"], "13:00", "13:50"))], // 70-minute gap
-    );
-    const tight = layout(
-      "tight",
-      [sec("A", [], 5, at(["M"], "08:00", "08:50"))],
-      [sec("B", [], 5, at(["M"], "09:00", "09:50"))], // 10-minute gap, but early
+      [sec("B", [], 5, at(["M"], "13:00", "13:50"))],
     );
     expect(layoutMetrics(gappy, {}).gapMinutes).toBe(70);
-    expect(layoutMetrics(tight, {}).gapMinutes).toBe(10);
-    expect(names(sortLayouts([gappy, tight]))).toEqual(["tight", "gappy"]);
+  });
+
+  it("when score and rating tie, fewer gap minutes first, then lower condensed", () => {
+    const base = layoutMetrics(layout("x", [sec("A", [], 5, at(["M"], "11:00", "11:50"))]), {});
+    expect(compareBest({ ...base, gapMinutes: 10 }, { ...base, gapMinutes: 70 })).toBeLessThan(0);
+    expect(compareBest({ ...base, condensed: 50 }, { ...base, condensed: 90 })).toBeLessThan(0);
   });
 
   it("breaks rating and gap ties by preferring classes toward midday, with no cutoff hours", () => {
@@ -201,5 +200,62 @@ describe("sortLayouts: recommended", () => {
     const gappy = layout("gappy", [sec("A", ["X"], 5, at(["M"], "08:00", "08:50"), at(["M"], "15:00", "15:50"))]);
     const tight = layout("tight", [sec("A", ["X"], 5, t)]);
     expect(names(sortLayouts([gappy, tight], "recommended"))).toEqual(["tight", "gappy"]);
+  });
+});
+
+describe("sortLayouts: Default weighted score (owner, 2026-10-09)", () => {
+  const mid = at(["M"], "11:00", "11:50");
+  const gpas = { [gpaKey("A", "Hi Gpa")]: 4.0, [gpaKey("A", "Lo Gpa")]: 2.0, [gpaKey("A", "Three")]: 4.0 };
+
+  it("weights are 30% rating, 30% GPA, 40% timing, summing to 1", () => {
+    expect(DEFAULT_WEIGHTS).toEqual({ rating: 0.3, gpa: 0.3, timing: 0.4 });
+    expect(DEFAULT_WEIGHTS.rating + DEFAULT_WEIGHTS.gpa + DEFAULT_WEIGHTS.timing).toBeCloseTo(1);
+  });
+
+  it("a compact midday schedule beats slightly better teachers on a spread-out day; Best Teachers disagrees", () => {
+    const spread = layout("spread", [sec("A", ["Ada Good"], 5, at(["M"], "08:00", "08:50"), at(["M"], "16:00", "16:50"))]);
+    const compact = layout("compact", [sec("A", ["Bo Fine"], 5, mid)]);
+    expect(names(sortLayouts([spread, compact], "best", { ratings }))).toEqual(["compact", "spread"]);
+    expect(names(sortLayouts([spread, compact], "recommended", { ratings }))).toEqual(["spread", "compact"]);
+  });
+
+  it("GPA now matters for Default", () => {
+    const lo = layout("lo", [sec("A", ["Lo Gpa"], 5, mid)]);
+    const hi = layout("hi", [sec("A", ["Hi Gpa"], 5, mid)]);
+    expect(names(sortLayouts([lo, hi], "best", { gpas }))).toEqual(["hi", "lo"]);
+  });
+
+  it("measures rating and GPA on the 0-1 scales of Best Teachers, neutral 0.5 when missing", () => {
+    const l = layout("l", [sec("A", ["Ada Good"], 5, mid)]);
+    expect(layoutMetrics(l, { ratings }).ratingScore).toBeCloseTo(0.875);
+    expect(layoutMetrics(l, { ratings }).gpaScore).toBeCloseTo(0.5);
+    const hi = layout("hi", [sec("A", ["Hi Gpa"], 5, mid)]);
+    expect(layoutMetrics(hi, { gpas }).gpaScore).toBeCloseTo(1);
+    expect(layoutMetrics(hi, { gpas }).ratingScore).toBeCloseTo(0.5);
+  });
+
+  it("timing is relative to the sorted set: a teacher edge worth less than the timing gap does not flip the order", () => {
+    // a: compact; c: far from midday. Timing gap is the full 0.4; the teacher edge is at most 0.3 x 0.5.
+    const a = layout("a", [sec("A", ["Cy Meh"], 5, at(["M"], "11:00", "11:50"))]);
+    const c = layout("c", [sec("A", ["Ada Good"], 5, at(["M"], "08:00", "08:50"))]);
+    expect(names(sortLayouts([c, a], "best", { ratings }))).toEqual(["a", "c"]);
+    // add a much worse layout b: c's timing is no longer 0, so the same teacher edge can now win
+    const b = layout("b", [sec("A", ["Cy Meh"], 5, at(["M"], "08:00", "08:50"), at(["M"], "17:00", "17:50"))]);
+    const near = layout("near", [sec("A", ["Ada Good"], 5, at(["M"], "10:00", "10:50"))]);
+    expect(names(sortLayouts([b, near, a], "best", { ratings })).slice(0, 2).sort()).toEqual(["a", "near"]);
+  });
+
+  it("a single layout, or layouts that are all equal, sort without error (timing 1)", () => {
+    const a = layout("a", [sec("A", [], 5, mid)]);
+    const b = layout("b", [sec("A", [], 5, mid)]);
+    expect(names(sortLayouts([a]))).toEqual(["a"]);
+    expect(names(sortLayouts([b, a]))).toEqual(["b", "a"]);
+  });
+
+  it("equal scores fall back to the higher rating", () => {
+    const r2 = { ...ratings, Five: 5, Three: 3 };
+    const five = layout("five", [sec("A", ["Five"], 5, mid)]); // 0.3*1 + 0.3*0.5
+    const three = layout("three", [sec("A", ["Three"], 5, mid)]); // 0.3*0.5 + 0.3*1
+    expect(names(sortLayouts([three, five], "best", { ratings: r2, gpas }))).toEqual(["five", "three"]);
   });
 });
