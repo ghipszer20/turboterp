@@ -1,54 +1,33 @@
-import { describe, expect, it, vi } from "vitest";
-import { chooserCopy, createChooserFlow } from "../chooser";
+import { describe, expect, it } from "vitest";
+import { chooserCopy, copyLine } from "../chooser";
 import { summarize } from "../summary";
 
-describe("chooser flow", () => {
-  it("changes nothing until the confirm tap", () => {
-    const resolve = vi.fn();
-    const f = createChooserFlow("plan", false, resolve);
-    f.choose("local");
-    expect(f.state().step).toBe("confirm");
-    expect(resolve).not.toHaveBeenCalled();
-    f.back();
-    expect(f.state().step).toBe("pick");
-    expect(resolve).not.toHaveBeenCalled();
-    f.choose("remote");
-    f.confirm();
-    expect(resolve).toHaveBeenCalledExactlyOnceWith("plan", "remote");
+describe("chooser copy", () => {
+  it("words the question and buttons per document", () => {
+    expect(chooserCopy("plan")).toEqual({
+      title: "Replace the plan saved in your account with this one?",
+      replace: "Replace it",
+      keep: "Keep my saved plan",
+    });
+    expect(chooserCopy("schedule").title).toBe("Replace the schedule saved in your account with this one?");
+    expect(chooserCopy("schedule").keep).toBe("Keep my saved schedule");
+    expect(chooserCopy("registration").title).toBe("Replace the registration checklist saved in your account with this one?");
+    expect(chooserCopy("registration").keep).toBe("Keep my saved checklist");
   });
-  it("uploads without a confirm when the account has no copy", () => {
-    const resolve = vi.fn();
-    const f = createChooserFlow("plan", true, resolve);
-    f.choose("local");
-    expect(resolve).toHaveBeenCalledWith("plan", "local");
-  });
-  it("removing a device copy asks first", () => {
-    const resolve = vi.fn();
-    const f = createChooserFlow("schedule", true, resolve);
-    f.choose("remote");
-    expect(resolve).not.toHaveBeenCalled();
-    expect(chooserCopy("schedule", true).confirm("remote")).toBe("Are you sure you want to delete the schedule on this device?");
-    f.confirm();
-    expect(resolve).toHaveBeenCalledWith("schedule", "remote");
-  });
-  it("words the confirm per document", () => {
-    expect(chooserCopy("plan", false).confirm("local")).toBe("Are you sure you want to delete the other copy of your plan?");
-    expect(chooserCopy("schedule", false).confirm("local")).toBe("Are you sure you want to delete the other copy of your schedule?");
-    expect(chooserCopy("registration", false).confirm("remote")).toBe("Are you sure you want to delete the other copy of your registration prep?");
-    expect(chooserCopy("plan", false).title).toBe("Your plan is different on this device and in your account.");
-    expect(chooserCopy("plan", true).title).toBe(
-      "This device has a plan that isn't saved to your account. It may belong to someone who used this browser before.",
+  it("one muted line comparing the two copies", () => {
+    const local = JSON.stringify({ programs: ["a", "b"], terms: new Array(8).fill({}) });
+    const remote = JSON.stringify({ programs: ["a"], terms: [{}] });
+    const name = (id: string) => ({ a: "Mathematics Major", b: "Computer Science Major" })[id] ?? id;
+    expect(copyLine("plan", local, remote, name)).toBe(
+      "This device: Mathematics Major, Computer Science Major, 8 terms \u00b7 Your account: Mathematics Major, 1 term",
     );
-    expect(chooserCopy("plan", false).keepLocal).toBe("Keep this device's plan");
-    expect(chooserCopy("plan", false).keepRemote).toBe("Use the plan saved to your account");
-    expect(chooserCopy("plan", true).keepRemote).toBe("Remove it from this device");
   });
 });
 
 describe("summarize", () => {
   it("plan: programs and number of terms", () => {
     const raw = JSON.stringify({ v: 1, programs: ["cs-bs"], catalogYear: "2025", startTerm: "Fall 2025", terms: [{}, {}] });
-    expect(summarize("plan", raw).lines).toEqual(["Programs: cs-bs", "2 terms"]);
+    expect(summarize("plan", raw).lines).toEqual(["cs-bs", "2 terms"]);
   });
   it("schedule and registration", () => {
     expect(summarize("schedule", JSON.stringify({ v: 1, term: "202701", courses: ["CMSC131", "MATH140"] })).lines).toEqual(["Spring 2027", "2 courses"]);
@@ -56,7 +35,7 @@ describe("summarize", () => {
   });
   it("bad input gives an empty summary", () => {
     expect(summarize("plan", JSON.stringify({ programs: ["cs-bs", "x"], terms: [] }), (id) => (id === "cs-bs" ? "Computer Science" : id)).lines).toEqual([
-      "Programs: Computer Science, x",
+      "Computer Science, x",
       "0 terms",
     ]);
     expect(summarize("plan", "nope").lines).toEqual([]);

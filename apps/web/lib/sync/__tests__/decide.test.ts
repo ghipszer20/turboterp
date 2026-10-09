@@ -18,9 +18,9 @@ describe("decideOnFocus", () => {
   it("nothing when revs are equal", () => expect(decideOnFocus(3, 3, true)).toBe("nothing"));
   it("nothing when local is ahead", () => expect(decideOnFocus(4, 3, false)).toBe("nothing"));
   it("downloads when remote newer and local unchanged", () => expect(decideOnFocus(2, 3, false)).toBe("download"));
-  it("asks when remote newer and local changed", () => expect(decideOnFocus(2, 3, true)).toBe("ask"));
-  it("never synced and remote exists: download if clean, ask if dirty", () => {
+  it("uploads when remote newer and local changed (the newest change wins)", () => expect(decideOnFocus(2, 3, true)).toBe("upload"));
+  it("never synced and remote exists: download if clean, upload if dirty", () => {
     expect(decideOnFocus(undefined, 1, false)).toBe("download");
-    expect(decideOnFocus(undefined, 1, true)).toBe("ask");
+    expect(decideOnFocus(undefined, 1, true)).toBe("upload");
   });
 });

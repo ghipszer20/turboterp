@@ -34,8 +34,9 @@ export function decideOnFocus(
   localRev: number | undefined,
   remoteRev: number | undefined,
   localDirty: boolean,
-): "nothing" | "download" | "ask" {
+): "nothing" | "download" | "upload" {
   if (remoteRev === undefined) return "nothing";
   if (localRev !== undefined && remoteRev <= localRev) return "nothing";
-  return localDirty ? "ask" : "download";
+  // Unsaved edits are the newest change, so they win over the server's copy.
+  return localDirty ? "upload" : "download";
 }

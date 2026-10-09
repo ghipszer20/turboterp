@@ -1,5 +1,13 @@
-// The sync engine: debounced saves, revision tracking, conflict detection. Nothing here touches the
-// UI or storage directly; the app passes in small adapters (see Deps) so tests can fake everything.
+// The sync engine: debounced saves and revision tracking. Nothing here touches the UI or storage
+// directly; the app passes in small adapters (see Deps) so tests can fake everything.
+//
+// While signed in the engine never asks: the newest change wins. A save that hits a revision conflict
+// reads the server's current revision and saves this device's copy over it (one retry; a second
+// conflict waits for the next change or check). On a check, a newer server copy is downloaded unless
+// this device has unsaved edits, which are uploaded instead.
+// The only question is at start(), when this browser's copy and the account's copy have never been
+// synced with each other (no known revision for this user) and both exist and differ: onAsk, then
+// resolve(kind, "local" | "remote") replaces the other side's copy.
 
 import { DOC_KINDS, decideOnFocus, decideOnSignIn, type DocKind } from "./decide";
 import type { MetaStore } from "./meta";
@@ -16,8 +24,8 @@ export type Deps = {
   clearTimer(handle: unknown): void;
   /** Subscribe to the browser's "online" event; returns an unsubscribe. */
   listenOnline(cb: () => void): () => void;
-  /** Both copies exist and differ (or, after an account switch, `remote` may be null): the app shows the chooser. */
-  onAsk(kind: DocKind, local: string | null, remote: string | null): void;
+  /** Never synced with each other, and both copies exist and differ: the app asks which one to keep. */
+  onAsk(kind: DocKind, local: string, remote: string): void;
   onError(kind: DocKind, reason: ErrorReason): void;
 };
 
@@ -46,13 +54,15 @@ export function createSyncEngine(deps: Deps) {
   };
   const asking = new Set<DocKind>();
   const retryOnline = new Set<DocKind>();
+  // Saves that hit a conflict twice in a row: tried again on the next check.
+  const conflicted = new Set<DocKind>();
   const timers = new Map<DocKind, unknown>();
 
   const setRev = (kind: DocKind, rev: number) => {
     const m = meta.load();
     meta.save({ ...m, revs: { ...m.revs, [kind]: rev } });
   };
-  const ask = (kind: DocKind, local: string | null, remoteRaw: string | null) => {
+  const ask = (kind: DocKind, local: string, remoteRaw: string) => {
     asking.add(kind);
     deps.onAsk(kind, local, remoteRaw);
   };
@@ -74,7 +84,7 @@ export function createSyncEngine(deps: Deps) {
     return true;
   }
 
-  async function save(kind: DocKind): Promise<void> {
+  async function save(kind: DocKind, retried = false): Promise<void> {
     cancelTimer(kind);
     if (!active || asking.has(kind)) return;
     const raw = docs[kind].read();
@@ -93,14 +103,28 @@ export function createSyncEngine(deps: Deps) {
     if (!active) return;
     if (res.ok) {
       retryOnline.delete(kind);
+      conflicted.delete(kind);
       setRev(kind, res.rev);
       if (docs[kind].read() === raw) markClean(kind);
       else schedule(kind); // changed while saving
       return;
     }
     if (res.reason === "conflict") {
+      // Somebody saved in between. This device's copy is the newest change: save over the server's.
+      if (retried) {
+        conflicted.add(kind);
+        return;
+      }
       const cur = await remote.fetchDoc(kind).catch(() => null);
-      ask(kind, raw, cur ? JSON.stringify(cur.body) : null);
+      if (!active) return;
+      if (cur) setRev(kind, cur.rev);
+      else {
+        const m = meta.load();
+        const { [kind]: _drop, ...rest } = m.revs;
+        void _drop;
+        meta.save({ ...m, revs: rest });
+      }
+      return save(kind, true);
     } else if (res.reason === "offline") {
       retryOnline.add(kind);
     } else {
@@ -123,13 +147,19 @@ export function createSyncEngine(deps: Deps) {
     }
     for (const kind of DOC_KINDS) {
       if (!active || asking.has(kind)) continue;
+      if (conflicted.has(kind) && dirty.has(kind)) {
+        await save(kind);
+        continue;
+      }
       const remoteRev = revs.find((r) => r.kind === kind)?.rev;
       const action = decideOnFocus(meta.load().revs[kind], remoteRev, dirty.has(kind));
       if (action === "nothing") continue;
+      if (action === "upload") {
+        await save(kind); // a stale revision conflicts once, then saves over the server's copy
+        continue;
+      }
       const doc = await remote.fetchDoc(kind).catch(() => null);
-      if (!doc) continue;
-      if (action === "download") apply(kind, doc);
-      else ask(kind, docs[kind].read(), JSON.stringify(doc.body));
+      if (doc) apply(kind, doc);
     }
   }
 
@@ -161,23 +191,19 @@ export function createSyncEngine(deps: Deps) {
       if (known[kind] !== undefined && decideOnFocus(known[kind], remoteRev, dirty.has(kind)) === "nothing") continue;
       const doc = remoteRev === undefined ? null : await remote.fetchDoc(kind).catch(() => null);
       if (remoteRev !== undefined && !doc) continue;
-      const remoteRaw = doc ? JSON.stringify(doc.body) : null;
 
       if (known[kind] !== undefined) {
-        // This browser has synced this document with this account before.
+        // This browser has synced this document with this account before: the newest change wins.
         const action = decideOnFocus(known[kind], doc?.rev, dirty.has(kind));
         if (action === "download" && doc) apply(kind, doc);
-        else if (action === "ask") ask(kind, local, remoteRaw);
+        else if (action === "upload") await save(kind);
         continue;
       }
-      if (!sameUser && prev.userId !== null && local !== null) {
-        // Another account's copy may be sitting in this browser: never upload it unasked.
-        ask(kind, local, remoteRaw);
-        continue;
-      }
+      // Never synced with each other: the only case that may ask.
+      const remoteRaw = doc ? JSON.stringify(doc.body) : null;
       const action = decideOnSignIn(local, remoteRaw);
       if (action === "download" && doc) apply(kind, doc);
-      else if (action === "ask") ask(kind, local, remoteRaw);
+      else if (action === "ask" && local !== null && remoteRaw !== null) ask(kind, local, remoteRaw);
       else if (action === "upload") {
         markDirty(kind);
         await save(kind);
@@ -210,8 +236,7 @@ export function createSyncEngine(deps: Deps) {
       asking.delete(kind);
       const doc = await remote.fetchDoc(kind).catch(() => null);
       if (keep === "remote") {
-        if (doc) apply(kind, doc);
-        else docs[kind].replace(null);
+        if (doc) apply(kind, doc); // keep the account's copy, replace this device's
         return;
       }
       // Keep local: save over the server's current version, which we just looked at.
@@ -231,6 +256,7 @@ export function createSyncEngine(deps: Deps) {
       dirty.clear();
       asking.clear();
       retryOnline.clear();
+      conflicted.clear();
       if (clearLocal) {
         for (const kind of DOC_KINDS) docs[kind].replace(null);
         meta.clear();
