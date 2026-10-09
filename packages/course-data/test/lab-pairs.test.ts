@@ -108,7 +108,7 @@ const unclassifiedIn = (from: string, to: string) => unclassifiedLabs(fixture).f
 describe("lab coverage (every source)", () => {
   // Turned on by the builders who classify each half (docs/project/lab-pairs-plan.md Task 4).
   it.skip("accounts for every lab in departments A–L", () => expect(unclassifiedIn("A", "LZZZ")).toEqual([]));
-  it.skip("accounts for every lab in departments M–Z", () => expect(unclassifiedIn("M", "ZZZZ")).toEqual([]));
+  it("accounts for every lab in departments M–Z", () => expect(unclassifiedIn("M", "ZZZZ")).toEqual([]));
 
   it("cites a source for every hand-written entry, with valid course ids", () => {
     const id = /^[A-Z]{4}\d{3}[A-Z]?$/;
