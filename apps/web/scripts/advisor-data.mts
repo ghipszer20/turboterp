@@ -10,7 +10,8 @@
 //
 //   npm run advisor-data -w @turboterp/web [-- --soc <path/to/soc-YYYYMM.json>]
 //
-// Inputs: every packages/course-data/.cache/soc-*.json (or the one --soc file) and
+// Inputs: every packages/course-data/.cache/soc-*.json (or the one --soc file), plus the older terms in
+// .cache/history/soc-*.json (courses and `offered` seasons only; `term` stays the newest current term), and
 // packages/ratings/.cache/grades-out/. The catalog and course details span ALL cached terms merged
 // (a course seen in any term is known; the newest term's record wins), so fall-only courses such
 // as CMNS100 resolve. index.json's `term` is the newest term (the one whose sections the app
@@ -25,7 +26,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gzipSync } from "node:zlib";
 import { mergeSnapshots, type Course } from "@turboterp/course-data";
-import { buildCatalog } from "@turboterp/plan/catalog";
+import { buildCatalog, withOfferings } from "@turboterp/plan/catalog";
 import { encodeCatalogFile } from "@turboterp/plan/catalog-file";
 import { courseDetailFiles } from "../lib/advisor/course-details.ts";
 
@@ -41,6 +42,13 @@ function snapshotPaths(): string[] {
   return readdirSync(dir).filter((f) => /^soc-\d{6}\.json$/.test(f)).sort().map((f) => join(dir, f));
 }
 
+// Older terms (winter and summer too) cached by `--history`: they add courses and offering data only.
+function historyPaths(): string[] {
+  const dir = join(repo, "packages/course-data/.cache/history");
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir).filter((f) => /^soc-\d{6}\.json$/.test(f)).sort().map((f) => join(dir, f));
+}
+
 const socPaths = snapshotPaths().filter((p) => existsSync(p));
 if (!socPaths.length) {
   console.log("advisor-data: no Schedule of Classes snapshot found; skipping (the Advisor tab will say course data isn't built).");
@@ -48,8 +56,13 @@ if (!socPaths.length) {
 }
 
 type Snapshot = { term: string; fetchedAt: string; courses: Course[] };
-const snapshots = socPaths.map((p) => JSON.parse(readFileSync(p, "utf8")) as Snapshot).sort((a, b) => a.term.localeCompare(b.term));
-const newest = snapshots.at(-1)!;
+const read = (p: string) => JSON.parse(readFileSync(p, "utf8")) as Snapshot;
+const byTerm = (a: Snapshot, b: Snapshot) => a.term.localeCompare(b.term);
+const current = socPaths.map(read).sort(byTerm);
+const currentTerms = new Set(current.map((s) => s.term));
+const history = historyPaths().map(read).filter((s) => !currentTerms.has(s.term)).sort(byTerm);
+const snapshots = [...current, ...history].sort(byTerm);
+const newest = current.at(-1)!;
 const term = newest.term;
 const terms = snapshots.map((s) => s.term);
 const courses = mergeSnapshots(snapshots);
@@ -65,7 +78,7 @@ const write = (path: string, data: unknown) => {
 };
 
 const t = performance.now();
-const catalog = buildCatalog(courses);
+const catalog = withOfferings(buildCatalog(courses), snapshots);
 const catalogSize = write(join(termDir, "catalog.json"), encodeCatalogFile(catalog, { term, generatedAt: newest.fetchedAt }));
 
 let detailBytes = 0;

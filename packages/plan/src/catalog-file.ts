@@ -6,6 +6,7 @@
 // course with short keys and empty fields left out.
 
 import type { Requirement } from "@turboterp/course-data/prereqs";
+import type { Season } from "./check.ts";
 import type { CatalogCourse, PlanCatalog } from "./catalog.ts";
 
 export const CATALOG_FILE_VERSION = 1;
@@ -31,7 +32,12 @@ export type CompactCourse = {
   r?: number;
   /** Twins: f = Renumbered ("Formerly"), x = Cross-listed, co = Credit-only */
   e?: { f?: string[]; x?: string[]; co?: string[] };
+  /** seasons offered, as letters: F Fall, W Winter, S Spring, U Summer */
+  o?: string;
 };
+
+const SEASON_LETTER: Record<Season, string> = { Fall: "F", Winter: "W", Spring: "S", Summer: "U" };
+const LETTER_SEASON = Object.fromEntries(Object.entries(SEASON_LETTER).map(([k, v]) => [v, k as Season])) as Record<string, Season>;
 
 export type CatalogFile = {
   v: typeof CATALOG_FILE_VERSION;
@@ -51,6 +57,7 @@ export function encodeCatalogFile(catalog: PlanCatalog, meta: { term: string; ge
     if (course.prerequisite) out.p = course.prerequisite;
     if (course.corequisite) out.q = course.corequisite;
     if (course.repeat.kind === "repeatable") out.r = course.repeat.maxCredits ?? 0;
+    if (course.offered?.length) out.o = course.offered.map((x) => SEASON_LETTER[x]).join("");
     const t = course.twins;
     if (t) {
       out.e = {};
@@ -81,6 +88,7 @@ export function decodeCatalogFile(data: unknown): { term: string; generatedAt: s
       prerequisite: c.p ?? null,
       corequisite: c.q ?? null,
       repeat: c.r === undefined ? { kind: "unknown" } : c.r === 0 ? { kind: "repeatable" } : { kind: "repeatable", maxCredits: c.r },
+      ...(c.o ? { offered: [...c.o].flatMap((l) => (LETTER_SEASON[l] ? [LETTER_SEASON[l]!] : [])) } : {}),
       ...(c.e ? { twins: { ...(c.e.f && { renumbered: c.e.f }), ...(c.e.x && { crossListed: c.e.x }), ...(c.e.co && { creditOnly: c.e.co }) } } : {}),
     });
   }
