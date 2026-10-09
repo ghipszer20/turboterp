@@ -63,6 +63,7 @@ Keys:
 | `dining/<date>/<hallId>` | `DiningMenu` |
 | `libraries/hours` | `LibraryHours[]` |
 | `recwell/areas` | `RecWellArea[]` (14-day window) |
+| `recwell/classes` | `FitnessClass[]` (RecWell group fitness timetable, one week) |
 | `buses/gtfs` | unzipped GTFS text files (about 7 MB); the web parses them once per server instance |
 | `buildings` | `Building[]` (umd.io map buildings: id, name, lat, lon) for the trip planner's place search |
 | `calendar/academic` | `AcademicEvent[]` (registrar dates for the current and next two terms: registration, schedule adjustment, drop with W, derived pass/fail, apply to graduate, finals) |

@@ -9,6 +9,7 @@ import { parseAcademicCalendar } from "../src/calendar.ts";
 import { parseDiningMenu, type DiningMenu } from "../src/dining.ts";
 import { parseLibCalHours, type LibCalHoursFeed } from "../src/libraries.ts";
 import { parseStampVenues } from "../src/stamp-dining.ts";
+import { parseGroupFitness } from "../src/group-fitness.ts";
 import { parseRecWellTab } from "../src/recwell.ts";
 import { applyAvailability, openWindows, parseRoomLocations, parseRooms, roomRangeEnd, type Room } from "../src/rooms.ts";
 import {
@@ -44,6 +45,7 @@ function fakeSources(fail: Partial<Record<keyof CampusSources, boolean>> = {}) {
     libraryHours: 0,
     stampVenues: 0,
     recWellAreas: 0,
+    groupFitness: 0,
     shuttleGtfs: 0,
     buildings: 0,
     academicCalendar: 0,
@@ -67,6 +69,7 @@ function fakeSources(fail: Partial<Record<keyof CampusSources, boolean>> = {}) {
     libraryHours: () => run("libraryHours", () => parseLibCalHours(JSON.parse(fixture("libcal-hours.json")) as LibCalHoursFeed)),
     stampVenues: () => run("stampVenues", () => parseStampVenues(fixture("stamp-dining-gviz.txt"))),
     recWellAreas: () => run("recWellAreas", () => parseRecWellTab(fixture("recwell-eppley.csv"), "indoor")),
+    groupFitness: () => run("groupFitness", () => parseGroupFitness(fixture("group-fitness.html"))),
     shuttleGtfs: () => run("shuttleGtfs", () => ({ ...GTFS })),
     academicCalendar: () => run("academicCalendar", () => parseAcademicCalendar(fixture("academic-calendar-447.html"), "Spring 2027")),
     buildings: () =>
@@ -102,6 +105,7 @@ describe("buildSnapshots", () => {
       "libraries/hours",
       "dining/stamp",
       "recwell/areas",
+      "recwell/classes",
       "buses/gtfs",
       "buildings",
       "calendar/academic",
@@ -293,6 +297,7 @@ describe("pruneSnapshots", () => {
       snapshotKeys.roomCatalog,
       snapshotKeys.libraryHours,
       snapshotKeys.recWellAreas,
+      snapshotKeys.groupFitness,
       snapshotKeys.shuttleGtfs,
       snapshotKeys.buildings,
       snapshotKeys.academicCalendar,
