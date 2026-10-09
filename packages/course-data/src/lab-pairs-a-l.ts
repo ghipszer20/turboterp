@@ -21,7 +21,7 @@ export const PAIRS: LabPair[] = [
   { lecture: "BSCI483", labs: ["BSCI484"], source: "Testudo Schedule of Classes, 202608: BSCI484 prerequisite 'Minimum grade of C- in [BSCI180 or (BSCI161 and BSCI171)] AND minimum grade of C- in BSCI207; and must have completed with a minimum grade of C- in, or be concurrently enrolled in, BSCI483.'" },
   { lecture: "ANSC446", labs: ["ANSC447"], source: "Testudo Schedule of Classes, 202608: ANSC447 prerequisite 'Must have completed or be concurrently enrolled in ANSC446.'" },
   { lecture: "ANSC212", labs: ["ANSC214"], source: "Testudo Schedule of Classes, 202501: ANSC214 prerequisite 'Must have completed or be concurrently enrolled in ANSC212.'" },
-  { lecture: "BSCI170", labs: ["BSCI171"], source: "Testudo Schedule of Classes, 202601: BSCI171 'Basic laboratory principles of biology with special emphasis on cellular and molecular biology'; UMD catalog corequisite of BSCI170" },
+  { lecture: "BSCI170", labs: ["BSCI171"], source: "UMD catalog, https://academiccatalog.umd.edu/undergraduate/approved-courses/bsci/: BSCI171 corequisite 'BSCI170.'" },
 ];
 
 export const STANDALONE: StandaloneLab[] = [
