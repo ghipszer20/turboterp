@@ -4,7 +4,9 @@ import { connection } from "next/server";
 import { campusDate, campusMinutes, recWellOnDate, type RecWellAreaToday } from "@turboterp/campus-data";
 import { GymIcon } from "@/components/icons";
 import { Notice, Page, Section, SkeletonCard, SourceError, SubHeading, Tile, TileGrid } from "@/components/ui";
-import { getRecWellAreas, safe } from "@/lib/campus";
+import { ClassesSection } from "./ClassesSection";
+import { ReserveSection } from "./ReserveSection";
+import { getGroupFitness, getRecWellAreas, safe } from "@/lib/campus";
 import { EPPLEY_SUBSECTION_FALLBACK, regroupEppleyAreas, type RegroupedArea } from "@/lib/gyms";
 import { hoursStatus } from "@/lib/status";
 
@@ -16,6 +18,14 @@ export default function GymPage() {
       <Suspense fallback={<SkeletonCard rows={6} />}>
         <GymList />
       </Suspense>
+      <Section title="Classes">
+        <Suspense fallback={<SkeletonCard rows={4} />}>
+          <Classes />
+        </Suspense>
+      </Section>
+      <Section title="Reserve">
+        <ReserveSection />
+      </Section>
       <Notice>
         Hours from UMD RecWell. Closures can happen on short notice; check{" "}
         <a href="https://recwell.umd.edu/facility-alerts" target="_blank" rel="noreferrer">
@@ -25,6 +35,13 @@ export default function GymPage() {
       </Notice>
     </Page>
   );
+}
+
+async function Classes() {
+  await connection();
+  const res = await safe(getGroupFitness);
+  if (!res.ok) return <SourceError source="RecWell group fitness" />;
+  return <ClassesSection classes={res.data} todayIso={campusDate()} initialMinutes={campusMinutes()} />;
 }
 
 async function GymList() {

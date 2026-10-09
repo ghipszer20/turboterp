@@ -1,7 +1,7 @@
 // The snapshot jobs (how they're scheduled: ../../SNAPSHOTS.md).
 //
 //   buildSnapshots  daily, ~5am   room catalog, room availability, today's menus,
-//                                 library hours, RecWell hours, Shuttle-UM GTFS, academic calendar
+//                                 library hours, RecWell hours, group fitness classes, Shuttle-UM GTFS, academic calendar
 //   refreshFast     every ~5 min  room availability; menus once they're 30 min old
 //
 // A source that fails never overwrites its last good snapshot: the error goes
@@ -17,6 +17,7 @@ import { fetchBytes } from "../http.ts";
 import { fetchLibraryHours, type LibraryHours } from "../libraries.ts";
 import { fetchStampVenues, stampWindow, type StampVenue } from "../stamp-dining.ts";
 import { fetchRecWellAreas, recWellWindow, type RecWellArea } from "../recwell.ts";
+import { fetchGroupFitness, type FitnessClass } from "../group-fitness.ts";
 import {
   fetchCategoryAvailability,
   fetchRoomCatalog,
@@ -38,6 +39,8 @@ export type CampusSources = {
   libraryHours(): Promise<LibraryHours[]>;
   stampVenues(): Promise<StampVenue[]>;
   recWellAreas(): Promise<RecWellArea[]>;
+  /** RecWell group fitness classes (recwell.umd.edu only; ActiveTerp is never fetched). */
+  groupFitness(): Promise<FitnessClass[]>;
   /** The unzipped GTFS text files (file name → contents). */
   shuttleGtfs(): Promise<Record<string, string>>;
   /** UMD building locations, for the trip planner's place search. */
@@ -54,6 +57,7 @@ export const liveSources: CampusSources = {
   libraryHours: () => fetchLibraryHours(2),
   stampVenues: fetchStampVenues,
   recWellAreas: fetchRecWellAreas,
+  groupFitness: fetchGroupFitness,
   shuttleGtfs: async () => unzipGtfs(await fetchBytes("buses", SHUTTLE_UM_GTFS_URL)),
   buildings: fetchBuildings,
   academicCalendar: fetchAcademicCalendar,
@@ -67,6 +71,7 @@ export const snapshotKeys = {
   libraryHours: "libraries/hours",
   stampVenues: "dining/stamp",
   recWellAreas: "recwell/areas",
+  groupFitness: "recwell/classes",
   shuttleGtfs: "buses/gtfs",
   buildings: "buildings",
   academicCalendar: "calendar/academic",
@@ -167,6 +172,11 @@ export async function buildSnapshots(
     refresh(store, now, snapshotKeys.recWellAreas, async () =>
       recWellWindow(await sources.recWellAreas(), today, RECWELL_DAYS),
     ),
+    refresh(store, now, snapshotKeys.groupFitness, async () => {
+      const classes = await sources.groupFitness();
+      if (classes.length === 0) throw new Error("group fitness came back empty");
+      return classes;
+    }),
     refresh(store, now, snapshotKeys.shuttleGtfs, async () => {
       const files = await sources.shuttleGtfs();
       parseGtfs(files); // throws on a feed we couldn't use

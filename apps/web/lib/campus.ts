@@ -27,6 +27,8 @@ import {
   fetchDiningMenu,
   fetchLibraryHours,
   fetchRecWellAreas,
+  fetchGroupFitness,
+  type FitnessClass,
   fetchStampVenues,
   fetchRoomCatalog,
   fetchShuttleFeed,
@@ -110,6 +112,11 @@ export async function getRecWellAreas(): Promise<RecWellArea[]> {
   return (await snapshotOrLive(snap, liveRecWellAreas)).data;
 }
 
+export async function getGroupFitness(): Promise<FitnessClass[]> {
+  const snap = await readSnapshot<FitnessClass[]>(snapshotKeys.groupFitness, STABLE);
+  return (await snapshotOrLive(snap, liveGroupFitness)).data;
+}
+
 /** UMD building locations, for the trip planner's "From"/"To" search. Barely changes, so it's read like the other stable snapshots. */
 export async function getBuildings(): Promise<Building[]> {
   const snap = await readSnapshot<Building[]>(snapshotKeys.buildings, STABLE);
@@ -182,6 +189,12 @@ async function liveRecWellAreas() {
   "use cache";
   cacheLife({ stale: 300, revalidate: 6 * 3600, expire: 3 * 86400 });
   return fetchRecWellAreas();
+}
+
+async function liveGroupFitness() {
+  "use cache";
+  cacheLife({ stale: 300, revalidate: 6 * 3600, expire: 3 * 86400 });
+  return fetchGroupFitness();
 }
 
 async function liveBuildings() {
