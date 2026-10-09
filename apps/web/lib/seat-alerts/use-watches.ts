@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { authConfigured } from "@/lib/auth/client";
 import { useSession } from "@/lib/auth/use-session";
 import { addWatch, finishWatch, listWatches, removeWatch } from "./client";
@@ -33,7 +33,8 @@ export function useWatches(): WatchesState {
   const session = useSession();
   const mock = useMock();
   const [remote, setRemote] = useState<{ phase: "ready" | "signed-out" | "unavailable"; data: WatchesResponse } | null>(null);
-  const [mockData, setMockData] = useState<WatchesResponse>(() => mockWatches());
+  const [mockData, setMockData] = useState<WatchesResponse | null>(null);
+  const mockInitial = useMemo(() => (mock ? mockWatches() : EMPTY), [mock]);
 
   useEffect(() => {
     if (mock || !authConfigured() || session.status !== "signed-in") return;
@@ -56,8 +57,8 @@ export function useWatches(): WatchesState {
         : session.status === "signed-out"
           ? "signed-out"
           : (remote?.phase ?? "loading");
-  const data = mock ? mockData : (remote?.data ?? EMPTY);
-  const setData = (f: (d: WatchesResponse) => WatchesResponse) => (mock ? setMockData(f) : setRemote((r) => ({ phase: "ready", data: f(r?.data ?? EMPTY) })));
+  const data = mock ? (mockData ?? mockInitial) : (remote?.data ?? EMPTY);
+  const setData = (f: (d: WatchesResponse) => WatchesResponse) => (mock ? setMockData(f(mockData ?? mockInitial)) : setRemote((r) => ({ phase: "ready", data: f(r?.data ?? EMPTY) })));
 
   const reload = useCallback(async () => {
     const r = await listWatches();

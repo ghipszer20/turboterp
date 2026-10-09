@@ -7,7 +7,14 @@ import type { WatchesResponse } from "./view";
 
 export function mockAllowed(search: string): boolean {
   const env = { NODE_ENV: process.env.NODE_ENV, NEXT_PUBLIC_TURBOTERP_SEED: process.env.NEXT_PUBLIC_TURBOTERP_SEED };
-  return seedAllowed(env) && new URLSearchParams(search).get("mock") === "1";
+  if (!seedAllowed(env)) return false;
+  // The builder rewrites the query string, so remember the flag for this tab.
+  try {
+    if (new URLSearchParams(search).get("mock") === "1") sessionStorage.setItem("seat-alerts-mock", "1");
+    return sessionStorage.getItem("seat-alerts-mock") === "1";
+  } catch {
+    return new URLSearchParams(search).get("mock") === "1";
+  }
 }
 
 const ago = (min: number) => new Date(Date.now() - min * 60_000).toISOString();

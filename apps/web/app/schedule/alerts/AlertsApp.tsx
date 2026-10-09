@@ -13,7 +13,6 @@ const FOOTER =
 
 export function AlertsApp() {
   const state = useWatches();
-  const now = new Date();
 
   if (state.phase === "loading") return <SkeletonCard rows={3} />;
   if (state.phase === "unavailable")
@@ -27,6 +26,7 @@ export function AlertsApp() {
       </div>
     );
 
+  const now = new Date();
   const { watches, done, ended } = state.data;
   const note = endedNote(ended);
 
