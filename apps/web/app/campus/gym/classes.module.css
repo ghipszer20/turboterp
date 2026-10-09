@@ -70,15 +70,38 @@
   gap: 12px;
 }
 
+.reserveBody {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 14px 16px;
+}
+
+.reserveTitle {
+  margin: 0;
+  font: var(--t-headline);
+  font-family: var(--font-display), var(--font);
+}
+
 .rules {
-  display: block;
+  margin: 0;
   font: var(--t-sub);
-  white-space: normal;
+  color: var(--text-2);
 }
 
 .linkStack {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.source {
+  margin: 0;
+  color: var(--text-2);
+  font: var(--t-foot);
+}
+
+.source a {
+  color: var(--accent);
 }

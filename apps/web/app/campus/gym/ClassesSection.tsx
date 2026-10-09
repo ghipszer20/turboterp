@@ -6,7 +6,7 @@
 // Hard rules (owner/legal): ActiveTerp is only LINKED to, never fetched,
 // scraped or automated, and the app never asks for or handles UMD credentials.
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import type { ClassKind, ClassPlace, FitnessClass } from "@turboterp/campus-data";
 import { Chip, Segmented } from "@/components/Segmented";
 import { Card, EmptyState, Row } from "@/components/ui";
@@ -25,6 +25,21 @@ import styles from "./classes.module.css";
 const FIRST_TIME_KEY = "turboterp-fitness-first-time-dismissed";
 const ACTIVETERP = "https://activeterp.umd.edu/";
 
+const listeners = new Set<() => void>();
+function subscribe(l: () => void) {
+  listeners.add(l);
+  return () => listeners.delete(l);
+}
+let dismissedThisVisit = false;
+function readDismissed(): boolean {
+  if (dismissedThisVisit) return true;
+  try {
+    return localStorage.getItem(FIRST_TIME_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
 export function ClassesSection({
   classes,
   todayIso,
@@ -39,25 +54,19 @@ export function ClassesSection({
   const [day, setDay] = useState(today);
   const [kind, setKind] = useState<ClassKind | null>(null);
   const [place, setPlace] = useState<ClassPlace | null>(null);
-  // Hidden until the device's choice is read, so a dismissed card never flashes.
-  const [showFirstTime, setShowFirstTime] = useState(false);
-
-  useEffect(() => {
-    try {
-      setShowFirstTime(localStorage.getItem(FIRST_TIME_KEY) !== "1");
-    } catch {
-      setShowFirstTime(true);
-    }
-  }, []);
+  // Hidden on the server and until hydration, so a dismissed card never flashes.
+  const dismissed = useSyncExternalStore(subscribe, readDismissed, () => true);
 
   function dismiss() {
-    setShowFirstTime(false);
     try {
       localStorage.setItem(FIRST_TIME_KEY, "1");
     } catch {
       // Private mode: the card just comes back next visit.
     }
+    dismissedThisVisit = true;
+    listeners.forEach((l) => l());
   }
+  const showFirstTime = !dismissed;
 
   // Start the week at today so "Today" is first and the rest follow in order.
   const todayIdx = WEEKDAYS.indexOf(today as (typeof WEEKDAYS)[number]);
