@@ -106,9 +106,8 @@ const fixture = (JSON.parse(readFileSync(new URL("./fixtures/lab-courses.json", 
 const unclassifiedIn = (from: string, to: string) => unclassifiedLabs(fixture).filter((x) => x.department >= from && x.department <= to).map((x) => `${x.id} ${x.title}`);
 
 describe("lab coverage (every source)", () => {
-  // Turned on by the builders who classify each half (docs/project/lab-pairs-plan.md Task 4).
   it("accounts for every lab in departments A–L", () => expect(unclassifiedIn("A", "LZZZ")).toEqual([]));
-  it.skip("accounts for every lab in departments M–Z", () => expect(unclassifiedIn("M", "ZZZZ")).toEqual([]));
+  it("accounts for every lab in departments M–Z", () => expect(unclassifiedIn("M", "ZZZZ")).toEqual([]));
 
   it("cites a source for every hand-written entry, with valid course ids", () => {
     const id = /^[A-Z]{4}\d{3}[A-Z]?$/;
@@ -121,7 +120,7 @@ describe("lab coverage (every source)", () => {
     for (const r of STANDALONE_RULES) expect([r.source.trim(), r.reason.trim()].every(Boolean), r.prefix).toBe(true);
   });
 
-  // BSCI171's newest record (Testudo) doesn't name BSCI170, so it needs a hand pair (C1 turns this on).
+  // BSCI171's newest record (Testudo) doesn't name BSCI170,, so it needs a hand pair.
   it("keeps BSCI171 and BSCI161 as labs of BSCI170 and BSCI160", () => {
     const m = labsByLecture(fixture, [...DERIVED_PAIRS, ...LAB_PAIRS]);
     expect(m.get("BSCI170")).toEqual(expect.arrayContaining(["BSCI180", "BSCI171"]));
