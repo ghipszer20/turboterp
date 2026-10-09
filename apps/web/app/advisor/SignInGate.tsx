@@ -91,7 +91,7 @@ function SignInCard({ onClose }: { onClose: () => void }) {
               {error}
             </p>
           ) : null}
-          <button type="submit" className={styles.primaryButton} disabled={busy}>
+          <button type="submit" className={styles.ghostButton} disabled={busy}>
             Email me a sign-in link
           </button>
         </form>
@@ -147,12 +147,14 @@ function DeleteConfirm({ onCancel }: { onCancel: () => void }) {
           Couldn&apos;t delete your account. Nothing was deleted. Try again later.
         </p>
       ) : null}
-      <button type="button" className={styles.dangerButton} disabled={busy} onClick={remove}>
-        Delete account
-      </button>
-      <button type="button" className={styles.linkButton} disabled={busy} onClick={onCancel}>
-        Cancel
-      </button>
+      <div className={styles.actions}>
+        <button type="button" className={styles.ghostButton} disabled={busy} onClick={onCancel}>
+          Cancel
+        </button>
+        <button type="button" className={styles.dangerButton} disabled={busy} onClick={remove}>
+          Delete account
+        </button>
+      </div>
     </div>
   );
 }
