@@ -53,6 +53,10 @@ progress report.
      Summer is quiet; winter+summer wording; regular course in Winter not offered there warns; a course
      offered in Winter, planned in Winter, is quiet; fall-only course in Spring is quiet (not checked);
      no `offered` means quiet; a completed course is quiet.
+     Owner's example: HLTH432 (Medical Terminology) ran in Summer 2025, Winter 2026 and Summer 2026,
+     and never in fall or spring, so `offered` is `["Summer", "Winter"]` (in either order). Planned in
+     Fall it warns "HLTH432 is only offered in winter and summer, based on UMD's recent schedules.";
+     planned in Winter or Summer it's quiet. Add this as a test case.
   4. `apps/web/scripts/advisor-data.mts`: read `.cache/history/soc-*.json` too; apply `withOfferings`
      to every snapshot. Keep `term` as the newest non-history term.
 - **Main session:** merge; run `npm run advisor-data -w @turboterp/web`, then check that a summer-only
