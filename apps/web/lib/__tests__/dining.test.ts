@@ -2,12 +2,13 @@ import { describe, expect, it } from "vitest";
 import type { DiningMenu } from "@turboterp/campus-data";
 import {
   diningSlice,
-  groupSearchHits,
+  groupSearchByHall,
   hallFromQuery,
   mealFromQuery,
   mealsServed,
   parseDiningQuery,
   resolveMeal,
+  SEARCH_LIMIT_PER_HALL,
   searchMenus,
   stationDisplayName,
   type SearchMatch,
@@ -27,7 +28,7 @@ describe("parseDiningQuery", () => {
   });
 });
 
-describe("groupSearchHits", () => {
+describe("groupSearchByHall", () => {
   const hit = (hall: string, meal: string, station: string, name: string): SearchMatch => ({
     hallId: 1,
     hall,
@@ -35,21 +36,30 @@ describe("groupSearchHits", () => {
     station,
     item: { name, labelUrl: null, diets: [], contains: [] },
   });
-  it("groups by hall, meal and station, keeping item order", () => {
-    const groups = groupSearchHits([
-      hit("Yahentamitsi", "Lunch", "Grill", "Chicken Burger"),
-      hit("Yahentamitsi", "Lunch", "Grill", "Chicken Wrap"),
-      hit("Yahentamitsi", "Dinner", "Woks", "Orange Chicken"),
-      hit("South", "Lunch", "Deli", "Chicken Club"),
-    ]);
-    expect(groups).toEqual([
-      { hall: "Yahentamitsi", meal: "Lunch", station: "Grill", items: ["Chicken Burger", "Chicken Wrap"] },
-      { hall: "Yahentamitsi", meal: "Dinner", station: "Woks", items: ["Orange Chicken"] },
-      { hall: "South", meal: "Lunch", station: "Deli", items: ["Chicken Club"] },
+  it("groups by hall then meal + station, keeping hit and item order", () => {
+    const halls = groupSearchByHall(
+      [
+        hit("Yahentamitsi", "Lunch", "Grill", "Chicken Burger"),
+        hit("Yahentamitsi", "Lunch", "Grill", "Chicken Wrap"),
+        hit("Yahentamitsi", "Dinner", "Woks", "Orange Chicken"),
+        hit("South", "Lunch", "Deli", "Chicken Club"),
+      ],
+      ["South"],
+    );
+    expect(halls).toEqual([
+      {
+        hall: "Yahentamitsi",
+        capped: false,
+        rows: [
+          { meal: "Lunch", station: "Grill", items: ["Chicken Burger", "Chicken Wrap"] },
+          { meal: "Dinner", station: "Woks", items: ["Orange Chicken"] },
+        ],
+      },
+      { hall: "South", capped: true, rows: [{ meal: "Lunch", station: "Deli", items: ["Chicken Club"] }] },
     ]);
   });
   it("is empty for no hits", () => {
-    expect(groupSearchHits([])).toEqual([]);
+    expect(groupSearchByHall([], [])).toEqual([]);
   });
 });
 
@@ -231,15 +241,19 @@ describe("searchMenus", () => {
     expect(searchMenus(all, "burger pasta").results).toEqual([]);
   });
 
-  it("caps results and flags when more exist", () => {
-    const big: DiningMenu = {
-      hallId: 19,
+  it("caps each hall separately and keeps going with the next hall", () => {
+    const many = (hallId: number): DiningMenu => ({
+      hallId,
       date: "d",
-      meals: [{ name: "Lunch", stations: [{ name: "S", items: Array.from({ length: 70 }, (_, i) => item(`Taco ${i}`)) }] }],
-    };
-    const r = searchMenus([big], "taco");
-    expect(r.results).toHaveLength(60);
-    expect(r.capped).toBe(true);
-    expect(searchMenus(all, "burger").capped).toBe(false);
+      meals: [{ name: "Lunch", stations: [{ name: "S", items: Array.from({ length: 40 }, (_, i) => item(`Taco ${i}`)) }] }],
+    });
+    const r = searchMenus([many(19), south, many(51)], "taco");
+    expect(r.results.filter((x) => x.hallId === 19)).toHaveLength(SEARCH_LIMIT_PER_HALL);
+    expect(r.results.filter((x) => x.hallId === 51)).toHaveLength(SEARCH_LIMIT_PER_HALL);
+    expect(r.cappedHalls).toEqual(["Yahentamitsi", "251 North"]);
+  });
+
+  it("lists no capped halls when none hit the cap", () => {
+    expect(searchMenus(all, "burger").cappedHalls).toEqual([]);
   });
 });

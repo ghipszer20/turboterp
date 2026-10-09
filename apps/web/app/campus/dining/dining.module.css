@@ -174,13 +174,6 @@
   white-space: nowrap;
 }
 
-.note {
-  margin: 0;
-  padding: 0 16px;
-  color: var(--text-3);
-  font: var(--t-caption);
-}
-
 .resultsHead {
   margin: 0;
   padding: 0 4px;
