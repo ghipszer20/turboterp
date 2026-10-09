@@ -12,7 +12,7 @@ export const BATCH_PAUSE_MS = 300;
 export type RunDeps = {
   /** The current Schedule of Classes term (snapshot `schedule/current`), or null. */
   term: () => Promise<string | null>;
-  store: SeatAlertStore;
+  store: Pick<SeatAlertStore, "listActiveWatches" | "getStates" | "saveStates" | "markAlerted" | "subscriptionsFor" | "deleteSubscription" | "getCursor" | "setCursor">;
   fetchSections: (term: string, courseIds: string[]) => Promise<Section[]>;
   push: (sub: PushSub, payload: PushPayload) => Promise<PushResult>;
   /** Signed "I got it" token for a watch id (api.ts signWatchToken with CRON_SECRET). */
