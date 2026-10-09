@@ -74,6 +74,7 @@ Moved to `docs/project/roadmap.md` (phases 0–6, MVP recommendation, estimates,
 ## 10. Open to-dos and questions
 - [ ] Optional: a courtesy email to UMD Trademarks & Licensing (required only if the project makes money).
 - [ ] Email UMD Libraries requesting LibCal API credentials.
+- [ ] Email UMD RecWell asking for API access (Innosoft Fusion for ActiveTerp classes and courts, Planyo for tennis) so students can sign up inside TurboTerp (`docs/project/recwell-signups.md`).
 - [ ] Email UMD DOTS requesting Shuttle-UM real-time data access (a Swiftly GTFS-RT key).
 - [ ] Claim a domain (turboterp.com was unregistered on 2026-10-04, per Verisign RDAP), the App Store name and social handles.
 - [ ] Decide whether to reuse or partner with Jupiterp (open source; check license).
