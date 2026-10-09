@@ -4,7 +4,7 @@
 // or section batch still fails, nothing is saved (the old file stays) and
 // the script exits non-zero. Run by hand:
 //
-//   npm run snapshot -w @turboterp/course-data -- 202701
+//   npm run snapshot -w @turboterp/course-data -- 202701 [--history]
 
 import { mkdirSync, writeFileSync } from "node:fs";
 import { fetchEach } from "../src/fetch-each.ts";
@@ -17,7 +17,8 @@ const pause = () => new Promise<void>((r) => setTimeout(r, PAUSE_MS));
 
 const { terms, departments: listed } = await fetchTermsAndDepartments();
 const departments = withExtraDepartments(listed);
-const term = process.argv[2] ?? terms.find((t) => t.current)?.id;
+const history = process.argv.includes("--history");
+const term = process.argv.slice(2).find((a) => !a.startsWith("--")) ?? terms.find((t) => t.current)?.id;
 if (!term) throw new Error("No term given and no current term found");
 console.log(`Term ${term}: ${departments.length} departments`);
 
@@ -48,7 +49,9 @@ const sectionRun = await fetchEach(
 );
 const sections = sectionRun.items;
 
-const file = `.cache/soc-${term}.json`;
+// --history keeps a past term under .cache/history/, away from the schedule builder and advisor-data.
+const dir = history ? ".cache/history" : ".cache";
+const file = `${dir}/soc-${term}.json`;
 if (courseRun.failed.length > 0 || sectionRun.failed.length > 0) {
   for (const f of courseRun.failed) console.error(`  ${f.key}: ${f.message}`);
   for (const f of sectionRun.failed) console.error(`  sections ${f.key}-${f.key + SECTION_BATCH - 1}: ${f.message}`);
@@ -58,6 +61,6 @@ if (courseRun.failed.length > 0 || sectionRun.failed.length > 0) {
   process.exit(1);
 }
 
-mkdirSync(".cache", { recursive: true });
+mkdirSync(dir, { recursive: true });
 writeFileSync(file, JSON.stringify({ term, fetchedAt: new Date().toISOString(), departments, courses, sections }));
 console.log(`Saved ${courses.length} courses and ${sections.length} sections to ${file}`);
