@@ -13,6 +13,7 @@ const PATHS = [
   "/campus/rooms",
   "/campus/transport",
   "/schedule",
+  "/schedule/alerts",
   "/advisor",
   "/calendar",
   "/about",

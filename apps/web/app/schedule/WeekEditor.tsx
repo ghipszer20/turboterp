@@ -171,6 +171,7 @@ export function WeekEditor({
             ratings={ratings}
             grades={gradesFor(open)}
             seatsUpdatedAt={seatsUpdatedAt?.(open) ?? null}
+            allSections={sectionsByCourse.get(open) ?? []}
             overlaps={mode === "own" ? (s) => overlapsWith(s, placed) : undefined}
             onPreview={(s) => setPreview(s && s.id !== current?.id ? s : null)}
             onCommit={(s) => {
