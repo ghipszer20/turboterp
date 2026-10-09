@@ -120,7 +120,7 @@ describe("lab coverage (every source)", () => {
     for (const r of STANDALONE_RULES) expect([r.source.trim(), r.reason.trim()].every(Boolean), r.prefix).toBe(true);
   });
 
-  // BSCI171's newest record (Testudo) doesn't name BSCI170,, so it needs a hand pair.
+  // BSCI171's newest record (Testudo) doesn't name BSCI170, so it needs a hand pair.
   it("keeps BSCI171 and BSCI161 as labs of BSCI170 and BSCI160", () => {
     const m = labsByLecture(fixture, [...DERIVED_PAIRS, ...LAB_PAIRS]);
     expect(m.get("BSCI170")).toEqual(expect.arrayContaining(["BSCI180", "BSCI171"]));
