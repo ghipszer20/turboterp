@@ -53,7 +53,9 @@ export function labsByLecture(courses: readonly LabSourceCourse[], pairs: readon
     if (pair) add(c.id, pair.with);
     for (const id of c.texts.corequisite?.match(CODE) ?? []) {
       const other = byId.get(id);
-      if (!other) continue;
+      // Same department only: PHYS174's corequisite MATH140 isn't its lecture. Cross-department
+      // pairs (BSCI392 with GEOL392) are hand-written, with their source.
+      if (!other || other.id.slice(0, 4) !== c.id.slice(0, 4)) continue;
       if (isLabCourse(c) && !isLabCourse(other)) add(other.id, c.id);
       else if (!isLabCourse(c) && isLabCourse(other)) add(c.id, other.id);
     }

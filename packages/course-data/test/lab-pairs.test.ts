@@ -66,6 +66,10 @@ describe("labsByLecture", () => {
   it("links a lab-only course found by meeting type", () => {
     expect(labsByLecture([c("PHYS161", "Physics", { coreq: "PHYS275." }), c("PHYS275", "Experimental Physics I", { labOnly: true })]).get("PHYS161")).toEqual(["PHYS275"]);
   });
+  it("ignores a corequisite between a lab and a course in another department (PHYS174 with MATH140)", () => {
+    expect(labsByLecture([c("MATH140", "Calculus I"), c("PHYS174", "Physics Laboratory Introduction", { coreq: "MATH140." })]).size).toBe(0);
+    expect(labsByLecture([c("ENST200", "Fundamentals of Soil Science", { coreq: "CHEM132." }), c("CHEM132", "General Chemistry I Laboratory")]).size).toBe(0);
+  });
   it("ignores a corequisite between two lectures", () => {
     expect(labsByLecture([c("MATH001", "Calculus", { coreq: "MATH002." }), c("MATH002", "Calculus Workshop")]).size).toBe(0);
   });

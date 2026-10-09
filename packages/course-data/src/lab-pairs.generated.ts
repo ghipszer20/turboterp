@@ -104,13 +104,6 @@ export const DERIVED_PAIRS: LabPair[] = [
   "source": "Testudo Schedule of Classes, 202701"
  },
  {
-  "lecture": "ENST200",
-  "labs": [
-   "CHEM132"
-  ],
-  "source": "Testudo Schedule of Classes, 202701"
- },
- {
   "lecture": "GEOG201",
   "labs": [
    "GEOG211"
@@ -277,13 +270,6 @@ export const DERIVED_PAIRS: LabPair[] = [
    "PHYS103"
   ],
   "source": "Testudo Schedule of Classes, 202608"
- },
- {
-  "lecture": "MATH140",
-  "labs": [
-   "PHYS174"
-  ],
-  "source": "Testudo Schedule of Classes, 202701"
  },
  {
   "lecture": "PHYS260H",

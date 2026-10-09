@@ -27,6 +27,7 @@ export const PAIRS: LabPair[] = [
 export const STANDALONE: StandaloneLab[] = [
   { id: "NAVY108", reason: "naval science leadership lab; self-contained", source: `${T7}: NAVY108 listing` },
   { id: "NEUR405", reason: "upper-level lab; prerequisites finished first", source: `${T7}: NEUR405 prerequisite 'NEUR306 or BSCI353'` },
+  { id: "PHYS174", reason: "lab introduction; its corequisite is MATH140 (calculus), not a physics lecture", source: `${T7}: PHYS174 corequisite 'MATH140.'` },
   { id: "PHYS276", reason: "prerequisites PHYS272 and PHYS275 finished first", source: `${T7}: PHYS276 listing` },
   { id: "PHYS405", reason: "advanced lab; prerequisite PHYS375 finished first", source: `${T7}: PHYS405 listing` },
   { id: "PSYC200", reason: "statistics course that meets as a lab; self-contained", source: `${T7}: PSYC200 listing` },
