@@ -5,6 +5,7 @@ import { addDays, campusDate, campusMinutes, DINING_HALLS, orderLibraries, recWe
 import { BusIcon, DiningIcon, GymIcon, LibraryIcon, RoomIcon, SearchIcon } from "@/components/icons";
 import { NextClassHero, type UpNext } from "@/app/NextClassHero";
 import { RegistrationCountdown } from "@/app/RegistrationCountdown";
+import { SeatAlertsCard } from "@/app/SeatAlertsCard";
 import { HeroRow, Page, Section, SkeletonCard, Tile, TileGrid } from "@/components/ui";
 import {
   getAcademicCalendar,
@@ -60,6 +61,7 @@ async function Today() {
 
   return (
     <Page title="Today" subtitle={dateLabel}>
+      <SeatAlertsCard />
       <Suspense fallback={<SkeletonCard rows={2} />}>
         <Hero today={today} />
       </Suspense>

@@ -13,7 +13,10 @@ import {
   type GradeSummary,
   type SectionChoices,
 } from "@/lib/schedule/sections";
+import { useWatches } from "@/lib/seat-alerts/use-watches";
 import { RatingBadge } from "./RatingBadge";
+import { SeatBell } from "./SeatBell";
+import bell from "./seatbell.module.css";
 import cal from "./calendar.module.css";
 import styles from "./panel.module.css";
 
@@ -61,6 +64,7 @@ export function SectionPanel({
   ratings,
   grades,
   seatsUpdatedAt = null,
+  allSections = [],
   overlaps,
   onPreview,
   onCommit,
@@ -78,6 +82,8 @@ export function SectionPanel({
   grades: Record<string, CourseGrades> | null | undefined;
   /** When this department's seat counts were last refreshed (ISO), or null when unknown. */
   seatsUpdatedAt?: string | null;
+  /** Every section of this course; the full ones are listed with a "Notify me" bell. */
+  allSections?: Section[];
   /** Build my own: the placed courses a section would overlap. */
   overlaps?: (s: Section) => string[];
   onPreview: (s: Section | null) => void;
@@ -85,6 +91,8 @@ export function SectionPanel({
   onClose: () => void;
   onRemove?: () => void;
 }) {
+  const watches = useWatches();
+  const fullSections = allSections.filter((s) => s.seats.open === 0 && s.id !== current?.id);
   const pointer = useRef<string>("mouse");
   // Touch: the section the last tap previewed; tapping it again commits.
   const tapped = useRef<string | null>(null);
@@ -162,6 +170,9 @@ export function SectionPanel({
           ✕
         </button>
       </div>
+      <div className={bell.anyRow}>
+        <SeatBell state={watches} courseId={courseId} sectionId={null} label="Any section" />
+      </div>
       <div className={styles.scroll} onMouseLeave={() => onPreview(null)}>
         {empty ? <p className={styles.none}>Every section of {courseId} is full.</p> : null}
         {choices.sameLecture.length ? (
@@ -176,7 +187,25 @@ export function SectionPanel({
             <ul className={styles.list}>{choices.otherLectures.map(row)}</ul>
           </>
         ) : null}
-        <p className={styles.source}>Ratings and grades: PlanetTerp. Full sections are hidden.</p>
+        {fullSections.length ? (
+          <>
+            <h4 className={styles.group}>Full sections</h4>
+            <ul className={styles.list}>
+              {fullSections.map((s) => (
+                <li key={s.id} className={bell.fullRow}>
+                  <span className={bell.fullText}>
+                    <b>{s.id}</b>
+                    <span>
+                      Full · waitlist {s.seats.waitlist} · {s.instructors.join(", ") || "TBA"}
+                    </span>
+                  </span>
+                  <SeatBell state={watches} courseId={courseId} sectionId={s.id} label="Notify me" />
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : null}
+        <p className={styles.source}>Ratings and grades: PlanetTerp. Full sections can&apos;t be placed; use the bell to get notified.</p>
         {onRemove && current ? (
           <button type="button" className={styles.remove} onClick={onRemove}>
             Take {courseId} off the week

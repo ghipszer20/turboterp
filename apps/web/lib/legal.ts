@@ -221,6 +221,7 @@ export const PRIVACY: LegalSection[] = [
       "When you are signed in, your plan, saved schedules and registration checklist are stored on our server (Supabase), tied to your account, so they follow you between devices. While you are signed in, the newest change wins: each edit is saved and replaces the older copy, on every device. If this browser already has a plan made before you signed in and your account has a different one, we ask which to keep.",
       "When you sign the Advisor agreement, we also keep a record of it: its version, the time, a random id for your browser, your account if you are signed in, and the name you typed. The name is stored encrypted so that only we can read it, and only if it is needed as a legal record.",
       "Signing out removes the synced copies from that browser. Your signed agreement stays on the device.",
+      "Seat Alerts: the classes you watch and, if you turn on notifications, your browser's push address (from Apple, Google or Mozilla). Deleted with your account.",
     ],
   },
   {

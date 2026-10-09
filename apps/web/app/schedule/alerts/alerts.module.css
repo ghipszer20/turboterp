@@ -1,0 +1,214 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 640px;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--tile-border);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+}
+
+.title {
+  font: var(--t-headline);
+}
+
+.sub {
+  color: var(--text-2);
+  font: var(--t-sub);
+}
+
+.fine {
+  color: var(--text-2);
+  font: var(--t-foot);
+}
+
+.h2 {
+  margin: 0 4px 8px;
+  font: var(--t-headline);
+}
+
+.statusLine {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: var(--t-body);
+}
+
+.dot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--closed);
+}
+
+.dot[data-kind="on"] {
+  background: var(--open);
+}
+
+.dot[data-kind="blocked"] {
+  background: var(--accent);
+}
+
+.guide {
+  margin: 0;
+  padding-left: 22px;
+  color: var(--text);
+  font: var(--t-sub);
+}
+
+.guide li + li {
+  margin-top: 4px;
+}
+
+.primary,
+.ghost,
+.link {
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: var(--r-pill);
+  font: var(--t-sub);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--fast) var(--spring);
+}
+
+.primary {
+  border: 0;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.ghost {
+  border: 1px solid var(--tile-border);
+  background: var(--surface);
+  color: var(--accent);
+}
+
+.link {
+  min-height: 36px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+.primary:disabled,
+.ghost:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.input {
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--tile-border);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  color: var(--text);
+  font: var(--t-body);
+}
+
+.error {
+  color: var(--accent);
+  font: var(--t-foot);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--tile-border);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 60px;
+  padding: 10px 16px;
+}
+
+.row + .row {
+  border-top: 1px solid var(--separator);
+}
+
+.rowText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rowTitle {
+  font: var(--t-body);
+  font-weight: 600;
+}
+
+.rowSub {
+  color: var(--text-2);
+  font: var(--t-foot);
+}
+
+.open {
+  color: var(--open);
+  font-weight: 600;
+}
+
+.rowActions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 4px;
+}
+
+.pick {
+  min-height: 44px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 16px;
+  border: 0;
+  background: none;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.countRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0 4px 8px;
+}
+
+.details summary {
+  padding: 4px;
+  color: var(--text-2);
+  font: var(--t-sub);
+  cursor: pointer;
+}
+
+.details[open] summary {
+  margin-bottom: 8px;
+}
