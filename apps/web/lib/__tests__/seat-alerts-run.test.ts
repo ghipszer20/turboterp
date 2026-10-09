@@ -23,6 +23,7 @@ function setup(over: { watches?: Watch[]; states?: SeatState[]; fetchSections?: 
     },
     fetchSections: over.fetchSections ?? (async (_t, ids) => { log.fetched.push(ids); return ids.map((c) => section(c, "0201", 1)); }),
     push: over.push ?? (async (sub) => { log.pushed.push(sub.endpoint); return "ok"; }),
+    signToken: (id) => `tok-${id}`,
     sleep: async () => { log.slept++; },
     clock: over.clock ?? (() => 0),
   };
@@ -98,5 +99,14 @@ describe("runSeatAlerts", () => {
     expect(log.fetched[0]![0]).toBe("CMSC140");
     expect(log.fetched[0]).toHaveLength(5);
     expect(log.cursor).toBeNull();
+  });
+});
+
+describe("push payload", () => {
+  it("carries the watch deep link, id and signed token", async () => {
+    const payloads: unknown[] = [];
+    const { deps } = setup({ watches: [watch()], states: [prior(0)], push: async (_s, p) => { payloads.push(p); return "ok"; } });
+    await runSeatAlerts({ ...deps, signToken: (id) => `tok-${id}` }, now);
+    expect(payloads[0]).toMatchObject({ url: "/schedule/alerts?watch=w1", watchId: "w1", token: "tok-w1" });
   });
 });

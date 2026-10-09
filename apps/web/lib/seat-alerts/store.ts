@@ -12,6 +12,8 @@ type WatchRow = { id: string; user_id: string; term: string; course_id: string; 
 type StateRow = { course_id: string; section_id: string; open: number; waitlist: number; holdfile: number; checked_at: string };
 
 const enc = encodeURIComponent;
+const WATCH_COLS = "id,user_id,term,course_id,section_id,last_alert_at,done_at";
+const toWatch = (x: WatchRow): Watch => ({ id: x.id, userId: x.user_id, term: x.term, courseId: x.course_id, sectionId: x.section_id, lastAlertAt: x.last_alert_at, doneAt: x.done_at });
 
 export function seatAlertStore(env: SupabaseEnv, fetchFn: typeof fetch = fetch) {
   const base = `${env.url}/rest/v1`;
@@ -70,7 +72,49 @@ export function seatAlertStore(env: SupabaseEnv, fetchFn: typeof fetch = fetch) 
       await call(`push_subscriptions?endpoint=eq.${enc(endpoint)}`, { method: "DELETE", headers: { Prefer: "return=minimal" } });
     },
 
-    async getCursor(): Promise<string | null> {
+    /** Every watch of one user (all terms, active and done), oldest first. */
+    async listWatches(userId: string): Promise<Watch[]> {
+      return (await rows<WatchRow>(`seat_watches?user_id=eq.${enc(userId)}&select=${WATCH_COLS}&order=created_at.asc`)).map(toWatch);
+    },
+
+    async getWatch(id: string): Promise<Watch | null> {
+      const r = await rows<WatchRow>(`seat_watches?id=eq.${enc(id)}&select=${WATCH_COLS}`);
+      return r[0] ? toWatch(r[0]) : null;
+    },
+
+    async createWatch(userId: string, term: string, courseId: string, sectionId: string | null): Promise<Watch> {
+      const res = await call("seat_watches", {
+        method: "POST",
+        headers: { Prefer: "return=representation" },
+        body: JSON.stringify({ user_id: userId, term, course_id: courseId, section_id: sectionId }),
+      });
+      const body = (await res.json()) as WatchRow[];
+      if (!Array.isArray(body) || !body[0]) throw new Error("seat-alerts: no row returned");
+      return toWatch(body[0]);
+    },
+
+    async markDone(id: string, at: Date): Promise<void> {
+      await call(`seat_watches?id=eq.${enc(id)}`, { method: "PATCH", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ done_at: at.toISOString() }) });
+    },
+
+    async deleteWatch(id: string): Promise<void> {
+      await call(`seat_watches?id=eq.${enc(id)}`, { method: "DELETE", headers: { Prefer: "return=minimal" } });
+    },
+
+    /** Upserts on the endpoint, so a device that changes account moves to the new user. */
+    async upsertSubscription(userId: string, sub: PushSub): Promise<void> {
+      await call("push_subscriptions?on_conflict=endpoint", {
+        method: "POST",
+        headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
+        body: JSON.stringify({ user_id: userId, endpoint: sub.endpoint, p256dh: sub.p256dh, auth: sub.auth }),
+      });
+    },
+
+    async deleteSubscriptionFor(userId: string, endpoint: string): Promise<void> {
+      await call(`push_subscriptions?endpoint=eq.${enc(endpoint)}&user_id=eq.${enc(userId)}`, { method: "DELETE", headers: { Prefer: "return=minimal" } });
+    },
+
+    async getCursor():Promise<string | null> {
       const r = await rows<{ next_course: string | null }>("seat_alert_cursor?id=eq.1&select=next_course");
       return r[0]?.next_course ?? null;
     },
