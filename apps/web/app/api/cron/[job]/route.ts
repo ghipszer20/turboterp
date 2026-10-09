@@ -4,6 +4,7 @@ import { buildSnapshots, openSnapshotStore, pruneSnapshots, refreshFast } from "
 import { liveRefreshDeps, refreshCourses, refreshSeats } from "@turboterp/course-data/soc-refresh";
 import { fetchSections } from "@turboterp/course-data";
 import { authorizeCron, cronJob } from "@/lib/cron";
+import { signWatchToken } from "@/lib/seat-alerts/api";
 import { sendPush, vapidConfigured } from "@/lib/seat-alerts/push";
 import { runSeatAlerts } from "@/lib/seat-alerts/run";
 import { seatAlertStore } from "@/lib/seat-alerts/store";
@@ -46,6 +47,7 @@ async function run(request: NextRequest, context: { params: Promise<{ job: strin
           store: seatAlertStore(env),
           fetchSections,
           push: sendPush,
+          signToken: (watchId) => signWatchToken(watchId, process.env.CRON_SECRET!, now),
           sleep: (ms) => new Promise((r) => setTimeout(r, ms)),
           clock: () => performance.now(),
         },

@@ -1,6 +1,6 @@
 import type { Section } from "@turboterp/course-data";
 import { activeForTerm, alertText, batches, detectOpenings, matchWatches, watchedCourses, type SeatCount } from "./logic";
-import type { PushResult } from "./push";
+import type { PushPayload, PushResult } from "./push";
 import type { SeatAlertStore, PushSub } from "./store";
 
 // One cron run. Owner rulings: only watched courses, 40 per request, one request at a time,
@@ -12,9 +12,11 @@ export const BATCH_PAUSE_MS = 300;
 export type RunDeps = {
   /** The current Schedule of Classes term (snapshot `schedule/current`), or null. */
   term: () => Promise<string | null>;
-  store: SeatAlertStore;
+  store: Pick<SeatAlertStore, "listActiveWatches" | "getStates" | "saveStates" | "markAlerted" | "subscriptionsFor" | "deleteSubscription" | "getCursor" | "setCursor">;
   fetchSections: (term: string, courseIds: string[]) => Promise<Section[]>;
-  push: (sub: PushSub, payload: { title: string; body: string; url?: string }) => Promise<PushResult>;
+  push: (sub: PushSub, payload: PushPayload) => Promise<PushResult>;
+  /** Signed "I got it" token for a watch id (api.ts signWatchToken with CRON_SECRET). */
+  signToken: (watchId: string) => string;
   sleep: (ms: number) => Promise<void>;
   /** Milliseconds, monotonic. */
   clock: () => number;
@@ -61,8 +63,9 @@ export async function runSeatAlerts(deps: RunDeps, now: Date): Promise<RunReport
     const subs = await deps.store.subscriptionsFor([...new Set(matches.map((m) => m.watch.userId))]);
     const alerted = new Set<string>();
     for (const { watch, opening } of matches) {
+      const payload: PushPayload = { ...alertText(opening), url: `/schedule/alerts?watch=${watch.id}`, watchId: watch.id, token: deps.signToken(watch.id) };
       for (const sub of subs.filter((s) => s.userId === watch.userId)) {
-        const result = await deps.push(sub, { ...alertText(opening), url: "/schedule/alerts" });
+        const result = await deps.push(sub, payload);
         if (result === "ok") { report.alerts++; alerted.add(watch.id); }
         else if (result === "gone") { report.gone++; await deps.store.deleteSubscription(sub.endpoint); }
       }

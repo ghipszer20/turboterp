@@ -23,7 +23,9 @@ const defaultSend: Send = (sub, payload) => {
 };
 
 /** "gone" (404 or 410) means the browser dropped the subscription: delete it. */
-export async function sendPush(sub: PushSub, payload: { title: string; body: string; url?: string }, send: Send = defaultSend): Promise<PushResult> {
+export type PushPayload = { title: string; body: string; url?: string; watchId?: string; token?: string };
+
+export async function sendPush(sub: PushSub, payload: PushPayload, send: Send = defaultSend): Promise<PushResult> {
   try {
     const res = await send({ endpoint: sub.endpoint, keys: { p256dh: sub.p256dh, auth: sub.auth } }, JSON.stringify(payload));
     return res.statusCode >= 200 && res.statusCode < 300 ? "ok" : "failed";
