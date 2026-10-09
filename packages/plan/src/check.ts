@@ -1,6 +1,8 @@
 // Checks a Plan term by term. Pure and synchronous: it runs in the student's browser on every
 // edit, so all text parsing happens once, in buildCatalog.
 
+import { earnsCredit } from "@turboterp/audit";
+import { sameOrVariant } from "@turboterp/course-data/lab-pairs";
 import { checkRequirement, type CourseRecord, type Requirement } from "@turboterp/course-data/prereqs";
 import type { PlanCatalog } from "./catalog.ts";
 import { collegeName, creditCap, type College } from "./credit-caps.ts";
@@ -47,6 +49,8 @@ export type Plan = {
 export type IssueKind =
   | "prerequisite"
   | "corequisite"
+  | "lab-missing"
+  | "lecture-missing"
   | "repeat"
   | "twin-repeat"
   | "credit-load"
@@ -124,6 +128,23 @@ function courseLeaves(req: Requirement): CourseLeaf[] {
   if (req.kind === "course" || req.kind === "dept-level") return [req];
   if (req.kind === "manual") return [];
   return req.of.flatMap(courseLeaves);
+}
+
+/** A plan course that counts: planned, or completed with a grade that earns credit (not F or W). */
+const counts = (c: Pick<PlanCourse, "status" | "grade">) =>
+  earnsCredit({ status: c.status === "completed" ? "completed" : "planned", ...(c.grade ? { grade: c.grade } : {}) });
+
+/** "A", "A or B", "A, B or C" */
+const orList = (items: string[]) => (items.length <= 1 ? (items[0] ?? "") : `${items.slice(0, -1).join(", ")} or ${items.at(-1)}`);
+
+/** Whether a requirement names one of these courses. */
+const names = (req: Requirement | null, ids: string[]) => req !== null && courseLeaves(req).some((l) => l.kind === "course" && ids.includes(l.course));
+
+/** Each lab's lectures, from every lecture's `labs`; a section variant (BSCI180S) finds its base lab's. */
+function lectureIndex(catalog: PlanCatalog): (id: string) => string[] {
+  const byLab = new Map<string, string[]>();
+  for (const c of catalog.values()) for (const lab of c.labs ?? []) byLab.set(lab, [...(byLab.get(lab) ?? []), c.id]);
+  return (id) => byLab.get(id) ?? (/\d[A-Z]$/.test(id) ? byLab.get(id.slice(0, -1)) : undefined) ?? [];
 }
 
 /** What's still missing from an unmet requirement, in words: "CMSC250 (C- or better) and CMSC216". */
@@ -238,6 +259,11 @@ export function checkPlan(plan: Plan, catalog: PlanCatalog, options: CheckOption
   const before: Record<string, CourseRecord> = {};
   for (const c of prior.values()) before[c.id] = c.grade ? { grade: c.grade } : {};
 
+  const lecturesOf = lectureIndex(catalog);
+  /** Prior credit for one of `ids` that earns credit. */
+  const priorFor = (has: (id: string) => boolean) =>
+    (plan.priorCredit ?? []).some((x) => has(x.id) && counts({ status: "completed", ...(x.grade ? { grade: x.grade } : {}) }));
+
   plan.terms.forEach((term, i) => {
     // Same-term courses count only where the prerequisite allows concurrent enrollment;
     // a corequisite is met by the same term or an earlier one.
@@ -341,6 +367,45 @@ export function checkPlan(plan: Plan, catalog: PlanCatalog, options: CheckOption
             ...at,
             message: `${where} also has a corequisite TurboTerp can't check. Confirm it yourself: ${confirmTexts(info.corequisite, coreqHistory).join("; ")}.`,
             short: `Confirm: ${confirmTexts(info.corequisite, coreqHistory).join("; ")}`,
+          });
+        }
+      }
+
+      // Labs and lectures are usually taken together (docs/project/lab-pairs.md). Each check stands
+      // down when UMD's own prerequisite or corequisite already names the partner.
+      const labs = info.labs ?? [];
+      if (labs.length > 0 && !names(info.corequisite, labs)) {
+        const isLab = (id: string) => labs.some((l) => sameOrVariant(id, l));
+        const together = term.courses.some((x) => isLab(x.id) && counts(x));
+        const earlier = priorFor(isLab) || plan.terms.slice(0, i).some((t) => t.courses.some((x) => isLab(x.id) && x.status === "completed" && counts(x)));
+        if (!together && !earlier) {
+          const current = labs.filter((l) => catalog.has(l));
+          const named = current.length > 0 ? current : labs.slice(0, 1);
+          issues.push({
+            kind: "lab-missing",
+            severity: "warning",
+            ...at,
+            message: `${course.id} is usually taken with ${named.length === 1 ? `its lab, ${named[0]}` : `one of its labs, ${orList(named)}`}, in the same term.`,
+            short: `Usually taken with ${orList(named)}`,
+          });
+        }
+      }
+
+      const lectures = lecturesOf(course.id);
+      if (lectures.length > 0 && !names(info.corequisite, lectures) && !names(info.prerequisite, lectures)) {
+        const isLecture = (id: string) => lectures.includes(id);
+        const together = term.courses.some((x) => isLecture(x.id) && counts(x));
+        // A lecture planned earlier already gets lab-missing, so the lab doesn't warn too.
+        const earlier = priorFor(isLecture) || plan.terms.slice(0, i).some((t) => t.courses.some((x) => isLecture(x.id) && counts(x)));
+        if (!together && !earlier) {
+          const current = lectures.filter((l) => catalog.has(l));
+          const named = current.length > 0 ? current : lectures.slice(0, 1);
+          issues.push({
+            kind: "lecture-missing",
+            severity: "warning",
+            ...at,
+            message: `${course.id} is a lab, usually taken in the same term as ${named.length === 1 ? `its lecture, ${named[0]}` : `one of its lectures, ${orList(named)}`}.`,
+            short: `Usually taken with ${orList(named)}`,
           });
         }
       }
