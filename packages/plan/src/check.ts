@@ -51,6 +51,7 @@ export type IssueKind =
   | "corequisite"
   | "lab-missing"
   | "lecture-missing"
+  | "term-offering"
   | "repeat"
   | "twin-repeat"
   | "credit-load"
@@ -367,6 +368,32 @@ export function checkPlan(plan: Plan, catalog: PlanCatalog, options: CheckOption
             ...at,
             message: `${where} also has a corequisite TurboTerp can't check. Confirm it yourself: ${confirmTexts(info.corequisite, coreqHistory).join("; ")}.`,
             short: `Confirm: ${confirmTexts(info.corequisite, coreqHistory).join("; ")}`,
+          });
+        }
+      }
+
+      // Winter and summer courses (docs/project/term-offerings.md). Fall against spring isn't checked.
+      const offered = info.offered;
+      const planned = seasonOf(term.name);
+      if (offered && planned) {
+        const regular = offered.includes("Fall") || offered.includes("Spring");
+        if (!regular && (planned === "Fall" || planned === "Spring")) {
+          const only = offered.length === 2 ? "winter and summer" : offered[0]!.toLowerCase();
+          issues.push({
+            kind: "term-offering",
+            severity: "warning",
+            ...at,
+            message: `${course.id} is only offered in ${only}, based on UMD's recent schedules.`,
+            short: `Only offered in ${only}`,
+          });
+        } else if ((planned === "Winter" || planned === "Summer") && !offered.includes(planned)) {
+          const season = planned.toLowerCase();
+          issues.push({
+            kind: "term-offering",
+            severity: "warning",
+            ...at,
+            message: `${course.id} isn't offered in ${season}, based on UMD's recent schedules.`,
+            short: `Not offered in ${season}`,
           });
         }
       }

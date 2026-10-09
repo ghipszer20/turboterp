@@ -5,6 +5,7 @@ import type { Course } from "@turboterp/course-data";
 import { labPairOf } from "@turboterp/course-data/gen-ed";
 import { DERIVED_PAIRS, LAB_PAIRS, labsByLecture } from "@turboterp/course-data/lab-pairs";
 import { parsePrerequisite, type Requirement } from "@turboterp/course-data/prereqs";
+import type { Season } from "./check.ts";
 import { parseCourseTwins, type Twins } from "./twins.ts";
 
 /**
@@ -29,6 +30,9 @@ export type CatalogCourse = {
   /** Renumbered, Cross-listed and Credit-only Twins, as this course's own Testudo lines name them
    * (twinsOf gives the symmetric view). Left out when there are none. */
   twins?: Twins;
+  /** Seasons this course appeared in across the cached Schedule of Classes terms. Left out when the
+   * course came from no dated term. */
+  offered?: Season[];
 };
 
 export type PlanCatalog = ReadonlyMap<string, CatalogCourse>;
@@ -73,4 +77,31 @@ export function buildCatalog(...lists: Course[][]): PlanCatalog {
     });
   }
   return catalog;
+}
+
+const SEASON_BY_MONTH: Record<string, Season> = { "01": "Spring", "05": "Summer", "08": "Fall", "12": "Winter" };
+const SEASON_ORDER: Season[] = ["Fall", "Winter", "Spring", "Summer"];
+
+/** The season of a Testudo term code (YYYYMM): month 01 Spring, 05 Summer, 08 Fall, 12 Winter. */
+export function seasonOfTerm(term: string): Season | undefined {
+  return SEASON_BY_MONTH[term.slice(4, 6)];
+}
+
+/** A copy of the catalog with each course's `offered` seasons, from the terms whose snapshots list it. */
+export function withOfferings(catalog: PlanCatalog, snapshots: { term: string; courses: { id: string }[] }[]): PlanCatalog {
+  const seen = new Map<string, Set<Season>>();
+  for (const { term, courses } of snapshots) {
+    const season = seasonOfTerm(term);
+    if (!season) continue;
+    for (const { id } of courses) {
+      if (!seen.has(id)) seen.set(id, new Set());
+      seen.get(id)!.add(season);
+    }
+  }
+  const out = new Map<string, CatalogCourse>();
+  for (const [id, course] of catalog) {
+    const seasons = seen.get(id);
+    out.set(id, seasons ? { ...course, offered: SEASON_ORDER.filter((s) => seasons.has(s)) } : course);
+  }
+  return out;
 }
