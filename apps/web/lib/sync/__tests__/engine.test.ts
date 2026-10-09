@@ -104,16 +104,33 @@ describe("saving", () => {
     expect(t.remote.saveDoc).toHaveBeenCalledTimes(1);
   });
 
-  it("conflict asks instead of overwriting", async () => {
+  it("conflict saves this device's copy over the server's newer one, without asking", async () => {
     const t = setup({ meta: { userId: "u", revs: { plan: 1 } }, server: { plan: [{ a: 1 }, 1] } });
     await t.engine.start("u");
     t.local.plan = J({ a: 2 });
     t.server.set("plan", { body: { a: 9 }, rev: 2 });
     t.engine.localChanged("plan");
     await t.engine.flush();
-    expect(t.onAsk).toHaveBeenCalledWith("plan", J({ a: 2 }), J({ a: 9 }));
-    expect(t.server.get("plan")!.body).toEqual({ a: 9 });
+    expect(t.onAsk).not.toHaveBeenCalled();
+    expect(t.server.get("plan")).toEqual({ body: { a: 2 }, rev: 3 });
+    expect(t.getMeta().revs.plan).toBe(3);
     expect(t.local.plan).toBe(J({ a: 2 }));
+  });
+
+  it("a conflict that conflicts again is retried on the next check, not looped", async () => {
+    const t = setup({ meta: { userId: "u", revs: { plan: 1 } }, server: { plan: [{ a: 1 }, 1] } });
+    await t.engine.start("u");
+    t.local.plan = J({ a: 2 });
+    t.setSave({ ok: false, reason: "conflict" });
+    t.engine.localChanged("plan");
+    await t.engine.flush();
+    expect(t.remote.saveDoc).toHaveBeenCalledTimes(2);
+    expect(t.onAsk).not.toHaveBeenCalled();
+    t.setSave(null);
+    vi.setSystemTime(Date.now() + 61_000);
+    await t.engine.checkRemote();
+    expect(t.remote.saveDoc).toHaveBeenCalledTimes(3);
+    expect(t.server.get("plan")!.body).toEqual({ a: 2 });
   });
 
   it("too-large reports, keeps local, and does not retry", async () => {
@@ -163,26 +180,28 @@ describe("checking the server", () => {
     expect(t.onAsk).not.toHaveBeenCalled();
   });
 
-  it("newer remote with changed local asks", async () => {
+  it("newer remote with unsaved local edits uploads them instead of asking", async () => {
     const t = setup({ meta: { userId: "u", revs: { plan: 1 } }, server: { plan: [{ a: 1 }, 1] }, local: { plan: J({ a: 1 }) } });
     await t.engine.start("u");
     t.engine.localChanged("plan");
     t.server.set("plan", { body: { a: 2 }, rev: 2 });
     vi.setSystemTime(Date.now() + 61_000);
     await t.engine.checkRemote();
-    expect(t.onAsk).toHaveBeenCalledWith("plan", J({ a: 1 }), J({ a: 2 }));
+    expect(t.onAsk).not.toHaveBeenCalled();
     expect(t.docs.plan.replace).not.toHaveBeenCalled();
+    expect(t.server.get("plan")).toEqual({ body: { a: 1 }, rev: 3 });
   });
 
-  it("an unsaved edit survives a reload: newer remote then asks instead of overwriting", async () => {
+  it("an unsaved edit survives a reload: newer remote then uploads it, never asks", async () => {
     const t = setup({
       meta: { userId: "u", revs: { plan: 1 }, dirty: ["plan"] },
       server: { plan: [{ a: 2 }, 2] },
       local: { plan: J({ a: 1 }) },
     });
     await t.engine.start("u");
-    expect(t.onAsk).toHaveBeenCalledWith("plan", J({ a: 1 }), J({ a: 2 }));
+    expect(t.onAsk).not.toHaveBeenCalled();
     expect(t.docs.plan.replace).not.toHaveBeenCalled();
+    expect(t.server.get("plan")).toEqual({ body: { a: 1 }, rev: 3 });
   });
 
   it("a downloaded body that fails validate is not applied", async () => {
@@ -241,13 +260,27 @@ describe("sign-in", () => {
     expect(t.getMeta().revs.plan).toBe(5);
   });
 
-  it("a different userId in meta never uploads without asking", async () => {
+  it("a different userId in meta with an empty account uploads silently", async () => {
     const t = setup({ local: { plan: J({ a: 1 }) }, meta: { userId: "other", revs: { plan: 7 } } });
     await t.engine.start("u");
+    expect(t.onAsk).not.toHaveBeenCalled();
+    expect(t.remote.saveDoc).toHaveBeenCalledWith("plan", { a: 1 }, null);
+    expect(t.getMeta()).toEqual({ userId: "u", revs: { plan: 1 } });
+  });
+
+  it("a different userId in meta with a differing account copy asks", async () => {
+    const t = setup({ local: { plan: J({ a: 1 }) }, server: { plan: [{ a: 2 }, 5] }, meta: { userId: "other", revs: { plan: 5 } } });
+    await t.engine.start("u");
+    expect(t.onAsk).toHaveBeenCalledWith("plan", J({ a: 1 }), J({ a: 2 }));
     expect(t.remote.saveDoc).not.toHaveBeenCalled();
-    expect(t.onAsk).toHaveBeenCalledWith("plan", J({ a: 1 }), null);
-    expect(t.getMeta().userId).toBe("u");
-    expect(t.getMeta().revs.plan).toBeUndefined();
+  });
+
+  it("equal copies with no known rev just remember the rev", async () => {
+    const t = setup({ local: { plan: J({ b: 2, a: 1 }) }, server: { plan: [{ a: 1, b: 2 }, 5] } });
+    await t.engine.start("u");
+    expect(t.onAsk).not.toHaveBeenCalled();
+    expect(t.remote.saveDoc).not.toHaveBeenCalled();
+    expect(t.getMeta().revs.plan).toBe(5);
   });
 });
 

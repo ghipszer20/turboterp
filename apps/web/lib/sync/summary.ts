@@ -1,4 +1,4 @@
-// A few plain lines describing one copy of a document, for the "which copy?" cards.
+// A few plain lines describing one copy of a document, for the "replace the saved copy?" dialog.
 import { termFromMatriculationId } from "../advisor/terms";
 import type { DocKind } from "./decide";
 
@@ -14,7 +14,7 @@ export function summarize(kind: DocKind, raw: string | null, nameOf: (id: string
     if (kind === "plan") {
       const programs = Array.isArray(d.programs) ? d.programs.filter((p): p is string => typeof p === "string") : [];
       const terms = Array.isArray(d.terms) ? d.terms.length : 0;
-      return { lines: [...(programs.length ? [`Programs: ${programs.map(nameOf).join(", ")}`] : []), plural(terms, "term")] };
+      return { lines: [...(programs.length ? [programs.map(nameOf).join(", ")] : []), plural(terms, "term")] };
     }
     if (kind === "schedule") {
       const courses = Array.isArray(d.courses) ? d.courses.length : 0;

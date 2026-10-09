@@ -8,7 +8,7 @@ import { createMetaStore, type MetaStore } from "./meta";
 import { createRemote } from "./remote";
 import { createSaveStatus } from "./status";
 
-export type Ask = { kind: DocKind; local: string | null; remote: string | null };
+export type Ask = { kind: DocKind; local: string | null; remote: string };
 
 function build() {
   const baseMeta = createMetaStore();
@@ -55,7 +55,7 @@ function build() {
       askSubs.add(fn);
       return () => void askSubs.delete(fn);
     },
-    /** The student's answer in the chooser (already confirmed). */
+    /** The student's answer in the chooser (the dialog is the confirmation). */
     async resolve(kind: DocKind, keep: "local" | "remote") {
       setAsks(asks.filter((a) => a.kind !== kind));
       await engine.resolve(kind, keep);
