@@ -1,8 +1,8 @@
 // Plain-language Terms of Use and Privacy Policy, as data. No lawyer review
 // (docs/project/legal.md). Bump the version whenever the meaning changes.
 
-export const TERMS_VERSION = "2026-10-04";
-export const PRIVACY_VERSION = "2026-10-06";
+export const TERMS_VERSION = "2026-10-09";
+export const PRIVACY_VERSION = "2026-10-09";
 
 /** A paragraph, or a list of bullet points. */
 export type LegalBlock = string | string[];
@@ -67,8 +67,8 @@ export const TERMS: LegalSection[] = [
   {
     heading: "Accounts",
     paragraphs: [
-      "You can use TurboTerp without an account. If you make one, you sign in with a link sent to your email address, so keep that inbox secure and use an address that is yours.",
-      "We may suspend or remove an account that is used to misuse the site. You can ask us to delete your account at any time.",
+      "You can use TurboTerp without an account. If you make one, you sign in with Google or with a link sent to your email address, so keep that account or inbox secure and use an address that is yours.",
+      "We may suspend or remove an account that is used to misuse the site. You can delete your account yourself at any time with the Delete account button next to Sign out in the Advisor. If you can't use it, ask us through the Report an issue page.",
     ],
   },
   {
@@ -137,22 +137,22 @@ export const PRIVACY: LegalSection[] = [
     heading: "Introduction",
     paragraphs: [
       "This Privacy Policy explains what TurboTerp collects, where it is kept and what we do with it.",
-      "The short version: an account is optional, and it holds just your email address. Your plan and schedule stay in your browser. No analytics, no ads, no tracking cookies, and nothing is sold.",
+      "The short version: an account is optional. Without one, your plan and schedule stay in your browser. When you sign in, they are also saved to your account so they follow you between devices. No analytics, no ads, no tracking cookies, and nothing is sold.",
     ],
   },
   {
     heading: "What we collect",
     paragraphs: [
       "An account is optional. Campus, Schedule, Calendar, Today and the Advisor all work without one.",
-      "If you sign in, we collect your email address, and nothing else. Any email address works; it doesn't have to be a UMD one. There is no password: you sign in with a link sent to that address.",
-      "We use your email address only to sign you in and to tell your account apart from others. We don't send newsletters or marketing email.",
+      "If you sign in, we collect your email address. Any email address works; it doesn't have to be a UMD one. There is no password: you sign in with Google, or with a link sent to your address. If you use Google, we get your email address and basic profile from Google, and nothing else.",
+      "We use your email address only to sign you in and to tell your account apart from others. While you are signed in, your plan, saved schedules and registration checklist are also stored on our server (see \"Your plan on every device\" below). We don't send newsletters or marketing email.",
       "We never ask for or store your Testudo password or your UID, and we never see your official UMD records.",
     ],
   },
   {
     heading: "What is stored in your browser",
     paragraphs: [
-      "TurboTerp saves a few things on your device using your browser's local storage. None of it is sent to us.",
+      "TurboTerp saves a few things on your device using your browser's local storage. Without an account, none of it is sent to us. When you are signed in, the plan, schedules and checklist are also saved to your account.",
       [
         "turboterp-advisor-plan: your four-year plan, including the courses, grades and credit you entered.",
         "turboterp-advisor-consent: your signed Advisor agreement (version, date and typed name).",
@@ -160,7 +160,7 @@ export const PRIVACY: LegalSection[] = [
         "turboterp-registration: your registration checklist and the registration appointment time you typed in.",
         "turboterp-leave-origin: the building you chose as your starting point for leave-by times.",
         "turboterp-theme: your light or dark choice.",
-        "turboterp-sync: which version of your plan and schedules this browser last saved to your account, when you're signed in.",
+        "turboterp-sync: which version of your plan and schedules this browser last saved to your account, when you're signed in. Signing out removes the synced copies from that browser.",
       ],
       "If you are signed in, our sign-in provider's code also keeps a sign-in token there, so you stay signed in on that device.",
       "Clearing your site data in the browser deletes all of it.",
@@ -197,7 +197,8 @@ export const PRIVACY: LegalSection[] = [
     heading: "Other services involved",
     paragraphs: [
       [
-        "Supabase runs sign-in and the database, in the United States. It stores your email address and sends the email with your sign-in link.",
+        "Supabase runs sign-in and the database, in the United States. It stores your email address, your synced plan and schedules, and the agreement records, and sends the email with your sign-in link.",
+        "Google, if you choose Continue with Google, signs you in and tells us your email address and basic profile. Google's own privacy policy applies to that sign-in.",
         "Brevo sends email for us: sign-in emails, issue reports and the plan emails you ask for. It sees the address it sends to and the message it carries.",
         "Vercel hosts the website. Like any web host, it may keep short-lived request logs (such as IP address and the page requested) to run and protect the service.",
         "OpenFreeMap serves the map tiles, so it sees your IP address when a map loads, like any site you load images from.",
@@ -215,17 +216,18 @@ export const PRIVACY: LegalSection[] = [
     ],
   },
   {
-    heading: "Coming next: your plan on every device (planned)",
+    heading: "Your plan on every device",
     paragraphs: [
-      "Storing your plan and your signed agreement on our server is planned, not built yet. The plan is to keep them on our server, tied to your account, so they follow you between devices. For the agreement that means its version, the time, your account and the name you typed, stored encrypted so that only we can read it, and only if it is needed as a legal record.",
-      "You will be able to delete it all yourself, after confirming that you mean it. This page will be updated before that starts.",
+      "When you are signed in, your plan, saved schedules and registration checklist are stored on our server (Supabase), tied to your account, so they follow you between devices. While you are signed in, the newest change wins: each edit is saved and replaces the older copy, on every device. If this browser already has a plan made before you signed in and your account has a different one, we ask which to keep.",
+      "When you sign the Advisor agreement, we also keep a record of it: its version, the time, a random id for your browser, your account if you are signed in, and the name you typed. The name is stored encrypted so that only we can read it, and only if it is needed as a legal record.",
+      "Signing out removes the synced copies from that browser. Your signed agreement stays on the device.",
     ],
   },
   {
     heading: "Deleting your data",
     paragraphs: [
       "Everything in your browser is yours to delete: clear the site's data in your browser settings.",
-      "To delete your account and the email address stored with it, ask us through the Report an issue page, linked below. Send the request from the address the account uses, so we know it is yours.",
+      "To delete your account, tap Delete account next to Sign out in the Advisor and confirm. That removes your account, your email address and your saved plans and schedules from our server. Your signed agreement record is kept as a legal record, without any link to your account. If you can't use the button, ask us through the Report an issue page, linked below, from the address the account uses.",
     ],
   },
   {
