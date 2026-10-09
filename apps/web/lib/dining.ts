@@ -41,28 +41,31 @@ export function stationDisplayName(name: string): string {
 /** The hall a link asked for (`/campus/dining?hall=16`, from Today's rows), or null if absent or unknown. */
 export type SearchMatch = { hallId: number; hall: string; meal: string; station: string; item: MenuItem };
 
-export const SEARCH_LIMIT = 60;
+export const SEARCH_LIMIT_PER_HALL = 30;
 
 /**
  * Foods whose name contains every word of `query`, across all halls' menus for the day
  * (menus in hall order; null for a hall that couldn't load). Results follow hall then meal
- * order, list an item once per hall + meal + station, and stop at SEARCH_LIMIT (`capped`).
+ * order and list an item once per hall + meal + station. A hall stops at SEARCH_LIMIT_PER_HALL
+ * matches (its short name goes in `cappedHalls`); later halls carry on.
  */
 export function searchMenus(
   menus: readonly (DiningMenu | null)[],
   query: string,
   filters: { hallId?: number | null; meal?: string | null } = {},
-): { results: SearchMatch[]; capped: boolean } {
+): { results: SearchMatch[]; cappedHalls: string[] } {
   const q = query.trim().toLowerCase();
-  if (q.length < 2) return { results: [], capped: false };
+  if (q.length < 2) return { results: [], cappedHalls: [] };
   const words = q.split(/\s+/);
   const wantMeal = filters.meal?.trim().toLowerCase() || null;
   const results: SearchMatch[] = [];
+  const cappedHalls: string[] = [];
   for (const menu of menus) {
     if (!menu) continue;
     if (filters.hallId != null && menu.hallId !== filters.hallId) continue;
     const hall = DINING_HALLS.find((h) => h.id === menu.hallId)?.short ?? String(menu.hallId);
-    for (const meal of menu.meals) {
+    let count = 0;
+    hallLoop: for (const meal of menu.meals) {
       if (wantMeal && meal.name.trim().toLowerCase() !== wantMeal) continue;
       for (const station of meal.stations) {
         const seen = new Set<string>();
@@ -70,13 +73,17 @@ export function searchMenus(
           const name = item.name.toLowerCase();
           if (seen.has(name) || !words.every((w) => name.includes(w))) continue;
           seen.add(name);
-          if (results.length === SEARCH_LIMIT) return { results, capped: true };
+          if (count === SEARCH_LIMIT_PER_HALL) {
+            cappedHalls.push(hall);
+            break hallLoop;
+          }
+          count++;
           results.push({ hallId: menu.hallId, hall, meal: meal.name, station: stationDisplayName(station.name), item });
         }
       }
     }
   }
-  return { results, capped: false };
+  return { results, cappedHalls };
 }
 
 const MEAL_ORDER = ["breakfast", "brunch", "lunch", "dinner", "late night"];
@@ -113,16 +120,18 @@ export function parseDiningQuery(raw: string | string[] | undefined): string | n
   return q.length >= 2 ? q : null;
 }
 
-export type SearchGroup = { hall: string; meal: string; station: string; items: string[] };
+export type HallResultRow = { meal: string; station: string; items: string[] };
+export type HallResultGroup = { hall: string; capped: boolean; rows: HallResultRow[] };
 
-/** Groups search hits by hall + meal + station, in order of first appearance (hall, then meal), keeping item order. */
-export function groupSearchHits(hits: readonly SearchMatch[]): SearchGroup[] {
-  const groups = new Map<string, SearchGroup>();
+/** Groups search hits by hall (hit order), then meal + station rows in first-appearance order, keeping item order. */
+export function groupSearchByHall(hits: readonly SearchMatch[], cappedHalls: readonly string[]): HallResultGroup[] {
+  const halls = new Map<string, HallResultGroup>();
   for (const h of hits) {
-    const key = `${h.hall}|${h.meal}|${h.station}`;
-    const g = groups.get(key);
-    if (g) g.items.push(h.item.name);
-    else groups.set(key, { hall: h.hall, meal: h.meal, station: h.station, items: [h.item.name] });
+    let g = halls.get(h.hall);
+    if (!g) halls.set(h.hall, (g = { hall: h.hall, capped: cappedHalls.includes(h.hall), rows: [] }));
+    const row = g.rows.find((r) => r.meal === h.meal && r.station === h.station);
+    if (row) row.items.push(h.item.name);
+    else g.rows.push({ meal: h.meal, station: h.station, items: [h.item.name] });
   }
-  return [...groups.values()];
+  return [...halls.values()];
 }
