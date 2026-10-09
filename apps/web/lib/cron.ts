@@ -13,7 +13,7 @@ export function authorizeCron(authorizationHeader: string | null, secret: string
   return timingSafeEqual(given, wanted) ? "ok" : "unauthorized";
 }
 
-const JOBS = ["fast", "daily", "soc-seats", "soc-courses"] as const;
+const JOBS = ["fast", "daily", "soc-seats", "soc-courses", "seat-alerts"] as const;
 export type CronJob = (typeof JOBS)[number];
 
 export function cronJob(name: string): CronJob | null {
