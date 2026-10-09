@@ -1,119 +1,168 @@
-# Lab pairs: design spec (owner-approved 2026-10-09)
+# Lab pairs: design spec (owner-approved 2026-10-09; expanded by the owner the same day)
 
 ## Goal
 
-The advisor knows the lab for every UMD lecture that has one. When a student plans or takes a
-lecture without its lab, the plan checks say so. Example: BSCI170 is almost always taken with
-BSCI180 in the same term. A biochemistry major with AP Chemistry credit still takes CHEM146 with
-CHEM177.
+Every lab UMD offers is accounted for: each one is either linked to its lecture or marked standalone
+with a reason. Plan checks warn both ways:
 
-The owner picked only "warn if the lab is missing" (2026-10-09). Out of scope: auto-adding labs,
-listing labs in audit suggestions or auto-filled plans, and recognizing discontinued labs as catalog
-courses. Recognizing discontinued labs is a separate idea; BSCI171 and BSCI161 aren't in the Fall 2026
-or Spring 2027 Schedule of Classes because UMD replaced them with BSCI180.
+- **Lab missing:** a lecture is planned without its lab in the same term. Example: BSCI170 is almost
+  always taken with BSCI180, and a biochemistry major with AP Chemistry credit still takes CHEM146
+  with CHEM177.
+- **Lecture missing:** a lab is planned without its lecture in the same term, and the student has no
+  prior credit for the lecture.
+
+Owner decisions (2026-10-09):
+
+- Warnings only. Out of scope: auto-adding labs, and listing labs in audit suggestions or auto-filled
+  plans.
+- "Every lab needs to be accounted for": the lab list is not limited to the current terms or to
+  titles that say "Lab".
+- Add the lecture-missing warning.
+
+Courses that are no longer offered still don't become advisor catalog courses (the advisor catalog stays
+the current terms). Old labs are used only to link lectures to labs, so a student who took BSCI171 with
+BSCI170 gets no warning.
 
 ## What exists today
 
 - **Corequisites UMD lists** (`CatalogCourse.corequisite`, from the Schedule of Classes text) are
   checked in `packages/plan/src/check.ts`. For example, CHEM131 requires CHEM132, so CHEM131 without
   CHEM132 is already an error.
-- **DSNL lab links** (`CatalogCourse.labPair`, parsed by `labPairOf` in
-  `packages/course-data/src/gen-ed.ts` from "DSNL (if taken with X)") are used only for Gen Ed credit
-  (`labScience()` in `packages/plan/src/notices.ts`). Today there are 20 such lectures.
-- **The gap:** lectures with a usual lab that UMD doesn't list as a corequisite (BSCI160, BSCI170,
-  CHEM146, PHYS161 and others) get no warning, and nothing checks that every UMD lab is linked to a
-  lecture.
+- **DSNL lab links** (`CatalogCourse.labPair`, from "DSNL (if taken with X)") are used only for Gen
+  Ed credit.
+- The advisor catalog merges only the cached current terms (Fall 2026 and Spring 2027 on 2026-10-09).
+  They contain 98 courses with "Lab" or "Laboratory" in the title. Only 27 of them link to a lecture
+  through Testudo's text.
 
-## 1. Data: lab options for every lecture
+## 1. Where the labs come from
 
-New field on `CatalogCourse` (`packages/plan/src/catalog.ts`):
+Measured 2026-10-09:
 
-```ts
-/** Labs usually taken in the same term as this lecture, current lab first, e.g. ["BSCI180", "BSCI171"]. */
-labs?: string[];
-```
+| Source | What it adds |
+|---|---|
+| Testudo Schedule of Classes, current terms (202608, 202701) | 98 lab-titled courses, plus section meeting types |
+| Testudo, past terms it still serves (202501 to 202605, including winter and summer; it serves nothing before Spring 2025) | Recently offered labs, such as BSCI161 and BSCI171 |
+| UMD Undergraduate Catalog "Approved Courses" (`academiccatalog.umd.edu/undergraduate/approved-courses/<dept>/`, 202 departments, 5,457 courses) | Every approved course, including those not offered recently: 85 lab-titled, 20 of them missing from the current terms (BSCI125, BSCI161, BSCI171, BSCI393, BSCI415, PHYS429, ...) |
+| UMD Graduate Catalog courses (`academiccatalog.umd.edu/graduate/courses/<dept>/`, 162 departments) | Graduate labs |
 
-`buildCatalog` fills it by merging three sources, removing duplicates, and putting the current lab
-first:
+Catalog course blocks have the same labeled lines as Testudo ("Prerequisite:", "Corequisite:",
+"Restriction:", "Additional Information:"), so they are parsed into the same `Course` shape.
 
-1. **Corequisites on the Schedule of Classes:** if lecture L lists lab B as a corequisite, or lab B
-   lists lecture L, then B is one of L's labs. B counts as a lab when the lab test below says so. A
-   corequisite between two lectures, such as MATH with MATH, is not a lab pair.
-2. **DSNL links:** `labPair.with`.
-3. **Hand-written pairs:** `packages/course-data/src/lab-pairs.ts`. Each entry is
-   `{ lecture, labs, source }`, where `source` is the UMD catalog or department page that states the
-   pairing. Entries may name former labs, such as BSCI171 for BSCI170 and BSCI161 for BSCI160, so a
-   student who took the old lab gets no warning. A lab doesn't have to be in the catalog to be listed.
-   Pairings come from UMD's published sources only, never from the owner (rulings: "The owner does not
-   adjudicate academic requirements").
+Past Testudo terms go in `packages/course-data/.cache/history/`, and the catalog courses in
+`.cache/catalog-courses.json`. Nothing else reads these files, so the schedule builder and the advisor
+catalog don't change.
 
-**What counts as a lab:** a course whose title contains "Lab" or "Laboratory" as a word (124 courses in
-the 2026-10-08 data).
+## 2. What counts as a lab
 
-**Catalog file:** short key `lb: string[]` in `packages/plan/src/catalog-file.ts`, written only when the
-list is non-empty, and round-trip tested like `nl`.
+A course is a **lab course** if either:
+
+1. its title contains "Lab" or "Laboratory" as a word; or
+2. in a Testudo term, every meeting of every section is typed "Lab" (on 2026-10-09: 176 courses,
+   such as PHYS275 and PHYS276, plus art studios, dance and PE activity classes).
+
+**Bulk rules** (`STANDALONE_RULES`) mark whole groups standalone with one reason and one source. An
+example is studio art, dance, music and theatre studios, and KNES activity courses, which meet as labs
+but have no lecture. A rule matches a department code, optionally with a level prefix (for example
+`KNES1`). Rules apply only to courses that are labs by meeting type alone. A course with "Lab" in its
+title is always classified individually.
+
+## 3. Lecture-to-lab links
+
+`CatalogCourse.labs?: string[]` lists a lecture's labs, current labs first. The data comes from:
+
+1. **Derived pairs** (`src/lab-pairs.generated.ts`, written by the coverage script, committed): from
+   every source in section 1. A corequisite between a lab and a non-lab course links them, in either
+   direction. So does "DSNL (if taken with X)". Each derived pair records its source (term or catalog
+   page).
+2. **Hand-written pairs** (`LAB_PAIRS`): classified from the UMD text the coverage script collects,
+   each with a `source`. For example, "Must have completed or be concurrently enrolled in ANSC101"
+   pairs ANSC103 with ANSC101, and the catalog's "only when taken concurrently with X" lines pair a lab
+   with X. Former labs are included, such as BSCI171 for BSCI170 and BSCI161 for
+   BSCI160.
+3. **Standalone** (`STANDALONE_LABS` individually, `STANDALONE_RULES` in bulk): labs with no separate
+   lecture, or labs taken after the lecture rather than with it. Examples: a lab whose prerequisite
+   requires the lecture to be finished first, a capstone, research, practicum or thesis lab, a
+   "Topics" course, or a title that uses "Laboratory" in another sense.
+
+`buildCatalog` fills `labs` from live Testudo text, derived pairs and hand-written pairs. The catalog
+file stores it under the key `lb`.
+
+Pairings come from UMD's published sources only, never from the owner (rulings: "The owner does not
+adjudicate academic requirements"). When the text is silent or unclear, the lab is **standalone**: a
+missing pair means no warning, while a wrong pair means a wrong warning.
+
+**Section variants:** a one-letter suffix (CHEM132S, BSCI180S) counts as the lab itself.
 
 ### Coverage: every lab is accounted for
 
-The same file also exports `standaloneLabs: { id, reason, source }[]`: lab courses with no separate
-lecture. These are lab-only courses, combined lecture-and-lab courses, and research or teaching labs.
+`npm run lab-coverage -w @turboterp/course-data` reads every source in section 1. It prints every lab
+course that is neither linked to a lecture nor standalone. It also writes:
 
-- **Script:** `npm run lab-coverage -w @turboterp/course-data` reads the cached Schedule of Classes
-  snapshots. It prints every lab course that is neither some lecture's lab nor in `standaloneLabs`.
-  Run it after each term refresh.
-- **Test:** coverage is complete for the current snapshot fixture, and every hand-written entry has a
-  non-empty `source`.
+- `test/fixtures/lab-courses.json`: every lab course from every source, plus the courses that name
+  them, with a `labOnly` flag for labs found by meeting type;
+- `src/lab-pairs.generated.ts`: the derived pairs;
+- `program-sources/labs.md`: the UMD text of each unclassified lab, for the builders who classify
+  them.
 
-## 2. Check: lab missing (`packages/plan/src/check.ts`)
+A test requires that the fixture has no unclassified labs and that every hand-written entry has a
+source. Run the script after each term refresh.
 
-New `IssueKind` `"lab-missing"`, severity **warning**.
+## 4. Checks (`packages/plan/src/check.ts`)
 
-The check fires for a course in a term when all of these are true:
+Both checks are warnings and apply to **planned** courses only. `checkPlan` already skips completed
+courses, and a warning about a finished term gives the student nothing to do.
 
-- the course has `labs`;
-- the course is planned, not completed (changed 2026-10-09 while planning: `checkPlan` already skips
-  completed courses, and a warning about a finished term gives the student nothing to do);
-- no lab option in the same term earns credit;
-- no lab option is already credited: completed in an earlier term with credit, or in
-  `plan.priorCredit` (AP, IB or transfer, e.g. CHEM132 from AP Chemistry 5);
-- the course's UMD corequisite doesn't already name one of its labs (the corequisite check covers
-  that, so the student doesn't get two messages).
+### lab-missing
 
-A lab planned in a later term still triggers the warning, because the warning is about taking them
-together.
+A planned lecture with `labs` gets a warning when all of these are true:
 
-**Message:** "BSCI170 is usually taken with its lab, BSCI180, in the same term." With more than one
-current lab: "... with one of its labs, A or B, ...". Former labs (lab options not in the catalog)
-aren't named in the message. If none is current, the message names the first one listed. `short`:
-"Usually taken with BSCI180".
+- no lab (or a section variant of one) that earns credit is in the same term;
+- no lab was completed with credit in an earlier term, and none is in `plan.priorCredit` (AP, IB or
+  transfer, e.g. CHEM132 from AP Chemistry 5);
+- the lecture's UMD corequisite doesn't already name one of its labs (that check covers it).
 
-The warning shows wherever plan checks already show (Advisor checks panel, course cards). There is no
-new UI component. Wording is a UI change, so the owner sees a screenshot before merge.
+The warning fires even when the lab is planned in another term.
 
-## 3. Testing (test-first, strict TDD)
+**Message:** "BSCI170 is usually taken with its lab, BSCI180, in the same term." With more than one:
+"... with one of its labs, A or B, ...". `short`: "Usually taken with BSCI180".
 
-- `buildCatalog`: corequisite-derived labs (both directions), a lecture-to-lecture corequisite is
-  ignored, DSNL-derived labs, hand-written labs, de-duplication and ordering.
-- Catalog file: `lb` round-trip; absent when empty.
-- Check: lab in the same term means no warning; lecture alone warns; lab in another term warns; lab
-  completed earlier means no warning; lab as prior credit means no warning; withdrawn or failed lab
-  warns; a failed or withdrawn lecture doesn't warn; a corequisite already naming the lab gives only
-  the corequisite issue; a former lab (BSCI171) completed in the same term means no warning; the
-  message wording for one lab and for two.
-- Coverage test against the snapshot fixture; existing tests stay green (`lab-pairs.test.ts`,
-  `check-plan.test.ts`, the test-student and owner-plan tests). If a sample plan now warns, fix the
-  plan data only when the program source shows the lab; otherwise record it.
+### lecture-missing
+
+A planned lab (any course listed in some lecture's `labs`, or a section variant of one) gets a warning
+when all of these are true:
+
+- none of its lectures that earns credit is in the same term;
+- none of its lectures is in an earlier term (completed with credit, or planned; a lecture planned
+  earlier already gets lab-missing, so the student doesn't get two warnings for one mistake);
+- none of its lectures is in `plan.priorCredit`;
+- the lab's UMD corequisite or prerequisite doesn't already name one of its lectures (those checks
+  cover it).
+
+**Message:** "BSCI180 is a lab, usually taken in the same term as its lecture, BSCI160 or BSCI170." With
+one lecture: "... as its lecture, CHEM146." With more than one: "... as one of its lectures, A or B."
+`short`: "Usually taken with BSCI160 or BSCI170".
+
+For both messages, only courses in the advisor catalog are named. If none is, the message names the
+first one listed.
+
+Both warnings show where plan checks already show (Advisor checks panel, course cards). There is no new
+component, but the wording is a UI change, so the owner sees a screenshot before merge.
+
+## 5. Testing (test-first, strict TDD)
+
+- Lab tests (title and meeting type), bulk rules, section variants, derivation from each source,
+  de-duplication and ordering.
+- Catalog page parser against a saved catalog page fixture.
+- `lb` round-trip, and absent when empty.
+- lab-missing: lab in the same term, variant, former lab, alone, other term, completed earlier, prior
+  credit, failed or withdrawn lab, completed lecture, corequisite overlap, and wording for one, several
+  or none in the catalog.
+- lecture-missing: lecture in the same term, earlier lecture, prior credit, lab alone, variant lab,
+  overlap with a prerequisite or corequisite, completed lab, and wording.
+- Coverage against the committed fixture.
 - After merging: `npm run advisor-data -w @turboterp/web`, then the full local test, typecheck, lint
   and build (no CI).
 
-## 4. Work split (PROJECT_MEMORY section 18)
+## 6. Work split
 
-Superseded by `docs/project/lab-pairs-plan.md`: three Sonnet builders, because the code and the
-classification of about 71 labs are split into separate tasks. Original split: two Sonnet builders, one after the other, each in its own worktree and branch:
-
-- **A, `feat/lab-pairs-data`:** the `labs` field, `buildCatalog` merge, `lb` key, `lab-pairs.ts` with
-  sourced pairs and standalone labs, the coverage script and test. Builders don't do research: the
-  main session first runs the coverage script on the derived pairs. If labs remain unclassified, the
-  main session fetches their Testudo and catalog text into `program-sources/labs.md` for the builder.
-- **B, `feat/lab-missing-check`:** the `lab-missing` check and message, then one screenshot of the
-  checks panel for owner approval.
+See `docs/project/lab-pairs-plan.md`.
