@@ -8,7 +8,7 @@ import { ExternalIcon } from "@/components/icons";
 import { Card, EmptyState, SearchField, Section, SkeletonCard } from "@/components/ui";
 import { useRouter } from "next/navigation";
 import {
-  groupSearchHits,
+  groupSearchByHall,
   parseDiningQuery,
   resolveMeal,
   stationDisplayName,
@@ -16,6 +16,7 @@ import {
   type SearchMatch,
 } from "@/lib/dining";
 import { FILLER } from "@/lib/status";
+import { HallResults } from "./HallResults";
 import styles from "./dining.module.css";
 
 /** A hall and the names of the meals it serves today (null: its menu couldn't be loaded). */
@@ -48,7 +49,7 @@ const ALLERGENS = ["dairy", "gluten", "egg", "soy", "nuts", "sesame", "fish", "s
 type SearchState =
   | { status: "loading" }
   | { status: "error" }
-  | { status: "done"; results: SearchMatch[]; capped: boolean };
+  | { status: "done"; results: SearchMatch[]; cappedHalls: string[] };
 
 function DietTags({ item }: { item: MenuItem }) {
   const veg = item.diets.includes("vegan") ? "Vegan" : item.diets.includes("vegetarian") ? "Vegetarian" : null;
@@ -82,8 +83,8 @@ export function DiningView({ date, halls, initial, preferredMeal, query, searchH
     const ctrl = new AbortController();
     fetch(`/api/dining/search?${new URLSearchParams({ date, q: term, ...(searchHallId ? { hall: String(searchHallId) } : {}), ...(searchMeal ? { meal: searchMeal } : {}) })}`, { signal: ctrl.signal })
       .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
-      .then((d: { results: SearchMatch[]; capped: boolean }) =>
-        setFetched({ term, state: { status: "done", results: d.results, capped: d.capped } }),
+      .then((d: { results: SearchMatch[]; cappedHalls: string[] }) =>
+        setFetched({ term, state: { status: "done", results: d.results, cappedHalls: d.cappedHalls } }),
       )
       .catch((e: unknown) => {
         if (!(e instanceof DOMException && e.name === "AbortError")) setFetched({ term, state: { status: "error" } });
@@ -239,31 +240,12 @@ function SearchResults({ query, search, scope }: { query: string; search: Search
       </Card>
     );
   }
-  const groups = groupSearchHits(search.results);
   return (
     <div className={styles.stations} aria-live="polite">
       <p className={styles.resultsHead}>
         Foods matching “{query}” {scope ? `at ${scope}` : "today"} {clear}
       </p>
-      {groups.map((g) => (
-        <Section key={`${g.hall}|${g.meal}|${g.station}`}>
-          <h2 className={styles.station}>
-            {g.hall} · {g.meal} · {g.station}
-          </h2>
-          <Card className={styles.stationCard}>
-            <ul className={styles.items}>
-              {g.items.map((name, i) => (
-                <li key={`${i}-${name}`} className={styles.item}>
-                  <span className={styles.itemName}>{name}</span>
-                </li>
-              ))}
-            </ul>
-          </Card>
-        </Section>
-      ))}
-      {search.capped ? (
-        <p className={styles.note}>Showing the first {search.results.length} matches. Type more to narrow it down.</p>
-      ) : null}
+      <HallResults halls={groupSearchByHall(search.results, search.cappedHalls)} />
     </div>
   );
 }
