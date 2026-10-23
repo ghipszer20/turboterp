@@ -20,6 +20,7 @@ begin
   end if;
   return new;
 end $$;
+drop trigger if exists seat_watches_limit on public.seat_watches;
 create trigger seat_watches_limit before insert on public.seat_watches for each row execute function public.seat_watches_limit();
 
 create table if not exists public.push_subscriptions (
