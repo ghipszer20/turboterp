@@ -5,6 +5,7 @@ import {
   alertsStatus,
   currentPushEnv,
   currentSubscription,
+  onReturnToPage,
   permissionStatus,
   pushSupport,
   sendTestAlert,
@@ -26,18 +27,23 @@ export function StatusCard({ mock }: { mock: boolean }) {
   useEffect(() => {
     if (mock) return;
     let live = true;
-    Promise.resolve().then(async () => {
-      const s = pushSupport(currentPushEnv());
-      const sub = s === "supported" ? await currentSubscription() : null;
-      if (!live) return;
-      setSupport(s);
-      if (s === "supported") {
-        setPermission(permissionStatus());
-        setSubscribed(!!sub);
-      }
-    });
+    const check = () =>
+      Promise.resolve().then(async () => {
+        const s = pushSupport(currentPushEnv());
+        const sub = s === "supported" ? await currentSubscription() : null;
+        if (!live) return;
+        setSupport(s);
+        if (s === "supported") {
+          setPermission(permissionStatus());
+          setSubscribed(!!sub);
+        }
+      });
+    check();
+    // Re-check when the student comes back, e.g. after allowing notifications in site settings.
+    const stop = onReturnToPage(check);
     return () => {
       live = false;
+      stop();
     };
   }, [mock]);
 

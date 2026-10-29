@@ -38,6 +38,23 @@ export function currentPushEnv(): PushEnv {
 export type PermissionState = "default" | "granted" | "denied";
 export const permissionStatus = (): PermissionState => ("Notification" in window ? Notification.permission : "denied");
 
+/** Calls `cb` when the student comes back to the page (e.g. after allowing notifications in site settings). Returns a cleanup. */
+export function onReturnToPage(
+  cb: () => void,
+  doc: EventTarget & { visibilityState: DocumentVisibilityState } = document,
+  win: EventTarget = window,
+): () => void {
+  const onVisible = () => {
+    if (doc.visibilityState === "visible") cb();
+  };
+  doc.addEventListener("visibilitychange", onVisible);
+  win.addEventListener("focus", cb);
+  return () => {
+    doc.removeEventListener("visibilitychange", onVisible);
+    win.removeEventListener("focus", cb);
+  };
+}
+
 export type AlertsStatus = { kind: "on" | "off" | "blocked" | "unavailable"; text: string; guide: boolean };
 
 /** The status line: alerts on for this device, off, blocked in browser settings, or unavailable. */

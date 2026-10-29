@@ -98,8 +98,16 @@ export async function handleWatchesGet(request: Request, deps: SeatApiDeps): Pro
     const active = all.filter((w) => w.doneAt === null && w.term === term);
     const states = await deps.store.getStates(term, [...new Set(active.map((w) => w.courseId))]);
     const watches = active.map((w) => {
-      const s = w.sectionId ? states.get(seatKey(w.courseId, w.sectionId)) : undefined;
-      return { ...w, status: s ? { open: s.open, waitlist: s.waitlist, checkedAt: s.checkedAt } : null };
+      if (w.sectionId) {
+        const s = states.get(seatKey(w.courseId, w.sectionId));
+        return { ...w, status: s ? { open: s.open, waitlist: s.waitlist, checkedAt: s.checkedAt } : null };
+      }
+      // Any section: the course's totals, as of its most recent check.
+      const course = [...states.values()].filter((s) => s.courseId === w.courseId);
+      if (course.length === 0) return { ...w, status: null };
+      const sum = (k: "open" | "waitlist") => course.reduce((n, s) => n + s[k], 0);
+      const checkedAt = course.map((s) => s.checkedAt).reduce((a, b) => (b > a ? b : a));
+      return { ...w, status: { open: sum("open"), waitlist: sum("waitlist"), checkedAt } };
     });
     const done = all.filter((w) => w.doneAt !== null && w.term === term);
     const ended = all.filter((w) => w.doneAt === null && w.term !== term).length;

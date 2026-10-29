@@ -71,9 +71,18 @@ describe("GET watches", () => {
     expect(b.term).toBe(TERM);
     expect(b.watches.map((w: Watch) => w.id)).toEqual([ID1, ID2]);
     expect(b.watches[0].status).toEqual({ open: 0, waitlist: 4, checkedAt: "t" });
-    expect(b.watches[1].status).toBeNull();
+    expect(b.watches[1].status).toEqual({ open: 0, waitlist: 4, checkedAt: "t" });
     expect(b.done.map((w: Watch) => w.id)).toEqual(["d"]);
     expect(b.ended).toBe(1);
+  });
+
+  it("gives an any-section watch the course's totals across its sections, checked at the latest time", async () => {
+    const st = (sectionId: string, open: number, waitlist: number, checkedAt: string) => [`CMSC351-${sectionId}`, { courseId: "CMSC351", sectionId, open, waitlist, holdfile: 0, checkedAt }] as const;
+    const states = new Map([st("0101", 0, 2, "2026-10-09T11:58:00Z"), st("0201", 3, 0, "2026-10-09T11:59:00Z"), ["CMSC330-0101", { courseId: "CMSC330", sectionId: "0101", open: 9, waitlist: 0, holdfile: 0, checkedAt: "x" }]]);
+    const { deps } = setup({ watches: [watch({ sectionId: null }), watch({ id: ID2, courseId: "MATH999", sectionId: null })], states: states as never });
+    const b = await j(await handleWatchesGet(req("GET"), deps));
+    expect(b.watches[0].status).toEqual({ open: 3, waitlist: 2, checkedAt: "2026-10-09T11:59:00Z" });
+    expect(b.watches[1].status).toBeNull();
   });
 });
 

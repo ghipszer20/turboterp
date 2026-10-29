@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { alertsStatus, pushSupport } from "../seat-alerts/client";
+import { alertsStatus, onReturnToPage, pushSupport } from "../seat-alerts/client";
 import { endedNote, MAX_WATCHES, minutesSince, watchCount, watchRowView, type WatchRow } from "../seat-alerts/view";
 
 const base = { hasServiceWorker: true, hasPushManager: true, hasNotification: true, standalone: false, maxTouchPoints: 0 };
@@ -65,5 +65,22 @@ describe("watch view model", () => {
     expect(endedNote(0)).toBeNull();
     expect(endedNote(1)).toBe("1 watch from last term has ended.");
     expect(endedNote(3)).toBe("3 watches from last term have ended.");
+  });
+});
+
+describe("onReturnToPage", () => {
+  it("calls back when the page becomes visible or regains focus, and stops after cleanup", () => {
+    const doc = Object.assign(new EventTarget(), { visibilityState: "visible" as DocumentVisibilityState });
+    const win = new EventTarget();
+    let calls = 0;
+    const stop = onReturnToPage(() => calls++, doc, win);
+    doc.dispatchEvent(new Event("visibilitychange"));
+    win.dispatchEvent(new Event("focus"));
+    doc.visibilityState = "hidden";
+    doc.dispatchEvent(new Event("visibilitychange"));
+    expect(calls).toBe(2);
+    stop();
+    win.dispatchEvent(new Event("focus"));
+    expect(calls).toBe(2);
   });
 });
