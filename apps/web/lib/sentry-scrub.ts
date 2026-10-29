@@ -16,6 +16,13 @@ export function scrubEvent<T extends ErrorEvent>(event: T): T {
   if (e.request?.url) e.request = { url: scrubText(e.request.url) };
   else delete e.request;
   for (const v of e.exception?.values ?? []) if (v.value) v.value = scrubText(v.value);
-  for (const b of e.breadcrumbs ?? []) if (b.message) b.message = scrubText(b.message);
+  for (const b of e.breadcrumbs ?? []) {
+    if (b.message) b.message = scrubText(b.message);
+    // fetch/xhr breadcrumbs carry `url`, navigation ones `from`/`to`, often relative.
+    for (const k of ["url", "from", "to"]) {
+      const v = b.data?.[k];
+      if (typeof v === "string") b.data![k] = scrubText(v.replace(/[?#].*$/, ""));
+    }
+  }
   return e;
 }
