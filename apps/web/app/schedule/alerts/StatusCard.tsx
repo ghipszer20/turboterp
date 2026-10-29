@@ -16,6 +16,38 @@ import {
 } from "@/lib/seat-alerts/client";
 import styles from "./alerts.module.css";
 
+const iconProps = {
+  width: 20,
+  height: 20,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 1.8,
+  strokeLinecap: "round",
+  strokeLinejoin: "round",
+  "aria-hidden": true,
+  className: styles.stepIcon,
+} as const;
+
+/** The iOS Share button: a square with an arrow leaving the top. */
+function ShareIcon() {
+  return (
+    <svg {...iconProps}>
+      <path d="M12 15V4M8.5 7.5 12 4l3.5 3.5M8 10H6.5A1.5 1.5 0 0 0 5 11.5v7A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5v-7A1.5 1.5 0 0 0 17.5 10H16" />
+    </svg>
+  );
+}
+
+/** The "Add to Home Screen" row icon: a plus in a rounded square. */
+function AddSquareIcon() {
+  return (
+    <svg {...iconProps}>
+      <rect x="4" y="4" width="16" height="16" rx="3.5" />
+      <path d="M12 8.5v7M8.5 12h7" />
+    </svg>
+  );
+}
+
 /** The status line for this device (on, off, blocked, unavailable) with its one action. */
 export function StatusCard({ mock }: { mock: boolean }) {
   const [support, setSupport] = useState<PushSupport>("supported");
@@ -82,10 +114,20 @@ export function StatusCard({ mock }: { mock: boolean }) {
         {status.text}
       </p>
       {status.guide ? (
-        <ol className={styles.guide}>
-          <li>In Safari, tap Share, then Add to Home Screen.</li>
-          <li>Open TurboTerp from your Home Screen, come back to Seat Alerts and turn alerts on.</li>
-        </ol>
+        <>
+          <p className={styles.sub}>Add TurboTerp to your Home Screen. It opens right on Seat Alerts.</p>
+          <ol className={styles.guide}>
+            <li>
+              Tap <strong>Share</strong> <ShareIcon />
+            </li>
+            <li>
+              Tap <strong>Add to Home Screen</strong> <AddSquareIcon />
+            </li>
+            <li>
+              Tap <strong>Add</strong>, then open TurboTerp from your Home Screen.
+            </li>
+          </ol>
+        </>
       ) : null}
       {status.kind === "blocked" ? (
         <p className={styles.sub}>Allow notifications for turboterp.com in your browser&apos;s site settings, then come back.</p>

@@ -64,6 +64,13 @@
   font: var(--t-sub);
 }
 
+.stepIcon {
+  display: inline-block;
+  vertical-align: -5px;
+  margin-left: 4px;
+  color: #ba0c2f;
+}
+
 .guide li + li {
   margin-top: 4px;
 }
