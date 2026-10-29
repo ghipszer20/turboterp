@@ -6,6 +6,9 @@ import type { SeatAlertStore, PushSub } from "./store";
 // One cron run. Owner rulings: only watched courses, 40 per request, one request at a time,
 // 300 ms apart, one retry for a failed batch, a 50 s budget with a cursor. Never logs in to Testudo.
 
+/** Tapping a seat alert opens Testudo; registration needs the student's own login, so no deeper link exists (owner, 2026-10-29). */
+export const TESTUDO_URL = "https://app.testudo.umd.edu/";
+
 export const RUN_BUDGET_MS = 50_000;
 export const BATCH_PAUSE_MS = 300;
 
@@ -63,7 +66,7 @@ export async function runSeatAlerts(deps: RunDeps, now: Date): Promise<RunReport
     const subs = await deps.store.subscriptionsFor([...new Set(matches.map((m) => m.watch.userId))]);
     const alerted = new Set<string>();
     for (const { watch, opening } of matches) {
-      const payload: PushPayload = { ...alertText(opening), url: `/schedule/alerts?watch=${watch.id}`, watchId: watch.id, token: deps.signToken(watch.id) };
+      const payload: PushPayload = { ...alertText(opening), url: TESTUDO_URL, watchId: watch.id, token: deps.signToken(watch.id) };
       for (const sub of subs.filter((s) => s.userId === watch.userId)) {
         const result = await deps.push(sub, payload);
         if (result === "ok") { report.alerts++; alerted.add(watch.id); }

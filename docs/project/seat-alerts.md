@@ -50,9 +50,12 @@ minute**, and when a watched section gets an open seat, the student gets a **pus
   - A finished watch (I got it) moves to a collapsed "Done" list for the term.
 - **The notification:** title "CMSC351 0201 has 1 open seat". Body "Register on Testudo now. Waitlist:
   0." or "Waitlisted students may get it first. Waitlist: 3."
-  - Tapping it opens Seat Alerts with that watch highlighted.
-  - On Android and desktop it also has an **I got it** action button. iOS doesn't show action buttons,
-    so there the student uses the button in the app.
+  - Tapping it opens Testudo (`https://app.testudo.umd.edu/`) (owner, 2026-10-29: Drop/Add needs the
+    student's own two-factor login, so no deeper link exists; the title alone is enough, students know
+    Testudo).
+  - On Android and desktop it also has **Open Testudo** and **I got it** action buttons. iOS doesn't show
+    action buttons, so there the student uses "I got it" in the app; until then the watch can alert again
+    after the cooldown.
 - **Today:** while any watch is active, a small "Seat Alerts: 3 watching" card links to the page.
 - **The term:** watches are for the term whose sections the Schedule tab shows (the current Schedule
   of Classes term). When the term moves on, last term's watches end automatically and the page says

@@ -14,7 +14,7 @@ self.addEventListener("push", (event) => {
     data: { url: p.url || "/schedule/alerts", watchId: p.watchId, token: p.token },
     icon: "/apple-icon",
   };
-  if (p.watchId && p.token) options.actions = [{ action: "done", title: "I got it" }];
+  if (p.watchId && p.token) options.actions = [{ action: "open", title: "Open Testudo" }, { action: "done", title: "I got it" }];
   event.waitUntil(self.registration.showNotification(p.title || "Seat Alerts", options));
 });
 

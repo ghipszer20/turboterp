@@ -107,6 +107,6 @@ describe("push payload", () => {
     const payloads: unknown[] = [];
     const { deps } = setup({ watches: [watch()], states: [prior(0)], push: async (_s, p) => { payloads.push(p); return "ok"; } });
     await runSeatAlerts({ ...deps, signToken: (id) => `tok-${id}` }, now);
-    expect(payloads[0]).toMatchObject({ url: "/schedule/alerts?watch=w1", watchId: "w1", token: "tok-w1" });
+    expect(payloads[0]).toMatchObject({ url: "https://app.testudo.umd.edu/", watchId: "w1", token: "tok-w1" });
   });
 });
