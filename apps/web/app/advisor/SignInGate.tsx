@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { authConfigured, getAuthClient } from "@/lib/auth/client";
 import { emailProblem, sendProblem } from "@/lib/auth/email";
+import { useCodeEntry } from "@/lib/auth/use-code-entry";
 import { accountControl } from "@/lib/auth/session-state";
 import { useSession } from "@/lib/auth/use-session";
 import { getAppSync } from "@/lib/sync/app-sync";
@@ -16,6 +17,7 @@ function SignInCard({ onClose }: { onClose: () => void }) {
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const entry = useCodeEntry(sent ?? "", setError);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,8 +63,26 @@ function SignInCard({ onClose }: { onClose: () => void }) {
         <>
           <h2 className={styles.gateTitle}>Check your email</h2>
           <p className={styles.gateIntro}>
-            We sent a sign-in link to <strong>{sent}</strong>. Open it on this device to continue. If it isn&apos;t there in a minute, check your spam folder.
+            We sent a sign-in link to <strong>{sent}</strong>. If it isn&apos;t there in a minute, check your spam folder. Open the link, or enter the code from the email:
           </p>
+          <form className={styles.gate} onSubmit={entry.verify} noValidate>
+            <input
+              className={styles.input}
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              aria-label="Sign-in code"
+              value={entry.code}
+              onChange={(e) => entry.change(e.target.value)}
+            />
+            {error ? (
+              <p className={styles.error} role="alert">
+                {error}
+              </p>
+            ) : null}
+            <button type="submit" className={styles.primaryButton} disabled={entry.busy}>
+              Sign in
+            </button>
+          </form>
           <button type="button" className={styles.ghostButton} onClick={() => (setSent(null), setError(null))}>
             Use a different address
           </button>

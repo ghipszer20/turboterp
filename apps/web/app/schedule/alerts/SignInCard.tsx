@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { getAuthClient } from "@/lib/auth/client";
 import { emailProblem, sendProblem } from "@/lib/auth/email";
+import { useCodeEntry } from "@/lib/auth/use-code-entry";
 import styles from "./alerts.module.css";
 
 /** The Advisor's sign-in (Google or an emailed link), coming back to Seat Alerts. */
@@ -11,7 +12,8 @@ export function SignInCard() {
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const redirectTo = () => `${window.location.origin}/schedule/alerts`;
+  const entry = useCodeEntry(sent ?? "", setError);
+  const redirectTo =() => `${window.location.origin}/schedule/alerts`;
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,8 +52,26 @@ export function SignInCard() {
       <section className={styles.tile} aria-label="Sign in">
         <h2 className={styles.title}>Check your email</h2>
         <p className={styles.sub}>
-          We sent a sign-in link to <strong>{sent}</strong>. Open it on this device to continue.
+          We sent a sign-in link to <strong>{sent}</strong>. Open the link, or enter the code from the email:
         </p>
+        <form onSubmit={entry.verify} noValidate>
+          <input
+            className={styles.input}
+            inputMode="numeric"
+            autoComplete="one-time-code"
+            aria-label="Sign-in code"
+            value={entry.code}
+            onChange={(e) => entry.change(e.target.value)}
+          />
+          {error ? (
+            <p className={styles.error} role="alert">
+              {error}
+            </p>
+          ) : null}
+          <button type="submit" className={styles.primary} disabled={entry.busy}>
+            Sign in
+          </button>
+        </form>
         <div className={styles.actions}>
           <button type="button" className={styles.link} onClick={() => (setSent(null), setError(null))}>
             Use a different address

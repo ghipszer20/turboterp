@@ -1,5 +1,26 @@
 import { describe, expect, it } from "vitest";
-import { emailProblem, isEmail, sendProblem } from "../auth/email";
+import { codeProblem, emailProblem, isEmail, normalizeCode, sendProblem, verifyProblem } from "../auth/email";
+
+describe("sign-in code helpers", () => {
+  it("normalizeCode strips spaces and dashes", () => {
+    expect(normalizeCode(" 123 456-78 ")).toBe("12345678");
+  });
+  it("codeProblem accepts 6 to 10 digits", () => {
+    expect(codeProblem("123456")).toBeNull();
+    expect(codeProblem("1234567890")).toBeNull();
+  });
+  it("codeProblem rejects empty, short, long and non-digit codes", () => {
+    for (const bad of ["", "12345", "12345678901", "12a456"]) expect(codeProblem(bad)).toMatch(/digits/);
+  });
+  it("verifyProblem maps expired or wrong codes and other failures", () => {
+    const msg = "That code didn't work. Check it, or send a new email.";
+    expect(verifyProblem({ code: "otp_expired", status: 403 })).toBe(msg);
+    expect(verifyProblem({ status: 403 })).toBe(msg);
+    expect(verifyProblem({ status: 400 })).toBe(msg);
+    expect(verifyProblem({ status: 429 })).toMatch(/Too many/);
+    expect(verifyProblem(new Error("network"))).toMatch(/Try again/);
+  });
+});
 import { accountControl, decideSession } from "../auth/session-state";
 
 describe("isEmail", () => {
