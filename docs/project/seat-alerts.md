@@ -52,7 +52,8 @@ minute**, and when a watched section gets an open seat, the student gets a **pus
   0." or "Waitlisted students may get it first. Waitlist: 3."
   - Tapping it opens Testudo Drop/Add for the watched term, `https://app.testudo.umd.edu/#/main/dropAdd?termId=<term>`
     (owner, 2026-10-29; the student logs in with two-factor there; the title alone is enough, students know
-    Testudo).
+    Testudo). Checked by the owner: the link opens Drop/Add when already logged into Testudo; Testudo's login
+    drops the `#/main/dropAdd` part, so a logged-out student lands on their schedule (one tap from Drop/Add).
   - On Android and desktop it also has **Open Testudo** and **I got it** action buttons. iOS doesn't show
     action buttons, so there the student uses "I got it" in the app; until then the watch can alert again
     after the cooldown.
