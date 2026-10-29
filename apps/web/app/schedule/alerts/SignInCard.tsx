@@ -13,7 +13,7 @@ export function SignInCard() {
   const [sent, setSent] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const entry = useCodeEntry(sent ?? "", setError);
-  const redirectTo =() => `${window.location.origin}/schedule/alerts`;
+  const redirectTo = () => `${window.location.origin}/schedule/alerts`;
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
