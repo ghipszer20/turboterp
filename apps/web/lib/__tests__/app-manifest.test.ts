@@ -21,6 +21,13 @@ describe("buildManifest", () => {
     expect(root.icons?.length).toBeGreaterThan(0);
   });
 
+  it("keeps the whole site in scope and one app identity, whichever page it was saved from", () => {
+    for (const m of [buildManifest(), buildManifest({ startUrl: ALERTS_START_URL })]) {
+      expect(m.scope).toBe("/");
+      expect(m.id).toBe("/");
+    }
+  });
+
   it("serves the Seat Alerts manifest from its own path", () => {
     expect(ALERTS_MANIFEST_PATH).toBe("/schedule/alerts/manifest.webmanifest");
   });
