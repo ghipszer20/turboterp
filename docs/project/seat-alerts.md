@@ -11,7 +11,7 @@ minute**, and when a watched section gets an open seat, the student gets a **pus
 - **Push only.** No seat-alert emails, because Brevo's free plan is 300 emails a day, shared with
   sign-in.
 - **A watch stays on until the student taps "I got it"** (or removes it). If the seat fills and opens
-  again, they get another alert, at most one per section every 15 minutes.
+  again, they get another alert, at most one per watch every 5 minutes (owner, 2026-10-29; was 15).
 - **Watch scope:** specific sections, plus "any section of <course>". Up to **20** active watches per
   student.
 - **Name and place:** "**Seat Alerts**", inside the **Schedule** tab, which gets a sub-nav like Campus:
@@ -76,7 +76,7 @@ minute**, and when a watched section gets an open seat, the student gets a **pus
      0 open to more than 0. A section seen for the first time only sets its baseline and never
      alerts. Save the new counts and `checked_at`.
   4. For each opening, find the watches it matches: section watches for that section, and
-     "any section" watches for its course. Skip a watch whose `last_alert_at` is less than 15 minutes
+     "any section" watches for its course. Skip a watch whose `last_alert_at` is less than 5 minutes
      ago.
   5. Send a push to each subscription of each matched student. Set `last_alert_at`. Delete a
      subscription when the push service answers 404 or 410 (expired).
@@ -136,7 +136,7 @@ minute**, and when a watched section gets an open seat, the student gets a **pus
 ## 6. Testing (test-first)
 
 - **Pure logic:** opening detection, including the first-check baseline; matching section and
-  any-section watches; the 15-minute limit; done and other-term watches ignored; the 20-watch limit;
+  any-section watches; the 5-minute limit; done and other-term watches ignored; the 20-watch limit;
   batching courses by 40 with the cursor; notification text with and without a waitlist; pruning
   expired subscriptions (404 and 410).
 - **API:** watch create, list, I got it and remove (auth, ownership, limit, open-section refusal);

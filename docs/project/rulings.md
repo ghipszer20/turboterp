@@ -140,3 +140,4 @@ Plan: `docs/project/account-sync-plan.md`.
 ## Seat Alerts channel (owner, 2026-10-29)
 - Considered SMS (Twilio about 1.3¢/text plus ~$20 once and ~$3/month; sole-proprietor 10DLC registration), email, Discord and others. **Owner: push from TurboTerp on the Home Screen is the best option**: free, instant, on the lock screen. iMessage can't be sent by services.
 - The alert title ("CMSC330 0101 has 27 open seats") is enough; tapping it opens Testudo Drop/Add for the watched term (`https://app.testudo.umd.edu/#/main/dropAdd?termId=<term>`, from the owner). Drop/Add needs the student's two-factor login, and there's no link to a specific section.
+- **Cooldown 5 minutes** (owner, 2026-10-29; was 15): a watch alerts at most once every 5 minutes, so a second opening during registration isn't missed.

@@ -27,9 +27,10 @@ describe("matching", () => {
     const watches = [w({ id: "a" }), w({ id: "b", sectionId: null }), w({ id: "c", userId: "u2", sectionId: null }), w({ id: "d", sectionId: "0101" })];
     expect(matchWatches([opening], watches, now).map((m) => m.watch.id).sort()).toEqual(["a", "c"]);
   });
-  it("respects the 15-minute cooldown and done watches", () => {
-    expect(shouldAlert(w({ lastAlertAt: "2026-10-09T17:50:00Z" }), now)).toBe(false);
-    expect(shouldAlert(w({ lastAlertAt: "2026-10-09T17:44:00Z" }), now)).toBe(true);
+  it("respects the 5-minute cooldown and done watches", () => {
+    expect(shouldAlert(w({ lastAlertAt: "2026-10-09T17:56:00Z" }), now)).toBe(false);
+    expect(shouldAlert(w({ lastAlertAt: "2026-10-09T17:55:00Z" }), now)).toBe(true);
+    expect(shouldAlert(w({ lastAlertAt: "2026-10-09T17:50:00Z" }), now)).toBe(true);
     expect(shouldAlert(w({ doneAt: "2026-10-09T17:00:00Z" }), now)).toBe(false);
   });
   it("only watches of the current term count", () => {

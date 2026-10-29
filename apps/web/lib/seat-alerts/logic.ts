@@ -6,7 +6,7 @@ export type SeatState = SeatCount & { checkedAt: string };
 export type Opening = SeatCount; // a section that went from 0 open to > 0
 
 export const MAX_WATCHES = 20; // owner: up to 20 active watches
-export const ALERT_COOLDOWN_MINUTES = 15; // owner: max 1 alert per watch per 15 minutes
+export const ALERT_COOLDOWN_MINUTES = 5; // owner: max 1 alert per watch per 5 minutes (was 15; owner 2026-10-29)
 export const COURSES_PER_REQUEST = 40; // owner: polite to Testudo, 40 per request
 
 export const seatKey = (courseId: string, sectionId: string) => `${courseId}-${sectionId}`;
