@@ -2,7 +2,7 @@
 // (docs/project/legal.md). Bump the version whenever the meaning changes.
 
 export const TERMS_VERSION = "2026-10-09";
-export const PRIVACY_VERSION = "2026-10-09";
+export const PRIVACY_VERSION = "2026-10-29";
 
 /** A paragraph, or a list of bullet points. */
 export type LegalBlock = string | string[];
@@ -137,7 +137,7 @@ export const PRIVACY: LegalSection[] = [
     heading: "Introduction",
     paragraphs: [
       "This Privacy Policy explains what TurboTerp collects, where it is kept and what we do with it.",
-      "The short version: an account is optional. Without one, your plan and schedule stay in your browser. When you sign in, they are also saved to your account so they follow you between devices. No analytics, no ads, no tracking cookies, and nothing is sold.",
+      "The short version: an account is optional. Without one, your plan and schedule stay in your browser. When you sign in, they are also saved to your account so they follow you between devices. We count page visits with Vercel Web Analytics, which uses no cookies and doesn't identify you. No ads, no tracking cookies, and nothing is sold.",
     ],
   },
   {
@@ -175,7 +175,7 @@ export const PRIVACY: LegalSection[] = [
   {
     heading: "Cookies and tracking",
     paragraphs: [
-      "No analytics, no ads and no tracking cookies.",
+      "We count page visits with Vercel Web Analytics. It uses no cookies and doesn't identify you. There are no ads and no tracking cookies.",
       "While the site is in preview, entering the access code sets one cookie, tt_access, so that browser stays let in for 180 days. It holds a scrambled copy of the code and nothing about you.",
     ],
   },
@@ -201,6 +201,8 @@ export const PRIVACY: LegalSection[] = [
         "Google, if you choose Continue with Google, signs you in and tells us your email address and basic profile. Google's own privacy policy applies to that sign-in.",
         "Brevo sends email for us: sign-in emails, issue reports and the plan emails you ask for. It sees the address it sends to and the message it carries.",
         "Vercel hosts the website. Like any web host, it may keep short-lived request logs (such as IP address and the page requested) to run and protect the service.",
+        "Vercel Web Analytics counts page visits anonymously. It uses no cookies and doesn't identify you.",
+        "Sentry receives error reports when something breaks: the error, the page and the browser type, with email addresses and account details removed.",
         "OpenFreeMap serves the map tiles, so it sees your IP address when a map loads, like any site you load images from.",
       ],
       "Links to other sites, such as UMD pages, LibCal and Testudo, take you to services with their own privacy policies.",

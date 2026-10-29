@@ -59,8 +59,15 @@ describe("legal pages", () => {
     expect(t).toMatch(/newest change wins/i);
     expect(t).toMatch(/Delete account/);
     expect(text(TERMS)).toMatch(/Delete account/);
-    expect(PRIVACY_VERSION).toBe("2026-10-09");
+    expect(PRIVACY_VERSION).toBe("2026-10-29");
     expect(TERMS_VERSION).toBe("2026-10-09");
+  });
+
+  it("privacy discloses Web Analytics and Sentry and no longer says no analytics", () => {
+    const t = text(PRIVACY);
+    expect(t).not.toMatch(/no analytics/i);
+    expect(t).toMatch(/Vercel Web Analytics/);
+    expect(t).toMatch(/Sentry/);
   });
 
   it("privacy names every storage key and cookie the app writes", () => {

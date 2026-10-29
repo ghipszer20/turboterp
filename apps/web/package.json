@@ -16,6 +16,7 @@
     "agreements": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --env-file=.env.local scripts/read-agreements.mts"
   },
   "dependencies": {
+    "@sentry/nextjs": "^11.10.0",
     "@supabase/supabase-js": "^2.117.2",
     "@turboterp/audit": "*",
     "@turboterp/campus-data": "*",
@@ -25,6 +26,7 @@
     "@turboterp/programs": "*",
     "@turboterp/ratings": "*",
     "@turboterp/tracks": "*",
+    "@vercel/analytics": "^2.0.1",
     "exceljs": "^4.4.0",
     "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.8",
