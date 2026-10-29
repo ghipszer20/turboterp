@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { sendPush } from "../seat-alerts/push";
 
 const sub = { endpoint: "https://push/1", p256dh: "k", auth: "a" };
@@ -17,6 +17,17 @@ describe("sendPush", () => {
     expect(await sendPush(sub, payload, async () => { throw Object.assign(new Error("x"), { statusCode: 500 }); })).toBe("failed");
     expect(await sendPush(sub, payload, async () => { throw new Error("network"); })).toBe("failed");
     expect(await sendPush(sub, payload, async () => ({ statusCode: 429 }) as never)).toBe("failed");
+  });
+  it("logs why a send failed, without the subscription endpoint", async () => {
+    const spy = vi.spyOn(console, "error").mockImplementation(() => {});
+    await sendPush(sub, payload, async () => { throw Object.assign(new Error("Received unexpected response code"), { statusCode: 403, body: "invalid JWT" }); });
+    await sendPush(sub, payload, async () => { throw new Error("Vapid subject is not a valid URL"); });
+    expect(spy.mock.calls.map((c) => c.join(" "))).toEqual([
+      "seat alert push failed: 403 invalid JWT",
+      "seat alert push failed: - Vapid subject is not a valid URL",
+    ]);
+    expect(spy.mock.calls.flat().join(" ")).not.toContain(sub.endpoint);
+    spy.mockRestore();
   });
   it("sends the JSON payload to the subscription", async () => {
     let seen: unknown[] = [];

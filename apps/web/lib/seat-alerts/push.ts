@@ -30,7 +30,10 @@ export async function sendPush(sub: PushSub, payload: PushPayload, send: Send = 
     const res = await send({ endpoint: sub.endpoint, keys: { p256dh: sub.p256dh, auth: sub.auth } }, JSON.stringify(payload));
     return res.statusCode >= 200 && res.statusCode < 300 ? "ok" : "failed";
   } catch (err) {
-    const code = (err as { statusCode?: number }).statusCode;
-    return code === 404 || code === 410 ? "gone" : "failed";
+    const { statusCode: code, body, message } = err as { statusCode?: number; body?: string; message?: string };
+    if (code === 404 || code === 410) return "gone";
+    // Logged so a bad VAPID setup shows in Vercel logs; never the endpoint (it identifies the device).
+    console.error("seat alert push failed:", code ?? "-", String(body || message).slice(0, 200));
+    return "failed";
   }
 }
