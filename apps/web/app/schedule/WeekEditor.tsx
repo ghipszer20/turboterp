@@ -7,6 +7,7 @@ import { sectionBlocks } from "@/lib/schedule/block-items";
 import { untimed, type TimeScale } from "@/lib/schedule/calendar";
 import { courseColor } from "@/lib/schedule/colors";
 import { overlapNote, saveBlockedBy } from "@/lib/schedule/conflicts";
+import { layoutRestrictions, restrictionLine, sectionRestriction } from "@/lib/schedule/restrictions";
 import { overlapsWith, sectionChoices } from "@/lib/schedule/sections";
 import { useBuildings } from "@/lib/schedule/use-buildings";
 import { dayWalks, formatWalk, walkNote } from "@/lib/schedule/walks";
@@ -42,6 +43,7 @@ export function WeekEditor({
   onPick,
   ratings,
   titles,
+  restrictions = {},
   scale,
   gradesFor,
   loadGrades,
@@ -56,6 +58,8 @@ export function WeekEditor({
   onPick: (courseId: string, s: Section | null) => void;
   ratings: Readonly<Record<string, number>>;
   titles: Readonly<Record<string, string>>;
+  /** Course id -> Testudo's course-level restriction text. */
+  restrictions?: Readonly<Record<string, string | null | undefined>>;
   scale: TimeScale;
   gradesFor: (courseId: string) => Record<string, CourseGrades> | null | undefined;
   loadGrades: (courseId: string) => void;
@@ -125,6 +129,14 @@ export function WeekEditor({
               ))}
             </p>
           ) : null}
+          {layoutRestrictions(placed, restrictions).map((r) => {
+            const s = placed.find((p) => p.courseId === r.courseId && p.id === r.sectionId)!;
+            return (
+              <p key={`${r.courseId}-${r.sectionId}`} className={styles.restrictNote} role="status">
+                {restrictionLine(r.courseId, r.sectionId, sectionRestriction(s, restrictions[r.courseId] ?? null)!)}
+              </p>
+            );
+          })}
           {conflicts.length ? (
             <p className={styles.conflictNote} role="status">
               <b>Overlap:</b> {overlapNote(conflicts)} You can’t register for overlapping sections; tap one to pick another
@@ -172,6 +184,7 @@ export function WeekEditor({
             grades={gradesFor(open)}
             seatsUpdatedAt={seatsUpdatedAt?.(open) ?? null}
             allSections={sectionsByCourse.get(open) ?? []}
+            restriction={restrictions[open] ?? null}
             overlaps={mode === "own" ? (s) => overlapsWith(s, placed) : undefined}
             onPreview={(s) => setPreview(s && s.id !== current?.id ? s : null)}
             onCommit={(s) => {

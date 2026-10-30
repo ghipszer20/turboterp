@@ -403,6 +403,7 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
       courses={data.indexState.index.courses}
       picked={courses}
       titles={data.titles}
+      restrictions={data.restrictions}
       onChange={setCourses}
       fromPlan={fromPlan}
       elsewhere={elsewhere}
@@ -474,6 +475,7 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
           onPick={(c, s) => update((st) => setOwnSection(st, c, s?.id ?? null))}
           ratings={data.ratings}
           titles={data.titles}
+          restrictions={data.restrictions}
           scale={ownScale}
           gradesFor={data.gradesFor}
           loadGrades={data.loadGrades}
@@ -490,6 +492,7 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
           onPick={(c, s) => s && setView({ kind: "editor", picks: { ...view.picks, [c]: s } })}
           ratings={data.ratings}
           titles={data.titles}
+          restrictions={data.restrictions}
           scale={result?.scale ?? ownScale}
           gradesFor={data.gradesFor}
           loadGrades={data.loadGrades}
@@ -530,7 +533,7 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
           ) : result ? (
             <div style={{ opacity: pending ? 0.5 : 1, transition: "opacity 160ms ease" }}>
               <Gallery
-                data={{ layouts: result.layouts, scale: result.scale, sectionByKey: shownSectionByKey, ratings: shownReq?.ratings ?? data.ratings, courseIds: shownReq?.courseIds ?? courses, gpas: shownReq?.gpas }}
+                data={{ layouts: result.layouts, scale: result.scale, sectionByKey: shownSectionByKey, ratings: shownReq?.ratings ?? data.ratings, courseIds: shownReq?.courseIds ?? courses, restrictions: data.restrictions, gpas: shownReq?.gpas }}
                 days={filters.days}
                 onOpen={(picks) => setView({ kind: "editor", picks: Object.fromEntries(picks.map((s) => [s.courseId, s])) })}
               />

@@ -10,6 +10,7 @@
     "./prereqs": "./src/prereqs.ts",
     "./gen-ed": "./src/gen-ed.ts",
     "./schedules": "./src/schedules.ts",
+    "./program-restriction": "./src/program-restriction.ts",
     "./sort": "./src/sort.ts",
     "./explain": "./src/explain.ts",
     "./schedule-files": "./src/schedule-files.ts",

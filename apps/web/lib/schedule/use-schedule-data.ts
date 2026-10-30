@@ -101,6 +101,7 @@ export function useScheduleData(courseIds: string[], wantGrades = false) {
     const sections: Section[] = [];
     const ratings: Record<string, number> = {};
     const titles: Record<string, string> = {};
+    const restrictions: Record<string, string | null> = {};
     const reviewed = new Set<string>();
     let loaded = true;
     for (const dept of wanted ? wanted.split(",") : []) {
@@ -112,14 +113,17 @@ export function useScheduleData(courseIds: string[], wantGrades = false) {
       if (d === "missing") continue;
       Object.assign(ratings, d.ratings);
       for (const n of d.reviews) reviewed.add(n);
-      for (const c of d.courses) titles[c.id] = c.title;
+      for (const c of d.courses) {
+        titles[c.id] = c.title;
+        restrictions[c.id] = c.restriction;
+      }
     }
     const chosen = new Set(courseIds);
     for (const dept of wanted ? wanted.split(",") : []) {
       const d = depts[dept];
       if (d && d !== "missing") for (const s of d.sections) if (chosen.has(s.courseId)) sections.push(s);
     }
-    return { sections, ratings, titles, reviewed, loaded };
+    return { sections, ratings, titles, restrictions, reviewed, loaded };
   }, [depts, wanted, courseIds]);
 
   const gradesFor = useCallback(
