@@ -6,6 +6,7 @@ import { InstructorName } from "./InstructorReviews";
 import type { CourseGrades } from "@turboterp/ratings";
 import { seatsAge } from "@/lib/age";
 import { courseColor } from "@/lib/schedule/colors";
+import { restrictionNote, sectionRestriction } from "@/lib/schedule/restrictions";
 import {
   bestRating,
   gradeSummary,
@@ -66,6 +67,7 @@ export function SectionPanel({
   seatsUpdatedAt = null,
   allSections = [],
   overlaps,
+  restriction = null,
   onPreview,
   onCommit,
   onClose,
@@ -86,6 +88,8 @@ export function SectionPanel({
   allSections?: Section[];
   /** Build my own: the placed courses a section would overlap. */
   overlaps?: (s: Section) => string[];
+  /** The course's Testudo restriction text, for program-limit warnings. */
+  restriction?: string | null;
   onPreview: (s: Section | null) => void;
   onCommit: (s: Section) => void;
   onClose: () => void;
@@ -144,6 +148,15 @@ export function SectionPanel({
             </span>
           </span>
           <span className={styles.when}>{meetingSummary(s)}</span>
+          {(() => {
+            const r = sectionRestriction(s, restriction);
+            return r ? (
+              <>
+                <span className={styles.restrict}>{restrictionNote(r)}</span>
+                {r.text ? <span className={styles.restrictText}>{r.text}</span> : null}
+              </>
+            ) : null;
+          })()}
           {clash.length ? <span className={styles.clash}>Overlaps {clash.join(", ")}</span> : null}
           <GradeBar summary={gradeSummary(grades ?? null, courseId, s.instructors)} loading={grades === undefined} />
         </button>

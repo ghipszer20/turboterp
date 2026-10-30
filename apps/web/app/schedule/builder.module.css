@@ -839,3 +839,20 @@
 .termLine b {
   color: var(--text);
 }
+
+.restrictNote {
+  margin: 4px 4px 0;
+  color: var(--soon);
+  font: var(--t-foot);
+  overflow-wrap: anywhere;
+}
+
+.cardRestrict {
+  margin: 2px 0 0;
+  color: var(--soon);
+  font: var(--t-foot);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -3,6 +3,7 @@
 import { useId, useMemo, useState } from "react";
 import type { IndexedCourse } from "@turboterp/course-data/schedule-files";
 import { courseColor } from "@/lib/schedule/colors";
+import { courseRestrictionLine, courseRestrictionOf } from "@/lib/schedule/restrictions";
 import { searchCourses } from "@/lib/schedule/search";
 import cal from "./calendar.module.css";
 import styles from "./builder.module.css";
@@ -15,6 +16,7 @@ export function CoursePicker({
   onChange,
   fromPlan,
   elsewhere,
+  restrictions,
 }: {
   courses: readonly IndexedCourse[];
   picked: string[];
@@ -24,6 +26,8 @@ export function CoursePicker({
   fromPlan?: ReadonlySet<string>;
   /** Course id -> other plan terms that also have it ("Also planned for Fall 2027"). */
   elsewhere?: ReadonlyMap<string, string[]>;
+  /** Course id -> Testudo's course-level restriction text (program limits warn). */
+  restrictions?: Readonly<Record<string, string | null | undefined>>;
 }) {
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
@@ -83,6 +87,14 @@ export function CoursePicker({
           </ul>
         ) : null}
       </div>
+      {picked.map((id) => {
+        const r = courseRestrictionOf(restrictions?.[id] ?? null);
+        return r ? (
+          <p key={id} className={styles.restrictNote} role="status">
+            {courseRestrictionLine(id, r)}
+          </p>
+        ) : null;
+      })}
       {picked.length ? (
         <ul className={styles.chips} aria-label="Your courses">
           {picked.map((id) => {

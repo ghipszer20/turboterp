@@ -8,6 +8,7 @@ import type { TimeScale } from "@/lib/schedule/calendar";
 import { courseColor } from "@/lib/schedule/colors";
 import type { FilterState } from "@/lib/schedule/filters";
 import { tightWalkLine } from "@/lib/schedule/conflicts";
+import { layoutRestrictions, restrictionLine, sectionRestriction } from "@/lib/schedule/restrictions";
 import { useBuildings } from "@/lib/schedule/use-buildings";
 import { decodeLayout, visibleRows, type EncodedLayouts } from "@/lib/schedule/gallery";
 import { pickSection } from "@/lib/schedule/sections";
@@ -22,7 +23,7 @@ const ZOOM_COL = 360;
 const HOVER_DELAY = 300; // owner: a short pause before the enlarged preview
 const PRESS_DELAY = 350;
 /** Card height: padding, day heads, the columns, and one strip row per course (18 px; 33 px with a Recommended reason line). */
-const cardHeight = (courses: number, reasons = false) => 228 + (reasons ? 33 : 18) * courses;
+const cardHeight = (courses: number, reasons = false) => 228 + (reasons ? 33 : 18) * courses + 16;
 
 export type GalleryData = {
   layouts: EncodedLayouts;
@@ -30,6 +31,8 @@ export type GalleryData = {
   sectionByKey: ReadonlyMap<string, Section>;
   ratings: Readonly<Record<string, number>>;
   courseIds: string[];
+  /** Course id -> Testudo's course-level restriction text. */
+  restrictions?: Readonly<Record<string, string | null | undefined>>;
   /** Set only for the Recommended sort: the strip then explains each pick. */
   gpas?: Readonly<Record<string, number>>;
 };
@@ -56,6 +59,10 @@ const Card = memo(function Card({
   const { picks, groups } = cardSections(data, index);
   const items = picks.flatMap((s) => sectionBlocks(s, { color: courseColor(data.courseIds, s.courseId), size }));
   const walk = tightWalkLine(picks, buildings);
+  const first = layoutRestrictions(picks, data.restrictions ?? {})[0];
+  const pickOf = first ? picks.find((s) => s.courseId === first.courseId && s.id === first.sectionId) : undefined;
+  const found = pickOf ? sectionRestriction(pickOf, data.restrictions?.[pickOf.courseId] ?? null) : null;
+  const restricted = first && found ? restrictionLine(first.courseId, first.sectionId, found) : null;
   return (
     <>
       <WeekCalendar size={size} scale={data.scale} items={items} height={size === "mini" ? MINI_COL : ZOOM_COL} days={days} />
@@ -63,6 +70,11 @@ const Card = memo(function Card({
       {walk ? (
         <p className={styles.cardWalk} title={walk}>
           {walk}
+        </p>
+      ) : null}
+      {restricted ? (
+        <p className={styles.cardRestrict} title={restricted}>
+          {restricted}
         </p>
       ) : null}
     </>
