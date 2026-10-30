@@ -56,7 +56,7 @@ export function WhatIfView({ plan, catalog, prior }: { plan: AdvisorPlan; catalo
   return (
     <div className={styles.auditLayout}>
       <section className={styles.panel}>
-        <h2 className={styles.panelTitle}>What if…</h2>
+        <h2 className={styles.panelTitle}>Try a different major or minor</h2>
         <p className={styles.panelNote}>
           Switch a major, add a major or minor, or drop one to see the effect on your plan before committing to it. Your real plan (
           {programsLabel(plan.programs)}) doesn&apos;t change until you press Apply.
@@ -81,7 +81,7 @@ export function WhatIfView({ plan, catalog, prior }: { plan: AdvisorPlan; catalo
 
       {!ready ? (
         <div className={styles.card}>
-          <p className={styles.cardNote}>Course data isn&apos;t built on this server yet, so What-if can&apos;t run.</p>
+          <p className={styles.cardNote}>Course data isn&apos;t built on this server yet, so Explore can&apos;t run.</p>
         </div>
       ) : !changed ? (
         <div className={styles.card}>

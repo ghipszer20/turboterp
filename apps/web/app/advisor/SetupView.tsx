@@ -211,7 +211,7 @@ function TracksPanel({
       <h2 className={styles.panelTitle}>Pre-professional tracks</h2>
       <p className={styles.panelNote}>
         Optional. A track lists what a professional school expects to see, on top of any major -- never a UMD graduation
-        requirement. What-if audits cover chosen tracks too.
+        requirement. Audits in the Explore tab cover chosen tracks too.
       </p>
       <div className={styles.optionList} role="group" aria-label="Pre-professional tracks">
         {TRACKS.map((t) => {

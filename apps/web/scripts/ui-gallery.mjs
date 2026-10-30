@@ -40,7 +40,7 @@ const SHOTS = [
   ["Advisor", "Plan (Math Applied + CS)", "/advisor?seed=owner"],
   ["Advisor", "Prior credit", "/advisor?seed=owner", click("Prior credit"), 1500],
   ["Advisor", "Audit", "/advisor?seed=owner", click("Audit"), 3000],
-  ["Advisor", "What if", "/advisor?seed=owner", click("What if"), 3000],
+  ["Advisor", "Explore", "/advisor?seed=owner", click("Explore"), 3000],
   ["Advisor", "Export menu", "/advisor?seed=owner", `document.querySelector('[aria-haspopup=menu]')?.click()`, 1000],
   ["Advisor", "Edit setup", "/advisor?seed=owner&setup=1"],
   ["Advisor", "Program picker (blocked minor)", "/advisor?seed=owner&setup=1&q=statistics"],

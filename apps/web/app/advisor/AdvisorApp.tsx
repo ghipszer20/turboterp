@@ -29,7 +29,7 @@ const VIEWS: { value: View; label: string }[] = [
   { value: "plan", label: "Plan" },
   { value: "credit", label: "Prior credit" },
   { value: "audit", label: "Audit" },
-  { value: "what-if", label: "What if" },
+  { value: "what-if", label: "Explore" },
 ];
 
 /** Debounce for the audit and notices (HiGHS); the plan checker itself runs on every edit. */
