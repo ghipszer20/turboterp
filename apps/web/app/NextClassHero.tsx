@@ -1,33 +1,35 @@
 "use client";
 
 // Today's hero: the next class today from the schedule saved on this device (nothing leaves the
-// device), with a leave-by time when the previous class's building is known. With no class left
-// it shows the next academic date instead.
+// device), with a leave-by time when the previous class's building is known. A schedule for a term
+// whose classes haven't started (or have ended) is ignored. With no class left it shows the next
+// academic date instead.
 
 import { useEffect, useState } from "react";
 import { buildingByCode } from "@turboterp/campus-data/buildings";
 import { distanceMeters, walkMinutes } from "@turboterp/campus-data/walk";
 import type { Section } from "@turboterp/course-data/schedules";
 import { Hero } from "@/components/ui";
+import { classTermInSession, type ClassWindows } from "@/lib/calendar";
 import { nextClass } from "@/lib/next-class";
 import { loadPickedSections } from "@/lib/schedule/picked-sections";
 import { useBuildings } from "@/lib/schedule/use-buildings";
 
 export type UpNext = { title: string; sub: string };
 
-export function NextClassHero({ upNext }: { upNext: UpNext | null }) {
+export function NextClassHero({ upNext, today, windows }: { upNext: UpNext | null; today: string; windows: ClassWindows }) {
   const buildings = useBuildings();
   const [sections, setSections] = useState<Section[] | null>(null);
   const [now, setNow] = useState<Date | null>(null);
 
   useEffect(() => {
-    loadPickedSections()
+    loadPickedSections((term) => classTermInSession(term, today, windows))
       .catch(() => null)
       .then((picked) => {
         setNow(new Date());
         setSections(picked);
       });
-  }, []);
+  }, [today, windows]);
 
   const next =
     sections && now

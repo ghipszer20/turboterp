@@ -6,8 +6,11 @@ import type { Section } from "@turboterp/course-data/schedules";
 import { pickedForToday } from "./leave-by";
 import { parseSaved, SAVED_KEY } from "./saved";
 
-/** Sections the saved schedule picked, or null when there is no saved schedule. */
-export async function loadPickedSections(): Promise<Section[] | null> {
+/**
+ * Sections the saved schedule picked, or null when there is no saved schedule or `inSession`
+ * says its term's classes aren't meeting now (a Spring schedule saved during the fall).
+ */
+export async function loadPickedSections(inSession: (term: string) => boolean = () => true): Promise<Section[] | null> {
   let raw: string | null = null;
   try {
     raw = localStorage.getItem(SAVED_KEY);
@@ -16,7 +19,7 @@ export async function loadPickedSections(): Promise<Section[] | null> {
   }
   if (!raw) return null;
   const term = (JSON.parse(raw) as { term?: unknown }).term;
-  if (typeof term !== "string") return null;
+  if (typeof term !== "string" || !inSession(term)) return null;
   const picks = pickedForToday(parseSaved(raw, term));
   const depts = [...new Set(Object.keys(picks).map((c) => c.slice(0, 4)))];
   if (depts.length === 0) return null;

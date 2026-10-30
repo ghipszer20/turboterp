@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { AcademicEvent } from "@turboterp/campus-data";
-import { calendarTitle, dedupeEvents, formatKeyDates, groupByMonth, isHighlighted, isKeyEvent, isPast, nextEvent, termKeyDates } from "../calendar";
+import { calendarTitle, classTermInSession, classWindows, dedupeEvents, formatKeyDates, groupByMonth, isHighlighted, isKeyEvent, isPast, nextEvent, termKeyDates } from "../calendar";
 
 const ev = (kind: AcademicEvent["kind"], start: string, end?: string, term = "Spring 2027"): AcademicEvent => ({
   term,
@@ -176,5 +176,38 @@ describe("calendarTitle", () => {
 
   it("leaves the Advisor's short forms alone", () => {
     expect(formatKeyDates([t("drop-w", "Last day to drop a course with a W", "Fall 2026")])).toContain("Drop with W");
+  });
+});
+
+describe("classTermInSession (Today's next class only for the term in session)", () => {
+  const ev = (term: string, kind: AcademicEvent["kind"], start: string): AcademicEvent => ({ term, kind, label: kind, start });
+  const windows = classWindows([
+    ev("Fall 2026", "first-day", "2026-08-31"),
+    ev("Fall 2026", "last-class", "2026-12-11"),
+    ev("Spring 2027", "first-day", "2027-01-25"),
+    ev("Spring 2027", "last-class", "2027-05-10"),
+    ev("Spring 2027", "finals", "2027-05-12"),
+  ]);
+
+  it("collects each term's first and last day of classes", () => {
+    expect(windows).toEqual({ "Fall 2026": ["2026-08-31", "2026-12-11"], "Spring 2027": ["2027-01-25", "2027-05-10"] });
+  });
+
+  it("hides a Spring schedule during the fall and shows it once Spring classes start", () => {
+    expect(classTermInSession("202701", "2026-10-30", windows)).toBe(false);
+    expect(classTermInSession("202701", "2027-01-24", windows)).toBe(false);
+    expect(classTermInSession("202701", "2027-01-25", windows)).toBe(true);
+    expect(classTermInSession("202701", "2027-05-10", windows)).toBe(true);
+    expect(classTermInSession("202701", "2027-05-11", windows)).toBe(false);
+  });
+
+  it("shows the current term's schedule", () => {
+    expect(classTermInSession("202608", "2026-10-30", windows)).toBe(true);
+  });
+
+  it("without calendar dates, waits for the term's start month", () => {
+    expect(classTermInSession("202701", "2026-10-30", {})).toBe(false);
+    expect(classTermInSession("202701", "2027-01-02", {})).toBe(true);
+    expect(classTermInSession("202608", "2026-10-30", {})).toBe(true);
   });
 });

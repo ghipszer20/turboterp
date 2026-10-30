@@ -1,6 +1,7 @@
 // Pure helpers over the registrar's academic-calendar events (Today, plan grid).
 
 import type { AcademicEvent, AcademicEventKind } from "@turboterp/campus-data";
+import { termFromMatriculationId } from "./advisor/terms";
 
 const SHORT: Partial<Record<AcademicEventKind, string>> = {
   "registration-appointments": "Registration appointments",
@@ -160,4 +161,28 @@ export function groupByMonth(events: AcademicEvent[]): MonthGroup[] {
 /** The soonest event that has not finished by `today` (one in progress counts). */
 export function nextEvent(events: AcademicEvent[], today: string): AcademicEvent | undefined {
   return [...events].sort(byStart).find((e) => endOf(e) >= today);
+}
+
+/** Each term's class days, term name -> [first day of classes, last day of classes], when the calendar has both. */
+export type ClassWindows = Record<string, [string, string]>;
+
+export function classWindows(events: readonly AcademicEvent[]): ClassWindows {
+  const out: ClassWindows = {};
+  for (const e of events) {
+    if (e.kind !== "first-day") continue;
+    const last = events.find((x) => x.kind === "last-class" && x.term === e.term);
+    if (last) out[e.term] = [e.start, endOf(last)];
+  }
+  return out;
+}
+
+/**
+ * Whether classes of the Schedule of Classes term `termId` ("202701") meet on `today`
+ * (YYYY-MM-DD). Without calendar dates for the term, any day from its start month on counts.
+ */
+export function classTermInSession(termId: string, today: string, windows: ClassWindows): boolean {
+  const name = termFromMatriculationId(termId);
+  const w = name ? windows[name] : undefined;
+  if (w) return w[0] <= today && today <= w[1];
+  return today >= `${termId.slice(0, 4)}-${termId.slice(4, 6)}-01`;
 }

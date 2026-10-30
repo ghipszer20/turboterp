@@ -15,7 +15,7 @@ import {
   getStampVenues,
   safe,
 } from "@/lib/campus";
-import { eventTitle, formatEventDate, nextEvent } from "@/lib/calendar";
+import { classWindows, eventTitle, formatEventDate, nextEvent } from "@/lib/calendar";
 import { stampSummary } from "@/lib/stamp";
 import { gymRowTitle, MAIN_GYMS } from "@/lib/gyms";
 import { compactLibraryName, MAIN_LIBRARIES } from "@/lib/libraries";
@@ -106,7 +106,7 @@ async function Hero({ today }: { today: string }) {
   const upNext: UpNext | null = event ? { title: eventTitle(event), sub: formatEventDate(event) } : null;
   return (
     <HeroRow>
-      <NextClassHero upNext={upNext} />
+      <NextClassHero upNext={upNext} today={today} windows={res.ok ? classWindows(res.data) : {}} />
       <RegistrationCountdown />
     </HeroRow>
   );
