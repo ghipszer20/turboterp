@@ -15,9 +15,9 @@ function fake(responses: unknown[]) {
 
 describe("seatAlertStore", () => {
   it("lists active watches for a term with service-role headers", async () => {
-    const { calls, store } = fake([[{ id: "w1", user_id: "u1", term: "202701", course_id: "CMSC351", section_id: null, last_alert_at: null, done_at: null }]]);
+    const { calls, store } = fake([[{ id: "w1", device_id: "u1", term: "202701", course_id: "CMSC351", section_id: null, last_alert_at: null, done_at: null }]]);
     const watches = await store.listActiveWatches("202701");
-    expect(watches).toEqual([{ id: "w1", userId: "u1", term: "202701", courseId: "CMSC351", sectionId: null, lastAlertAt: null, doneAt: null }]);
+    expect(watches).toEqual([{ id: "w1", deviceId: "u1", term: "202701", courseId: "CMSC351", sectionId: null, lastAlertAt: null, doneAt: null }]);
     expect(calls[0]!.url).toContain("/rest/v1/seat_watches?");
     expect(calls[0]!.url).toContain("term=eq.202701");
     expect(calls[0]!.url).toContain("done_at=is.null");
@@ -59,12 +59,10 @@ describe("seatAlertStore", () => {
     expect(calls).toHaveLength(0);
   });
 
-  it("loads subscriptions and deletes by endpoint", async () => {
-    const { calls, store } = fake([[{ user_id: "u1", endpoint: "https://push/1", p256dh: "k", auth: "a" }], []]);
-    expect(await store.subscriptionsFor(["u1"])).toEqual([{ userId: "u1", endpoint: "https://push/1", p256dh: "k", auth: "a" }]);
-    await store.deleteSubscription("https://push/1");
-    expect(calls[1]!.init.method).toBe("DELETE");
-    expect(calls[1]!.url).toContain("endpoint=eq.https%3A%2F%2Fpush%2F1");
+  it("loads subscriptions from alert_devices by device id", async () => {
+    const { calls, store } = fake([[{ id: "d1", endpoint: "https://push/1", p256dh: "k", auth: "a" }]]);
+    expect(await store.subscriptionsFor(["d1"])).toEqual([{ deviceId: "d1", endpoint: "https://push/1", p256dh: "k", auth: "a" }]);
+    expect(calls[0]!.url).toContain("alert_devices?id=in.(d1)");
   });
 
   it("reads and writes the cursor", async () => {

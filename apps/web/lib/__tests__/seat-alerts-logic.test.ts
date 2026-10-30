@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { activeForTerm, alertText, batches, detectOpenings, matchWatches, shouldAlert, watchedCourses, type SeatState, type Watch } from "../seat-alerts/logic";
 
 const now = new Date("2026-10-09T18:00:00Z");
-const w = (p: Partial<Watch>): Watch => ({ id: "w1", userId: "u1", term: "202701", courseId: "CMSC351", sectionId: "0201", lastAlertAt: null, doneAt: null, ...p });
+const w = (p: Partial<Watch>): Watch => ({ id: "w1", deviceId: "u1", term: "202701", courseId: "CMSC351", sectionId: "0201", lastAlertAt: null, doneAt: null, ...p });
 const st = (sectionId: string, open: number, extra: Partial<SeatState> = {}): SeatState => ({ courseId: "CMSC351", sectionId, open, waitlist: 0, holdfile: 0, checkedAt: "2026-10-09T17:59:00Z", ...extra });
 
 describe("detectOpenings", () => {
@@ -24,7 +24,7 @@ describe("detectOpenings", () => {
 describe("matching", () => {
   const opening = { courseId: "CMSC351", sectionId: "0201", open: 1, waitlist: 0, holdfile: 0 };
   it("matches section and any-section watches, one per user per opening", () => {
-    const watches = [w({ id: "a" }), w({ id: "b", sectionId: null }), w({ id: "c", userId: "u2", sectionId: null }), w({ id: "d", sectionId: "0101" })];
+    const watches = [w({ id: "a" }), w({ id: "b", sectionId: null }), w({ id: "c", deviceId: "u2", sectionId: null }), w({ id: "d", sectionId: "0101" })];
     expect(matchWatches([opening], watches, now).map((m) => m.watch.id).sort()).toEqual(["a", "c"]);
   });
   it("respects the 5-minute cooldown and done watches", () => {

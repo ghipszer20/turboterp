@@ -3,7 +3,7 @@ import { runSeatAlerts, type RunDeps } from "../seat-alerts/run";
 import type { SeatState, Watch } from "../seat-alerts/logic";
 
 const now = new Date("2026-10-09T18:00:00Z");
-const watch = (p: Partial<Watch> = {}): Watch => ({ id: "w1", userId: "u1", term: "202701", courseId: "CMSC351", sectionId: "0201", lastAlertAt: null, doneAt: null, ...p });
+const watch = (p: Partial<Watch> = {}): Watch => ({ id: "w1", deviceId: "u1", term: "202701", courseId: "CMSC351", sectionId: "0201", lastAlertAt: null, doneAt: null, ...p });
 const section = (courseId: string, id: string, open: number, waitlist = 0) => ({ id, courseId, seats: { open, waitlist, holdfile: 0 } }) as never;
 
 function setup(over: { watches?: Watch[]; states?: SeatState[]; fetchSections?: RunDeps["fetchSections"]; push?: RunDeps["push"]; cursor?: string | null; clock?: () => number } = {}) {
@@ -16,8 +16,8 @@ function setup(over: { watches?: Watch[]; states?: SeatState[]; fetchSections?: 
       getStates: async () => states,
       saveStates: async (_t, s) => { log.saved.push(...s); },
       markAlerted: async (ids) => { log.marked.push(...ids); },
-      subscriptionsFor: async (ids) => ids.flatMap((u) => [1, 2].map((n) => ({ userId: u, endpoint: `https://push/${u}/${n}`, p256dh: "k", auth: "a" }))),
-      deleteSubscription: async (e) => { log.deleted.push(e); },
+      subscriptionsFor: async (ids) => ids.flatMap((u) => [1, 2].map((n) => ({ deviceId: u, endpoint: `https://push/${u}/${n}`, p256dh: "k", auth: "a" }))),
+      deleteDevice: async (id) => { log.deleted.push(id); },
       getCursor: async () => over.cursor ?? null,
       setCursor: async (c) => { log.cursor = c; },
     },
@@ -59,7 +59,7 @@ describe("runSeatAlerts", () => {
   it("deletes a gone device and carries on with the others", async () => {
     const { deps, log } = setup({ watches: [watch()], states: [prior(0)], push: async (s) => { log.pushed.push(s.endpoint); return s.endpoint.endsWith("/1") ? "gone" : "ok"; } });
     const r = await runSeatAlerts(deps, now);
-    expect(log.deleted).toEqual(["https://push/u1/1"]);
+    expect(log.deleted).toEqual(["u1"]);
     expect(log.pushed).toHaveLength(2);
     expect(r).toMatchObject({ gone: 1, alerts: 1 });
     expect(log.marked).toEqual(["w1"]);

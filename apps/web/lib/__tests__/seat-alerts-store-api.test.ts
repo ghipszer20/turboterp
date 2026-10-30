@@ -13,12 +13,12 @@ function fake(responses: unknown[]) {
 }
 
 describe("seatAlertStore: student API", () => {
-  const row = { id: "i1", user_id: "u1", term: "202701", course_id: "CMSC351", section_id: null, last_alert_at: null, done_at: null };
-  const w = { id: "i1", userId: "u1", term: "202701", courseId: "CMSC351", sectionId: null, lastAlertAt: null, doneAt: null };
+  const row = { id: "i1", device_id: "u1", term: "202701", course_id: "CMSC351", section_id: null, last_alert_at: null, done_at: null };
+  const w = { id: "i1", deviceId: "u1", term: "202701", courseId: "CMSC351", sectionId: null, lastAlertAt: null, doneAt: null };
   it("listWatches reads one user's rows", async () => {
     const { calls, store } = fake([[row]]);
     expect(await store.listWatches("u1")).toEqual([w]);
-    expect(calls[0]!.url).toContain("seat_watches?user_id=eq.u1");
+    expect(calls[0]!.url).toContain("seat_watches?device_id=eq.u1");
   });
   it("getWatch returns null when absent", async () => {
     expect(await fake([[]]).store.getWatch("i1")).toBeNull();
@@ -28,7 +28,7 @@ describe("seatAlertStore: student API", () => {
     const { calls, store } = fake([[row]]);
     expect(await store.createWatch("u1", "202701", "CMSC351", null)).toEqual(w);
     expect(calls[0]!.init.method).toBe("POST");
-    expect(JSON.parse(calls[0]!.init.body as string)).toEqual({ user_id: "u1", term: "202701", course_id: "CMSC351", section_id: null });
+    expect(JSON.parse(calls[0]!.init.body as string)).toEqual({ device_id: "u1", term: "202701", course_id: "CMSC351", section_id: null });
     expect((calls[0]!.init.headers as Record<string, string>).Prefer).toContain("return=representation");
   });
   it("markDone and deleteWatch target the id", async () => {
@@ -40,17 +40,31 @@ describe("seatAlertStore: student API", () => {
     expect(JSON.parse(calls[0]!.init.body as string)).toEqual({ done_at: "2026-10-09T00:00:00.000Z" });
     expect(calls[1]!.init.method).toBe("DELETE");
   });
-  it("upsertSubscription merges on endpoint and reassigns the user", async () => {
-    const { calls, store } = fake([[]]);
-    await store.upsertSubscription("u1", { endpoint: "https://p/1", p256dh: "k", auth: "a" });
-    expect(calls[0]!.url).toContain("push_subscriptions?on_conflict=endpoint");
-    expect((calls[0]!.init.headers as Record<string, string>).Prefer).toContain("merge-duplicates");
-    expect(JSON.parse(calls[0]!.init.body as string)).toEqual({ user_id: "u1", endpoint: "https://p/1", p256dh: "k", auth: "a" });
+  it("createDevice inserts into alert_devices and returns the id", async () => {
+    const { calls, store } = fake([[{ id: "d1" }]]);
+    expect(await store.createDevice({ secretHash: "h", sub: { endpoint: "https://p/1", p256dh: "k", auth: "a" } })).toBe("d1");
+    expect(calls[0]!.url).toContain("/rest/v1/alert_devices");
+    expect(JSON.parse(calls[0]!.init.body as string)).toEqual({ secret_hash: "h", endpoint: "https://p/1", p256dh: "k", auth: "a" });
   });
-  it("deleteSubscriptionFor only deletes that user's endpoint", async () => {
+  it("getDevice returns the hash or null", async () => {
+    expect(await fake([[{ id: "d1", secret_hash: "h" }]]).store.getDevice("d1")).toEqual({ id: "d1", secretHash: "h" });
+    expect(await fake([[]]).store.getDevice("d1")).toBeNull();
+  });
+  it("updateDeviceSub patches the endpoint and keys", async () => {
     const { calls, store } = fake([[]]);
-    await store.deleteSubscriptionFor("u1", "https://p/1");
-    expect(calls[0]!.url).toContain("endpoint=eq.https%3A%2F%2Fp%2F1");
-    expect(calls[0]!.url).toContain("user_id=eq.u1");
+    await store.updateDeviceSub("d1", { endpoint: "https://p/2", p256dh: "k", auth: "a" });
+    expect(calls[0]!.url).toContain("alert_devices?id=eq.d1");
+    expect(calls[0]!.init.method).toBe("PATCH");
+  });
+  it("deleteDevice and deleteDeviceByEndpoint (optionally sparing one id)", async () => {
+    const { calls, store } = fake([[], [], []]);
+    await store.deleteDevice("d1");
+    await store.deleteDeviceByEndpoint("https://p/1");
+    await store.deleteDeviceByEndpoint("https://p/1", "d2");
+    expect(calls[0]!.url).toContain("alert_devices?id=eq.d1");
+    expect(calls[1]!.url).toContain("alert_devices?endpoint=eq.https%3A%2F%2Fp%2F1");
+    expect(calls[1]!.url).not.toContain("neq");
+    expect(calls[2]!.url).toContain("id=neq.d2");
+    expect(calls.every((c) => c.init.method === "DELETE")).toBe(true);
   });
 });
