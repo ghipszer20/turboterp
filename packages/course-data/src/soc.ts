@@ -255,6 +255,36 @@ export function parseSections(html: string): Section[] {
   return out;
 }
 
+/** A section's seat counts from the seats-only scan. */
+export type SeatRow = [courseId: string, sectionId: string, total: number, open: number, waitlist: number, holdfile: number];
+
+/**
+ * Seat counts only, by plain string search instead of building a DOM (cheerio costs ~150x more CPU).
+ * Must agree with parseSections' `seats`; the nightly full run cross-checks the two.
+ */
+export function scanSeats(html: string): SeatRow[] {
+  const rows: SeatRow[] = [];
+  const courseRe =
+    /<div[^>]*class="(?:course-sections|course)"[^>]*id="([A-Z]{4}\d{3}[A-Z]?)"|<div[^>]*id="([A-Z]{4}\d{3}[A-Z]?)"[^>]*class="(?:course-sections|course)"/g;
+  const starts: { id: string; at: number }[] = [];
+  for (let m; (m = courseRe.exec(html)); ) starts.push({ id: (m[1] ?? m[2])!, at: m.index });
+  const num = (chunk: string, cls: string) => {
+    const i = chunk.indexOf(cls);
+    if (i < 0) return 0;
+    const m = /^[^>]*>\s*(\d+)/.exec(chunk.slice(i, i + 200));
+    return m ? Number(m[1]) : 0;
+  };
+  for (let c = 0; c < starts.length; c++) {
+    const block = html.slice(starts[c]!.at, starts[c + 1]?.at ?? html.length);
+    for (const part of block.split(/class="section(?:\s[^"]*)?"/).slice(1)) {
+      const id = /class="section-id[^"]*"[^>]*>\s*([^<\s]+)/.exec(part);
+      if (!id) continue;
+      rows.push([starts[c]!.id, id[1]!, num(part, "total-seats-count"), num(part, "open-seats-count"), num(part, "waitlist-count"), num(part, "holdfile-count")]);
+    }
+  }
+  return rows;
+}
+
 // ---- network (callers should pace requests; see scripts/snapshot.ts) ----
 
 export async function fetchTermsAndDepartments(): Promise<{ terms: Term[]; departments: Department[] }> {
@@ -264,6 +294,11 @@ export async function fetchTermsAndDepartments(): Promise<{ terms: Term[]; depar
 
 export async function fetchCourses(term: string, department: string): Promise<Course[]> {
   return parseCourses(await fetchText("soc", `${SOC}/${term}/${department}`), department);
+}
+
+/** The raw sections page for these courses (what scanSeats and parseSections both read). */
+export function fetchSectionsHtml(term: string, courseIds: string[]): Promise<string> {
+  return fetchText("soc", `${SOC}/${term}/sections?courseIds=${courseIds.join(",")}`);
 }
 
 export async function fetchSections(term: string, courseIds: string[]): Promise<Section[]> {
