@@ -156,3 +156,13 @@ Plan: `docs/project/account-sync-plan.md`.
 
 ## Privacy names data, not providers (owner, 2026-10-30)
 - The Privacy Policy lists what data is gathered, not the tooling behind the site: no Supabase, Vercel, Brevo, Sentry or other provider names. "Other services involved" became "Data we gather" (account, synced data, email, request logs, visit counts, error reports), with one line that service providers handle data for hosting, sign-in, storage and email, and that **a list of service providers is available on request** through Report an issue. Services the user picks themselves stay named: Google sign-in, Venmo, the browser push services. Branch `fix/privacy-data-not-vendors` (version 2026-10-30); `legal.test.ts` fails if a provider name returns.
+
+## iOS App Store decisions (owner, 2026-10-30)
+- **No Donate in the iOS app.** The website keeps its Donate page. The app's About, store text and screenshots don't mention donations (ios-plan.md section 8, R-4).
+- **United States storefront only**, declared as a non-trader (no income from the app; ios-plan.md R-14).
+- **PlanetTerp needs no permission email** (owner: "PlanetTerp is open-source"). Its code is AGPL-3.0 and its API is public and documented for developers. The app shows only rating summaries, credits PlanetTerp and links to the professor's PlanetTerp page. If Apple asks for authorization (guideline 5.2.2), answer with the public API docs (planetterp.com/api) and the repo (github.com/planetterp/PlanetTerp).
+- **Supabase Security Advisor (owner screenshot, 2026-10-30):** 0 errors and 4 warnings.
+  - Two trigger functions had a mutable search_path; migration `0013_function_search_path.sql` fixes them.
+  - `pg_net` installed in the public schema: accepted. Its functions live in the `net` schema, and moving it would mean dropping and recreating the extension under the cron jobs.
+  - Leaked password protection is off: accepted. TurboTerp has no passwords (email code, Google, Apple), and the setting needs a paid plan.
+  - The 6 Info items weren't in the screenshot. They're expected to be "RLS enabled, no policy" on the service-role-only tables, which is intended.
