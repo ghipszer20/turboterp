@@ -180,7 +180,7 @@ export const PRIVACY: LegalSection[] = [
     heading: "How your data is used and shared",
     paragraphs: [
       "Your data is used only to run TurboTerp for you. We do not sell, rent or give away your email address or anything else about you, to advertisers, data brokers or anyone else.",
-      "Like most websites, TurboTerp relies on a few service providers for hosting, sign-in, storage and email. They handle your data only as far as running the site needs, and only the data listed below.",
+      "Like most websites, TurboTerp relies on a few service providers for hosting, sign-in, storage and email. They handle your data only as far as running the site needs, and only the data listed below. A list of our service providers is available on request through the Report an issue page.",
     ],
   },
   {

@@ -44,6 +44,7 @@ describe("legal pages", () => {
     expect(t).toMatch(/error reports/i);
     expect(t).toMatch(/IP address/);
     expect(t).toMatch(/Venmo/);
+    expect(t).toMatch(/list of our service providers is available on request/i);
   });
 
   it("privacy explains server-sent email and the rate-limit record", () => {
