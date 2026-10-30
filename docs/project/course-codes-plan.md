@@ -6,7 +6,7 @@
 
 **Depends on:** `feat/catalog-fallback` (dispatched 2026-10-29). It adds the UMD Academic Catalog (`packages/course-data/.cache/catalog-courses.json`) under the Testudo snapshots in the Advisor catalog, and writes `docs/project/unknown-courses.md`: course ids used in program requirements that are in neither source, by program, with hints (Formerly twin, suffix-stripped base code). That report is this plan's work list. Nothing here starts until that branch is merged.
 
-**Rough size (quick scan 2026-10-29, the report gives the real numbers):** 3,282 course ids in program files; 783 missing from the Advisor catalog before the fallback, ~452 fixed by it, ~331 left. Of those, three kinds:
+**Size (`feat/catalog-fallback` merged 2026-10-29, `379c7fcc`):** 3,666 distinct course ids in 417 programs; 1,040 were missing from the Advisor catalog, 502 are now covered by the Academic Catalog fallback, 538 are left (`docs/project/unknown-courses.md`; per-program lines: 94 with a Formerly hint, 341 with a suffix-base hint). Three kinds:
 
 | Kind | Example | Already credited by the audit? | Fix |
 |---|---|---|---|
