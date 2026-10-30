@@ -64,6 +64,8 @@ export type Section = {
   /** "f2f" | "blended" | "online" and so on, from Testudo's delivery class. */
   delivery: string;
   meetings: Meeting[];
+  /** Testudo's note under the section (e.g. "Must be in the Science in the Evening (SIE) Program..."), or null. */
+  notes: string | null;
 };
 
 const text = (s: string | undefined) => (s ?? "").replace(/\s+/g, " ").trim();
@@ -226,6 +228,9 @@ export function parseSections(html: string): Section[] {
             return { days, start, end, building, room, type: text(r.find(".class-type").text()) || "Lecture" };
           })
           .filter((m) => m.days.length > 0 || m.building !== null || m.start !== null);
+        const noteEl = sec.find(".section-texts-container .section-text").clone();
+        noteEl.find("a").remove(); // "Click here for more information." links
+        const notes = noteEl.toArray().map((n) => text($(n).text())).filter(Boolean).join(" ") || null;
         out.push({
           id: text(sec.find(".section-id").first().text()),
           courseId,
@@ -243,6 +248,7 @@ export function parseSections(html: string): Section[] {
           },
           delivery,
           meetings,
+          notes,
         });
       });
   });

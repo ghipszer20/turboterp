@@ -124,7 +124,7 @@ describe("refreshSeats", () => {
     expect(report.failed).toBe(0);
     expect(calls).toEqual([["CMSC131"]]);
     const cmsc = decodeDepartmentSections(await get("schedule/202701/sections/CMSC"));
-    expect(cmsc.courses[0]).toEqual({ id: "CMSC131", title: "Intro", credits: { min: 4, max: 4 } });
+    expect(cmsc.courses[0]).toEqual({ id: "CMSC131", title: "Intro", credits: { min: 4, max: 4 }, restriction: null });
   });
 
   it("does nothing without a current term", async () => {

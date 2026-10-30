@@ -12,8 +12,10 @@ export const SCHEDULE_FILE_VERSION = 1;
 
 /** [days "MWF", start, end, building, room, type]; times are minutes after midnight or null. */
 type EncodedMeeting = [string, number | null, number | null, string | null, string | null, string];
-/** [id, instructors, open, total, waitlist, holdfile, delivery, meetings] */
-type EncodedSection = [string, string[], number, number, number, number, string, EncodedMeeting[]];
+/** [id, instructors, open, total, waitlist, holdfile, delivery, meetings, note?]; the note is left off when null (older files have no 9th element). */
+type EncodedSection =
+  | [string, string[], number, number, number, number, string, EncodedMeeting[]]
+  | [string, string[], number, number, number, number, string, EncodedMeeting[], string];
 
 export type CourseIndexFile = {
   v: typeof SCHEDULE_FILE_VERSION;
@@ -28,7 +30,7 @@ export type DepartmentSectionsFile = {
   term: string;
   dept: string;
   generatedAt: string;
-  courses: Record<string, { t: string; cr: [number, number]; s: EncodedSection[] }>;
+  courses: Record<string, { t: string; cr: [number, number]; s: EncodedSection[]; /** Course restriction text; absent when none and in older files. */ rs?: string }>;
   /** PlanetTerp average rating by instructor (SOC spelling); unrated instructors are left out. */
   ratings: Record<string, number>;
   /** Instructors (SOC spelling) with a PlanetTerp review summary file. Absent in older files. */
@@ -41,20 +43,21 @@ export type DepartmentSections = {
   term: string;
   dept: string;
   generatedAt: string;
-  courses: { id: string; title: string; credits: { min: number; max: number } }[];
+  courses: { id: string; title: string; credits: { min: number; max: number }; restriction: string | null }[];
   sections: Section[];
   ratings: Record<string, number>;
   reviews: string[];
 };
 
-type Snapshot = { term: string; courses: Pick<Course, "id" | "department" | "title" | "credits">[]; sections: Section[] };
+type Snapshot = { term: string; courses: (Pick<Course, "id" | "department" | "title" | "credits"> & { texts?: { restriction: string | null } })[]; sections: Section[] };
 
 const DAY_CODES = /Tu|Th|Sa|Su|M|W|F/g;
 /** Testudo's "Instructor: TBA" (and plain "TBA") means no instructor has been named. */
 const isPlaceholder = (name: string) => /^\s*(instructor:\s*)?tba\s*$/i.test(name);
 
 const encodeMeeting = (m: Meeting): EncodedMeeting => [m.days.join(""), m.start, m.end, m.building, m.room, m.type];
-const encodeSection = (s: Section): EncodedSection => [
+const encodeSection = (s: Section): EncodedSection => {
+  const row: EncodedSection = [
   s.id,
   s.instructors.filter((n) => !isPlaceholder(n)),
   s.seats.open,
@@ -63,7 +66,9 @@ const encodeSection = (s: Section): EncodedSection => [
   s.seats.holdfile,
   s.delivery,
   s.meetings.map(encodeMeeting),
-];
+  ];
+  return s.notes ? [...row, s.notes] : row;
+};
 
 export function buildScheduleFiles(
   snapshot: Snapshot,
@@ -97,6 +102,8 @@ export function buildScheduleFiles(
       reviews: [],
     });
     file.courses[id] = { t: title, cr: [credits.min, credits.max], s: sections.map(encodeSection) };
+    const restriction = c?.texts?.restriction?.trim();
+    if (restriction) file.courses[id]!.rs = restriction;
     for (const s of sections) {
       for (const name of s.instructors) {
         const r = options.ratings?.[name];
@@ -130,14 +137,15 @@ export function decodeDepartmentSections(data: unknown): DepartmentSections {
   const courses: DepartmentSections["courses"] = [];
   const sections: Section[] = [];
   for (const [courseId, c] of Object.entries(f.courses)) {
-    courses.push({ id: courseId, title: c.t, credits: { min: c.cr[0], max: c.cr[1] } });
-    for (const [id, instructors, open, total, waitlist, holdfile, delivery, meetings] of c.s) {
+    courses.push({ id: courseId, title: c.t, credits: { min: c.cr[0], max: c.cr[1] }, restriction: c.rs ?? null });
+    for (const [id, instructors, open, total, waitlist, holdfile, delivery, meetings, notes] of c.s) {
       sections.push({
         id,
         courseId,
         instructors,
         seats: { total, open, waitlist, holdfile },
         delivery,
+        notes: notes ?? null,
         meetings: meetings.map(([days, start, end, building, room, type]) => ({
           days: days.match(DAY_CODES) ?? [],
           start,
