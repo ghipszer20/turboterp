@@ -86,6 +86,8 @@ Scripts in the session scratchpad (`measure/seats.ts`, `measure/scan.ts`, `measu
 Until then, an alert at 50% of each meter.
 
 ## 6. Tasks
+**Cron state (owner, 2026-10-30):** the owner unscheduled `turboterp-seat-alerts` (and `turboterp-soc-seats` if run; check with `select jobname, schedule from cron.job;`) so the old code can't burn CPU when Vercel unpauses. Seat counts and Seat Alerts are frozen until the new jobs deploy; the deploy steps must re-add them.
+
 0. **Measure (done 2026-10-30, main session; calibrated against the owner's Usage reading).**
 1. **Seats scanner + split files** (one builder, `feat/seats-scan`).
    - Test first with the saved real pages as fixtures (scanner = `parseSections` seat counts).
