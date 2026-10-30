@@ -1,5 +1,5 @@
 import { openSnapshotStore } from "@turboterp/campus-data/snapshots";
-import { supabaseEnv } from "../email/rate-limit";
+import { supabaseEnv, supabaseSendStore } from "../email/rate-limit";
 import { lookupInDeptFile, type SeatApiDeps } from "./api";
 import { sendPush, vapidConfigured } from "./push";
 import { seatAlertStore } from "./store";
@@ -16,6 +16,7 @@ export function seatApiDeps(): SeatApiDeps | null {
     push: sendPush,
     vapidConfigured: () => vapidConfigured(),
     secret: process.env.CRON_SECRET,
+    limits: supabaseSendStore(env),
     now: () => new Date(),
   };
 }

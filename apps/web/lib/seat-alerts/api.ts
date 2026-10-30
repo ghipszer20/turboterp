@@ -1,5 +1,5 @@
-import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
-import { hashKey } from "../email/rate-limit";
+import { createHmac, hkdfSync, randomBytes, timingSafeEqual } from "node:crypto";
+import { checkAndRecord, hashKey, type SendStore } from "../email/rate-limit";
 import { MAX_WATCHES, seatKey, type Watch } from "./logic";
 import type { PushPayload, PushResult } from "./push";
 import type { PushSub, SeatAlertStore } from "./store";
@@ -27,6 +27,8 @@ export type SeatApiDeps = {
   vapidConfigured: () => boolean;
   /** CRON_SECRET, the HMAC key for "I got it" tokens. */
   secret: string | undefined;
+  /** Per-IP limit on new devices (email_sends, kind "device"); omitted or failing means no limit. */
+  limits?: SendStore;
   now: () => Date;
 };
 
@@ -37,7 +39,9 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 // ---- signed watch token: `<expiryMs>.<hex hmac of "<watchId>.<expiryMs>">` ----
 
-const mac = (watchId: string, exp: number, secret: string) => createHmac("sha256", secret).update(`${watchId}.${exp}`).digest("hex");
+// Its own key derived from CRON_SECRET, so a token MAC can never stand in for the cron bearer secret or vice versa.
+const tokenKey = (secret: string) => Buffer.from(hkdfSync("sha256", secret, "", "turboterp seat-alert watch token v1", 32));
+const mac = (watchId: string, exp: number, secret: string) => createHmac("sha256", tokenKey(secret)).update(`${watchId}.${exp}`).digest("hex");
 
 export function signWatchToken(watchId: string, secret: string, now: Date): string {
   const exp = now.getTime() + TOKEN_DAYS * DAY_MS;
@@ -228,6 +232,11 @@ export async function handleDeviceRegister(request: Request, deps: SeatApiDeps):
       return json({ token: `${existing.deviceId}.${existing.secret}` }, 200);
     }
     if (existing.status === 503) return existing;
+    // Fails open: the limit damps scripted sign-ups and must not block students if the table is missing (migration 0012).
+    if (deps.limits) {
+      const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "unknown";
+      if ((await checkAndRecord(deps.limits, "device", hashKey(ip), deps.now())) === "limited") return json({ error: "rate-limited" }, 429);
+    }
     // New device (or storage was cleared): a row that already has this endpoint is unreachable, so it goes with its watches.
     await deps.store.deleteDeviceByEndpoint(sub.endpoint);
     const secret = randomBytes(32).toString("base64url");

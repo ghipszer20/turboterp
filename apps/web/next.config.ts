@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { securityHeaders } from "./lib/security-headers";
 
 const nextConfig: NextConfig = {
   // Cache Components: data is cached explicitly with 'use cache' + cacheLife,
@@ -16,6 +17,14 @@ const nextConfig: NextConfig = {
     "@turboterp/ratings",
     "@turboterp/tracks",
   ],
+  async headers() {
+    const headers = securityHeaders({
+      supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
+      sentryDsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+      dev: process.env.NODE_ENV === "development",
+    });
+    return [{ source: "/:path*", headers }];
+  },
   // Keep old links working after the tab restructure.
   async redirects() {
     return [

@@ -1,10 +1,11 @@
-import { createHash } from "node:crypto";
+import { createHash, createHmac } from "node:crypto";
 import { describe, expect, it } from "vitest";
 import {
   handleDeviceDelete, handleDeviceRegister, handleWatchCreate, handleWatchDelete, handleWatchDone, handleWatchesGet,
   lookupInDeptFile, parseDeviceToken, signWatchToken, TEST_ALERT, verifyWatchToken, type SeatApiDeps,
 } from "../seat-alerts/api";
 import type { Watch } from "../seat-alerts/logic";
+import type { SendStore } from "../email/rate-limit";
 
 const TERM = "202701";
 const SECRET = "s3cret";
@@ -230,6 +231,11 @@ describe("signed 'I got it' token", () => {
     expect(verifyWatchToken(ID1, t, "other", now)).toBe(false);
     expect(verifyWatchToken(ID1, "garbage", SECRET, now)).toBe(false);
   });
+  it("verify: the token key is derived from CRON_SECRET, so an HMAC made with the raw secret is refused", () => {
+    const exp = now.getTime() + 86_400_000;
+    const raw = `${exp}.${createHmac("sha256", SECRET).update(`${ID1}.${exp}`).digest("hex")}`;
+    expect(verifyWatchToken(ID1, raw, SECRET, now)).toBe(false);
+  });
   it("a token with no CRON_SECRET configured never verifies", async () => {
     const { deps } = setup({ watches: [watch()] });
     const t = signWatchToken(ID1, SECRET, now);
@@ -299,6 +305,40 @@ describe("device registration", () => {
       expect(await j(r)).toEqual({ error: "bad-request" });
       expect(db.writes).toBe(0);
     }
+  });
+  // In-memory send store: counts every recorded new device; `fail` makes it throw like a missing table.
+  const limitStore = (fail = false) => {
+    const rows: { key: string; at: Date }[] = [];
+    const store: SendStore = {
+      count: async (kind, key, since) => { if (fail) throw new Error("down"); expect(kind).toBe("device"); return rows.filter((r) => r.key === key && r.at >= since).length; },
+      record: async (_kind, key, at) => { rows.push({ key, at }); },
+    };
+    return { store, rows };
+  };
+  const fromIp = (ip: string, auth: string | null = null) =>
+    new Request("https://x/api/seat-alerts/device", { method: "POST", headers: { "x-forwarded-for": `${ip}, 10.0.0.1`, ...(auth ? { authorization: auth } : {}) }, body: JSON.stringify(SUB) });
+  it("device create: at most 20 new devices per IP an hour, keyed by a hash of the IP; other IPs unaffected", async () => {
+    const { deps, db } = setup();
+    const { store, rows } = limitStore();
+    const limited = { ...deps, limits: store };
+    for (let i = 0; i < 20; i++) expect((await handleDeviceRegister(fromIp("1.2.3.4"), limited)).status).toBe(201);
+    const before = db.devices.length;
+    const r = await handleDeviceRegister(fromIp("1.2.3.4"), limited);
+    expect(r.status).toBe(429);
+    expect(await j(r)).toEqual({ error: "rate-limited" });
+    expect(db.devices.length).toBe(before);
+    expect(rows.every((x) => x.key === sha("1.2.3.4"))).toBe(true);
+    expect((await handleDeviceRegister(fromIp("5.6.7.8"), limited)).status).toBe(201);
+  });
+  it("device re-register (a known device rotating its endpoint) is never limited", async () => {
+    const { deps } = setup();
+    const { store, rows } = limitStore();
+    for (let i = 0; i < 25; i++) expect((await handleDeviceRegister(fromIp("1.2.3.4", AUTH_A), { ...deps, limits: store })).status).toBe(200);
+    expect(rows).toEqual([]);
+  });
+  it("device create: the limit store failing lets sign-ups through (abuse damping, not access control)", async () => {
+    const { deps } = setup();
+    expect((await handleDeviceRegister(fromIp("1.2.3.4"), { ...deps, limits: limitStore(true).store })).status).toBe(201);
   });
   it("400 for missing keys", async () => {
     const { deps } = setup();

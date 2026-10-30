@@ -1,14 +1,16 @@
 import { createHash } from "node:crypto";
 
 // Server-only. Per-key send limits, stored in the email_sends table (supabase/migrations/0006_email_sends.sql).
-// Keys are SHA-256 hashes (of the IP for reports, the user id for plan emails), never the raw value.
+// Keys are SHA-256 hashes (of the IP for reports, consent and new devices, the user id for plan emails), never the raw value.
 
-export type SendKind = "report" | "plan" | "consent";
+export type SendKind = "report" | "plan" | "consent" | "device";
 
 export const LIMITS: Record<SendKind, { max: number; windowMs: number }> = {
   report: { max: 5, windowMs: 3600_000 },
   plan: { max: 5, windowMs: 86_400_000 },
   consent: { max: 10, windowMs: 3600_000 },
+  // New Seat Alerts devices per IP: each one stores a row and sends a test push. High enough for a shared campus IP.
+  device: { max: 20, windowMs: 3600_000 },
 };
 
 const DAY_MS = 86_400_000;
