@@ -3,7 +3,6 @@ import { ACCESS_COOKIE } from "../access";
 import { CONSENT_STORAGE_KEY } from "../advisor/consent";
 import { PLAN_STORAGE_KEY } from "../advisor/storage";
 import { PRIVACY, PRIVACY_VERSION, STORAGE_KEYS, TERMS, TERMS_VERSION, formatVersion } from "../legal";
-import { PREP_KEY } from "../schedule/registration";
 import { SAVED_KEY } from "../schedule/saved";
 import { THEME_STORAGE_KEY } from "../theme";
 
@@ -71,7 +70,7 @@ describe("legal pages", () => {
 
   it("privacy names every storage key and cookie the app writes", () => {
     expect([...STORAGE_KEYS].sort()).toEqual(
-      [PLAN_STORAGE_KEY, CONSENT_STORAGE_KEY, SAVED_KEY, PREP_KEY, THEME_STORAGE_KEY, "turboterp-sync"].sort(),
+      [PLAN_STORAGE_KEY, CONSENT_STORAGE_KEY, SAVED_KEY, THEME_STORAGE_KEY, "turboterp-sync"].sort(),
     );
     for (const k of STORAGE_KEYS) expect(text(PRIVACY)).toContain(k);
     expect(text(PRIVACY)).toContain(ACCESS_COOKIE);

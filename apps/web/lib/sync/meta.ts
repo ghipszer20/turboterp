@@ -9,7 +9,7 @@ export const SYNC_KEY = "turboterp-sync";
 export type SyncMeta = { userId: string | null; revs: Partial<Record<DocKind, number>>; dirty?: DocKind[] };
 export type MetaStore = { load(): SyncMeta; save(m: SyncMeta): void; clear(): void };
 
-const KINDS: DocKind[] = ["plan", "schedule", "registration"];
+const KINDS: DocKind[] = ["plan", "schedule"];
 const empty = (): SyncMeta => ({ userId: null, revs: {} });
 
 function parse(raw: string | null): SyncMeta {

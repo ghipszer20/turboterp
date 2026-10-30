@@ -11,8 +11,6 @@ describe("chooser copy", () => {
     });
     expect(chooserCopy("schedule").title).toBe("Your account already has a saved schedule. Would you like to replace that with this one?");
     expect(chooserCopy("schedule").keep).toBe("Keep my saved schedule");
-    expect(chooserCopy("registration").title).toBe("Your account already has a saved registration checklist. Would you like to replace that with this one?");
-    expect(chooserCopy("registration").keep).toBe("Keep my saved checklist");
   });
   it("one muted line comparing the two copies", () => {
     const local = JSON.stringify({ programs: ["a", "b"], terms: new Array(8).fill({}) });
@@ -29,9 +27,8 @@ describe("summarize", () => {
     const raw = JSON.stringify({ v: 1, programs: ["cs-bs"], catalogYear: "2025", startTerm: "Fall 2025", terms: [{}, {}] });
     expect(summarize("plan", raw).lines).toEqual(["cs-bs", "2 terms"]);
   });
-  it("schedule and registration", () => {
+  it("schedule", () => {
     expect(summarize("schedule", JSON.stringify({ v: 1, term: "202701", courses: ["CMSC131", "MATH140"] })).lines).toEqual(["Spring 2027", "2 courses"]);
-    expect(summarize("registration", JSON.stringify({ "202701": { checked: [] } })).lines).toEqual(["1 term"]);
   });
   it("bad input gives an empty summary", () => {
     expect(summarize("plan", JSON.stringify({ programs: ["cs-bs", "x"], terms: [] }), (id) => (id === "cs-bs" ? "Computer Science" : id)).lines).toEqual([

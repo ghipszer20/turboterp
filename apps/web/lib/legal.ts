@@ -18,7 +18,6 @@ export const STORAGE_KEYS = [
   "turboterp-advisor-plan",
   "turboterp-advisor-consent",
   "turboterp-schedule",
-  "turboterp-registration",
   "turboterp-theme",
   "turboterp-sync",
 ] as const;
@@ -143,19 +142,18 @@ export const PRIVACY: LegalSection[] = [
     paragraphs: [
       "An account is optional. Campus, Schedule, Seat Alerts, Today and the Advisor all work without one.",
       "If you sign in, we collect your email address. Any email address works; it doesn't have to be a UMD one. There is no password: you sign in with Google, or with a link sent to your address. If you use Google, we get your email address and basic profile from Google, and nothing else.",
-      "We use your email address only to sign you in and to tell your account apart from others. While you are signed in, your plan, saved schedules and registration checklist are also stored on our server (see \"Your plan on every device\" below). We don't send newsletters or marketing email.",
+      "We use your email address only to sign you in and to tell your account apart from others. While you are signed in, your plan and saved schedules are also stored on our server (see \"Your plan on every device\" below). We don't send newsletters or marketing email.",
       "We never ask for or store your Testudo password or your UID, and we never see your official UMD records.",
     ],
   },
   {
     heading: "What is stored in your browser",
     paragraphs: [
-      "TurboTerp saves a few things on your device using your browser's local storage. Without an account, none of it is sent to us. When you are signed in, the plan, schedules and checklist are also saved to your account.",
+      "TurboTerp saves a few things on your device using your browser's local storage. Without an account, none of it is sent to us. When you are signed in, the plan and schedules are also saved to your account.",
       [
         "turboterp-advisor-plan: your four-year plan, including the courses, grades and credit you entered.",
         "turboterp-advisor-consent: your signed Advisor agreement (version, date and typed name).",
         "turboterp-schedule: your saved schedule.",
-        "turboterp-registration: your registration checklist and the registration appointment time you typed in.",
         "turboterp-theme: your light or dark choice.",
         "turboterp-sync: which version of your plan and schedules this browser last saved to your account, when you're signed in. Signing out removes the synced copies from that browser.",
       ],
@@ -209,7 +207,7 @@ export const PRIVACY: LegalSection[] = [
   {
     heading: "Your plan on every device",
     paragraphs: [
-      "When you are signed in, your plan, saved schedules and registration checklist are stored on our server (Supabase), tied to your account, so they follow you between devices. While you are signed in, the newest change wins: each edit is saved and replaces the older copy, on every device. If this browser already has a plan made before you signed in and your account has a different one, we ask which to keep.",
+      "When you are signed in, your plan and saved schedules are stored on our server (Supabase), tied to your account, so they follow you between devices. While you are signed in, the newest change wins: each edit is saved and replaces the older copy, on every device. If this browser already has a plan made before you signed in and your account has a different one, we ask which to keep.",
       "When you sign the Advisor agreement, we also keep a record of it: its version, the time, a random id for your browser, your account if you are signed in, and the name you typed. The name is stored encrypted so that only we can read it, and only if it is needed as a legal record.",
       "Signing out removes the synced copies from that browser. Your signed agreement stays on the device.",
       "Seat Alerts need no account. For each device that turns on alerts we keep its push address (from Apple, Google, Mozilla or Microsoft), a scrambled copy of a random key stored in that browser, and the classes it watches. They are not linked to your account. Turning alerts off deletes them, and so does a push address that stops working.",

@@ -20,7 +20,7 @@ export function summarize(kind: DocKind, raw: string | null, nameOf: (id: string
       const courses = Array.isArray(d.courses) ? d.courses.length : 0;
       return { lines: [...(typeof d.term === "string" ? [termFromMatriculationId(d.term) ?? d.term] : []), plural(courses, "course")] };
     }
-    return { lines: [plural(Object.keys(d).length, "term")] };
+    return { lines: [] };
   } catch {
     return { lines: [] };
   }

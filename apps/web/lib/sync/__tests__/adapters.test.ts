@@ -26,19 +26,17 @@ beforeEach(() => vi.resetModules());
 afterEach(() => vi.unstubAllGlobals());
 
 describe("store change hooks", () => {
-  it("a plan, schedule and prep change each call localChanged", async () => {
+  it("a plan and schedule change each call localChanged", async () => {
     stubBrowser();
     const hooks = await import("../hooks");
     const spy = vi.fn();
     hooks.setLocalChangedListener(spy);
     const { savePlan, replacePlanFromRemote } = await import("../../../app/advisor/store");
     const { savedStore } = await import("../../schedule/saved-store");
-    const { prepStore } = await import("../../schedule/registration-store");
     replacePlanFromRemote(PLAN);
     savePlan(JSON.parse(PLAN));
     savedStore.write(JSON.stringify({ v: 1, term: "202701" }));
-    prepStore.update((p) => ({ ...p, "202701": { checked: [] } }));
-    expect(spy.mock.calls.map((c) => c[0])).toEqual(["plan", "schedule", "registration"]);
+    expect(spy.mock.calls.map((c) => c[0])).toEqual(["plan", "schedule"]);
   });
   it("replacing from the account does not report a local change", async () => {
     stubBrowser();
@@ -54,19 +52,19 @@ describe("store change hooks", () => {
 });
 
 describe("app adapters", () => {
-  it("sign-out clearing removes the three keys and tells subscribers", async () => {
+  it("sign-out clearing removes the keys and tells subscribers", async () => {
     const ls = stubBrowser();
     const { createDocAdapters } = await import("../adapters");
     const { PLAN_STORAGE_KEY } = await import("../../advisor/storage");
     const docs = createDocAdapters();
     docs.plan.replace(PLAN);
     docs.schedule.replace(JSON.stringify({ v: 1, term: "202701" }));
-    docs.registration.replace(JSON.stringify({ "202701": { checked: [] } }));
-    expect(ls.m.has(PLAN_STORAGE_KEY) && ls.m.has("turboterp-schedule") && ls.m.has("turboterp-registration")).toBe(true);
+    expect(ls.m.has(PLAN_STORAGE_KEY) && ls.m.has("turboterp-schedule")).toBe(true);
     const { savedStore } = await import("../../schedule/saved-store");
     const notified = vi.fn();
     savedStore.subscribe(notified);
-    for (const k of ["plan", "schedule", "registration"] as const) docs[k].replace(null);
+    ls.m.set("turboterp-registration", "{}"); // left behind by an older version
+    for (const k of ["plan", "schedule"] as const) docs[k].replace(null);
     expect([...ls.m.keys()]).toEqual([]);
     expect(notified).toHaveBeenCalled();
     expect(docs.plan.read()).toBeNull();
@@ -80,8 +78,6 @@ describe("app adapters", () => {
     expect(d.schedule.validate(JSON.stringify({ v: 1, term: "202701", courses: null, own: {} }))).toBe(true);
     expect(d.schedule.validate('{"v":1}')).toBe(false);
     expect(d.schedule.validate("junk")).toBe(false);
-    expect(d.registration.validate("{}")).toBe(true);
-    expect(d.registration.validate("[1]")).toBe(false);
   });
   it("storage blocked: still reads back what was saved, from memory", async () => {
     stubBrowser(true);
