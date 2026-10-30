@@ -1,12 +1,9 @@
 "use client";
 
 import { SkeletonCard } from "@/components/ui";
-import { useSession } from "@/lib/auth/use-session";
-import { getAppSync } from "@/lib/sync/app-sync";
 import { useWatches } from "@/lib/seat-alerts/use-watches";
 import { endedNote, watchCount, watchRowView, type WatchRow } from "@/lib/seat-alerts/view";
 import { AddClass } from "./AddClass";
-import { SignInCard } from "./SignInCard";
 import { StatusCard } from "./StatusCard";
 import styles from "./alerts.module.css";
 
@@ -15,7 +12,6 @@ const FOOTER =
 
 export function AlertsApp() {
   const state = useWatches();
-  const session = useSession();
 
   if (state.phase === "loading") return <SkeletonCard rows={3} />;
   if (state.phase === "unavailable")
@@ -35,11 +31,11 @@ export function AlertsApp() {
 
   return (
     <div className={styles.stack}>
-      {state.phase === "signed-out" ? (
-        <SignInCard />
+      {state.phase === "needs-setup" ? (
+        <StatusCard mock={false} onTurnOn={state.enable} />
       ) : (
         <>
-          <StatusCard mock={state.mock} />
+          <StatusCard mock={state.mock} onTurnOn={state.enable} />
           <AddClass state={state} />
           <section aria-label="Your watches">
             <div className={styles.countRow}>
@@ -75,15 +71,6 @@ export function AlertsApp() {
                 ))}
               </ul>
             </details>
-          ) : null}
-          {!state.mock && session.status === "signed-in" ? (
-            <p className={styles.fine}>
-              {session.email}{" "}
-              {/* Same as the Advisor's Sign out: synced copies leave this browser before the session ends. */}
-              <button type="button" className={styles.link} onClick={() => void getAppSync().signOutAndClear()}>
-                Sign out
-              </button>
-            </p>
           ) : null}
         </>
       )}

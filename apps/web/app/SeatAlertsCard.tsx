@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useWatches } from "@/lib/seat-alerts/use-watches";
 import styles from "./seat-alerts-card.module.css";
 
-/** Today card: shown only while the signed-in student has active seat watches. */
+/** Today card: shown only while this device has active seat watches. */
 export function SeatAlertsCard() {
   const { phase, data } = useWatches();
   const n = data.watches.length;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { alertsStatus, onReturnToPage, pushSupport } from "../seat-alerts/client";
+import { alertsStatus, bellMode, onReturnToPage, pushSupport } from "../seat-alerts/client";
 import { endedNote, MAX_WATCHES, minutesSince, watchCount, watchRowView, type WatchRow } from "../seat-alerts/view";
 
 const base = { hasServiceWorker: true, hasPushManager: true, hasNotification: true, standalone: false, maxTouchPoints: 0 };
@@ -15,6 +15,14 @@ describe("pushSupport", () => {
     expect(pushSupport({ ...base, userAgent: IPHONE, standalone: true })).toBe("supported"));
   it("detects iPadOS posing as a Mac", () =>
     expect(pushSupport({ ...base, userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Safari", maxTouchPoints: 5, hasPushManager: false })).toBe("ios-needs-home-screen"));
+});
+
+describe("bellMode", () => {
+  it("maps supported to watch, ios-needs-home-screen to link, unsupported to hidden", () => {
+    expect(bellMode("supported")).toBe("watch");
+    expect(bellMode("ios-needs-home-screen")).toBe("link");
+    expect(bellMode("unsupported")).toBe("hidden");
+  });
 });
 
 describe("alertsStatus", () => {

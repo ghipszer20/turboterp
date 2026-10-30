@@ -1,7 +1,7 @@
 // Browser side of Seat Alerts: push support, permission, subscription and the API calls.
-// Server contract: docs/project/seat-alerts-plan.md Task 2. Authorization is the Supabase access token.
+// Server contract: docs/project/seat-alerts-plan.md Task 2. Authorization is the device token (device.ts); there is no sign-in.
 
-import { getAuthClient } from "@/lib/auth/client";
+import { clearDeviceToken, loadDeviceToken, saveDeviceToken } from "./device";
 import type { WatchesResponse, WatchRow } from "./view";
 
 export type PushSupport = "supported" | "ios-needs-home-screen" | "unsupported";
@@ -33,6 +33,11 @@ export function currentPushEnv(): PushEnv {
     hasNotification: "Notification" in window,
     standalone: nav.standalone === true || window.matchMedia("(display-mode: standalone)").matches,
   };
+}
+
+/** What a bell does: ask for permission and watch, link to the Seat Alerts page (iPhone Safari tabs can't get push), or not show. */
+export function bellMode(support: PushSupport): "watch" | "link" | "hidden" {
+  return support === "supported" ? "watch" : support === "ios-needs-home-screen" ? "link" : "hidden";
 }
 
 export type PermissionState = "default" | "granted" | "denied";
@@ -72,25 +77,19 @@ function keyBytes(b64: string): Uint8Array<ArrayBuffer> {
   return Uint8Array.from(raw, (c) => c.charCodeAt(0));
 }
 
-export async function accessToken(): Promise<string | null> {
-  try {
-    const client = await getAuthClient();
-    const { data } = await client.auth.getSession();
-    return data.session?.access_token ?? null;
-  } catch {
-    return null;
-  }
-}
-
 export type ApiResult<T> = { ok: true; data: T } | { ok: false; status: number; error: string };
 
 async function call<T>(path: string, init: { method?: string; body?: unknown } = {}): Promise<ApiResult<T>> {
-  const token = await accessToken();
-  if (!token) return { ok: false, status: 401, error: "signed-out" };
+  const token = loadDeviceToken();
+  if (!token) return { ok: false, status: 401, error: "no-device" };
+  return request<T>(path, token, init);
+}
+
+async function request<T>(path: string, token: string | null, init: { method?: string; body?: unknown }): Promise<ApiResult<T>> {
   try {
     const res = await fetch(path, {
       method: init.method ?? "GET",
-      headers: { authorization: `Bearer ${token}`, ...(init.body ? { "content-type": "application/json" } : {}) },
+      headers: { ...(token ? { authorization: `Device ${token}` } : {}), ...(init.body ? { "content-type": "application/json" } : {}) },
       body: init.body ? JSON.stringify(init.body) : undefined,
     });
     const json = (await res.json().catch(() => ({}))) as { error?: string };
@@ -105,7 +104,6 @@ export const addWatch = (courseId: string, sectionId: string | null) =>
   call<{ watch: WatchRow }>("/api/seat-alerts/watches", { method: "POST", body: { courseId, sectionId } });
 export const finishWatch = (id: string) => call<unknown>(`/api/seat-alerts/watches/${id}/done`, { method: "POST" });
 export const removeWatch = (id: string) => call<unknown>(`/api/seat-alerts/watches/${id}`, { method: "DELETE" });
-export const sendTestAlert = () => call<{ sent: number; gone: number }>("/api/seat-alerts/test", { method: "POST" });
 
 export async function currentSubscription(): Promise<PushSubscription | null> {
   if (!("serviceWorker" in navigator)) return null;
@@ -122,13 +120,15 @@ export async function subscribe(): Promise<string | null> {
   await navigator.serviceWorker.ready;
   const sub = (await reg.pushManager.getSubscription()) ?? (await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: keyBytes(key) }));
   const json = sub.toJSON() as { endpoint?: string; keys?: { p256dh?: string; auth?: string } };
-  const saved = await call("/api/seat-alerts/subscription", { method: "POST", body: { endpoint: json.endpoint, keys: json.keys } });
-  return saved.ok ? null : "Couldn't turn on alerts. Try again.";
+  const saved = await request<{ token?: string }>("/api/seat-alerts/device", loadDeviceToken(), { method: "POST", body: { endpoint: json.endpoint, keys: json.keys } });
+  if (!saved.ok || !saved.data.token) return "Couldn't turn on alerts. Try again.";
+  saveDeviceToken(saved.data.token);
+  return null;
 }
 
 export async function unsubscribe(): Promise<void> {
   const sub = await currentSubscription();
-  if (!sub) return;
-  await call("/api/seat-alerts/subscription", { method: "DELETE", body: { endpoint: sub.endpoint } });
-  await sub.unsubscribe().catch(() => false);
+  await call("/api/seat-alerts/device", { method: "DELETE" });
+  clearDeviceToken();
+  await sub?.unsubscribe().catch(() => false);
 }
