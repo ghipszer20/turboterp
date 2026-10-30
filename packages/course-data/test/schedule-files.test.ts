@@ -16,7 +16,7 @@ const sample = JSON.parse(readFileSync(new URL("./fixtures/soc-202701-sample.jso
   sections: Section[];
 };
 
-const course = (id: string, title: string, credits = 3) => ({
+const course = (id: string, title: string, credits = 3, restriction: string | null = null) => ({
   id,
   department: id.slice(0, 4),
   title,
@@ -24,7 +24,7 @@ const course = (id: string, title: string, credits = 3) => ({
   genEd: [],
   genEdText: "",
   permissionRequired: false,
-  texts: { prerequisite: null, corequisite: null, restriction: null, creditOnlyGrantedFor: null, other: {} },
+  texts: { prerequisite: null, corequisite: null, restriction, creditOnlyGrantedFor: null, other: {} },
   description: "long text the builder doesn't need",
 });
 
@@ -37,7 +37,9 @@ const snapshot = {
     course("STAT400", "Applied Probability and Statistics I"),
     course("CMSC999", "No sections this term"),
   ],
-  sections: sample.sections.filter((s) => s.courseId === "CMSC351" || s.courseId === "STAT400"),
+  sections: sample.sections
+    .filter((s) => s.courseId === "CMSC351" || s.courseId === "STAT400")
+    .map((s) => ({ ...s, notes: null })),
 };
 const meta = { generatedAt: "2026-09-25T20:00:00.000Z" };
 const ratings = { "Clyde Kruskal": 2.6, "Archana Khurana": 4.6, "Someone Elsewhere": 5 };
@@ -98,6 +100,40 @@ describe("buildScheduleFiles", () => {
     };
     const out = buildScheduleFiles({ ...snapshot, sections: [online] }, meta);
     expect(decodeDepartmentSections(out.departments.CMSC).sections[0]!.meetings).toEqual(online.meetings);
+  });
+});
+
+describe("section notes and course restrictions", () => {
+  const note = "Must be in the Science in the Evening (SIE) Program.";
+  const restriction = "Students must be matriculated into the College Park Scholars Business, Society & Entrepreneurship program.";
+  const sections: Section[] = [
+    { ...snapshot.sections[0]!, courseId: "BSCI160", id: "0101", notes: null },
+    { ...snapshot.sections[0]!, courseId: "BSCI160", id: "SES1", notes: note },
+  ];
+  const snap = { ...snapshot, courses: [course("BSCI160", "Principles of Biology I", 4, restriction)], sections };
+
+  it("round-trips the notes and the course restriction", () => {
+    const out = buildScheduleFiles(snap, meta);
+    const dept = decodeDepartmentSections(JSON.parse(JSON.stringify(out.departments.BSCI)));
+    expect(dept.sections.map((s) => s.notes)).toEqual([null, note]);
+    expect(dept.courses[0]!.restriction).toBe(restriction);
+  });
+
+  it("writes no rs for a course without a restriction and no 9th element for a section without a note", () => {
+    const out = buildScheduleFiles({ ...snap, courses: [course("BSCI160", "Principles of Biology I", 4)] }, meta);
+    const c = out.departments.BSCI!.courses.BSCI160!;
+    expect("rs" in c).toBe(false);
+    expect(c.s.map((row) => row.length)).toEqual([8, 9]);
+  });
+
+  it("reads a file written before this change (no rs, 8-element rows) as no notes, no restriction", () => {
+    const old = {
+      v: SCHEDULE_FILE_VERSION, term: "202701", dept: "BSCI", generatedAt: "x", ratings: {},
+      courses: { BSCI160: { t: "Principles of Biology I", cr: [4, 4], s: [["0101", [], 5, 10, 0, 0, "f2f", []]] } },
+    };
+    const dept = decodeDepartmentSections(old);
+    expect(dept.sections[0]!.notes).toBeNull();
+    expect(dept.courses[0]!.restriction).toBeNull();
   });
 });
 

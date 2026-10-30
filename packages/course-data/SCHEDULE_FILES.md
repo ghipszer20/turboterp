@@ -58,4 +58,11 @@ files (≈90 KB before gzip); grade files load only when the section panel opens
 - Only courses with at least one section are in the index.
 - `"Instructor: TBA"` is dropped: an empty instructor list means TBA.
 - Full sections stay in the files (seat counts change); the builder excludes them.
-- Bump `SCHEDULE_FILE_VERSION` when a format changes; decoders reject other versions.
+- Optional restriction fields (added without a version bump): `"rs"` on a course is Testudo's
+  course-level "Restriction" text (left off when there is none); a section row may carry a 9th
+  element, Testudo's note under that section (e.g. "Must be in the Science in the Evening (SIE)
+  Program ..."), left off when there is none. Decoders read a file without them as
+  `restriction: null` / `notes: null`, so files written before this change still load until the
+  next refresh rewrites them. `programRestriction` (`src/program-restriction.ts`) classifies the
+  text as a special-program limit.
+- Bump `SCHEDULE_FILE_VERSION` when a format changes in a way old decoders can't read (additive optional fields don't need it); decoders reject other versions.

@@ -87,6 +87,7 @@ describe("sections", () => {
         { days: ["Tu", "Th"], start: 570, end: 645, building: "CSI", room: "1115", type: "Lecture" },
         { days: ["M", "W"], start: 660, end: 710, building: "CSI", room: "1121", type: "Discussion" },
       ],
+      notes: null,
     });
   });
 
@@ -106,6 +107,21 @@ describe("sections", () => {
 </div></div></div>
 </body></html>`;
     expect(parseSections(html)[0]!.instructors).toEqual(["TBA"]);
+  });
+
+  describe("section notes (BSCI160)", () => {
+    const bsci = parseSections(fixture("soc-bsci160.html")).filter((s) => s.courseId === "BSCI160");
+    it("keeps the note under a limited section, without the 'Click here' link text", () => {
+      const ses1 = bsci.find((s) => s.id === "SES1")!;
+      expect(ses1.notes).toBe(
+        "Must be in the Science in the Evening (SIE) Program or the Scientific Foundations of Health and Disease Certificate.",
+      );
+    });
+    it("leaves notes null on sections without one", () => {
+      const plain = bsci.filter((s) => s.id !== "SES1");
+      expect(plain.length).toBeGreaterThan(0);
+      expect(plain.every((s) => s.notes === null)).toBe(true);
+    });
   });
 });
 
