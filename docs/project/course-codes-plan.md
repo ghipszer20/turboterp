@@ -43,7 +43,7 @@ After Tasks 1 and 2 merge, rerun the report. Each brief gets one batch: the prog
   4. **Real but unscheduled and uncatalogued** (e.g. a course for a program starting later) → keep it, add a `reviewNotes` line.
   5. **Not settled by the source** → keep it, `reviewNotes`, list it in the report.
 - Test first: one test per program touched, asserting the fixed requirement accepts the corrected code (pattern: that program's existing test file).
-- Batches are split by college from the report, about 40 unknown codes or about 10 programs per builder, whichever comes first (the largest clusters in the scan were MUSP, PSYC, AASP, BSCI, GEOG, RUSS).
+- Batches are split by college from the report, about 40 unknown codes or about 10 programs per builder, whichever comes first (owner OK 2026-10-29: "10 programs per builder is ok if the volume:builder ratio is reasonably low"; PROJECT_MEMORY §18) (the largest clusters in the scan were MUSP, PSYC, AASP, BSCI, GEOG, RUSS).
 - Done per batch: every code in the batch is fixed or listed with a reason; the full suite passes.
 
 ## Final step (main session)
