@@ -77,7 +77,7 @@ Moved to `docs/project/roadmap.md` (phases 0–6, MVP recommendation, estimates,
 - [ ] Email UMD RecWell asking for API access (Innosoft Fusion for ActiveTerp classes and courts, Planyo for tennis) so students can sign up inside TurboTerp (`docs/project/recwell-signups.md`).
 - [ ] Claim a domain (turboterp.com was unregistered on 2026-10-04, per Verisign RDAP), the App Store name and social handles.
 - [ ] Decide whether to reuse or partner with Jupiterp (open source; check license).
-- [ ] iOS app: plan proposed 2026-10-29 in `docs/project/ios-plan.md` (Expo + EAS cloud builds, no Mac; S0 spike checks the audit's WASM on iOS). Waiting on the owner's yes (plan section 4, O1).
+- [ ] iOS app: plan proposed 2026-10-29 in `docs/project/ios-plan.md` (Expo + EAS cloud builds, no Mac; S0 spike checks the audit's WASM on iOS). Waiting on the owner's yes (plan section 6, O1; runs as 5 owner-run sessions, section 2).
 - [ ] Decide: launch everything at once, or in waves by college.
 - [ ] Before making the repo public: scrub personal details from PROJECT_MEMORY.md (owner's program plans, personal notes) and review git history.
 
@@ -140,7 +140,7 @@ Code comments that cite "PROJECT_MEMORY section 17" (e.g. "open question 1") ref
 - **Verification:** the builder runs the full suite (tests, typecheck, lint, build) once on its branch; the main session runs it again after each merge, before pushing (no CI).
 - **Builder budget** (overrides superpowers subagent-driven-development / dispatching-parallel-agents defaults and CLAUDE.md where they conflict). Target: **under 100k tokens per builder**; record each builder's reported tokens in the status log.
   - **Model:** Sonnet (`model: sonnet`); Haiku for trivial tasks the main session doesn't do itself; Opus only for hard reasoning (note why in the status log).
-  - **One agent per task, at most 6 at once** (owner, 2026-10-29; was 2, then 4). No reviewer, advisor or second-opinion subagents or passes. Queue the rest; critical-path work first.
+  - **One agent per task, at most 3 at once per session** (owner, 2026-10-29). The owner may run several sessions in parallel and coordinate them (the iOS plan uses 5; `docs/project/ios-plan.md` section 5: when several run, only the Lead session edits this file and the status log). No reviewer, advisor or second-opinion subagents or passes. Queue the rest; critical-path work first.
   - **One feature or one program per brief.** Never bundle unrelated fixes. Program work: one program per builder, or at most 3 small minors from one department (owner, 2026-09-28; batches of 5–14 programs cost 200–400k tokens because every fetched page stays in context). **Exception (owner, 2026-10-29):** code-fix batches that only read already-fetched `program-sources/` files may take about 10 programs per builder, as long as the volume per builder stays low (about 40 codes or fewer).
   - **No research inside builders (owner, 2026-09-28).** Program sources (catalog page, department page, sample plan) are fetched beforehand by the source-fetch script (queue item 1) into `program-sources/<program>.md` as trimmed text; PDFs are converted to text, never read as documents. Builders don't use WebFetch or read PDFs; if a source is missing or unclear, they stop and report it. Briefs name the source file, the catalog drafter's output as the starting point, and one already-encoded program as the pattern to copy.
   - **Tool-call cap: about 40 per builder.** At the cap: commit, push, and report what's done and what's left.
