@@ -22,8 +22,9 @@ const MINI_COL = 170;
 const ZOOM_COL = 360;
 const HOVER_DELAY = 300; // owner: a short pause before the enlarged preview
 const PRESS_DELAY = 350;
-/** Card height: padding, day heads, the columns, and one strip row per course (18 px; 33 px with a Recommended reason line). */
-const cardHeight = (courses: number, reasons = false) => 228 + (reasons ? 33 : 18) * courses + 16;
+/** Card height: padding, day heads, the columns, one strip row per course (18 px; 33 px with a Recommended reason line),
+ *  and 16 px for the program-restriction line when any section in these layouts has one (cards share one height). */
+const cardHeight = (courses: number, reasons = false, restrictLine = false) => 228 + (reasons ? 33 : 18) * courses + (restrictLine ? 16 : 0);
 
 export type GalleryData = {
   layouts: EncodedLayouts;
@@ -107,7 +108,11 @@ export function Gallery({
   const colGap = phone ? 16 : 40;
   const rowGap = phone ? 28 : 44;
   const columns = width >= DESKTOP_MIN ? 3 : 1;
-  const rowHeight = cardHeight(data.courseIds.length, !!data.gpas) + rowGap;
+  const restrictLine = useMemo(
+    () => [...data.sectionByKey.values()].some((s) => sectionRestriction(s, data.restrictions?.[s.courseId] ?? null) !== null),
+    [data.sectionByKey, data.restrictions],
+  );
+  const rowHeight = cardHeight(data.courseIds.length, !!data.gpas, restrictLine) + rowGap;
   const rows = Math.ceil(data.layouts.count / columns);
 
   useLayoutEffect(() => {
@@ -176,7 +181,7 @@ export function Gallery({
             <div
               key={i}
               className={styles.card}
-              style={{ height: cardHeight(data.courseIds.length, !!data.gpas) }}
+              style={{ height: cardHeight(data.courseIds.length, !!data.gpas, restrictLine) }}
               role="button"
               tabIndex={0}
               aria-label={`Layout ${i + 1} of ${data.layouts.count}: open in the editor`}
