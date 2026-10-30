@@ -8,7 +8,7 @@ import { dispatchPlan, useAdvisorStore } from "@/app/advisor/store";
 import { Segmented } from "@/components/Segmented";
 import { RemovePlanButton } from "./RemovePlanButton";
 import { EmptyState, SkeletonCard } from "@/components/ui";
-import { buildIcs } from "@/lib/schedule/ics";
+import { addToCalendarUrl, isAppleDevice } from "@/lib/schedule/calendar-feed";
 import { termDates } from "@/lib/schedule/term-dates";
 import { timeScale } from "@/lib/schedule/calendar";
 import { DEFAULT_FILTERS, readQuery, relaxConstraint, relaxOptions, toScheduleFilters, writeQuery, type FilterState } from "@/lib/schedule/filters";
@@ -259,17 +259,15 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
       if (view.kind === "editor") setView({ kind: "own" });
     }
   };
-  const exportIcs = (picks: Record<string, string>) => {
+  const addToCalendar = (picks: Record<string, string>) => {
     if (!term) return;
-    const chosen = Object.entries(picks)
-      .filter(([c]) => courses.includes(c))
-      .flatMap(([c, id]) => sectionByKey.get(`${c}/${id}`) ?? []);
-    const url = URL.createObjectURL(new Blob([buildIcs(term, chosen)], { type: "text/calendar;charset=utf-8" }));
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `turboterp-${term}.ics`;
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    const pairs = Object.entries(picks)
+      .filter(([c, id]) => courses.includes(c) && sectionByKey.has(`${c}/${id}`))
+      .map(([courseId, sectionId]) => ({ courseId, sectionId }));
+    const apple = isAppleDevice({ userAgent: navigator.userAgent, platform: navigator.platform, maxTouchPoints: navigator.maxTouchPoints });
+    const url = addToCalendarUrl({ host: window.location.host, term, pairs, apple });
+    if (apple) window.location.href = url;
+    else window.open(url, "_blank", "noopener");
   };
   const sharePicks = (picks: Record<string, string>) =>
     Object.fromEntries(Object.entries(picks).filter(([c, id]) => courses.includes(c) && sectionByKey.has(`${c}/${id}`)));
@@ -325,10 +323,10 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
       <button
         type="button"
         className={styles.exportBtn}
-        onClick={() => exportIcs(picks)}
+        onClick={() => addToCalendar(picks)}
         disabled={!Object.keys(picks).length || !term || !termDates(term)}
       >
-        Add to calendar (.ics)
+        Add to calendar
       </button>
       <button
         type="button"
