@@ -43,7 +43,6 @@ import { useScheduleData } from "@/lib/schedule/use-schedule-data";
 import { CoursePicker } from "./CoursePicker";
 import { Gallery } from "./Gallery";
 import { ReviewsContext } from "./InstructorReviews";
-import { RegistrationPanel } from "./RegistrationPanel";
 import { WeekEditor } from "./WeekEditor";
 import { WeekFilters } from "./WeekFilters";
 import styles from "./builder.module.css";
@@ -543,18 +542,6 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
           )}
         </>
       )}
-      {term ? (
-        <RegistrationPanel
-          saved={saved}
-          courses={courses}
-          term={term}
-          termName={planTermName(term) ?? term}
-          sections={data.sections}
-          events={events}
-          asOf={data.indexState.index.generatedAt}
-          titles={data.titles}
-        />
-      ) : null}
     </div>
     </ReviewsContext.Provider>
   );

@@ -3,12 +3,12 @@ import { createSyncEngine } from "../engine";
 import type { DocKind, Remote, SaveResult } from "../remote";
 import type { MetaStore, SyncMeta } from "../meta";
 
-const KINDS: DocKind[] = ["plan", "schedule", "registration"];
+const KINDS: DocKind[] = ["plan", "schedule"];
 
 function setup(opts: { local?: Partial<Record<DocKind, string>>; server?: Partial<Record<DocKind, [unknown, number]>>; meta?: SyncMeta } = {}) {
   const server = new Map<DocKind, { body: unknown; rev: number }>();
   for (const [k, v] of Object.entries(opts.server ?? {})) server.set(k as DocKind, { body: v![0], rev: v![1] });
-  const local: Record<string, string | null> = { plan: null, schedule: null, registration: null, ...opts.local };
+  const local: Record<string, string | null> = { plan: null, schedule: null, ...opts.local };
   let saveOverride: SaveResult | null = null;
 
   const remote = {
@@ -75,6 +75,18 @@ const J = (v: unknown) => JSON.stringify(v);
 
 beforeEach(() => vi.useFakeTimers());
 afterEach(() => vi.useRealTimers());
+
+describe("retired registration document", () => {
+  it("a bundle on the server that still has a registration row loads without error and the row is ignored", async () => {
+    const t = setup({ meta: { userId: "u", revs: { registration: 4 } as SyncMeta["revs"] }, server: { plan: [{ a: 1 }, 2], registration: [{ "202701": { checked: [] } }, 4] } as never });
+    await t.engine.start("u");
+    expect(t.onError).not.toHaveBeenCalled();
+    expect(t.onAsk).not.toHaveBeenCalled();
+    expect(t.remote.fetchDoc).not.toHaveBeenCalledWith("registration");
+    expect(t.remote.saveDoc).not.toHaveBeenCalledWith("registration", expect.anything(), expect.anything());
+    expect(t.docs.plan.replace).toHaveBeenCalled();
+  });
+});
 
 describe("saving", () => {
   it("three changes within 3 s make one save", async () => {

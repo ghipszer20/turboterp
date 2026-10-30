@@ -6,7 +6,6 @@ import { summarize } from "./summary";
 const NOUN: Record<DocKind, { title: string; keep: string }> = {
   plan: { title: "plan", keep: "plan" },
   schedule: { title: "schedule", keep: "schedule" },
-  registration: { title: "registration checklist", keep: "checklist" },
 };
 
 export function chooserCopy(kind: DocKind) {

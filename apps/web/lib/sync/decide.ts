@@ -1,7 +1,7 @@
 // Pure decisions for account sync. No I/O.
 
-export type DocKind = "plan" | "schedule" | "registration";
-export const DOC_KINDS: readonly DocKind[] = ["plan", "schedule", "registration"];
+export type DocKind = "plan" | "schedule";
+export const DOC_KINDS: readonly DocKind[] = ["plan", "schedule"];
 
 /** Object keys sorted at every level: Postgres jsonb doesn't keep key order. */
 const sortKeys = (x: unknown): unknown =>

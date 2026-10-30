@@ -4,7 +4,6 @@ import { connection } from "next/server";
 import { addDays, campusDate, campusMinutes, DINING_HALLS, orderLibraries, recWellOnDate } from "@turboterp/campus-data";
 import { DiningIcon, GymIcon, LibraryIcon, RoomIcon, SearchIcon } from "@/components/icons";
 import { NextClassHero, type UpNext } from "@/app/NextClassHero";
-import { RegistrationCountdown } from "@/app/RegistrationCountdown";
 import { SeatAlertsCard } from "@/app/SeatAlertsCard";
 import { HeroRow, Page, Section, SkeletonCard, Tile, TileGrid } from "@/components/ui";
 import {
@@ -107,7 +106,6 @@ async function Hero({ today }: { today: string }) {
   return (
     <HeroRow>
       <NextClassHero upNext={upNext} />
-      <RegistrationCountdown />
     </HeroRow>
   );
 }
