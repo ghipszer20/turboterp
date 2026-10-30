@@ -34,9 +34,24 @@ describe("programRestriction", () => {
     expect(programRestriction(text)).toEqual({ program: expected, text });
   });
 
-  it("returns program null (with the text) for an unnamed 'enrolled in the X program' limit", () => {
-    const text = "Students must be enrolled in the Terrapin Teaching Fellows program.";
-    expect(programRestriction(text)).toEqual({ program: null, text });
+  it("names Writers' House however Testudo spells it", () => {
+    for (const text of [
+      "Must be in the Jimenez-Porter Writers' House Living-Learning Program.",
+      "Currently enrolled in Writers' House or permission of program.",
+      "Sophomore standing or higher; must be in the Theatre major or the Writers House program; or permission of instructor.",
+    ])
+      expect(programRestriction(text)?.program).toBe("Jiménez-Porter Writers' House");
+  });
+
+  // Unnamed "enrolled in a program" limits are degree or department programs, not the special programs
+  // students might not know about, so they don't warn (main session, after checking all 1,199 real sentences).
+  it.each([
+    "Must be a Public Health Practice major who has been admitted to the combined BS/MPH degree program.",
+    "Must be admitted to the departmental honors program.",
+    "Instructor permission is required for students not enrolled in a degree seeking program in the School of Public Health.",
+    "Must be a first year international student enrolled in the College of Agriculture and Natural Resources 2+2 Program.",
+  ])("ignores a degree or department program: %s", (text) => {
+    expect(programRestriction(text)).toBeNull();
   });
 
   it.each([
