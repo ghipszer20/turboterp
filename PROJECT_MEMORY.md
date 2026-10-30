@@ -55,7 +55,7 @@ See the package.json files: Next.js web app (apps/web), TypeScript packages, HiG
 
 ## 8. UI / design
 - **Principles:** show the answer, not the data; one main action per screen; plain language (e.g. "Humanities (DSHU)"); color only when it means something (white and gray, one accent, a pastel for each requirement category); an instant feel (cached data, skeleton loading, springs, haptics); accessibility (Dynamic Type, VoiceOver, dark mode, AA contrast).
-- **Navigation (owner decision, 2026-09-24; Calendar added 2026-10-04):** FOUR main tabs: **Campus · Schedule · Calendar · Advisor**.
+- **Navigation (owner decision, 2026-09-24; Calendar added 2026-10-04; owner 2026-10-29: Calendar to be replaced by a Seat Alerts main tab, design `docs/project/seat-alerts-tab.md`, rulings.md "Calendar tab out"):** FOUR main tabs: **Campus · Schedule · Calendar · Advisor**, becoming **Campus · Schedule · Seat Alerts · Advisor** when that ships.
   - **Campus** has a sub-nav: Dining · Libraries (hours + study rooms) · Fitness (Transport removed 2026-10-29, section 2).
   - **Schedule**: the schedule builder, plus course and professor info (replaces the old Explore idea).
   - **Calendar**: UMD's academic dates by month (breaks, finals, registration), key dates by default.
