@@ -16,6 +16,7 @@ const section = (courseId: string, id: string, ...meetings: Meeting[]): Section 
   seats: { total: 30, open: 10, waitlist: 0, holdfile: 0 },
   delivery: "f2f",
   meetings,
+  notes: null,
 });
 const ids = (schedules: Section[][]) => schedules.map((s) => s.map((x) => `${x.courseId}-${x.id}`).join(" "));
 

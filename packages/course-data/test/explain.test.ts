@@ -22,6 +22,7 @@ const section = (courseId: string, id: string, open: number, ...meetings: Meetin
   seats: { total: 30, open, waitlist: 0, holdfile: 0 },
   delivery: "f2f",
   meetings,
+  notes: null,
 });
 
 describe("explainNoLayouts", () => {

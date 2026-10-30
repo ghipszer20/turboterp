@@ -23,6 +23,7 @@ const sec = (courseId: string, instructors: string[], open: number, ...meetings:
   seats: { total: 30, open, waitlist: 0, holdfile: 0 },
   delivery: "f2f",
   meetings,
+  notes: null,
 });
 /** A layout with one choice group per course. */
 const layout = (name: string, ...groups: Section[][]): Layout & { name?: string } =>

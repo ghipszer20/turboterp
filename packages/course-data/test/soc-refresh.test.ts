@@ -12,7 +12,7 @@ const course = (id: string, title = id): Course => ({
   permissionRequired: false, texts: {} as Course["texts"], description: "",
 });
 const section = (courseId: string, open: number, instructors = ["Ann Lee"]): Section => ({
-  id: `${courseId}-0101`, courseId, instructors, seats: { total: 30, open, waitlist: 0, holdfile: 0 }, delivery: "f2f", meetings: [],
+  id: `${courseId}-0101`, courseId, instructors, seats: { total: 30, open, waitlist: 0, holdfile: 0 }, delivery: "f2f", meetings: [], notes: null,
 });
 
 let store: FileSnapshotStore;
