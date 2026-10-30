@@ -5,7 +5,7 @@
 Items for the owner to review or decide, listed in progress reports. Remove an item once the owner answers (record the answer in `docs/project/rulings.md` or PROJECT_MEMORY.md section 17). Moved out of PROJECT_MEMORY.md on 2026-09-26.
 
 
-- **iOS app plan (2026-10-29): decide.** `docs/project/ios-plan.md`. (1) Expo native app built in the cloud (no Mac), or the Capacitor fallback? (2) 2 or 3 builders at once for this project? (3) Bundle ID `com.turboterp.app` OK (permanent)? (4) Then start O2: Apple Developer enrollment ($99/yr; your legal name shows as the seller).
+- **iOS app plan (2026-10-29): decide.** `docs/project/ios-plan.md`. (1) Expo native app built in the cloud (no Mac), or the Capacitor fallback? (2) Bundle ID `com.turboterp.app` OK (permanent)? (3) Then start O2: Apple Developer enrollment ($99/yr; your legal name shows as the seller).
 
 - **Sign-in code: email template (2026-10-29).** Supabase → Authentication → Emails → Magic Link: add `<p>Or enter this code in TurboTerp: <strong>{{ .Token }}</strong></p>` under the link, save, then deploy. Lets email users sign in inside the Home Screen app.
 - **Monitoring setup (2026-10-29).** Built and merged (`feat/ui-rework`). (1) Vercel → turboterp → Analytics → Enable Web Analytics. (2) Create a free Sentry project (platform Next.js), then in Sentry Settings → Security & Privacy turn on "Prevent Storing of IP Addresses" and the data scrubber; put its DSN in Vercel Production as `NEXT_PUBLIC_SENTRY_DSN`; redeploy. Until the DSN is set, error reporting stays off.

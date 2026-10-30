@@ -52,3 +52,31 @@ Rerun `unknown-courses` and the equivalence audit; regenerate course sets once; 
 ## Sessions
 - **Session 1 (this one):** review and merge `feat/catalog-fallback`, then dispatch Tasks 1 and 2 in parallel (different files: program files vs `packages/plan` + advisor-data). Review and merge both, rerun the report, write the Task 3+ batch list into this file.
 - **Session 2 onward (fresh session per §16, or overtime):** Tasks 3+ two builders at a time, then the final step. Starting fresh keeps the program-file diffs out of a long context.
+
+## Status and batch list (2026-10-29, after Tasks 1 and 2)
+Tasks 1 (`fix/formerly-codes`, 46 replacements in 28 files) and 2 (`feat/topic-suffix-courses`, 189 topic-code entries) are merged into `feat/ui-rework`. Unknown codes: **315 distinct, 621 program lines, 161 programs** (`docs/project/unknown-courses.md`). Six old codes claimed by several current courses were allowlisted by Task 1 for a hand reading: BSCI474 (bioe-major), ENFP489I (chbe-major), BMGT438A (fin-major), EDMS451 (nfsc-major-dietetics), LASC235 (plcy-minors), AAST222 (socy-minors, tlpl-minors); they go to the batch owning that program.
+
+**Not batch work:**
+- `lead-cert`, `lead-minor` (142 lines): codes produced by the files' `lettered()` helper (every letter A–Z after HESI318/LEAD318 etc.), not encoding errors. Main session: make `unknown-courses.ts` skip a suffix code whose sibling with another suffix is known, or allowlist these; no program edits.
+- `hcai-*` (7 programs, 56 lines): HCAI100/120/121... are the new Human-Centered AI major's own courses, not yet in Testudo or the catalog. Kind 4: keep; one `reviewNotes` line in `hcai-shared`.
+
+**Batches (Tasks 3+), each about 10 programs or 40 lines; the brief copies its programs' sections from the report at dispatch time, by program-id prefix:**
+
+| # | Prefixes | Programs | Lines |
+|---|---|---|---|
+| 1 | musc, thet, danc | 12 | 59 (MUSP codes repeat across the 9 music programs) |
+| 2 | comm, jour | 10 | 34 |
+| 3 | russ, japn, kore, span, roml, chin, port, fren | 12 | 36 |
+| 4 | psyc, anth, plcy, socy, econ, ccjs | 9 | 49 |
+| 5 | wgss, aaas, gfpl, geog, amst, clas, isrl, engl | 15 | 39 |
+| 6 | scholars, honors | 10 | 25 |
+| 7 | llp, technology, gtst, rotc, ras, engr, inag, ppe, sds | 10 | 17 |
+| 8 | cmsc, biocomp, bchm, math | 10 | 27 |
+| 9 | bsci, chem, astr, aosc, neur, entm | 10 | 21 |
+| 10 | arec, agst, plsc, agnr | 10 | 28 |
+| 11 | ansc, nfsc, ensp, arch | 9 | 16 |
+| 12 | acct, mgmt, mktg, fin, intb, omba, scm, bmgt, infs | 12 | 34 |
+| 13 | compe, cpse, bioe, me, chbe, tid, imdm | 13 | 19 |
+| 14 | tlpl, educ, ecse, hesp, hdev, rebe, lacs, and any prefix not listed above | ~12 | ~20 |
+
+Batch 5 is over 10 programs but low volume; split it if a builder hits the cap. Order: the largest student populations first (4, 8, 12, 9, 2), then the rest. Two at a time; about 14 builders in all, roughly 1M tokens at the recent ~70–100k per builder.

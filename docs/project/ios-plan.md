@@ -1,6 +1,6 @@
 # iOS app plan
 
-Drafted 2026-10-29 by the main session for the owner's request: "plan the transfer of this project to iOS app form", with timelines, steps agents can run in parallel, and the owner's own steps in detail. **Status: proposal.** The stack choice (section 1) and the lane cap (section 3) need the owner's yes. This moves iOS up from the roadmap's "Spring 2028" (roadmap.md).
+Drafted 2026-10-29 by the main session for the owner's request: "plan the transfer of this project to iOS app form", with timelines, steps agents can run in parallel, and the owner's own steps in detail. **Status: proposal.** The stack choice (section 1) needs the owner's yes. 4 builders at once: owner, 2026-10-29. This moves iOS up from the roadmap's "Spring 2028" (roadmap.md).
 
 ## 1. Approach (recommended)
 
@@ -40,33 +40,37 @@ Drafted 2026-10-29 by the main session for the owner's request: "plan the transf
 
 Every task is one builder (Sonnet), test-first, in its own worktree and branch (`feat/ios-<id>`). It merges into `feat/ios` (cut from `feat/ui-rework`), which merges into the working branch after review. Rough size is in builder-days. **UI** means a major UI change that needs owner approval on the iPhone.
 
-### Gate (both lanes start here)
+Tasks are split so 4 builders can run at once (owner ruling 2026-10-29). Lanes are in section 3. Parallel tasks touch separate files; where two touch the same area, the brief lists exactly which files each one owns.
+
+### Gate
 | ID | Task | Depends on | Size | Done when |
 |---|---|---|---|---|
 | **S0** | **Spike: run the shared code on iOS.** Expo app in `apps/mobile`, npm workspace, Metro resolving the raw-`.ts` ESM packages. Test cases: (a) `highs` + one real audit on Hermes; (b) the same audit through a WebView bridge; (c) `pdfjs` text extraction in the bridge. Also: an import-graph check for Node-only modules. Throwaway screens. | none | 1 | Written result in `docs/project/ios-spike.md`: which path the audit and transcript use, with timings. Main session records the decision in rulings.md. |
 | **S1** | **Scaffold (keeps S0's working setup):** `app.json` (bundle ID `com.turboterp.app`, scheme `turboterp`, `ITSAppUsesNonExemptEncryption: false`, iPhone only), `eas.json` profiles (development / preview / production), expo-router with the 4 tabs + Today, Expo web export wired to `ui-check`, Vitest, lint (incl. the Node-only import ban). | S0 | 0.5 | `npx expo export -p web` and the tests pass; the first dev build is ready to start (owner step O5). |
 
-### Lane A: shared logic and backend
+### Shared logic and backend
 | ID | Task | Depends on | Size |
 |---|---|---|---|
-| **A1** | **Extract shared app logic** from `apps/web/lib` into a new framework-free `packages/app-core`: advisor plan-state, transcript parsing, sync engine, schedule logic, seat-alerts client, calendar, consent and legal text, next-class. Split the 3 files that import `next`. Storage goes behind an adapter interface (web: `localStorage`, mobile: MMKV). The web app imports from `app-core`; **the web suite must stay green with no behavior change.** May split into A1a (advisor) and A1b (everything else) if it passes 100k tokens. | S0 | 1.5–2 |
-| **A2** | **JSON data API for the app:** `/api/v1/` routes for everything the web pages read on the server (campus snapshots, dining, libraries, rooms, gyms, calendar, schedule data, ratings), CDN-cached the same way. Plus a typed client in `app-core`. Add new routes to `robots.ts` disallow. | A1 | 1 |
-| **A3** | **Auth + sync on iOS:** Supabase client with the session in `expo-secure-store`. Email code sign-in. Google through `expo-web-browser` to `turboterp://auth/callback`. Sign in with Apple (`expo-apple-authentication`, native token to Supabase). Sync engine wired through `app-core`. Delete account (two-tap confirm). | A1, owner O7 | 1.5 |
-| **A4** | **Native Seat Alerts push:** migration `0010_push_tokens.sql` (user, Expo token, platform). Register the token after sign-in. The cron sends via the Expo push API next to web push, with the same cooldown and logging. Tapping the notification opens Drop/Add. Privacy text updated (push token, iOS app). | A3 | 1 |
-| **A5** | **Engine bridge** (only if S0 says the audit and/or transcript can't run natively): a bundled WebView page holding the audit, transcript parsing and exports, a typed `postMessage` API in `app-core`, and a warm-start so the first audit is fast. If S0 found the audit runs natively, A5 shrinks to transcript + exports. | S0, A1 | 1–1.5 |
+| **A1a** | **Extract the advisor logic** from `apps/web/lib/advisor` into a new framework-free `packages/app-core` (creates the package): plan-state, analysis, prior credit, transcript parsing. Storage goes behind an adapter interface (web: `localStorage`, mobile: MMKV). The web app imports from `app-core`; **the web suite must stay green with no behavior change.** | S0 | 1 |
+| **A1b** | **Extract the rest** into `app-core` (rebased on A1a's package skeleton, merged after it): sync engine, schedule logic, seat-alerts client, calendar, consent and legal text, next-class, campus helpers. Splits the 3 files that import `next`. Same green-suite rule. | S0 (starts with A1a; merges after it) | 1 |
+| **A2** | **JSON data API for the app:** `/api/v1/` routes for everything the web pages read on the server (campus snapshots, dining, libraries, rooms, gyms, calendar, schedule data, ratings), CDN-cached the same way. A typed client lives in `apps/web/lib/api-v1/` until `app-core` exists, then the main session moves it (a small move). Add the new routes to the `robots.ts` disallow list. | none | 1 |
+| **A3** | **Auth + sync on iOS:** Supabase client with the session in `expo-secure-store`. Email code sign-in. Google through `expo-web-browser` to `turboterp://auth/callback`. Sign in with Apple (`expo-apple-authentication`, native token to Supabase). Sync engine wired through `app-core`. Delete account (two-tap confirm). Registers the Expo push token after sign-in (needs A4s's table). | A1b, S1, owner O7 | 1.5 |
+| **A4s** | **Native Seat Alerts push, server side:** migration `0010_push_tokens.sql` (user, Expo token, platform), a token register/unregister route, and the cron sending via the Expo push API next to web push, with the same cooldown and logging. Tapping opens Drop/Add (payload URL). Privacy text updated (push token, iOS app). Web-only work, so no dependency. | none | 1 |
+| **A5** | **Engine bridge** (only if S0 says the audit and/or transcript can't run natively): a bundled WebView page holding the audit, transcript parsing and exports, a typed `postMessage` API, and a warm-start so the first audit is fast. If S0 found the audit runs natively, A5 shrinks to transcript + exports. | S0 | 1–1.5 |
 
-### Lane B: screens (each one is **UI**)
+### Screens (each one is **UI**)
 | ID | Task | Depends on | Size |
 |---|---|---|---|
 | **B1** | **App shell and design system:** port `lib/theme.ts` tokens and `components/ui.tsx` primitives to React Native. Accent `#BA0C2F`, light and dark mode, Dynamic Type, VoiceOver labels, haptics, skeleton loading. Tab bar (Campus · Schedule · Calendar · Advisor), Today home from the logo. "Not affiliated with the University of Maryland" on About. | S1 | 1 |
 | **B2** | **Today + Calendar** (next-class hero with "leave by", registration countdown, dining tiles, academic calendar). | B1, A2 | 1 |
 | **B3** | **Campus:** Dining (+ Find a food), Libraries (hours + study-room grid with LibCal deep links), Fitness (gyms, RecWell classes). | B1, A2 | 1.5 |
 | **B4a** | **Schedule part 1:** course search, course and professor info, ratings and grade data, sort. | B1, A2 | 1.5 |
-| **B4b** | **Schedule part 2:** builder grid, sections panel, schedules A/B/C, overlap blocking, "Get ready to register" panel, `.ics` export via the share sheet, sync with the 4-year plan. | B4a, A1 | 2 |
-| **B5** | **Seat Alerts screen** (watch list, bells in the section panel, "I got it"). | B4b, A4 | 0.5 |
-| **B6** | **Advisor part 1:** sign-in gate, typed-name clickwrap, setup (programs, year, tracks), 4-year plan grid with checks and warnings. | A3, B1 | 2 |
-| **B7** | **Advisor part 2:** audit view, what-if, prior credit (AP/IB), course sheet, credit caps, tracks. | B6, A5 | 2 |
-| **B8** | **Transcript import + exports:** file picker / share-to-app for the PDF, paste and photo (OCR) paths, plan PDF/Excel export, "Email my plan". | B7, A5 | 1 |
+| **B4b** | **Schedule part 2:** builder grid, sections panel, schedules A/B/C, overlap blocking, "Get ready to register" panel, `.ics` export via the share sheet, sync with the 4-year plan. | B4a, A1b | 2 |
+| **B5** | **Seat Alerts screen** (watch list, bells in the section panel, "I got it"). | B4b, A3, A4s | 0.5 |
+| **B6** | **Advisor part 1:** typed-name clickwrap, setup (programs, year, tracks), 4-year plan grid with checks and warnings. Runs with a **stub signed-in user**; the sign-in gate is wired in once A3 merges (a small follow-up in B7a's brief). | A1a, B1 | 2 |
+| **B7a** | **Advisor part 2a:** audit view and what-if; wires the sign-in gate from A3. | B6, A5, A3 | 1.5 |
+| **B7b** | **Advisor part 2b:** prior credit (AP/IB), course sheet, credit caps, tracks. Separate screens from B7a, so they run in parallel. | B6 | 1.5 |
+| **B8** | **Transcript import + exports:** file picker / share-to-app for the PDF, paste and photo (OCR) paths, plan PDF/Excel export, "Email my plan". | B6, A5 | 1 |
 
 ### Release (main session + owner)
 | ID | Task | Depends on |
@@ -77,24 +81,28 @@ Every task is one builder (Sonnet), test-first, in its own worktree and branch (
 
 ## 3. Order and timeline
 
-The project rules allow **at most 2 builders at once** (PROJECT_MEMORY section 18). With 2 lanes, the critical path is **S0 → S1 → B1 → B4a → B4b → B5**, alongside **A1 → A3 → B6 → B7 → B8**. The Advisor is last because it needs both the extraction and the engine decision.
+**4 builders at once** (owner, 2026-10-29; PROJECT_MEMORY section 18). Four lanes, each a chain of tasks. A lane takes its next task as soon as that task's dependencies are merged.
+
+- **Critical path:** **S0 → A1a → B6 → B7a**, about 5.5 builder-days. The Advisor still finishes last, but it now starts on day 3 instead of week 3. B6 no longer waits for sign-in, and the advisor extraction is split off.
+- **Not limited by builders any more:** with 4 lanes, the limits are the owner's Apple enrollment (needed for the first dev build, by about day 3) and how fast UI reviews come back. About **2 screens a day** arrive for approval in week 1.5–2.
+- **Main-session review load:** up to 4 branches finish per day. The main session merges in dependency order and runs the full suite after each merge. Expect merges to take part of each day.
 
 Estimates assume overtime runs on most days and the owner approves UI within about a day. Apple's review usually takes 1–3 days per submission.
 
-| When | Lane A | Lane B | Owner (section 4) |
-|---|---|---|---|
-| **Days 1–2** | S0 spike | (waits on S0) | O1–O4: decide, enroll in Apple Developer, Expo account, iPhone ready |
-| **Days 2–4** | A1 extraction | S1 scaffold → B1 shell | O5–O6 when Apple approves: first dev build, install |
-| **Days 4–7** | A2 data API → A5 engine bridge | B2 Today+Calendar → B3 Campus | approve B1, B2, B3 on the iPhone; O7 Supabase |
-| **Week 2** | A3 auth → A4 push | B4a → B4b Schedule | O8 migration 0010; approve Schedule |
-| **Week 3** | B6 Advisor 1 → B7 Advisor 2 | B5 Seat Alerts → R1 listing | approve the Advisor screens; O9 store setup |
-| **Week 4** | B8 transcript/exports | fixes | **O10 TestFlight testing (3–7 days)** |
-| **Week 5** | fixes | fixes | O11 submit → Apple review → O12 release |
-| **Weeks 6–7** | R3 widgets / Live Activity (v1.1) | | approve, update |
+| When | Lane 1 (app frame) | Lane 2 (Advisor) | Lane 3 (logic) | Lane 4 (data and engine) | Owner (section 4) |
+|---|---|---|---|---|---|
+| **Day 1** | S0 spike | A2 data API | A4s push server side | (idle until S0; main session drafts R1) | O1–O4: decide, Apple enrollment, Expo account, iPhone |
+| **Days 2–3** | S1 scaffold → B1 shell | A1a advisor extraction | A1b other extraction | A5 engine bridge | O8 migration 0010 (A4s done); O5–O6 dev build once Apple approves |
+| **Days 4–5** | B2 Today+Calendar | B6 Advisor 1 | A3 auth + sync | B4a Schedule 1 | O7 Supabase (A3 starts); approve B1, B2 |
+| **Days 6–8** | B3 Campus | B7a audit + what-if | B7b prior credit, course sheet, tracks | B4b Schedule 2 | approve B6, B4a, B3 |
+| **Days 9–10** | B5 Seat Alerts | B8 transcript + exports | accessibility + dark-mode pass | fixes from approvals | approve B7a/b, B4b, B5, B8; O9 store setup |
+| **Week 3** | fixes | fixes | | | **O10 TestFlight testing (3–7 days)** |
+| **Week 3.5–4** | fixes | | | | O11 submit → Apple review → O12 release |
+| **Weeks 4–5** | R3 widgets / Live Activity (v1.1) | | | | approve, update |
 
-**First App Store release: about 4.5–5.5 weeks after the go.** Most of the slack is owner approval and Apple review, not building.
+**First App Store release: about 3–4 weeks after the go** (was 4.5–5.5 with 2 builders). Building drops from about 3.5 weeks to about 2. TestFlight testing and Apple review don't get shorter.
 
-**With 3 builders at once** (needs an owner ruling to lift the section 18 cap for this project): a third lane takes A2/A4/A5 and R1, and Lane A moves straight from A1 to A3 and the Advisor. That saves about 1 week (first release around week 4). Token cost rises about 50% for those weeks.
+**Cost:** total work is about the same, plus about 3 extra builder start-ups from the splits (about 45k tokens each, section 18). Usage per day is about **twice** the 2-builder plan. If a usage limit stops work, lanes 3 and 4 pause first: lanes 1 and 2 hold the critical path.
 
 **If S0 fails badly** (the shared code can't run in Expo even through a WebView): stop and come back to the owner with the Capacitor fallback and its 4.2 risk before building more.
 
@@ -104,9 +112,8 @@ Claude can't do these: they need the owner's identity, money, Apple 2FA or devic
 
 ### O1. Say yes to the plan (day 1, 5 minutes)
 1. Confirm **Expo, native app** (section 1), or ask for the Capacitor fallback.
-2. Say whether builders can run **3 at once** for this project or stay at 2.
-3. Give the go for S0, or turn on overtime mode so builders dispatch without asking each time.
-4. Confirm the bundle ID **`com.turboterp.app`**. It can never change after the first upload.
+2. Give the go for S0, A2 and A4s (day 1 lanes), or turn on overtime mode so builders dispatch without asking each time.
+3. Confirm the bundle ID **`com.turboterp.app`**. It can never change after the first upload.
 
 ### O2. Enroll in the Apple Developer Program (day 1; approval takes hours to a few days, so start first)
 1. On your iPhone, install **Apple Developer** from the App Store. Enrolling in the app is the fastest path for individuals.
@@ -126,7 +133,7 @@ Claude can't do these: they need the owner's identity, money, Apple 2FA or devic
 1. Update to the latest iOS.
 2. Keep it close during O5–O6.
 
-### O5. First development build (after O2 is approved and S1 is merged; about 30 minutes plus the build queue)
+### O5. First development build (after O2 is approved and S1 is merged, about day 2–3; about 30 minutes plus the build queue). This is now the main thing that can hold up the screens: B1 is reviewed on the phone.
 1. Register your iPhone: run `! npx eas-cli device:create` in `apps/mobile`, choose **Website**, and open the link or QR code **on your iPhone in Safari**. Install the profile: Settings → General → VPN & Device Management → the downloaded profile → Install.
 2. Start the build: `! npx eas-cli build --profile development --platform ios` in `apps/mobile`. When it asks:
    - "Log in to your Apple account?" → **Yes**, sign in, approve the 2FA prompt.
@@ -148,7 +155,7 @@ Claude can't do these: they need the owner's identity, money, Apple 2FA or devic
 3. Supabase → **Authentication → Emails → Magic Link**: if not done yet, add the `{{ .Token }}` code line (owner-review.md, 2026-10-29). The app signs in by code only.
 4. Google sign-in needs nothing new: the app uses the same web OAuth client through the in-app browser.
 
-### O8. Push tokens migration (when A4 is merged)
+### O8. Push tokens migration (when A4s is merged, about day 2)
 1. Supabase → **SQL Editor** → paste `supabase/migrations/0010_push_tokens.sql` → Run, the same way as 0009.
 2. Optional but recommended: expo.dev → project → **Settings → Push security** → turn on "Enhanced security", create a token, set it in Vercel Production as `EXPO_ACCESS_TOKEN`, then deploy.
 3. Deploy the web app (`npx vercel deploy --prod` from the main checkout, as usual) so the cron starts sending iOS pushes.
