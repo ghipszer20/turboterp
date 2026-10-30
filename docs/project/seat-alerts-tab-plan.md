@@ -75,7 +75,7 @@
 - [ ] **Step 4: Implement.**
   - `logic.ts`: `Watch.userId` → `deviceId`; `matchWatches` collapses per device (rename `perUser`).
   - `store.ts`: replace the `push_subscriptions` methods with `createDevice({ secretHash, sub }): Promise<string>` (returns id), `getDevice(id): Promise<{ id; secretHash } | null>`, `updateDeviceSub(id, sub)`, `deleteDevice(id)`, `deleteDeviceByEndpoint(endpoint)`, `subscriptionsFor(deviceIds): Promise<DeviceSub[]>`. `listWatches(deviceId)`, `createWatch(deviceId, ...)`.
-  - `api.ts`: `authenticate` resolves `Device <id>.<secret>` → compares `hashKey(secret)` (from `lib/email/rate-limit.ts`) to `secretHash` with `timingSafeEqual`. Secret = 32 random bytes, base64url. Add `handleDeviceRegister` and `handleDeviceDelete`; delete `handleTestAlert`, `handleSubscriptionSave/Delete`. `SeatApiDeps` loses `getUser`, gains nothing else (ip comes from the request).
+  - `api.ts`: `authenticate` resolves `Device <id>.<secret>` → compares `hashKey(secret)` (from `lib/email/rate-limit.ts`) to `secretHash` with `timingSafeEqual`. Secret = 32 random bytes, base64url. Add `handleDeviceRegister` and `handleDeviceDelete`; delete `handleTestAlert`, `handleSubscriptionSave/Delete`. `SeatApiDeps` loses `getUser`, gains nothing else.
   - `deps.ts`: drop `getUser`.
   - `run.ts`: subscriptions by `watch.deviceId`; on `gone` call `store.deleteDevice(sub.deviceId)`.
   - `app/api/seat-alerts/device/route.ts`: `POST` and `DELETE`, same shape as the old subscription route.
