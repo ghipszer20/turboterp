@@ -23,6 +23,10 @@ const nextConfig: NextConfig = {
       { source: "/campus/transport", destination: "/campus", permanent: false },
       { source: "/campus/buses", destination: "/campus", permanent: false },
       { source: "/campus/transit", destination: "/campus", permanent: false },
+      // Seat Alerts moved out of Schedule into its own tab; Calendar was removed (owner, 2026-10-29).
+      { source: "/schedule/alerts", destination: "/alerts", permanent: false },
+      { source: "/schedule/alerts/:path*", destination: "/alerts/:path*", permanent: false },
+      { source: "/calendar", destination: "/", permanent: false },
       { source: "/plan", destination: "/advisor", permanent: true },
       { source: "/explore", destination: "/schedule", permanent: true },
     ];

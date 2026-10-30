@@ -24,7 +24,7 @@ export function SeatBell({ state, courseId, sectionId, label }: { state: Watches
   if (mode === "hidden") return null;
   if (mode === "link")
     return (
-      <Link className={styles.bell} href="/schedule/alerts" title="Set up seat alerts">
+      <Link className={styles.bell} href="/alerts" title="Set up seat alerts">
         <Bell filled={false} />
         {label}
       </Link>

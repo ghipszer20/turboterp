@@ -1,4 +1,4 @@
-// Development-only example watches for screenshots and local checks: /schedule/alerts?mock=1 (and
+// Development-only example watches for screenshots and local checks: /alerts?mock=1 (and
 // /schedule?mock=1 for the bells) skips sign-in and the API. Inert in production builds unless
 // NEXT_PUBLIC_TURBOTERP_SEED=1, like lib/advisor/seed.ts.
 

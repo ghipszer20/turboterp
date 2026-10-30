@@ -10,7 +10,7 @@ export function SeatAlertsCard() {
   const n = data.watches.length;
   if (phase !== "ready" || n === 0) return null;
   return (
-    <Link href="/schedule/alerts" className={styles.card}>
+    <Link href="/alerts" className={styles.card}>
       <span className={styles.title}>Seat Alerts: {n} watching</span>
       <span className={styles.sub}>We&apos;ll notify you when a seat opens.</span>
     </Link>

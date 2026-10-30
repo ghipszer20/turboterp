@@ -1,8 +1,10 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { SkeletonCard } from "@/components/ui";
+import { currentPushEnv, pushSupport, type PushSupport } from "@/lib/seat-alerts/client";
 import { useWatches } from "@/lib/seat-alerts/use-watches";
-import { endedNote, watchCount, watchRowView, type WatchRow } from "@/lib/seat-alerts/view";
+import { endedNote, setupSteps, watchCount, watchRowView, type WatchRow } from "@/lib/seat-alerts/view";
 import { AddClass } from "./AddClass";
 import { StatusCard } from "./StatusCard";
 import styles from "./alerts.module.css";
@@ -10,8 +12,41 @@ import styles from "./alerts.module.css";
 const FOOTER =
   "Alerts are best-effort and can be a minute or two late. TurboTerp checks Testudo; it never registers you or uses your UMD login.";
 
+/** What Seat Alerts does and how to use it on this device. Final wording is the owner's to approve. */
+function Intro({ support }: { support: PushSupport }) {
+  const steps = setupSteps(support);
+  return (
+    <section className={styles.tile} aria-label="About Seat Alerts">
+      <h2 className={styles.title}>Get a notification when a seat opens</h2>
+      <p className={styles.sub}>
+        Watch a full class or section. TurboTerp checks Testudo every minute and notifies this device the moment a seat opens, so you can grab it.
+      </p>
+      {steps.length ? (
+        <>
+          <h3 className={styles.title}>How it works</h3>
+          <ol className={styles.guide}>
+            {steps.map((t) => (
+              <li key={t}>{t}</li>
+            ))}
+          </ol>
+        </>
+      ) : (
+        <p className={styles.sub}>
+          This browser can&apos;t get notifications. Try Safari on iPhone (from the Home Screen), or Chrome on Android or a computer.
+        </p>
+      )}
+    </section>
+  );
+}
+
 export function AlertsApp() {
   const state = useWatches();
+  const [support, setSupport] = useState<PushSupport>("supported");
+  useEffect(() => {
+    // Read after mount so the server and first client render agree.
+    Promise.resolve().then(() => setSupport(pushSupport(currentPushEnv())));
+  }, []);
+  const mockSupport = state.phase === "ready" && state.mock ? "supported" : support;
 
   if (state.phase === "loading") return <SkeletonCard rows={3} />;
   if (state.phase === "unavailable")
@@ -31,6 +66,7 @@ export function AlertsApp() {
 
   return (
     <div className={styles.stack}>
+      <Intro support={mockSupport} />
       {state.phase === "needs-setup" ? (
         <StatusCard mock={false} onTurnOn={state.enable} />
       ) : (

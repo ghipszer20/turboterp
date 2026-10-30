@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function AlertsPage() {
   return (
-    <Page title="Seat Alerts" subtitle="Schedule">
+    <Page title="Seat Alerts">
       <AlertsApp />
     </Page>
   );

@@ -37,11 +37,10 @@ export const CampusIcon = (p: IconProps) => (
   </Icon>
 );
 
-export const CalendarIcon = (p: IconProps) => (
+export const BellIcon = (p: IconProps) => (
   <Icon {...p}>
-    <rect x="3.5" y="5" width="17" height="15.5" rx="3" />
-    <path d="M3.5 10h17M8 3v4M16 3v4" />
-    <path d="M8 14h.01M12 14h.01M16 14h.01M8 17.5h.01M12 17.5h.01" strokeWidth={2.4} />
+    <path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z" />
+    <path d="M10 20.5a2 2 0 0 0 4 0" />
   </Icon>
 );
 
