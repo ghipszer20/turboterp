@@ -108,7 +108,7 @@ export function StatusCard({ mock, onTurnOn }: { mock: boolean; onTurnOn?: () =>
           <p className={styles.sub}>Add TurboTerp to your Home Screen. It opens right on Seat Alerts.</p>
           <ol className={styles.guide}>
             <li>
-              In Safari&apos;s own toolbar (not on this page), tap <strong>Share</strong> <ShareIcon />. On newer iPhones, it&apos;s under the <strong>•••</strong> button.
+              In Safari&apos;s toolbar, tap <strong>Share</strong> <ShareIcon />
             </li>
             <li>
               Tap <strong>Add to Home Screen</strong> <AddSquareIcon />
