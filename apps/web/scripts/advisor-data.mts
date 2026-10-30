@@ -26,7 +26,8 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gzipSync } from "node:zlib";
 import { mergeSnapshots, type Course } from "@turboterp/course-data";
-import { buildCatalog, withOfferings } from "@turboterp/plan/catalog";
+import { execFileSync } from "node:child_process";
+import { addedByFallback, buildCatalog, withCatalogFallback, withOfferings } from "@turboterp/plan/catalog";
 import { encodeCatalogFile } from "@turboterp/plan/catalog-file";
 import { courseDetailFiles } from "../lib/advisor/course-details.ts";
 
@@ -47,6 +48,24 @@ function historyPaths(): string[] {
   const dir = join(repo, "packages/course-data/.cache/history");
   if (!existsSync(dir)) return [];
   return readdirSync(dir).filter((f) => /^soc-\d{6}\.json$/.test(f)).sort().map((f) => join(dir, f));
+}
+
+// The UMD Academic Catalog cache (catalog-courses.ts). A git worktree has no .cache, so fall back to
+// the main checkout's. Absent: log a line and add nothing.
+function readCatalogCourses(): Course[] {
+  const name = "packages/course-data/.cache/catalog-courses.json";
+  let main = repo;
+  try {
+    main = dirname(resolve(execFileSync("git", ["rev-parse", "--path-format=absolute", "--git-common-dir"], { cwd: repo, encoding: "utf8" }).trim()));
+  } catch {
+    // not a git checkout: only the local path
+  }
+  const path = [join(repo, name), join(main, name)].find((p) => existsSync(p));
+  if (!path) {
+    console.log("advisor-data: no Academic Catalog cache (catalog-courses.json); catalog-only courses skipped.");
+    return [];
+  }
+  return (JSON.parse(readFileSync(path, "utf8")) as { courses: Course[] }).courses;
 }
 
 const socPaths = snapshotPaths().filter((p) => existsSync(p));
@@ -78,11 +97,15 @@ const write = (path: string, data: unknown) => {
 };
 
 const t = performance.now();
-const catalog = withOfferings(buildCatalog(courses), snapshots, [...currentTerms]);
+const scheduled = withOfferings(buildCatalog(courses), snapshots, [...currentTerms]);
+// Academic Catalog courses no cached term schedules fill in beneath the snapshot courses.
+const catalogCourses = readCatalogCourses();
+const fallback = addedByFallback(scheduled, catalogCourses);
+const catalog = withCatalogFallback(scheduled, catalogCourses);
 const catalogSize = write(join(termDir, "catalog.json"), encodeCatalogFile(catalog, { term, generatedAt: newest.fetchedAt }));
 
 let detailBytes = 0;
-const details = courseDetailFiles(courses, term);
+const details = courseDetailFiles([...courses, ...fallback], term);
 for (const [dept, file] of Object.entries(details)) detailBytes += write(join(termDir, "courses", `${dept}.json`), file).bytes;
 
 // Grade files: copied unchanged, so the schedule builder can share them.
@@ -111,7 +134,7 @@ write(join(out, "advisor", "index.json"), {
 });
 
 const kb = (n: number) => `${(n / 1024).toFixed(0)} KB`;
-console.log(`advisor-data: term ${term} (merged ${terms.join(", ")}), ${catalog.size} courses in ${(performance.now() - t).toFixed(0)} ms`);
+console.log(`advisor-data: term ${term} (merged ${terms.join(", ")}), ${catalog.size} courses (${fallback.length} catalog-only) in ${(performance.now() - t).toFixed(0)} ms`);
 console.log(`  catalog.json ${kb(catalogSize.bytes)} (${kb(catalogSize.gzip)} gzipped)`);
 console.log(`  course details: ${Object.keys(details).length} department files, ${kb(detailBytes)} in all`);
 console.log(`  grade files: ${gradeFiles} copied, ${kb(gradeBytes)} in all${gradeFiles ? "" : " (none found; course sheets will say there's no grade data)"}`);
