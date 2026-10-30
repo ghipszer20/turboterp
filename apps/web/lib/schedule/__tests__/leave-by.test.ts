@@ -3,7 +3,7 @@ import type { Section } from "@turboterp/course-data/schedules";
 import { emptySaved } from "../saved";
 import { nextClassToday, pickedForToday, weekdayOf } from "../leave-by";
 
-const sec = (courseId: string, days: Section["meetings"][number]["days"], start: number | null, end: number | null, building: string | null): Section => ({
+const sec = (courseId: string, days: Section["meetings"][number]["days"], start: number | null, end: number | null, building: string | null): Section => ({ notes: null,
   id: "0101",
   courseId,
   instructors: [],

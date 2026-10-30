@@ -26,7 +26,7 @@ describe("visibleRows", () => {
 });
 
 describe("layout transfer from the worker", () => {
-  const s = (courseId: string, id: string): Section => ({
+  const s = (courseId: string, id: string): Section => ({ notes: null,
     id,
     courseId,
     instructors: [],

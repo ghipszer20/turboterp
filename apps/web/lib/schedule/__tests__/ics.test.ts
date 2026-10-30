@@ -22,6 +22,7 @@ import { termDates } from "../term-dates";
 
 const sec = (over: Partial<Section> = {}, meetings: Section["meetings"] = []): Section => ({
   id: "0101",
+  notes: null,
   courseId: "CMSC351",
   instructors: ["Ada Lovelace", "Alan Turing"],
   seats: { total: 10, open: 1, waitlist: 0, holdfile: 0 },

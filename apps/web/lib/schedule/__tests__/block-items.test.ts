@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import type { Section } from "@turboterp/course-data/schedules";
 import { blockLabel, sectionBlocks } from "../block-items";
 
-const stat: Section = {
+const stat: Section = { notes: null,
   id: "0311",
   courseId: "STAT400",
   instructors: ["Shixin Zheng"],

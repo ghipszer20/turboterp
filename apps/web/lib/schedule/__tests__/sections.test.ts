@@ -9,7 +9,7 @@ const sec = (
   meetings: [string[], number, number, string][],
   open = 10,
   courseId = "STAT400",
-): Section => ({
+): Section => ({ notes: null,
   id,
   courseId,
   instructors,

@@ -8,7 +8,7 @@ const buildings = [
   { id: "035", name: "McKeldin Library", code: "MCK", lat: 38.98595, lon: -76.94505 },
 ];
 
-const sec = (courseId: string, meetings: Section["meetings"]): Section => ({
+const sec = (courseId: string, meetings: Section["meetings"]): Section => ({ notes: null,
   id: "0101",
   courseId,
   instructors: [],
