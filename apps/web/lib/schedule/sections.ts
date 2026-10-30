@@ -83,12 +83,16 @@ export function gradeSummary(
   return { bars: LETTERS.map((letter) => ({ letter, share: d.shares[letter] })), gpa: d.averageGpa, students: d.students };
 }
 
-/** Instructors of a section, or of a group of interchangeable ones: "Ting Jiang +1". */
+/**
+ * Instructors of a section, or of a group of interchangeable ones. Co-teachers of the section are
+ * named ("Jose Feijo & Daniel Rodriguez Leal"); "+2" counts only teachers of the other sections.
+ */
 export function instructorLabel(pick: Section, group?: Section[]): string {
-  const main = pick.instructors[0] ?? "TBA";
+  const own = pick.instructors.length ? pick.instructors : ["TBA"];
   const others = new Set((group ?? [pick]).flatMap((s) => s.instructors));
-  others.delete(main);
-  return others.size ? `${main} +${others.size}` : main;
+  for (const n of own) others.delete(n);
+  const names = own.join(" & ");
+  return others.size ? `${names} +${others.size}` : names;
 }
 
 export function bestRating(pick: Section, ratings: Readonly<Record<string, number>>): number | undefined {

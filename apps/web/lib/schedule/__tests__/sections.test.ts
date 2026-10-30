@@ -124,6 +124,12 @@ describe("instructorLabel", () => {
     expect(instructorLabel(sec("0101", [], [MWF10]))).toBe("TBA");
   });
 
+  it("names co-teachers of the same section instead of counting them", () => {
+    const co = sec("0101", ["Jose Feijo", "Daniel Rodriguez Leal"], [MWF10]);
+    expect(instructorLabel(co)).toBe("Jose Feijo & Daniel Rodriguez Leal");
+    expect(instructorLabel(co, [co, sec("0102", ["Jose Feijo", "Daniel Rodriguez Leal"], [MWF10])])).toBe("Jose Feijo & Daniel Rodriguez Leal");
+  });
+
   it("counts the other instructors among interchangeable sections", () => {
     expect(instructorLabel(s0111, [s0111, s0111other, s0211])).toBe("Archana Khurana +2");
   });
