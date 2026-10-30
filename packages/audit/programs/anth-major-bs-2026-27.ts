@@ -99,7 +99,7 @@ export const anthMajorBs: Program = {
         ["AOSC123"], ["BSCI103"], ["BSCI160", "BSCI180"], ["BSCI160", "BSCI161"], ["BSCI170", "BSCI180"], ["BSCI170", "BSCI171"], ["BSCI135"], ["BSCI189"],
         ["BSCI201"], ["BSCI202"], ["BSCI222"], ["BSCI223"], ["BSCI360"], ["BSCI361"], ["BSCI363"], ["BSCI370"],
         ["BSCI462"], ["BSCI471"], ["CMSC131"], ["CMSC132"], ["ENST233"], ["ENST440"], ["GEOL100", "GEOL110"],
-        ["GEOL340"], ["GEOL342"], ["GEOL446"], ["GEOG330"], ["GEOG332"], ["GEOG372"], ["GEOG373"], ["GEOG416"],
+        ["GEOL340"], ["GEOL342"], ["GEOL446"], ["GEOG330"], ["GEOG332"], ["GEOG272"], ["GEOG373"], ["GEOG416"],
         ["GEOG431"], ["GEOG472"], ["GEOG473"], ["MIEH300"], ["MIEH321"], ["HLTH130"], ["HLTH200"], ["HLTH300"],
         ["HIST204"],
       ],

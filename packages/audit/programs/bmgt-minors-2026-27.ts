@@ -113,7 +113,7 @@ export const bmgtMinorEntrepreneurialLeadership: Program = {
       count: 2,
       from: {
         courses: [
-          "BMGT289B", "BMGT289A", "BMGT289E", "BMGT362", "BMGT369", "BMGT382", "BMGT352",
+          "BMGT289B", "BMGT289A", "BMGT289E", "BMGT362", "BMGT369", "BMGT382", "BMGT456",
           "BMGT467", "BMGT468R", "BMGT468T", "BMGT468Z",
         ],
       },

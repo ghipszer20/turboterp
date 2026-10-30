@@ -39,7 +39,7 @@ export const bchmMajor: Program = {
       kind: "course",
       id: "freshman-seminar",
       name: "Freshman seminar",
-      options: ["UNIV100", "UNIV101", "GEMS100", "HONR100", "HLSC100", "HEIP100", "ARHU105"],
+      options: ["UNIV100", "UNIV101", "GEMS100", "HONR100", "HLSC100", "HEIP100", "HHUM105"],
     },
     {
       kind: "sets",

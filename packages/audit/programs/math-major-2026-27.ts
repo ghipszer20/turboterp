@@ -85,7 +85,7 @@ export const mathMajorTraditional: Program = {
       name: "Computer programming course",
       options: [
         "CMSC106", "CMSC131", "CMSC141", "CMSC132", "CMSC142",
-        "AOSC247", "BIOE241", "ENAE202", "ENME202", "ENME351", "ENME489I", "ENEE150", "PHYS165", "PHYS265", "AOSC358L",
+        "AOSC247", "BIOE241", "ENAE202", "ENME202", "ENME351", "ENME420", "ENEE150", "PHYS165", "PHYS265", "AOSC358L",
       ],
     },
     // Supporting three-course sequence (one of twelve; department page item 5 adds Nine-Twelve

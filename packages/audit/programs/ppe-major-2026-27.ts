@@ -13,7 +13,7 @@ const PHPE_CORE = ["PHPE400", "PHPE401", "PHPE402"];
 
 // Named elective courses from the catalog's "Select four courses" list, excluding WMST400 (see reviewNotes).
 const PPE_NAMED_ELECTIVES = [
-  "AASP301",
+  "AAAS301",
   "AASP314",
   "AASP499",
   "BMGT468",

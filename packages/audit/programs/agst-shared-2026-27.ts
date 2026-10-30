@@ -23,7 +23,7 @@ export const agstCore: Requirement[] = [
     kind: "sets",
     id: "organic-chem-or-plsc275",
     name: "Organic Chemistry I & Laboratory, or PLSC275: CHEM231 & CHEM232, or PLSC275",
-    options: [["CHEM231", "CHEM232"], ["PLSC275"]],
+    options: [["CHEM231", "CHEM232"], ["AGST275"]],
   },
   { kind: "course", id: "plsc201", name: "Plant Structure and Function (PLSC201)", options: ["PLSC201"] },
   { kind: "course", id: "plsc206", name: "Plant Structure and Function Laboratory (PLSC206)", options: ["PLSC206"] },

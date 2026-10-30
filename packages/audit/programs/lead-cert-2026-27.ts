@@ -7,10 +7,12 @@
 import type { Program, ProgramMeta } from "../src/audit.ts";
 
 // Core courses moved from the HESI to the LEAD prefix in Fall 2023: accept both.
-const both = (n: number) => [`LEAD${n}`, `HESI${n}`];
+// Old HESI codes that Testudo renumbered (its Formerly lines): the new code already counts an old-code transcript, so only the new code is named.
+const renumbered = new Set(["HESI217", "HESI315", "HESI320", "HESI321", "HESI417", "HESI318N", "HESI418B", "HESI418D", "HESI418F", "HESI418G"]);
+const both = (n: number) => [`LEAD${n}`, `HESI${n}`].filter((c) => !renumbered.has(c));
 // Courses offered under a number with letter suffixes (HESI318A, COMM469B, ...).
 const lettered = (id: string) => [id, ...Array.from("ABCDEFGHIJKLMNOPQRSTUVWXYZ", (c) => `${id}${c}`)];
-const bothLettered = (n: number) => [...lettered(`HESI${n}`), ...lettered(`LEAD${n}`)];
+const bothLettered = (n: number) => [...lettered(`HESI${n}`), ...lettered(`LEAD${n}`), ...(n === 318 ? ["TLTC310"] : [])].filter((c) => !renumbered.has(c)); // TLTC310 was HESI318N
 
 const leadershipElectives = [
   ...both(221),
@@ -34,7 +36,7 @@ const generalElectives = [
   "JOUR300", "JOUR402",
   "PSYC221", "PSYC334", "PSYC361",
   "PLCY201", "PLCY311", "PLCY313",
-  "WGSS250", "WMST250",
+  "WGSS250",
 ];
 
 const core300 = [...both(315), ...both(320), ...both(321), ...both(417)];
