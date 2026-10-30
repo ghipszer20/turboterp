@@ -112,7 +112,7 @@ export function ClassesSection({
       {rows.length === 0 ? (
         <EmptyState title="No classes match">Try another day or clear a filter.</EmptyState>
       ) : (
-        <Card>
+        <Card className={styles.classList}>
           {rows.map((c, i) => {
             const note = signupNote(c, todayIso, minutes);
             const when = c.end === undefined ? clockLabel(c.start) : `${clockLabel(c.start)} – ${clockLabel(c.end)}`;

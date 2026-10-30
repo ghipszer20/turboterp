@@ -5,6 +5,18 @@
   margin-top: 12px;
 }
 
+/* Room between the place chips and the list, and between classes: each row
+   has three lines (time, place, sign-up note), so the default row padding is
+   too tight. */
+.classList {
+  margin-top: 16px;
+}
+
+.classList > div {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
 .signUp {
   display: inline-flex;
   align-items: center;
