@@ -15,7 +15,7 @@ export const BATCH_PAUSE_MS = 300;
 export type RunDeps = {
   /** The current Schedule of Classes term (snapshot `schedule/current`), or null. */
   term: () => Promise<string | null>;
-  store: Pick<SeatAlertStore, "listActiveWatches" | "getStates" | "saveStates" | "markAlerted" | "subscriptionsFor" | "deleteSubscription" | "getCursor" | "setCursor">;
+  store: Pick<SeatAlertStore, "listActiveWatches" | "getStates" | "saveStates" | "markAlerted" | "subscriptionsFor" | "deleteDevice" | "getCursor" | "setCursor">;
   fetchSections: (term: string, courseIds: string[]) => Promise<Section[]>;
   push: (sub: PushSub, payload: PushPayload) => Promise<PushResult>;
   /** Signed "I got it" token for a watch id (api.ts signWatchToken with CRON_SECRET). */
@@ -63,14 +63,14 @@ export async function runSeatAlerts(deps: RunDeps, now: Date): Promise<RunReport
 
     const matches = matchWatches(openings, watches.filter((w) => batch.includes(w.courseId)), now);
     if (matches.length === 0) continue;
-    const subs = await deps.store.subscriptionsFor([...new Set(matches.map((m) => m.watch.userId))]);
+    const subs = await deps.store.subscriptionsFor([...new Set(matches.map((m) => m.watch.deviceId))]);
     const alerted = new Set<string>();
     for (const { watch, opening } of matches) {
       const payload: PushPayload = { ...alertText(opening), url: dropAddUrl(watch.term), watchId: watch.id, token: deps.signToken(watch.id) };
-      for (const sub of subs.filter((s) => s.userId === watch.userId)) {
+      for (const sub of subs.filter((s) => s.deviceId === watch.deviceId)) {
         const result = await deps.push(sub, payload);
         if (result === "ok") { report.alerts++; alerted.add(watch.id); }
-        else if (result === "gone") { report.gone++; await deps.store.deleteSubscription(sub.endpoint); }
+        else if (result === "gone") { report.gone++; await deps.store.deleteDevice(sub.deviceId); }
       }
     }
     await deps.store.markAlerted([...alerted], now);

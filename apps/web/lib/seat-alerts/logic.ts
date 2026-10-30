@@ -1,6 +1,6 @@
 // Seat Alerts pure logic (docs/project/seat-alerts.md). No I/O here.
 
-export type Watch = { id: string; userId: string; term: string; courseId: string; sectionId: string | null; lastAlertAt: string | null; doneAt: string | null };
+export type Watch = { id: string; deviceId: string; term: string; courseId: string; sectionId: string | null; lastAlertAt: string | null; doneAt: string | null };
 export type SeatCount = { courseId: string; sectionId: string; open: number; waitlist: number; holdfile: number };
 export type SeatState = SeatCount & { checkedAt: string };
 export type Opening = SeatCount; // a section that went from 0 open to > 0
@@ -49,14 +49,14 @@ export function matchWatches(openings: Opening[], watches: Watch[], now: Date): 
   const out: { watch: Watch; opening: Opening }[] = [];
   const used = new Set<string>(); // a watch alerts once per run even if several of its sections open
   for (const opening of openings) {
-    const perUser = new Map<string, Watch>();
+    const perDevice = new Map<string, Watch>();
     for (const w of watches) {
       if (w.courseId !== opening.courseId || (w.sectionId !== null && w.sectionId !== opening.sectionId)) continue;
       if (used.has(w.id) || !shouldAlert(w, now)) continue;
-      const kept = perUser.get(w.userId);
-      if (!kept || (kept.sectionId === null && w.sectionId !== null)) perUser.set(w.userId, w);
+      const kept = perDevice.get(w.deviceId);
+      if (!kept || (kept.sectionId === null && w.sectionId !== null)) perDevice.set(w.deviceId, w);
     }
-    for (const w of perUser.values()) {
+    for (const w of perDevice.values()) {
       used.add(w.id);
       out.push({ watch: w, opening });
     }

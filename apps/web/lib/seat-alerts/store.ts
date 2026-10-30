@@ -1,19 +1,19 @@
 import type { SupabaseEnv } from "../email/rate-limit";
 import { seatKey, type SeatState, type Watch } from "./logic";
 
-// Server-only. Supabase REST with the service role (tables: supabase/migrations/0009_seat_alerts.sql).
+// Server-only. Supabase REST with the service role (tables: supabase/migrations/0009_seat_alerts.sql, 0010_seat_alert_devices.sql).
 
 export type PushSub = { endpoint: string; p256dh: string; auth: string };
-export type UserPushSub = PushSub & { userId: string };
+export type DeviceSub = PushSub & { deviceId: string };
 
 export type SeatAlertStore = ReturnType<typeof seatAlertStore>;
 
-type WatchRow = { id: string; user_id: string; term: string; course_id: string; section_id: string | null; last_alert_at: string | null; done_at: string | null };
+type WatchRow = { id: string; device_id: string; term: string; course_id: string; section_id: string | null; last_alert_at: string | null; done_at: string | null };
 type StateRow = { course_id: string; section_id: string; open: number; waitlist: number; holdfile: number; checked_at: string };
 
 const enc = encodeURIComponent;
-const WATCH_COLS = "id,user_id,term,course_id,section_id,last_alert_at,done_at";
-const toWatch = (x: WatchRow): Watch => ({ id: x.id, userId: x.user_id, term: x.term, courseId: x.course_id, sectionId: x.section_id, lastAlertAt: x.last_alert_at, doneAt: x.done_at });
+const WATCH_COLS = "id,device_id,term,course_id,section_id,last_alert_at,done_at";
+const toWatch = (x: WatchRow): Watch => ({ id: x.id, deviceId: x.device_id, term: x.term, courseId: x.course_id, sectionId: x.section_id, lastAlertAt: x.last_alert_at, doneAt: x.done_at });
 
 export function seatAlertStore(env: SupabaseEnv, fetchFn: typeof fetch = fetch) {
   const base = `${env.url}/rest/v1`;
@@ -31,8 +31,8 @@ export function seatAlertStore(env: SupabaseEnv, fetchFn: typeof fetch = fetch) 
 
   return {
     async listActiveWatches(term: string): Promise<Watch[]> {
-      const r = await rows<WatchRow>(`seat_watches?term=eq.${enc(term)}&done_at=is.null&select=id,user_id,term,course_id,section_id,last_alert_at,done_at`);
-      return r.map((x) => ({ id: x.id, userId: x.user_id, term: x.term, courseId: x.course_id, sectionId: x.section_id, lastAlertAt: x.last_alert_at, doneAt: x.done_at }));
+      const r = await rows<WatchRow>(`seat_watches?term=eq.${enc(term)}&done_at=is.null&select=id,device_id,term,course_id,section_id,last_alert_at,done_at`);
+      return r.map((x) => ({ id: x.id, deviceId: x.device_id, term: x.term, courseId: x.course_id, sectionId: x.section_id, lastAlertAt: x.last_alert_at, doneAt: x.done_at }));
     },
 
     /** Saved states for these courses, keyed `${courseId}-${sectionId}`. */
@@ -62,19 +62,44 @@ export function seatAlertStore(env: SupabaseEnv, fetchFn: typeof fetch = fetch) 
       });
     },
 
-    async subscriptionsFor(userIds: string[]): Promise<UserPushSub[]> {
-      if (userIds.length === 0) return [];
-      const r = await rows<{ user_id: string; endpoint: string; p256dh: string; auth: string }>(`push_subscriptions?user_id=in.(${userIds.map(enc).join(",")})&select=user_id,endpoint,p256dh,auth`);
-      return r.map((x) => ({ userId: x.user_id, endpoint: x.endpoint, p256dh: x.p256dh, auth: x.auth }));
+    async subscriptionsFor(deviceIds: string[]): Promise<DeviceSub[]> {
+      if (deviceIds.length === 0) return [];
+      const r = await rows<{ id: string; endpoint: string; p256dh: string; auth: string }>(`alert_devices?id=in.(${deviceIds.map(enc).join(",")})&select=id,endpoint,p256dh,auth`);
+      return r.map((x) => ({ deviceId: x.id, endpoint: x.endpoint, p256dh: x.p256dh, auth: x.auth }));
     },
 
-    async deleteSubscription(endpoint: string): Promise<void> {
-      await call(`push_subscriptions?endpoint=eq.${enc(endpoint)}`, { method: "DELETE", headers: { Prefer: "return=minimal" } });
+    async createDevice(d: { secretHash: string; sub: PushSub }): Promise<string> {
+      const res = await call("alert_devices", {
+        method: "POST",
+        headers: { Prefer: "return=representation" },
+        body: JSON.stringify({ secret_hash: d.secretHash, endpoint: d.sub.endpoint, p256dh: d.sub.p256dh, auth: d.sub.auth }),
+      });
+      const body = (await res.json()) as { id?: string }[];
+      if (!Array.isArray(body) || !body[0]?.id) throw new Error("seat-alerts: no row returned");
+      return body[0].id;
     },
 
-    /** Every watch of one user (all terms, active and done), oldest first. */
-    async listWatches(userId: string): Promise<Watch[]> {
-      return (await rows<WatchRow>(`seat_watches?user_id=eq.${enc(userId)}&select=${WATCH_COLS}&order=created_at.asc`)).map(toWatch);
+    async getDevice(id: string): Promise<{ id: string; secretHash: string } | null> {
+      const r = await rows<{ id: string; secret_hash: string }>(`alert_devices?id=eq.${enc(id)}&select=id,secret_hash`);
+      return r[0] ? { id: r[0].id, secretHash: r[0].secret_hash } : null;
+    },
+
+    async updateDeviceSub(id: string, sub: PushSub): Promise<void> {
+      await call(`alert_devices?id=eq.${enc(id)}`, { method: "PATCH", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ endpoint: sub.endpoint, p256dh: sub.p256dh, auth: sub.auth }) });
+    },
+
+    /** Deleting a device cascades to its watches. */
+    async deleteDevice(id: string): Promise<void> {
+      await call(`alert_devices?id=eq.${enc(id)}`, { method: "DELETE", headers: { Prefer: "return=minimal" } });
+    },
+
+    async deleteDeviceByEndpoint(endpoint: string, exceptId?: string): Promise<void> {
+      await call(`alert_devices?endpoint=eq.${enc(endpoint)}${exceptId ? `&id=neq.${enc(exceptId)}` : ""}`, { method: "DELETE", headers: { Prefer: "return=minimal" } });
+    },
+
+    /** Every watch of one device (all terms, active and done), oldest first. */
+    async listWatches(deviceId: string): Promise<Watch[]> {
+      return (await rows<WatchRow>(`seat_watches?device_id=eq.${enc(deviceId)}&select=${WATCH_COLS}&order=created_at.asc`)).map(toWatch);
     },
 
     async getWatch(id: string): Promise<Watch | null> {
@@ -82,11 +107,11 @@ export function seatAlertStore(env: SupabaseEnv, fetchFn: typeof fetch = fetch) 
       return r[0] ? toWatch(r[0]) : null;
     },
 
-    async createWatch(userId: string, term: string, courseId: string, sectionId: string | null): Promise<Watch> {
+    async createWatch(deviceId: string, term: string, courseId: string, sectionId: string | null): Promise<Watch> {
       const res = await call("seat_watches", {
         method: "POST",
         headers: { Prefer: "return=representation" },
-        body: JSON.stringify({ user_id: userId, term, course_id: courseId, section_id: sectionId }),
+        body: JSON.stringify({ device_id: deviceId, term, course_id: courseId, section_id: sectionId }),
       });
       const body = (await res.json()) as WatchRow[];
       if (!Array.isArray(body) || !body[0]) throw new Error("seat-alerts: no row returned");
@@ -99,19 +124,6 @@ export function seatAlertStore(env: SupabaseEnv, fetchFn: typeof fetch = fetch) 
 
     async deleteWatch(id: string): Promise<void> {
       await call(`seat_watches?id=eq.${enc(id)}`, { method: "DELETE", headers: { Prefer: "return=minimal" } });
-    },
-
-    /** Upserts on the endpoint, so a device that changes account moves to the new user. */
-    async upsertSubscription(userId: string, sub: PushSub): Promise<void> {
-      await call("push_subscriptions?on_conflict=endpoint", {
-        method: "POST",
-        headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
-        body: JSON.stringify({ user_id: userId, endpoint: sub.endpoint, p256dh: sub.p256dh, auth: sub.auth }),
-      });
-    },
-
-    async deleteSubscriptionFor(userId: string, endpoint: string): Promise<void> {
-      await call(`push_subscriptions?endpoint=eq.${enc(endpoint)}&user_id=eq.${enc(userId)}`, { method: "DELETE", headers: { Prefer: "return=minimal" } });
     },
 
     async getCursor():Promise<string | null> {
