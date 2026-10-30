@@ -47,6 +47,7 @@ Scripts in the session scratchpad (`measure/seats.ts`, `measure/scan.ts`, `measu
   - Seat Alerts every minute: 43,200 calls a month.
   - Total ~80k of 500k (16%), the same at any number of users.
 - **Why not stay on Vercel:** pessimistic seats at 5 min = 1.1 s × 8,640 = 2.6 CPU-hours, plus alerts ~1.2 and campus ~0.4 ≈ 4.2 of 4 CPU-hours. Doesn't fit. (Fallback if the Edge port fails: seats every 15 min on Vercel ≈ 0.9 CPU-hours, every 5 min only during registration and adjustment.)
+- **Provisioned memory (found reviewing `feat/seats-scan`, 2026-10-30):** a seats run is ~100–170 s of wall time, mostly waiting on Testudo (232 requests, 300 ms apart). Vercel bills provisioned memory for that wait: 8,640 runs × ~170 s × ~2 GB ≈ 800 GB-hours a month against Hobby's 360. **So the 5-minute seats job must not run on Vercel at all**; it stays unscheduled until `feat/edge-jobs` runs it on Supabase. The nightly `soc-sections` run (one ~3-minute run a day) is fine on Vercel.
 - **Port check first:** the packages use `.ts` relative imports and `fetch`, so they should run in Deno. `web-push` (VAPID encryption) needs a Deno-compatible library; spike it before the rest.
 - **Campus refresh stays on Vercel, much slower:** study rooms every 30 min, dining menus twice a day, library hours and RecWell daily. ~1 s × ~1,500 calls ≈ 0.4 CPU-hours pessimistic. (It could move to Supabase later the same way.)
 
@@ -86,7 +87,7 @@ Scripts in the session scratchpad (`measure/seats.ts`, `measure/scan.ts`, `measu
 Until then, an alert at 50% of each meter.
 
 ## 6. Tasks
-**Cron state (owner, 2026-10-30):** the owner unscheduled `turboterp-seat-alerts` (and `turboterp-soc-seats` if run; check with `select jobname, schedule from cron.job;`) so the old code can't burn CPU when Vercel unpauses. Seat counts and Seat Alerts are frozen until the new jobs deploy; the deploy steps must re-add them.
+**Cron state (owner, 2026-10-30):** the owner unscheduled `turboterp-seat-alerts` (and `turboterp-soc-seats` if run; check with `select jobname, schedule from cron.job;`) so the old code can't burn CPU when Vercel unpauses. Seat counts and Seat Alerts are frozen until the new jobs deploy. **Rollout:** (1) deploy `feat/ui-rework` with Tasks 1, 3 and the calendar change; apply 0014 (nightly `soc-sections` on Vercel) and 0015 (campus refresh every 30 min). Seat counts then update nightly. (2) `feat/edge-jobs`: seats every 5 min and Seat Alerts on Supabase Edge Functions, with their own cron entries; never re-add `turboterp-soc-seats` pointing at Vercel.
 
 0. **Measure (done 2026-10-30, main session; calibrated against the owner's Usage reading).**
 1. **Seats scanner + split files** (one builder, `feat/seats-scan`).
