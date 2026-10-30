@@ -118,7 +118,7 @@ Make the three item-8 edits, then link `security-plan.md` from PROJECT_MEMORY se
 
 **Before the sessions start (10 minutes, unblocks A's real-key check; the sessions can build with test keys meanwhile):**
 1. Go to dash.cloudflare.com and sign up (free).
-2. Go to Turnstile → Add widget. Name it "TurboTerp", add the hostnames `turboterp.com` and `localhost`, and choose "Managed" mode.
+2. Go to Turnstile → Add widget. Name it "TurboTerp", add the hostname `turboterp.com` (subdomains are covered; local development uses Cloudflare's test keys, not localhost), and choose "Managed" mode.
 3. Copy the **Site Key** into Vercel Production as `NEXT_PUBLIC_TURNSTILE_SITE_KEY`.
 4. Copy the **Secret Key** into Vercel Production as `TURNSTILE_SECRET_KEY`. Keep it in your password manager too, because step 4 of the next list needs it. Never paste it in chat.
 
