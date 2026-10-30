@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { formatMinutes } from "@turboterp/campus-data/hours";
 import { Chip, Segmented } from "@/components/Segmented";
 import { RoomIcon } from "@/components/icons";
-import { Card, EmptyState, Section, Tile, TileGrid } from "@/components/ui";
+import { Card, EmptyState, SkeletonCard, Section, Tile, TileGrid } from "@/components/ui";
 import {
   dayChoices,
   daysWithOpenRooms,
@@ -15,6 +15,7 @@ import {
   timeOptions,
 } from "@/lib/rooms";
 import { useCampusMinutes } from "@/lib/useCampusMinutes";
+import { useCampusClock } from "@/lib/useCampusClock";
 import styles from "./rooms.module.css";
 
 export type RoomRow = {
@@ -31,7 +32,14 @@ export type RoomRow = {
 const SIZES = [1, 2, 4, 6, 8] as const;
 
 
-export function RoomsView({
+/** Rooms; today and the time come from the browser, so the page itself can be cached. */
+export function RoomsView({ rooms, libraries, partial }: { rooms: RoomRow[]; libraries: { id: number; name: string }[]; partial: boolean }) {
+  const clock = useCampusClock();
+  if (!clock) return <SkeletonCard rows={8} />;
+  return <RoomsInner rooms={rooms} libraries={libraries} today={clock.today} initialMinutes={clock.minutes} partial={partial} />;
+}
+
+function RoomsInner({
   rooms,
   libraries,
   today,

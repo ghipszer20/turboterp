@@ -1,5 +1,7 @@
 import type { NextRequest } from "next/server";
 import { connection } from "next/server";
+import { revalidateTag } from "next/cache";
+import { campusTagsForKeys } from "@/lib/campus-tags";
 import { buildSnapshots, openSnapshotStore, pruneSnapshots, refreshFast } from "@turboterp/campus-data/snapshots";
 import { liveRefreshDeps, refreshCourses, refreshSeats } from "@turboterp/course-data/soc-refresh";
 import { fetchSections } from "@turboterp/course-data";
@@ -68,6 +70,8 @@ async function run(request: NextRequest, context: { params: Promise<{ job: strin
       await pruneSnapshots(store, now);
       await sendDailyDigest(now);
     }
+    // Rebuild the cached pages whose data was just rewritten.
+    for (const tag of campusTagsForKeys(report.results.filter((r) => r.ok).map((r) => r.key))) revalidateTag(tag, "max");
     const failures = report.results.flatMap((r) => (r.ok ? [] : [{ key: r.key, error: r.error }]));
     return Response.json(
       {

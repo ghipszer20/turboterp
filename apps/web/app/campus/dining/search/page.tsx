@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { connection } from "next/server";
-import { campusDate, DINING_HALLS } from "@turboterp/campus-data";
 import { Notice, Page, SkeletonCard } from "@/components/ui";
-import { getAllDiningMenus } from "@/lib/campus";
-import { mealsServed } from "@/lib/dining";
-import { FoodSearch } from "./FoodSearch";
+import { getDiningBundle } from "@/lib/campus-bundles";
+import { FoodSearchLoader } from "./FoodSearchLoader";
 
 export const metadata: Metadata = { title: "Find a food" };
 
@@ -22,8 +19,5 @@ export default function FoodSearchPage() {
 }
 
 async function Search() {
-  await connection();
-  const today = campusDate();
-  const menus = (await getAllDiningMenus(today)).map((m) => (m.ok ? m.data : null));
-  return <FoodSearch date={today} halls={DINING_HALLS.map((h) => ({ id: h.id, name: h.short }))} meals={mealsServed(menus)} />;
+  return <FoodSearchLoader bundle={await getDiningBundle()} />;
 }

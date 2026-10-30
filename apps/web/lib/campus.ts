@@ -16,7 +16,8 @@
 //   room list      1 day
 //   room slots     5 min
 
-import { cacheLife } from "next/cache";
+import { cacheLife, cacheTag } from "next/cache";
+import { campusTagForKey } from "./campus-tags";
 import {
   roomRangeEnd,
   DINING_HALLS,
@@ -69,9 +70,11 @@ function snapshotStore(): SnapshotStore {
 }
 
 /** One snapshot, held in memory for `seconds` so concurrent requests share a single read. */
-async function readSnapshot<T>(key: string, seconds: number): Promise<Snapshot<T> | null> {
+async function readSnapshot<T>(key: string, _seconds?: number): Promise<Snapshot<T> | null> {
   "use cache";
-  cacheLife({ stale: 30, revalidate: seconds, expire: 86400 });
+  cacheLife({ stale: 300, revalidate: 1800, expire: 86400 });
+  const tag = campusTagForKey(key);
+  if (tag) cacheTag(tag);
   return snapshotStore().get<T>(key);
 }
 

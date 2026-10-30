@@ -7,7 +7,7 @@ Pages never scrape UMD sites per request. Two jobs fetch the data ahead of time 
 | Job | Schedule | What it refreshes |
 | --- | --- | --- |
 | `buildSnapshots` (`daily`) | once a day, ~5:00am campus time | room catalog, today's room availability, today's menus for every hall, library hours (2 weeks), RecWell hours (14 days from today), UMD building locations, registrar academic calendar, then `pruneSnapshots` |
-| `refreshFast` (`fast`) | every 5 minutes | room availability for today; each hall's menu once its snapshot is 30+ minutes old (so menus are re-checked every ~30 min), or right away when the date rolls over |
+| `refreshFast` (`fast`) | every 30 minutes | room availability for today; each hall's menu once its snapshot is 12+ hours old (so menus are re-checked twice a day), or right away when the date rolls over |
 | `pruneSnapshots` (`prune`) | run automatically at the end of `daily`; also available on its own | removes dated snapshots (and their matching `status/` entries) outside the keep window |
 
 Run them with the CLI (from `packages/campus-data`):
@@ -22,10 +22,10 @@ npm run snapshots -- prune          # remove old dated snapshots on their own
 The CLI prints one line per snapshot and exits 1 if any source failed, so a scheduler flags the run.
 
 **Scheduling:** Supabase cron (`pg_cron` + `pg_net`, set up by `supabase/migrations/0003_cron_refresh.sql`) calls two protected endpoints on the site:
-- `/api/cron/fast` every 3 minutes (`*/3 * * * *`): study-room availability, and menus once 30 minutes old.
+- `/api/cron/fast` every 30 minutes (`*/30 * * * *`): study-room availability, and menus once 12 hours old.
 - `/api/cron/daily` at `0 9 * * *` UTC (5am EDT, 4am EST): everything, plus the prune.
 - Both need `Authorization: Bearer <secret>`. The `CRON_SECRET` env var on Vercel and the Supabase Vault secret `cron_secret` must hold the same value; without `CRON_SECRET` the endpoints answer 503.
-- Every 3 minutes is as often as we dare: rooms change constantly, but the Libraries' booking site should be fetched politely, not hammered.
+- Every 30 minutes keeps the cached pages cheap to rebuild: rooms change constantly, but the Libraries' booking site should be fetched politely, not hammered.
 - An endpoint answers 200 even when some sources failed (the failures are listed in the JSON, and the store keeps the last good data); 500 means the job itself threw. A skipped run is harmless because pages keep serving the last snapshot.
 
 ## Failure behavior
