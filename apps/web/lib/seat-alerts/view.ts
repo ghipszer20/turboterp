@@ -1,6 +1,17 @@
 // View model for the Seat Alerts watch list. Pure; the API contract is in docs/project/seat-alerts-plan.md Task 2.
 
+import type { PushSupport } from "./client";
+
 export const MAX_WATCHES = 20;
+
+/** The numbered "How it works" steps for this device. An unsupported browser gets none. */
+export function setupSteps(support: PushSupport): string[] {
+  if (support === "ios-needs-home-screen")
+    return ["In Safari's toolbar, tap Share, then Add to Home Screen.", "Open TurboTerp from your Home Screen.", "Turn on alerts there and add your classes."];
+  if (support === "supported")
+    return ["Turn on alerts for this device.", "Add a full class, or any section of it.", "When a seat opens, tap the alert to go to Testudo."];
+  return [];
+}
 
 /** One watch as GET /api/seat-alerts/watches returns it (the Watch fields the page uses, plus its latest seat status). */
 export type WatchRow = {

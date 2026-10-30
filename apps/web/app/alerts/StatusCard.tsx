@@ -8,7 +8,6 @@ import {
   onReturnToPage,
   permissionStatus,
   pushSupport,
-  sendTestAlert,
   subscribe,
   unsubscribe,
   type PermissionState,
@@ -49,7 +48,7 @@ function AddSquareIcon() {
 }
 
 /** The status line for this device (on, off, blocked, unavailable) with its one action. */
-export function StatusCard({ mock }: { mock: boolean }) {
+export function StatusCard({ mock, onTurnOn }: { mock: boolean; onTurnOn?: () => Promise<string | null> }) {
   const [support, setSupport] = useState<PushSupport>("supported");
   const [permission, setPermission] = useState<PermissionState>("default");
   const [subscribed, setSubscribed] = useState(false);
@@ -84,19 +83,10 @@ export function StatusCard({ mock }: { mock: boolean }) {
   const turnOn = async () => {
     setBusy(true);
     setNote(null);
-    const problem = await subscribe().catch(() => "Couldn't turn on alerts. Try again.");
+    const problem = await (onTurnOn ?? subscribe)().catch(() => "Couldn't turn on alerts. Try again.");
     setPermission(permissionStatus());
     setSubscribed(!problem);
     setNote(problem);
-    setBusy(false);
-  };
-  const test = async () => {
-    setBusy(true);
-    if (mock) setNote("Test alert sent to 1 device.");
-    else {
-      const r = await sendTestAlert();
-      setNote(r.ok ? (r.data.sent > 0 ? `Test alert sent to ${r.data.sent} device${r.data.sent === 1 ? "" : "s"}.` : "No device is registered yet. Turn alerts on first.") : "Couldn't send the test alert.");
-    }
     setBusy(false);
   };
   const turnOff = async () => {
@@ -118,7 +108,7 @@ export function StatusCard({ mock }: { mock: boolean }) {
           <p className={styles.sub}>Add TurboTerp to your Home Screen. It opens right on Seat Alerts.</p>
           <ol className={styles.guide}>
             <li>
-              Tap <strong>Share</strong> <ShareIcon />
+              In Safari&apos;s toolbar, tap <strong>Share</strong> <ShareIcon />
             </li>
             <li>
               Tap <strong>Add to Home Screen</strong> <AddSquareIcon />
@@ -139,14 +129,9 @@ export function StatusCard({ mock }: { mock: boolean }) {
           </button>
         ) : null}
         {status.kind === "on" ? (
-          <>
-            <button type="button" className={styles.ghost} disabled={busy} onClick={test}>
-              Send a test alert
-            </button>
-            <button type="button" className={styles.link} disabled={busy} onClick={turnOff}>
-              Turn off on this device
-            </button>
-          </>
+          <button type="button" className={styles.link} disabled={busy} onClick={turnOff}>
+            Turn off on this device
+          </button>
         ) : null}
       </div>
       {note ? (

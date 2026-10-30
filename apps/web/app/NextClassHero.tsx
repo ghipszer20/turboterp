@@ -43,6 +43,6 @@ export function NextClassHero({ upNext }: { upNext: UpNext | null }) {
     const sub = [next.room, leave].filter(Boolean).join(" · ");
     return <Hero label="Next class" title={`${next.courseId} · ${next.start}`} sub={sub} href="/schedule" />;
   }
-  if (upNext) return <Hero label="Up next" title={upNext.title} sub={upNext.sub} href="/calendar" />;
+  if (upNext) return <Hero label="Up next" title={upNext.title} sub={upNext.sub} />;
   return <Hero label="Next class" title="No class left today" sub="Save a schedule to see your next class here" href="/schedule" />;
 }

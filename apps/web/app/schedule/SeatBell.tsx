@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { bellMode, currentPushEnv, pushSupport } from "@/lib/seat-alerts/client";
 import type { WatchesState } from "@/lib/seat-alerts/use-watches";
 import { findWatch } from "@/lib/seat-alerts/view";
 import styles from "./seatbell.module.css";
@@ -19,9 +20,11 @@ function Bell({ filled }: { filled: boolean }) {
 export function SeatBell({ state, courseId, sectionId, label }: { state: WatchesState; courseId: string; sectionId: string | null; label: string }) {
   const [error, setError] = useState<string | null>(null);
   if (state.phase === "loading" || state.phase === "unavailable") return null;
-  if (state.phase === "signed-out")
+  const mode = state.mock ? "watch" : bellMode(pushSupport(currentPushEnv()));
+  if (mode === "hidden") return null;
+  if (mode === "link")
     return (
-      <Link className={styles.bell} href="/schedule/alerts" title="Sign in to get seat alerts">
+      <Link className={styles.bell} href="/alerts" title="Set up seat alerts">
         <Bell filled={false} />
         {label}
       </Link>
@@ -37,6 +40,10 @@ export function SeatBell({ state, courseId, sectionId, label }: { state: Watches
         onClick={async () => {
           setError(null);
           if (watch) return state.remove(watch.id);
+          if (state.phase === "needs-setup") {
+            const setup = await state.enable();
+            if (setup) return setError(setup);
+          }
           const problem = await state.add(courseId, sectionId);
           if (problem) setError(problem === "limit" ? "20 watches is the limit" : "Couldn't add that watch");
         }}

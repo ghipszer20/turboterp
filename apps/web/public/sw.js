@@ -11,7 +11,7 @@ self.addEventListener("push", (event) => {
     body: p.body || "",
     tag: p.watchId || "seat-alert",
     renotify: true,
-    data: { url: p.url || "/schedule/alerts", watchId: p.watchId, token: p.token },
+    data: { url: p.url || "/alerts", watchId: p.watchId, token: p.token },
     icon: "/apple-icon",
   };
   if (p.watchId && p.token) options.actions = [{ action: "open", title: "Open Testudo" }, { action: "done", title: "I got it" }];
@@ -27,7 +27,7 @@ self.addEventListener("notificationclick", (event) => {
     );
     return;
   }
-  const target = new URL(d.url || "/schedule/alerts", self.location.origin).href;
+  const target = new URL(d.url || "/alerts", self.location.origin).href;
   event.waitUntil(
     self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((list) => {
       for (const c of list) if (c.url === target && "focus" in c) return c.focus();

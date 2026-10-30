@@ -7,7 +7,7 @@ describe("buildManifest", () => {
   });
 
   it("opens Seat Alerts when saved from the Seat Alerts page", () => {
-    expect(buildManifest({ startUrl: ALERTS_START_URL }).start_url).toBe("/schedule/alerts");
+    expect(buildManifest({ startUrl: ALERTS_START_URL }).start_url).toBe("/alerts");
   });
 
   it("shares name, colours, display and icons between both", () => {
@@ -29,6 +29,6 @@ describe("buildManifest", () => {
   });
 
   it("serves the Seat Alerts manifest from its own path", () => {
-    expect(ALERTS_MANIFEST_PATH).toBe("/schedule/alerts/manifest.webmanifest");
+    expect(ALERTS_MANIFEST_PATH).toBe("/alerts/manifest.webmanifest");
   });
 });

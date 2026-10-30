@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
-export const ALERTS_START_URL = "/schedule/alerts";
-export const ALERTS_MANIFEST_PATH = "/schedule/alerts/manifest.webmanifest";
+export const ALERTS_START_URL = "/alerts";
+export const ALERTS_MANIFEST_PATH = "/alerts/manifest.webmanifest";
 
 /**
  * One web app manifest for the site; only start_url differs per page. scope and id stay "/", so an
