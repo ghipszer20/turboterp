@@ -46,7 +46,7 @@ export function CoursePicker({
         <input
           className={styles.search}
           type="search"
-          placeholder="Add a course: code or title (e.g. CMSC351, calculus)"
+          placeholder="Add a course, e.g. CMSC351 or calculus"
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);

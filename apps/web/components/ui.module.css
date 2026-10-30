@@ -427,16 +427,17 @@
 .tile[data-accent] {
   border-color: var(--accent);
   background: var(--accent);
-  color: var(--on-solid);
+  color: var(--on-accent); /* dark text on the lighter dark-mode pink, like the selected tab pill */
 }
 
 .tile[data-accent] .tileIcon {
   background: rgb(255 255 255 / 0.2);
-  color: var(--on-solid);
+  color: var(--on-accent);
 }
 
 .tile[data-accent] .tileSub {
-  color: rgb(255 255 255 / 0.85);
+  color: var(--on-accent);
+  opacity: 0.85;
 }
 
 .tile[data-wide] {
@@ -535,7 +536,7 @@
   line-height: 1.3;
 }
 
-/* Wrap Hero + HeroStat in this row: stacked on phones, 1fr 240px on desktop. */
+/* Wrap Hero + HeroStat in this row: stacked on phones, side by side (stat 240px) on desktop. */
 .heroRow {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -544,7 +545,10 @@
 
 @media (min-width: 900px) {
   .heroRow {
-    grid-template-columns: 1fr 240px;
+    /* The stat column exists only when a stat is shown, so a lone hero spans the row. */
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    grid-auto-columns: 240px;
     gap: 12px;
   }
 }

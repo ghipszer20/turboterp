@@ -14,6 +14,10 @@ describe("hoursStatus: one day on its own", () => {
   it("says when a closed place opens", () => {
     expect(hoursStatus(parseHours("11am - 12am"), at(9))).toEqual({ status: "closed", text: "Opens at 11am" });
   });
+  it("capitalizes free-text hours from the source (\"dawn to 1am\")", () => {
+    expect(hoursStatus({ kind: "text", label: "dawn to 1am" }, at(9))).toEqual({ status: "unknown", text: "Dawn to 1am" });
+    expect(hoursStatus({ kind: "text", label: "by reservation only" }, at(9)).text).toBe("By reservation only");
+  });
 });
 
 // McKeldin on a Sunday: UMD Libraries lists "11am - 12am" for Sunday and "24 Hours" for Monday,
