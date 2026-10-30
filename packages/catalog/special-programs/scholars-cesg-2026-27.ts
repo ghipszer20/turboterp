@@ -20,6 +20,7 @@ export const scholarsCesg: Program = {
   source: SOURCE,
   verified: false,
   reviewNotes: [
+    `[check] CPCV240 and CPCV250 (source: "CPCV 240: Service-Learning; CPCV 250: Research") are unknown to the Advisor catalog; left as encoded.`,
     ...SCHOLARS_CITATION_NOTES,
     `[check] Courses: "CPCV 100: Colloquium I 1 cr; CPCV 225: Intro to Civic Engagement for Social Good 3 cr; CPCV 101: Colloquium II 1 cr; CPCV200: Colloquium III 1 cr; CHSE 228C: Intergroup Dialogue (DVCC) 1 cr".`,
     `[check] Practicum: "CPCV 230: Internship; or CPCV 240: Service-Learning; or CPCV 250: Research; or" (3 cr). The list ends in a dangling "or" in the PDF; a fourth option may be missing.`,

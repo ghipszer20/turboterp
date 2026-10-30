@@ -12,9 +12,9 @@ export const SOURCE = "https://scholars.umd.edu/sites/default/files/2026-05/Curr
 const APPROVED_PREFIXES = ["ARTH", "ARCH", "ARTT", "CMLT", "DANC", "ENGL", "CINE", "LARC", "MUET", "MUSC", "MUSP", "THET"];
 
 const SUPPORTING = [
-  "AAAS202", "AAAS234", "AAST351", "AAST355", "AAST440", "AASP211", "AMST204", "AMST203", "AMST320",
+  "AAAS202", "AAAS234", "AAST351", "AAST355", "AAST440", "AAAS211", "AMST204", "AMST203", "AMST320",
   "ARHU275", "ARHU158", "BMGT289B", "BMGT289E", "ENES100", "FREN242", "HISP200", "JOUR175", "JOUR370",
-  "JOUR452", "PHYS102", "PHYS103", "PHYS106", "PHYS107", "URSP372", "URSP250", "WGSS275", "WMST275",
+  "JOUR452", "PHYS102", "PHYS103", "PHYS106", "PHYS107", "URSP372", "URSP250", "WGSS275", "CMLT275",
   "WGSS250",
   // Scholars-taught courses
   "CPSP210", "CPSP300", "CPSP110", "WEID138", "EDDI110", "ENES138",
@@ -27,6 +27,7 @@ export const scholarsArts: Program = {
   source: SOURCE,
   verified: false,
   reviewNotes: [
+    `[fixed 2026-10-30] Renumbered courses (old code → the catalog course whose "Formerly" line names it): AASP211 → AAAS211; WMST275 → CMLT275 (cross-listed with WGSS275).`,
     ...SCHOLARS_CITATION_NOTES,
     `[check] Colloquia: the curriculum table lists "CPSA 100: Colloquium I", "CPSA 101: Colloquium II", "CPSA 200: Colloquium III", "C PSA 201: Colloquium IV", 1 credit each; each is a required course.`,
     `[check] Practicum: "CPSA 240: Service Learning; or CPSA 250: Research (DSSP); or CPSA 260: Peer Teaching (DSSP)", 2 credits; one of the three.`,
@@ -34,7 +35,7 @@ export const scholarsArts: Program = {
     `[manual] "Supporting courses must span at least 2 disciplines (i.e. they cannot all have the same disciplinary prefix)." Not enforced.`,
     `[manual] "At least one supporting course must fulfill the Cultural Competency (DVCC) or Understanding Plural Societies (DVUP) General Education requirements." Not enforced: a Gen Ed filter can't be intersected with this list in the engine, and a plain DVCC/DVUP filter would be met by courses outside the program.`,
     `[check] "ARHU158 (various) Explorations in Arts and Humanities" is encoded as ARHU158; lettered topics (ARHU158A…) won't match until listed.`,
-    `[check] "WGSS275 World Literature by Women (also WMST275, CMLT275…)": WGSS275 and WMST275 listed; CMLT is an approved prefix. "PHYS102 Physics of Music (DSNL if taken with PHYS103)": both listed separately; PHYS103 is 1 credit.`,
+    `[check] "WGSS275 World Literature by Women (also WMST275, CMLT275…)": WGSS275 and CMLT275 listed (WMST275 is their old code); CMLT is an approved prefix. "PHYS102 Physics of Music (DSNL if taken with PHYS103)": both listed separately; PHYS103 is 1 credit.`,
     `[check] "CPSP110 Bridging Divides thru Intergroup Dialogue Across Disciplines (DVCC) or alternate dialogue course (WEID138, EDDI110, ENES138, etc.)": the three named alternates are listed; "etc." is left to the student.`,
     `[manual] "All courses for Arts Leadership Minor" are approved supporting courses (tdps.umd.edu); not encoded, since the list lives on another page.`,
     `[manual] "Students may petition an alternative course to the Arts program director." / "May be fulfilled through AP, transfer, or examination credit".`,

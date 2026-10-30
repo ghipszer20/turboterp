@@ -1,6 +1,6 @@
 # Living-learning and special programs report
 
-Generated 2026-09-28 by `packages/catalog/scripts/special-report.ts` from `special-programs/registry.ts`.
+Generated 2026-10-30 by `packages/catalog/scripts/special-report.ts` from `special-programs/registry.ts`.
 Sources and page formats are in `SOURCES.md`. Every drafted program is `verified: false` until the owner signs it off.
 
 How programs were drafted: **table** = a catalog requirement table through `parseProgramPage` + `draftPrograms`
@@ -18,38 +18,38 @@ interpretation quoted in `reviewNotes`; **none** = no academic requirements are 
 | Departmental Honors | 39 | 28 | 11 |
 | **Total** | **74** | **56** | **18** |
 
-Drafted: **216** requirements and **345** review notes (199 manual, 146 check).
+Drafted: **216** requirements and **358** review notes (199 manual, 153 check).
 Manual notes are rules the audit can't check (GPA, residence, attendance, approvals); check notes are interpretations to confirm.
 
 ## Programs
 
 | Program | Kind | Drafted | Requirements | Review notes | Manual | Check |
 | --- | --- | --- | --- | --- | --- | --- |
-| College Park Scholars: Arts | Scholars | hand | 6 | 15 | 8 | 7 |
+| College Park Scholars: Arts | Scholars | hand | 6 | 16 | 8 | 7 |
 | College Park Scholars: Business, Society and Entrepreneurship | Scholars | hand | 8 | 9 | 5 | 4 |
-| College Park Scholars: Civic Engagement for Social Good | Scholars | hand | 7 | 8 | 4 | 4 |
-| College Park Scholars: Data Justice | Scholars | hand | 6 | 8 | 4 | 4 |
-| College Park Scholars: Environment, Technology and Economy | Scholars | hand | 5 | 9 | 6 | 3 |
+| College Park Scholars: Civic Engagement for Social Good | Scholars | hand | 7 | 9 | 4 | 5 |
+| College Park Scholars: Data Justice | Scholars | hand | 6 | 9 | 4 | 4 |
+| College Park Scholars: Environment, Technology and Economy | Scholars | hand | 5 | 10 | 6 | 3 |
 | College Park Scholars: Global Public Health | Scholars | hand | 5 | 7 | 5 | 2 |
-| College Park Scholars: International Studies | Scholars | hand | 7 | 10 | 5 | 5 |
+| College Park Scholars: International Studies | Scholars | hand | 7 | 11 | 5 | 6 |
 | College Park Scholars: Justice and Legal Thought | Scholars | hand | 7 | 7 | 4 | 3 |
-| College Park Scholars: Life Sciences | Scholars | hand | 10 | 11 | 7 | 4 |
-| College Park Scholars: Media, Self and Society | Scholars | hand | 6 | 8 | 5 | 3 |
+| College Park Scholars: Life Sciences | Scholars | hand | 10 | 12 | 7 | 5 |
+| College Park Scholars: Media, Self and Society | Scholars | hand | 6 | 9 | 5 | 4 |
 | College Park Scholars: Public Leadership | Scholars | hand | 5 | 8 | 5 | 3 |
-| College Park Scholars: Science and Global Change | Scholars | hand | 8 | 13 | 5 | 8 |
-| College Park Scholars: Science, Technology and Society | Scholars | hand | 5 | 10 | 5 | 5 |
+| College Park Scholars: Science and Global Change | Scholars | hand | 8 | 14 | 5 | 8 |
+| College Park Scholars: Science, Technology and Society | Scholars | hand | 5 | 11 | 5 | 5 |
 | Advanced Cybersecurity Experience for Students (ACES) | Honors | hand | 5 | 7 | 3 | 4 |
-| Design Cultures & Creativity | Honors | hand | 6 | 7 | 3 | 4 |
+| Design Cultures & Creativity | Honors | hand | 6 | 8 | 3 | 5 |
 | Gemstone | Honors | hand | 9 | 6 | 4 | 2 |
 | Honors Global Challenges & Solutions | Honors | hand | 5 | 7 | 4 | 3 |
 | Honors Humanities | Honors | hand | 5 | 9 | 5 | 4 |
 | Integrated Life Sciences | Honors | hand | 6 | 8 | 3 | 5 |
 | Interdisciplinary Business Honors | Honors | hand | 5 | 5 | 3 | 2 |
 | University Honors | Honors | hand | 3 | 6 | 4 | 2 |
-| Carillon Communities | Other LLP | hand | 1 | 3 | 2 | 1 |
+| Carillon Communities | Other LLP | hand | 1 | 4 | 2 | 2 |
 | Flexus: Women in Engineering | Other LLP | hand | 4 | 4 | 2 | 2 |
 | Virtus: Men in Engineering | Other LLP | hand | 4 | 4 | 2 | 2 |
-| Jiménez-Porter Writers' House | Other LLP | hand | 6 | 10 | 4 | 6 |
+| Jiménez-Porter Writers' House | Other LLP | hand | 6 | 11 | 4 | 7 |
 | Language House | Other LLP | hand | 1 | 3 | 2 | 1 |
 | BioFIRE | Other LLP | none: No course ids or completion requirements are published: the page says only "Enroll in a one-credit fall and spring seminar" and take first-year science courses with the cohort. | 0 | 0 | 0 | 0 |
 | FIRE: First-Year Innovation & Research Experience | Other special program | hand | 3 | 3 | 1 | 2 |
@@ -93,7 +93,7 @@ Manual notes are rules the audit can't check (GPA, residence, attendance, approv
 | Departmental Honors: Computer Science | Departmental Honors | none: No enumerated course requirement: to graduate with the citation a student must have "Completed a graduate level 'PhD Qualifying' CMSC course OR an honors version of a CMSC3xx/4xx course (not including CMSC396H)" plus an approved honors thesis; neither the qualifying-course list nor the honors-version course ids are published, and CMSC499/CMSC396H research credit is explicitly "not strictly required." | 0 | 0 | 0 | 0 |
 | Departmental Honors: Family Health | Departmental Honors | none: No course ids are published: "Students enroll in special honors courses, complete honors option work in regular courses and conduct independent research," culminating in a senior honors thesis, but no course ids or credit totals are named. | 0 | 0 | 0 | 0 |
 | Departmental Honors: French | Departmental Honors | none: Unlike German and Spanish, SLLC publishes no dedicated honors-program page for French: the page the Honors College directory links to is the general French Program page, with no honors section, and no French-specific honors subpage was found from its links. | 0 | 0 | 0 | 0 |
-| Departmental Honors: Hearing & Speech Sciences | Departmental Honors | hand | 5 | 7 | 4 | 3 |
+| Departmental Honors: Hearing & Speech Sciences | Departmental Honors | hand | 5 | 8 | 4 | 3 |
 | Departmental Honors: Human Development | Departmental Honors | none: No course ids are published: the page describes a "two-year program sequence" with "an Honors seminar offered in the fall of the Junior year" and senior-year thesis mentorship, but names no course ids and defers eligibility/application details to a separate overview page. | 0 | 0 | 0 | 0 |
 | Departmental Honors: Linguistics | Departmental Honors | none: No required course: a student finds a faculty supervisor and may "optionally register for LING 499 ('Directed Studies')"; there's no fixed, required course id and no other requirement beyond a thesis and its supervisor's recommendation. | 0 | 0 | 0 | 0 |
 | Departmental Honors: Neuroscience | Departmental Honors | hand | 2 | 6 | 4 | 2 |

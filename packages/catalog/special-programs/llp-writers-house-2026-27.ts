@@ -25,6 +25,7 @@ export const writersHouse: Program = {
   verified: false,
   minGrade: "B",
   reviewNotes: [
+    `[check] AASP298L (source: "AASP298L – Special Topics in Afro-American Studies") is unknown to the Advisor catalog and no AAAS course lists it as Formerly; left as encoded.`,
     `[check] Grade: "Obtain a grade of B or better in all classes (12 credits total)". Encoded as a program-wide minimum grade of B (a B- does not count). The drafted courses total 12 credits: ARHU300 (1), ARHU309 (1), ARHU318 (1), ARHU319 (3), ARHU320 (3) and the 3-credit supporting course.`,
     `[check] ARHU309: "take any of the following sections: ARHU309-0101 – Prose, ARHU309-0201 – Poetry, ARHU309-0301 – Fantasy/Sci-fi". These are sections of one course, so ARHU309.`,
     `[check] ARHU318: "take any of the following sections: ARHU318A – Prose, ARHU318B – Spoken Word Poetry (TOTUS), ARHU318W – Script/Screenwriting". These are lettered course ids, so any of the three.`,

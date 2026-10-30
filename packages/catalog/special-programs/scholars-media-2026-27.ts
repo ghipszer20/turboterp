@@ -17,6 +17,7 @@ export const scholarsMedia: Program = {
   source: SOURCE,
   verified: false,
   reviewNotes: [
+    `[check] ENGL240 is in neither the Advisor catalog nor the cached sources; left as encoded.`,
     ...SCHOLARS_CITATION_NOTES,
     `[check] Courses: "CPMS 100: Colloquium I 1 cr; CPMS 225: Analyzing Media Practice Through Theory (SCIS, DSHS) 3 cr; CPMS 101: Colloquium II 1 cr; CPMS 200: Colloquium III; CPMS 230: Internship; or CPMS 240: Service-Learning; or CPSP 359S: Discovery Research (DSSP)".`,
     `[check] Supporting courses: "Two courses (total: 6–8 credits)" from the Supporting Course Options. "SOCY 100 or 105", "ECON 200 or 201", "ENGL 240 or 241 or 243 or 244", "GVPT 105 or 170" and "HIST 200 or 201" are alternatives: at most one of each group counts. "CMSC 122 (DSSP) or higher" is encoded as any CMSC course numbered 122 or above. The credit total isn't checked.`,

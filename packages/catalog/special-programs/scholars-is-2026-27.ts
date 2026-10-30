@@ -18,6 +18,7 @@ export const scholarsIs: Program = {
   source: SOURCE,
   verified: false,
   reviewNotes: [
+    `[check] BSST230 is in neither the Advisor catalog nor the cached sources; left as encoded.`,
     ...SCHOLARS_CITATION_NOTES,
     `[check] Courses: "CPSN 100: Colloquium I 1 cr; CPSN 101: Colloquium II (DVCC) 1 cr; GVPT 200: International Political Relations (DSHS, DVUP); or GVPT 241: The Study of Political Philosophy: Ancient and Modern (DSSP) 3 cr; CPSN 200: Colloquium III 1 cr".`,
     `[check] Practicum: "CPSN 230: Internship; or CPSN 240: Service-Learning; or CPSN 250: Research; or CPSP 359S: Discovery Research (DSSP); or CPSP300: Intergroup Dialogue Facilitation (DSSP); or Study Abroad" (2-3 cr). The course options are encoded; "Study Abroad" is manual.`,

@@ -6,7 +6,7 @@ import { CATALOG_YEAR, SCHOLARS_CITATION_NOTES } from "./common.ts";
 export const SOURCE = "https://scholars.umd.edu/sites/default/files/2026-05/CurriculumRequirementsDJ2026_1.pdf";
 
 const SUPPORTING = [
-  "AASP187", "AMST205", "AMST260", "ARCH170", "CHSE205", "CMSC116", "COMM200", "DATA200", "ENES200", "ENEE200",
+  "AAAS187", "AMST205", "AMST260", "ARCH170", "CHSE205", "CMSC116", "COMM200", "DATA200", "ENES200", "ENEE200",
   "ENES240", "ENGL255", "ENGL290", "ENGL293", "ENGL294", "ENGL295", "ENMA201", "GEOG140", "GEOG201", "IMDM150",
   "JOUR130", "JOUR175", "JOUR282", "JOUR289", "LARC162", "PHIL100", "PHIL140", "PHIL202", "PHIL203", "PHIL211",
   "PHIL220", "PHIL245", "PHIL271", "PHYS137", "PLCY215", "PLCY240", "SOCY200", "SOCY241", "WGSS115",
@@ -19,6 +19,7 @@ export const scholarsDj: Program = {
   source: SOURCE,
   verified: false,
   reviewNotes: [
+    `[fixed 2026-10-30] Renumbered courses (old code → the catalog course whose "Formerly" line names it): AASP187 → AAAS187. [check] JOUR289 is in neither the Advisor catalog nor the cached sources; left as encoded.`,
     ...SCHOLARS_CITATION_NOTES,
     `[check] Courses: "CPDJ 100: Colloquium I 1 cr; INST204S: Designing Fair Systems (DSHS, SCIS) 3 cr; CPDJ 101: Colloquium II 1 cr; CPDJ 200: Colloquium III 1 cr". INST204S is a Scholars-designated id; plain INST204 is not accepted.`,
     `[check] Practicum: "Semester 4 CPDJ 240: Service-Learning Practicum 3 cr, CPDJ230: Internship Practicum 3 cr, CPDJ250: Research Practicum 3 cr" (no "or" between them). Encoded as one of the three, like every other Scholars program's practicum.`,

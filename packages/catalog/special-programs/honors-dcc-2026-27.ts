@@ -14,6 +14,7 @@ export const honorsDcc: Program = {
   verified: false,
   minGrade: "C-",
   reviewNotes: [
+    `[check] HDCC378 (source: "HDCC378 Design reviewNotes: [ Creativity Abroad") is unknown to the Advisor catalog; left as encoded.`,
     ...HONORS_CITATION_NOTES,
     `[check] "All students must earn at least a C- semester grade or higher in all HDCC coursework." Encoded as a program-wide C- minimum, which also applies to the non-HDCC 3-credit option.`,
     `[check] "All DCC students must complete 16 credits by the end of their sophomore year: HDCC105 (3 credits), HDCC106 (3 credits), HDCC201 (1 credit), HDCC208 (3 credits), HDCC209 (3 credits) And, 3 credits from ONE of the following four options". 13 + 3 = 16. The sophomore-year deadline isn't checked.`,
