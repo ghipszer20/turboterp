@@ -4,7 +4,7 @@ import { setupSteps } from "../seat-alerts/view";
 describe("setupSteps", () => {
   it("tells an iPhone Safari tab only to add to the Home Screen", () => {
     expect(setupSteps("ios-needs-home-screen")).toEqual([
-      "Tap Share, then Add to Home Screen.",
+      "In Safari's own toolbar (not on this page), tap Share, then Add to Home Screen. On newer iPhones, Share is under the ••• button.",
       "Open TurboTerp from your Home Screen.",
       "Turn on alerts there and add your classes.",
     ]);

@@ -7,7 +7,7 @@ export const MAX_WATCHES = 20;
 /** The numbered "How it works" steps for this device. An unsupported browser gets none. */
 export function setupSteps(support: PushSupport): string[] {
   if (support === "ios-needs-home-screen")
-    return ["Tap Share, then Add to Home Screen.", "Open TurboTerp from your Home Screen.", "Turn on alerts there and add your classes."];
+    return ["In Safari's own toolbar (not on this page), tap Share, then Add to Home Screen. On newer iPhones, Share is under the ••• button.", "Open TurboTerp from your Home Screen.", "Turn on alerts there and add your classes."];
   if (support === "supported")
     return ["Turn on alerts for this device.", "Add a full class, or any section of it.", "When a seat opens, tap the alert to go to Testudo."];
   return [];
