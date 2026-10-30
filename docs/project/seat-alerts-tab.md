@@ -70,8 +70,11 @@ would fix this properly; it is not part of this work.)
   service worker can read it (IndexedDB), and sends it with every Seat Alerts API call. The builder
   chooses the exact mechanism; the requirement is that only that device can read or change its
   watches.
-- **Limit:** 20 active watches per device (the existing number). Add a modest per-IP limit on
-  creating device records so nobody can flood the table.
+- **Limit:** 20 active watches per device (the existing number). **No per-IP limit** (owner,
+  2026-10-29): campus Wi-Fi puts many students behind one address, so it would block real students
+  at registration. Instead, a device's push endpoint must be on a real push service (Apple, Google,
+  Mozilla, Microsoft). Testudo load is bounded anyway: the checker fetches each watched course once a
+  minute however many devices watch it.
 - **Losing the device:** if the student deletes the Home Screen app or clears site data, the watches
   are gone and the device record expires once pushes to it fail (404/410, as today). This is
   accepted.

@@ -14,7 +14,7 @@
     { "term": "Year 1 Spring", "courses": ["GEOG202"] },
     { "term": "Year 2 Fall", "courses": ["GEOG301", "GEOG330", "GEOG212"] },
     { "term": "Year 2 Spring", "courses": ["GEOG306", "GEOG303"] },
-    { "term": "Year 3 Fall", "courses": ["GEOG372"] },
+    { "term": "Year 3 Fall", "courses": ["GEOG272"] },
     { "term": "Year 3 Spring", "courses": ["GEOG331"] },
     { "term": "Year 4 Fall", "courses": ["GEOG358", "GEOG421"] },
     { "term": "Year 4 Spring", "courses": ["GEOG422"] }

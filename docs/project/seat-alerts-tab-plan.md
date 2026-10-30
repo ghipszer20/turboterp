@@ -17,7 +17,7 @@
 - 20 active watches per device (`MAX_WATCHES`, unchanged). Cooldown 5 minutes, alert wording and the Drop/Add link unchanged.
 - Never say the setup is temporary or "until the app".
 - Test notification: title `Test: this is what a Seat Alert looks like`, body `When a seat opens in a class you watch, you'll get one like this.`, url `/alerts`. Sent once, when a device is first created. No test button, no `/api/seat-alerts/test`.
-- New-device limit: 60 per IP per hour (campus networks share IPs; this only stops floods).
+- No per-IP limit on new devices (owner: campus Wi-Fi shares IPs). Push endpoints must be `https://` on a known push service host: `web.push.apple.com`, `fcm.googleapis.com`, `updates.push.services.mozilla.com`, or a host ending in `.notify.windows.com`; anything else → 400 `bad-request`.
 - Existing watches and subscriptions are dropped by the migration (owner is the only user).
 - Run from `apps/web`: `npx vitest run <file>`; at the end `npm test`, `npx tsc --noEmit`, `npm run lint`, `npm run build`.
 - Don't use GitHub Actions; verify locally.
@@ -46,14 +46,14 @@
   - `POST /api/seat-alerts/device`, body `{ endpoint, keys: { p256dh, auth } }`, optional `Authorization: Device <token>`.
     - Valid token → updates that device's endpoint/keys → `200 { token }` (same token), no test push.
     - No or invalid token → creates a device, sends the test push → `201 { token, test: "ok" | "failed" }`. If another device row has this endpoint, delete that row first (cascade removes its watches).
-    - Over 60 new devices for this IP in the last hour → `429 { error: "too-many" }`. VAPID not configured → `503 { error: "not-configured" }` before anything is written.
+    - Endpoint not on a known push service host → `400 { error: "bad-request" }`. VAPID not configured → `503 { error: "not-configured" }` before anything is written.
   - `DELETE /api/seat-alerts/device` with the token → deletes the device and its watches → `200 { ok: true }`.
   - `GET/POST /api/seat-alerts/watches`, `POST .../watches/[id]/done`, `DELETE .../watches/[id]`: same bodies and responses as today, but authorized by `Authorization: Device <token>` (401 `{ error: "unauthorized" }` otherwise). The signed `?token=` path for "I got it" is unchanged.
 - Produces (TS): `Watch.deviceId: string` (replaces `userId`); `DeviceSub = { deviceId: string; endpoint: string; p256dh: string; auth: string }`; `parseDeviceToken(header: string | null): { deviceId: string; secret: string } | null` in `api.ts`; `TEST_ALERT = { title, body, url }` exported from `api.ts`.
 
 - [ ] **Step 1: Write the migration** `0010_seat_alert_devices.sql`:
   - `delete from public.seat_watches;` then `drop table public.push_subscriptions;`
-  - `create table public.alert_devices (id uuid primary key default gen_random_uuid(), secret_hash text not null, endpoint text not null unique check (endpoint ~ '^https://'), p256dh text not null, auth text not null, ip_hash text, created_at timestamptz not null default now(), last_success_at timestamptz);` index on `(ip_hash, created_at)`; RLS on, no policies.
+  - `create table public.alert_devices (id uuid primary key default gen_random_uuid(), secret_hash text not null, endpoint text not null unique check (endpoint ~ '^https://'), p256dh text not null, auth text not null, created_at timestamptz not null default now(), last_success_at timestamptz);` RLS on, no policies.
   - `seat_watches`: drop `user_id` (and its unique index), add `device_id uuid not null references public.alert_devices(id) on delete cascade`; recreate `seat_watches_one_active` on `(device_id, term, course_id, coalesce(section_id, ''))` where `done_at is null`; replace `seat_watches_limit()` to count by `device_id`.
   - Header comment: deploy this together with the code (the old code reads `user_id`).
 
@@ -61,7 +61,7 @@
   - `device create: no token → 201 with "<uuid>.<secret>" token, one test push with TEST_ALERT, secret stored only as sha256`
   - `device create: endpoint already on another device → that device deleted, new one created` (Review Focus 1)
   - `device re-register: valid token + new endpoint → 200 same token, endpoint and keys updated, no push` (Review Focus 2)
-  - `device create: 60 devices from this ip in the last hour → 429 too-many; ip read from x-forwarded-for first entry, stored hashed`
+  - `device create: endpoints on web.push.apple.com, fcm.googleapis.com, updates.push.services.mozilla.com and wns2-par02p.notify.windows.com accepted; http://, https://evil.example and https://web.push.apple.com.evil.example → 400`
   - `device create: vapid not configured → 503, nothing written`
   - `device create: test push fails → 201 with test "failed"; test push gone → device deleted, 201 test "failed"`
   - `auth: missing header, "Bearer x", "Device nodot", unknown id, wrong secret → 401 on GET watches` (Review Focus 3)
@@ -74,7 +74,7 @@
 
 - [ ] **Step 4: Implement.**
   - `logic.ts`: `Watch.userId` → `deviceId`; `matchWatches` collapses per device (rename `perUser`).
-  - `store.ts`: replace the `push_subscriptions` methods with `createDevice({ secretHash, ipHash, sub }): Promise<string>` (returns id), `getDevice(id): Promise<{ id; secretHash } | null>`, `updateDeviceSub(id, sub)`, `deleteDevice(id)`, `deleteDeviceByEndpoint(endpoint)`, `countDevicesSince(ipHash, since: Date): Promise<number>` (PostgREST `Prefer: count=exact`, `head`-style or `select=id` length), `subscriptionsFor(deviceIds): Promise<DeviceSub[]>`. `listWatches(deviceId)`, `createWatch(deviceId, ...)`.
+  - `store.ts`: replace the `push_subscriptions` methods with `createDevice({ secretHash, sub }): Promise<string>` (returns id), `getDevice(id): Promise<{ id; secretHash } | null>`, `updateDeviceSub(id, sub)`, `deleteDevice(id)`, `deleteDeviceByEndpoint(endpoint)`, `subscriptionsFor(deviceIds): Promise<DeviceSub[]>`. `listWatches(deviceId)`, `createWatch(deviceId, ...)`.
   - `api.ts`: `authenticate` resolves `Device <id>.<secret>` → compares `hashKey(secret)` (from `lib/email/rate-limit.ts`) to `secretHash` with `timingSafeEqual`. Secret = 32 random bytes, base64url. Add `handleDeviceRegister` and `handleDeviceDelete`; delete `handleTestAlert`, `handleSubscriptionSave/Delete`. `SeatApiDeps` loses `getUser`, gains nothing else (ip comes from the request).
   - `deps.ts`: drop `getUser`.
   - `run.ts`: subscriptions by `watch.deviceId`; on `gone` call `store.deleteDevice(sub.deviceId)`.
@@ -98,7 +98,7 @@
 - Consumes: Task 1's HTTP endpoints.
 - Produces (used by Task 3):
   - `device.ts`: `DEVICE_KEY = "turboterp.seatAlerts.device"`; `loadDeviceToken(storage?: Storage): string | null`; `saveDeviceToken(token: string, storage?: Storage): void`; `clearDeviceToken(storage?: Storage): void`. All catch storage errors.
-  - `client.ts`: `subscribe(): Promise<string | null>` now posts to `/api/seat-alerts/device` with the saved token (if any) and saves the returned one; `unsubscribe()` calls `DELETE /api/seat-alerts/device` then clears the token. `call()` sends `Authorization: Device <token>`; no token → `{ ok: false, status: 401, error: "no-device" }`. Remove `accessToken` and `sendTestAlert`. `subscribe` returns `"Too many new devices from this network. Try again in an hour."` on 429.
+  - `client.ts`: `subscribe(): Promise<string | null>` now posts to `/api/seat-alerts/device` with the saved token (if any) and saves the returned one; `unsubscribe()` calls `DELETE /api/seat-alerts/device` then clears the token. `call()` sends `Authorization: Device <token>`; no token → `{ ok: false, status: 401, error: "no-device" }`. Remove `accessToken` and `sendTestAlert`.
   - `client.ts`: `bellMode(support: PushSupport): "watch" | "link" | "hidden"` → `supported` → `"watch"`, `ios-needs-home-screen` → `"link"`, `unsupported` → `"hidden"`.
   - `use-watches.ts`: `WatchesState.phase: "loading" | "needs-setup" | "ready" | "unavailable"` (no `"signed-out"`); new `enable(): Promise<string | null>` = `subscribe()` then reload. No `useSession`.
 

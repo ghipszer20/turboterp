@@ -12,7 +12,7 @@
   "terms": [
     { "term": "Freshman Fall", "courses": ["CHEM131", "PLSC201", "ANSC101", "ANSC103", "TLPL101", "UNIV100"] },
     { "term": "Freshman Spring", "courses": ["CHEM132", "PLSC206", "MATH113", "TLPL102"] },
-    { "term": "Sophomore Fall", "courses": ["PLSC275", "ENST200", "AREC250", "BSCI160"] },
+    { "term": "Sophomore Fall", "courses": ["AGST275", "ENST200", "AREC250", "BSCI160"] },
     { "term": "Sophomore Spring", "courses": ["BSCI487", "BSCI180", "INAG250"] },
     { "term": "Junior Fall", "courses": ["PLSC420", "INAG235", "PLSC471", "ANSC245"] },
     { "term": "Junior Spring", "courses": ["PLSC453", "PLSC112", "PLSC113", "PLSC115"] },
