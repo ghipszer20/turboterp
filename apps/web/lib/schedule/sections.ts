@@ -121,19 +121,15 @@ export function conflictPairs(placed: Section[]): [string, string][] {
   return out;
 }
 
-/** Why "Best Teachers" liked a pick, in plain words: "4.6★ · avg GPA 3.4". Missing data is left out. */
-export function recommendReason(
-  s: Section,
-  ratings: Readonly<Record<string, number>>,
-  gpas: Readonly<Record<string, number>>,
-): string {
-  const parts: string[] = [];
-  const rating = bestRating(s, ratings);
-  if (rating !== undefined) parts.push(`${rating.toFixed(1)}★`);
+/** The highest average GPA (in this course) among the section's teachers; undefined without grade data. */
+export function bestGpa(s: Section, gpas: Readonly<Record<string, number>>): number | undefined {
   const g = s.instructors.map((n) => gpas[gpaKey(s.courseId, n)]).filter((x): x is number => x !== undefined);
-  if (g.length) parts.push(`avg GPA ${Math.max(...g).toFixed(1)}`);
-  return parts.join(" · ");
+  return g.length ? Math.max(...g) : undefined;
 }
+
+/** Color band of a teacher's average GPA, on the same scale as `ratingTone` (Claude's thresholds, 2026-10-30). */
+export const gpaTone = (g: number | undefined | null): RatingTone =>
+  g === undefined || g === null ? "none" : g >= 3.3 ? "good" : g >= 2.8 ? "fair" : "low";
 
 /** Each instructor's average GPA per course, for the sort: `gpaKey(courseId, name)` → GPA. Skips missing data. */
 export function gpasFor(

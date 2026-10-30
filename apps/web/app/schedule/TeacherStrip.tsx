@@ -1,8 +1,8 @@
 import type { Section } from "@turboterp/course-data/schedules";
 import { courseColor } from "@/lib/schedule/colors";
-import { bestRating, instructorLabel, recommendReason } from "@/lib/schedule/sections";
+import { bestGpa, bestRating, instructorLabel } from "@/lib/schedule/sections";
 import { InstructorName } from "./InstructorReviews";
-import { RatingBadge } from "./RatingBadge";
+import { GpaBadge, RatingBadge } from "./RatingBadge";
 import cal from "./calendar.module.css";
 import styles from "./builder.module.css";
 
@@ -33,20 +33,27 @@ export function TeacherStrip({
   groups?: Section[][];
   courseIds: string[];
   ratings: Readonly<Record<string, number>>;
-  /** Given only when sorting by Recommended: adds one short reason per course. */
+  /** Given only when sorting by Best Teachers: adds a GPA box next to the rating. */
   gpas?: Readonly<Record<string, number>>;
   size?: "mini" | "zoom" | "large";
 }) {
   return (
     <ul className={styles.strip} data-size={size}>
       {picks.map((s, k) => (
-        <li key={s.courseId} className={cal.course} data-color={courseColor(courseIds, s.courseId)} data-reason={gpas ? "" : undefined}>
+        <li key={s.courseId} className={cal.course} data-color={courseColor(courseIds, s.courseId)}>
           <span className={styles.swatch} />
           <b>{s.courseId}</b>
           <span className={styles.stripWho}>
             <StripName label={instructorLabel(s, groups?.[k])} main={s.instructors[0]} />
           </span>
-          {gpas ? <span className={styles.stripReason}>{recommendReason(s, ratings, gpas)}</span> : <RatingBadge rating={bestRating(s, ratings)} />}
+          {gpas ? (
+            <span className={styles.badges}>
+              <RatingBadge rating={bestRating(s, ratings)} />
+              <GpaBadge gpa={bestGpa(s, gpas)} />
+            </span>
+          ) : (
+            <RatingBadge rating={bestRating(s, ratings)} />
+          )}
         </li>
       ))}
     </ul>

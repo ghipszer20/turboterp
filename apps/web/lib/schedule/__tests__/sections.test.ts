@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { Section } from "@turboterp/course-data/schedules";
 import { distributionFromCounts, GRADE_COLUMNS, type CourseGrades } from "@turboterp/ratings";
-import { bestRating, conflictPairs, gpasFor, gradeSummary, recommendReason, instructorLabel, meetingSummary, overlapsWith, pickSection, ratingTone, sectionChoices, sectionKey } from "../sections";
+import { bestRating, conflictPairs, gpasFor, gradeSummary, bestGpa, gpaTone, instructorLabel, meetingSummary, overlapsWith, pickSection, ratingTone, sectionChoices, sectionKey } from "../sections";
 
 const sec = (
   id: string,
@@ -186,10 +186,14 @@ describe("recommendation helpers", () => {
     expect(gpas).toEqual({ "STAT400|Ann Lee": 3.5 });
   });
 
-  it("recommendReason is plain words and leaves out missing data", () => {
-    const s = sec("0101", ["Ann Lee"], [MWF10], 12);
-    expect(recommendReason(s, { "Ann Lee": 4.6 }, { "STAT400|Ann Lee": 3.4 })).toBe("4.6★ · avg GPA 3.4");
-    expect(recommendReason(s, {}, {})).toBe("");
+  it("bestGpa is the highest average GPA among the section's teachers, or undefined", () => {
+    const s = sec("0101", ["Ann Lee", "Bo Kim"], [MWF10], 12);
+    expect(bestGpa(s, { "STAT400|Ann Lee": 3.1, "STAT400|Bo Kim": 3.4 })).toBe(3.4);
+    expect(bestGpa(s, {})).toBeUndefined();
+  });
+
+  it("gpaTone colors average GPAs: 3.3+ good, 2.8+ fair, below low, none without data", () => {
+    expect([3.6, 3.3, 3.0, 2.8, 2.7, undefined].map(gpaTone)).toEqual(["good", "good", "fair", "fair", "low", "none"]);
   });
 });
 
