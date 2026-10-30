@@ -156,6 +156,22 @@
   white-space: nowrap;
 }
 
+/* A catalog course with no sections this term: same row layout, grayed, nothing to click. */
+.notOffered div {
+  display: grid;
+  grid-template-columns: minmax(76px, max-content) minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 9px;
+  color: var(--text-2);
+  cursor: default;
+}
+
+.notOffered[aria-selected="true"] div {
+  background: var(--surface-2);
+}
+
 .results li[aria-selected="true"] button,
 .results button:hover {
   background: var(--surface-2);

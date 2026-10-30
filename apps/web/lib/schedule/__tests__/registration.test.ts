@@ -15,7 +15,7 @@ import {
   type TermPrep,
 } from "../registration";
 
-const sec = (courseId: string, id: string, open: number, days: string[] = ["M"], start = 600, end = 650): Section => ({ notes: null,
+const sec = (courseId: string, id: string, open: number, days: string[] = ["M"], start = 600, end = 650): Section => ({
   id,
   courseId,
   instructors: [],

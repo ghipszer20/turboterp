@@ -42,15 +42,17 @@ function loadCatalog(): Promise<CatalogState> {
   return catalogPromise;
 }
 
-export function useCatalog(): CatalogState {
+/** The plan catalog; with `enabled` false it waits (stays "loading") until enabled. */
+export function useCatalog(enabled = true): CatalogState {
   const [state, setState] = useState<CatalogState>({ status: "loading" });
   useEffect(() => {
+    if (!enabled) return;
     let live = true;
     loadCatalog().then((s) => live && setState(s));
     return () => {
       live = false;
     };
-  }, []);
+  }, [enabled]);
   return state;
 }
 

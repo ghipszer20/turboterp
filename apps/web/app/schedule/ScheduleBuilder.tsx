@@ -406,6 +406,7 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
       onChange={setCourses}
       fromPlan={fromPlan}
       elsewhere={elsewhere}
+      termName={termName}
     />
   );
 

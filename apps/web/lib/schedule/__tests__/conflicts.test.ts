@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import type { Section } from "@turboterp/course-data/schedules";
 import { overlapNote, saveBlockedBy, tightWalkLine } from "../conflicts";
 
-const sec = (courseId: string, days: string[], start: number, end: number, building = "ARM"): Section => ({ notes: null,
+const sec = (courseId: string, days: string[], start: number, end: number, building = "ARM"): Section => ({
   id: "0101",
   courseId,
   instructors: [],
