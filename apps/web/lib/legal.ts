@@ -2,7 +2,7 @@
 // (docs/project/legal.md). Bump the version whenever the meaning changes.
 
 export const TERMS_VERSION = "2026-10-29";
-export const PRIVACY_VERSION = "2026-10-29";
+export const PRIVACY_VERSION = "2026-10-30";
 
 /** A paragraph, or a list of bullet points. */
 export type LegalBlock = string | string[];
@@ -135,7 +135,7 @@ export const PRIVACY: LegalSection[] = [
     heading: "Introduction",
     paragraphs: [
       "This Privacy Policy explains what TurboTerp collects, where it is kept and what we do with it.",
-      "The short version: an account is optional. Without one, your plan and schedule stay in your browser. When you sign in, they are also saved to your account so they follow you between devices. We count page visits with Vercel Web Analytics, which uses no cookies and doesn't identify you. No ads, no tracking cookies, and nothing is sold.",
+      "The short version: an account is optional. Without one, your plan and schedule stay in your browser. When you sign in, they are also saved to your account so they follow you between devices. We count page visits anonymously, without cookies. No ads, no tracking cookies, and nothing is sold.",
     ],
   },
   {
@@ -159,7 +159,7 @@ export const PRIVACY: LegalSection[] = [
         "turboterp-theme: your light or dark choice.",
         "turboterp-sync: which version of your plan and schedules this browser last saved to your account, when you're signed in. Signing out removes the synced copies from that browser.",
       ],
-      "If you are signed in, our sign-in provider's code also keeps a sign-in token there, so you stay signed in on that device.",
+      "If you are signed in, a sign-in token is also kept there, so you stay signed in on that device.",
       "Clearing your site data in the browser deletes all of it.",
     ],
   },
@@ -172,7 +172,7 @@ export const PRIVACY: LegalSection[] = [
   {
     heading: "Cookies and tracking",
     paragraphs: [
-      "We count page visits with Vercel Web Analytics. It uses no cookies and doesn't identify you. There are no ads and no tracking cookies.",
+      "We count page visits anonymously. It uses no cookies and doesn't identify you. There are no ads and no tracking cookies.",
       "While the site is in preview, entering the access code sets one cookie, tt_access, so that browser stays let in for 180 days. It holds a scrambled copy of the code and nothing about you.",
     ],
   },
@@ -180,19 +180,19 @@ export const PRIVACY: LegalSection[] = [
     heading: "How your data is used and shared",
     paragraphs: [
       "Your data is used only to run TurboTerp for you. We do not sell, rent or give away your email address or anything else about you, to advertisers, data brokers or anyone else.",
-      "The only others that handle it are the services listed below, and only as far as running the site needs.",
+      "Like most websites, TurboTerp relies on a few service providers for hosting, sign-in, storage and email. They handle your data only as far as running the site needs, and only the data listed below.",
     ],
   },
   {
-    heading: "Other services involved",
+    heading: "Data we gather",
     paragraphs: [
       [
-        "Supabase runs sign-in and the database, in the United States. It stores your email address, your synced plan and schedules, and the agreement records, and sends the email with your sign-in link.",
-        "Google, if you choose Continue with Google, signs you in and tells us your email address and basic profile. Google's own privacy policy applies to that sign-in.",
-        "Brevo sends email for us: sign-in emails, issue reports and the plan emails you ask for. It sees the address it sends to and the message it carries.",
-        "Vercel hosts the website. Like any web host, it may keep short-lived request logs (such as IP address and the page requested) to run and protect the service.",
-        "Vercel Web Analytics counts page visits anonymously. It uses no cookies and doesn't identify you.",
-        "Sentry receives error reports when something breaks: the error, the page and the browser type, with email addresses and account details removed.",
+        "Account: your email address, and your basic profile if you choose Continue with Google (Google's own privacy policy applies to that sign-in). Stored in the United States.",
+        "Synced data, when you are signed in: your plan, saved schedules, registration checklist and Advisor agreement records.",
+        "Email: the address and contents of the sign-in emails, issue reports and plan emails you ask for.",
+        "Request logs: like any website, short-lived logs of requests (such as IP address and the page requested) to run and protect the service.",
+        "Visit counts: anonymous page-visit counts, with no cookies and nothing that identifies you.",
+        "Error reports: when something breaks, the error, the page and the browser type, with email addresses and account details removed.",
       ],
       "Links to other sites, such as UMD pages, LibCal and Testudo, take you to services with their own privacy policies.",
     ],
@@ -200,7 +200,7 @@ export const PRIVACY: LegalSection[] = [
   {
     heading: "Reports and donations",
     paragraphs: [
-      "Report an issue sends what you type from our server, through Brevo, to us. A report email holds what you wrote, the page you named, your email address only if you typed one, and the time it was sent. Issues filed on GitHub are public.",
+      "Report an issue sends what you type from our server to us by email. A report email holds what you wrote, the page you named, your email address only if you typed one, and the time it was sent. Issues filed on GitHub are public.",
       "Email my plan sends your 4-year plan as a PDF, with a short summary of your audit, only to your own address, the one you signed in with. Nothing is sent to any other address.",
       "To stop abuse, we keep a rate-limit record for each report or plan email: a scrambled copy of your IP address (reports) or account id (plan emails) and the time. It is deleted after a day.",
       "Donations go through Venmo, under Venmo's own privacy policy. We never see your card or bank details. We see what Venmo shows the person receiving a payment: your Venmo name, the amount and any note.",
@@ -209,7 +209,7 @@ export const PRIVACY: LegalSection[] = [
   {
     heading: "Your plan on every device",
     paragraphs: [
-      "When you are signed in, your plan, saved schedules and registration checklist are stored on our server (Supabase), tied to your account, so they follow you between devices. While you are signed in, the newest change wins: each edit is saved and replaces the older copy, on every device. If this browser already has a plan made before you signed in and your account has a different one, we ask which to keep.",
+      "When you are signed in, your plan, saved schedules and registration checklist are stored on our server, tied to your account, so they follow you between devices. While you are signed in, the newest change wins: each edit is saved and replaces the older copy, on every device. If this browser already has a plan made before you signed in and your account has a different one, we ask which to keep.",
       "When you sign the Advisor agreement, we also keep a record of it: its version, the time, a random id for your browser, your account if you are signed in, and the name you typed. The name is stored encrypted so that only we can read it, and only if it is needed as a legal record.",
       "Signing out removes the synced copies from that browser. Your signed agreement stays on the device.",
       "Seat Alerts need no account. For each device that turns on alerts we keep its push address (from Apple, Google, Mozilla or Microsoft), a scrambled copy of a random key stored in that browser, and the classes it watches. They are not linked to your account. Turning alerts off deletes them, and so does a push address that stops working.",

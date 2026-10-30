@@ -33,15 +33,21 @@ describe("legal pages", () => {
   it("privacy covers its topics", () => {
     const h = headings(PRIVACY).join("|");
     for (const t of [
-      "introduction", "what we collect", "browser", "transcripts", "cookies", "used and shared", "other services",
+      "introduction", "what we collect", "browser", "transcripts", "cookies", "used and shared", "data we gather",
       "donations", "every device", "deleting", "security", "changes", "contact",
     ]) expect(h).toContain(t);
-    for (const service of ["Supabase", "Vercel", "Venmo", "Brevo"]) expect(text(PRIVACY)).toContain(service);
+  });
+
+  it("privacy lists the data gathered without naming the tools behind the site (owner, 2026-10-30)", () => {
+    const t = text(PRIVACY);
+    for (const vendor of ["Supabase", "Vercel", "Brevo", "Sentry"]) expect(t).not.toContain(vendor);
+    expect(t).toMatch(/error reports/i);
+    expect(t).toMatch(/IP address/);
+    expect(t).toMatch(/Venmo/);
   });
 
   it("privacy explains server-sent email and the rate-limit record", () => {
     const t = text(PRIVACY);
-    expect(t).toMatch(/Brevo/);
     expect(t).toMatch(/issue reports/i);
     expect(t).toMatch(/only to your own address/i);
     expect(t).toMatch(/scrambled/i);
@@ -58,15 +64,15 @@ describe("legal pages", () => {
     expect(t).toMatch(/newest change wins/i);
     expect(t).toMatch(/Delete account/);
     expect(text(TERMS)).toMatch(/Delete account/);
-    expect(PRIVACY_VERSION).toBe("2026-10-29");
+    expect(PRIVACY_VERSION).toBe("2026-10-30");
     expect(TERMS_VERSION).toBe("2026-10-29");
   });
 
-  it("privacy discloses Web Analytics and Sentry and no longer says no analytics", () => {
+  it("privacy discloses visit counting and error reports and no longer says no analytics", () => {
     const t = text(PRIVACY);
     expect(t).not.toMatch(/no analytics/i);
-    expect(t).toMatch(/Vercel Web Analytics/);
-    expect(t).toMatch(/Sentry/);
+    expect(t).toMatch(/count page visits/i);
+    expect(t).toMatch(/error reports/i);
   });
 
   it("privacy names every storage key and cookie the app writes", () => {
