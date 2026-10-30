@@ -8,7 +8,8 @@ import { dispatchPlan, useAdvisorStore } from "@/app/advisor/store";
 import { Segmented } from "@/components/Segmented";
 import { RemovePlanButton } from "./RemovePlanButton";
 import { EmptyState, SkeletonCard } from "@/components/ui";
-import { addToCalendarUrl, isAppleDevice } from "@/lib/schedule/calendar-feed";
+import { isAppleDevice } from "@/lib/schedule/apple-device";
+import { buildIcs } from "@/lib/schedule/ics";
 import { termDates } from "@/lib/schedule/term-dates";
 import { timeScale } from "@/lib/schedule/calendar";
 import { DEFAULT_FILTERS, readQuery, relaxConstraint, relaxOptions, toScheduleFilters, writeQuery, type FilterState } from "@/lib/schedule/filters";
@@ -61,6 +62,12 @@ declare global {
 
 export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
   const params = useSearchParams();
+  // Server render and first paint say "not Apple"; the browser then shows the button on Apple devices.
+  const apple = useSyncExternalStore(
+    () => () => {},
+    () => isAppleDevice({ userAgent: navigator.userAgent, platform: navigator.platform, maxTouchPoints: navigator.maxTouchPoints }),
+    () => false,
+  );
   const [view, setView] = useState<View>(() => (params.get("view") === "own" ? { kind: "own" } : { kind: "gallery" }));
   const [plan, setPlan] = useState<PlanId>("A");
   const [savedNote, setSavedNote] = useState<string | null>(null);
@@ -261,13 +268,17 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
   };
   const addToCalendar = (picks: Record<string, string>) => {
     if (!term) return;
-    const pairs = Object.entries(picks)
-      .filter(([c, id]) => courses.includes(c) && sectionByKey.has(`${c}/${id}`))
-      .map(([courseId, sectionId]) => ({ courseId, sectionId }));
-    const apple = isAppleDevice({ userAgent: navigator.userAgent, platform: navigator.platform, maxTouchPoints: navigator.maxTouchPoints });
-    const url = addToCalendarUrl({ host: window.location.host, term, pairs, apple });
-    if (apple) window.location.href = url;
-    else window.open(url, "_blank", "noopener");
+    const sections = Object.entries(picks).flatMap(([c, id]) => (courses.includes(c) ? sectionByKey.get(`${c}/${id}`) ?? [] : []));
+    if (!sections.length) return;
+    // One-time file made here: on iOS Safari it opens Calendar's "Add All"; on a Mac it downloads.
+    const url = URL.createObjectURL(new Blob([buildIcs(term, sections)], { type: "text/calendar;charset=utf-8" }));
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `turboterp-${term}.ics`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 60_000);
   };
   const sharePicks = (picks: Record<string, string>) =>
     Object.fromEntries(Object.entries(picks).filter(([c, id]) => courses.includes(c) && sectionByKey.has(`${c}/${id}`)));
@@ -320,14 +331,16 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
       >
         {savedNote ?? `Save as Plan ${plan}`}
       </button>
-      <button
-        type="button"
-        className={styles.exportBtn}
-        onClick={() => addToCalendar(picks)}
-        disabled={!Object.keys(picks).length || !term || !termDates(term)}
-      >
-        Add to calendar
-      </button>
+      {apple ? (
+        <button
+          type="button"
+          className={styles.exportBtn}
+          onClick={() => addToCalendar(picks)}
+          disabled={!Object.keys(picks).length || !term || !termDates(term)}
+        >
+          Add to calendar
+        </button>
+      ) : null}
       <button
         type="button"
         className={styles.exportBtn}
