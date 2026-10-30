@@ -5,6 +5,9 @@ Generated 2026-10-30 for every hand-drafted program in `packages/catalog/special
 - **Fixed**: an old code replaced by the catalog course whose "Formerly" line names it.
 - **Unknown**: in neither the snapshots nor the catalog; left as encoded with a `reviewNotes` line.
 - **Not offered recently**: known, but in neither Fall 2026 nor Spring 2027 (catalog-only means no snapshot at all).
+- Successor check: every not-recent or catalog-only code was also looked up for a recent course whose "Formerly" line names it. The only hit was ARHU319A → ARHU320 (Writers' House), already listed.
+- Honors Global Communities is now Honors Global Challenges & Solutions (`honors-hglo`, see SOURCES.md "Renamed or gone"). UMD Fellows was checked as well.
+- Seasons come from the Testudo snapshot terms; the catalog cache has no offered-season field.
 - **Seasonal**: offered in only one of Fall 2026 / Spring 2027; the terms are every snapshot term it appears in. Not a bug; left unchanged.
 
 Totals over 56 programs (counted per program): 11 fixed, 17 unknown, 119 not offered recently, 384 seasonal.
@@ -146,7 +149,7 @@ Totals over 56 programs (counted per program): 11 fixed, 17 unknown, 119 not off
 
 **Fixed**
 
-- ENMA289A → ENMA201 (ENMA201 "Formerly: ENMA289A")
+- ENMA289A → ENMA201 (source: "ENMA201: Bigger, Faster, Better: The Quest for Absolute Technology"; ENMA201 "Formerly: ENMA289A")
 - PLSC101 → PLSC112 (source: "PLSC 101 Introductory Crop Science"; PLSC112 "Formerly: PLSC101")
 - PLSC289I → LARC152 (source: "PLSC 289I Greening Cities…"; LARC152 "Formerly: PLSC289I")
 
@@ -298,6 +301,8 @@ Totals over 56 programs (counted per program): 11 fixed, 17 unknown, 119 not off
 - AASP298L: named by the source; no AAAS course lists it as Formerly
 
 **Not offered recently**: ARHU318A (last Spring 2025), ARHU318W (catalog only), ARHU319 (catalog only), ARHU319A (catalog only), ARHU319B (catalog only), ARHU375 (last Fall 2025), ENGL477 (catalog only), ARAB401 (catalog only), ARHU350 (catalog only), ARHU269I (catalog only), ARHU351 (catalog only), ARHU269A (catalog only), ENGL269M (catalog only), CMLT242 (catalog only), ENGL348 (catalog only), ENGL358 (catalog only), ENGL362 (last Fall 2025), ENGL379 (catalog only), ENGL439D (last Spring 2026), ENGL471 (catalog only), ENGL472 (catalog only), ENGL479 (catalog only)
+
+**Note**: ARHU319A (last offered Spring 2025 or earlier) has a successor, ARHU320 ("Formerly: ARHU319A"), that is already listed, so ARHU319A is left as encoded with a `[check]` note.
 
 **Seasonal**: ARHU300 (Fall 2025, Fall 2026), ARHU309 (Fall 2025, Fall 2026), ARHU318B (Spring 2026, Spring 2027), ARHU320 (Spring 2025, Spring 2026, Spring 2027), ENGL354 (Spring 2025, Spring 2026, Spring 2027), ENGL433 (Spring 2025, Fall 2025, Fall 2026)
 

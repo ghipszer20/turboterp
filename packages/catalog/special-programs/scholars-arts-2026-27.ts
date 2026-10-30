@@ -27,7 +27,7 @@ export const scholarsArts: Program = {
   source: SOURCE,
   verified: false,
   reviewNotes: [
-    `[fixed 2026-10-30] Renumbered courses (old code → the catalog course whose "Formerly" line names it): AASP211 → AAAS211; WMST275 → CMLT275 (cross-listed with WGSS275).`,
+    `[check] Renumbered 2026-10-30 (old code → the catalog course whose "Formerly" line names it): AASP211 → AAAS211; WMST275 → CMLT275 (cross-listed with WGSS275).`,
     ...SCHOLARS_CITATION_NOTES,
     `[check] Colloquia: the curriculum table lists "CPSA 100: Colloquium I", "CPSA 101: Colloquium II", "CPSA 200: Colloquium III", "C PSA 201: Colloquium IV", 1 credit each; each is a required course.`,
     `[check] Practicum: "CPSA 240: Service Learning; or CPSA 250: Research (DSSP); or CPSA 260: Peer Teaching (DSSP)", 2 credits; one of the three.`,

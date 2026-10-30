@@ -28,7 +28,8 @@ export const scholarsSgc: Program = {
   source: SOURCE,
   verified: false,
   reviewNotes: [
-    `[fixed 2026-10-30] Renumbered courses (old code → the catalog course whose "Formerly" line names it): ENMA289A → ENMA201; PLSC101 → PLSC112; PLSC289I → LARC152. [check] PUAF301 (source: "AGNR/PUAF 301"), ENST140, ANSC277 and HIST141 (named by the source) and ANTH241 (not in the cached sources) are unknown to the Advisor catalog; left as encoded.`,
+    `[check] Renumbered 2026-10-30 (old code → the catalog course whose "Formerly" line names it): ENMA289A → ENMA201; PLSC101 → PLSC112; PLSC289I → LARC152.`,
+    `[check] PUAF301 (source: "AGNR/PUAF 301"), ENST140, ANSC277 and HIST141 (named by the source) and ANTH241 (not in the cached sources) are unknown to the Advisor catalog; left as encoded.`,
     ...SCHOLARS_CITATION_NOTES,
     `[check] Courses: "CPSG 100: Colloquium I; CPSG 101: Colloquium II; CPSG 200: Colloquium III; CPSG 230: Internship or CPSG 240: Service Learning or CPSG 250: Research or CPSP 359G: Advanced Research (DSSP) or CPSP 359S: Discovery Research (DSSP)".`,
     `[check] CDP: "The CDP Course requirement can be earned by taking one of the following: Any 3-credit class with DVCC or DVUP credit; Any combination of 1- or 2-credit courses with DVCC or DVUP credit, which total up to at least 3 credits; FMSC190S …; GVPT 170 …; GVPT 202 …". Encoded as 3 credits of DVCC/DVUP courses or those three courses. "The CDP requirement can be earned by one of the Supporting Courses if that course has DVCC or DVUP credit", so it is an overlay (it doesn't use the course up).`,

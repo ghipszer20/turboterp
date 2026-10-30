@@ -32,7 +32,8 @@ export const scholarsEte: Program = {
   source: SOURCE,
   verified: false,
   reviewNotes: [
-    `[fixed 2026-10-30] Renumbered courses (old code → the catalog course whose "Formerly" line names it): GEOG372 → GEOG272; HESI217 → LEAD217. [check] ENST140 (named by the source, no catalog course), GVPT205S and PLSC120 (not in the cached sources) are unknown to the Advisor catalog; left as encoded.`,
+    `[check] Renumbered 2026-10-30 (old code → the catalog course whose "Formerly" line names it): GEOG372 → GEOG272; HESI217 → LEAD217.`,
+    `[check] ENST140 (named by the source, no catalog course), GVPT205S and PLSC120 (not in the cached sources) are unknown to the Advisor catalog; left as encoded.`,
     ...SCHOLARS_CITATION_NOTES,
     `[check] Courses: "CPET 100: Colloquium I; CPET 101: Colloquium II (DSSP, DVUP); CPET 200: Colloquium III; CPET 230: Internship; or CPET 240: Service-Learning; or CPET 250: Research". The PDF's semester and credit columns are misaligned; credits are not quoted.`,
     `[check] Supporting courses: "Select from list of approved courses (see below) Two courses (6 credits)". Encoded as two courses from the Fall 2026 list; the 6-credit total isn't checked. Lab pairings in the list ("AOSC200 … (*with AOSC201)", "BSCI124 (*if taken with BSCI125)") only affect Gen Ed, so the labs are not listed.`,

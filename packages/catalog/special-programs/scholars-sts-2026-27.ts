@@ -28,7 +28,7 @@ export const scholarsSts: Program = {
   source: SOURCE,
   verified: false,
   reviewNotes: [
-    `[fixed 2026-10-30] Renumbered courses (old code → the catalog course whose "Formerly" line names it): AASP211 → AAAS211; BSCI150 → BSCI151.`,
+    `[check] Renumbered 2026-10-30 (old code → the catalog course whose "Formerly" line names it): AASP211 → AAAS211; BSCI150 → BSCI151.`,
     ...SCHOLARS_CITATION_NOTES,
     `[check] Courses: "CPSS 100: Colloquium I 2 cr; CPSS 101: Colloquium II or CPSP 110: Bridging Divides thru Intergroup Dialogue Across Disciplines (DVCC) or IDEA 311: Design Your Purpose 1 cr".`,
     `[check] Practicum (3 cr): "CPSS 220: Future of Communicating Science (DVCC) or CPSS 240: Robotics Service-Learning (SCIS, DSSP) or CPSS 340: Infrastructure and Society (DSSP) or CPSP 210: Art-Tech Studio … or CPSS 270: Chip Technologies in Taiwan … or CPSP 279T: Indigenous Communities and Technology in Ecuador".`,

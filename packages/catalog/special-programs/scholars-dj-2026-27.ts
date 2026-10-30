@@ -19,7 +19,8 @@ export const scholarsDj: Program = {
   source: SOURCE,
   verified: false,
   reviewNotes: [
-    `[fixed 2026-10-30] Renumbered courses (old code → the catalog course whose "Formerly" line names it): AASP187 → AAAS187. [check] JOUR289 is in neither the Advisor catalog nor the cached sources; left as encoded.`,
+    `[check] Renumbered 2026-10-30 (old code → the catalog course whose "Formerly" line names it): AASP187 → AAAS187.`,
+    `[check] JOUR289 is in neither the Advisor catalog nor the cached sources; left as encoded.`,
     ...SCHOLARS_CITATION_NOTES,
     `[check] Courses: "CPDJ 100: Colloquium I 1 cr; INST204S: Designing Fair Systems (DSHS, SCIS) 3 cr; CPDJ 101: Colloquium II 1 cr; CPDJ 200: Colloquium III 1 cr". INST204S is a Scholars-designated id; plain INST204 is not accepted.`,
     `[check] Practicum: "Semester 4 CPDJ 240: Service-Learning Practicum 3 cr, CPDJ230: Internship Practicum 3 cr, CPDJ250: Research Practicum 3 cr" (no "or" between them). Encoded as one of the three, like every other Scholars program's practicum.`,
