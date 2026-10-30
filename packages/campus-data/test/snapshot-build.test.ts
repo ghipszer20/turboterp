@@ -200,18 +200,18 @@ describe("refreshFast", () => {
     expect((await store.get("rooms/2026-09-25/6745-23066"))?.updatedAt).toBe(later.toISOString());
   });
 
-  it("re-checks menus only once they are 30 minutes old", async () => {
+  it("re-checks menus only once they are 12 hours old", async () => {
     await buildSnapshots(store, NOW, fakeSources().sources);
 
     const early = fakeSources();
-    await refreshFast(store, minutesAfter(25), early.sources);
+    await refreshFast(store, minutesAfter(12 * 60 - 5), early.sources);
     expect(early.calls.diningMenu).toBe(0);
     expect((await store.get("dining/2026-09-25/19"))?.updatedAt).toBe(NOW.toISOString());
 
     const due = fakeSources();
-    await refreshFast(store, minutesAfter(30), due.sources);
+    await refreshFast(store, minutesAfter(12 * 60), due.sources);
     expect(due.calls.diningMenu).toBe(3);
-    expect((await store.get("dining/2026-09-25/19"))?.updatedAt).toBe(minutesAfter(30).toISOString());
+    expect((await store.get("dining/2026-09-25/19"))?.updatedAt).toBe(minutesAfter(12 * 60).toISOString());
   });
 
   it("fetches a new day's menus as soon as the date rolls over", async () => {
@@ -226,7 +226,7 @@ describe("refreshFast", () => {
 
   it("keeps the previous menu when a re-check fails", async () => {
     await buildSnapshots(store, NOW, fakeSources().sources);
-    const report = await refreshFast(store, minutesAfter(30), fakeSources({ diningMenu: true }).sources);
+    const report = await refreshFast(store, minutesAfter(12 * 60), fakeSources({ diningMenu: true }).sources);
     expect(report.ok).toBe(false);
     expect((await store.get("dining/2026-09-25/19"))?.updatedAt).toBe(NOW.toISOString());
   });
