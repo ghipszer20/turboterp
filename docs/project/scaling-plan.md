@@ -61,9 +61,7 @@ Scripts in the session scratchpad (`measure/seats.ts`, `measure/scan.ts`, `measu
 - **Delete `proxy.ts` and the gate at launch.** It runs on every request. While the site is locked (owner, 2026-10-30), it stays.
 
 ### 4.5 Per-user server routes (the only costs that grow with users)
-- **Calendar feed `/api/calendar/schedule.ics`:** every subscribed calendar app re-downloads it on its own schedule, often hourly. 10k subscribers could mean millions of CDN requests a month, more than the whole Hobby allowance. Options (owner decision):
-  - (a) "Add to calendar" downloads a `.ics` built in the browser: no server cost. It doesn't pick up later room or time changes, but changing sections already means a new feed link.
-  - (b) Keep the feed, with `s-maxage` of a day so each subscriber costs at most one render a day, and accept that it counts against CDN requests.
+- **Calendar (owner, 2026-10-30): Apple devices only, a one-time download, no feed.** On iPhone, iPad and Mac, "Add to calendar" builds the `.ics` in the browser (Calendar's "Add All"); other devices don't show the button. The feed route `/api/calendar/schedule.ics` and the Google add-by-URL link are removed. No server cost and no polling. Trade-off accepted by the owner: a later UMD room or time change doesn't reach the student's calendar; they delete the events and add again.
 - **Seat Alerts watch list and device routes:** the Alerts tab calls `GET /api/seat-alerts/watches` on every open (dynamic, per device). Move reads and writes to Supabase RPC functions that check the device token (security definer), so Vercel isn't involved. Otherwise, measure the route and budget it.
 - **Others** (consent, email plan, report, delete account): rare, one per action. Plan sync already goes straight from the browser to Supabase.
 
@@ -102,16 +100,15 @@ Until then, an alert at 50% of each meter.
    - Repoint the pg_cron jobs (a migration for the owner to apply).
    - Remove `soc-seats` and `seat-alerts` from the Vercel cron route.
 3. **Cached Today and Campus pages** (one builder, `feat/static-campus`). Drop `connection()`, revalidate by tag from the refresh job, time-relative parts in the browser. Campus refresh intervals: rooms 30 min, menus twice a day.
-4. **Per-user routes** (one builder, after the owner picks 4.5 (a) or (b)): calendar feed change; Seat Alerts reads and writes through Supabase RPC.
+4. **Per-user routes** (one builder): Apple-only browser-built calendar download, feed route and Google link removed (4.5); Seat Alerts reads and writes through Supabase RPC.
 5. **Guardrails** (main session):
    - A build check that fails if a page outside an allow-list renders per visit, or if `soc-seats` or `seat-alerts` come back to Vercel.
    - Re-run the Task 0 scripts after each task.
    - Usage alerts at 50%.
    - A monthly look at both Usage pages (prelaunch checklist).
 
-Tasks 1 and 3 can run in parallel. 2 waits for 1. 4 waits for the owner.
+Tasks 1 and 3 can run in parallel. 2 waits for 1. 4 can run any time.
 
 ## 7. Owner decisions
-- Calendar: browser-built download (a) or feed with a day's caching (b) (4.5).
 - Seat Alerts request cap per minute (proposed 40, 4.3).
 - Later, at ~5k weekly users: Vercel Pro or a different host (section 5).

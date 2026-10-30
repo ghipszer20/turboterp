@@ -167,3 +167,7 @@ Plan: `docs/project/account-sync-plan.md`.
   - Leaked password protection is off: accepted. TurboTerp has no passwords (email code, Google, Apple), and the setting needs a paid plan.
   - The 6 Info items are all "RLS Enabled No Policy": `alert_devices`, `consent_records`, `email_sends`, `seat_alert_cursor`, `seat_state` and `seat_watches`. This is intended. Those tables are service-role only, so the anon key can neither read nor write them. Don't add policies to them.
   - No "RLS disabled" error, so no public table is open to the anon key.
+
+## Add to calendar: Apple only, one-time download (owner, 2026-10-30)
+- Supersedes the feed in "Schedule builder cleanup" (5): "Add to calendar" shows only on Apple devices (iPhone, iPad, Mac) and gives a one-time `.ics` made in the browser (Calendar's "Add All"). No `webcal://` feed and no Google Calendar link (owner: "the calendar feature is only useful on iPhones anyway"). Reason: subscribed feeds are re-downloaded by every calendar app on its own schedule, which costs server requests per student forever (`docs/project/scaling-plan.md` 4.5).
+- Accepted trade-off: a later UMD room or time change doesn't update the student's calendar; they delete the events and tap Add to calendar again.
