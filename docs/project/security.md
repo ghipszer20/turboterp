@@ -5,7 +5,7 @@ Review of 2026-10-30 (branch `fix/security-hardening`). Covers the web app, its 
 ## Controls in place
 - **Auth on every write route.** Account delete, plan email and consent use the Supabase access token, checked server-side. Seat Alerts use a per-device secret, stored only as a SHA-256 hash and compared in constant time. Ownership is checked on every watch.
 - **Database.** RLS is on for every table. `user_documents` is owner-only (select/insert/update/delete), with a 64 KB cap per row and server-set `rev`. Every other table is service-role only. `usage_stats()` can only be run by the service role.
-- **Secrets.** Only in Vercel env vars and the gitignored `.env.local`. No key, token or private key was found anywhere in the git history (scan of 2026-10-30). The cron secret lives in Supabase Vault, and the cron check runs in constant time.
+- **Secrets.** Only in Vercel env vars and the gitignored `.env.local`. A scan of the full git history (2026-10-30) found no matches for the patterns checked: Supabase JWT and `sb_secret_` keys, Brevo keys, private-key blocks, and `*SECRET`/`*TOKEN`/`*KEY` assignments with long values. Re-scan with a dedicated tool (gitleaks or secretlint) before the repo goes public. The cron secret lives in Supabase Vault, and the cron check runs in constant time.
 - **Abuse limits** (email_sends table, keys hashed):
 
   | What's limited | Limit |
