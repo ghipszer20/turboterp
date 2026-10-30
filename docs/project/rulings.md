@@ -142,3 +142,11 @@ Plan: `docs/project/account-sync-plan.md`.
 - Considered SMS (Twilio about 1.3¢/text plus ~$20 once and ~$3/month; sole-proprietor 10DLC registration), email, Discord and others. **Owner: push from TurboTerp on the Home Screen is the best option**: free, instant, on the lock screen. iMessage can't be sent by services.
 - The alert title ("CMSC330 0101 has 27 open seats") is enough; tapping it opens Testudo Drop/Add for the watched term (`https://app.testudo.umd.edu/#/main/dropAdd?termId=<term>`, from the owner). Drop/Add needs the student's two-factor login, and there's no link to a specific section.
 - **Cooldown 5 minutes** (owner, 2026-10-29; was 15): a watch alerts at most once every 5 minutes, so a second opening during registration isn't missed.
+
+## Calendar tab out, Seat Alerts tab in (owner, 2026-10-29)
+- The Calendar tab is removed: it only restated the Registrar's page. Key dates stay on Today and the Advisor plan. Assignments and midterms are ELMS's job, not TurboTerp's (students already use it); the syllabus-timeline idea is dropped.
+- .ics downloads are out: adding to a calendar should be a subscription that opens Google Calendar or Apple Calendar depending on the device. Finals times + that subscription in the Schedule tab are a later follow-up (first check how UMD publishes final exam times).
+- Seat Alerts becomes a main tab, keeping the name "Seat Alerts". It opens with a summary of what it is and how to use it. No "this is temporary until the app" wording.
+- Seat Alerts needs no sign-in: watches belong to the device (option 1), because Home Screen apps on iPhone don't share sign-in with Safari. Supersedes seat-alerts.md "signed-in students only" and the Schedule sub-nav placement.
+- One test notification is sent automatically when a device turns alerts on; the "Send a test alert" button is removed.
+- Design: `docs/project/seat-alerts-tab.md`.
