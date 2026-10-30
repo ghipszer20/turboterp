@@ -16,9 +16,9 @@ const LIST_A = [
 const LIST_C = [
   "ANSC227", "ANSC277", "ANTH210", "ANTH222", "ANTH240", "ANTH241", "ANTH265", "ANTH266", "AREC240", "AREC241",
   "AREC365", "BSCI151", "INST126", "INST326", "INST327", "ECON181", "ECON185", "ENEE131", "ENEE200", "ENES200",
-  "ENGL255", "ENMA150", "ENMA289A", "ENSP250", "PLSC250", "ENST233", "ENST282", "FMSC110", "GEOG140", "GEOG330",
+  "ENGL255", "ENMA150", "ENMA201", "ENSP250", "PLSC250", "ENST233", "ENST282", "FMSC110", "GEOG140", "GEOG330",
   "GEOL288", "GEOL388", "GVPT273", "GVPT306", "HIST141", "HIST204", "HIST205", "HIST206", "PHIL209B", "PHIL250",
-  "PLSC101", "PLSC115", "PLSC125", "PLSC289I", "TLPL285", "URSP250",
+  "PLSC112", "PLSC115", "PLSC125", "LARC152", "TLPL285", "URSP250",
 ];
 
 export const scholarsSgc: Program = {
@@ -28,6 +28,8 @@ export const scholarsSgc: Program = {
   source: SOURCE,
   verified: false,
   reviewNotes: [
+    `[check] Renumbered 2026-10-30 (old code → the catalog course whose "Formerly" line names it): ENMA289A → ENMA201; PLSC101 → PLSC112; PLSC289I → LARC152.`,
+    `[check] PUAF301 (source: "AGNR/PUAF 301"), ENST140, ANSC277 and HIST141 (named by the source) and ANTH241 (not in the cached sources) are unknown to the Advisor catalog; left as encoded.`,
     ...SCHOLARS_CITATION_NOTES,
     `[check] Courses: "CPSG 100: Colloquium I; CPSG 101: Colloquium II; CPSG 200: Colloquium III; CPSG 230: Internship or CPSG 240: Service Learning or CPSG 250: Research or CPSP 359G: Advanced Research (DSSP) or CPSP 359S: Discovery Research (DSSP)".`,
     `[check] CDP: "The CDP Course requirement can be earned by taking one of the following: Any 3-credit class with DVCC or DVUP credit; Any combination of 1- or 2-credit courses with DVCC or DVUP credit, which total up to at least 3 credits; FMSC190S …; GVPT 170 …; GVPT 202 …". Encoded as 3 credits of DVCC/DVUP courses or those three courses. "The CDP requirement can be earned by one of the Supporting Courses if that course has DVCC or DVUP credit", so it is an overlay (it doesn't use the course up).`,

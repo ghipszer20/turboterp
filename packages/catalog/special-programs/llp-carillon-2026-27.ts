@@ -14,6 +14,7 @@ export const carillon: Program = {
   source: SOURCE,
   verified: false,
   reviewNotes: [
+    `[check] CRLN101 (source: "the Carillon Studio (CRLN101)") is unknown to the Advisor catalog; left as encoded.`,
     `[check] "Live with your Carillon peers and complete the two required program courses: Carillon Community Course: 3-credit course for each community; Carillon Studio Course: 1-credit course for all Carillon students". The Studio is "CRLN101" ("In the Carillon Studio (CRLN101)", carillon.umd.edu/carillon-experience/carillon-studio).`,
     `[manual] Community course: no course id is published for the 3-credit Community course of each community (2026-27: Constitutional Rights, Health Justice, iGive; the catalog lists "Constitutional Rights, Deliberative Democracy, iGive" for 2025-26). The student confirms it.`,
     `[manual] Residence: Carillon students live in Easton Hall; not a course requirement. No citation or notation is mentioned on the program pages.`,

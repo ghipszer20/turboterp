@@ -7,10 +7,10 @@ export const SOURCE = "https://scholars.umd.edu/sites/default/files/2026-05/Curr
 
 /** "Supporting Course Options" plus the first-semester advising guide's recommended list. */
 const SUPPORTING = [
-  "AASP211", "AAST394", "AMST324", "AGST130", "AMST205", "AMST210", "AMST260", "ANSC227", "ANTH210", "ANTH222",
+  "AAAS211", "AAST394", "AMST324", "AGST130", "AMST205", "AMST210", "AMST260", "ANSC227", "ANTH210", "ANTH222",
   "ANTH242", "ANTH265", "ANTH266", "AOSC123", "AOSC200", "ARCH170", "ARCH271", "ARCH272", "AREC200", "AREC210",
   "AREC240", "AREC254", "AREC260", "ARHU230", "ENGL254", "HIST219N", "WGSS230", "ARTH262", "ASTR220", "ASTR230",
-  "BMGT190H", "ENED290", "BMGT207", "BMGT289A", "BSCI135", "BSCI144", "BSCI150", "CCJS225", "CHSE205", "CINE280",
+  "BMGT190H", "ENED290", "BMGT207", "BMGT289A", "BSCI135", "BSCI144", "BSCI151", "CCJS225", "CHSE205", "CINE280",
   "CPSP220", "DATA200", "ECON185", "EDHD201", "EDHD221", "EDSP220", "ENCE215", "ENES192", "ENES197", "ENES200",
   "ENEE200", "ENES250", "ENGL245", "CINE245", "ENGL255", "ENGL290", "ENGL293", "ENGL294", "ENGL295", "ENMA150",
   "ENMA201", "ENST233", "FMSC110", "FMSC190S", "FMSC260", "FMSC270", "FMSC286", "GEOG140", "GEOL200", "GVPT273",
@@ -28,6 +28,7 @@ export const scholarsSts: Program = {
   source: SOURCE,
   verified: false,
   reviewNotes: [
+    `[check] Renumbered 2026-10-30 (old code → the catalog course whose "Formerly" line names it): AASP211 → AAAS211; BSCI150 → BSCI151.`,
     ...SCHOLARS_CITATION_NOTES,
     `[check] Courses: "CPSS 100: Colloquium I 2 cr; CPSS 101: Colloquium II or CPSP 110: Bridging Divides thru Intergroup Dialogue Across Disciplines (DVCC) or IDEA 311: Design Your Purpose 1 cr".`,
     `[check] Practicum (3 cr): "CPSS 220: Future of Communicating Science (DVCC) or CPSS 240: Robotics Service-Learning (SCIS, DSSP) or CPSS 340: Infrastructure and Society (DSSP) or CPSP 210: Art-Tech Studio … or CPSS 270: Chip Technologies in Taiwan … or CPSP 279T: Indigenous Communities and Technology in Ecuador".`,

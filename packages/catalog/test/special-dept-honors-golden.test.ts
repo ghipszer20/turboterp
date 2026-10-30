@@ -107,8 +107,8 @@ describe("Departmental Honors: Hearing & Speech Sciences (2026-27)", () => {
   });
 
   it("accepts any of the three approved statistics courses", async () => {
-    const withEdms = replace(plan, "PSYC200", c("EDMS451"));
-    await expectAllSatisfied(deptHesp, withEdms);
+    const withQmms = replace(plan, "PSYC200", c("QMMS451"));
+    await expectAllSatisfied(deptHesp, withQmms);
   });
 
   it("needs 3 credits of the honors seminar, not 1", async () => {

@@ -12,6 +12,7 @@ export const scholarsLs: Program = {
   source: SOURCE,
   verified: false,
   reviewNotes: [
+    `[check] CPSF230 (source: "CPSF 230: Practicum: Internship") is unknown to the Advisor catalog; left as encoded.`,
     ...SCHOLARS_CITATION_NOTES,
     `[check] Courses: "CPSF 100: Colloquium I 1 cr; BSCI 160: Ecology and Evolution (DSNL) 3 cr; CHEM 131 + 132S: General Chemistry + Lab (DSNL) 4 cr; CMNS 100: Becoming a Science Terp 1 cr; CPSF 101: Colloquium II 1 cr; BSCI 170: Molecular and Cellular Biology (DSNL) 3 cr; *BSCI 180S: Principles of Biology Laboratory (DSNL) 1 cr; CPSF 200: Colloquium III 1 cr; CPSF 230: Practicum: Internship 1 cr".`,
     `[check] Equivalents: "should take all of these courses or an approved equivalent (e.g., CHEM 135/136)". CHEM135 is accepted for CHEM131 and CHEM136 for the lab; plain CHEM132 and BSCI180 are accepted for the Scholars sections CHEM132S and BSCI180S. Owner to confirm.`,
