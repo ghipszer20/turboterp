@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { connection } from "next/server";
-import { campusDate, campusMinutes, roomBookingUrl } from "@turboterp/campus-data";
+import { roomBookingUrl } from "@turboterp/campus-data";
 import { Notice, Page, SkeletonCard, SourceError } from "@/components/ui";
-import { dataAge } from "@/lib/age";
-import { getStudyRooms, safe } from "@/lib/campus";
+import { safe } from "@/lib/campus";
+import { getStudyRoomsToday } from "@/lib/campus-bundles";
 import { shortLibraryName } from "@/lib/rooms";
 import { RoomsView, type RoomRow } from "./RoomsView";
+import { UpdatedAgeText } from "./UpdatedAgeText";
 
 export const metadata: Metadata = { title: "Study Rooms" };
 
@@ -17,7 +17,7 @@ export default function RoomsPage() {
         <Rooms />
       </Suspense>
       <Notice>
-        Availability from UMD Libraries&apos; booking system, refreshed every few minutes
+        Availability from UMD Libraries&apos; booking system, refreshed every half hour
         <Suspense fallback={null}>
           <UpdatedAge />
         </Suspense>
@@ -28,10 +28,9 @@ export default function RoomsPage() {
   );
 }
 
+// Cached with the page and rebuilt when the refresh job writes new availability; "now" is the browser's.
 async function Rooms() {
-  await connection();
-  const today = campusDate();
-  const res = await safe(() => getStudyRooms(today));
+  const res = await safe(getStudyRoomsToday);
   if (!res.ok) return <SourceError source="UMD Libraries" />;
 
   const { catalog, rooms, failed } = res.data;
@@ -52,8 +51,6 @@ async function Rooms() {
     <RoomsView
       rooms={rows}
       libraries={catalog.locations.map((l) => ({ id: l.id, name: shortLibraryName(l.name) }))}
-      today={today}
-      initialMinutes={campusMinutes()}
       partial={failed > 0}
     />
   );
@@ -61,8 +58,7 @@ async function Rooms() {
 
 /** " (updated 3 min ago)" when the rooms come from a snapshot. */
 async function UpdatedAge() {
-  await connection();
-  const res = await safe(() => getStudyRooms(campusDate()));
+  const res = await safe(getStudyRoomsToday);
   if (!res.ok || !res.data.updatedAt) return null;
-  return ` (${dataAge(res.data.updatedAt, new Date())})`;
+  return <UpdatedAgeText updatedAt={res.data.updatedAt} />;
 }

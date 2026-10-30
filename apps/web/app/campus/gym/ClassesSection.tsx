@@ -9,8 +9,9 @@
 import { useState, useSyncExternalStore } from "react";
 import type { ClassKind, ClassPlace, FitnessClass } from "@turboterp/campus-data";
 import { Chip, Segmented } from "@/components/Segmented";
-import { Card, EmptyState, Row } from "@/components/ui";
+import { Card, EmptyState, Row, SkeletonCard } from "@/components/ui";
 import { useCampusMinutes } from "@/lib/useCampusMinutes";
+import { useCampusClock } from "@/lib/useCampusClock";
 import {
   CLASS_KINDS,
   CLASS_PLACES,
@@ -40,7 +41,14 @@ function readDismissed(): boolean {
   }
 }
 
-export function ClassesSection({
+/** Classes for the week; today and the time come from the browser, so the page itself can be cached. */
+export function ClassesSection({ classes }: { classes: FitnessClass[] }) {
+  const clock = useCampusClock();
+  if (!clock) return <SkeletonCard rows={4} />;
+  return <ClassesInner classes={classes} todayIso={clock.today} initialMinutes={clock.minutes} />;
+}
+
+function ClassesInner({
   classes,
   todayIso,
   initialMinutes,

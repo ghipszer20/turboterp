@@ -76,8 +76,8 @@ export const snapshotKeys = {
 /** How many days of RecWell hours a snapshot keeps (the sheet covers a whole year). */
 export const RECWELL_DAYS = 14;
 export const STAMP_DAYS = 14;
-/** Menus are re-checked once their snapshot is this old. */
-export const MENU_RECHECK_MS = 30 * 60_000;
+/** Menus are re-checked once their snapshot is this old (twice a day). */
+export const MENU_RECHECK_MS = 12 * 60 * 60_000;
 
 export type SourceStatus = { lastAttemptAt: string; lastSuccessAt: string | null; error: string | null };
 export type JobResult = { key: string; ok: boolean; error?: string };
