@@ -33,7 +33,7 @@ export const TERMS: LegalSection[] = [
   {
     heading: "What TurboTerp is",
     paragraphs: [
-      "TurboTerp is a free, open-source app made by a UMD student. It brings campus info, a schedule builder, an academic calendar, a four-year plan and a degree audit into one place.",
+      "TurboTerp is a free, open-source app made by a UMD student. It brings campus info, a schedule builder, seat alerts, a four-year plan and a degree audit into one place.",
       "It is a student project. It has no ads and no paid features, and it is not a business.",
     ],
   },
@@ -141,7 +141,7 @@ export const PRIVACY: LegalSection[] = [
   {
     heading: "What we collect",
     paragraphs: [
-      "An account is optional. Campus, Schedule, Calendar, Today and the Advisor all work without one.",
+      "An account is optional. Campus, Schedule, Seat Alerts, Today and the Advisor all work without one.",
       "If you sign in, we collect your email address. Any email address works; it doesn't have to be a UMD one. There is no password: you sign in with Google, or with a link sent to your address. If you use Google, we get your email address and basic profile from Google, and nothing else.",
       "We use your email address only to sign you in and to tell your account apart from others. While you are signed in, your plan, saved schedules and registration checklist are also stored on our server (see \"Your plan on every device\" below). We don't send newsletters or marketing email.",
       "We never ask for or store your Testudo password or your UID, and we never see your official UMD records.",
@@ -212,7 +212,7 @@ export const PRIVACY: LegalSection[] = [
       "When you are signed in, your plan, saved schedules and registration checklist are stored on our server (Supabase), tied to your account, so they follow you between devices. While you are signed in, the newest change wins: each edit is saved and replaces the older copy, on every device. If this browser already has a plan made before you signed in and your account has a different one, we ask which to keep.",
       "When you sign the Advisor agreement, we also keep a record of it: its version, the time, a random id for your browser, your account if you are signed in, and the name you typed. The name is stored encrypted so that only we can read it, and only if it is needed as a legal record.",
       "Signing out removes the synced copies from that browser. Your signed agreement stays on the device.",
-      "Seat Alerts: the classes you watch and, if you turn on notifications, your browser's push address (from Apple, Google or Mozilla). Deleted with your account.",
+      "Seat Alerts need no account. For each device that turns on alerts we keep its push address (from Apple, Google, Mozilla or Microsoft), a scrambled copy of a random key stored in that browser, and the classes it watches. They are not linked to your account. Turning alerts off deletes them, and so does a push address that stops working.",
     ],
   },
   {
