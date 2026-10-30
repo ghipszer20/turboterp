@@ -1,6 +1,6 @@
 # iOS app plan
 
-Drafted 2026-10-29 by the main session for the owner's request: "plan the transfer of this project to iOS app form", with timelines, steps agents can run in parallel, and the owner's own steps in detail. **Status: proposal.** The stack choice (section 1) needs the owner's yes. 4 builders at once: owner, 2026-10-29. This moves iOS up from the roadmap's "Spring 2028" (roadmap.md).
+Drafted 2026-10-29 by the main session for the owner's request: "plan the transfer of this project to iOS app form", with timelines, steps agents can run in parallel, and the owner's own steps in detail. **Status: proposal.** The stack choice (section 1) needs the owner's yes. 6 builders at once: owner, 2026-10-29. This moves iOS up from the roadmap's "Spring 2028" (roadmap.md).
 
 ## 1. Approach (recommended)
 
@@ -40,7 +40,7 @@ Drafted 2026-10-29 by the main session for the owner's request: "plan the transf
 
 Every task is one builder (Sonnet), test-first, in its own worktree and branch (`feat/ios-<id>`). It merges into `feat/ios` (cut from `feat/ui-rework`), which merges into the working branch after review. Rough size is in builder-days. **UI** means a major UI change that needs owner approval on the iPhone.
 
-Tasks are split so 4 builders can run at once (owner ruling 2026-10-29). Lanes are in section 3. Parallel tasks touch separate files; where two touch the same area, the brief lists exactly which files each one owns.
+Tasks are split so up to 6 builders can run at once (owner ruling 2026-10-29). Lanes are in section 3. Parallel tasks touch separate files; where two touch the same area, the brief lists exactly which files each one owns.
 
 ### Gate
 | ID | Task | Depends on | Size | Done when |
@@ -75,34 +75,41 @@ Tasks are split so 4 builders can run at once (owner ruling 2026-10-29). Lanes a
 ### Release (main session + owner)
 | ID | Task | Depends on |
 |---|---|---|
-| **R1** | Store package: App Store text (name, subtitle, description with "Not affiliated with the University of Maryland", keywords), privacy-label answers, review notes, 1320×2868 screenshots composed from the owner's iPhone shots, app icon (1024 px, from `app/icon.svg`, no transparency). Claude drafts all of it in `docs/project/app-store-listing.md`. | B1 |
+| **R1** | Store package: App Store text (name, subtitle, description with "Not affiliated with the University of Maryland", keywords), privacy-label answers, review notes, 1320×2868 screenshots composed from the owner's iPhone shots, app icon (1024 px, from `app/icon.svg`, no transparency). Claude drafts all of it in `docs/project/app-store-listing.md`. | none (screenshots after the screens are approved) |
 | **R2** | TestFlight build → owner tests 3–7 days → fix list → (B-lane fixes) → release build → submit. | all of A and B |
-| **R3** (v1.1) | Widgets (next class, dining) and Live Activity for Seat Alerts (roadmap phase 6). Swift extension targets through a config plugin; each iteration needs a cloud build. | R2 |
+| **R3** (v1.1, or v1 if started early) | Widgets (next class, dining) and Live Activity for Seat Alerts (roadmap phase 6). Swift extension targets through a config plugin; each iteration needs a cloud build. | S1 (early start in a spare lane, if the build count allows) |
 
 ## 3. Order and timeline
 
-**4 builders at once** (owner, 2026-10-29; PROJECT_MEMORY section 18). Four lanes, each a chain of tasks. A lane takes its next task as soon as that task's dependencies are merged.
+**6 builders at once** (owner, 2026-10-29; PROJECT_MEMORY section 18). That is the most this plan can use: when every task starts as soon as its dependencies merge, at most about 6 run at the same moment (days 2.5–3.5). **A 7th builder would save nothing.** The dependency chain is now the limit, not the builder count.
 
-- **Critical path:** **S0 → A1a → B6 → B7a**, about 5.5 builder-days. The Advisor still finishes last, but it now starts on day 3 instead of week 3. B6 no longer waits for sign-in, and the advisor extraction is split off.
-- **Not limited by builders any more:** with 4 lanes, the limits are the owner's Apple enrollment (needed for the first dev build, by about day 3) and how fast UI reviews come back. About **2 screens a day** arrive for approval in week 1.5–2.
-- **Main-session review load:** up to 4 branches finish per day. The main session merges in dependency order and runs the full suite after each merge. Expect merges to take part of each day.
+- **Critical path:** **S0 → S1 → B1 → B4a → B4b → B5**, about 6.5 builder-days. The Advisor chain (**S0 → A1a → B6 → B7a**) finishes at about day 6 alongside it.
+- **Merge conflicts:** four screen builders start on the same day. To keep them out of each other's files, **B1 creates an empty route file for every screen** (Today, Calendar, each Campus page, Schedule, Seat Alerts, each Advisor screen), plus the tab bar. Each later builder only fills in its own files; shared components go through the main session.
+- **What holds things up now:**
+  - **The owner's Apple enrollment.** The first dev build is needed by about day 2.5, when B1 is ready for review.
+  - **The owner's UI reviews.** About 8 screens arrive on days 3.5–6.5, about 2–3 a day.
+  - **The main session's merges.** Up to 6 branches finish on some days. Merges go in dependency order, with the full suite after each.
 
 Estimates assume overtime runs on most days and the owner approves UI within about a day. Apple's review usually takes 1–3 days per submission.
 
-| When | Lane 1 (app frame) | Lane 2 (Advisor) | Lane 3 (logic) | Lane 4 (data and engine) | Owner (section 4) |
-|---|---|---|---|---|---|
-| **Day 1** | S0 spike | A2 data API | A4s push server side | (idle until S0; main session drafts R1) | O1–O4: decide, Apple enrollment, Expo account, iPhone |
-| **Days 2–3** | S1 scaffold → B1 shell | A1a advisor extraction | A1b other extraction | A5 engine bridge | O8 migration 0010 (A4s done); O5–O6 dev build once Apple approves |
-| **Days 4–5** | B2 Today+Calendar | B6 Advisor 1 | A3 auth + sync | B4a Schedule 1 | O7 Supabase (A3 starts); approve B1, B2 |
-| **Days 6–8** | B3 Campus | B7a audit + what-if | B7b prior credit, course sheet, tracks | B4b Schedule 2 | approve B6, B4a, B3 |
-| **Days 9–10** | B5 Seat Alerts | B8 transcript + exports | accessibility + dark-mode pass | fixes from approvals | approve B7a/b, B4b, B5, B8; O9 store setup |
-| **Week 3** | fixes | fixes | | | **O10 TestFlight testing (3–7 days)** |
-| **Week 3.5–4** | fixes | | | | O11 submit → Apple review → O12 release |
-| **Weeks 4–5** | R3 widgets / Live Activity (v1.1) | | | | approve, update |
+| When | Lane 1 | Lane 2 | Lane 3 | Lane 4 | Lane 5 | Lane 6 | Owner (section 4) |
+|---|---|---|---|---|---|---|---|
+| **Day 1** | S0 spike | A2 data API | A4s push server | (waits on S0) | (waits on S0) | (waits on S0) | O1–O4: decide, Apple enrollment, Expo account, iPhone |
+| **Day 2** | S1 scaffold → B1 shell | A1a advisor extraction | A1b other extraction | A5 engine bridge | | R1 listing draft | O8 migration 0010 |
+| **Days 2.5–4.5** | B2 Today+Calendar | B6 Advisor 1 | A3 auth + sync | B3 Campus | B4a Schedule 1 | accessibility + dark-mode checks of merged screens | O5–O6 dev build (Apple approved by now); O7 Supabase; approve B1, B2 |
+| **Days 4.5–6** | fixes from approvals | B7a audit + what-if | B7b prior credit, course sheet, tracks | B8 transcript + exports | B4b Schedule 2 (to day 6) | R3 widgets spike (optional) | approve B3, B4a, B6 |
+| **Days 6–7** | B5 Seat Alerts | fixes | fixes | fixes | fixes | R3 cont. | approve B4b, B7a/b, B8, B5; O9 store setup |
+| **Week 2 (end)** | first TestFlight build | | | | | | **O10 TestFlight testing (3–7 days)** |
+| **Week 3** | fixes | | | | | | O11 submit → Apple review → O12 release |
 
-**First App Store release: about 3–4 weeks after the go** (was 4.5–5.5 with 2 builders). Building drops from about 3.5 weeks to about 2. TestFlight testing and Apple review don't get shorter.
+**First App Store release: about 2.5–3.5 weeks after the go.** That compares with 3–4 weeks for 4 builders and 4.5–5.5 weeks for 2. Building takes about 7 days, against about 10 for 4 builders. TestFlight testing and Apple review are now more than half of the time, and more builders can't shorten them.
 
-**Cost:** total work is about the same, plus about 3 extra builder start-ups from the splits (about 45k tokens each, section 18). Usage per day is about **twice** the 2-builder plan. If a usage limit stops work, lanes 3 and 4 pause first: lanes 1 and 2 hold the critical path.
+**Using the spare lanes:** lanes 5 and 6 are free for part of the time. They take R1 (the store listing) and an optional early start on R3 (widgets and the Seat Alerts Live Activity). R3 needs cloud builds (about 15 a month on the free plan), so it starts only if the build count allows. If it's ready by TestFlight, widgets ship in v1 instead of v1.1.
+
+**Cost:**
+- **Total work** is about the same as the 4-builder plan, plus R3 if it starts early.
+- **Usage per day** is about 3 times the 2-builder plan for days 2–6, so a usage limit is more likely to stop work.
+- **If a limit hits,** pause lanes 6, 5, 4 and 3 in that order. Lanes 1 and 2 hold the critical path and the Advisor.
 
 **If S0 fails badly** (the shared code can't run in Expo even through a WebView): stop and come back to the owner with the Capacitor fallback and its 4.2 risk before building more.
 
@@ -133,7 +140,7 @@ Claude can't do these: they need the owner's identity, money, Apple 2FA or devic
 1. Update to the latest iOS.
 2. Keep it close during O5–O6.
 
-### O5. First development build (after O2 is approved and S1 is merged, about day 2–3; about 30 minutes plus the build queue). This is now the main thing that can hold up the screens: B1 is reviewed on the phone.
+### O5. First development build (after O2 is approved and S1 is merged, about day 2–2.5; about 30 minutes plus the build queue). This is now the main thing that can hold up the screens: B1 is reviewed on the phone.
 1. Register your iPhone: run `! npx eas-cli device:create` in `apps/mobile`, choose **Website**, and open the link or QR code **on your iPhone in Safari**. Install the profile: Settings → General → VPN & Device Management → the downloaded profile → Install.
 2. Start the build: `! npx eas-cli build --profile development --platform ios` in `apps/mobile`. When it asks:
    - "Log in to your Apple account?" → **Yes**, sign in, approve the 2FA prompt.

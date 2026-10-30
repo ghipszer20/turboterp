@@ -13,7 +13,7 @@ Moved out of PROJECT_MEMORY.md (sections 9 and 12) on 2026-09-26 so it loads onl
 | 3 | Advising v1 (what-if audits, semester and section recommendations, strength profile) |
 | 4 | Accounts, reviews and moderation, professor summaries, LLM advisor and grade feedback |
 | 5 | Optimizer (easier, front-loaded, summer), registration-day plan |
-| 6 | iOS app (proposed 2026-10-29 to move up: `docs/project/ios-plan.md`, about 3–4 weeks to the App Store with 4 builders) + extras: widgets, dining/booking/waitlist reminders |
+| 6 | iOS app (proposed 2026-10-29 to move up: `docs/project/ios-plan.md`, about 2.5–3.5 weeks to the App Store with 6 builders) + extras: widgets, dining/booking/waitlist reminders |
 | Spike | Seat and waitlist monitoring during a registration window |
 
 MVP recommendation: Phases 0–2 plus what-if audits and section recommendations from Phase 3.
