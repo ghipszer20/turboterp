@@ -102,6 +102,38 @@ export function withCatalogFallback(catalog: PlanCatalog, catalogCourses: Course
   return out;
 }
 
+/** The base course id and trailing suffix letters of a topic code: BIOE489G is ["BIOE489", "G"]. */
+export function topicCodeParts(id: string): { base: string; suffix: string } | undefined {
+  const m = /^([A-Z]{4}\d{3})([A-Z]+)$/.exec(id);
+  return m ? { base: m[1]!, suffix: m[2]! } : undefined;
+}
+
+/**
+ * Entries for topic codes with a letter suffix (BIOE489G) that program requirements name but no
+ * catalog lists, built from the base course (BIOE489): its credits, title "<base> (topic G)", no Gen
+ * Eds (a topic's Gen Eds vary), no twins, prerequisites or `offered`, and `notScheduled`. Only the
+ * ids in `namedIds` get entries; a code already in `catalog`, or whose base is not, is left alone.
+ */
+export function withTopicCourses(catalog: PlanCatalog, namedIds: Iterable<string>): PlanCatalog {
+  const out = new Map(catalog);
+  for (const id of namedIds) {
+    const parts = topicCodeParts(id);
+    const base = parts && catalog.get(parts.base);
+    if (!parts || !base || catalog.has(id)) continue;
+    out.set(id, {
+      id,
+      title: `${base.title} (topic ${parts.suffix})`,
+      credits: base.credits,
+      genEd: [],
+      prerequisite: null,
+      corequisite: null,
+      repeat: base.repeat,
+      notScheduled: true,
+    });
+  }
+  return out;
+}
+
 const SEASON_BY_MONTH: Record<string, Season> = { "01": "Spring", "05": "Summer", "08": "Fall", "12": "Winter" };
 const SEASON_ORDER: Season[] = ["Fall", "Winter", "Spring", "Summer"];
 

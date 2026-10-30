@@ -27,7 +27,9 @@ import { fileURLToPath } from "node:url";
 import { gzipSync } from "node:zlib";
 import { mergeSnapshots, type Course } from "@turboterp/course-data";
 import { execFileSync } from "node:child_process";
-import { addedByFallback, buildCatalog, withCatalogFallback, withOfferings } from "@turboterp/plan/catalog";
+import { addedByFallback, buildCatalog, withCatalogFallback, withOfferings, withTopicCourses }
+import { programCourseIds } from "@turboterp/audit";
+import { PROGRAMS } from "@turboterp/programs"; from "@turboterp/plan/catalog";
 import { encodeCatalogFile } from "@turboterp/plan/catalog-file";
 import { courseDetailFiles } from "../lib/advisor/course-details.ts";
 
@@ -101,7 +103,12 @@ const scheduled = withOfferings(buildCatalog(courses), snapshots, [...currentTer
 // Academic Catalog courses no cached term schedules fill in beneath the snapshot courses.
 const catalogCourses = readCatalogCourses();
 const fallback = addedByFallback(scheduled, catalogCourses);
-const catalog = withCatalogFallback(scheduled, catalogCourses);
+// Topic codes with a letter suffix (BIOE489G) that program requirements name, built from their base course.
+const namedIds = new Set<string>();
+for (const entry of PROGRAMS) for (const id of programCourseIds(await entry.load())) namedIds.add(id);
+const withFallback = withCatalogFallback(scheduled, catalogCourses);
+const catalog = withTopicCourses(withFallback, namedIds);
+const topicCount = catalog.size - withFallback.size;
 const catalogSize = write(join(termDir, "catalog.json"), encodeCatalogFile(catalog, { term, generatedAt: newest.fetchedAt }));
 
 let detailBytes = 0;
@@ -134,7 +141,7 @@ write(join(out, "advisor", "index.json"), {
 });
 
 const kb = (n: number) => `${(n / 1024).toFixed(0)} KB`;
-console.log(`advisor-data: term ${term} (merged ${terms.join(", ")}), ${catalog.size} courses (${fallback.length} catalog-only) in ${(performance.now() - t).toFixed(0)} ms`);
+console.log(`advisor-data: term ${term} (merged ${terms.join(", ")}), ${catalog.size} courses (${fallback.length} catalog-only, ${topicCount} topic codes) in ${(performance.now() - t).toFixed(0)} ms`);
 console.log(`  catalog.json ${kb(catalogSize.bytes)} (${kb(catalogSize.gzip)} gzipped)`);
 console.log(`  course details: ${Object.keys(details).length} department files, ${kb(detailBytes)} in all`);
 console.log(`  grade files: ${gradeFiles} copied, ${kb(gradeBytes)} in all${gradeFiles ? "" : " (none found; course sheets will say there's no grade data)"}`);

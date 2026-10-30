@@ -13,6 +13,7 @@ import { dirname, join, resolve } from "node:path";
 import { programCourseIds } from "@turboterp/audit";
 import type { Course } from "@turboterp/course-data";
 import { PROGRAMS } from "@turboterp/programs";
+import { topicCodeParts } from "../src/catalog.ts";
 import { parseTwinLine } from "../src/twins.ts";
 
 const git = (...args: string[]) => execFileSync("git", args, { encoding: "utf8" }).trim();
@@ -38,7 +39,13 @@ for (const c of [...snapshot.values(), ...catalog.values()]) {
     formerlyOf.set(old, list);
   }
 }
-const known = (id: string) => snapshot.has(id) || catalog.has(id);
+const inCatalogs = (id: string) => snapshot.has(id) || catalog.has(id);
+// A topic code (BIOE489G) whose base course is known gets an entry from withTopicCourses.
+const known = (id: string) => {
+  if (inCatalogs(id)) return true;
+  const parts = topicCodeParts(id);
+  return parts !== undefined && inCatalogs(parts.base);
+};
 
 function hint(id: string): string {
   const parts: string[] = [];

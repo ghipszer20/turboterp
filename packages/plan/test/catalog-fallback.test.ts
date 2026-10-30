@@ -1,7 +1,7 @@
 // Courses only in the UMD Academic Catalog (not on any cached Schedule of Classes) join the plan catalog.
 
 import { describe, expect, it } from "vitest";
-import { addedByFallback, buildCatalog, withCatalogFallback } from "../src/catalog.ts";
+import { addedByFallback, buildCatalog, topicCodeParts, withCatalogFallback, withTopicCourses } from "../src/catalog.ts";
 import { checkPlan } from "../src/check.ts";
 import { SPRING_2027 } from "./helpers.ts";
 
