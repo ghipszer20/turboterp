@@ -57,7 +57,7 @@ export const rotcMinorMilitaryStudies: Program = {
       advisorMayApprove: true,
       name: "Global Affairs elective",
       options: [
-        "GVPT200", "GVPT280", "GVPT289L", "GVPT354", "GVPT360", "GVPT456",
+        "GVPT200", "GVPT280", "GVPT210", "GVPT354", "GVPT360", "GVPT456",
         "HIST224", "HIST225", "HIST240", "HIST266", "HIST353", "HIST355", "HIST357",
       ],
     },

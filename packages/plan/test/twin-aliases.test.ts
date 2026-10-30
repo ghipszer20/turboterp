@@ -5,6 +5,7 @@
 import { describe, expect, it } from "vitest";
 import type { CatalogCourse, PlanCatalog } from "../src/catalog.ts";
 import type { Plan } from "../src/check.ts";
+import { auditProgram } from "@turboterp/audit";
 import { planCourses } from "../src/notices.ts";
 import type { Twins } from "../src/twins.ts";
 
@@ -61,5 +62,13 @@ describe("planCourses: twin aliases for the audit", () => {
     const out = planCourses(plan(["PLAIN100"]), catalog);
     expect("crossListed" in out[0]!).toBe(false);
     expect("renumbered" in out[0]!).toBe(false);
+  });
+
+  it("an old-code transcript course (HIST157, taken years ago) satisfies a requirement naming only HIST201", async () => {
+    const out = planCourses(plan([], ["HIST157"]), catalog);
+    expect(byId(out, "HIST157").renumbered).toEqual(["HIST201"]);
+    const program = { id: "t", name: "t", requirements: [{ kind: "course" as const, id: "h", name: "H", options: ["HIST201"] }] };
+    const audit = await auditProgram(program, out);
+    expect(audit.requirements[0]!.status).toBe("satisfied");
   });
 });

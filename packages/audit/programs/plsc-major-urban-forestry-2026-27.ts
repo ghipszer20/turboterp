@@ -35,7 +35,7 @@ export const plscMajorUrbanForestry: Program = {
     plscC("plsc253", "Woody Plants for Mid-Atlantic Landscapes I (PLSC253)", "PLSC253"),
     plscC("plsc254", "Woody Plants for Mid-Atlantic Landscape II (PLSC254)", "PLSC254"),
     plscC("plsc272", "Principles of Arboriculture (PLSC272)", "PLSC272"),
-    plscC("plsc361", "PLSC361", "PLSC361"),
+    plscC("plsc361", "PLSC251", "PLSC251"),
     plscC("plsc389", "Internship (PLSC389)", "PLSC389"),
     plscC("plsc400", "Plant Physiology (PLSC400)", "PLSC400"),
     plscC("plsc420", "Principles of Plant Pathology (PLSC420)", "PLSC420"),
