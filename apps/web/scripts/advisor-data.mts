@@ -27,9 +27,9 @@ import { fileURLToPath } from "node:url";
 import { gzipSync } from "node:zlib";
 import { mergeSnapshots, type Course } from "@turboterp/course-data";
 import { execFileSync } from "node:child_process";
-import { addedByFallback, buildCatalog, withCatalogFallback, withOfferings, withTopicCourses }
+import { addedByFallback, buildCatalog, withCatalogFallback, withOfferings, withTopicCourses } from "@turboterp/plan/catalog";
 import { programCourseIds } from "@turboterp/audit";
-import { PROGRAMS } from "@turboterp/programs"; from "@turboterp/plan/catalog";
+import { PROGRAMS } from "@turboterp/programs";
 import { encodeCatalogFile } from "@turboterp/plan/catalog-file";
 import { courseDetailFiles } from "../lib/advisor/course-details.ts";
 
