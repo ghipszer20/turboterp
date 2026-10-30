@@ -1,6 +1,34 @@
 import { describe, expect, it } from "vitest";
 import { DEFAULT_FILTERS } from "../filters";
-import { affectsPlan, emptySaved, parseSaved, savePlan, serializeSaved, setOwnSection, withCourses } from "../saved";
+import { affectsPlan, emptySaved, lastSavedPlan, parseSaved, removePlan, savePlan, serializeSaved, setOwnSection, withCourses } from "../saved";
+
+describe("removing saved plans (last one only)", () => {
+  const base = withCourses(emptySaved("202701"), ["CMSC131"]);
+  const abc = savePlan(savePlan(savePlan(base, "A", { CMSC131: "0101" }), "B", { CMSC131: "0201" }), "C", { CMSC131: "0301" });
+
+  it("finds the highest lettered plan that has picks", () => {
+    expect(lastSavedPlan(emptySaved("202701"))).toBeNull();
+    expect(lastSavedPlan(savePlan(base, "A", { CMSC131: "0101" }))).toBe("A");
+    expect(lastSavedPlan(abc)).toBe("C");
+    expect(lastSavedPlan(savePlan(base, "B", {}))).toBeNull();
+  });
+
+  it("honours a caller's own notion of 'has picks'", () => {
+    expect(lastSavedPlan(abc, (p) => p !== "C")).toBe("B");
+  });
+
+  it("removes the last plan and nothing else", () => {
+    const next = removePlan(abc, "C");
+    expect(next.plans).toEqual({ A: { CMSC131: "0101" }, B: { CMSC131: "0201" } });
+    expect(next.own).toEqual(abc.own);
+  });
+
+  it("refuses to remove an earlier plan or an empty one", () => {
+    expect(removePlan(abc, "B")).toBe(abc);
+    expect(removePlan(abc, "A")).toBe(abc);
+    expect(removePlan(emptySaved("202701"), "A").plans).toEqual({});
+  });
+});
 
 describe("saved schedule (per device)", () => {
   it("starts empty for the term, following the plan (no local course list yet)", () => {
