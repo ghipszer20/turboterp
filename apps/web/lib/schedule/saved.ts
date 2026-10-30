@@ -98,6 +98,23 @@ export const savePlan = (s: SavedSchedule, plan: PlanId, picks: SectionPicks): S
   plans: { ...s.plans, [plan]: { ...picks } },
 });
 
+/** The highest-lettered plan with picks (C before B before A), or null. `hasPicks` lets the UI ignore picks for dropped courses. */
+export function lastSavedPlan(
+  s: SavedSchedule,
+  hasPicks: (p: PlanId) => boolean = (p) => Object.keys(s.plans[p] ?? {}).length > 0,
+): PlanId | null {
+  for (const p of [...PLAN_IDS].reverse()) if (hasPicks(p)) return p;
+  return null;
+}
+
+/** Deletes a saved plan, but only the last one (owner: no removing B before C). Anything else returns `s` unchanged. */
+export function removePlan(s: SavedSchedule, id: PlanId): SavedSchedule {
+  if (lastSavedPlan(s) !== id) return s;
+  const plans = { ...s.plans };
+  delete plans[id];
+  return { ...s, plans };
+}
+
 export function setOwnSection(s: SavedSchedule, courseId: string, sectionId: string | null): SavedSchedule {
   const own = { ...s.own };
   if (sectionId === null) delete own[courseId];

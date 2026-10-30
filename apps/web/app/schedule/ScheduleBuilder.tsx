@@ -6,6 +6,7 @@ import type { AcademicEvent } from "@turboterp/campus-data";
 import type { Section } from "@turboterp/course-data/schedules";
 import { dispatchPlan, useAdvisorStore } from "@/app/advisor/store";
 import { Segmented } from "@/components/Segmented";
+import { RemovePlanButton } from "./RemovePlanButton";
 import { EmptyState, SkeletonCard } from "@/components/ui";
 import { buildIcs } from "@/lib/schedule/ics";
 import { termDates } from "@/lib/schedule/term-dates";
@@ -25,6 +26,8 @@ import {
   parseSaved,
   PLAN_IDS,
   savePlan,
+  lastSavedPlan,
+  removePlan,
   serializeSaved,
   setOwnSection,
   withCourses,
@@ -243,6 +246,20 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
   // Only a saved plan's picks for courses still in this term count — a course the plan or the
   // picker dropped shouldn't leave a phantom "Plan A ✓".
   const planHasPicks = (p: PlanId) => Object.keys(saved.plans[p] ?? {}).some((c) => courses.includes(c));
+  const lastPlan = lastSavedPlan(saved, planHasPicks);
+  // Deleting the last plan: if it was the one open, fall back to the one before it, or to Build my own.
+  const removeLastPlan = (p: PlanId) => {
+    update((s) => removePlan(s, p));
+    if (plan !== p) return;
+    const prev = PLAN_IDS[PLAN_IDS.indexOf(p) - 1];
+    if (prev) {
+      setPlan(prev);
+      if (view.kind === "editor") openPlan(prev);
+    } else {
+      setPlan("A");
+      if (view.kind === "editor") setView({ kind: "own" });
+    }
+  };
   const exportIcs = (picks: Record<string, string>) => {
     if (!term) return;
     const chosen = Object.entries(picks)
@@ -296,6 +313,7 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
         value={plan}
         onChange={setPlan}
       />
+      {lastPlan ? <RemovePlanButton plan={lastPlan} onRemove={removeLastPlan} /> : null}
       <button
         type="button"
         className={styles.save}
@@ -436,6 +454,7 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
                 Plan {p}
               </button>
             ))}
+            {lastPlan ? <RemovePlanButton plan={lastPlan} onRemove={removeLastPlan} /> : null}
           </div>
         ) : null}
       </div>
