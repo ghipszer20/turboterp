@@ -165,4 +165,5 @@ Plan: `docs/project/account-sync-plan.md`.
   - Two trigger functions had a mutable search_path; migration `0013_function_search_path.sql` fixes them.
   - `pg_net` installed in the public schema: accepted. Its functions live in the `net` schema, and moving it would mean dropping and recreating the extension under the cron jobs.
   - Leaked password protection is off: accepted. TurboTerp has no passwords (email code, Google, Apple), and the setting needs a paid plan.
-  - The 6 Info items weren't in the screenshot. They're expected to be "RLS enabled, no policy" on the service-role-only tables, which is intended.
+  - The 6 Info items are all "RLS Enabled No Policy": `alert_devices`, `consent_records`, `email_sends`, `seat_alert_cursor`, `seat_state` and `seat_watches`. This is intended. Those tables are service-role only, so the anon key can neither read nor write them. Don't add policies to them.
+  - No "RLS disabled" error, so no public table is open to the anon key.
