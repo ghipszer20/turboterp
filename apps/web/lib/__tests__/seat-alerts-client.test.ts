@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { alertsStatus, bellMode, onReturnToPage, pushSupport } from "../seat-alerts/client";
-import { endedNote, MAX_WATCHES, minutesSince, watchCount, watchRowView, type WatchRow } from "../seat-alerts/view";
+import { endedNote, MAX_WATCHES, minutesSince, watchRowView, type WatchRow } from "../seat-alerts/view";
 
 const base = { hasServiceWorker: true, hasPushManager: true, hasNotification: true, standalone: false, maxTouchPoints: 0 };
 const IPHONE = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) AppleWebKit/605.1.15 Version/17.4 Mobile/15E148 Safari/604.1";
@@ -53,7 +53,7 @@ describe("watch view model", () => {
   });
   it("words an open section", () =>
     expect(watchRowView(row({ status: { open: 1, waitlist: 0, checkedAt: "2026-10-09T17:59:30Z" } }), now).status).toBe("1 open · waitlist 0"));
-  it("words an any-section watch", () => expect(watchRowView(row({ sectionId: null }), now).title).toBe("Any section of CMSC351"));
+  it("words an all-sections watch", () => expect(watchRowView(row({ sectionId: null }), now).title).toBe("All sections of CMSC351"));
   it("handles a watch not checked yet", () => {
     const v = watchRowView(row({ status: null }), now);
     expect(v.status).toBe("Not checked yet");
@@ -64,10 +64,8 @@ describe("watch view model", () => {
     expect(minutesSince("2026-10-09T17:59:50Z", now)).toBe(0);
     expect(minutesSince("2026-10-09T16:00:00Z", now)).toBe(120);
   });
-  it("counts watches against the limit", () => {
+  it("keeps the per-device watch limit at 20", () => {
     expect(MAX_WATCHES).toBe(20);
-    expect(watchCount(3)).toBe("3 of 20 watches");
-    expect(watchCount(1)).toBe("1 of 20 watches");
   });
   it("notes ended watches from older terms", () => {
     expect(endedNote(0)).toBeNull();

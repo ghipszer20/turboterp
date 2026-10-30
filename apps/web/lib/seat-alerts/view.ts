@@ -9,7 +9,7 @@ export function setupSteps(support: PushSupport): string[] {
   if (support === "ios-needs-home-screen")
     return ["In Safari's toolbar, tap Share, then Add to Home Screen.", "Open TurboTerp from your Home Screen.", "Turn on alerts there and add your classes."];
   if (support === "supported")
-    return ["Turn on alerts for this device.", "Add a full class, or any section of it.", "When a seat opens, tap the alert to go to Testudo."];
+    return ["Turn on alerts for this device.", "Pick a full section, or get alerts for all sections of a class.", "When a seat opens, tap the alert to go to Testudo."];
   return [];
 }
 
@@ -41,7 +41,7 @@ function ago(iso: string, now: Date): string {
 export function watchRowView(w: WatchRow, now: Date) {
   const s = w.status ?? null;
   return {
-    title: w.sectionId ? `${w.courseId} ${w.sectionId}` : `Any section of ${w.courseId}`,
+    title: w.sectionId ? `${w.courseId} ${w.sectionId}` : `All sections of ${w.courseId}`,
     status: s ? (s.open > 0 ? `${s.open} open · waitlist ${s.waitlist}` : `Full · waitlist ${s.waitlist}`) : "Not checked yet",
     checked: s ? `Checked ${ago(s.checkedAt, now)}` : "",
     lastAlert: w.lastAlertAt ? `Last alert ${ago(w.lastAlertAt, now)}` : "",
@@ -49,7 +49,6 @@ export function watchRowView(w: WatchRow, now: Date) {
   };
 }
 
-export const watchCount = (n: number) => `${n} of ${MAX_WATCHES} watches`;
 
 export function endedNote(n: number): string | null {
   if (n <= 0) return null;

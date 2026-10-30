@@ -13,7 +13,7 @@ describe("setupSteps", () => {
   it("gives a device that can get notifications the three-step flow", () => {
     expect(setupSteps("supported")).toEqual([
       "Turn on alerts for this device.",
-      "Add a full class, or any section of it.",
+      "Pick a full section, or get alerts for all sections of a class.",
       "When a seat opens, tap the alert to go to Testudo.",
     ]);
   });

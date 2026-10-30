@@ -13,7 +13,7 @@ const ERRORS: Record<string, string> = {
   limit: `You're watching ${MAX_WATCHES} already. Remove one to add another.`,
 };
 
-/** Search the current term's classes, then watch one section or any section. */
+/** Search the current term's classes, then watch one full section or all sections. */
 export function AddClass({ state }: { state: WatchesState }) {
   const [query, setQuery] = useState("");
   const [course, setCourse] = useState<string | null>(null);
@@ -62,14 +62,17 @@ export function AddClass({ state }: { state: WatchesState }) {
         ) : null}
         {course ? (
           <>
-            <button
-              type="button"
-              className={styles.ghost}
-              disabled={atLimit || !!findWatch(watches, course, null)}
-              onClick={() => watch(null)}
-            >
-              {findWatch(watches, course, null) ? `Watching any section of ${course}` : `Any section of ${course}`}
-            </button>
+            {/* Only worth watching every section while at least one is full (owner, 2026-10-30). */}
+            {data.loaded && sections.some((s) => s.seats.open === 0) ? (
+              <button
+                type="button"
+                className={styles.ghost}
+                disabled={atLimit || !!findWatch(watches, course, null)}
+                onClick={() => watch(null)}
+              >
+                {findWatch(watches, course, null) ? `Alerts on for all sections of ${course}` : `Alert for all sections of ${course}`}
+              </button>
+            ) : null}
             {!data.loaded ? <p className={styles.fine}>Loading sections…</p> : null}
             {data.loaded && !sections.length ? <p className={styles.fine}>No sections this term.</p> : null}
             <ul className={styles.list}>
@@ -77,19 +80,26 @@ export function AddClass({ state }: { state: WatchesState }) {
                 const watched = findWatch(watches, s.courseId, s.id);
                 return (
                   <li key={s.id} className={styles.row}>
+                    {/* One fact per line and a short action, so the text keeps the row's width on phones. */}
                     <div className={styles.rowText}>
-                      <span className={styles.rowTitle}>
-                        {s.id} · {s.instructors.join(", ") || "TBA"}
-                      </span>
+                      <span className={styles.rowTitle}>Section {s.id}</span>
+                      <span className={styles.rowSub}>{s.instructors.join(", ") || "Instructor TBA"}</span>
                       <span className={styles.rowSub}>{meetingSummary(s)}</span>
                       <span className={styles.rowSub}>
-                        {s.seats.open > 0 ? `${s.seats.open} open` : "Full"} · waitlist {s.seats.waitlist}
+                        <span className={s.seats.open > 0 ? styles.open : undefined}>{`${s.seats.open} open`}</span>
+                        {` · waitlist ${s.seats.waitlist}`}
                       </span>
                     </div>
                     <div className={styles.rowActions}>
                       {s.seats.open > 0 ? (
-                        <a className={`${styles.link} ${styles.open}`} href="https://app.testudo.umd.edu/soc/" target="_blank" rel="noreferrer">
-                          Open now: register on Testudo
+                        <a
+                          className={`${styles.link} ${styles.open}`}
+                          href="https://app.testudo.umd.edu/soc/"
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`Section ${s.id} has open seats: register on Testudo`}
+                        >
+                          Open
                         </a>
                       ) : watched ? (
                         <span className={styles.rowSub}>Watching</span>

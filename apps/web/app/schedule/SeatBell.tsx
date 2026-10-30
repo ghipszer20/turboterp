@@ -16,7 +16,7 @@ function Bell({ filled }: { filled: boolean }) {
   );
 }
 
-/** "Notify me" (a full section) or "Any section" (the course header). Filled when watched; one tap removes. */
+/** "Notify me" (a full section) or "Alert for all sections" (the course header). Filled when watched; one tap removes. */
 export function SeatBell({ state, courseId, sectionId, label }: { state: WatchesState; courseId: string; sectionId: string | null; label: string }) {
   const [error, setError] = useState<string | null>(null);
   if (state.phase === "loading" || state.phase === "unavailable") return null;

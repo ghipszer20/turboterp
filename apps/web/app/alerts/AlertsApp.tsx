@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { SkeletonCard } from "@/components/ui";
 import { currentPushEnv, pushSupport, type PushSupport } from "@/lib/seat-alerts/client";
 import { useWatches } from "@/lib/seat-alerts/use-watches";
-import { endedNote, setupSteps, watchCount, watchRowView, type WatchRow } from "@/lib/seat-alerts/view";
+import { endedNote, setupSteps, watchRowView, type WatchRow } from "@/lib/seat-alerts/view";
 import { AddClass } from "./AddClass";
 import { AddSquareIcon, ShareIcon, StatusCard } from "./StatusCard";
 import styles from "./alerts.module.css";
@@ -85,7 +85,6 @@ export function AlertsApp() {
           <section aria-label="Your watches">
             <div className={styles.countRow}>
               <h2 className={styles.title}>Watching</h2>
-              <span className={styles.fine}>{watchCount(watches.length)}</span>
             </div>
             {watches.length ? (
               <ul className={styles.list}>
@@ -132,8 +131,8 @@ function WatchItem({ w, now, onDone, onRemove }: { w: WatchRow; now: Date; onDon
         <span className={styles.rowTitle}>{v.title}</span>
         <span className={styles.rowSub}>
           <span className={v.isOpen ? styles.open : undefined}>{v.status}</span>
-          {v.checked ? ` · ${v.checked}` : ""}
         </span>
+        {v.checked ? <span className={styles.rowSub}>{v.checked}</span> : null}
         {v.lastAlert ? <span className={styles.rowSub}>{v.lastAlert}</span> : null}
       </div>
       <div className={styles.rowActions}>

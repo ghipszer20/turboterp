@@ -170,9 +170,12 @@ export function SectionPanel({
           ✕
         </button>
       </div>
-      <div className={bell.anyRow}>
-        <SeatBell state={watches} courseId={courseId} sectionId={null} label="Any section" />
-      </div>
+      {/* Watching every section only makes sense while one is full (owner, 2026-10-30). */}
+      {allSections.some((s) => s.seats.open === 0) ? (
+        <div className={bell.anyRow}>
+          <SeatBell state={watches} courseId={courseId} sectionId={null} label="Alert for all sections" />
+        </div>
+      ) : null}
       <div className={styles.scroll} onMouseLeave={() => onPreview(null)}>
         {empty ? <p className={styles.none}>Every section of {courseId} is full.</p> : null}
         {choices.sameLecture.length ? (
