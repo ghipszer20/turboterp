@@ -2,7 +2,7 @@ import { getBuildings } from "@/lib/campus";
 
 // GET /api/campus/buildings -> the umd.io buildings list (id, name, Testudo code, position),
 // read from the campus snapshot, never from umd.io per request. Same for every student, so
-// CDNs and browsers cache it; the schedule builder and Transport's "leave by" card use it.
+// CDNs and browsers cache it; the schedule builder and Today's "leave by" hero use it.
 export async function GET() {
   try {
     const buildings = await getBuildings();

@@ -10,7 +10,7 @@ An all-in-one iOS app + website for UMD students. It combines:
 - UMD degree audit
 - The UMD Schedule of Classes
 - PlanetTerp and Reddit course/professor info
-- Advising, campus life info (dining, libraries, gyms) and study-room booking
+- Advising, campus life info (dining, libraries, gyms) and study-room booking (no buses: Transit does that better)
 
 What sets it apart from Jupiterp, Coursicle and PlanetTerp is the **degree audit + 4-year planner + advising**, all in one app.
 
@@ -24,7 +24,7 @@ What sets it apart from Jupiterp, Coursicle and PlanetTerp is the **degree audit
 - **The UI must be incredibly sleek and easy to understand, Apple-style quality.** 4-year plan grid styled like the UMD CS 4-year plan, but with lighter, friendlier colors.
 - Grade upload is wanted so the LLM can give personalized course-selection feedback.
 - Dining hall menus, library hours, all RecWell gym schedules, and booking any study room at any library are all wanted.
-- Shuttle-UM bus schedules are wanted, with the Transit app as the design inspiration.
+- **Transport removed (owner, 2026-10-29; supersedes the Shuttle-UM rulings):** "I can't do it better than transit even on data that runs out soon. cut the fat." Research first (2026-10-29): Shuttle-UM real-time is not public (Swiftly → Transit app; no GTFS-RT listed on Transitland or the Mobility Database), and the static feed (published 2026-04-30) ends 2026-12-24 with fall service ending 2026-12-11–12. So the Transport tab, map, trip planner, bus board, bus APIs, GTFS snapshot, MapLibre and the DOTS email are gone. Kept: walking-time estimates between classes (`packages/campus-data/src/walk.ts`), Today's next-class "leave by" hero (now links to /schedule) and the buildings snapshot. Old /campus/transport, /campus/transit, /campus/buses links redirect to /campus.
 - Changes in the schedule builder must update the 4-year plan (two-way sync; see module 3).
 - The 4-year plan feature requires a signed liability agreement (typed-name clickwrap) before first use (see section 11).
 - Must handle switching majors, grad courses as an undergrad, double majors, double degrees, and adding or dropping majors and minors (see module 1).
@@ -56,7 +56,7 @@ See the package.json files: Next.js web app (apps/web), TypeScript packages, HiG
 ## 8. UI / design
 - **Principles:** show the answer, not the data; one main action per screen; plain language (e.g. "Humanities (DSHU)"); color only when it means something (white and gray, one accent, a pastel for each requirement category); an instant feel (cached data, skeleton loading, springs, haptics); accessibility (Dynamic Type, VoiceOver, dark mode, AA contrast).
 - **Navigation (owner decision, 2026-09-24; Calendar added 2026-10-04):** FOUR main tabs: **Campus · Schedule · Calendar · Advisor**.
-  - **Campus** has a sub-nav: Dining · Transit (Shuttle-UM) · Libraries (hours + study rooms) · Gyms.
+  - **Campus** has a sub-nav: Dining · Libraries (hours + study rooms) · Fitness (Transport removed 2026-10-29, section 2).
   - **Schedule**: the schedule builder, plus course and professor info (replaces the old Explore idea).
   - **Calendar**: UMD's academic dates by month (breaks, finals, registration), key dates by default.
   - **Advisor**: the 4-year plan / degree audit plus LLM advising.
@@ -75,7 +75,6 @@ Moved to `docs/project/roadmap.md` (phases 0–6, MVP recommendation, estimates,
 - [ ] Optional: a courtesy email to UMD Trademarks & Licensing (required only if the project makes money).
 - [ ] Email UMD Libraries requesting LibCal API credentials.
 - [ ] Email UMD RecWell asking for API access (Innosoft Fusion for ActiveTerp classes and courts, Planyo for tennis) so students can sign up inside TurboTerp (`docs/project/recwell-signups.md`).
-- [ ] Email UMD DOTS requesting Shuttle-UM real-time data access (a Swiftly GTFS-RT key).
 - [ ] Claim a domain (turboterp.com was unregistered on 2026-10-04, per Verisign RDAP), the App Store name and social handles.
 - [ ] Decide whether to reuse or partner with Jupiterp (open source; check license).
 - [ ] Confirm Expo's native-component support (for the later iOS app).
@@ -97,7 +96,7 @@ Moved to `docs/project/legal.md`. Read it before building the disclaimer, accoun
 
 ## 14. Current state (replace in place, never append; dated narrative goes in `docs/project/status-log.md`)
 - **Branches (2026-10-28):** `feat/ui-rework` is the working branch; PR #12 (feat/ui-rework → main, from `46b39502`) is open for the owner to merge. All worktree branches are merged into it. Full local suite (4,349 tests), typecheck, lint (0 errors) and build passed on `46b39502` (2026-10-28), with advisor-data rebuilt in the main checkout. **Deployed 2026-10-29** by the owner from `b706dcd6` (`dpl_2enGnn5wjdavHDfuv3NtaYXVrLaw`, aliased to turboterp.com, READY): ships everything since 2026-10-08 (account sync Tasks 3–4, lab pairs, winter/summer, RecWell, sort, Seat Alerts code). Live Supabase check (2026-10-28): migration 0008 is applied; 0009 (Seat Alerts) is NOT, and the VAPID keys aren't set.
-- **Built** (full list in `docs/project/built.md`; all unverified by the owner unless noted): About page; Campus tab (dining, libraries, study rooms, gyms, Transport map + trip planner); Schedule builder linked to the 4-year plan; Advisor tab (disclaimer, setup, credit caps, What-if, AP/IB credit, plan grid, checks, audit, transcript import, grad courses, 22 pre-professional tracks, college intro layer, 4-year plan export PDF/Excel); ~417 programs in the registry. Logged skips: AI major (unpublished), Individual Studies, Global Studies (umbrella).
+- **Built** (full list in `docs/project/built.md`; all unverified by the owner unless noted): About page; Campus tab (dining, libraries, study rooms, gyms; Transport removed 2026-10-29); Schedule builder linked to the 4-year plan; Advisor tab (disclaimer, setup, credit caps, What-if, AP/IB credit, plan grid, checks, audit, transcript import, grad courses, 22 pre-professional tracks, college intro layer, 4-year plan export PDF/Excel); ~417 programs in the registry. Logged skips: AI major (unpublished), Individual Studies, Global Studies (umbrella).
 - **Done 2026-09-29 and 2026-10-02** (detail in the status log): UI review folder (`npm run ui-gallery -w @turboterp/web`), workload-based semester difficulty, plain plan export, overlaps block saving, color-only gallery blocks, phone Advisor header, college intro courses (CMNS/ARHU/SPHL), new-tracks research; snapshot script refuses partial terms; `Requirement.advisorMayApprove` (45 requirements in 30 program files).
 - **Prerequisite audit complete (2026-10-06, session A; status log):** every Testudo prerequisite/corequisite template hand-verified (`docs/project/prereq-audit-verdicts.md`); and/or precedence (`feat/prereq-precedence`) and phrase fixes P2–P10 (`feat/prereq-phrases`) merged into `feat/course-data` (`be8f222`); session B's Gen Ed rules and course-equivalence catalog key merged on top (`ab01216`; B paused, `feat/equivalence-credit` not started). Not deployed: the deploying checkout needs `ab01216`+, then `npm run advisor-data -w @turboterp/web`, then deploy.
 - **Wave 4 in progress (2026-10-04; detail in the status log):** live at turboterp.com since 2026-10-04 (Vercel project `turboterp`, Supabase project `turboterp`, us-east-1; keys only in the gitignored `apps/web/.env.local` and Vercel env vars). `--prod` deploys only with the owner's go; the owner runs `npx vercel deploy` (blocked for Claude). Live: Supabase snapshot store, magic-link sign-in, scheduled refresh (Supabase cron), Stamp dining, course-data refresh (seats every 15 minutes, 5 during schedule adjustment; course list nightly; migration 0005). **Left:** Supabase Auth URL settings and custom SMTP; **accounts take any email and the Advisor only offers sign-in** (owner, 2026-10-04; migration 0004 applied); plan and agreement sync with a confirmed delete (not started); records email; acceptance run; owner requests in roadmap "Known to-dos". Before going public again: fresh repo or history rewrite (owner's name and terpmail are in old commits). 22 tracks (8 added 2026-09-29, unverified; owner-review lists them). Reuse `.claude/worktrees/merge-s1` for merges.

@@ -1,7 +1,7 @@
 // Plain-language Terms of Use and Privacy Policy, as data. No lawyer review
 // (docs/project/legal.md). Bump the version whenever the meaning changes.
 
-export const TERMS_VERSION = "2026-10-09";
+export const TERMS_VERSION = "2026-10-29";
 export const PRIVACY_VERSION = "2026-10-29";
 
 /** A paragraph, or a list of bullet points. */
@@ -19,7 +19,6 @@ export const STORAGE_KEYS = [
   "turboterp-advisor-consent",
   "turboterp-schedule",
   "turboterp-registration",
-  "turboterp-leave-origin",
   "turboterp-theme",
   "turboterp-sync",
 ] as const;
@@ -100,9 +99,8 @@ export const TERMS: LegalSection[] = [
   {
     heading: "Third-party data",
     paragraphs: [
-      "TurboTerp shows data from other sources: UMD's Schedule of Classes and Academic Catalog, PlanetTerp, campus dining, LibCal, RecWell and Shuttle-UM. Each stays the property of its owner and is subject to that owner's terms.",
+      "TurboTerp shows data from other sources: UMD's Schedule of Classes and Academic Catalog, PlanetTerp, campus dining, LibCal and RecWell. Each stays the property of its owner and is subject to that owner's terms.",
       "Grade distributions and professor ratings come from PlanetTerp. They are shown as is and are not an official university record.",
-      "Shuttle-UM GTFS data is used under the Interline license, for non-commercial educational use.",
     ],
   },
   {
@@ -158,7 +156,6 @@ export const PRIVACY: LegalSection[] = [
         "turboterp-advisor-consent: your signed Advisor agreement (version, date and typed name).",
         "turboterp-schedule: your saved schedule.",
         "turboterp-registration: your registration checklist and the registration appointment time you typed in.",
-        "turboterp-leave-origin: the building you chose as your starting point for leave-by times.",
         "turboterp-theme: your light or dark choice.",
         "turboterp-sync: which version of your plan and schedules this browser last saved to your account, when you're signed in. Signing out removes the synced copies from that browser.",
       ],
@@ -180,13 +177,6 @@ export const PRIVACY: LegalSection[] = [
     ],
   },
   {
-    heading: "Maps and location",
-    paragraphs: [
-      "Your location is used only when you tap a button like \"Show my location\", and it isn't stored.",
-      "When you plan a trip, its start and end points (which can be your location) are sent to our server to find buses. They're used for that request only and aren't saved.",
-    ],
-  },
-  {
     heading: "How your data is used and shared",
     paragraphs: [
       "Your data is used only to run TurboTerp for you. We do not sell, rent or give away your email address or anything else about you, to advertisers, data brokers or anyone else.",
@@ -203,7 +193,6 @@ export const PRIVACY: LegalSection[] = [
         "Vercel hosts the website. Like any web host, it may keep short-lived request logs (such as IP address and the page requested) to run and protect the service.",
         "Vercel Web Analytics counts page visits anonymously. It uses no cookies and doesn't identify you.",
         "Sentry receives error reports when something breaks: the error, the page and the browser type, with email addresses and account details removed.",
-        "OpenFreeMap serves the map tiles, so it sees your IP address when a map loads, like any site you load images from.",
       ],
       "Links to other sites, such as UMD pages, LibCal and Testudo, take you to services with their own privacy policies.",
     ],

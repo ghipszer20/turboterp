@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { connection } from "next/server";
 import { addDays, campusDate, campusMinutes, DINING_HALLS, orderLibraries, recWellOnDate } from "@turboterp/campus-data";
-import { BusIcon, DiningIcon, GymIcon, LibraryIcon, RoomIcon, SearchIcon } from "@/components/icons";
+import { DiningIcon, GymIcon, LibraryIcon, RoomIcon, SearchIcon } from "@/components/icons";
 import { NextClassHero, type UpNext } from "@/app/NextClassHero";
 import { RegistrationCountdown } from "@/app/RegistrationCountdown";
 import { SeatAlertsCard } from "@/app/SeatAlertsCard";
@@ -12,7 +12,6 @@ import {
   getAllDiningMenus,
   getLibraryHours,
   getRecWellAreas,
-  getRoutesOn,
   getStampVenues,
   safe,
 } from "@/lib/campus";
@@ -85,11 +84,6 @@ async function Today() {
       <Section title="Fitness">
         <Suspense fallback={<SkeletonGrid />}>
           <Gyms today={today} minutes={minutes} />
-        </Suspense>
-      </Section>
-      <Section title="Transport">
-        <Suspense fallback={<SkeletonCard rows={1} />}>
-          <Buses today={today} />
         </Suspense>
       </Section>
     </Page>
@@ -216,21 +210,6 @@ async function Gyms({ today, minutes }: { today: string; minutes: number }) {
         })
       )}
     </TileGrid>
-  );
-}
-
-async function Buses({ today }: { today: string }) {
-  const res = await safe(() => getRoutesOn(today));
-  const count = res.ok ? res.data.routes.length : null;
-  return (
-    <Tile
-      wide
-      href="/campus/transport"
-      icon={<BusIcon />}
-      area="transport"
-      title="Shuttle-UM"
-      sub={count === null ? "Departures near you" : `${count} routes running today · departures near you`}
-    />
   );
 }
 

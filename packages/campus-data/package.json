@@ -2,7 +2,7 @@
   "name": "@turboterp/campus-data",
   "version": "0.1.0",
   "private": true,
-  "description": "Fetchers and parsers for UMD campus data (dining, libraries, RecWell, Shuttle-UM). Framework-free so the web app and a future iOS app can share it.",
+  "description": "Fetchers and parsers for UMD campus data (dining, libraries, RecWell, buildings). Framework-free so the web app and a future iOS app can share it.",
   "license": "Apache-2.0",
   "type": "module",
   "main": "./src/index.ts",
@@ -10,12 +10,11 @@
   "exports": {
     ".": "./src/index.ts",
     "./buildings": "./src/buildings.ts",
-    "./buses": "./src/buses.ts",
     "./dates": "./src/dates.ts",
     "./hours": "./src/hours.ts",
     "./http": "./src/http.ts",
     "./snapshots": "./src/snapshots/index.ts",
-    "./trip": "./src/trip.ts"
+    "./walk": "./src/walk.ts"
   },
   "scripts": {
     "test": "vitest run",
@@ -24,8 +23,7 @@
     "snapshots": "node scripts/build-snapshots.ts"
   },
   "dependencies": {
-    "cheerio": "^1.2.0",
-    "fflate": "^0.8.3"
+    "cheerio": "^1.2.0"
   },
   "devDependencies": {
     "@types/node": "^22.20.4",

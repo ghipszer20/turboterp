@@ -2,7 +2,7 @@
 // after client JavaScript has run: collects console errors and page text,
 // and saves phone-sized screenshots. Windows-only helper for local checks.
 //
-//   node scripts/ui-check.mjs http://localhost:3000 /campus/transport /campus/dining [--dark] [--desktop] [--full]
+//   node scripts/ui-check.mjs http://localhost:3000 /campus/dining /campus/gym [--dark] [--desktop] [--full]
 //   --dark: prefers-color-scheme: dark   --desktop: 1280×820 instead of iPhone
 //   --full: capture the whole page (the fixed tab bar then appears mid-page)
 //

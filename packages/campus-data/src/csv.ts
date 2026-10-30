@@ -1,5 +1,5 @@
 // Minimal RFC 4180 CSV parser (quoted fields, escaped quotes, CRLF).
-// Used for the RecWell Google Sheet export and GTFS text files.
+// Used for the RecWell Google Sheet export.
 
 export function parseCsv(text: string): string[][] {
   const rows: string[][] = [];

@@ -361,12 +361,6 @@
   --a-chip: var(--chip-fitness);
 }
 
-.tile[data-area="transport"] {
-  --a-tint: var(--tint-transport);
-  --a-ink: var(--ink-transport);
-  --a-chip: var(--chip-transport);
-}
-
 .tileIcon {
   display: grid;
   place-items: center;

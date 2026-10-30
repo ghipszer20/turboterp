@@ -1,5 +1,4 @@
 export * from "./buildings.ts";
-export * from "./buses.ts";
 export * from "./calendar.ts";
 export * from "./dates.ts";
 export * from "./dining.ts";
@@ -11,4 +10,4 @@ export * from "./stamp-dining.ts";
 export * from "./recwell.ts";
 export * from "./recwell-reserve.ts";
 export * from "./rooms.ts";
-export * from "./trip.ts";
+export * from "./walk.ts";

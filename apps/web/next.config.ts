@@ -19,8 +19,10 @@ const nextConfig: NextConfig = {
   // Keep old links working after the tab restructure.
   async redirects() {
     return [
-      { source: "/campus/buses", destination: "/campus/transport", permanent: true },
-      { source: "/campus/transit", destination: "/campus/transport", permanent: true },
+      // Transport (Shuttle-UM) was removed 2026-10-29; Transit covers it better.
+      { source: "/campus/transport", destination: "/campus", permanent: false },
+      { source: "/campus/buses", destination: "/campus", permanent: false },
+      { source: "/campus/transit", destination: "/campus", permanent: false },
       { source: "/plan", destination: "/advisor", permanent: true },
       { source: "/explore", destination: "/schedule", permanent: true },
     ];

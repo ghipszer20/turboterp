@@ -7,7 +7,6 @@ import styles from "./CampusNav.module.css";
 // Sub-navigation inside the Campus tab. Study rooms live under Libraries.
 const SECTIONS = [
   { href: "/campus/dining", label: "Dining", match: ["/campus/dining"] },
-  { href: "/campus/transport", label: "Transport", match: ["/campus/transport"] },
   { href: "/campus/libraries", label: "Libraries", match: ["/campus/libraries", "/campus/rooms"] },
   { href: "/campus/gym", label: "Fitness", match: ["/campus/gym"] },
 ] as const;

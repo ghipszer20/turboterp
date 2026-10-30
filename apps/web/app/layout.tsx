@@ -13,7 +13,7 @@ const plusJakarta = Plus_Jakarta_Sans({ subsets: ["latin"], weight: ["600", "700
 export const metadata: Metadata = {
   title: { default: "TurboTerp", template: "%s · TurboTerp" },
   description:
-    "Dining menus, library and gym hours, study rooms and Shuttle-UM buses for UMD students. Unofficial; not affiliated with the University of Maryland.",
+    "Dining menus, library and gym hours, study rooms, schedules and degree planning for UMD students. Unofficial; not affiliated with the University of Maryland.",
   applicationName: "TurboTerp",
   appleWebApp: { capable: true, title: "TurboTerp", statusBarStyle: "default" },
   formatDetection: { telephone: false },

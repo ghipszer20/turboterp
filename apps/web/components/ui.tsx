@@ -150,7 +150,7 @@ export function SourceError({ source }: { source: string }) {
 }
 
 
-export type TileArea = "dining" | "study" | "fitness" | "transport";
+export type TileArea = "dining" | "study" | "fitness";
 
 /** Today / Campus tile: icon box, name, a two-line sub. `status` colors the sub with a dot; `accent` makes it solid red. */
 export function Tile({

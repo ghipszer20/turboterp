@@ -11,7 +11,6 @@ const PATHS = [
   "/campus/gym",
   "/campus/libraries",
   "/campus/rooms",
-  "/campus/transport",
   "/schedule",
   "/schedule/alerts",
   "/advisor",

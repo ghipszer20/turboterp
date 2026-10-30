@@ -1,7 +1,7 @@
 // The snapshot jobs (how they're scheduled: ../../SNAPSHOTS.md).
 //
 //   buildSnapshots  daily, ~5am   room catalog, room availability, today's menus,
-//                                 library hours, RecWell hours, group fitness classes, Shuttle-UM GTFS, academic calendar
+//                                 library hours, RecWell hours, group fitness classes, building locations, academic calendar
 //   refreshFast     every ~5 min  room availability; menus once they're 30 min old
 //
 // A source that fails never overwrites its last good snapshot: the error goes
@@ -11,9 +11,7 @@
 import { fetchBuildings, type Building } from "../buildings.ts";
 import { addDays, campusDate } from "../dates.ts";
 import { DINING_HALLS, fetchDiningMenu, type DiningMenu } from "../dining.ts";
-import { parseGtfs, SHUTTLE_UM_GTFS_URL, unzipGtfs } from "../buses.ts";
 import { fetchAcademicCalendar, type AcademicEvent } from "../calendar.ts";
-import { fetchBytes } from "../http.ts";
 import { fetchLibraryHours, type LibraryHours } from "../libraries.ts";
 import { fetchStampVenues, stampWindow, type StampVenue } from "../stamp-dining.ts";
 import { fetchRecWellAreas, recWellWindow, type RecWellArea } from "../recwell.ts";
@@ -41,9 +39,7 @@ export type CampusSources = {
   recWellAreas(): Promise<RecWellArea[]>;
   /** RecWell group fitness classes (recwell.umd.edu only; ActiveTerp is never fetched). */
   groupFitness(): Promise<FitnessClass[]>;
-  /** The unzipped GTFS text files (file name → contents). */
-  shuttleGtfs(): Promise<Record<string, string>>;
-  /** UMD building locations, for the trip planner's place search. */
+  /** UMD building locations, for walking times between classes. */
   buildings(): Promise<Building[]>;
   /** Key registrar dates for the current and next terms. */
   academicCalendar(): Promise<AcademicEvent[]>;
@@ -58,7 +54,6 @@ export const liveSources: CampusSources = {
   stampVenues: fetchStampVenues,
   recWellAreas: fetchRecWellAreas,
   groupFitness: fetchGroupFitness,
-  shuttleGtfs: async () => unzipGtfs(await fetchBytes("buses", SHUTTLE_UM_GTFS_URL)),
   buildings: fetchBuildings,
   academicCalendar: fetchAcademicCalendar,
 };
@@ -72,7 +67,6 @@ export const snapshotKeys = {
   stampVenues: "dining/stamp",
   recWellAreas: "recwell/areas",
   groupFitness: "recwell/classes",
-  shuttleGtfs: "buses/gtfs",
   buildings: "buildings",
   academicCalendar: "calendar/academic",
   /** The last attempt to refresh a snapshot key. */
@@ -177,11 +171,6 @@ export async function buildSnapshots(
       if (classes.length === 0) throw new Error("group fitness came back empty");
       return classes;
     }),
-    refresh(store, now, snapshotKeys.shuttleGtfs, async () => {
-      const files = await sources.shuttleGtfs();
-      parseGtfs(files); // throws on a feed we couldn't use
-      return files;
-    }),
     refresh(store, now, snapshotKeys.buildings, () => sources.buildings()),
     refresh(store, now, snapshotKeys.academicCalendar, async () => {
       const events = await sources.academicCalendar();
@@ -226,7 +215,7 @@ export type PruneReport = { removed: string[] };
  * Remove dated snapshots (and their `status/` entries) whose date falls outside
  * `keepDays` days of `now`, in campus time. Defaults to keeping yesterday, today,
  * and tomorrow (keepDays: 1). Undated keys (the room catalog, library hours,
- * RecWell areas, the GTFS feed, building locations) are never touched.
+ * RecWell areas, building locations) are never touched.
  */
 export async function pruneSnapshots(store: SnapshotStore, now: Date, { keepDays = 1 }: PruneOptions = {}): Promise<PruneReport> {
   const today = campusDate(now);
