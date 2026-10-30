@@ -29,7 +29,7 @@ const iconProps = {
 } as const;
 
 /** The iOS Share button: a square with an arrow leaving the top. */
-function ShareIcon() {
+export function ShareIcon() {
   return (
     <svg {...iconProps}>
       <path d="M12 15V4M8.5 7.5 12 4l3.5 3.5M8 10H6.5A1.5 1.5 0 0 0 5 11.5v7A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5v-7A1.5 1.5 0 0 0 17.5 10H16" />
@@ -38,7 +38,7 @@ function ShareIcon() {
 }
 
 /** The "Add to Home Screen" row icon: a plus in a rounded square. */
-function AddSquareIcon() {
+export function AddSquareIcon() {
   return (
     <svg {...iconProps}>
       <rect x="4" y="4" width="16" height="16" rx="3.5" />

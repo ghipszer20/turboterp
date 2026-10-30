@@ -6,7 +6,7 @@ import { currentPushEnv, pushSupport, type PushSupport } from "@/lib/seat-alerts
 import { useWatches } from "@/lib/seat-alerts/use-watches";
 import { endedNote, setupSteps, watchCount, watchRowView, type WatchRow } from "@/lib/seat-alerts/view";
 import { AddClass } from "./AddClass";
-import { StatusCard } from "./StatusCard";
+import { AddSquareIcon, ShareIcon, StatusCard } from "./StatusCard";
 import styles from "./alerts.module.css";
 
 const FOOTER =
@@ -25,9 +25,17 @@ function Intro({ support }: { support: PushSupport }) {
         <>
           <h3 className={styles.title}>How it works</h3>
           <ol className={styles.guide}>
-            {steps.map((t) => (
-              <li key={t}>{t}</li>
-            ))}
+            {steps.map((t, i) =>
+              support === "ios-needs-home-screen" && i === 0 ? (
+                // The same step with Safari's Share and Add to Home Screen icons (owner likes them, 2026-10-30).
+                <li key={t}>
+                  In Safari&apos;s toolbar, tap <strong>Share</strong> <ShareIcon />, then <strong>Add to Home Screen</strong>{" "}
+                  <AddSquareIcon />.
+                </li>
+              ) : (
+                <li key={t}>{t}</li>
+              ),
+            )}
           </ol>
         </>
       ) : (
@@ -68,7 +76,8 @@ export function AlertsApp() {
     <div className={styles.stack}>
       <Intro support={mockSupport} />
       {state.phase === "needs-setup" ? (
-        <StatusCard mock={false} onTurnOn={state.enable} />
+        // iPhone Safari: the intro's steps already say to add TurboTerp to the Home Screen (owner, 2026-10-30).
+        mockSupport === "ios-needs-home-screen" ? null : <StatusCard mock={false} onTurnOn={state.enable} />
       ) : (
         <>
           <StatusCard mock={state.mock} onTurnOn={state.enable} />
