@@ -83,6 +83,25 @@ export function buildCatalog(...lists: Course[][]): PlanCatalog {
   return catalog;
 }
 
+/** The Academic Catalog courses the Schedule of Classes catalog doesn't have. */
+export function addedByFallback(catalog: PlanCatalog, catalogCourses: Course[]): Course[] {
+  const seen = new Set<string>();
+  return catalogCourses.filter((c) => !catalog.has(c.id) && !seen.has(c.id) && seen.add(c.id));
+}
+
+/**
+ * The catalog plus Academic Catalog courses that no cached Schedule of Classes lists, as
+ * `notScheduled` courses with no `offered` seasons (so no term-offering warning). A course already
+ * in `catalog` is kept as is, never overwritten.
+ */
+export function withCatalogFallback(catalog: PlanCatalog, catalogCourses: Course[]): PlanCatalog {
+  const out = new Map(catalog);
+  for (const [id, course] of buildCatalog(addedByFallback(catalog, catalogCourses))) {
+    out.set(id, { ...course, notScheduled: true });
+  }
+  return out;
+}
+
 const SEASON_BY_MONTH: Record<string, Season> = { "01": "Spring", "05": "Summer", "08": "Fall", "12": "Winter" };
 const SEASON_ORDER: Season[] = ["Fall", "Winter", "Spring", "Summer"];
 
