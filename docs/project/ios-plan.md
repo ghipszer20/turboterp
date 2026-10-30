@@ -1,6 +1,6 @@
 # iOS app plan
 
-Drafted 2026-10-29 by the main session for the owner's request: "plan the transfer of this project to iOS app form", with timelines, steps agents can run in parallel, and the owner's own steps in detail. **Status: proposal.** The stack choice (section 1) needs the owner's yes. **Review-risk pass (2026-10-30):** section 8 lists everything that could get the app rejected, crash in real use or open a security hole. Its fixes are also written into the task rows below. Runs as 5 owner-coordinated sessions with up to 3 subagents each (owner, 2026-10-29; section 2). This moves iOS up from the roadmap's "Spring 2028" (roadmap.md).
+Drafted 2026-10-29 by the main session for the owner's request: "plan the transfer of this project to iOS app form", with timelines, steps agents can run in parallel, and the owner's own steps in detail. **Status: stack approved (owner, 2026-10-30): Expo / React Native, built in the cloud.** Still waiting on the owner: the bundle ID (O1 step 3), Apple enrollment (O2), the Expo account (O3), then "set up the sessions". **Review-risk pass (2026-10-30):** section 8 lists everything that could get the app rejected, crash in real use or open a security hole. Its fixes are also written into the task rows below. Runs as 5 owner-coordinated sessions with up to 3 subagents each (owner, 2026-10-29; section 2). This moves iOS up from the roadmap's "Spring 2028" (roadmap.md).
 
 ## 1. Approach (recommended)
 
