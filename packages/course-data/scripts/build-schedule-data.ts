@@ -58,7 +58,9 @@ const term: string = snapshot.term;
 const size = (x: unknown) => JSON.stringify(x).length;
 
 await store.put(`schedule/${term}/index`, { updatedAt, data: index });
-// The full course list, which the scheduled seat refresh reads (src/soc-refresh.ts).
+// Ratings and reviewed-instructor names, stored once; the nightly full refresh reads them from here (src/soc-refresh.ts).
+await store.put(`schedule/${term}/ratings`, { updatedAt, data: { v: 1, term, ratings, reviews: reviewNames } });
+// The full course list, which the scheduled refreshes read (src/soc-refresh.ts).
 await store.put(`schedule/${term}/courses`, { updatedAt, data: { term, courses: snapshot.courses } });
 let bytes = 0;
 for (const [dept, file] of Object.entries(departments)) {

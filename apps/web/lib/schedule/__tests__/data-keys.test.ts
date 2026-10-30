@@ -6,6 +6,10 @@ describe("scheduleDataKey", () => {
     expect(scheduleDataKey(["current"])).toEqual({ key: "schedule/current", maxAge: 300 });
   });
 
+  it("maps a term's seats file with a one-minute browser cache", () => {
+    expect(scheduleDataKey(["202701", "seats"])).toEqual({ key: "schedule/202701/seats", maxAge: 300, browserMaxAge: 60 });
+  });
+
   it("maps a term's course index", () => {
     expect(scheduleDataKey(["202701", "index"])).toEqual({ key: "schedule/202701/index", maxAge: 3600 });
   });
@@ -34,6 +38,7 @@ describe("scheduleDataKey", () => {
     [["202701", "sections"]],
     [["202701", "other", "CMSC"]],
     [["202701", "index", "extra"]],
+    [["202701", "seats", "extra"]],
     [[]],
   ])("rejects %j", (parts) => {
     expect(scheduleDataKey(parts)).toBeNull();

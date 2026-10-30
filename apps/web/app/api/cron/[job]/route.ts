@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { connection } from "next/server";
 import { buildSnapshots, openSnapshotStore, pruneSnapshots, refreshFast } from "@turboterp/campus-data/snapshots";
-import { liveRefreshDeps, refreshCourses, refreshSeats } from "@turboterp/course-data/soc-refresh";
+import { liveRefreshDeps, refreshCourses, refreshSections, refreshSeats } from "@turboterp/course-data/soc-refresh";
 import { fetchSections } from "@turboterp/course-data";
 import { authorizeCron, cronJob } from "@/lib/cron";
 import { signWatchToken } from "@/lib/seat-alerts/api";
@@ -55,8 +55,8 @@ async function run(request: NextRequest, context: { params: Promise<{ job: strin
       );
       return Response.json({ ...report, ms: Math.round(performance.now() - started) }, { headers: { "Cache-Control": "no-store" } });
     }
-    if (job === "soc-seats" || job === "soc-courses") {
-      const refresh = job === "soc-seats" ? refreshSeats : refreshCourses;
+    if (job === "soc-seats" || job === "soc-sections" || job === "soc-courses") {
+      const refresh = job === "soc-seats" ? refreshSeats : job === "soc-sections" ? refreshSections : refreshCourses;
       const r = await refresh(store, liveRefreshDeps(), now);
       return Response.json(
         { ...r, ms: Math.round(performance.now() - started) },

@@ -1,7 +1,7 @@
 // URL path → snapshot key for the schedule builder's data (packages/course-data/SCHEDULE_FILES.md).
 // Strict patterns, so a bad URL is a 404 and never reaches the store.
 
-export type DataKey = { key: string; /** seconds a CDN may serve it without revalidating */ maxAge: number };
+export type DataKey = { key: string; /** seconds a CDN may serve it without revalidating */ maxAge: number; /** seconds a browser may reuse it (default: maxAge, at most an hour) */ browserMaxAge?: number };
 
 const TERM = /^\d{6}$/;
 const DEPT = /^[A-Z]{4}$/;
@@ -11,6 +11,7 @@ export function scheduleDataKey(parts: readonly string[]): DataKey | null {
   if (parts.length === 1 && parts[0] === "current") return { key: "schedule/current", maxAge: 300 };
   const [term, kind, dept] = parts;
   if (!term || !TERM.test(term)) return null;
+  if (parts.length === 2 && kind === "seats") return { key: `schedule/${term}/seats`, maxAge: 300, browserMaxAge: 60 };
   if (parts.length === 2 && kind === "index") return { key: `schedule/${term}/index`, maxAge: 3600 };
   if (parts.length === 3 && dept && kind === "reviews" && REVIEW.test(dept)) {
     return { key: `schedule/${term}/reviews/${dept}`, maxAge: 86400 };

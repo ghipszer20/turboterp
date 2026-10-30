@@ -20,7 +20,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ pat
     }
     return Response.json(data, {
       headers: {
-        "Cache-Control": `public, max-age=${Math.min(found.maxAge, 3600)}, s-maxage=${found.maxAge}, stale-while-revalidate=${found.maxAge * 7}`,
+        "Cache-Control": `public, max-age=${found.browserMaxAge ?? Math.min(found.maxAge, 3600)}, s-maxage=${found.maxAge}, stale-while-revalidate=${found.maxAge * 7}`,
       },
     });
   } catch (err) {

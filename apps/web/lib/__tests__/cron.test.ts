@@ -24,6 +24,7 @@ describe("cronJob", () => {
     expect(cronJob("fast")).toBe("fast");
     expect(cronJob("daily")).toBe("daily");
     expect(cronJob("soc-seats")).toBe("soc-seats");
+    expect(cronJob("soc-sections")).toBe("soc-sections");
     expect(cronJob("soc-courses")).toBe("soc-courses");
     expect(cronJob("seat-alerts")).toBe("seat-alerts");
     expect(cronJob("prune")).toBeNull();
