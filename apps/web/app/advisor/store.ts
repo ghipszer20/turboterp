@@ -9,6 +9,7 @@ import { CONSENT_STORAGE_KEY, parseConsent, type ConsentRecord } from "@/lib/adv
 import { planReducer, type AdvisorPlan, type PlanAction } from "@/lib/advisor/plan-state";
 import { seedFromUrl } from "@/lib/advisor/seed";
 import { parsePlan, PLAN_STORAGE_KEY, serializePlan } from "@/lib/advisor/storage";
+import { consentSaved, localChanged } from "../../lib/sync/hooks";
 
 export type AdvisorSnapshot = { consent: ConsentRecord | null; plan: AdvisorPlan | null };
 
@@ -59,12 +60,35 @@ const getServerSnapshot = () => null;
 /** null until the page has mounted in the browser. */
 export const useAdvisorStore = (): AdvisorSnapshot | null => useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
+/** Store the signed agreement (with a random device id) and send the record to the server. */
 export function saveConsent(consent: ConsentRecord) {
+  updateConsent({ ...consent, deviceId: consent.deviceId ?? crypto.randomUUID() });
+  consentSaved();
+}
+
+/** Store a consent record as is (used when the server confirms it was recorded or linked). */
+export function updateConsent(consent: ConsentRecord) {
   write(CONSENT_STORAGE_KEY, JSON.stringify(consent));
   set({ ...getSnapshot(), consent });
 }
 
+export const getConsent = (): ConsentRecord | null => getSnapshot().consent;
+
 export function savePlan(plan: AdvisorPlan | null) {
+  write(PLAN_STORAGE_KEY, plan ? serializePlan(plan) : null);
+  set({ ...getSnapshot(), plan });
+  localChanged("plan");
+}
+
+/** The plan as stored text (from memory, so it works when storage is blocked); what account sync reads. */
+export const readPlanRaw = (): string | null => {
+  const plan = getSnapshot().plan;
+  return plan ? serializePlan(plan) : null;
+};
+
+/** Replace the plan with the account's copy (or remove it with null). Not a student edit: nothing is re-saved. */
+export function replacePlanFromRemote(raw: string | null) {
+  const plan = parsePlan(raw);
   write(PLAN_STORAGE_KEY, plan ? serializePlan(plan) : null);
   set({ ...getSnapshot(), plan });
 }

@@ -86,7 +86,6 @@
   --tint-dining: #fff0e6; --ink-dining: #e8590c; --chip-dining: #ff7a1a;
   --tint-study: #e9f0ff; --ink-study: #1d4ed8; --chip-study: #3b82f6;
   --tint-fitness: #e6f7ee; --ink-fitness: #15803d; --chip-fitness: #22a35a;
-  --tint-transport: #f1e9ff; --ink-transport: #6d28d9; --chip-transport: #8b5cf6;
   /* Hero widget (next class): the brand red gradient. */
   --hero-bg: linear-gradient(135deg, #d0183c, #a80a29);
   /* Schedule class blocks, "S1": solid fill, 1.5px deeper edge, white text. One pair per course slot. */

@@ -39,7 +39,7 @@ export function hoursStatus(hours: DayHours | undefined, minutes: number, tomorr
     case "closed":
       return { status: "closed", text: "Closed today" };
     case "text":
-      return { status: "unknown", text: hours.label };
+      return { status: "unknown", text: hours.label.charAt(0).toUpperCase() + hours.label.slice(1) }; // "dawn to 1am" → "Dawn to 1am"
     case "ranges": {
       if (isOpenAt(hours, minutes)) {
         const on = pastMidnight(minutes + minutesUntilClose(hours, minutes)!, tomorrow);

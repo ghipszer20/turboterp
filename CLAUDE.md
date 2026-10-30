@@ -13,4 +13,4 @@ Use the superpowers plugin skills for how work is done (brainstorming before new
 Also use these superpowers skills whenever relevant (owner, 2026-09-25): verification-before-completion, requesting-code-review, finishing-a-development-branch, writing-plans, subagent-driven-development, dispatching-parallel-agents.
 **GitHub Actions limit (owner, 2026-09-28):** once the account's GitHub Actions usage limit is hit (free minutes run out, or runs fail or queue for that reason), stop using GitHub Actions: don't trigger or wait on CI runs; run tests, typecheck, lint and build locally instead, and tell the owner the limit was reached.
 
-When dispatching agents, PROJECT_MEMORY.md section 18 (builder budget) overrides these skills' defaults: builders on Sonnet, one agent per task with no reviewer subagents, at most 2 at once, short briefs.
+When dispatching agents, PROJECT_MEMORY.md section 18 (builder budget) overrides these skills' defaults: builders on Sonnet, one agent per task with no reviewer subagents, at most 3 at once per session (the owner may run several sessions), short briefs.

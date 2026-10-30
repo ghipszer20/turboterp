@@ -63,6 +63,12 @@ describe("cardNote", () => {
   it("falls back to the message, and counts the rest", () => {
     expect(cardNote([issue({ message: "needs 216" }), issue({ message: "coreq" })])).toBe("needs 216 (+1 more)");
   });
+
+  it("shows the most severe issue first, matching the card's color", () => {
+    const confirm = issue({ severity: "confirm", message: "long", short: "Confirm: math eligibility" });
+    const warning = issue({ severity: "warning", kind: "lab-missing", message: "lab", short: "Usually taken with BSCI180" });
+    expect(cardNote([confirm, warning])).toBe("Usually taken with BSCI180 (+1 more)");
+  });
 });
 
 describe("planTips", () => {

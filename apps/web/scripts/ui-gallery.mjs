@@ -30,7 +30,6 @@ const SHOTS = [
   ["Home", "About", "/about"],
   ["Campus", "Campus overview", "/campus"],
   ["Campus", "Dining", "/campus/dining"],
-  ["Campus", "Transport (buses, map, trip planner)", "/campus/transport"],
   ["Campus", "Libraries", "/campus/libraries"],
   ["Campus", "Study rooms", "/campus/rooms"],
   ["Campus", "Fitness", "/campus/gym"],

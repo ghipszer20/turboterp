@@ -1,7 +1,7 @@
 // The snapshot jobs (how they're scheduled: ../../SNAPSHOTS.md).
 //
 //   buildSnapshots  daily, ~5am   room catalog, room availability, today's menus,
-//                                 library hours, RecWell hours, Shuttle-UM GTFS, academic calendar
+//                                 library hours, RecWell hours, group fitness classes, building locations, academic calendar
 //   refreshFast     every ~5 min  room availability; menus once they're 30 min old
 //
 // A source that fails never overwrites its last good snapshot: the error goes
@@ -11,12 +11,11 @@
 import { fetchBuildings, type Building } from "../buildings.ts";
 import { addDays, campusDate } from "../dates.ts";
 import { DINING_HALLS, fetchDiningMenu, type DiningMenu } from "../dining.ts";
-import { parseGtfs, SHUTTLE_UM_GTFS_URL, unzipGtfs } from "../buses.ts";
 import { fetchAcademicCalendar, type AcademicEvent } from "../calendar.ts";
-import { fetchBytes } from "../http.ts";
 import { fetchLibraryHours, type LibraryHours } from "../libraries.ts";
 import { fetchStampVenues, stampWindow, type StampVenue } from "../stamp-dining.ts";
 import { fetchRecWellAreas, recWellWindow, type RecWellArea } from "../recwell.ts";
+import { fetchGroupFitness, type FitnessClass } from "../group-fitness.ts";
 import {
   fetchCategoryAvailability,
   fetchRoomCatalog,
@@ -38,9 +37,9 @@ export type CampusSources = {
   libraryHours(): Promise<LibraryHours[]>;
   stampVenues(): Promise<StampVenue[]>;
   recWellAreas(): Promise<RecWellArea[]>;
-  /** The unzipped GTFS text files (file name → contents). */
-  shuttleGtfs(): Promise<Record<string, string>>;
-  /** UMD building locations, for the trip planner's place search. */
+  /** RecWell group fitness classes (recwell.umd.edu only; ActiveTerp is never fetched). */
+  groupFitness(): Promise<FitnessClass[]>;
+  /** UMD building locations, for walking times between classes. */
   buildings(): Promise<Building[]>;
   /** Key registrar dates for the current and next terms. */
   academicCalendar(): Promise<AcademicEvent[]>;
@@ -54,7 +53,7 @@ export const liveSources: CampusSources = {
   libraryHours: () => fetchLibraryHours(2),
   stampVenues: fetchStampVenues,
   recWellAreas: fetchRecWellAreas,
-  shuttleGtfs: async () => unzipGtfs(await fetchBytes("buses", SHUTTLE_UM_GTFS_URL)),
+  groupFitness: fetchGroupFitness,
   buildings: fetchBuildings,
   academicCalendar: fetchAcademicCalendar,
 };
@@ -67,7 +66,7 @@ export const snapshotKeys = {
   libraryHours: "libraries/hours",
   stampVenues: "dining/stamp",
   recWellAreas: "recwell/areas",
-  shuttleGtfs: "buses/gtfs",
+  groupFitness: "recwell/classes",
   buildings: "buildings",
   academicCalendar: "calendar/academic",
   /** The last attempt to refresh a snapshot key. */
@@ -167,10 +166,10 @@ export async function buildSnapshots(
     refresh(store, now, snapshotKeys.recWellAreas, async () =>
       recWellWindow(await sources.recWellAreas(), today, RECWELL_DAYS),
     ),
-    refresh(store, now, snapshotKeys.shuttleGtfs, async () => {
-      const files = await sources.shuttleGtfs();
-      parseGtfs(files); // throws on a feed we couldn't use
-      return files;
+    refresh(store, now, snapshotKeys.groupFitness, async () => {
+      const classes = await sources.groupFitness();
+      if (classes.length === 0) throw new Error("group fitness came back empty");
+      return classes;
     }),
     refresh(store, now, snapshotKeys.buildings, () => sources.buildings()),
     refresh(store, now, snapshotKeys.academicCalendar, async () => {
@@ -216,7 +215,7 @@ export type PruneReport = { removed: string[] };
  * Remove dated snapshots (and their `status/` entries) whose date falls outside
  * `keepDays` days of `now`, in campus time. Defaults to keeping yesterday, today,
  * and tomorrow (keepDays: 1). Undated keys (the room catalog, library hours,
- * RecWell areas, the GTFS feed, building locations) are never touched.
+ * RecWell areas, building locations) are never touched.
  */
 export async function pruneSnapshots(store: SnapshotStore, now: Date, { keepDays = 1 }: PruneOptions = {}): Promise<PruneReport> {
   const today = campusDate(now);

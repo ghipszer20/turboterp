@@ -38,7 +38,7 @@ export const engrMinorGlobalEngineeringLeadership: Program = {
       id: "dialogue",
       advisorMayApprove: true,
       name: "Intergroup dialogue course (1 credit)",
-      options: ["ENES138", "WEID138", "WEID139", "CHSE328"],
+      options: ["ENES138", "WEID138", "WEID139", "CHSE228"],
     },
     {
       kind: "choose",

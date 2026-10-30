@@ -46,7 +46,7 @@ export const tlplMinorSecondaryEducation: Program = {
       count: 1,
       from: {
         courses: [
-          "AASP100", "AASP202", "AAST201", "AAST222", "HIST106", "WGSS200", "LGBT200", "LGBT264", "LACS234", "ANTH264",
+          "AAAS100", "AASP202", "AAST201", "AAST222", "HIST106", "WGSS200", "LGBT200", "LGBT264", "LACS234", "ANTH264",
           "TLPL206", "TLPL287", "TLPL443", "TLPL453", "TLPL457", "EDHD426",
         ],
       },

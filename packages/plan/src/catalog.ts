@@ -3,7 +3,9 @@
 
 import type { Course } from "@turboterp/course-data";
 import { labPairOf } from "@turboterp/course-data/gen-ed";
+import { DERIVED_PAIRS, LAB_PAIRS, labsByLecture } from "@turboterp/course-data/lab-pairs";
 import { parsePrerequisite, type Requirement } from "@turboterp/course-data/prereqs";
+import type { Season } from "./check.ts";
 import { parseCourseTwins, type Twins } from "./twins.ts";
 
 /**
@@ -20,12 +22,21 @@ export type CatalogCourse = {
   genEd: string[];
   /** DSNL only when taken with this lab, in the same term: Testudo's "DSNL (if taken with CHEM132)". */
   labPair?: { code: "DSNL"; with: string };
+  /** Labs usually taken in the same term as this lecture, current lab first, e.g. ["BSCI180", "BSCI171"]. */
+  labs?: string[];
   prerequisite: Requirement | null;
   corequisite: Requirement | null;
   repeat: Repeatability;
   /** Renumbered, Cross-listed and Credit-only Twins, as this course's own Testudo lines name them
    * (twinsOf gives the symmetric view). Left out when there are none. */
   twins?: Twins;
+  /** Seasons this course appeared in across the cached Schedule of Classes terms. Left out when the
+   * course came from no dated term. */
+  offered?: Season[];
+  /** Has no sections on any current term's Schedule of Classes, though it ran in a cached past term
+   * (BSCI171: last scheduled Summer 2026, not in Fall 2026 or Spring 2027). Still a real course; checks
+   * just don't suggest it for a fall or spring term. Left out otherwise. */
+  notScheduled?: true;
 };
 
 export type PlanCatalog = ReadonlyMap<string, CatalogCourse>;
@@ -51,6 +62,7 @@ function repeatability(course: Course): Repeatability {
  */
 export function buildCatalog(...lists: Course[][]): PlanCatalog {
   const catalog = new Map<string, CatalogCourse>();
+  const labs = labsByLecture(lists.flat(), [...DERIVED_PAIRS, ...LAB_PAIRS]);
   for (const course of lists.flat()) {
     if (catalog.has(course.id)) continue;
     const { twins } = parseCourseTwins(course);
@@ -61,6 +73,7 @@ export function buildCatalog(...lists: Course[][]): PlanCatalog {
       genEd: course.genEd,
       // Snapshots parsed before the labPair field still carry the text it comes from.
       ...(course.labPair ? { labPair: course.labPair } : labPairOf(course.genEdText ?? "")),
+      ...(labs.get(course.id)?.length ? { labs: labs.get(course.id)! } : {}),
       prerequisite: parsePrerequisite(course.texts.prerequisite),
       corequisite: parsePrerequisite(course.texts.corequisite),
       repeat: repeatability(course),
@@ -68,4 +81,89 @@ export function buildCatalog(...lists: Course[][]): PlanCatalog {
     });
   }
   return catalog;
+}
+
+/** The Academic Catalog courses the Schedule of Classes catalog doesn't have. */
+export function addedByFallback(catalog: PlanCatalog, catalogCourses: Course[]): Course[] {
+  const seen = new Set<string>();
+  return catalogCourses.filter((c) => !catalog.has(c.id) && !seen.has(c.id) && seen.add(c.id));
+}
+
+/**
+ * The catalog plus Academic Catalog courses that no cached Schedule of Classes lists, as
+ * `notScheduled` courses with no `offered` seasons (so no term-offering warning). A course already
+ * in `catalog` is kept as is, never overwritten.
+ */
+export function withCatalogFallback(catalog: PlanCatalog, catalogCourses: Course[]): PlanCatalog {
+  const out = new Map(catalog);
+  for (const [id, course] of buildCatalog(addedByFallback(catalog, catalogCourses))) {
+    out.set(id, { ...course, notScheduled: true });
+  }
+  return out;
+}
+
+/** The base course id and trailing suffix letters of a topic code: BIOE489G is ["BIOE489", "G"]. */
+export function topicCodeParts(id: string): { base: string; suffix: string } | undefined {
+  const m = /^([A-Z]{4}\d{3})([A-Z]+)$/.exec(id);
+  return m ? { base: m[1]!, suffix: m[2]! } : undefined;
+}
+
+/**
+ * Entries for topic codes with a letter suffix (BIOE489G) that program requirements name but no
+ * catalog lists, built from the base course (BIOE489): its credits, title "<base> (topic G)", no Gen
+ * Eds (a topic's Gen Eds vary), no twins, prerequisites or `offered`, and `notScheduled`. Only the
+ * ids in `namedIds` get entries; a code already in `catalog`, or whose base is not, is left alone.
+ */
+export function withTopicCourses(catalog: PlanCatalog, namedIds: Iterable<string>): PlanCatalog {
+  const out = new Map(catalog);
+  for (const id of namedIds) {
+    const parts = topicCodeParts(id);
+    const base = parts && catalog.get(parts.base);
+    if (!parts || !base || catalog.has(id)) continue;
+    out.set(id, {
+      id,
+      title: `${base.title} (topic ${parts.suffix})`,
+      credits: base.credits,
+      genEd: [],
+      prerequisite: null,
+      corequisite: null,
+      repeat: base.repeat,
+      notScheduled: true,
+    });
+  }
+  return out;
+}
+
+const SEASON_BY_MONTH: Record<string, Season> = { "01": "Spring", "05": "Summer", "08": "Fall", "12": "Winter" };
+const SEASON_ORDER: Season[] = ["Fall", "Winter", "Spring", "Summer"];
+
+/** The season of a Testudo term code (YYYYMM): month 01 Spring, 05 Summer, 08 Fall, 12 Winter. */
+export function seasonOfTerm(term: string): Season | undefined {
+  return SEASON_BY_MONTH[term.slice(4, 6)];
+}
+
+/** A copy of the catalog with each course's `offered` seasons, from the terms whose snapshots list it,
+ * and `notScheduled` for courses on none of the `current` terms' schedules (when any are given). */
+export function withOfferings(
+  catalog: PlanCatalog,
+  snapshots: { term: string; courses: { id: string }[] }[],
+  current: readonly string[] = [],
+): PlanCatalog {
+  const inCurrent = new Set(snapshots.filter((s) => current.includes(s.term)).flatMap((s) => s.courses.map((c) => c.id)));
+  const seen = new Map<string, Set<Season>>();
+  for (const { term, courses } of snapshots) {
+    const season = seasonOfTerm(term);
+    if (!season) continue;
+    for (const { id } of courses) {
+      if (!seen.has(id)) seen.set(id, new Set());
+      seen.get(id)!.add(season);
+    }
+  }
+  const out = new Map<string, CatalogCourse>();
+  for (const [id, course] of catalog) {
+    const seasons = seen.get(id);
+    const notScheduled = seasons !== undefined && current.length > 0 && !inCurrent.has(id);
+    out.set(id, seasons ? { ...course, offered: SEASON_ORDER.filter((s) => seasons.has(s)), ...(notScheduled ? { notScheduled: true as const } : {}) } : course);
+  }
+  return out;
 }

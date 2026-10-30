@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
     const loaded = menus.map((m) => (m.ok ? m.data : null));
     const hallId = hallFromQuery(params.get("hall") ?? undefined, DINING_HALLS.map((h) => h.id));
     const meal = mealFromQuery(params.get("meal") ?? undefined, mealsServed(loaded));
-    const { results, capped } = searchMenus(
+    const { results, cappedHalls } = searchMenus(
       loaded,
       q,
       { hallId, meal },
@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
       return Response.json({ error: "UMD Dining didn't respond." }, { status: 502 });
     }
     return Response.json(
-      { date, q, results, capped },
+      { date, q, results, cappedHalls },
       { headers: { "Cache-Control": "public, max-age=60, s-maxage=300, stale-while-revalidate=1800" } },
     );
   } catch (err) {

@@ -21,3 +21,21 @@ export function sendProblem(error: unknown): string {
     ? "Too many sign-in emails were just sent. Wait a few minutes, then try again."
     : "We couldn't send the link. Try again in a moment.";
 }
+
+/** The emailed one-time code, without the spaces or dashes people copy along with it. */
+export function normalizeCode(input: string): string {
+  return input.replace(/[\s-]/g, "");
+}
+
+/** Supabase's code length setting can be 6 to 10 digits. */
+export function codeProblem(code: string): string | null {
+  return /^\d{6,10}$/.test(normalizeCode(code)) ? null : "Enter the digits from the email (6 to 10 numbers).";
+}
+
+/** What to tell the student when the typed code was refused. */
+export function verifyProblem(error: unknown): string {
+  const e = (error ?? {}) as { status?: number; code?: string };
+  if (e.status === 429) return sendProblem(error);
+  if (e.code === "otp_expired" || e.status === 400 || e.status === 403) return "That code didn't work. Check it, or send a new email.";
+  return "We couldn't check the code. Try again in a moment.";
+}

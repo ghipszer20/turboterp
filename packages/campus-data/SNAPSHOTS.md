@@ -6,7 +6,7 @@ Pages never scrape UMD sites per request. Two jobs fetch the data ahead of time 
 
 | Job | Schedule | What it refreshes |
 | --- | --- | --- |
-| `buildSnapshots` (`daily`) | once a day, ~5:00am campus time | room catalog, today's room availability, today's menus for every hall, library hours (2 weeks), RecWell hours (14 days from today), Shuttle-UM GTFS feed, UMD building locations, registrar academic calendar, then `pruneSnapshots` |
+| `buildSnapshots` (`daily`) | once a day, ~5:00am campus time | room catalog, today's room availability, today's menus for every hall, library hours (2 weeks), RecWell hours (14 days from today), UMD building locations, registrar academic calendar, then `pruneSnapshots` |
 | `refreshFast` (`fast`) | every 5 minutes | room availability for today; each hall's menu once its snapshot is 30+ minutes old (so menus are re-checked every ~30 min), or right away when the date rolls over |
 | `pruneSnapshots` (`prune`) | run automatically at the end of `daily`; also available on its own | removes dated snapshots (and their matching `status/` entries) outside the keep window |
 
@@ -32,7 +32,7 @@ The CLI prints one line per snapshot and exits 1 if any source failed, so a sche
 
 - A source that throws never overwrites its last good snapshot. The error is written to `status/<key>` as `{ lastAttemptAt, lastSuccessAt, error }`, and the snapshot's `updatedAt` keeps meaning "when this data was fetched".
 - Each dining hall and each room category is a separate key, so one failing hall or category doesn't affect the others.
-- A GTFS feed that doesn't parse, or an empty room catalog, counts as a failure.
+- An empty room catalog counts as a failure.
 - A hall that posted no menu is valid data (an empty menu), not a failure.
 - If the catalog fetch fails, the daily build computes availability from the last good catalog. `refreshFast` never scrapes the catalog; with no catalog snapshot, it reports an error.
 - Pages serve a snapshot however old it is, and fetch live only when none exists.
@@ -63,13 +63,13 @@ Keys:
 | `dining/<date>/<hallId>` | `DiningMenu` |
 | `libraries/hours` | `LibraryHours[]` |
 | `recwell/areas` | `RecWellArea[]` (14-day window) |
-| `buses/gtfs` | unzipped GTFS text files (about 7 MB); the web parses them once per server instance |
-| `buildings` | `Building[]` (umd.io map buildings: id, name, lat, lon) for the trip planner's place search |
+| `recwell/classes` | `FitnessClass[]` (RecWell group fitness timetable, one week) |
+| `buildings` | `Building[]` (umd.io map buildings: id, name, lat, lon) for walking times between classes |
 | `calendar/academic` | `AcademicEvent[]` (registrar dates for the current and next two terms: registration, schedule adjustment, drop with W, derived pass/fail, apply to graduate, finals) |
 | `status/<key>` | the last refresh attempt for `<key>` |
 
 ## Cleanup
 
-Dated keys (`rooms/<date>/...`, `dining/<date>/...`) add about 12 small files a day. `pruneSnapshots(store, now, { keepDays })` removes any dated snapshot — and its matching `status/<key>` entry — whose date falls outside `now`'s campus date ± `keepDays`. `keepDays` defaults to 1, keeping yesterday, today, and tomorrow (the extra day on each side is slack for timezone edges around midnight). Undated keys (`rooms/catalog`, `libraries/hours`, `recwell/areas`, `buses/gtfs`, `buildings`, `calendar/academic`) are never touched.
+Dated keys (`rooms/<date>/...`, `dining/<date>/...`) add about 12 small files a day. `pruneSnapshots(store, now, { keepDays })` removes any dated snapshot — and its matching `status/<key>` entry — whose date falls outside `now`'s campus date ± `keepDays`. `keepDays` defaults to 1, keeping yesterday, today, and tomorrow (the extra day on each side is slack for timezone edges around midnight). Undated keys (`rooms/catalog`, `libraries/hours`, `recwell/areas`, `buildings`, `calendar/academic`) are never touched.
 
 The daily build runs `pruneSnapshots` automatically after refreshing everything else. It can also be run on its own with `npm run snapshots -- prune`.

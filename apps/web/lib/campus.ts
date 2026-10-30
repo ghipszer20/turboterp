@@ -15,7 +15,6 @@
 //   calendar       6 h
 //   room list      1 day
 //   room slots     5 min
-//   buses          6 h (in memory)
 
 import { cacheLife } from "next/cache";
 import {
@@ -27,30 +26,19 @@ import {
   fetchDiningMenu,
   fetchLibraryHours,
   fetchRecWellAreas,
+  fetchGroupFitness,
+  type FitnessClass,
   fetchStampVenues,
   fetchRoomCatalog,
-  fetchShuttleFeed,
-  nextDepartures,
-  parseGtfs,
-  planArriveBy,
-  planTrip,
-  routeMap,
-  routesOn,
   studyRoomCategories,
   withWinterBreak,
   type Building,
   type DiningMenu,
   type StampVenue,
-  type Feed,
   type AcademicEvent,
   type LibraryHours,
-  type Place,
-  type PlanArriveByResult,
-  type PlanTripResult,
   type RecWellArea,
   type RoomAvailability,
-  type RouteWithMap,
-  type Stop,
 } from "@turboterp/campus-data";
 import {
   openSnapshotStore,
@@ -110,7 +98,12 @@ export async function getRecWellAreas(): Promise<RecWellArea[]> {
   return (await snapshotOrLive(snap, liveRecWellAreas)).data;
 }
 
-/** UMD building locations, for the trip planner's "From"/"To" search. Barely changes, so it's read like the other stable snapshots. */
+export async function getGroupFitness(): Promise<FitnessClass[]> {
+  const snap = await readSnapshot<FitnessClass[]>(snapshotKeys.groupFitness, STABLE);
+  return (await snapshotOrLive(snap, liveGroupFitness)).data;
+}
+
+/** UMD building locations, for walking times between classes. Barely changes, so it's read like the other stable snapshots. */
 export async function getBuildings(): Promise<Building[]> {
   const snap = await readSnapshot<Building[]>(snapshotKeys.buildings, STABLE);
   return (await snapshotOrLive(snap, liveBuildings)).data;
@@ -184,6 +177,12 @@ async function liveRecWellAreas() {
   return fetchRecWellAreas();
 }
 
+async function liveGroupFitness() {
+  "use cache";
+  cacheLife({ stale: 300, revalidate: 6 * 3600, expire: 3 * 86400 });
+  return fetchGroupFitness();
+}
+
 async function liveBuildings() {
   "use cache";
   cacheLife({ stale: 3600, revalidate: 86400, expire: 7 * 86400 });
@@ -207,95 +206,4 @@ async function liveRoomAvailability(locationId: number, categoryId: number, isoD
   cacheLife({ stale: 60, revalidate: 120, expire: 3600 });
   const { rooms } = await liveRoomCatalog();
   return fetchCategoryAvailability(rooms, locationId, categoryId, isoDate, roomRangeEnd(isoDate));
-}
-
-// ---- buses ----
-// The parsed feed is big (≈100k stop times), so it lives in server memory,
-// parsed from the GTFS snapshot (live download only if there is none) and
-// reloaded every 6 hours; only small derived answers go through 'use cache'.
-
-let feed: { loadedAt: number; promise: Promise<Feed> } | null = null;
-
-function loadFeed(): Promise<Feed> {
-  if (!feed || Date.now() - feed.loadedAt > 6 * 3_600_000) {
-    const promise = snapshotStore()
-      .get<Record<string, string>>(snapshotKeys.shuttleGtfs)
-      .then((snap) => (snap ? parseGtfs(snap.data) : fetchShuttleFeed()));
-    feed = { loadedAt: Date.now(), promise };
-    promise.catch(() => {
-      feed = null; // retry on the next request instead of caching the failure
-    });
-  }
-  return feed.promise;
-}
-
-export type BusStop = { id: string; name: string; lat: number; lon: number; departuresToday: number };
-
-/** Stops with service on a date, busiest first. */
-export async function getBusStops(isoDate: string): Promise<BusStop[]> {
-  "use cache";
-  cacheLife({ stale: 3600, revalidate: 86400, expire: 2 * 86400 });
-  const f = await loadFeed();
-  const counts = new Map<string, number>();
-  for (const [stopId] of f.stopTimesByStop) {
-    counts.set(stopId, nextDepartures(f, stopId, isoDate, 0, 1000).length);
-  }
-  return [...f.stops.values()]
-    .map((s) => ({ ...s, departuresToday: counts.get(s.id) ?? 0 }))
-    .filter((s) => s.departuresToday > 0)
-    .sort((a, b) => b.departuresToday - a.departuresToday);
-}
-
-export async function getRoutesOn(isoDate: string) {
-  "use cache";
-  cacheLife({ stale: 3600, revalidate: 86400, expire: 2 * 86400 });
-  const f = await loadFeed();
-  return {
-    routes: routesOn(f, isoDate).sort((a, b) => a.shortName.localeCompare(b.shortName, "en", { numeric: true })),
-    validUntil: f.validUntil,
-  };
-}
-
-type MapStop = { id: string; name: string; lat: number; lon: number };
-export type CampusMap = { routes: RouteWithMap[]; stops: MapStop[]; stopRoutes: Record<string, string[]> };
-
-/** Route lines and stops for the Transport map, for the routes running that day. */
-export async function getCampusMap(isoDate: string): Promise<CampusMap> {
-  "use cache";
-  cacheLife({ stale: 3600, revalidate: 86400, expire: 2 * 86400 });
-  const f = await loadFeed();
-  const { routes, stopRoutes } = routeMap(f, isoDate);
-  const stops = Object.keys(stopRoutes)
-    .map((id) => f.stops.get(id))
-    .filter((s): s is Stop => Boolean(s))
-    .map(({ id, name, lat, lon }) => ({ id, name, lat, lon }));
-  return { routes, stops, stopRoutes };
-}
-
-export async function getDepartures(stopIds: string[], isoDate: string, fromMinutes: number, perStop = 4) {
-  const f = await loadFeed();
-  return stopIds.map((id) => ({
-    stopId: id,
-    departures: nextDepartures(f, id, isoDate, fromMinutes, perStop).map((d) => ({
-      tripId: d.tripId,
-      route: d.route.shortName,
-      routeName: d.route.longName,
-      color: d.route.color,
-      textColor: d.route.textColor,
-      headsign: d.headsign,
-      minutes: d.minutes,
-    })),
-  }));
-}
-
-/** The trip planner: walking the whole way, plus up to 3 Shuttle-UM itineraries between two real places. */
-export async function planTripBetween(isoDate: string, fromMinutes: number, from: Place, to: Place): Promise<PlanTripResult> {
-  const f = await loadFeed();
-  return planTrip(f, isoDate, fromMinutes, from, to);
-}
-
-/** Arrive-by mode: the latest way to leave that still gets between two places by `arriveByMinutes`. */
-export async function planArriveByBetween(isoDate: string, arriveByMinutes: number, from: Place, to: Place): Promise<PlanArriveByResult> {
-  const f = await loadFeed();
-  return planArriveBy(f, isoDate, arriveByMinutes, from, to);
 }

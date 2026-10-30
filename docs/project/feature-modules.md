@@ -68,7 +68,7 @@ Moved out of PROJECT_MEMORY.md (section 3) so it loads only when needed. Update 
 8. **Campus tab.**
    - Dining menus, library hours, RecWell hours and fitness classes.
    - A study-room availability grid covering every library and room type.
-9. **Buses (Shuttle-UM, Transit-app style).**
+9. **Buses: removed 2026-10-29 (PROJECT_MEMORY section 2). Only the walking "leave by" survives, on Today.**
    - Opens to nearby stops, with large countdowns and a clear "live" vs "scheduled" label.
    - Favorite routes, service alerts, and route colors and shapes drawn on the map.
    - Event routes (football, Maryland Day, Commencement) appear only on the days they run.

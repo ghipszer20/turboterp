@@ -35,15 +35,15 @@ export const aaasMajorGeneral: Program = {
     "Not encoded (engine gaps): the checklist's residency rules (15 of the final 30 credits at the 300-400 level, 12 upper-level major credits at UMD, at least 30 credits at UMD, cumulative 2.0 UMD GPA); and the 120-credit graduation minimum.",
   ],
   requirements: [
-    { kind: "course", id: "aaas100", name: "Introduction to African American and Africana Studies", options: ["AAAS100", "AASP100"] },
-    { kind: "course", id: "aaas200", name: "African Civilization", options: ["AAAS200", "AASP200"] },
+    { kind: "course", id: "aaas100", name: "Introduction to African American and Africana Studies", options: ["AAAS100"] },
+    { kind: "course", id: "aaas200", name: "African Civilization", options: ["AAAS200"] },
     {
       kind: "course",
       id: "aaas101-or-202",
       name: "AAAS101 (Public Policy and the Black Community) or AAAS202 (Black Culture in the United States)",
-      options: ["AAAS101", "AASP101", "AAAS202", "AASP202"],
+      options: ["AAAS101", "AAAS202", "AASP202"],
     },
-    { kind: "course", id: "aaas210", name: "Intro to Research Design and Analysis in African American and Africana Studies", options: ["AAAS210", "AASP210"] },
+    { kind: "course", id: "aaas210", name: "Intro to Research Design and Analysis in African American and Africana Studies", options: ["AAAS210"] },
     {
       kind: "choose",
       id: "research-practicum",
@@ -55,7 +55,7 @@ export const aaasMajorGeneral: Program = {
       kind: "course",
       id: "advanced-methods",
       name: "Advanced Methods: AAAS395 (Fundamentals of Quantitative Research) or AAAS390 (Advanced Qualitative Methods)",
-      options: ["AAAS395", "AASP395", "AAAS390", "AASP390"],
+      options: ["AAAS395", "AAAS390", "AASP390"],
     },
     {
       kind: "choose",
@@ -65,7 +65,7 @@ export const aaasMajorGeneral: Program = {
       // The catalog's other two options are printed as "AAAS4XX" (Capstone Seminar and Community
       // Practicum; Study Abroad), so any 400-level AAAS/AASP course is accepted (broader than the
       // department's list; main session, 2026-09-28).
-      from: { courses: ["AAAS397", "AASP397"], departments: ["AAAS", "AASP"], minNumber: 400, maxNumber: 499 },
+      from: { courses: ["AAAS397"], departments: ["AAAS", "AASP"], minNumber: 400, maxNumber: 499 },
     },
     {
       kind: "choose",

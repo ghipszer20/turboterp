@@ -9,6 +9,7 @@ import { parseAcademicCalendar } from "../src/calendar.ts";
 import { parseDiningMenu, type DiningMenu } from "../src/dining.ts";
 import { parseLibCalHours, type LibCalHoursFeed } from "../src/libraries.ts";
 import { parseStampVenues } from "../src/stamp-dining.ts";
+import { parseGroupFitness } from "../src/group-fitness.ts";
 import { parseRecWellTab } from "../src/recwell.ts";
 import { applyAvailability, openWindows, parseRoomLocations, parseRooms, roomRangeEnd, type Room } from "../src/rooms.ts";
 import {
@@ -28,13 +29,6 @@ const NOW = new Date("2026-09-25T13:00:00.000Z");
 const TODAY = "2026-09-25";
 const minutesAfter = (min: number) => new Date(NOW.getTime() + min * 60_000);
 
-const GTFS = {
-  "routes.txt": "route_id,route_short_name,route_long_name,route_color,route_text_color\n118,118,Gold,FFD200,000000",
-  "stops.txt": "stop_id,stop_name,stop_lat,stop_lon\nSTAMP,Stamp,38.9882,-76.9445",
-  "trips.txt": "route_id,service_id,trip_id,trip_headsign\n118,WEEKDAY,g1,Metro",
-  "stop_times.txt": "trip_id,arrival_time,departure_time,stop_id,stop_sequence\ng1,08:00:00,08:00:00,STAMP,1",
-};
-
 /** Fixture-backed sources that count calls; `fail` makes a source throw. */
 function fakeSources(fail: Partial<Record<keyof CampusSources, boolean>> = {}) {
   const calls: Record<keyof CampusSources, number> = {
@@ -44,7 +38,7 @@ function fakeSources(fail: Partial<Record<keyof CampusSources, boolean>> = {}) {
     libraryHours: 0,
     stampVenues: 0,
     recWellAreas: 0,
-    shuttleGtfs: 0,
+    groupFitness: 0,
     buildings: 0,
     academicCalendar: 0,
   };
@@ -67,7 +61,7 @@ function fakeSources(fail: Partial<Record<keyof CampusSources, boolean>> = {}) {
     libraryHours: () => run("libraryHours", () => parseLibCalHours(JSON.parse(fixture("libcal-hours.json")) as LibCalHoursFeed)),
     stampVenues: () => run("stampVenues", () => parseStampVenues(fixture("stamp-dining-gviz.txt"))),
     recWellAreas: () => run("recWellAreas", () => parseRecWellTab(fixture("recwell-eppley.csv"), "indoor")),
-    shuttleGtfs: () => run("shuttleGtfs", () => ({ ...GTFS })),
+    groupFitness: () => run("groupFitness", () => parseGroupFitness(fixture("group-fitness.html"))),
     academicCalendar: () => run("academicCalendar", () => parseAcademicCalendar(fixture("academic-calendar-447.html"), "Spring 2027")),
     buildings: () =>
       run("buildings", () => [
@@ -102,7 +96,7 @@ describe("buildSnapshots", () => {
       "libraries/hours",
       "dining/stamp",
       "recwell/areas",
-      "buses/gtfs",
+      "recwell/classes",
       "buildings",
       "calendar/academic",
     ];
@@ -163,16 +157,6 @@ describe("buildSnapshots", () => {
     await buildSnapshots(store, later, fakeSources().sources);
     const status = await store.get<SourceStatus>(snapshotKeys.status("libraries/hours"));
     expect(status?.data).toEqual({ lastAttemptAt: later.toISOString(), lastSuccessAt: later.toISOString(), error: null });
-  });
-
-  it("rejects a bus feed that won't parse instead of overwriting the good one", async () => {
-    await buildSnapshots(store, NOW, fakeSources().sources);
-    const broken = fakeSources();
-    broken.sources.shuttleGtfs = async () => ({ "routes.txt": GTFS["routes.txt"] }); // stops.txt etc. missing
-    const report = await buildSnapshots(store, minutesAfter(60), broken.sources);
-
-    expect(report.results.find((r) => r.key === "buses/gtfs")?.ok).toBe(false);
-    expect((await store.get("buses/gtfs"))?.updatedAt).toBe(NOW.toISOString());
   });
 
   it("builds room availability from the last good catalog when the catalog fetch fails", async () => {
@@ -293,7 +277,7 @@ describe("pruneSnapshots", () => {
       snapshotKeys.roomCatalog,
       snapshotKeys.libraryHours,
       snapshotKeys.recWellAreas,
-      snapshotKeys.shuttleGtfs,
+      snapshotKeys.groupFitness,
       snapshotKeys.buildings,
       snapshotKeys.academicCalendar,
     ];

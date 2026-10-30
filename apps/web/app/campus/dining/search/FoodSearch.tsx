@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import { Chip } from "@/components/Segmented";
 import { Card, EmptyState, SearchField } from "@/components/ui";
-import { groupSearchHits, parseDiningQuery, type SearchMatch } from "@/lib/dining";
+import { groupSearchByHall, parseDiningQuery, type SearchMatch } from "@/lib/dining";
+import { HallResults } from "../HallResults";
 import styles from "./FoodSearch.module.css";
 
 type Hall = { id: number; name: string };
-type State = { key: string; status: "done"; results: SearchMatch[] } | { key: string; status: "error" };
+type State = { key: string; status: "done"; results: SearchMatch[]; cappedHalls: string[] } | { key: string; status: "error" };
 
 /** Search every dining hall's menu for today, optionally limited to one hall and one meal. */
 export function FoodSearch({ date, halls, meals }: { date: string; halls: Hall[]; meals: string[] }) {
@@ -27,7 +28,7 @@ export function FoodSearch({ date, halls, meals }: { date: string; halls: Hall[]
     if (meal) params.set("meal", meal);
     fetch(`/api/dining/search?${params}`, { signal: ctrl.signal })
       .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
-      .then((d: { results: SearchMatch[] }) => setState({ key, status: "done", results: d.results }))
+      .then((d: { results: SearchMatch[]; cappedHalls?: string[] }) => setState({ key, status: "done", results: d.results, cappedHalls: d.cappedHalls ?? [] }))
       .catch((e: unknown) => {
         if (!(e instanceof DOMException && e.name === "AbortError")) setState({ key, status: "error" });
       });
@@ -63,30 +64,23 @@ export function FoodSearch({ date, halls, meals }: { date: string; halls: Hall[]
         </div>
       ) : null}
       {query ? (
-        <Card>
-          <div aria-live="polite">
-            {!current ? (
+        <div aria-live="polite">
+          {!current ? (
+            <Card>
               <EmptyState title="Searching">Looking through today&apos;s menus.</EmptyState>
-            ) : current.status === "error" ? (
+            </Card>
+          ) : current.status === "error" ? (
+            <Card>
               <EmptyState title="Couldn’t search">UMD Dining didn&apos;t respond. Try again in a few minutes.</EmptyState>
-            ) : current.results.length === 0 ? (
+            </Card>
+          ) : current.results.length === 0 ? (
+            <Card>
               <EmptyState title={`No ${query} at ${scope}.`}>Try a different word, hall or meal.</EmptyState>
-            ) : (
-              <>
-                {groupSearchHits(current.results).map((g) => (
-                    <div key={`${g.hall}|${g.meal}|${g.station}`} className={styles.group}>
-                      <p className={styles.where}>
-                        {g.hall} · {g.meal} · {g.station}
-                      </p>
-                      <p className={styles.foods}>
-                        {g.items.join(", ")}
-                      </p>
-                    </div>
-                  ))}
-              </>
-            )}
-          </div>
-        </Card>
+            </Card>
+          ) : (
+            <HallResults halls={groupSearchByHall(current.results, current.cappedHalls)} />
+          )}
+        </div>
       ) : null}
     </div>
   );

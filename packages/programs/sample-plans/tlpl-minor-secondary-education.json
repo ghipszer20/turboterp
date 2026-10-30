@@ -8,7 +8,7 @@
   ],
   "terms": [
     { "term": "Term 1", "courses": ["EDHD413", "TLPL481"] },
-    { "term": "Term 2", "courses": ["TLPL360", "AASP100"] },
+    { "term": "Term 2", "courses": ["TLPL360", "AAAS100"] },
     { "term": "Term 3", "courses": ["TLPL451"] }
   ]
 }

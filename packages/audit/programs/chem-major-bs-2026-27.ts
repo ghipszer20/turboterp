@@ -36,7 +36,7 @@ export const chemMajorBs: Program = {
       kind: "course",
       id: "freshman-seminar",
       name: "Freshman seminar",
-      options: ["UNIV100", "UNIV101", "GEMS100", "HONR100", "HLSC100", "HEIP100", "ARHU105"],
+      options: ["UNIV100", "UNIV101", "GEMS100", "HONR100", "HLSC100", "HEIP100", "HHUM105"],
     },
     { kind: "course", id: "bsci170", name: "Principles of Molecular & Cellular Biology", options: ["BSCI170"] },
     { kind: "course", id: "biology-lab", name: "Biology Laboratory", options: ["BSCI171", "BSCI180"] },

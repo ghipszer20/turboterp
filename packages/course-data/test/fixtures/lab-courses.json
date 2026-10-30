@@ -1,0 +1,8842 @@
+{
+ "sources": [
+  "202701",
+  "202608",
+  "202605",
+  "202601",
+  "202512",
+  "202508",
+  "202505",
+  "202501",
+  "catalogs"
+ ],
+ "courses": [
+  {
+   "id": "ANSC103",
+   "department": "ANSC",
+   "title": "Principles of Animal Science Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ANSC214",
+   "department": "ANSC",
+   "title": "Applied Animal Physiology Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ANSC260",
+   "department": "ANSC",
+   "title": "Laboratory Animal Management",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ANSC447",
+   "department": "ANSC",
+   "title": "Physiology of Mammalian Reproduction Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ANSC497",
+   "department": "ANSC",
+   "title": "Animal Biotechnology Recombinant DNA Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ANTH222",
+   "department": "ANTH",
+   "title": "Introduction to Ecological and Evolutionary Anthropology",
+   "credits": {
+    "min": 4,
+    "max": 4
+   },
+   "genEd": [
+    "DSNL",
+    "DVUP"
+   ],
+   "genEdText": "DSNL, DVUP",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ANTH345",
+   "department": "ANTH",
+   "title": "Introduction to Laboratory Methods in Archaeology",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "AOSC200",
+   "department": "AOSC",
+   "title": "Weather and Climate",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL",
+    "DSNS",
+    "SCIS"
+   ],
+   "genEdText": "DSNL (if taken with AOSC201), DSNS, SCIS",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "AOSC201",
+   "department": "AOSC",
+   "title": "Weather and Climate Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "AOSC200.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARSC059",
+   "department": "ARSC",
+   "title": "Air Force Officer Lab",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARSC100",
+   "department": "ARSC",
+   "title": "Heritage and Values I",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "AFROTC cadets must also register for ARSC059.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARSC101",
+   "department": "ARSC",
+   "title": "Heritage and Values II",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "AFROTC cadets must also register for ARSC059.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARSC200",
+   "department": "ARSC",
+   "title": "Team and Leadership Fundamentals I",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "AFROTC cadets must also register for ARSC059.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARSC201",
+   "department": "ARSC",
+   "title": "Team and Leadership Fundamentals II",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "AFROTC cadets must also register for ARSC059.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARSC300",
+   "department": "ARSC",
+   "title": "Leading People and Effective Communication I",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "AFROTC cadets must also register for ARSC059; or permission of UGST-AFROTC-Air Science.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARSC301",
+   "department": "ARSC",
+   "title": "Leading People and Effective Communication II",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "AFROTC cadets must also register for ARSC059; or permission of UGST-AFROTC-Air Science.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARSC400",
+   "department": "ARSC",
+   "title": "National Security and Preparation for Active Duty I",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "ARSC059; or permission of UGST-AFROTC-Air Science.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARSC401",
+   "department": "ARSC",
+   "title": "National Security and Preparation for Active Duty II",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "ARSC059; or permission of UGST-AFROTC-Air Science.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT100",
+   "department": "ARTT",
+   "title": "Two-Dimensional Design Fundamentals",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSSP"
+   ],
+   "genEdText": "DSSP",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT110",
+   "department": "ARTT",
+   "title": "Elements of Drawing I",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSSP"
+   ],
+   "genEdText": "DSSP",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT110S",
+   "department": "ARTT",
+   "title": "Elements of Drawing I",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSSP"
+   ],
+   "genEdText": "DSSP",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT200",
+   "department": "ARTT",
+   "title": "Three-Dimensional Art Fundamentals",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT210",
+   "department": "ARTT",
+   "title": "Elements of Drawing II",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT255",
+   "department": "ARTT",
+   "title": "Introduction to Digital Art and Design Processes",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT320",
+   "department": "ARTT",
+   "title": "Elements of Painting",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT320H",
+   "department": "ARTT",
+   "title": "Elements of Painting",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT330",
+   "department": "ARTT",
+   "title": "Elements of Sculpture: Metal Casting",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT330H",
+   "department": "ARTT",
+   "title": "Elements of Sculpture: Metal Casting",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT331",
+   "department": "ARTT",
+   "title": "Elements of Sculpture: Steel",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT333",
+   "department": "ARTT",
+   "title": "Elements of Sculpture: Wood and Mixed Media",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT333H",
+   "department": "ARTT",
+   "title": "Elements of Sculpture: Wood and Mixed Media",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT341",
+   "department": "ARTT",
+   "title": "Elements of Printmaking: Woodcut and Relief",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT341H",
+   "department": "ARTT",
+   "title": "Elements of Printmaking: Woodcut and Relief",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT343",
+   "department": "ARTT",
+   "title": "Elements of Printmaking: Screen Printing",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT353",
+   "department": "ARTT",
+   "title": "Elements of Photography",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT355",
+   "department": "ARTT",
+   "title": "Intermediate Graphic Design Principles",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT356",
+   "department": "ARTT",
+   "title": "Graphic Design Processes",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT357",
+   "department": "ARTT",
+   "title": "Interactive Design",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT370",
+   "department": "ARTT",
+   "title": "Elements of Digital Media",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT418B",
+   "department": "ARTT",
+   "title": "Advanced Drawing Studio; Advanced Drawing: Contemporary Approach",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT418H",
+   "department": "ARTT",
+   "title": "Advanced Drawing Studio; Honors Advanced Drawing",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT426",
+   "department": "ARTT",
+   "title": "Advanced Painting: Painting on Site I",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT427",
+   "department": "ARTT",
+   "title": "Advanced Painting: Painting on Site II",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT428",
+   "department": "ARTT",
+   "title": "Advanced Painting Studio; Advanced Painting",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT428H",
+   "department": "ARTT",
+   "title": "Advanced Painting Studio; Honors Advanced Painting",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT438A",
+   "department": "ARTT",
+   "title": "Advanced Sculpture Studio",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT438D",
+   "department": "ARTT",
+   "title": "Advanced Sculpture Studio",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT438H",
+   "department": "ARTT",
+   "title": "Advanced Sculpture Studio",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT448E",
+   "department": "ARTT",
+   "title": "Advanced Printmaking Studio; Worldbuilding Through Printmedia",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT448H",
+   "department": "ARTT",
+   "title": "Advanced Printmaking Studio; Worldbuilding Through Printmedia",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT454",
+   "department": "ARTT",
+   "title": "Advanced Graphic Design Principles: Design in Society",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT455",
+   "department": "ARTT",
+   "title": "Three Dimensional Graphic Design",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT457",
+   "department": "ARTT",
+   "title": "Advanced Interactive Design",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT458",
+   "department": "ARTT",
+   "title": "Graphic Design Portfolio; Advanced Graphic Design",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT479A",
+   "department": "ARTT",
+   "title": "Advanced Digital Media Studio; Code and Form",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT479D",
+   "department": "ARTT",
+   "title": "Advanced Digital Media Studio; Immersive and Virtual Environments",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT479H",
+   "department": "ARTT",
+   "title": "Advanced Digital Media Studio; Honors Advanced Digital Media",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT479M",
+   "department": "ARTT",
+   "title": "Advanced Digital Media Studio",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT489B",
+   "department": "ARTT",
+   "title": "Advanced Special Topics in Art; AI and the Art of Visual Storytelling",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ARTT489H",
+   "department": "ARTT",
+   "title": "Advanced Special Topics in Art",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BCHM464",
+   "department": "BCHM",
+   "title": "Biochemistry Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "BCHM465.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BDBA813",
+   "department": "BDBA",
+   "title": "Business Research Lab",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BIOE121",
+   "department": "BIOE",
+   "title": "Biology for Engineers Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BIOE489J",
+   "department": "BIOE",
+   "title": "Special Topics in Bioengineering; Advanced Manufacturing Laboratory (AML)",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI125",
+   "department": "BSCI",
+   "title": "Plant Biology Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "BSCI124.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI160",
+   "department": "BSCI",
+   "title": "Principles of Ecology and Evolution",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL",
+    "DSNS"
+   ],
+   "genEdText": "DSNL (if taken with BSCI180), DSNS",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI161",
+   "department": "BSCI",
+   "title": "Principles of Ecology and Evolution Lab",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "BSCI160.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI161C",
+   "department": "BSCI",
+   "title": "Principles of Ecology and Evolution Lab",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI161S",
+   "department": "BSCI",
+   "title": "Principles of Ecology and Evolution Lab",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI170",
+   "department": "BSCI",
+   "title": "Principles of Molecular & Cellular Biology",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL",
+    "DSNS"
+   ],
+   "genEdText": "DSNL (if taken with BSCI180), DSNS",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI171",
+   "department": "BSCI",
+   "title": "Principles of Molecular & Cellular Biology Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI171S",
+   "department": "BSCI",
+   "title": "Principles of Molecular & Cellular Biology Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI180",
+   "department": "BSCI",
+   "title": "Principles of Biology Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI180S",
+   "department": "BSCI",
+   "title": "Principles of Biology Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI202",
+   "department": "BSCI",
+   "title": "Human Anatomy and Physiology II",
+   "credits": {
+    "min": 4,
+    "max": 4
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI332",
+   "department": "BSCI",
+   "title": "Cell Biology and Physiology Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI335",
+   "department": "BSCI",
+   "title": "Mammalogy Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI379L",
+   "department": "BSCI",
+   "title": "Cell Biology and Molecular Genetics Department Research; Lab Research",
+   "credits": {
+    "min": 1,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI389L",
+   "department": "BSCI",
+   "title": "Entomology Department Research; Lab Research",
+   "credits": {
+    "min": 1,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI393",
+   "department": "BSCI",
+   "title": "Biology of Extinct Animals Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI399L",
+   "department": "BSCI",
+   "title": "Biology Department Research; Biology Lab Research",
+   "credits": {
+    "min": 1,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI414",
+   "department": "BSCI",
+   "title": "Recombinant DNA Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI415",
+   "department": "BSCI",
+   "title": "Molecular Genetics Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI423",
+   "department": "BSCI",
+   "title": "Immunology Laboratory",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI425",
+   "department": "BSCI",
+   "title": "Advanced Cell Biology Lab Practices",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI441",
+   "department": "BSCI",
+   "title": "Mammalian Physiology Laboratory",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "Must have completed with a minimum grade of C-, or be concurrently enrolled in, BSCI440.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI451",
+   "department": "BSCI",
+   "title": "Mammalian Systems Physiology Laboratory",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "Must have completed with a minimum grade of C-, or be concurrently enrolled in, BSCI450 .",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI454",
+   "department": "BSCI",
+   "title": "Neurobiology Laboratory",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI455",
+   "department": "BSCI",
+   "title": "Neuroscience Laboratory",
+   "credits": {
+    "min": 4,
+    "max": 4
+   },
+   "genEd": [
+    "DSSP"
+   ],
+   "genEdText": "DSSP",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSCI484",
+   "department": "BSCI",
+   "title": "Insects, Pathogens, and Public Health: Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSST240",
+   "department": "BSST",
+   "title": "Understanding The Principles and Perils of CBRN Weapons",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL",
+    "DSNS"
+   ],
+   "genEdText": "DSNL (if taken with BSST241), DSNS",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "BSST241",
+   "department": "BSST",
+   "title": "Understanding the Principles and Perils of CBRN Weapons (Lab)",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "BSST240.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CCJS318J",
+   "department": "CCJS",
+   "title": "Special Topics in Criminology & Criminal Justice; Introduction to Testimony in Forensics",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CCJS320",
+   "department": "CCJS",
+   "title": "Introduction to Criminalistics",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHBE437",
+   "department": "CHBE",
+   "title": "Chemical and Biomolecular Engineering Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHBE485",
+   "department": "CHBE",
+   "title": "Biochemical Engineering Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHEM131",
+   "department": "CHEM",
+   "title": "Chemistry I - Fundamentals of General Chemistry",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL",
+    "DSNS"
+   ],
+   "genEdText": "DSNL (if taken with CHEM132), DSNS",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "CHEM132.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHEM132",
+   "department": "CHEM",
+   "title": "General Chemistry I Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "CHEM131.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHEM132C",
+   "department": "CHEM",
+   "title": "General Chemistry I Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHEM132S",
+   "department": "CHEM",
+   "title": "General Chemistry I Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHEM135",
+   "department": "CHEM",
+   "title": "General Chemistry for Engineers",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL",
+    "DSNS"
+   ],
+   "genEdText": "DSNL (if taken with CHEM136), DSNS",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHEM136",
+   "department": "CHEM",
+   "title": "General Chemistry Laboratory for Engineers",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHEM146",
+   "department": "CHEM",
+   "title": "Principles of General Chemistry",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL",
+    "DSNS"
+   ],
+   "genEdText": "DSNL (if taken with CHEM177), DSNS",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHEM177",
+   "department": "CHEM",
+   "title": "Introduction to Laboratory Practices and Research in the Chemical Sciences",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "CHEM146, CHEM131, or CHEM135.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHEM231",
+   "department": "CHEM",
+   "title": "Organic Chemistry I",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "CHEM232.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHEM232",
+   "department": "CHEM",
+   "title": "Organic Chemistry Laboratory I",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHEM232S",
+   "department": "CHEM",
+   "title": "Organic Chemistry Laboratory I",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHEM242",
+   "department": "CHEM",
+   "title": "Organic Chemistry Laboratory II",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "CHEM241.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHEM271",
+   "department": "CHEM",
+   "title": "General Chemistry and Energetics",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "CHEM272.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHEM272",
+   "department": "CHEM",
+   "title": "General Bioanalytical Chemistry Laboratory",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "CHEM271.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHEM277",
+   "department": "CHEM",
+   "title": "Fundamentals of Analytical and Bioanalytical Chemistry Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHEM483",
+   "department": "CHEM",
+   "title": "Physical Chemistry Laboratory I",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHEM484",
+   "department": "CHEM",
+   "title": "Physical Chemistry Laboratory II",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CHSE377",
+   "department": "CHSE",
+   "title": "Communicating with Sign Language Lab",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "CHSE376 .",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CINE319P",
+   "department": "CINE",
+   "title": "Special Topics in Documentary, Animation, Experimental Cinema, and Other Visual Media; Sound Design",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "CMSC437",
+   "department": "CMSC",
+   "title": "Introduction to Quantum Software Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC109",
+   "department": "DANC",
+   "title": "Choreography I: Improvisation",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSSP"
+   ],
+   "genEdText": "DSSP",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC118",
+   "department": "DANC",
+   "title": "Beginning Tap",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC119",
+   "department": "DANC",
+   "title": "Introduction to American Social Dance",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC128",
+   "department": "DANC",
+   "title": "Fundamentals of Ballet",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC138A",
+   "department": "DANC",
+   "title": "Global Dance Forms; Musical Theatre Jazz",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC138C",
+   "department": "DANC",
+   "title": "Global Dance Forms; Pop Culture Dances & TikTok",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC138D",
+   "department": "DANC",
+   "title": "Global Dance Forms; Yoga/Pilates for Dancers",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC138L",
+   "department": "DANC",
+   "title": "Global Dance Forms; Latin Dance",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC138P",
+   "department": "DANC",
+   "title": "Global Dance Forms; Hip Hop: Bounce & Rock",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC148",
+   "department": "DANC",
+   "title": "Fundamentals of Modern Dance",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC158",
+   "department": "DANC",
+   "title": "Fundamentals of Jazz",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC179",
+   "department": "DANC",
+   "title": "Movement Integration",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC207",
+   "department": "DANC",
+   "title": "Choreography II: The Creative Process",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSSP"
+   ],
+   "genEdText": "DSSP",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC218",
+   "department": "DANC",
+   "title": "Modern Dance I",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC219",
+   "department": "DANC",
+   "title": "Modern Dance II",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC228",
+   "department": "DANC",
+   "title": "Ballet I",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC229",
+   "department": "DANC",
+   "title": "Ballet II",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC258",
+   "department": "DANC",
+   "title": "Jazz I",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC309",
+   "department": "DANC",
+   "title": "Choreography III: Dance Composition",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC318",
+   "department": "DANC",
+   "title": "Modern Dance III",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC319",
+   "department": "DANC",
+   "title": "Modern Dance IV",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC328",
+   "department": "DANC",
+   "title": "Ballet III",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC329",
+   "department": "DANC",
+   "title": "Ballet IV",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC338P",
+   "department": "DANC",
+   "title": "Dance Techniques; Advanced Hip Hop: Street & Club Styles",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC418",
+   "department": "DANC",
+   "title": "Contemporary Modern",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC420",
+   "department": "DANC",
+   "title": "Partnering",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC448",
+   "department": "DANC",
+   "title": "Modern Dance V",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC449",
+   "department": "DANC",
+   "title": "Modern Dance VI",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC466",
+   "department": "DANC",
+   "title": "Laban Movement Analysis",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC468",
+   "department": "DANC",
+   "title": "Dance Repertory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC488",
+   "department": "DANC",
+   "title": "Project-Based Learning",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC608",
+   "department": "DANC",
+   "title": "Graduate Choreography I: Creative Process",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC628",
+   "department": "DANC",
+   "title": "Graduate Ballet",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC648",
+   "department": "DANC",
+   "title": "Advanced Modern Dance Technique I",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC649",
+   "department": "DANC",
+   "title": "Advanced Modern Dance Technique II",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC689G",
+   "department": "DANC",
+   "title": "Special Topics in Dance; Advanced Hip Hop",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC689N",
+   "department": "DANC",
+   "title": "Special Topics in Dance; Dance Pedagogy - Creative Process",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC689R",
+   "department": "DANC",
+   "title": "Special Topics in Dance; Graduate Dance Repertory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC689T",
+   "department": "DANC",
+   "title": "Special Topics in Dance; Graduate Improvisation/Performance Lab",
+   "credits": {
+    "min": 1,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC699",
+   "department": "DANC",
+   "title": "Thesis Writing Lab",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC708",
+   "department": "DANC",
+   "title": "Graduate Choreography II: Collaboration; Collaborative Work",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC719",
+   "department": "DANC",
+   "title": "Graduate Choreography III: Projects",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "DANC766",
+   "department": "DANC",
+   "title": "Graduate Movement Observation and Analysis",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "EDHD768",
+   "department": "EDHD",
+   "title": "Laboratory Methods in Developmental Psychophysiology",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "EDHD798",
+   "department": "EDHD",
+   "title": "Laboratory in Human Development",
+   "credits": {
+    "min": 1,
+    "max": 6
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENAE364",
+   "department": "ENAE",
+   "title": "Aerospace Engineering Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENAE464",
+   "department": "ENAE",
+   "title": "Aerospace Engineering Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENBC352",
+   "department": "ENBC",
+   "title": "Molecular Techniques Laboratory",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENEB408",
+   "department": "ENEB",
+   "title": "Capstone Design Lab",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENEB408A",
+   "department": "ENEB",
+   "title": "Capstone Design Lab; Capstone Design Lab I",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENEB408B",
+   "department": "ENEB",
+   "title": "Capstone Design Lab; Capstone Design Lab II",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENEE245",
+   "department": "ENEE",
+   "title": "Digital Circuits and Systems Laboratory",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENEE305",
+   "department": "ENEE",
+   "title": "Introduction to Micro and Nanoelectronics Lab",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENEE415",
+   "department": "ENEE",
+   "title": "Advanced Manufacturing Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENEE416",
+   "department": "ENEE",
+   "title": "Integrated Circuit Fabrication Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENEE419M",
+   "department": "ENEE",
+   "title": "Topics in Microelectronics; Advanced Manufacturing Laboratory (AML)",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENEE427",
+   "department": "ENEE",
+   "title": "Communications Design Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENEE428",
+   "department": "ENEE",
+   "title": "Communications Design Laboratory",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENEE445",
+   "department": "ENEE",
+   "title": "Computer Laboratory",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENEE459B",
+   "department": "ENEE",
+   "title": "Topics in Computer Engineering; Computer Security and Reverse Engineering Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENEE459L",
+   "department": "ENEE",
+   "title": "Topics in Computer Engineering; Edge AI and IoT Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENEE461",
+   "department": "ENEE",
+   "title": "Control Systems Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENEE467",
+   "department": "ENEE",
+   "title": "Robotics Project Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENEE473",
+   "department": "ENEE",
+   "title": "Electrical Machines Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENEE486",
+   "department": "ENEE",
+   "title": "Optoelectronics Lab",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENEE493",
+   "department": "ENEE",
+   "title": "Quantum Hardware Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENEE789D",
+   "department": "ENEE",
+   "title": "Advanced Topics in Electrophysics; Optoelectronics Lab",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENFP420",
+   "department": "ENFP",
+   "title": "Fire Assessment Methods and Laboratory",
+   "credits": {
+    "min": 4,
+    "max": 4
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENFP620",
+   "department": "ENFP",
+   "title": "Fire Dynamics Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENMA417",
+   "department": "ENMA",
+   "title": "Li-Ion Battery Design, Fabrication and Testing",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENMA466",
+   "department": "ENMA",
+   "title": "Advanced Materials Fabrication Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENMA489M",
+   "department": "ENMA",
+   "title": "Selected Topics in Engineering Materials; Advanced Manufacturing Laboratory (AML)",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENMA683",
+   "department": "ENMA",
+   "title": "Structural Determination Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENME432",
+   "department": "ENME",
+   "title": "Reactor and Radiation Measurements Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENME461",
+   "department": "ENME",
+   "title": "Control Systems Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENME740",
+   "department": "ENME",
+   "title": "Lab-on-a-Chip Microsystems",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENMT362",
+   "department": "ENMT",
+   "title": "Mechatronics and Controls Lab II",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "ENST200",
+   "department": "ENST",
+   "title": "Fundamentals of Soil Science",
+   "credits": {
+    "min": 4,
+    "max": 4
+   },
+   "genEd": [
+    "DSNL"
+   ],
+   "genEdText": "DSNL",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "CHEM131 and CHEM132; or permission of AGNR-Environmental Science & Technology department.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "GEOG201",
+   "department": "GEOG",
+   "title": "Geography of Environmental Systems",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL"
+   ],
+   "genEdText": "DSNL (if taken with GEOG211)",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "GEOG211",
+   "department": "GEOG",
+   "title": "Geography of Environmental Systems Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "GEOG212",
+   "department": "GEOG",
+   "title": "Career Planning for Geographical Sciences, GIS, and ENSP Majors",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "GEOG418",
+   "department": "GEOG",
+   "title": "Field and Laboratory Techniques in Environmental Science",
+   "credits": {
+    "min": 1,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "GEOL100",
+   "department": "GEOL",
+   "title": "Physical Geology",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL",
+    "DSNS"
+   ],
+   "genEdText": "DSNL (if taken with GEOL110), DSNS",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "GEOL110",
+   "department": "GEOL",
+   "title": "Physical Geology Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "GEOL120",
+   "department": "GEOL",
+   "title": "Environmental Geology",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL",
+    "DSNS"
+   ],
+   "genEdText": "DSNL (if taken with GEOL110), DSNS",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "GEOL392",
+   "department": "GEOL",
+   "title": "Biology of Extinct Animals Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "HESP648A",
+   "department": "HESP",
+   "title": "Clinical Practice in Speech: Diagnostic Procedures",
+   "credits": {
+    "min": 1,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "HESP648B",
+   "department": "HESP",
+   "title": "Clinical Practice in Speech: Therapeutic Procedures",
+   "credits": {
+    "min": 1,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "HESP728",
+   "department": "HESP",
+   "title": "Advanced Clinical Practice in Speech; Advanced Graduate Laboratory Practicum in Speech-Language Pathology",
+   "credits": {
+    "min": 1,
+    "max": 8
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "HESP729",
+   "department": "HESP",
+   "title": "Advanced Clinical Practice in Audiology; Advanced Graduate Laboratory Practicum in Audiology",
+   "credits": {
+    "min": 1,
+    "max": 8
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "HESP732",
+   "department": "HESP",
+   "title": "Hearing Aids Lab",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "HESP700.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "HESP733",
+   "department": "HESP",
+   "title": "Hearing Aids II Lab",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "HESP701.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "HESP734",
+   "department": "HESP",
+   "title": "Basic Hearing Measurement Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "HESP606.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "HESP736",
+   "department": "HESP",
+   "title": "Electrophysiological Measurements Lab",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "HESP630.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "HISP319T",
+   "department": "HISP",
+   "title": "Special Topics in Historic Preservation; Archaeology and Preservation Lab Methods",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "HISP619T",
+   "department": "HISP",
+   "title": "Special Topics in Historic Preservation; Computer Lab for Preservation",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "HLSA715",
+   "department": "HLSA",
+   "title": "HSR Data Lab",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "HLSA725.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "HLTH489",
+   "department": "HLTH",
+   "title": "Field Laboratory Projects",
+   "credits": {
+    "min": 1,
+    "max": 6
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "INST127",
+   "department": "INST",
+   "title": "Introduction to Programming for Information Science Lab",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "INST126.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "INST406",
+   "department": "INST",
+   "title": "Cross Disciplinary Design Communication Lab",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "JOUR368K",
+   "department": "JOUR",
+   "title": "Topics in Broadcast and Electronic Media; Video Lab",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "JOUR479Q",
+   "department": "JOUR",
+   "title": "Special Topics in Data Gathering and Analysis; Civic Media Lab",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "JOUR668K",
+   "department": "JOUR",
+   "title": "Topics in Broadcasting and Electronic Media; Video Lab",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES110",
+   "department": "KNES",
+   "title": "Strength Training",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES122",
+   "department": "KNES",
+   "title": "Jogging",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES126",
+   "department": "KNES",
+   "title": "Triathlon Training and Technique",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES136",
+   "department": "KNES",
+   "title": "Beginning Golf",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES137",
+   "department": "KNES",
+   "title": "Intermediate Golf",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES140R",
+   "department": "KNES",
+   "title": "Physical Education Activities: Coed; Trampoline (Beginning)",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES140V",
+   "department": "KNES",
+   "title": "Physical Education Activities: Coed; Tumbling and Balancing (Beginning)",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES141",
+   "department": "KNES",
+   "title": "Tumbling and Balance",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES142",
+   "department": "KNES",
+   "title": "Trampoline",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES144Q",
+   "department": "KNES",
+   "title": "Physical Education Activities: Coed; Martial Arts, Karate (Beginning)",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES144T",
+   "department": "KNES",
+   "title": "Physical Education Activities: Coed; Self-Defense",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES151",
+   "department": "KNES",
+   "title": "Professional Lifeguard Training",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES153",
+   "department": "KNES",
+   "title": "Aquatic High Intensity Interval Training Fitness",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES154",
+   "department": "KNES",
+   "title": "Beginning Swimming",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES154N",
+   "department": "KNES",
+   "title": "Beginning Swimming",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES155N",
+   "department": "KNES",
+   "title": "Physical Education Activities: Coed; Tennis",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES156",
+   "department": "KNES",
+   "title": "Pickleball",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES157N",
+   "department": "KNES",
+   "title": "Physical Education Activities: Coed; Weight Training (Beginning)",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES160",
+   "department": "KNES",
+   "title": "Yoga",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES161N",
+   "department": "KNES",
+   "title": "Physical Education Activities: Coed",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES161T",
+   "department": "KNES",
+   "title": "Physical Education Activities: Coed",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES164",
+   "department": "KNES",
+   "title": "Yoga for Strength",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES165",
+   "department": "KNES",
+   "title": "Pilates",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES166",
+   "department": "KNES",
+   "title": "Barre",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES170",
+   "department": "KNES",
+   "title": "Beginner Martial Arts",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES172",
+   "department": "KNES",
+   "title": "Self Defense",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES173",
+   "department": "KNES",
+   "title": "Beginner BJJ & Martial Arts",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES180",
+   "department": "KNES",
+   "title": "Volleyball",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES182",
+   "department": "KNES",
+   "title": "Soccer",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES186",
+   "department": "KNES",
+   "title": "Basketball",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES190",
+   "department": "KNES",
+   "title": "Flag Football",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES192",
+   "department": "KNES",
+   "title": "Ultimate Frisbee",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES288",
+   "department": "KNES",
+   "title": "A Service-Based Approach to Physical Activity Programs",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES300",
+   "department": "KNES",
+   "title": "Biomechanics of Human Motion",
+   "credits": {
+    "min": 4,
+    "max": 4
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES320",
+   "department": "KNES",
+   "title": "Physiological Basis of Physical Activity and Human Health",
+   "credits": {
+    "min": 4,
+    "max": 4
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES360",
+   "department": "KNES",
+   "title": "Physiology of Exercise",
+   "credits": {
+    "min": 4,
+    "max": 4
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES385",
+   "department": "KNES",
+   "title": "Motor Control and Learning",
+   "credits": {
+    "min": 4,
+    "max": 4
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "KNES389Y",
+   "department": "KNES",
+   "title": "Topical Investigations; Applications of Community Sports-Based Youth Development",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "LING248",
+   "department": "LING",
+   "title": "Introduction to Laboratory Research in Linguistics",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "LING448",
+   "department": "LING",
+   "title": "Advanced Laboratory Research in Linguistics",
+   "credits": {
+    "min": 2,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MIEH722",
+   "department": "MIEH",
+   "title": "Laboratory Methods in Environmental Health",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MOCB699",
+   "department": "MOCB",
+   "title": "Laboratory Rotation",
+   "credits": {
+    "min": 2,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUED484",
+   "department": "MUED",
+   "title": "Student Teaching in Elementary School: Music",
+   "credits": {
+    "min": 6,
+    "max": 6
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "MUED494.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUED494",
+   "department": "MUED",
+   "title": "Student Teaching in Secondary School: Music",
+   "credits": {
+    "min": 6,
+    "max": 6
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "MUED484.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC129A",
+   "department": "MUSC",
+   "title": "Ensemble; Chamber Strings",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC129B",
+   "department": "MUSC",
+   "title": "Ensemble; Chamber Woodwinds",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC129C",
+   "department": "MUSC",
+   "title": "Ensemble; Chamber Brasses",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC129D",
+   "department": "MUSC",
+   "title": "Ensemble; Steel Band",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC129E",
+   "department": "MUSC",
+   "title": "Ensemble; Advanced Steel Band",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC129F",
+   "department": "MUSC",
+   "title": "Ensemble; Brass Ensemble",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC129G",
+   "department": "MUSC",
+   "title": "Ensemble; Balinese Gamelan",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC129K",
+   "department": "MUSC",
+   "title": "Ensemble; Japanese Koto",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC129L",
+   "department": "MUSC",
+   "title": "Ensemble; Advanced Japanese Koto",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC129P",
+   "department": "MUSC",
+   "title": "Ensemble; Percussion",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC129Q",
+   "department": "MUSC",
+   "title": "Ensemble; Korean Percussion Ensemble",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC129U",
+   "department": "MUSC",
+   "title": "Ensemble; Tuba and Euphonium",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC229A",
+   "department": "MUSC",
+   "title": "Ensemble; Symphony Orchestra",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC229D",
+   "department": "MUSC",
+   "title": "Ensemble; Wind Orchestra",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC229E",
+   "department": "MUSC",
+   "title": "Ensemble; Wind Ensemble",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC229F",
+   "department": "MUSC",
+   "title": "Ensemble; Marching Band",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC229G",
+   "department": "MUSC",
+   "title": "Ensemble; Marching Band: Woodwinds and Brass",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC229I",
+   "department": "MUSC",
+   "title": "Ensemble; Marching Band: Drumline and Auxiliary",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC229J",
+   "department": "MUSC",
+   "title": "Ensemble; Jazz Ensemble",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC229K",
+   "department": "MUSC",
+   "title": "Ensemble; Marching Band Dance Team",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC229P",
+   "department": "MUSC",
+   "title": "Ensemble; Pep Band",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC229R",
+   "department": "MUSC",
+   "title": "Ensemble; University Orchestra",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC229U",
+   "department": "MUSC",
+   "title": "Ensemble; University Band",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC229V",
+   "department": "MUSC",
+   "title": "Ensemble; Campus Band",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC229Z",
+   "department": "MUSC",
+   "title": "Ensemble; Jazz Combo",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC329A",
+   "department": "MUSC",
+   "title": "Ensemble; University of Maryland Chorale",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC329B",
+   "department": "MUSC",
+   "title": "Ensemble; Chamber Singers",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC329E",
+   "department": "MUSC",
+   "title": "Ensemble; Gospel Choir",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC329M",
+   "department": "MUSC",
+   "title": "Ensemble; Ensemble: Tactus (Tenor & Bass Choir)",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC329O",
+   "department": "MUSC",
+   "title": "Ensemble; Opera Chorus",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC329W",
+   "department": "MUSC",
+   "title": "Ensemble; Treble Choir",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC379",
+   "department": "MUSC",
+   "title": "Opera Workshop",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC606",
+   "department": "MUSC",
+   "title": "Opera Repertory II",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC614",
+   "department": "MUSC",
+   "title": "Opera Techniques IV",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "MUSC606 and MUSC604.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC629A",
+   "department": "MUSC",
+   "title": "Ensemble; Symphony Orchestra",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC629C",
+   "department": "MUSC",
+   "title": "Ensemble; Wind Ensemble",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC629D",
+   "department": "MUSC",
+   "title": "Ensemble; Steel Band",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC629E",
+   "department": "MUSC",
+   "title": "Ensemble; Advanced Steel Band Ensemble",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC629F",
+   "department": "MUSC",
+   "title": "Ensemble; Marching Band",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC629G",
+   "department": "MUSC",
+   "title": "Ensemble; Balinese Gamelan",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC629H",
+   "department": "MUSC",
+   "title": "Ensemble; Harp",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC629J",
+   "department": "MUSC",
+   "title": "Ensemble; Jazz Ensemble",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC629K",
+   "department": "MUSC",
+   "title": "Ensemble; Japanese Koto",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC629L",
+   "department": "MUSC",
+   "title": "Ensemble; Advanced Japanese Koto",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC629O",
+   "department": "MUSC",
+   "title": "Ensemble; Tuba and Euphonium",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC629P",
+   "department": "MUSC",
+   "title": "Ensemble; Percussion Ensemble",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC629Q",
+   "department": "MUSC",
+   "title": "Ensemble; Korean Percussion Ensemble",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC629R",
+   "department": "MUSC",
+   "title": "Ensemble; Repertoire Orchestra",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC629U",
+   "department": "MUSC",
+   "title": "Ensemble; University Band",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC629V",
+   "department": "MUSC",
+   "title": "Ensemble; Campus Band",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC629W",
+   "department": "MUSC",
+   "title": "Ensemble; Wind Orchestra",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC629Z",
+   "department": "MUSC",
+   "title": "Ensemble; Jazz Combo",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC649A",
+   "department": "MUSC",
+   "title": "Ensemble; University of Maryland Chorale",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC649B",
+   "department": "MUSC",
+   "title": "Ensemble; Chamber Singers",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC649E",
+   "department": "MUSC",
+   "title": "Ensemble; Gospel Choir",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC649M",
+   "department": "MUSC",
+   "title": "Ensemble; Ensemble: Tactus (Tenor & Bass Choir)",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC649O",
+   "department": "MUSC",
+   "title": "Ensemble; Opera Chorus",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "MUSC649W",
+   "department": "MUSC",
+   "title": "Ensemble; Treble Choir",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "NAVY108",
+   "department": "NAVY",
+   "title": "Naval Science Leadership Lab",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "NEUR405",
+   "department": "NEUR",
+   "title": "Neuroscience Laboratory",
+   "credits": {
+    "min": 4,
+    "max": 4
+   },
+   "genEd": [
+    "DSSP"
+   ],
+   "genEdText": "DSSP",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "NFSC413",
+   "department": "NFSC",
+   "title": "Fermentation Science Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "NFSC423",
+   "department": "NFSC",
+   "title": "Food Chemistry Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSSP"
+   ],
+   "genEdText": "DSSP",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "NFSC434",
+   "department": "NFSC",
+   "title": "Food Microbiology Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "NFSC463",
+   "department": "NFSC",
+   "title": "Sensory Evaluation Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PHYS102",
+   "department": "PHYS",
+   "title": "Physics of Music",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL"
+   ],
+   "genEdText": "DSNL (if taken with PHYS103)",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PHYS103",
+   "department": "PHYS",
+   "title": "Physics of Music Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PHYS106",
+   "department": "PHYS",
+   "title": "Light, Perception, Photography, and Visual Phenomena",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL"
+   ],
+   "genEdText": "DSNL (if taken with PHYS107)",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PHYS107",
+   "department": "PHYS",
+   "title": "Light, Perception, Photography and Visual Phenomena Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PHYS161",
+   "department": "PHYS",
+   "title": "General Physics: Mechanics and Particle Dynamics",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL",
+    "DSNS"
+   ],
+   "genEdText": "DSNL (if taken with PHYS275), DSNS",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PHYS171",
+   "department": "PHYS",
+   "title": "Introductory Physics: Mechanics",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL",
+    "DSNS"
+   ],
+   "genEdText": "DSNL (if taken with PHYS275), DSNS",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PHYS171H",
+   "department": "PHYS",
+   "title": "Introductory Physics: Mechanics",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL",
+    "DSNS"
+   ],
+   "genEdText": "DSNL (if taken with PHYS275), DSNS",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PHYS174",
+   "department": "PHYS",
+   "title": "Physics Laboratory Introduction",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "MATH140.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PHYS260",
+   "department": "PHYS",
+   "title": "General Physics: Electricity, Magnetism and Thermodynamics",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL"
+   ],
+   "genEdText": "DSNL (if taken with PHYS261)",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "PHYS261.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PHYS260H",
+   "department": "PHYS",
+   "title": "General Physics: Electricity, Magnetism and Thermodynamics",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL"
+   ],
+   "genEdText": "DSNL (if taken with PHYS261)",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PHYS261",
+   "department": "PHYS",
+   "title": "General Physics: Mechanics, Vibrations, Waves, Heat (Laboratory)",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PHYS270",
+   "department": "PHYS",
+   "title": "General Physics: Waves, Optics, Relativity and Modern Physics",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL"
+   ],
+   "genEdText": "DSNL (if taken with PHYS271)",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "PHYS271.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PHYS271",
+   "department": "PHYS",
+   "title": "General Physics: Electrodynamics, Light, Relativity and Modern Physics (Laboratory)",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "PHYS270.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PHYS275",
+   "department": "PHYS",
+   "title": "Experimental Physics I: Mechanics and Waves",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PHYS276",
+   "department": "PHYS",
+   "title": "Experimental Physics II: Analog Circuits",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PHYS405",
+   "department": "PHYS",
+   "title": "Advanced Experiments",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PHYS429",
+   "department": "PHYS",
+   "title": "Atomic and Nuclear Physics Laboratory",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PLSC110",
+   "department": "PLSC",
+   "title": "Introduction to Horticulture",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL",
+    "DSNS"
+   ],
+   "genEdText": "DSNL (if taken with PLSC111), DSNS",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PLSC111",
+   "department": "PLSC",
+   "title": "Introduction to Horticulture Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "PLSC110 or permission of the Department of Plant Science and Landscape Architecture.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PLSC112",
+   "department": "PLSC",
+   "title": "Introductory Crop Science",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSNL",
+    "DSNS"
+   ],
+   "genEdText": "DSNL (if taken with PLSC113), DSNS",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PLSC113",
+   "department": "PLSC",
+   "title": "Introductory Crop Science Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "PLSC112 or permission of the Department of Plant Science and Landscape Architecture.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PLSC206",
+   "department": "PLSC",
+   "title": "Plant Structure and Function Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PSYC200",
+   "department": "PSYC",
+   "title": "Statistical Methods in Psychology",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "FSAR"
+   ],
+   "genEdText": "FSAR",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PSYC300",
+   "department": "PSYC",
+   "title": "Research Methods in Psychology Laboratory",
+   "credits": {
+    "min": 4,
+    "max": 4
+   },
+   "genEd": [
+    "DSSP"
+   ],
+   "genEdText": "DSSP",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PSYC401",
+   "department": "PSYC",
+   "title": "Biological Bases of Behavior Laboratory",
+   "credits": {
+    "min": 4,
+    "max": 4
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PSYC407",
+   "department": "PSYC",
+   "title": "Behavioral Neurobiology Laboratory",
+   "credits": {
+    "min": 4,
+    "max": 4
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PSYC420",
+   "department": "PSYC",
+   "title": "Experimental Psychology: Social Psychology Laboratory",
+   "credits": {
+    "min": 4,
+    "max": 4
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PSYC450",
+   "department": "PSYC",
+   "title": "Applying Psychology to the Workplace: Industrial Organizational Psychology Laboratory",
+   "credits": {
+    "min": 4,
+    "max": 4
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PSYC629",
+   "department": "PSYC",
+   "title": "Clinical Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PSYC629B",
+   "department": "PSYC",
+   "title": "Clinical Laboratory; Assessment Practicum",
+   "credits": {
+    "min": 1,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PSYC629C",
+   "department": "PSYC",
+   "title": "Clinical Laboratory; Adult Therapy Practicum",
+   "credits": {
+    "min": 1,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PSYC629D",
+   "department": "PSYC",
+   "title": "Clinical Laboratory; Child and Adolescent Therapy Practicum",
+   "credits": {
+    "min": 1,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PSYC629F",
+   "department": "PSYC",
+   "title": "Clinical Laboratory; Fundamentals of Supervision and Consultation",
+   "credits": {
+    "min": 1,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "PSYC629G",
+   "department": "PSYC",
+   "title": "Clinical Laboratory; Anti-Oppression Institute for Clinicians",
+   "credits": {
+    "min": 1,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "SOCY201",
+   "department": "SOCY",
+   "title": "Introductory Statistics for Sociology",
+   "credits": {
+    "min": 4,
+    "max": 4
+   },
+   "genEd": [
+    "FSAR"
+   ],
+   "genEdText": "FSAR",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "SOCY202",
+   "department": "SOCY",
+   "title": "Introduction to Research Methods in Sociology",
+   "credits": {
+    "min": 4,
+    "max": 4
+   },
+   "genEd": [
+    "DSSP"
+   ],
+   "genEdText": "DSSP",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "SPHL358",
+   "department": "SPHL",
+   "title": "Gymkana Troupe",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "SPHL603",
+   "department": "SPHL",
+   "title": "Public Health Data Laboratory",
+   "credits": {
+    "min": 1,
+    "max": 1
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "SPHL602.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET116",
+   "department": "THET",
+   "title": "Fundamentals of Theatrical Design",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET120",
+   "department": "THET",
+   "title": "Introduction to Acting",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSSP"
+   ],
+   "genEdText": "DSSP",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET222",
+   "department": "THET",
+   "title": "Foundations of Acting and Performance",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSSP"
+   ],
+   "genEdText": "DSSP",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET228A",
+   "department": "THET",
+   "title": "Special Topics in Introductory Theatre and Performance; Improvisation",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET240",
+   "department": "THET",
+   "title": "Introduction to Playwriting",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSSP"
+   ],
+   "genEdText": "DSSP",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET282",
+   "department": "THET",
+   "title": "Stage Makeup",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET310",
+   "department": "THET",
+   "title": "Voice for the Actor I",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET324",
+   "department": "THET",
+   "title": "Character Development",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET325",
+   "department": "THET",
+   "title": "Actor's Process I",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET327",
+   "department": "THET",
+   "title": "Movement for the Actor",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET328L",
+   "department": "THET",
+   "title": "Special Topics in Intermediate Theatre and Performance; Acting for Digital and Live Performance",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET328O",
+   "department": "THET",
+   "title": "Special Topics in Intermediate Theatre and Performance; Movement for the Actor",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET330",
+   "department": "THET",
+   "title": "Play Directing I",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET340",
+   "department": "THET",
+   "title": "Playwriting I",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSSP"
+   ],
+   "genEdText": "DSSP",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET351",
+   "department": "THET",
+   "title": "Musical Theatre I",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET371",
+   "department": "THET",
+   "title": "Scenic Design I",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET377",
+   "department": "THET",
+   "title": "Lighting Design for Performance",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET380",
+   "department": "THET",
+   "title": "Sound Design",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET383",
+   "department": "THET",
+   "title": "Costume Design I",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET385",
+   "department": "THET",
+   "title": "Media Design",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET411",
+   "department": "THET",
+   "title": "Voice for the Actor II",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET425",
+   "department": "THET",
+   "title": "Actor's Process II",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET428I",
+   "department": "THET",
+   "title": "Special Topics in Advanced Theatre and Performance; Blendr for Theatrical Rendering",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET428L",
+   "department": "THET",
+   "title": "Special Topics in Advanced Theatre and Performance; Advanced Techniques in Lighting Design: Programming",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET428P",
+   "department": "THET",
+   "title": "Special Topics in Advanced Theatre and Performance; Costume Draping",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET428R",
+   "department": "THET",
+   "title": "Special Topics in Advanced Theatre and Performance; Design for Devised Theatre",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET451",
+   "department": "THET",
+   "title": "Musical Theatre Workshop I",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET452",
+   "department": "THET",
+   "title": "Musical Theatre Workshop II",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET465",
+   "department": "THET",
+   "title": "History of Fashion for the Theatre",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET471",
+   "department": "THET",
+   "title": "Design Studio in Scenery",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET473",
+   "department": "THET",
+   "title": "Rendering for the Theatre II",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET477",
+   "department": "THET",
+   "title": "Design Studio in Lighting",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET480",
+   "department": "THET",
+   "title": "Advanced Sound Design",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET481",
+   "department": "THET",
+   "title": "Theatre Graphics II: Computer Assisted Design",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET491",
+   "department": "THET",
+   "title": "Theatrical Rendering Using Photoshop",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET499B",
+   "department": "THET",
+   "title": "Independent Study; Figure Drawing for Theatre Design",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET619C",
+   "department": "THET",
+   "title": "Special Topics in Theatre; Dance Design Collaboration",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET619O",
+   "department": "THET",
+   "title": "Special Topics in Theatre; Graduate Lighting Design Studio II",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET619R",
+   "department": "THET",
+   "title": "Special Topics in Theatre; Designing for Devised Theatre",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET619T",
+   "department": "THET",
+   "title": "Special Topics in Theatre; Adv. Lighting Drafting",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET619V",
+   "department": "THET",
+   "title": "Special Topics in Theatre; Drafting for Set Design",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET633",
+   "department": "THET",
+   "title": "Figure Drawing for Theatre Design",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET636",
+   "department": "THET",
+   "title": "Photoshop for Theatrical Rendering",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET639",
+   "department": "THET",
+   "title": "Graduate Design Studio - Scenery",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET645",
+   "department": "THET",
+   "title": "Graduate Rendering for Costume Design",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET649",
+   "department": "THET",
+   "title": "Graduate Design Studio - Costume",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET659",
+   "department": "THET",
+   "title": "Graduate Design Studio - Lighting",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET669D",
+   "department": "THET",
+   "title": "Independent Study; Graduate Costume Design: Draping",
+   "credits": {
+    "min": 1,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET669I",
+   "department": "THET",
+   "title": "Independent Study; Sound Design",
+   "credits": {
+    "min": 1,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET669O",
+   "department": "THET",
+   "title": "Independent Study; Graduate Lighting Design Studio II",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET669T",
+   "department": "THET",
+   "title": "Independent Study; Theatre Graphics II: Computer Assisted Design",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET669V",
+   "department": "THET",
+   "title": "Independent Study; Drafting for Set Design",
+   "credits": {
+    "min": 1,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET678",
+   "department": "THET",
+   "title": "Collaborative Design & Production for Performance",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET679",
+   "department": "THET",
+   "title": "Graduate Design Studio - Multimedia Design",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "THET680",
+   "department": "THET",
+   "title": "History of Fashion for Theatre",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "TLPL471",
+   "department": "TLPL",
+   "title": "Curriculum, Teaching, and Assessment in Secondary Social Studies",
+   "credits": {
+    "min": 3,
+    "max": 3
+   },
+   "genEd": [
+    "DSSP"
+   ],
+   "genEdText": "DSSP",
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": "TLPL479B.",
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  },
+  {
+   "id": "TLPL479B",
+   "department": "TLPL",
+   "title": "Field Experiences in Education; Secondary Social Studies Education",
+   "credits": {
+    "min": 2,
+    "max": 2
+   },
+   "genEd": [],
+   "genEdText": "",
+   "labOnly": true,
+   "permissionRequired": false,
+   "texts": {
+    "prerequisite": null,
+    "corequisite": null,
+    "restriction": null,
+    "creditOnlyGrantedFor": null,
+    "other": {}
+   },
+   "description": ""
+  }
+ ]
+}

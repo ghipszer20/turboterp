@@ -77,7 +77,7 @@ export const knesMinorExercisePhysiology: Program = {
       count: 5,
       from: {
         courses: [
-          "KNES260", "KNES282", "KNES289F", "KNES320", "KNES332", "KNES350",
+          "KNES260", "KNES282", "KNES264", "KNES320", "KNES332", "KNES350",
           "KNES360", "KNES445", "KNES460", "KNES464", "KNES465",
         ],
       },

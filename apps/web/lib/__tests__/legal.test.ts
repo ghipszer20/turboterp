@@ -25,7 +25,6 @@ describe("legal pages", () => {
       "donations", "changes", "governing law", "contact",
     ]) expect(h).toContain(t);
     expect(text(TERMS)).toMatch(/Apache-2\.0/);
-    expect(text(TERMS)).toMatch(/Interline/);
     expect(text(TERMS)).toMatch(/PlanetTerp/);
     expect(text(TERMS)).toMatch(/typing your name/);
     expect(text(TERMS)).toMatch(/laws of Maryland/);
@@ -34,10 +33,10 @@ describe("legal pages", () => {
   it("privacy covers its topics", () => {
     const h = headings(PRIVACY).join("|");
     for (const t of [
-      "introduction", "what we collect", "browser", "transcripts", "cookies", "location", "used and shared", "other services",
-      "donations", "planned", "deleting", "security", "changes", "contact",
+      "introduction", "what we collect", "browser", "transcripts", "cookies", "used and shared", "other services",
+      "donations", "every device", "deleting", "security", "changes", "contact",
     ]) expect(h).toContain(t);
-    for (const service of ["Supabase", "Vercel", "OpenFreeMap", "Venmo", "Brevo"]) expect(text(PRIVACY)).toContain(service);
+    for (const service of ["Supabase", "Vercel", "Venmo", "Brevo"]) expect(text(PRIVACY)).toContain(service);
   });
 
   it("privacy explains server-sent email and the rate-limit record", () => {
@@ -50,9 +49,29 @@ describe("legal pages", () => {
     expect(PRIVACY_VERSION).not.toBe("2026-10-04");
   });
 
+  it("privacy explains sync, encrypted name storage, Google and in-app deletion", () => {
+    const t = text(PRIVACY);
+    expect(t).not.toMatch(/planned, not built yet/i);
+    expect(t).toMatch(/encrypted/i);
+    expect(t).toMatch(/name you typed/i);
+    expect(t).toMatch(/Google/);
+    expect(t).toMatch(/newest change wins/i);
+    expect(t).toMatch(/Delete account/);
+    expect(text(TERMS)).toMatch(/Delete account/);
+    expect(PRIVACY_VERSION).toBe("2026-10-29");
+    expect(TERMS_VERSION).toBe("2026-10-29");
+  });
+
+  it("privacy discloses Web Analytics and Sentry and no longer says no analytics", () => {
+    const t = text(PRIVACY);
+    expect(t).not.toMatch(/no analytics/i);
+    expect(t).toMatch(/Vercel Web Analytics/);
+    expect(t).toMatch(/Sentry/);
+  });
+
   it("privacy names every storage key and cookie the app writes", () => {
     expect([...STORAGE_KEYS].sort()).toEqual(
-      [PLAN_STORAGE_KEY, CONSENT_STORAGE_KEY, SAVED_KEY, PREP_KEY, "turboterp-leave-origin", THEME_STORAGE_KEY].sort(),
+      [PLAN_STORAGE_KEY, CONSENT_STORAGE_KEY, SAVED_KEY, PREP_KEY, THEME_STORAGE_KEY, "turboterp-sync"].sort(),
     );
     for (const k of STORAGE_KEYS) expect(text(PRIVACY)).toContain(k);
     expect(text(PRIVACY)).toContain(ACCESS_COOKIE);

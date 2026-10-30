@@ -107,10 +107,10 @@ type Golden = {
 
 const FOOTNOTE_1_HONORS = "footnote 1 (honors MATH340–MATH341) is prose; the table lists only the standard course";
 const OWNER_CMSC141 = "owner-confirmed 2026-09-25: CMSC141/CMSC142 substitute for CMSC131/CMSC132; not in the catalog table";
-const DEPT_PROGRAMMING_EXTRAS = ["AOSC247", "BIOE241", "ENME202", "ENME351", "ENME489I", "PHYS165", "AOSC358L"];
+const DEPT_PROGRAMMING_EXTRAS = ["AOSC247", "BIOE241", "ENME202", "ENME351", "ENME420", "PHYS165", "AOSC358L"];
 const DEPT_VS_CATALOG_PROGRAMMING =
   "department-vs-catalog difference (owner ruling: follow the department page): the department page's programming item (4) is " +
-  "'CMSC 106, 131, 132, AOSC247, BIOE 241, ENAE 202, ENME202, ENME 351, ENME489I, ENEE150, PHYS 165, PHYS265, AOSC358L', wider than the catalog's row";
+  "'CMSC 106, 131, 132, AOSC247, BIOE 241, ENAE 202, ENME202, ENME 351, ENME489I, now ENME420, ENEE150, PHYS 165, PHYS265, AOSC358L', wider than the catalog's row";
 const DEPT_MATH240_MATH461 =
   "department-vs-catalog difference (owner ruling: follow the department page): the department page says 'the MATH 240 requirement may be fulfilled by MATH461'; the catalog's footnote 1 doesn't";
 

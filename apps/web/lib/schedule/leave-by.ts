@@ -1,5 +1,5 @@
-// Transport's "leave by" card: which class is next today, from this device's saved schedule.
-// Pure logic; the card fetches the sections and the trip and calls these.
+// Today's "leave by" hero: which class is next today, from this device's saved schedule.
+// Pure logic; the hero loads the sections and the walking estimate and calls these.
 
 import type { Section, Weekday } from "@turboterp/course-data/schedules";
 import type { SavedSchedule, SectionPicks } from "./saved";

@@ -60,6 +60,14 @@ describe("lab pair in the catalog file", () => {
     expect(file.courses.find((x) => x.i === "CHEM132")?.nl).toBeUndefined();
     expect(decodeCatalogFile(file).catalog.get("CHEM131")?.labPair).toEqual({ code: "DSNL", with: "CHEM132" });
   });
+  it("round-trips labs through the short key lb, absent when empty", () => {
+    const withLabs: PlanCatalog = new Map([...catalog, ["BSCI170", c("BSCI170", 3, { labs: ["BSCI180", "BSCI171"] })]]);
+    const file = encodeCatalogFile(withLabs, { term: "202701", generatedAt: "x" });
+    expect(file.courses.find((x) => x.i === "BSCI170")?.lb).toEqual(["BSCI180", "BSCI171"]);
+    expect(file.courses.find((x) => x.i === "CHEM132")?.lb).toBeUndefined();
+    expect(decodeCatalogFile(file).catalog.get("BSCI170")?.labs).toEqual(["BSCI180", "BSCI171"]);
+    expect(decodeCatalogFile(file).catalog.get("CHEM132")?.labs).toBeUndefined();
+  });
 });
 
 describe("lab-science pairs: review fixes", () => {
@@ -68,5 +76,25 @@ describe("lab-science pairs: review fixes", () => {
     const lecture = planCourses(p, catalog).find((x) => x.id === "CHEM131");
     expect(lecture?.genEd).toEqual(["DSNS"]);
     expect(lecture?.genEdCredits).toBeUndefined();
+  });
+});
+
+describe("lab-science pairs taken in order (BSCI170 then BSCI180)", () => {
+  // BSCI180's prerequisite needs BSCI170 finished first, so Testudo's "DSNL (if taken with BSCI180)"
+  // can only be met in a later term.
+  const after = { kind: "any" as const, of: [{ kind: "course" as const, course: "BSCI160" }, { kind: "course" as const, course: "BSCI170" }] };
+  const seq: PlanCatalog = new Map(
+    [
+      c("BSCI170", 3, { genEd: ["DSNL", "DSNS"], labPair: { code: "DSNL", with: "BSCI180" } }),
+      c("BSCI180", 1, { prerequisite: after }),
+    ].map((x) => [x.id, x]),
+  );
+  it("keeps DSNL when the lab comes in a later term", () => {
+    const lecture = planCourses(plan(["BSCI170"], ["BSCI180"]), seq).find((x) => x.id === "BSCI170");
+    expect(lecture?.genEd).toEqual(["DSNL", "DSNS"]);
+    expect(lecture?.genEdCredits).toBe(4);
+  });
+  it("still drops DSNL when the lab never comes", () => {
+    expect(planCourses(plan(["BSCI170"]), seq).find((x) => x.id === "BSCI170")?.genEd).toEqual(["DSNS"]);
   });
 });

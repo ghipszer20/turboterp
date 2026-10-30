@@ -1,6 +1,6 @@
 // UMD building locations, from umd.io's map API (https://api.umd.io/v1/map/buildings).
-// Feeds the trip planner's "search a place" boxes -- students pick a building by name
-// instead of a bus stop. Snapshotted like the other campus data (SNAPSHOTS.md): never
+// Feeds the walking-time estimates between classes (schedule builder, Today's next class).
+// Snapshotted like the other campus data (SNAPSHOTS.md): never
 // fetched per page view.
 
 import { fetchJson, SourceError } from "./http.ts";

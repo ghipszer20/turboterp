@@ -15,13 +15,15 @@ export type SortContext = {
 
 /** Weights of the "Best Teachers" score (sort key "recommended"; sum to 1). Open seats don't count (owner, 2026-10-07). */
 export const RECOMMEND_WEIGHTS = { rating: 0.5, gpa: 0.5 } as const;
+/** Weights of the "Default" score (sort key "best"; sum to 1; owner, 2026-10-09). */
+export const DEFAULT_WEIGHTS = { rating: 0.3, gpa: 0.3, timing: 0.4 } as const;
 /** Score of a missing input (unrated, no grade data): neutral, so it neither helps nor hurts. */
 export const NEUTRAL_SCORE = 0.5;
 
 export const gpaKey = (courseId: string, instructor: string) => `${courseId}|${instructor}`;
 
-/** One section's 0–1 "Best Teachers" score: professor rating and that professor's GPA in the course. */
-export function sectionScore(s: Section, context: SortContext = {}): number {
+/** One section's 0–1 rating and GPA components (neutral when missing). */
+export function sectionParts(s: Section, context: SortContext = {}): { rating: number; gpa: number } {
   let rating = -1;
   let gpa = -1;
   for (const name of s.instructors) {
@@ -30,10 +32,30 @@ export function sectionScore(s: Section, context: SortContext = {}): number {
     const g = context.gpas?.[gpaKey(s.courseId, name)];
     if (g != null) gpa = Math.max(gpa, Math.max(0, (g - 2) / 2)); // 2.0 -> 0, 3.0 -> 0.5 (neutral), 4.0 -> 1
   }
-  return (
-    RECOMMEND_WEIGHTS.rating * (rating < 0 ? NEUTRAL_SCORE : Math.min(rating, 1)) +
-    RECOMMEND_WEIGHTS.gpa * (gpa < 0 ? NEUTRAL_SCORE : Math.min(gpa, 1))
-  );
+  return { rating: rating < 0 ? NEUTRAL_SCORE : Math.min(rating, 1), gpa: gpa < 0 ? NEUTRAL_SCORE : Math.min(gpa, 1) };
+}
+
+/** One section's 0–1 "Best Teachers" score: professor rating and that professor's GPA in the course. */
+export function sectionScore(s: Section, context: SortContext = {}): number {
+  const p = sectionParts(s, context);
+  return RECOMMEND_WEIGHTS.rating * p.rating + RECOMMEND_WEIGHTS.gpa * p.gpa;
+}
+
+export type GroupParts = { rating: number; gpa: number; score: number };
+
+/** A choice group's best section (by `sectionScore`): its 0–1 rating and GPA parts and its score. */
+export function groupParts(group: readonly Section[], context: SortContext = {}): GroupParts {
+  let best: GroupParts = { rating: NEUTRAL_SCORE, gpa: NEUTRAL_SCORE, score: 0 };
+  let found = false;
+  for (const s of group) {
+    const p = sectionParts(s, context);
+    const score = RECOMMEND_WEIGHTS.rating * p.rating + RECOMMEND_WEIGHTS.gpa * p.gpa;
+    if (!found || score > best.score) {
+      best = { ...p, score };
+      found = true;
+    }
+  }
+  return best;
 }
 
 /** A choice group's score: its best section (the student can pick any of them). */
@@ -63,8 +85,14 @@ export type LayoutMetrics = {
   earliestStart: number;
   /** The latest class end of the week. */
   latestEnd: number;
-  /** Sum over the layout's courses of `groupScore` (only worked out for the "recommended" sort; else 0). */
+  /** Sum over the layout's courses of `groupScore` (the "Best Teachers" sort). */
   score: number;
+  /** Average over courses of the best section's 0–1 rating score (see `sectionParts`). */
+  ratingScore: number;
+  /** Average over courses of the best section's 0–1 GPA score. */
+  gpaScore: number;
+  /** The Default score (`DEFAULT_WEIGHTS`), 0–1; set by `applyDefaultScores` once the set is known. Single layout: timing counts as 1. */
+  weighted: number;
 };
 
 type Timed = { day: number; start: number; end: number };
@@ -109,11 +137,28 @@ function courseRating(group: Group, ratings: SortContext["ratings"]): number {
 }
 
 export function layoutMetrics(layout: Layout, context: SortContext = {}): LayoutMetrics {
-  return metricsWith(
+  const m = metricsWith(
     layout,
     (group) => courseRating(group, context.ratings),
-    (group) => groupScore(group, context),
+    (group) => groupParts(group, context),
   );
+  return applyDefaultScores([m])[0]!;
+}
+
+/** Fills in each metrics' Default score. Timing: 1 for the lowest `condensed` in the set, 0 for the highest, linear between (all equal: 1). */
+export function applyDefaultScores(all: LayoutMetrics[]): LayoutMetrics[] {
+  let lo = Infinity;
+  let hi = -Infinity;
+  for (const m of all) {
+    if (m.condensed < lo) lo = m.condensed;
+    if (m.condensed > hi) hi = m.condensed;
+  }
+  const range = hi - lo;
+  for (const m of all) {
+    const timing = range > 0 ? (hi - m.condensed) / range : 1;
+    m.weighted = DEFAULT_WEIGHTS.rating * m.ratingScore + DEFAULT_WEIGHTS.gpa * m.gpaScore + DEFAULT_WEIGHTS.timing * timing;
+  }
+  return all;
 }
 
 // Scratch space reused across calls to avoid allocating per layout (hot path: ~100k layouts per sort).
@@ -121,13 +166,18 @@ export function layoutMetrics(layout: Layout, context: SortContext = {}): Layout
 const buckets: Timed[][] = Array.from({ length: DAY_COUNT }, () => []);
 const counts = new Int32Array(DAY_COUNT);
 
-function metricsWith(layout: Layout, rate: (group: Group) => number, score?: (group: Group) => number): LayoutMetrics {
+function metricsWith(layout: Layout, rate: (group: Group) => number, parts: (group: Group) => GroupParts): LayoutMetrics {
   let ratingSum = 0;
   let scoreSum = 0;
+  let ratingScoreSum = 0;
+  let gpaScoreSum = 0;
   let condensed = 0;
   for (const group of layout) {
     ratingSum += rate(group);
-    if (score) scoreSum += score(group);
+    const p = parts(group);
+    scoreSum += p.score;
+    ratingScoreSum += p.rating;
+    gpaScoreSum += p.gpa;
     const times = groupTimes(group);
     condensed += times.midday;
     for (const t of times.timed) buckets[t.day]![counts[t.day]!++] = t;
@@ -165,20 +215,35 @@ function metricsWith(layout: Layout, rate: (group: Group) => number, score?: (gr
     if (reach > latestEnd) latestEnd = reach;
   }
   const rating = layout.length === 0 ? NEUTRAL_RATING : ratingSum / layout.length;
-  return { rating, gapMinutes, condensed, days, earliestStart, latestEnd, score: scoreSum };
+  const n = layout.length;
+  return {
+    rating,
+    gapMinutes,
+    condensed,
+    days,
+    earliestStart,
+    latestEnd,
+    score: scoreSum,
+    ratingScore: n === 0 ? NEUTRAL_SCORE : ratingScoreSum / n,
+    gpaScore: n === 0 ? NEUTRAL_SCORE : gpaScoreSum / n,
+    weighted: 0,
+  };
 }
 
 /**
  * THE definition of "Default" (sort key "best"; labeled "Best first" before 2026-10-07). Change the order here to change what it means.
- *   1. Higher average PlanetTerp rating of each course's best available instructor (unrated = NEUTRAL_RATING).
- *   2. Fewer idle minutes between classes on the same day.
- *   3. More condensed and toward midday: shorter days (first start to last end), plus a mild
- *      penalty for classes far from noon (MIDDAY_WEIGHT per minute). No cutoff hours; the student's
- *      own workday windows are a filter.
- * Open seats play no part: full sections are never generated.
+ * A weighted score, higher first (owner, 2026-10-09; `DEFAULT_WEIGHTS`):
+ *   30% average PlanetTerp rating of each course's best section, 0–1 (rating (r-1)/4),
+ *   30% average GPA of that teacher in the course, 0–1 (GPA (g-2)/2, clamped); missing = NEUTRAL_SCORE,
+ *   40% timing: condensed and toward midday, 0–1 relative to the layouts sorted together
+ *       (lowest `condensed` = 1, highest = 0). `condensed` is each day's span (first start to last end)
+ *       plus MIDDAY_WEIGHT per minute a class sits from noon. No cutoff hours; the student's own
+ *       workday windows are a filter.
+ * Ties fall back to: higher PlanetTerp rating, fewer idle minutes between classes, lower `condensed`.
+ * The score needs the whole set (`applyDefaultScores`; `sortLayouts` does it). Open seats play no part.
  */
 export function compareBest(a: LayoutMetrics, b: LayoutMetrics): number {
-  return b.rating - a.rating || a.gapMinutes - b.gapMinutes || a.condensed - b.condensed;
+  return b.weighted - a.weighted || b.rating - a.rating || a.gapMinutes - b.gapMinutes || a.condensed - b.condensed;
 }
 
 /** "Best Teachers" (sort key "recommended"): higher summed section score first (rating, GPA), then the Default order. */
@@ -205,18 +270,14 @@ export function sortLayouts(layouts: readonly Layout[], key: SortKey = "best", c
     if (r === undefined) rated.set(group, (r = courseRating(group, context.ratings)));
     return r;
   };
-  // Each group's score is worked out once too (groups are shared between layouts).
-  const scored = new Map<Group, number>();
-  const score =
-    key === "recommended"
-      ? (group: Group) => {
-          let v = scored.get(group);
-          if (v === undefined) scored.set(group, (v = groupScore(group, context)));
-          return v;
-        }
-      : undefined;
-  return layouts
-    .map((layout) => ({ layout, metrics: metricsWith(layout, rate, score) }))
-    .sort((a, b) => compare(a.metrics, b.metrics))
-    .map((x) => x.layout);
+  // Each group's parts are worked out once too (groups are shared between layouts).
+  const parted = new Map<Group, GroupParts>();
+  const parts = (group: Group) => {
+    let v = parted.get(group);
+    if (v === undefined) parted.set(group, (v = groupParts(group, context)));
+    return v;
+  };
+  const items = layouts.map((layout) => ({ layout, metrics: metricsWith(layout, rate, parts) }));
+  applyDefaultScores(items.map((x) => x.metrics));
+  return items.sort((a, b) => compare(a.metrics, b.metrics)).map((x) => x.layout);
 }

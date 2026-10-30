@@ -4,7 +4,7 @@
 // checkPlan; run it after edits settle, not on every keystroke.
 
 import { auditPrograms, earnsCredit, matchesFilter, type AuditResult, type Program, type StudentCourse } from "@turboterp/audit";
-import { allowsRetake } from "./check.ts";
+import { allowsRetake, needsFirst } from "./check.ts";
 import type { CatalogCourse, PlanCatalog } from "./catalog.ts";
 import type { Plan } from "./check.ts";
 import { allTwins, twinIndex } from "./twins.ts";
@@ -95,7 +95,7 @@ export function planCourses(plan: Plan, catalog: PlanCatalog): StudentCourse[] {
       ...aliases(c.id),
     });
   }
-  for (const term of plan.terms) {
+  for (const [index, term] of plan.terms.entries()) {
     for (const c of term.courses) {
       if (seen.has(c.id) && !retakable.has(c.id)) continue;
       if (!seen.has(c.id) && twinCounted(c.id)) continue;
@@ -111,7 +111,7 @@ export function planCourses(plan: Plan, catalog: PlanCatalog): StudentCourse[] {
         credits: c.credits ?? info?.credits.min ?? 0,
         status: c.status === "completed" ? "completed" : "planned",
         ...(c.grade ? { grade: c.grade } : {}),
-        ...labScience(info, term, catalog),
+        ...labScience(info, term, catalog, plan.terms.slice(index + 1)),
         ...aliases(c.id),
       });
       if (allowsRetake(c)) retakable.add(c.id);
@@ -129,9 +129,16 @@ function withoutUnpairedLab(info: CatalogCourse | undefined): string[] {
 /**
  * The genEd (and genEdCredits) of a course taken in a term. A lab-science lecture keeps DSNL only
  * when its paired lab is on record in the same term ("only when taken concurrently"), and then
- * brings the lab's credits too. The lab course itself carries no Gen Ed codes.
+ * brings the lab's credits too. A lab whose prerequisite needs the lecture finished first (BSCI180
+ * after BSCI170) can't share its term, so for it a later term counts. The lab course itself carries
+ * no Gen Ed codes.
  */
-function labScience(info: CatalogCourse | undefined, term: Plan["terms"][number], catalog: PlanCatalog): Pick<StudentCourse, "genEd" | "genEdCredits"> {
+function labScience(
+  info: CatalogCourse | undefined,
+  term: Plan["terms"][number],
+  catalog: PlanCatalog,
+  later: Plan["terms"] = [],
+): Pick<StudentCourse, "genEd" | "genEdCredits"> {
   if (!info) return { genEd: [] };
   const pair = info.labPair;
   if (!pair) {
@@ -139,9 +146,10 @@ function labScience(info: CatalogCourse | undefined, term: Plan["terms"][number]
     return { genEd: info.genEd };
   }
   // A withdrawn or failed lab doesn't make the pair (earnsCredit: F and W earn nothing).
-  const lab = term.courses.find(
-    (x) => x.id === pair.with && x.gradTag !== "graduate-only" && earnsCredit({ status: x.status === "completed" ? "completed" : "planned", ...(x.grade ? { grade: x.grade } : {}) }),
-  );
+  const isLab = (x: Plan["terms"][number]["courses"][number]) =>
+    x.id === pair.with && x.gradTag !== "graduate-only" && earnsCredit({ status: x.status === "completed" ? "completed" : "planned", ...(x.grade ? { grade: x.grade } : {}) });
+  const after = needsFirst(catalog.get(pair.with)?.prerequisite ?? null, info.id);
+  const lab = term.courses.find(isLab) ?? (after ? later.flatMap((t) => t.courses).find(isLab) : undefined);
   if (!lab) return { genEd: withoutUnpairedLab(info) };
   const own = term.courses.find((x) => x.id === info.id)?.credits ?? info.credits.min;
   const labCredits = lab.credits ?? catalog.get(lab.id)?.credits.min ?? 0;

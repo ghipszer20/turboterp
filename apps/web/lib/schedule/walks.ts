@@ -1,11 +1,10 @@
 // Walking time between back-to-back classes, for the plan editor's week view. Pure logic:
 // building codes come from the sections' meetings, positions from the umd.io buildings list
-// (served from the campus snapshot), minutes from the trip planner's walkMinutes estimate
+// (served from the campus snapshot), minutes from campus-data's walkMinutes estimate
 // (straight line x detour factor at walking speed -- always shown as an estimate).
 
 import { buildingByCode, type Building } from "@turboterp/campus-data/buildings";
-import { distanceMeters } from "@turboterp/campus-data/buses";
-import { walkMinutes } from "@turboterp/campus-data/trip";
+import { distanceMeters, walkMinutes } from "@turboterp/campus-data/walk";
 import { WEEKDAYS, type Section, type Weekday } from "@turboterp/course-data/schedules";
 
 export type Walk = {

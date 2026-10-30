@@ -11,10 +11,7 @@ import {
   fetchLibraryHours,
   fetchRecWellAreas,
   fetchRoomCatalog,
-  fetchShuttleFeed,
-  nextDepartures,
   recWellOnDate,
-  routesOn,
 } from "../src/index.ts";
 
 const today = campusDate();
@@ -60,15 +57,6 @@ await check("rooms", async () => {
   const avail = await fetchCategoryAvailability(rooms, first.locationId, first.categoryId, today, addDays(today, 1));
   const withOpen = avail.filter((r) => r.open.length > 0).length;
   return `${locations.length} libraries, ${rooms.length} rooms; "${first.categoryName}": ${withOpen}/${avail.length} have open time today`;
-});
-
-await check("buses", async () => {
-  const feed = await fetchShuttleFeed();
-  const routes = routesOn(feed, today);
-  const busiest = [...feed.stopTimesByStop.entries()].sort((a, b) => b[1].length - a[1].length)[0]!;
-  const stop = feed.stops.get(busiest[0])!;
-  const deps = nextDepartures(feed, stop.id, today, 12 * 60, 3);
-  return `${feed.routes.size} routes (${routes.length} running today), ${feed.stops.size} stops, valid until ${feed.validUntil}; ${stop.name} after noon: ${deps.map((d) => d.route.shortName).join(", ") || "none"}`;
 });
 
 process.exitCode = failures > 0 ? 1 : 0;

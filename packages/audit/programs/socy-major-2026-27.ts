@@ -54,7 +54,7 @@ export const socyMajor: Program = {
       kind: "course",
       id: "gateway-math",
       name: "Gateway Math (MATH107, MATH111, MATH120, MATH140, or STAT100)",
-      options: ["MATH107", "MATH111", "MATH120", "MATH140", "STAT100"],
+      options: ["MATH107", "MATH120", "MATH140", "STAT100"],
     },
     { kind: "course", id: "socy100", name: "Introduction to Sociology", options: ["SOCY100"] },
     { kind: "course", id: "socy201", name: "Introductory Statistics for Sociology", options: ["SOCY201"] },

@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { Nav } from "@/components/Nav";
+import { SyncProvider } from "@/lib/sync/SyncProvider";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import "./globals.css";
 
@@ -11,7 +13,7 @@ const plusJakarta = Plus_Jakarta_Sans({ subsets: ["latin"], weight: ["600", "700
 export const metadata: Metadata = {
   title: { default: "TurboTerp", template: "%s · TurboTerp" },
   description:
-    "Dining menus, library and gym hours, study rooms and Shuttle-UM buses for UMD students. Unofficial; not affiliated with the University of Maryland.",
+    "Dining menus, library and gym hours, study rooms, schedules and degree planning for UMD students. Unofficial; not affiliated with the University of Maryland.",
   applicationName: "TurboTerp",
   appleWebApp: { capable: true, title: "TurboTerp", statusBarStyle: "default" },
   formatDetection: { telephone: false },
@@ -36,8 +38,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body>
-        <Nav />
-        <div className="app-content">{children}</div>
+        <SyncProvider>
+          <Nav />
+          <div className="app-content">{children}</div>
+        </SyncProvider>
+        <Analytics />
       </body>
     </html>
   );

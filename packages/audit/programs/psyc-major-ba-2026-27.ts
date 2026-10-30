@@ -57,7 +57,7 @@ export const psycMajorBa: Program = {
       overlay: true,
       from: {
         courses: [
-          "PSYC202", "PSYC206", "PSYC301", "PSYC302", "PSYC304", "PSYC307", "PSYC310", "PSYC341",
+          "PSYC202", "PSYC206", "PSYC304", "PSYC302", "PSYC307", "PSYC310", "PSYC341",
           "PSYC355", "PSYC401", "PSYC402", "PSYC403", "PSYC404", "PSYC406", "PSYC407", "PSYC411",
           "PSYC413", "PSYC414", "PSYC417", "PSYC431", "PSYC440", "PSYC442", "PSYC443", "PSYC455",
           "PSYC489G", "PSYC489J", "PSYC489N", "PSYC489X",

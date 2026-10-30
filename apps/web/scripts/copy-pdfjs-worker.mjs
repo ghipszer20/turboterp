@@ -1,8 +1,7 @@
 // pdfjs-dist needs its worker script (pdf.worker.min.mjs) at a URL the browser can fetch; Next's
 // bundler only sees it if referenced through `new URL(..., import.meta.url)`, which is one more
 // thing that can silently break across pdfjs-dist upgrades. Following the same fix already used
-// for maplibre-gl's worker (copy-maplibre-worker.mjs) and tesseract.js's OCR assets
-// (copy-tesseract-assets.mjs): copy it here, unhashed, and reference it by a fixed same-origin path
+// for tesseract.js's OCR assets (copy-tesseract-assets.mjs): copy it here, unhashed, and reference it by a fixed same-origin path
 // (/vendor/pdfjs/pdf.worker.min.mjs) instead.
 //
 // Runs as apps/web's "postinstall". public/vendor/ is gitignored (build output, not source).

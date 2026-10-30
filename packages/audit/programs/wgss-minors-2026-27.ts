@@ -178,7 +178,7 @@ export const bwsMinor: Program = {
       id: "bws-foundation-2",
       name: "Foundation: one of WGSS314/AASP313, HIST360, AASP398",
       count: 1,
-      from: { courses: ["WGSS314", "AASP313", "HIST360", "AASP398"] },
+      from: { courses: ["WGSS314", "AASP313", "HIST360", "AAAS398"] },
     },
     {
       kind: "openSlot",

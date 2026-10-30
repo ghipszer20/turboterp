@@ -45,7 +45,7 @@ export const anscMajorAnimalCareManagement: Program = {
       kind: "course",
       id: "organic-chem-gateway",
       name: "Organic Chemistry I or equivalent (CHEM231, PLSC275, or AGST275)",
-      options: ["CHEM231", "PLSC275", "AGST275"],
+      options: ["CHEM231", "AGST275"],
     },
     { kind: "course", id: "ansc359", name: "Internship Experience in Animal and Avian Sciences (ANSC359)", options: ["ANSC359"] },
     {

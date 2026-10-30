@@ -486,7 +486,8 @@
 
 .terms {
   display: grid;
-  grid-template-columns: 1fr;
+  /* minmax(0, ...): a plain 1fr column grows to fit a long, unwrapped course title and widens the page on phones. */
+  grid-template-columns: minmax(0, 1fr);
   gap: 12px;
 }
 
