@@ -8,11 +8,21 @@
   border: 1px solid var(--tile-border);
 }
 
+/* Terms and Privacy stack one card per section: keep them apart. */
+.card.card + .card.card {
+  margin-top: 12px;
+}
+
 .prose {
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+/* Links inside text read as links. */
+.prose a {
+  color: var(--accent);
 }
 
 .prose strong {
@@ -43,6 +53,7 @@
 }
 
 .moreLinks {
+  margin-top: 8px;
   display: flex;
   flex-wrap: wrap;
   gap: 8px 20px;

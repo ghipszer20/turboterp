@@ -42,6 +42,24 @@ function classifyIcon(alt: string): { diet?: DietTag; contains?: string } {
   return {};
 }
 
+const SMALL_WORDS = new Set(["a", "an", "and", "as", "at", "for", "in", "of", "on", "or", "the", "to", "with"]);
+
+/** Tidies UMD Dining's item names: "Watercress,VeganFeta" → "Watercress, VeganFeta", "Chicken , Ham" → "Chicken, Ham", and
+ *  all-caps names to title case ("BLT WITH LEMON HERB AIOLI" → "BLT with Lemon Herb Aioli": short words stay as acronyms). */
+export function tidyItemName(raw: string): string {
+  const name = raw.replace(/\s+/g, " ").trim().replace(/ +,/g, ",").replace(/,(?=\p{L})/gu, ", ");
+  if (/\p{Ll}/u.test(name)) return name;
+  return name
+    .split(" ")
+    .map((word, i) => {
+      const lower = word.toLowerCase();
+      if (i > 0 && SMALL_WORDS.has(lower)) return lower;
+      if (/^\p{Lu}{2,3}$/u.test(word) && !SMALL_WORDS.has(lower)) return word;
+      return lower.charAt(0).toUpperCase() + lower.slice(1);
+    })
+    .join(" ");
+}
+
 export function parseDiningMenu(html: string, hallId: number, isoDate: string): DiningMenu {
   const $ = cheerio.load(html);
   const meals: Meal[] = [];
@@ -58,7 +76,7 @@ export function parseDiningMenu(html: string, hallId: number, isoDate: string): 
         .find(".menu-item-row")
         .each((_, row) => {
           const link = $(row).find("a.menu-item-name").first();
-          const itemName = link.text().trim();
+          const itemName = tidyItemName(link.text());
           if (!itemName) return;
           const diets = new Set<DietTag>();
           const contains = new Set<string>();
