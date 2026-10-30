@@ -7,6 +7,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { gpasFor } from "./sections";
+import { decodeSeats, overlaySeats, type SeatsOverlay } from "./seats-overlay";
 import {
   decodeCourseIndex,
   decodeDepartmentSections,
@@ -52,6 +53,15 @@ export function useScheduleData(courseIds: string[], wantGrades = false) {
       live = false;
     };
   }, []);
+
+  // The whole-term seats file (refreshed every 5 minutes); its counts replace the department files'.
+  const [seatsOverlay, setSeatsOverlay] = useState<SeatsOverlay | null>(null);
+  useEffect(() => {
+    if (!term) return;
+    getJson(`/api/schedule/${term}/seats`)
+      .then((data) => setSeatsOverlay(data ? decodeSeats(data) : null))
+      .catch((err) => console.warn(err));
+  }, [term]);
 
   const wanted = useMemo(() => [...new Set(courseIds.map(deptOf))].sort().join(","), [courseIds]);
   useEffect(() => {
@@ -123,8 +133,8 @@ export function useScheduleData(courseIds: string[], wantGrades = false) {
       const d = depts[dept];
       if (d && d !== "missing") for (const s of d.sections) if (chosen.has(s.courseId)) sections.push(s);
     }
-    return { sections, ratings, titles, restrictions, reviewed, loaded };
-  }, [depts, wanted, courseIds]);
+    return { sections: overlaySeats(sections, seatsOverlay), ratings, titles, restrictions, reviewed, loaded };
+  }, [depts, wanted, courseIds, seatsOverlay]);
 
   const gradesFor = useCallback(
     (courseId: string): Record<string, CourseGrades> | null | undefined => {
@@ -138,9 +148,11 @@ export function useScheduleData(courseIds: string[], wantGrades = false) {
   const seatsUpdatedAt = useCallback(
     (courseId: string): string | null => {
       const d = depts[deptOf(courseId)];
-      return d && d !== "missing" ? d.generatedAt : null;
+      if (!d || d === "missing") return null;
+      // Seat counts come from the seats file; fall back to the department file's nightly time when it is absent.
+      return seatsOverlay?.generatedAt ?? d.generatedAt;
     },
-    [depts],
+    [depts, seatsOverlay],
   );
   return { indexState, term, ...derived, loaded: derived.loaded && gradesLoaded, gpas, loadGrades, gradesFor, seatsUpdatedAt };
 }
