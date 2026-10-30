@@ -249,7 +249,7 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
   const lastPlan = lastSavedPlan(saved, planHasPicks);
   // Deleting the last plan: if it was the one open, fall back to the one before it, or to Build my own.
   const removeLastPlan = (p: PlanId) => {
-    update((s) => removePlan(s, p));
+    update((s) => removePlan(s, p, (q) => Object.keys(s.plans[q] ?? {}).some((c) => courses.includes(c))));
     if (plan !== p) return;
     const prev = PLAN_IDS[PLAN_IDS.indexOf(p) - 1];
     if (prev) {
@@ -449,12 +449,21 @@ export function ScheduleBuilder({ events = [] }: { events?: AcademicEvent[] }) {
         {PLAN_IDS.some((p) => planHasPicks(p)) ? (
           <div className={styles.savedPlans}>
             <span>Saved:</span>
-            {PLAN_IDS.filter((p) => planHasPicks(p)).map((p) => (
-              <button key={p} type="button" className={styles.planChip} onClick={() => openPlan(p)}>
-                Plan {p}
-              </button>
-            ))}
-            {lastPlan ? <RemovePlanButton plan={lastPlan} onRemove={removeLastPlan} /> : null}
+            {PLAN_IDS.filter((p) => planHasPicks(p)).map((p) =>
+              p === lastPlan ? (
+                // The last plan carries its own x inside the chip, like the course chips.
+                <span key={p} className={styles.planChipWithRemove}>
+                  <button type="button" className={styles.planChip} onClick={() => openPlan(p)}>
+                    Plan {p}
+                  </button>
+                  <RemovePlanButton plan={p} onRemove={removeLastPlan} />
+                </span>
+              ) : (
+                <button key={p} type="button" className={styles.planChip} onClick={() => openPlan(p)}>
+                  Plan {p}
+                </button>
+              ),
+            )}
           </div>
         ) : null}
       </div>

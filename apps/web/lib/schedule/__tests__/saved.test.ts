@@ -23,6 +23,12 @@ describe("removing saved plans (last one only)", () => {
     expect(next.own).toEqual(abc.own);
   });
 
+  it("uses the caller's notion of 'has picks', so the plan the x is on can be removed", () => {
+    // Plan C only has picks for a dropped course: the page shows B as last, so B must be removable.
+    const next = removePlan(abc, "B", (p) => p !== "C");
+    expect(Object.keys(next.plans).sort()).toEqual(["A", "C"]);
+  });
+
   it("refuses to remove an earlier plan or an empty one", () => {
     expect(removePlan(abc, "B")).toBe(abc);
     expect(removePlan(abc, "A")).toBe(abc);

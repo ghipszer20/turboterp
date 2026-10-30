@@ -108,8 +108,8 @@ export function lastSavedPlan(
 }
 
 /** Deletes a saved plan, but only the last one (owner: no removing B before C). Anything else returns `s` unchanged. */
-export function removePlan(s: SavedSchedule, id: PlanId): SavedSchedule {
-  if (lastSavedPlan(s) !== id) return s;
+export function removePlan(s: SavedSchedule, id: PlanId, hasPicks?: (p: PlanId) => boolean): SavedSchedule {
+  if (lastSavedPlan(s, hasPicks) !== id) return s;
   const plans = { ...s.plans };
   delete plans[id];
   return { ...s, plans };

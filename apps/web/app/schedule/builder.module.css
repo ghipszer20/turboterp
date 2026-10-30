@@ -36,6 +36,27 @@
   cursor: pointer;
 }
 
+.planChipWithRemove {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--card-border);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+}
+
+.planChipWithRemove .planChip {
+  padding-right: 2px;
+  border: 0;
+  background: transparent;
+}
+
+.planChipWithRemove .removePlan {
+  min-width: 26px;
+  min-height: 26px;
+  margin-right: 2px;
+  font-size: 16px;
+}
+
 .removePlan {
   flex: none;
   min-width: 32px;
