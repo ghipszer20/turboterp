@@ -58,7 +58,7 @@ See the package.json files: Next.js web app (apps/web), TypeScript packages, HiG
 - **Navigation (owner decision, 2026-09-24; owner 2026-10-29: Seat Alerts replaced the Calendar tab, rulings.md "Calendar tab out"):** FOUR main tabs: **Campus · Schedule · Seat Alerts · Advisor** (deployed 2026-10-30). Academic dates stay on Today and the Advisor; `/calendar` redirects to `/`.
   - **Campus** has a sub-nav: Dining · Libraries (hours + study rooms) · Fitness (Transport removed 2026-10-29, section 2).
   - **Schedule**: the schedule builder, plus course and professor info (replaces the old Explore idea). No sub-nav now.
-  - **Advisor**: the 4-year plan / degree audit plus LLM advising.
+  - **Advisor**: the 4-year plan / degree audit plus LLM advising. The what-if view is labeled **Explore**, heading "Try a different major or minor" (owner, 2026-10-30).
   - **Today** summary is the home page (`/`), reached from the TurboTerp logo; it's not a tab.
 - **Onboarding** in under 60 seconds: major and year → transcript → audit.
 - Don't use Testudo or UMD logos. **Logo (owner pick, 2026-10-04):** a small solid white terrapin in profile, mid-stride, with two bold speed lines, on the red tile (`apps/web/app/icon.svg`, `lib/logo.ts`). The owner rejected detailed top-down terrapins (scutes, rings, diamonds, claws, speckles, eyes): keep it minimal.
