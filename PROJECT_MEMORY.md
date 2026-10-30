@@ -76,7 +76,7 @@ Moved to `docs/project/roadmap.md` (phases 0–6, MVP recommendation, estimates,
 - [ ] Email UMD RecWell asking for API access (Innosoft Fusion for ActiveTerp classes and courts, Planyo for tennis) so students can sign up inside TurboTerp (`docs/project/recwell-signups.md`).
 - [ ] Claim a domain (turboterp.com was unregistered on 2026-10-04, per Verisign RDAP), the App Store name and social handles.
 - [ ] Decide whether to reuse or partner with Jupiterp (open source; check license).
-- [ ] iOS app: plan proposed 2026-10-29 in `docs/project/ios-plan.md` (Expo + EAS cloud builds, no Mac; S0 spike checks the audit's WASM on iOS). Waiting on the owner's yes (plan section 6, O1; runs as 5 owner-run sessions, section 2).
+- [ ] iOS app: plan proposed 2026-10-29 in `docs/project/ios-plan.md` (Expo + EAS cloud builds, no Mac; S0 spike checks the audit's WASM on iOS). Waiting on the owner's yes (plan section 6, O1; runs as 5 owner-run sessions, section 2). The review-risk pass (2026-10-30) added plan section 8 (rejection, crash and security risks), the tasks H1 (security hardening) and H2 (TestFlight crash pass), and fixed stale rows (Seat Alerts device-based, no Calendar tab, optional sign-in, migration 0011).
 - [ ] Decide: launch everything at once, or in waves by college.
 - [ ] Before making the repo public: scrub personal details from PROJECT_MEMORY.md (owner's program plans, personal notes) and review git history.
 

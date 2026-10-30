@@ -1,6 +1,6 @@
 # iOS app plan
 
-Drafted 2026-10-29 by the main session for the owner's request: "plan the transfer of this project to iOS app form", with timelines, steps agents can run in parallel, and the owner's own steps in detail. **Status: proposal.** The stack choice (section 1) needs the owner's yes. Runs as 5 owner-coordinated sessions with up to 3 subagents each (owner, 2026-10-29; section 2). This moves iOS up from the roadmap's "Spring 2028" (roadmap.md).
+Drafted 2026-10-29 by the main session for the owner's request: "plan the transfer of this project to iOS app form", with timelines, steps agents can run in parallel, and the owner's own steps in detail. **Status: proposal.** The stack choice (section 1) needs the owner's yes. **Review-risk pass (2026-10-30):** section 8 lists everything that could get the app rejected, crash in real use or open a security hole. Its fixes are also written into the task rows below. Runs as 5 owner-coordinated sessions with up to 3 subagents each (owner, 2026-10-29; section 2). This moves iOS up from the roadmap's "Spring 2028" (roadmap.md).
 
 ## 1. Approach (recommended)
 
@@ -25,8 +25,8 @@ Drafted 2026-10-29 by the main session for the owner's request: "plan the transf
 | Transcript import (`pdfjs-dist`, `tesseract.js`) | WASM and web workers | Engine bridge in v1. Later: iOS PDFKit + Apple Vision OCR (better OCR, smaller app). |
 | Plan export (`jspdf`, `exceljs`) | `exceljs` needs Node streams | Generated in the engine bridge, handed to the iOS share sheet (`expo-sharing`). |
 | `localStorage` (10 files) | Not available in React Native | A storage adapter (MMKV), so shared code doesn't care where data lives. |
-| Seat Alerts (web push) | iOS apps use APNs | Expo push service, sent by the cron next to web push; new `push_tokens` table. |
-| Sign-in | Magic-link redirects, OAuth redirect | Email **code** (already built) + Google via in-app browser to `turboterp://auth/callback` + **Sign in with Apple** (needed under guideline 4.8 because Google is offered). |
+| Seat Alerts (web push) | iOS apps use APNs | Expo push service, sent by the cron next to web push. Watches belong to the device and need no sign-in, the same as on the web (`alert_devices`, migration 0010). The app's device row holds an Expo push token in place of a web-push endpoint (migration 0011). |
+| Sign-in | Magic-link redirects, OAuth redirect | Accounts stay **optional** (rulings.md "Sync conflicts, simplified"): every tab works signed out, and signing in only syncs. Email **code** (already built) + Google via in-app browser with PKCE to `turboterp://auth/callback` + **Sign in with Apple** (needed under guideline 4.8 because Google is offered). Deleting an account also revokes its Apple tokens (section 8, R-3). |
 | Server-rendered data (pages reading snapshots) | The app needs JSON endpoints | `/api/v1/...` JSON routes over the same CDN-cached snapshots. |
 | Monitoring (Vercel Web Analytics, Sentry) | Vercel Web Analytics only runs in web pages; `@sentry/nextjs` is web-only | **No usage analytics in the app** (2026-10-30): visit counts stay a website-only figure, and the app's privacy label leaves out "usage data". **Sentry in the app** through `@sentry/react-native` (Expo config plugin): off until `EXPO_PUBLIC_SENTRY_DSN` is set, no tracing or replay, same scrubbing as the web (`scrubEvent` moves into `app-core`). |
 | Node-only package code (`cheerio` scrapers, `@napi-rs/canvas` in `catalog`) | Can't run on a phone | Never imported by the app. S0 checks the import graph; a lint rule in `apps/mobile` blocks it. |
@@ -45,9 +45,9 @@ The owner runs several Claude Code sessions at once and coordinates them (owner,
 
 | # | Session | Owns (only this session edits these) | Tasks | Model | Opens | Subagents at peak |
 |---|---|---|---|---|---|---|
-| 1 | **Lead** | `apps/mobile` frame: `app.json`, `eas.json`, root layout, tab bar, `components/ui`, Today, Calendar, Campus screens. Project docs (PROJECT_MEMORY.md, status log, rulings, owner-review). All EAS builds and the release. | S0, S1, B1, B2, B3a, B3b, R1, R2, R3 | Opus (spike decision, builds, release) | day 0 | 3 (B2, B3a, B3b) |
+| 1 | **Lead** | `apps/mobile` frame: `app.json`, `eas.json`, root layout, tab bar, `components/ui`, Today, Campus screens. Project docs (PROJECT_MEMORY.md, status log, rulings, owner-review). All EAS builds and the release. | S0, S1, B1, B2, B3a, B3b, R1, R2, R3, H2 | Opus (spike decision, builds, release) | day 0 | 3 (B2, B3a, B3b) |
 | 2 | **Core** | `packages/app-core` (new), the `apps/web/lib` files it replaces, the engine bridge (`apps/mobile/engine/`) | A1a, A1b, A5 | Sonnet | day 0 | 3 (day 1) |
-| 3 | **Backend** | `apps/web/app/api/**`, `supabase/migrations/**`, privacy/terms text, `apps/mobile/lib/auth/**`, account screens | A2, A4s, A3 | Sonnet | day 0 | 2 |
+| 3 | **Backend** | `apps/web/app/api/**`, `supabase/migrations/**`, privacy/terms text, `apps/mobile/lib/auth/**`, account screens | A2, A4s, A3, H1 | Sonnet | day 0 | 2 |
 | 4 | **Schedule** | `apps/mobile/app/(tabs)/schedule/**`, the Seat Alerts screen | B4a1, B4a2, B4b1, B4b2, B5 | Sonnet | about day 2 (B1 merged) | 2 |
 | 5 | **Advisor** | `apps/mobile/app/(tabs)/advisor/**` | B6a, B6b, B7a, B7b, B8 | Opus (audit semantics) | about day 2 (B1 and A1a merged) | 3 |
 
@@ -71,28 +71,30 @@ Every task is one builder subagent (Sonnet), test-first, in its own worktree and
 | ID | Session | Task | Depends on | Size |
 |---|---|---|---|---|
 | **S0** | Lead | **Spike: run the shared code on iOS.** Expo app in `apps/mobile`, npm workspace, Metro resolving the raw-`.ts` ESM packages. Test cases: (a) `highs` + one real audit on Hermes; (b) the same audit through a WebView bridge; (c) `pdfjs` text extraction in the bridge. Also: an import-graph check for Node-only modules. Result in `docs/project/ios-spike.md`; decision recorded in rulings.md. | none | 1 |
-| **S1** | Lead | **Scaffold** (keeps S0's working setup): `app.json` (bundle ID `com.turboterp.app`, scheme `turboterp`, `ITSAppUsesNonExemptEncryption: false`, iPhone only), `eas.json` profiles (development / preview / production), expo-router, Expo web export wired to `ui-check`, Vitest, lint (incl. the Node-only import ban). Sentry: `@sentry/react-native` with its config plugin, no-op unless `EXPO_PUBLIC_SENTRY_DSN` is set, `tracesSampleRate: 0`, no replay, `beforeSend` = the web's `scrubEvent` (moved from `apps/web/lib/sentry-scrub` into `app-core`, web still green). Source-map upload only if a `SENTRY_AUTH_TOKEN` EAS secret exists. | S0 | 0.5 |
-| **B1** | Lead | **App shell and design system:** port `lib/theme.ts` tokens and `components/ui.tsx` primitives to React Native. Accent `#BA0C2F`, light and dark mode, Dynamic Type, VoiceOver labels, haptics, skeleton loading. Tab bar (Campus · Schedule · Calendar · Advisor), Today home from the logo. "Not affiliated with the University of Maryland" on About. **Creates an empty route file for every screen** so other sessions only fill in their own files. **UI** | S1 | 1 |
+| **S1** | Lead | **Scaffold** (keeps S0's working setup): `app.json` (bundle ID `com.turboterp.app`, scheme `turboterp`, `ITSAppUsesNonExemptEncryption: false`, iPhone only), `eas.json` profiles (development / preview / production), expo-router, Expo web export wired to `ui-check`, Vitest, lint (incl. the Node-only import ban). Sentry: `@sentry/react-native` with its config plugin, no-op unless `EXPO_PUBLIC_SENTRY_DSN` is set, `tracesSampleRate: 0`, no replay, `beforeSend` = the web's `scrubEvent` (moved from `apps/web/lib/sentry-scrub` into `app-core`, web still green). Source-map upload only if a `SENTRY_AUTH_TOKEN` EAS secret exists. **Review readiness (section 8):**<br>- EAS build image with Xcode 26 and the iOS 26 SDK (required for uploads since 2026-04-28).<br>- An app privacy manifest (`ios.privacyManifests` in `app.json`) with a required-reason entry for every SDK used (MMKV, Sentry, Expo modules), matching the privacy label.<br>- A purpose string for every permission any screen asks for (camera, notifications). None for location unless a screen uses it.<br>- No `NSAllowsArbitraryLoads`.<br>- `expo-dev-client` only in the development profile.<br>- The EAS Update production channel is for fixes only (guideline 2.5.2). | S0 | 0.5 |
+| **B1** | Lead | **App shell and design system:** port `lib/theme.ts` tokens and `components/ui.tsx` primitives to React Native. Accent `#BA0C2F`, light and dark mode, Dynamic Type, VoiceOver labels, haptics, skeleton loading. Tab bar (Campus · Schedule · Seat Alerts · Advisor; PROJECT_MEMORY section 8), Today home from the logo. Every screen has a loading state, an offline state and an error state, never a blank screen. A root error boundary reports to Sentry and offers Retry. "Not affiliated with the University of Maryland" on About. The app has no Donate link (section 8, R-4; waiting on the owner's yes). **Creates an empty route file for every screen** so other sessions only fill in their own files. **UI** | S1 | 1 |
 | **A1a** | Core | **Extract the advisor logic** from `apps/web/lib/advisor` into a new framework-free `packages/app-core` (creates the package): plan-state, analysis, prior credit, transcript parsing. Storage goes behind an adapter interface (web: `localStorage`, mobile: MMKV). The web app imports from `app-core`; **the web suite must stay green with no behavior change.** | none | 1 |
 | **A1b** | Core | **Extract the rest** (merged after A1a): sync engine, schedule logic, seat-alerts client, calendar, consent and legal text, next-class, campus helpers. Splits the 3 files that import `next`. Same green-suite rule. | none (merges after A1a) | 1 |
-| **A5** | Core | **Engine bridge** (only if S0 says the audit and/or transcript can't run natively): a bundled WebView page holding the audit, transcript parsing and exports, a typed `postMessage` API, and a warm-start so the first audit is fast. If the audit runs natively, A5 shrinks to transcript + exports. | S0 | 1–1.5 |
-| **A2** | Backend | **JSON data API for the app:** `/api/v1/` routes for everything the web pages read on the server (campus snapshots, dining, libraries, rooms, gyms, calendar, schedule data, ratings), CDN-cached the same way, plus a typed client (moved into `app-core` by Core once it exists). Add the routes to the `robots.ts` disallow list. | none | 1 |
-| **A4s** | Backend | **Native Seat Alerts push, server side:** migration `0010_push_tokens.sql` (user, Expo token, platform), a token register/unregister route, and the cron sending via the Expo push API next to web push, with the same cooldown and logging. Tapping opens Drop/Add. Privacy text updated (push token, iOS app; visit counts come from the website only). | none | 1 |
-| **A3** | Backend | **Auth + sync on iOS:** Supabase client with the session in `expo-secure-store`. Email code sign-in. Google through `expo-web-browser` to `turboterp://auth/callback`. Sign in with Apple (`expo-apple-authentication`, native token to Supabase). Sync engine wired through `app-core`. Delete account (two-tap confirm). Registers the push token after sign-in. **UI** (sign-in and account screens) | A1b, S1, owner O7 | 1.5 |
-| **B2** | Lead | **Today + Calendar** (next-class hero with "leave by", registration countdown, dining tiles, academic calendar). **UI** | B1, A2 | 1 |
+| **A5** | Core | **Engine bridge** (only if S0 says the audit and/or transcript can't run natively): a bundled WebView page holding the audit, transcript parsing and exports, a typed `postMessage` API, and a warm-start so the first audit is fast. If the audit runs natively, A5 shrinks to transcript + exports. **Section 8 rules:**<br>- Every worker, WASM and OCR language file is bundled in the app, never fetched from a CDN. Tesseract.js and pdfjs fetch from CDNs by default; downloaded code breaks guideline 2.5.2 and fails offline.<br>- The bridge reloads itself after `onContentProcessDidTerminate`, because iOS kills a heavy WebView under memory pressure.<br>- It caps input size (PDF pages, image pixels) and runs every job with a timeout.<br>- The warm-start runs after the first screen renders, never during launch. | S0 | 1–1.5 |
+| **A2** | Backend | **JSON data API for the app:** `/api/v1/` routes for everything the web pages read on the server (campus snapshots, dining, libraries, rooms, gyms, calendar, schedule data, ratings), CDN-cached the same way, plus a typed client (moved into `app-core` by Core once it exists). Add the routes to the `robots.ts` disallow list. Responses are versioned and checked by the client: a shape mismatch shows the error state instead of crashing, so an older app version keeps working after a web deploy. | none | 1 |
+| **A4s** | Backend | **Native Seat Alerts push, server side:**<br>- Migration `0011_expo_push.sql`: a device in `alert_devices` holds either a web-push subscription or an Expo token, plus its platform. No link to a user, the same as on the web.<br>- The device route accepts an Expo token.<br>- The cron sends through the Expo push API next to web push, with the same cooldown and logging. It deletes tokens that Expo reports as `DeviceNotRegistered`.<br>- **Per-IP rate limit on device registration**, hashed with the existing `hashKey`. The web route has no such limit today.<br>- Tapping an alert opens Drop/Add.<br>- Privacy text updated: push token, iOS app; visit counts come from the website only. | none | 1 |
+| **A3** | Backend | **Auth + sync on iOS:**<br>- Supabase client with the session in `expo-secure-store`.<br>- Sign-in is optional and never blocks a feature.<br>- Email code sign-in.<br>- Google through `expo-web-browser` with PKCE to `turboterp://auth/callback`.<br>- Sign in with Apple (`expo-apple-authentication`, native token to Supabase). The server keeps the refresh token from Apple's authorization code so it can revoke it later.<br>- Sync engine wired through `app-core`.<br>- Delete account (two-tap confirm). It first **revokes the Apple tokens** through Apple's REST API (`/auth/revoke`), then deletes the user.<br>- Sign-in errors (expired code, email limit reached, cancelled Apple sheet) show plain-language messages.<br>**UI** (sign-in and account screens) | A1b, S1, owner O7 | 1.5 |
+| **B2** | Lead | **Today** (next-class hero with "leave by", dining tiles, academic dates). **UI** | B1, A2 | 1 |
 | **B3a** | Lead | **Dining** (halls, menus, Find a food). **UI** | B1, A2 | 1 |
 | **B3b** | Lead | **Libraries and Fitness** (hours, study-room grid with LibCal deep links, gyms, RecWell classes). **UI** | B1, A2 | 1 |
 | **B4a1** | Schedule | **Course search and sort.** **UI** | B1, A2 | 1 |
 | **B4a2** | Schedule | **Course and professor info** (ratings, grade data, reviews). **UI** | B1, A2 | 1 |
 | **B4b1** | Schedule | **Builder grid:** sections panel, schedules A/B/C, overlap blocking. **UI** | B4a1, A1b | 1 |
-| **B4b2** | Schedule | **Registration and export:** "Get ready to register" panel, `.ics` export via the share sheet, sync with the 4-year plan. **UI** | B4a1, A1b | 1 |
-| **B5** | Schedule | **Seat Alerts screen** (watch list, bells in the section panel, "I got it"). **UI** | B4b1, A3, A4s | 0.5 |
+| **B4b2** | Schedule | **Calendar export and plan sync:** Add to calendar (Apple Calendar or Google, as on the web) and sync with the 4-year plan. **UI** | B4a1, A1b | 1 |
+| **B5** | Schedule | **Seat Alerts tab**, no sign-in: watch list, bells in the section panel, "I got it". It asks for notification permission only when the student turns alerts on. If permission is denied, it shows a link to Settings. **UI** | B4b1, A4s | 0.5 |
 | **B6a** | Advisor | **Clickwrap and setup** (programs, year, tracks), with a stub signed-in user until A3 merges. **UI** | A1a, B1 | 1 |
 | **B6b** | Advisor | **4-year plan grid** with checks and warnings. **UI** | A1a, B1 | 1 |
-| **B7a** | Advisor | **Audit and what-if**; wires the real sign-in gate from A3. **UI** | B6b, A5, A3 | 1.5 |
+| **B7a** | Advisor | **Audit and Explore** (what-if). Wires in the optional sign-in and sync from A3; there's no sign-in gate (rulings.md "Sync conflicts, simplified"). Tested for time and memory with the largest real plans (double degree + minors) on an older iPhone. **UI** | B6b, A5, A3 | 1.5 |
 | **B7b** | Advisor | **Prior credit (AP/IB), course sheet, credit caps, tracks.** **UI** | B6a, B6b | 1.5 |
-| **B8** | Advisor | **Transcript import + exports:** file picker / share-to-app for the PDF, paste and photo (OCR) paths, plan PDF/Excel export, "Email my plan". **UI** | B6b, A5 | 1 |
-| **R1** | Lead | **Store package:** App Store text (name, subtitle, description with "Not affiliated with the University of Maryland", keywords), privacy-label answers, review notes, 1320×2868 screenshots composed from the owner's iPhone shots, app icon (1024 px, from `app/icon.svg`, no transparency), all in `docs/project/app-store-listing.md`. | none (screenshots after approval) | 0.5 |
+| **B8** | Advisor | **Transcript import + exports:** file picker / share-to-app for the PDF, paste and photo (OCR) paths, plan PDF/Excel export, "Email my plan". Photo OCR picks images through the system photo picker, which needs no photo-library permission. The camera path has a purpose string. A transcript leaves the device only when the student exports it. **UI** | B6b, A5 | 1 |
+| **R1** | Lead | **Store package:** App Store text (name, subtitle, description with "Not affiliated with the University of Maryland", keywords with no other brand names: no UMD, Testudo, PlanetTerp, Coursicle or Jupiterp; guideline 2.3.7), age-rating answers, privacy-label answers, review notes, 1320×2868 screenshots composed from the owner's iPhone shots, app icon (1024 px, from `app/icon.svg`, no transparency), all in `docs/project/app-store-listing.md`. | none (screenshots after approval) | 0.5 |
+| **H1** | Backend | **Security hardening before submission** (section 8, R-10 to R-12):<br>- Update `next` (critical advisories on 16.3.6), `jspdf` (it pulls in a vulnerable `dompurify`), `sharp`, `cheerio`'s `undici` and `exceljs`'s `uuid`.<br>- Add security headers in `next.config`: HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `frame-ancestors`.<br>- Add per-IP limits to the write routes that need no sign-in (device registration, report).<br>- Confirm every table has RLS and no write path for the anon key.<br>- The web suite stays green. | none | 0.5 |
+| **H2** | Lead | **Real-world crash pass on TestFlight** (section 8, "Crashes in real use"). Cases:<br>- airplane mode and a slow network on every tab<br>- first launch with no cache<br>- signed out everywhere<br>- notifications denied<br>- the largest Dynamic Type size, and dark mode<br>- the biggest audit, and a 20-page transcript PDF<br>- the app killed and reopened mid-sync<br>- an older iPhone, if one is available<br>Sentry must show no crashes before submitting. | R2's first build | 0.5 |
 | **R2** | Lead | TestFlight build → owner tests 3–7 days → fix list (sent to the owning sessions, or handled by Lead if they've closed) → release build → submit. | everything above | — |
 | **R3** | Lead | Widgets (next class, dining) and a Live Activity for Seat Alerts (roadmap phase 6). Swift extension targets through a config plugin; each iteration needs a cloud build. Early start in Lead's free time if the build count allows; otherwise v1.1. | S1 | 1–2 |
 
@@ -102,11 +104,11 @@ Days count from the owner's go. Each task starts as soon as its dependencies are
 
 | Days | 1 Lead | 2 Core | 3 Backend | 4 Schedule | 5 Advisor | Owner |
 |---|---|---|---|---|---|---|
-| **0–1** | S0 spike; R1 text | A1a, A1b | A2, A4s | not open yet | not open yet | O1–O4; open sessions 1–3 (section 5) |
-| **1–2** | S1 → B1 | A5 (to about 2.5) | A3 (to about 3) | not open yet | not open yet | O8 migration 0010; O7 Supabase; O5 dev build as soon as Apple approves |
+| **0–1** | S0 spike; R1 text | A1a, A1b | A2, A4s, H1 | not open yet | not open yet | O1–O4; open sessions 1–3 (section 5) |
+| **1–2** | S1 → B1 | A5 (to about 2.5) | A3 (to about 3) | not open yet | not open yet | O8 migration 0011; O7 Supabase; O5 dev build as soon as Apple approves |
 | **2–3.5** | B2, B3a, B3b | A5 done; fixes to `app-core` on request; then closes | A3 done; then closes | B4a1, B4a2 | B6a, B6b | open sessions 4–5; O6 install; approve B1, A3 sign-in |
 | **3.5–5** | R3 widgets (optional); fixes | | | B4b1, B4b2 → B5 (to about 5) | B7a, B7b, B8 (to about 5) | approve 3–4 screens a day |
-| **5–6** | merge to `feat/ui-rework`, first TestFlight build | | | fixes, then closes | fixes, then closes | O9 store setup |
+| **5–6** | merge to `feat/ui-rework`, first TestFlight build, H2 | | | fixes, then closes | fixes, then closes | O9 store setup |
 | **6–12** | fixes from testing | | | | | **O10 TestFlight testing (3–7 days)** |
 | **about 10–14** | submit, release | | | | | O11 submit → Apple review → O12 release |
 
@@ -206,9 +208,16 @@ Claude can't do these: they need the owner's identity, money, Apple 2FA or devic
 2. Supabase → **Authentication → Providers → Apple** → Enable. In **Client IDs**, enter `com.turboterp.app`. Leave the secret key empty: the native iOS sign-in doesn't use it. Save.
 3. Supabase → **Authentication → Emails → Magic Link**: if not done yet, add the `{{ .Token }}` code line (owner-review.md, 2026-10-29). The app signs in by code only.
 4. Google sign-in needs nothing new: the app uses the same web OAuth client through the in-app browser.
+5. **Sign in with Apple key, to revoke tokens when an account is deleted** (required; section 8, R-3):
+   1. developer.apple.com → Certificates, IDs & Profiles → **Keys → +**.
+   2. Name it "SIWA revoke", tick **Sign in with Apple**, configure it for `com.turboterp.app`, then **Register**.
+   3. Download the `.p8` file (you can download it only once).
+   4. In Vercel Production, set `APPLE_SIWA_KEY_ID` (the Key ID), `APPLE_TEAM_ID` (your Team ID) and `APPLE_SIWA_PRIVATE_KEY` (the key text). Never paste these into chat or the repo.
+6. **Email to Hide My Email users:** developer.apple.com → Certificates, IDs & Profiles → **Services → Sign in with Apple for Email Communication**. Add `turboterp.com` and the address the sign-in and plan emails are sent from. Without this, email to `@privaterelay.appleid.com` addresses is dropped.
+7. **Turn on custom SMTP** (Supabase → Authentication → SMTP, with the Brevo login; already an open item). Supabase's built-in mailer sends only a few emails an hour, so sign-in codes would stop on the first busy day, possibly while Apple is reviewing the app.
 
 ### O8. Push tokens migration (when A4s is merged, about day 1)
-1. Supabase → **SQL Editor** → paste `supabase/migrations/0010_push_tokens.sql` → Run, the same way as 0009.
+1. Supabase → **SQL Editor** → paste `supabase/migrations/0011_expo_push.sql` → Run, the same way as 0010.
 2. Optional but recommended: expo.dev → project → **Settings → Push security** → turn on "Enhanced security", create a token, set it in Vercel Production as `EXPO_ACCESS_TOKEN`, then deploy.
 3. Deploy the web app (`npx vercel deploy --prod` from the main checkout, as usual) so the cron starts sending iOS pushes.
 
@@ -218,8 +227,8 @@ Claude can't do these: they need the owner's identity, money, Apple 2FA or devic
    - Bundle ID **com.turboterp.app** (it appears after O5). SKU `turboterp-ios`. User access **Full Access**.
 2. **API key so Claude can upload builds:** Users and Access → **Integrations → App Store Connect API** → Team Keys → **+**. Name "EAS", access **App Manager** → Generate. Download the `.p8` file (one download only). Note the **Key ID** and **Issuer ID**. Run `! npx eas-cli credentials` → iOS → production → App Store Connect API Key → add it with those values. Then delete the `.p8` from Downloads, or keep it in your password manager.
 3. **App Information:** Category **Education**, secondary **Productivity**. Content Rights: answer that the app shows third-party content (UMD public data, PlanetTerp), and you have the right to use it where it's public and non-commercial (Claude drafts the wording in R1).
-4. **Age Rating:** answer the questionnaire. Everything is "None" or "No" except the questions R1 notes. Expected result: 4+.
-5. **Pricing and Availability:** Free, United States (or all countries).
+4. **Age Rating:** answer the current questionnaire (Apple updated it in 2026; R1 drafts every answer). v1 has no user-generated content, chat, social features or AI chatbot, so the expected rating is 4+. The answers change if the LLM advisor ships later.
+5. **Pricing and Availability:** Free, **United States only** (recommended). The EU requires either a public trader address and phone number (Digital Services Act) or a non-trader declaration, and the app is only useful at UMD. If App Store Connect asks about trader status, answer **not a trader**: the app earns no income.
 6. **App Privacy:** Privacy Policy URL `https://turboterp.com/privacy`. Fill the data-collection labels from the table Claude prepares in R1: email address, name (typed agreement name), user content (plans, courses), identifiers (push token), diagnostics (crash data, only if Sentry's DSN is set for the app). No usage data: the app has no analytics. For each: linked to the user or not, not used for tracking.
 7. **Support URL** `https://turboterp.com/support`, **Marketing URL** `https://turboterp.com`.
 
@@ -233,7 +242,14 @@ Claude can't do these: they need the owner's identity, money, Apple 2FA or devic
 ### O11. Screenshots and submission (about days 10–13, about 1 hour)
 1. On your iPhone, take 4–6 screenshots Claude lists in R1 (Today, Schedule builder, Audit, 4-year plan, Dining, Seat Alerts). Use a test plan, not your real grades. AirDrop or upload them, and Claude composes the 1320×2868 store images.
 2. In App Store Connect → the version page: upload the screenshots, paste the text from `docs/project/app-store-listing.md`, and pick the build Claude uploaded.
-3. **App Review Information:** your contact details. Turn **Sign-in required** on. In Notes, paste Claude's review notes: Campus, Schedule and Calendar work without an account; Sign in with Apple creates an account instantly for the Advisor; the agreement is a typed-name clickwrap; the app isn't affiliated with UMD and uses public data only.
+3. **App Review Information:** your contact details. Leave **Sign-in required** off: every feature works without an account. In Notes, paste Claude's review notes, which say:
+   - All four tabs work signed out. Signing in is optional and only syncs plans between devices; Sign in with Apple creates an account instantly.
+   - Account deletion is under Account → Delete account.
+   - The Advisor's agreement is a typed-name clickwrap.
+   - Seat Alerts needs notifications allowed, and works best on a class that is full.
+   - The app isn't affiliated with UMD and shows only public data (PlanetTerp ratings with permission; section 8, R-6).
+
+   If Apple still asks for a demo account, make one with an email you control, give the reviewer the steps to get a code, and reply in Resolution Center the same day.
 4. **Version Release:** choose **Manually release this version**.
 5. Tap **Add for Review → Submit**. Review usually takes 1–3 days. If Apple rejects it, paste the full message to Claude. Most rejections are fixed in the metadata or in one small build.
 
@@ -248,3 +264,47 @@ Claude can't do these: they need the owner's identity, money, Apple 2FA or devic
 - Any change to shared packages runs **both** test suites (web + mobile) before merge.
 - Secrets (`EXPO_TOKEN`, App Store Connect key) live only in gitignored `.env.local` files and on EAS/Vercel.
 - The web app is still deployed only from the main checkout (PROJECT_MEMORY section 14), never from an iOS worktree.
+- Never put a secret in an `EXPO_PUBLIC_` variable. Those ship inside the app, where anyone can read them.
+- Nothing ships to App Review with placeholder text, "coming soon" tiles or dead buttons (section 8, R-AI).
+
+## 8. App Review, crash and security risks (review pass 2026-10-30)
+
+These were checked against Apple's App Review Guidelines (fetched 2026-10-30), Apple's SDK requirements page, the current code and `npm audit`. Each fix is in the task named in the "Fix in" column, so it gets built. Items marked **owner** need the owner's yes.
+
+### Rejection risks
+| # | Risk | Guideline | Fix | Fix in |
+|---|---|---|---|---|
+| R-1 | **Login with no demo account.** The old plan set "Sign-in required" and had a sign-in gate on the Advisor. A reviewer can't receive an email code. Apple also rejects apps that force an account for features that don't need one. | 2.1(a), 5.1.1(v) | Accounts stay optional, as on the web (rulings.md "Sync conflicts, simplified"). Every tab works signed out, "Sign-in required" stays off, and the review notes explain this. Sign in with Apple lets the reviewer try sync instantly. | A3, B7a, O11 |
+| R-2 | Google sign-in without Sign in with Apple. | 4.8 | Sign in with Apple is in A3 already. | A3 |
+| R-3 | **Deleting an account without revoking its Apple tokens.** Apple requires a revoke call to its REST API when an account that used Sign in with Apple is deleted. That call needs a signing key, so O7's old "leave the secret key empty" was not enough. | 5.1.1(v) | The delete route revokes, then deletes. The owner creates the key (O7 step 5). | A3, O7 |
+| R-4 | **Donate links to a personal Venmo.** Tips to the developer from inside the app must use In-App Purchase. TurboTerp isn't an approved nonprofit, so the charity exception doesn't apply. **owner** | 3.1.1, 3.2.2(iv) | **Recommended: leave Donate out of the iOS app.** The website keeps it. Also keep the donate URL out of the app's About text. | B1 (About), R1 |
+| R-5 | A "repackaged website". | 4.2 | Native screens (section 1). Seat Alerts push, offline cached data and the share sheet are app-only value. The Capacitor fallback carries this risk, so it stays a fallback. | whole plan |
+| R-6 | **Third-party content without proof of permission.** Apple can ask for authorization for PlanetTerp ratings, UMD dining and course data, and LibCal links. | 5.2.2, 5.2.1 | The app shows only aggregates: star counts and a link out. `reviewsView` shows no review text today, so no user-generated content rules apply (1.2). Keep it that way. Before submission, the owner keeps a written OK from PlanetTerp (an email reply is enough). UMD data is public; never show UMD or Testudo marks. No Reddit text in v1. | R1, owner (PlanetTerp email) |
+| R-7 | Metadata that names other brands, or screenshots that don't match the app. | 2.3.7, 2.3.3 | No UMD, Testudo, PlanetTerp, Coursicle or Jupiterp in keywords. Screenshots come from the real build. The review notes match the four real tabs (Calendar is gone). | R1, O11 |
+| R-8 | **Build requirements.** Uploads since 2026-04-28 must be built with Xcode 26 and the iOS 26 SDK. Apple also checks the privacy manifest and required-reason APIs against the privacy label. | SDK requirements, 5.1.1 | Pin an EAS image that has Xcode 26. Write a privacy manifest for the app and its SDKs (MMKV, Sentry, Expo modules). The privacy label (O9) lists exactly what the manifest and privacy text say. | S1, R1, O9 |
+| R-9 | **Downloaded or changed code.** tesseract.js and pdfjs fetch workers, WASM and language data from a CDN by default. EAS Update can also ship features without review. | 2.5.2 | Bundle every engine file. Use the EAS Update production channel only for fixes. | A5, S1 |
+| R-AI | **"AI code flags".** App Review doesn't detect or reject code because AI wrote it. What it rejects is the usual symptoms: placeholder or unfinished screens (2.1), template-like apps (4.3), broken links, and features in the notes that aren't in the build. The **future LLM advisor** is the one AI rule that applies. Before sending grades or a transcript to a third-party AI, the app must say so and get explicit permission. Then the age-rating answers change, and if it chats, 1.2 report and block tools may apply. | 2.1, 4.3, 5.1.2(i) | No placeholder text, "coming soon" tiles or dead buttons in the release build. H2 checks every screen. The LLM advisor is not in v1, and when it comes it gets its own consent screen. | H2, roadmap |
+| R-14 | **EU trader status** (Digital Services Act). Selling in the EU needs a public address and phone number, or a non-trader declaration. **owner** | App Store Connect | Ship to the United States only and declare non-trader. | O9 |
+
+### Crashes and failures in real use
+- **Memory.** HiGHS plus a large audit, or OCR on a phone photo, can get the WebView or the app killed on older iPhones. A5 recovers from WebView termination, caps input sizes and uses timeouts. B7a and B8 test the largest cases on device.
+- **Launch.** iOS kills apps that hang at launch. The engine warm-start and data fetches run after the first screen, never during launch (A5, B1).
+- **Network.** Reviewers test on IPv6-only and flaky networks. All calls use HTTPS hostnames (no IP literals). Every screen has offline and error states, and cached snapshots show with their age (B1, H2).
+- **Permission prompts.** A missing purpose string crashes the app. Every permission has one, and nothing asks for permission at launch (S1, B5, B8).
+- **Version skew.** A web deploy must not break app versions already installed. `/api/v1` is versioned and the client checks response shapes (A2).
+- **Free-tier ceilings on launch day:**
+  - Supabase's built-in mailer sends only a few emails an hour, so custom SMTP is required (O7 step 7).
+  - Brevo allows 300 emails a day. Sign-in codes and "Email my plan" share that allowance, so the app shows a plain message when the limit is reached (A3).
+  - Expo push needs dead tokens removed (A4s).
+  - Vercel Hobby and Supabase free tier: read the usage pages the day after release.
+- **Hide My Email.** Without the private-relay sender setup, sign-in emails to Apple relay addresses never arrive (O7 step 6).
+- **Proof before submitting.** H2's TestFlight pass, plus Sentry showing no crashes.
+
+### Security
+| # | Finding (2026-10-30) | Fix | Fix in |
+|---|---|---|---|
+| R-10 | `npm audit --omit=dev` reports 2 critical and 4 high. The ones that reach production are `next` 16.3.6 (critical; its cache-poisoning advisory is for self-hosted apps only, and the site uses no Draft Mode, but update anyway), `dompurify` through `jspdf` (shipped in plan export), `sharp`, `undici` (through `cheerio`, server-side scrapers) and `uuid` through `exceljs`. `vite` and the dev-server advisories are dev-only and aren't App Store risks. | Update them and run the web suite. | H1 |
+| R-11 | `POST /api/seat-alerts/device` creates a device with no sign-in and no rate limit. A script could fill the table or the push queue. Each device's watches are capped. | Per-IP limit, hashed. | H1, A4s |
+| R-12 | `next.config` sets no security headers. | HSTS, nosniff, `Referrer-Policy`, `frame-ancestors 'none'`. | H1 |
+| R-13 | The Supabase anon key ships inside the app bundle, so RLS is the only guard. RLS is on in every migration: user tables are owner-only, and Seat Alerts and consent tables are service-role only. The snapshot store isn't created by a migration, so it hasn't been checked. | The owner opens Supabase → **Advisors → Security Advisor** and sends Claude anything flagged. H1 checks the store's policies. | H1, owner |
+| — | Already sound: device secrets are stored hashed and compared in constant time; "I got it" tokens are HMAC-signed with an expiry; consent names are encrypted; the session is in the Keychain (`expo-secure-store`); OAuth uses PKCE; no Testudo credentials; secrets only in gitignored env files and Vercel/EAS. | Keep these. | section 7 |
