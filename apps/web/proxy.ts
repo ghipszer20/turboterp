@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { ACCESS_COOKIE, COMING_SOON_PATH, accessToken, gateDecision } from "@/lib/access";
+import { ACCESS_COOKIE, ACCESS_HEADER, COMING_SOON_PATH, accessToken, gateDecision } from "@/lib/access";
 
 // Pre-launch gate: see lib/access.ts. Does nothing unless SITE_ACCESS_CODE is set.
 export async function proxy(request: NextRequest) {
@@ -9,6 +9,7 @@ export async function proxy(request: NextRequest) {
   const decision = gateDecision({
     pathname: request.nextUrl.pathname,
     cookie: request.cookies.get(ACCESS_COOKIE)?.value,
+    header: request.headers.get(ACCESS_HEADER),
     token: await accessToken(code),
   });
   if (decision === "allow") return NextResponse.next();

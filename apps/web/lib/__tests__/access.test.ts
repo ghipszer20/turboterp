@@ -27,6 +27,11 @@ describe("gateDecision", () => {
     expect(visit("/", token)).toBe("allow");
     expect(visit("/api/dining", token)).toBe("allow");
   });
+  it("accepts the token in the x-turboterp-access header (the app's way in)", () => {
+    expect(gateDecision({ pathname: "/api/v1/dining", cookie: undefined, header: token, token })).toBe("allow");
+    expect(gateDecision({ pathname: "/api/v1/dining", cookie: undefined, header: "wrong", token })).toBe("deny");
+    expect(gateDecision({ pathname: "/api/v1/dining", cookie: undefined, header: null, token })).toBe("deny");
+  });
   it("refuses data requests from visitors instead of redirecting them", () => {
     expect(visit("/api/dining")).toBe("deny");
     expect(visit("/api/schedule/202701/index.json")).toBe("deny");
