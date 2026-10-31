@@ -65,7 +65,7 @@ export default function Gym() {
                     />
                   ))}
                   {s.fallback ? (
-                    <ListRow title={s.label ?? ""} subtitle={s.fallback.description} onPress={() => openLink(s.fallback!.url)} last />
+                    <ListRow title="See hours on RecWell" subtitle={s.fallback.description} onPress={() => openLink(s.fallback!.url)} last />
                   ) : null}
                 </Card>
               </View>

@@ -138,7 +138,7 @@ export function roomSlots(room: RoomRow, day: string, clock: CampusClock): RoomS
     .map((w: Win) => ({
       start: w.start,
       end: w.end,
-      label: `${formatMinutes(w.start)}-${formatMinutes(w.end)}`,
+      label: w.start === 0 && w.end === 1440 ? "All day" : `${formatMinutes(w.start)}-${formatMinutes(w.end)}`,
       url: roomBookingUrl(room.id, day),
       current: isToday && w.start <= clock.minutes,
     }));
