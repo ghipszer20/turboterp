@@ -149,8 +149,10 @@ function Plan({ data }: { data: CatalogData }) {
           </Text>
         )}
       </Card>
-      <View style={{ marginTop: spacing.sm }}>
+      <View style={{ marginTop: spacing.sm, gap: spacing.sm }}>
         <Button variant="secondary" label="Edit setup" onPress={() => router.push("/advisor/setup")} />
+        <Button variant="secondary" label="Prior credit and credit limits" onPress={() => router.push("/advisor/credit")} />
+        {(plan.tracks ?? []).length > 0 ? <Button variant="secondary" label="Pre-professional tracks" onPress={() => router.push("/advisor/tracks")} /> : null}
       </View>
 
       {programChecks.length > 0 ? (
