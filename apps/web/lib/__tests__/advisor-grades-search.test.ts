@@ -1,7 +1,7 @@
 import { distributionFromCounts } from "@turboterp/ratings";
 import { describe, expect, it } from "vitest";
-import { gradeBars, gradeSummary, termSpan } from "../advisor/grades";
-import { searchCourses } from "../advisor/search";
+import { gradeBars, gradeSummary, termSpan } from "@turboterp/app-core/grades";
+import { searchCourses } from "@turboterp/app-core/search";
 
 const counts = { "A+": 5, A: 30, "A-": 15, "B+": 10, B: 10, "B-": 5, "C+": 5, C: 5, "C-": 0, "D+": 0, D: 2, "D-": 0, F: 3, W: 10, Other: 0 };
 const dist = distributionFromCounts(counts, ["202108", "202201", "202608"]);

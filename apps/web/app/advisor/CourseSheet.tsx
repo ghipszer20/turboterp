@@ -7,11 +7,11 @@
 import type { PlanIssue } from "@turboterp/plan/check";
 import { GRAD_CREDIT_TAGS, isGraduateCourse, type GradCreditTag } from "@turboterp/plan/grad-courses";
 import { useEffect, useState } from "react";
-import type { CourseDetails } from "@/lib/advisor/course-details";
-import { gradeBars, gradeSummary, termSpan } from "@/lib/advisor/grades";
-import { SEVERITY } from "@/lib/advisor/issues";
-import type { AdvisorPlan } from "@/lib/advisor/plan-state";
-import { genEdName } from "@/lib/advisor/words";
+import type { CourseDetails } from "@turboterp/app-core/course-details";
+import { gradeBars, gradeSummary, termSpan } from "@turboterp/app-core/grades";
+import { SEVERITY } from "@turboterp/app-core/issues";
+import type { AdvisorPlan } from "@turboterp/app-core/plan-state";
+import { genEdName } from "@turboterp/app-core/words";
 import type { CourseGrades } from "@turboterp/ratings";
 import type { OpenCourse } from "./AdvisorApp";
 import { loadCourseDetails, loadCourseGrades, type CatalogState } from "./data";

@@ -1,6 +1,6 @@
-import { describe, expect, it, vi } from "vitest";
-import { parseConsent, type ConsentRecord } from "../consent";
-import { syncConsent } from "../consent-send";
+﻿import { describe, expect, it, vi } from "vitest";
+import { parseConsent, type ConsentRecord } from "./consent";
+import { syncConsent } from "./consent-send";
 
 const rec = (extra: Partial<ConsentRecord> = {}): ConsentRecord => ({ name: "Ada Lovelace", acceptedAt: "2026-10-08T00:00:00Z", version: "2026-09-26", deviceId: "dev-1", ...extra });
 const res = (status: number) => ({ ok: status === 200, status }) as Response;

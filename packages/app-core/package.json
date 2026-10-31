@@ -1,0 +1,30 @@
+﻿{
+  "name": "@turboterp/app-core",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The Advisor's app logic shared by the web app and the iOS app: Plan state, analysis, prior credit, transcript text parsing, requirements, what-if. Framework-free; storage goes through a small key-value adapter.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@turboterp/audit": "*",
+    "@turboterp/course-data": "*",
+    "@turboterp/credit": "*",
+    "@turboterp/plan": "*",
+    "@turboterp/programs": "*",
+    "@turboterp/ratings": "*",
+    "@turboterp/tracks": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.4",
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.1"
+  }
+}

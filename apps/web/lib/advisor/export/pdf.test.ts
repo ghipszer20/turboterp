@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { buildPdf } from "./pdf";
-import { FOOTER, type PlanExport } from "./plan-export";
+import { FOOTER, type PlanExport } from "@turboterp/app-core/export/plan-export";
 
 const data: PlanExport = {
   header: { name: "Sam", date: "2026-09-29", disclaimer: "Unofficial, not affiliated with UMD, verify with your advisor", gradesHidden: false },

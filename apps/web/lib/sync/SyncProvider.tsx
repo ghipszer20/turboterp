@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { KeepWhichCopy } from "@/app/advisor/KeepWhichCopy";
 import { getConsent, updateConsent } from "@/app/advisor/store";
-import { syncConsent } from "@/lib/advisor/consent-send";
+import { syncConsent } from "@turboterp/app-core/consent-send";
 import { authConfigured, getAuthClient } from "@/lib/auth/client";
 import { useSession } from "@/lib/auth/use-session";
 import { getAppSync } from "./app-sync";

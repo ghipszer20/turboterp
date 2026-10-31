@@ -7,8 +7,8 @@ import { useState } from "react";
 import type { ProgramKind } from "@turboterp/programs";
 import { collegeName } from "@turboterp/plan/credit-caps";
 import { Segmented } from "@/components/Segmented";
-import { kindTabs, optionState, pickerGroups } from "@/lib/advisor/program-picker";
-import { PROGRAM_OPTIONS, type ProgramOption } from "@/lib/advisor/programs";
+import { kindTabs, optionState, pickerGroups } from "@turboterp/app-core/program-picker";
+import { PROGRAM_OPTIONS, type ProgramOption } from "@turboterp/app-core/programs";
 import styles from "./advisor.module.css";
 
 const KIND_NAME: Record<ProgramKind, string> = { major: "Major", minor: "Minor", certificate: "Certificate", special: "Special program" };

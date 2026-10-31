@@ -8,7 +8,7 @@ import {
   sortTerms,
   startTermOptions,
   termFromMatriculationId,
-} from "../advisor/terms";
+} from "@turboterp/app-core/terms";
 
 describe("defaultTerms", () => {
   it("gives eight fall and spring terms from a fall start", () => {

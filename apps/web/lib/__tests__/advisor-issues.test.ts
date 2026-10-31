@@ -1,6 +1,6 @@
 import type { PlanIssue } from "@turboterp/plan/check";
 import { describe, expect, it } from "vitest";
-import { cardNote, courseKey, groupIssues, planTips, SEVERITY } from "../advisor/issues";
+import { cardNote, courseKey, groupIssues, planTips, SEVERITY } from "@turboterp/app-core/issues";
 
 const issue = (p: Partial<PlanIssue>): PlanIssue => ({ kind: "prerequisite", severity: "error", term: "Fall 2026", message: "m", ...p });
 

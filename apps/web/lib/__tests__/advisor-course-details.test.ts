@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import type { Course } from "@turboterp/course-data";
 import { describe, expect, it } from "vitest";
-import { courseDetailFiles, decodeCourseDetails } from "../advisor/course-details";
+import { courseDetailFiles, decodeCourseDetails } from "@turboterp/app-core/course-details";
 
 const COURSES = (
   JSON.parse(

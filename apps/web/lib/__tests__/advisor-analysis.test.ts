@@ -3,10 +3,10 @@ import type { Course } from "@turboterp/course-data";
 import { buildCatalog } from "@turboterp/plan/catalog";
 import { checkPlan } from "@turboterp/plan/check";
 import { describe, expect, it } from "vitest";
-import { runAnalysis } from "../advisor/analysis";
-import { checkerPlan } from "../advisor/checker";
-import { computePriorCredit } from "../advisor/prior-credit";
-import { seedFromUrl } from "../advisor/seed";
+import { runAnalysis } from "@turboterp/app-core/analysis";
+import { checkerPlan } from "@turboterp/app-core/checker";
+import { computePriorCredit } from "@turboterp/app-core/prior-credit";
+import { seedFromUrl } from "@turboterp/app-core/seed";
 
 const COURSES = (
   JSON.parse(readFileSync(new URL("../../../../packages/plan/test/fixtures/courses-202701.json", import.meta.url), "utf8")) as {

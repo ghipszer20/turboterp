@@ -12,8 +12,8 @@ import {
   rankNoticeCandidates,
   studentDegrees,
   toggleProgram,
-} from "../advisor/programs";
-import type { ProgramOption } from "../advisor/programs";
+} from "@turboterp/app-core/programs";
+import type { ProgramOption } from "@turboterp/app-core/programs";
 import { PROGRAMS } from "@turboterp/programs";
 
 const ids = (list: { id: string }[]) => list.map((p) => p.id);

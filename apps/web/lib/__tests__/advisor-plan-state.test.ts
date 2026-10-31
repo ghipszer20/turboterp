@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { emptyPrior, newPlan, planReducer, termCourseIds, type AdvisorPlan } from "../advisor/plan-state";
+import { emptyPrior, newPlan, planReducer, termCourseIds, type AdvisorPlan } from "@turboterp/app-core/plan-state";
 
 const base = () => newPlan({ programs: ["cmsc-major"], catalogYear: "2026-27", startTerm: "Fall 2026" });
 const courses = (plan: AdvisorPlan, term: string) => termCourseIds(plan, term);

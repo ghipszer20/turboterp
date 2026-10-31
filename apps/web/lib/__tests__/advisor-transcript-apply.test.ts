@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { emptyPrior, newPlan, type AdvisorPlan } from "../advisor/plan-state";
-import { applyTranscriptImport, type SelectedAp, type SelectedCourse } from "../advisor/transcript-apply";
+import { emptyPrior, newPlan, type AdvisorPlan } from "@turboterp/app-core/plan-state";
+import { applyTranscriptImport, type SelectedAp, type SelectedCourse } from "@turboterp/app-core/transcript-apply";
 
 const basePlan = (): AdvisorPlan => newPlan({ programs: ["cs"], catalogYear: "2026-2027", startTerm: "Fall 2024" });
 

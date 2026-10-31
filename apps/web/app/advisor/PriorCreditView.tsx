@@ -7,8 +7,8 @@
 import { apExamNames, ibExamNames, type IbLevel } from "@turboterp/credit";
 import type { ReactNode } from "react";
 import { useState } from "react";
-import type { AdvisorPlan, PriorInputs } from "@/lib/advisor/plan-state";
-import { creditLabel, ibLevelsFor, removePriorEntry, type Earn, type PriorCreditResult, type PriorEntry } from "@/lib/advisor/prior-credit";
+import type { AdvisorPlan, PriorInputs } from "@turboterp/app-core/plan-state";
+import { creditLabel, ibLevelsFor, removePriorEntry, type Earn, type PriorCreditResult, type PriorEntry } from "@turboterp/app-core/prior-credit";
 import type { CatalogState } from "./data";
 import { dispatchPlan } from "./store";
 import styles from "./advisor.module.css";

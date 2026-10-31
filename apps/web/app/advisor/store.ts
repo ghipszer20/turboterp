@@ -5,10 +5,11 @@
 // there's no hydration mismatch.
 
 import { useSyncExternalStore } from "react";
-import { CONSENT_STORAGE_KEY, parseConsent, type ConsentRecord } from "@/lib/advisor/consent";
-import { planReducer, type AdvisorPlan, type PlanAction } from "@/lib/advisor/plan-state";
-import { seedFromUrl } from "@/lib/advisor/seed";
-import { parsePlan, PLAN_STORAGE_KEY, serializePlan } from "@/lib/advisor/storage";
+import { kvGet, kvSet, type KeyValueStore } from "@turboterp/app-core/key-value-store";
+import { CONSENT_STORAGE_KEY, parseConsent, type ConsentRecord } from "@turboterp/app-core/consent";
+import { planReducer, type AdvisorPlan, type PlanAction } from "@turboterp/app-core/plan-state";
+import { seedFromUrl } from "@turboterp/app-core/seed";
+import { parsePlan, PLAN_STORAGE_KEY, serializePlan } from "@turboterp/app-core/storage";
 import { consentSaved, localChanged } from "../../lib/sync/hooks";
 
 export type AdvisorSnapshot = { consent: ConsentRecord | null; plan: AdvisorPlan | null };
@@ -16,22 +17,15 @@ export type AdvisorSnapshot = { consent: ConsentRecord | null; plan: AdvisorPlan
 let snapshot: AdvisorSnapshot | null = null;
 const listeners = new Set<() => void>();
 
-function read(key: string): string | null {
-  try {
-    return localStorage.getItem(key);
-  } catch {
-    return null;
-  }
-}
+const kv: KeyValueStore = {
+  get: (key) => localStorage.getItem(key),
+  set: (key, value) => localStorage.setItem(key, value),
+  remove: (key) => localStorage.removeItem(key),
+};
 
-function write(key: string, value: string | null) {
-  try {
-    if (value === null) localStorage.removeItem(key);
-    else localStorage.setItem(key, value);
-  } catch {
-    // Storage blocked (private browsing): the plan lasts for this page only.
-  }
-}
+const read = (key: string) => kvGet(kv, key);
+// Storage blocked (private browsing): the plan lasts for this page only.
+const write = (key: string, value: string | null) => kvSet(kv, key, value);
 
 function load(): AdvisorSnapshot {
   const seed = seedFromUrl(location.search, {

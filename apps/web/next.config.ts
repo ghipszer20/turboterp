@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   // The shared packages ship TypeScript source; let Next compile them.
   transpilePackages: [
+    "@turboterp/app-core",
     "@turboterp/campus-data",
     "@turboterp/audit",
     "@turboterp/course-data",

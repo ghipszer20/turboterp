@@ -6,7 +6,7 @@
 
 import type { CourseWhatIf } from "@turboterp/plan/what-if";
 import { describe, expect, it } from "vitest";
-import { addedProgramNotes, completedCreditTotals, gatewayAttemptLimitNote, gatewayRuleText } from "../advisor/what-if-display";
+import { addedProgramNotes, completedCreditTotals, gatewayAttemptLimitNote, gatewayRuleText } from "@turboterp/app-core/what-if-display";
 
 describe("gatewayRuleText", () => {
   it("states the Fall-2024-or-later rule's grade and GPA minimums", () => {

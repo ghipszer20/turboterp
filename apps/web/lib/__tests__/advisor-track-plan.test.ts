@@ -6,7 +6,7 @@
 import { describe, expect, it } from "vitest";
 import type { PlanCatalog } from "@turboterp/plan/catalog";
 import type { Plan } from "@turboterp/plan/check";
-import { resolvedPlan } from "../advisor/track-plan";
+import { resolvedPlan } from "@turboterp/app-core/track-plan";
 
 const catalog: PlanCatalog = new Map([
   ["CHEM131", { id: "CHEM131", title: "Chemistry I", credits: { min: 3, max: 3 }, genEd: [], prerequisite: null, corequisite: null, repeat: { kind: "unknown" } }],

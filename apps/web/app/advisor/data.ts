@@ -8,7 +8,7 @@ import { decodeCatalogFile } from "@turboterp/plan/catalog-file";
 import type { PlanCatalog } from "@turboterp/plan/catalog";
 import { decodeDepartment, type CourseGrades } from "@turboterp/ratings";
 import { useEffect, useState } from "react";
-import { decodeCourseDetails, type CourseDetails } from "@/lib/advisor/course-details";
+import { decodeCourseDetails, type CourseDetails } from "@turboterp/app-core/course-details";
 
 type Index = { v: number; term: string; terms?: string[]; catalog: string; details: string; grades: string | null };
 

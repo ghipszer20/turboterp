@@ -55,7 +55,7 @@ describe("app adapters", () => {
   it("sign-out clearing removes the keys and tells subscribers", async () => {
     const ls = stubBrowser();
     const { createDocAdapters } = await import("../adapters");
-    const { PLAN_STORAGE_KEY } = await import("../../advisor/storage");
+    const { PLAN_STORAGE_KEY } = await import("@turboterp/app-core/storage");
     const docs = createDocAdapters();
     docs.plan.replace(PLAN);
     docs.schedule.replace(JSON.stringify({ v: 1, term: "202701" }));

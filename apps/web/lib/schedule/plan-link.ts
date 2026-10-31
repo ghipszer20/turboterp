@@ -6,8 +6,8 @@
 // own list first differs, and only an explicit "Update plan" click ever writes back to the plan.
 // Sections stay builder-only regardless (saved.ts).
 
-import { termCourseIds, type AdvisorPlan } from "../advisor/plan-state";
-import { sortTerms, termFromMatriculationId } from "../advisor/terms";
+import { termCourseIds, type AdvisorPlan } from "@turboterp/app-core/plan-state";
+import { sortTerms, termFromMatriculationId } from "@turboterp/app-core/terms";
 
 /** The plan's term name for the builder's schedule term, or null if it can't be parsed. */
 export const planTermName = (scheduleTerm: string): string | null => termFromMatriculationId(scheduleTerm);

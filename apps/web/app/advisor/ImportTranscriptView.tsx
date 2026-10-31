@@ -8,11 +8,11 @@
 
 import { apExamNames } from "@turboterp/credit";
 import { useMemo, useState } from "react";
-import { selectApLines } from "@/lib/advisor/transcript-ap-select";
-import { selectDualLines, selectIbLines } from "@/lib/advisor/transcript-ib-select";
-import { applyTranscriptImport, type SelectedAp, type SelectedCourse } from "@/lib/advisor/transcript-apply";
-import type { AdvisorPlan } from "@/lib/advisor/plan-state";
-import { parseTranscriptText, type ParsedCourse, type ParsedTranscript, type Source } from "@/lib/advisor/transcript-parse";
+import { selectApLines } from "@turboterp/app-core/transcript-ap-select";
+import { selectDualLines, selectIbLines } from "@turboterp/app-core/transcript-ib-select";
+import { applyTranscriptImport, type SelectedAp, type SelectedCourse } from "@turboterp/app-core/transcript-apply";
+import type { AdvisorPlan } from "@turboterp/app-core/plan-state";
+import { parseTranscriptText, type ParsedCourse, type ParsedTranscript, type Source } from "@turboterp/app-core/transcript-parse";
 import styles from "./advisor.module.css";
 
 const AP_EXAM_NAMES = apExamNames();

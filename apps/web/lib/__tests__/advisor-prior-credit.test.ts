@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { emptyPrior, type PriorInputs } from "../advisor/plan-state";
-import { computePriorCredit, creditLabel, ibLevelsFor, removePriorEntry } from "../advisor/prior-credit";
+import { emptyPrior, type PriorInputs } from "@turboterp/app-core/plan-state";
+import { computePriorCredit, creditLabel, ibLevelsFor, removePriorEntry } from "@turboterp/app-core/prior-credit";
 
 const prior = (p: Partial<PriorInputs>): PriorInputs => ({ ...emptyPrior(), ...p });
 const noGenEd = () => [];

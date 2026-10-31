@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { seedAllowed, seedFromUrl } from "../advisor/seed";
-import { parsePlan, serializePlan } from "../advisor/storage";
-import { hasConsent } from "../advisor/consent";
+import { seedAllowed, seedFromUrl } from "@turboterp/app-core/seed";
+import { parsePlan, serializePlan } from "@turboterp/app-core/storage";
+import { hasConsent } from "@turboterp/app-core/consent";
 
 const dev = { NODE_ENV: "development" };
 const prod = { NODE_ENV: "production" };

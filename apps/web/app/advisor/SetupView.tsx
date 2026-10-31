@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { newPlan, planReducer, type AdvisorPlan, type DegreeChoice } from "@/lib/advisor/plan-state";
+import { newPlan, planReducer, type AdvisorPlan, type DegreeChoice } from "@turboterp/app-core/plan-state";
 import { Segmented } from "@/components/Segmented";
-import { AUTOMATIC_PROGRAMS, CATALOG_YEARS, collegeOf, degreeModeOf, toggleProgram } from "@/lib/advisor/programs";
-import { defaultTerms, startTermOptions } from "@/lib/advisor/terms";
-import { examMilestone, toggleTrack, TRACKS, type Track } from "@/lib/advisor/tracks";
+import { AUTOMATIC_PROGRAMS, CATALOG_YEARS, collegeOf, degreeModeOf, toggleProgram } from "@turboterp/app-core/programs";
+import { defaultTerms, startTermOptions } from "@turboterp/app-core/terms";
+import { examMilestone, toggleTrack, TRACKS, type Track } from "@turboterp/app-core/tracks";
 import { COLLEGES, type College } from "@turboterp/plan/credit-caps";
 import type { Milestone } from "@turboterp/tracks/list";
 import styles from "./advisor.module.css";

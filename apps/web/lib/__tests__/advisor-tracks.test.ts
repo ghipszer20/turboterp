@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { showsScienceGpa, toggleTrack } from "../advisor/tracks";
+import { showsScienceGpa, toggleTrack } from "@turboterp/app-core/tracks";
 import type { Track } from "@turboterp/tracks/list";
 
 describe("toggleTrack", () => {
