@@ -4,6 +4,7 @@
 import type { AcademicEvent, DiningMenu, StampVenue } from "@turboterp/campus-data";
 import { dedupeEvents, eventTitle, formatEventDate, isKeyEvent, isPast } from "@turboterp/app-core/calendar";
 import { pickDay, type CampusClock } from "@turboterp/app-core/campus-clock";
+import { DINING_HALLS } from "@turboterp/app-core/dining";
 import { stampSummary } from "@turboterp/app-core/stamp";
 import { currentMealName, mealFoods } from "@turboterp/app-core/status";
 import type { TodayClass } from "@turboterp/app-core/next-class";
@@ -26,13 +27,7 @@ export function isTodayPayload(x: unknown): x is TodayPayload {
   return isPart(o.calendar) && isPart(o.dining) && isPart(o.stamp);
 }
 
-// Same order as the payload's per-hall menus (campus-data DINING_HALLS; that module pulls in a
-// Node-only HTML parser, so the three halls are listed here).
-export const DINING_HALLS = [
-  { id: 19, short: "Yahentamitsi" },
-  { id: 16, short: "South Campus" },
-  { id: 51, short: "251 North" },
-] as const;
+export { DINING_HALLS };
 
 export type Tile = { key: string; title: string; sub: string };
 

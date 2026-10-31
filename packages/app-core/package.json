@@ -18,6 +18,7 @@
     "./consent": "./src/consent.ts",
     "./consent-send": "./src/consent-send.ts",
     "./course-details": "./src/course-details.ts",
+    "./dining": "./src/dining.ts",
     "./difficulty": "./src/difficulty.ts",
     "./export/pdf": "./src/export/pdf.ts",
     "./export/pdf-rows": "./src/export/pdf-rows.ts",
