@@ -329,6 +329,156 @@ export async function refreshSections(store: SnapshotStore, deps: RefreshDeps, n
   return report;
 }
 
+// ---- seats in chunks (Supabase Edge Functions: ~2 s CPU and 150 s wall per call) ----
+//
+// The seats run is split by department into SEAT_CHUNKS calls. Each call writes only its own file,
+// schedule/<term>/seats-chunk/<n>, and then rebuilds the whole-term seats file from the chunk
+// files laid over the previous seats file. The rebuild is a pure function of what is stored, so
+// concurrent or partial chunks can't clobber each other: a chunk that hasn't run yet leaves its
+// departments' previous counts alone, and a merge that raced with another chunk's write is
+// repeated until the chunk files stop changing.
+
+export const SEAT_CHUNKS = 4;
+const CHUNK_KEY = (term: string, n: number) => `schedule/${term}/seats-chunk/${n}`;
+
+/** schedule/<term>/seats-chunk/<n>: the counts of the departments this chunk owns. */
+export type SeatsChunkFile = {
+  v: 1;
+  term: string;
+  chunk: number;
+  generatedAt: string;
+  completedAt?: string;
+  /** Where the next run resumes when this one hit its time budget. */
+  next?: string;
+  /** Departments fetched successfully at least once; the merge takes their entries from this file. */
+  depts: string[];
+  seats: SeatsFile["seats"];
+};
+
+/** Departments (by course count) dealt into `chunks` bins of about equal request count, largest first. Deterministic. */
+export function assignSeatChunks(courseCounts: Map<string, number>, chunks: number, batchSize: number): string[][] {
+  const bins = Array.from({ length: chunks }, () => ({ load: 0, depts: [] as string[] }));
+  const sized = [...courseCounts].map(([dept, n]) => ({ dept, requests: Math.max(1, Math.ceil(n / batchSize)) }));
+  sized.sort((a, b) => b.requests - a.requests || (a.dept < b.dept ? -1 : 1));
+  for (const { dept, requests } of sized) {
+    const bin = bins.reduce((best, b) => (b.load < best.load ? b : best));
+    bin.load += requests;
+    bin.depts.push(dept);
+  }
+  return bins.map((b) => b.depts.sort());
+}
+
+/** Rebuild schedule/<term>/seats from the chunk files over the previous seats file. */
+export async function mergeSeatChunks(store: SnapshotStore, term: string, chunks: number = SEAT_CHUNKS): Promise<void> {
+  const signature = (files: (SeatsChunkFile | undefined)[]) => files.map((f) => f?.generatedAt ?? "-").join("|");
+  const read = async () => Promise.all(Array.from({ length: chunks }, async (_, n) => (await store.get<SeatsChunkFile>(CHUNK_KEY(term, n)))?.data));
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const files = await read();
+    const base = (await store.get<SeatsFile>(SEATS_KEY(term)))?.data;
+    const seats: SeatsFile["seats"] = { ...base?.seats };
+    // A department claimed by two chunk files (it moved between chunks) takes the newer file.
+    const owner = new Map<string, SeatsChunkFile>();
+    for (const f of files) {
+      for (const dept of f?.depts ?? []) {
+        const held = owner.get(dept);
+        if (!held || f!.generatedAt > held.generatedAt) owner.set(dept, f!);
+      }
+    }
+    // One pass over the keys (not one per department): this runs on every chunk, inside the Edge CPU budget.
+    for (const key of Object.keys(seats)) if (owner.has(key.slice(0, 4))) delete seats[key];
+    for (const f of new Set(owner.values())) {
+      for (const [key, counts] of Object.entries(f.seats)) if (owner.get(key.slice(0, 4)) === f) seats[key] = counts;
+    }
+    const present = files.filter((f): f is SeatsChunkFile => f !== undefined);
+    // Honest freshness: the oldest part of the file (the previous file's time counts until every chunk has run).
+    const times = present.map((f) => f.generatedAt);
+    if (present.length < chunks && base) times.push(base.generatedAt);
+    if (times.length === 0) return;
+    const generatedAt = times.reduce((a, b) => (a < b ? a : b));
+    await store.put(SEATS_KEY(term), { updatedAt: generatedAt, data: { v: SEATS_FILE_VERSION, term, generatedAt, seats } satisfies SeatsFile });
+    if (signature(await read()) === signature(files)) return;
+  }
+}
+
+/**
+ * One chunk of the frequent seats run (see the block comment above). Same per-department rules as
+ * refreshSeats: a department whose fetch fails keeps its previous counts; while the nightly run
+ * flags the scanner as broken the full parse supplies the counts; a run that hits the time budget
+ * stores a cursor and the next run continues from it.
+ */
+export async function refreshSeatsChunk(
+  store: SnapshotStore,
+  deps: RefreshDeps,
+  now: Date,
+  chunk: number,
+  chunks: number = SEAT_CHUNKS,
+): Promise<RefreshReport & { chunk: number }> {
+  const report: RefreshReport & { chunk: number } = { job: "soc-seats", chunk, term: null, done: true, processed: 0, ok: 0, failed: 0, failures: [] };
+  const term = await currentTerm(store);
+  if (!term) return report;
+  report.term = term;
+
+  const started = deps.clock();
+  const generatedAt = now.toISOString();
+  const state = (await store.get<SeatsChunkFile>(CHUNK_KEY(term, chunk)))?.data;
+  const cursor = state?.next;
+  if (cursor === undefined && state?.completedAt && now.getTime() - Date.parse(state.completedAt) < (seatRefreshIntervalMinutes() - 0.5) * 60_000) {
+    report.skipped = "not due";
+    return report;
+  }
+  const useFullParse = (await store.get(SCAN_BROKEN_KEY(term))) !== null;
+  if (useFullParse) report.usedFullParse = true;
+
+  const groups = groupBy(await loadCourses(store, term), (c) => c.department);
+  const mine = assignSeatChunks(new Map([...groups].map(([d, cs]) => [d, cs.length])), chunks, deps.batchSize)[chunk] ?? [];
+  const mineSet = new Set(mine);
+  const seats: SeatsFile["seats"] = {};
+  for (const [key, counts] of Object.entries(state?.seats ?? {})) if (mineSet.has(key.slice(0, 4))) seats[key] = counts;
+  const fetched = new Set((state?.depts ?? []).filter((d) => mineSet.has(d)));
+  const fresh = new Map<string, [string, [number, number, number, number]][]>();
+  let stoppedAt: string | null = null;
+
+  for (const dept of mine.filter((d) => cursor === undefined || d >= cursor)) {
+    if (report.processed > 0 && deps.clock() - started >= deps.budgetMs) {
+      stoppedAt = dept;
+      break;
+    }
+    report.processed++;
+    const ids = groups.get(dept)!.map((c) => c.id);
+    const batches: string[][] = [];
+    for (let i = 0; i < ids.length; i += deps.batchSize) batches.push(ids.slice(i, i + deps.batchSize));
+    const result = await fetchEach(
+      batches,
+      async (batch) => (useFullParse ? rowsOf(await deps.fetchSections(term, batch)) : deps.fetchSeats(term, batch)),
+      { attempts: ATTEMPTS, pause: deps.pause },
+    );
+    if (result.failed.length > 0) {
+      report.failed++;
+      report.failures.push({ key: dept, error: result.failed[0]?.message ?? "failed" });
+      continue;
+    }
+    fresh.set(dept, result.items.map(toRow));
+    fetched.add(dept);
+    report.ok++;
+  }
+  for (const key of Object.keys(seats)) if (fresh.has(key.slice(0, 4))) delete seats[key];
+  for (const rows of fresh.values()) for (const [key, counts] of rows) seats[key] = counts;
+
+  const file: SeatsChunkFile = { v: 1, term, chunk, generatedAt, depts: [...fetched].sort(), seats };
+  if (stoppedAt) {
+    report.done = false;
+    file.next = stoppedAt;
+    file.completedAt = state?.completedAt;
+  } else {
+    file.completedAt = generatedAt;
+  }
+  if (mine.length > 0) {
+    await store.put(CHUNK_KEY(term, chunk), { updatedAt: generatedAt, data: file });
+    await mergeSeatChunks(store, term, chunks);
+  }
+  return report;
+}
+
 const groupDept = (courseId: string, courses: CourseRow[]) =>
   courses.find((c) => c.id === courseId)?.department ?? courseId.slice(0, 4);
 

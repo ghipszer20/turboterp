@@ -1,0 +1,12 @@
+{
+  "imports": {
+    "cheerio": "npm:cheerio@1.2.0",
+    "domhandler": "npm:domhandler@5.0.3",
+    "@turboterp/campus-data/http": "../../../packages/campus-data/src/http.ts",
+    "@turboterp/campus-data/snapshots": "../../../packages/campus-data/src/snapshots/index.ts",
+    "../../../apps/web/lib/seat-alerts/logic": "../../../apps/web/lib/seat-alerts/logic.ts",
+    "../../../apps/web/lib/seat-alerts/store": "../../../apps/web/lib/seat-alerts/store.ts",
+    "../../../apps/web/lib/seat-alerts/push": "./push.ts",
+    "../../../apps/web/lib/email/rate-limit": "../../../apps/web/lib/email/rate-limit.ts"
+  }
+}

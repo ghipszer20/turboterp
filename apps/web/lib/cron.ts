@@ -13,7 +13,9 @@ export function authorizeCron(authorizationHeader: string | null, secret: string
   return timingSafeEqual(given, wanted) ? "ok" : "unauthorized";
 }
 
-const JOBS = ["fast", "daily", "soc-seats", "soc-sections", "soc-courses", "seat-alerts"] as const;
+// soc-seats and seat-alerts are not here on purpose: they run as Supabase Edge Functions (supabase/functions), since
+// Vercel bills CPU and provisioned memory for them. Never add them back (docs/project/scaling-plan.md 4.2).
+const JOBS = ["fast", "daily", "soc-sections", "soc-courses"] as const;
 export type CronJob = (typeof JOBS)[number];
 
 export function cronJob(name: string): CronJob | null {
