@@ -11,6 +11,7 @@ const ICONS = {
   warning: { sf: "exclamationmark.triangle", glyph: "!" },
   offline: { sf: "wifi.slash", glyph: "✕" },
   empty: { sf: "tray", glyph: "∅" },
+  account: { sf: "person.crop.circle", glyph: "☺" },
 } as const;
 
 export type IconName = keyof typeof ICONS;
