@@ -23,16 +23,16 @@ describe("registerIosDevice", () => {
     const r = await registerIosDevice(s.api, s.store, "ExponentPushToken[abc]");
     expect(r).toEqual({ ok: true, token: "id.secret", isNew: true });
     expect(s.token()).toBe("id.secret");
-    expect(s.calls[0].url).toBe("https://api.test/api/seat-alerts/device");
-    expect(JSON.parse(s.calls[0].init.body!)).toEqual({ platform: "ios", expoToken: "ExponentPushToken[abc]" });
-    expect(s.calls[0].init.headers.authorization).toBeUndefined();
+    expect(s.calls[0]!.url).toBe("https://api.test/api/seat-alerts/device");
+    expect(JSON.parse(s.calls[0]!.init.body!)).toEqual({ platform: "ios", expoToken: "ExponentPushToken[abc]" });
+    expect(s.calls[0]!.init.headers.authorization).toBeUndefined();
   });
 
   it("re-registers a known device with its credential", async () => {
     const s = setup({ ok: true, status: 200, body: { token: "id.secret" } }, "id.secret");
     const r = await registerIosDevice(s.api, s.store, "ExponentPushToken[new]");
     expect(r).toEqual({ ok: true, token: "id.secret", isNew: false });
-    expect(s.calls[0].init.headers.authorization).toBe("Device id.secret");
+    expect(s.calls[0]!.init.headers.authorization).toBe("Device id.secret");
   });
 
   it("reports a server failure without saving anything", async () => {
