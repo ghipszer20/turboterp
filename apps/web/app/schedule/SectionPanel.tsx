@@ -4,15 +4,15 @@ import { Fragment, useRef } from "react";
 import type { Section } from "@turboterp/course-data/schedules";
 import { InstructorName } from "./InstructorReviews";
 import type { CourseGrades } from "@turboterp/ratings";
-import { courseColor } from "@/lib/schedule/colors";
-import { restrictionNote, sectionRestriction } from "@/lib/schedule/restrictions";
+import { courseColor } from "@turboterp/app-core/schedule/colors";
+import { restrictionNote, sectionRestriction } from "@turboterp/app-core/schedule/restrictions";
 import {
   bestRating,
   gradeSummary,
   meetingSummary,
   type GradeSummary,
   type SectionChoices,
-} from "@/lib/schedule/sections";
+} from "@turboterp/app-core/schedule/sections";
 import { useWatches } from "@/lib/seat-alerts/use-watches";
 import { RatingBadge } from "./RatingBadge";
 import { SeatBell } from "./SeatBell";

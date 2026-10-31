@@ -4,7 +4,7 @@ import { recWellOnDate, type RecWellArea, type RecWellAreaToday } from "@turbote
 import { GymIcon } from "@/components/icons";
 import { Section, SkeletonCard, SubHeading, Tile, TileGrid } from "@/components/ui";
 import { EPPLEY_SUBSECTION_FALLBACK, regroupEppleyAreas, type RegroupedArea } from "@/lib/gyms";
-import { hoursStatus } from "@/lib/status";
+import { hoursStatus } from "@turboterp/app-core/status";
 import { useCampusClock } from "@/lib/useCampusClock";
 
 /** Facility hours with open/closed worked out by the browser's clock, so the page itself can be cached. */

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import type { Status } from "@turboterp/app-core/status";
 import { ChevronIcon, SearchIcon } from "./icons";
 import { clampSub, tileStatusTone } from "../lib/tiles";
 import styles from "./ui.module.css";
@@ -89,7 +90,7 @@ export function Row({ title, subtitle, leading, trailing, href, external }: RowP
   );
 }
 
-export type Status = "open" | "soon" | "closed" | "unknown";
+export type { Status };
 
 export function StatusPill({
   status,

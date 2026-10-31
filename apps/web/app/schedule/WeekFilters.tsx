@@ -3,14 +3,14 @@
 import { useState } from "react";
 import type { Weekday } from "@turboterp/course-data/schedules";
 import type { SortKey } from "@turboterp/course-data/sort";
-import { clock, DAY_NAME, WEEKDAYS } from "@/lib/schedule/calendar";
+import { clock, DAY_NAME, WEEKDAYS } from "@turboterp/app-core/schedule/calendar";
 import {
   applySameHours,
   SORT_OPTIONS,
   setDayOff,
   setWindow,
   type FilterState,
-} from "@/lib/schedule/filters";
+} from "@turboterp/app-core/schedule/filters";
 import styles from "./builder.module.css";
 
 // The hours a student can pick for a workday window: 7am to 10pm.

@@ -1,6 +1,6 @@
 "use client";
 
-import { dataAge } from "@/lib/age";
+import { dataAge } from "@turboterp/app-core/age";
 import { useCampusClock } from "@/lib/useCampusClock";
 
 /** " (updated 3 min ago)", measured by the browser's clock so the cached page doesn't go stale. */

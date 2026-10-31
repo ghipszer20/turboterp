@@ -1,5 +1,5 @@
 // A tiny seam between the local stores and the sync engine, so the stores never import the engine.
-import type { DocKind } from "./decide";
+import type { DocKind } from "@turboterp/app-core/sync/decide";
 
 let listener: ((kind: DocKind) => void) | null = null;
 

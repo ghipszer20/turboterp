@@ -1,4 +1,4 @@
-import { gpaTone, ratingTone } from "@/lib/schedule/sections";
+import { gpaTone, ratingTone } from "@turboterp/app-core/schedule/sections";
 import styles from "./builder.module.css";
 
 /** PlanetTerp average rating ("4.6★"), colored by tone; "N/A" when unrated (owner, 2026-10-30). */

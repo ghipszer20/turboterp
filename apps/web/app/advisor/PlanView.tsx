@@ -9,7 +9,7 @@ import { planDifficulty } from "@turboterp/app-core/difficulty";
 import { cardNote, courseKey, type IssueGroups, type Severity } from "@turboterp/app-core/issues";
 import type { AdvisorPlan, PlanTermState } from "@turboterp/app-core/plan-state";
 import type { PriorCreditResult } from "@turboterp/app-core/prior-credit";
-import { formatKeyDates, termKeyDates } from "@/lib/calendar";
+import { formatKeyDates, termKeyDates } from "@turboterp/app-core/calendar";
 import { PROGRAM_OPTIONS } from "@turboterp/app-core/programs";
 import { legendCategories, rowCategory, type RowCategory } from "@turboterp/app-core/row-category";
 import { searchCourses } from "@turboterp/app-core/search";

@@ -2,9 +2,9 @@
 
 import { useId, useMemo, useState } from "react";
 import type { IndexedCourse } from "@turboterp/course-data/schedule-files";
-import { courseColor } from "@/lib/schedule/colors";
-import { courseRestrictionLine, courseRestrictionOf } from "@/lib/schedule/restrictions";
-import { searchCourses } from "@/lib/schedule/search";
+import { courseColor } from "@turboterp/app-core/schedule/colors";
+import { courseRestrictionLine, courseRestrictionOf } from "@turboterp/app-core/schedule/restrictions";
+import { searchCourses } from "@turboterp/app-core/schedule/search";
 import cal from "./calendar.module.css";
 import styles from "./builder.module.css";
 

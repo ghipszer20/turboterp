@@ -6,8 +6,8 @@
 // Everything is kept for the session; the CDN caches the files for everyone else.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { gpasFor } from "./sections";
-import { decodeSeats, overlaySeats, type SeatsOverlay } from "./seats-overlay";
+import { gpasFor } from "@turboterp/app-core/schedule/sections";
+import { decodeSeats, overlaySeats, type SeatsOverlay } from "@turboterp/app-core/schedule/seats-overlay";
 import {
   decodeCourseIndex,
   decodeDepartmentSections,

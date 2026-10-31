@@ -15,7 +15,7 @@ import {
   type DiningSlice,
   type SearchMatch,
 } from "@/lib/dining";
-import { FILLER } from "@/lib/status";
+import { FILLER } from "@turboterp/app-core/status";
 import { HallResults } from "./HallResults";
 import styles from "./dining.module.css";
 

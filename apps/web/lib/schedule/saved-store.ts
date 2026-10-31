@@ -2,7 +2,7 @@
 // component sees the same value and other tabs' changes arrive too.
 
 import { localChanged } from "../sync/hooks";
-import { SAVED_KEY } from "./saved";
+import { SAVED_KEY } from "@turboterp/app-core/schedule/saved";
 
 /** What the server (and the first client render) sees: storage isn't readable yet. */
 export const NOT_LOADED = "\u0000not-loaded";

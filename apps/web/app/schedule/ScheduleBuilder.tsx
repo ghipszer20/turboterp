@@ -8,12 +8,12 @@ import { dispatchPlan, useAdvisorStore } from "@/app/advisor/store";
 import { Segmented } from "@/components/Segmented";
 import { RemovePlanButton } from "./RemovePlanButton";
 import { EmptyState, SkeletonCard } from "@/components/ui";
-import { isAppleDevice } from "@/lib/schedule/apple-device";
-import { buildIcs } from "@/lib/schedule/ics";
-import { termDates } from "@/lib/schedule/term-dates";
-import { timeScale } from "@/lib/schedule/calendar";
-import { DEFAULT_FILTERS, readQuery, relaxConstraint, relaxOptions, toScheduleFilters, writeQuery, type FilterState } from "@/lib/schedule/filters";
-import type { GenerateRequest } from "@/lib/schedule/generate";
+import { isAppleDevice } from "@turboterp/app-core/schedule/apple-device";
+import { buildIcs } from "@turboterp/app-core/schedule/ics";
+import { termDates } from "@turboterp/app-core/schedule/term-dates";
+import { timeScale } from "@turboterp/app-core/schedule/calendar";
+import { DEFAULT_FILTERS, readQuery, relaxConstraint, relaxOptions, toScheduleFilters, writeQuery, type FilterState } from "@turboterp/app-core/schedule/filters";
+import type { GenerateRequest } from "@turboterp/app-core/schedule/generate";
 import {
   applyQueryCourses,
   builderCourses,
@@ -22,7 +22,7 @@ import {
   planCourseDiff,
   planCourseIds,
   planTermName,
-} from "@/lib/schedule/plan-link";
+} from "@turboterp/app-core/schedule/plan-link";
 import {
   parseSaved,
   PLAN_IDS,
@@ -34,13 +34,13 @@ import {
   withCourses,
   type PlanId,
   type SavedSchedule,
-} from "@/lib/schedule/saved";
+} from "@turboterp/app-core/schedule/saved";
 import { NOT_LOADED, savedStore } from "@/lib/schedule/saved-store";
-import { overlapNote, saveBlockedBy } from "@/lib/schedule/conflicts";
-import { sectionKey } from "@/lib/schedule/sections";
-import { resolveShared, saveShared, type SharedSchedule } from "@/lib/schedule/share";
-import { sectionBlocks } from "@/lib/schedule/block-items";
-import { courseColor } from "@/lib/schedule/colors";
+import { overlapNote, saveBlockedBy } from "@turboterp/app-core/schedule/conflicts";
+import { sectionKey } from "@turboterp/app-core/schedule/sections";
+import { resolveShared, saveShared, type SharedSchedule } from "@turboterp/app-core/schedule/share";
+import { sectionBlocks } from "@turboterp/app-core/schedule/block-items";
+import { courseColor } from "@turboterp/app-core/schedule/colors";
 import { WeekCalendar } from "./WeekCalendar";
 import { useLayouts } from "@/lib/schedule/use-layouts";
 import { useScheduleData } from "@/lib/schedule/use-schedule-data";

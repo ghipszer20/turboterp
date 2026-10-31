@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { GenerateRequest, GenerateResult } from "../generate";
+import type { GenerateRequest, GenerateResult } from "@turboterp/app-core/schedule/generate";
 import { shownLayouts } from "../use-layouts";
 
 const req = (...courseIds: string[]) => ({ courseIds, sections: courseIds.map((courseId) => ({ courseId, id: "0101" })) }) as unknown as GenerateRequest;

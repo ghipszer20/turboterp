@@ -1,4 +1,4 @@
-import { v1Envelope } from "./envelope";
+import { v1Envelope } from "@turboterp/app-core/api-v1/envelope";
 
 const CACHE = "public, max-age=60, s-maxage=300, stale-while-revalidate=1800";
 

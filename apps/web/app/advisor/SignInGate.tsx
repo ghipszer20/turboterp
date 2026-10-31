@@ -7,7 +7,7 @@ import { useCodeEntry } from "@/lib/auth/use-code-entry";
 import { accountControl } from "@/lib/auth/session-state";
 import { useSession } from "@/lib/auth/use-session";
 import { getAppSync } from "@/lib/sync/app-sync";
-import { statusText } from "@/lib/sync/status";
+import { statusText } from "@turboterp/app-core/sync/status";
 import { useSaveStatus } from "@/lib/sync/use-sync";
 import styles from "./advisor.module.css";
 

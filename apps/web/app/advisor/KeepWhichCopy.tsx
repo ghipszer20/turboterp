@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getAppSync, type Ask } from "@/lib/sync/app-sync";
-import { chooserCopy, copyLine } from "@/lib/sync/chooser";
+import { chooserCopy, copyLine } from "@turboterp/app-core/sync/chooser";
 import { useSyncAsks } from "@/lib/sync/use-sync";
 import styles from "./advisor.module.css";
 
