@@ -37,7 +37,6 @@ export default function TabsLayout() {
   const { c } = useTheme();
   return (
     <Tabs
-      initialRouteName="index"
       screenOptions={{
         headerTitle: () => <Logo />,
         headerRight: () => <AboutButton />,
