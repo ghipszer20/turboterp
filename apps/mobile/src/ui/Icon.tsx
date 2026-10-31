@@ -1,4 +1,4 @@
-import { Platform, Text as RNText } from "react-native";
+import { Platform, type ColorValue, Text as RNText } from "react-native";
 import { SymbolView } from "expo-symbols";
 
 // SF Symbol name plus a plain fallback glyph for web, Android and surfaces without symbols.
@@ -16,7 +16,7 @@ const ICONS = {
 export type IconName = keyof typeof ICONS;
 
 /** Decorative icon (hidden from VoiceOver; the control around it carries the label). */
-export function Icon({ name, size = 22, color }: { name: IconName; size?: number; color: string }) {
+export function Icon({ name, size = 22, color }: { name: IconName; size?: number; color: ColorValue }) {
   const i = ICONS[name];
   if (Platform.OS === "ios") {
     return <SymbolView name={i.sf} size={size} tintColor={color} accessibilityElementsHidden importantForAccessibility="no" />;

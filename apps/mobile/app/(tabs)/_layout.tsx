@@ -1,5 +1,5 @@
 import { Tabs, Link } from "expo-router";
-import { Pressable } from "react-native";
+import { Pressable, type ColorValue } from "react-native";
 import { Icon, Text, tap, useTheme, type IconName } from "../../src/ui";
 
 function Logo() {
@@ -29,7 +29,7 @@ function AboutButton() {
 }
 
 const tabIcon = (name: IconName) =>
-  function TabIcon({ color, size }: { color: string; size: number }) {
+  function TabIcon({ color, size }: { color: ColorValue; size: number }) {
     return <Icon name={name} size={size} color={color} />;
   };
 
@@ -37,6 +37,7 @@ export default function TabsLayout() {
   const { c } = useTheme();
   return (
     <Tabs
+      initialRouteName="index"
       screenOptions={{
         headerTitle: () => <Logo />,
         headerRight: () => <AboutButton />,
@@ -48,7 +49,7 @@ export default function TabsLayout() {
       }}
     >
       {/* Today is the home screen at "/", reached from the logo, not a tab. */}
-      <Tabs.Screen name="index" options={{ title: "Today", href: null }} />
+      <Tabs.Screen name="index" options={{ title: "Today", tabBarButton: () => null }} />
       <Tabs.Screen name="campus" options={{ title: "Campus", tabBarIcon: tabIcon("campus"), tabBarAccessibilityLabel: "Campus" }} />
       <Tabs.Screen name="schedule" options={{ title: "Schedule", tabBarIcon: tabIcon("schedule"), tabBarAccessibilityLabel: "Schedule" }} />
       <Tabs.Screen name="seat-alerts" options={{ title: "Seat Alerts", tabBarIcon: tabIcon("alerts"), tabBarAccessibilityLabel: "Seat Alerts" }} />

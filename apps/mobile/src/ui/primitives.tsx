@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Animated, Pressable, View, type StyleProp, type ViewStyle } from "react-native";
 import { Link, type Href } from "expo-router";
 import { tap } from "./haptics";
@@ -187,7 +187,7 @@ export function Badge({ label, tone = "neutral" }: { label: string; tone?: "neut
 /** Pulsing placeholder rows while loading. */
 export function Skeleton({ rows = 3 }: { rows?: number }) {
   const { c } = useTheme();
-  const pulse = useRef(new Animated.Value(0.5)).current;
+  const [pulse] = useState(() => new Animated.Value(0.5));
   useEffect(() => {
     const loop = Animated.loop(
       Animated.sequence([
