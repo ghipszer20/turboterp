@@ -384,9 +384,10 @@ export async function mergeSeatChunks(store: SnapshotStore, term: string, chunks
         if (!held || f!.generatedAt > held.generatedAt) owner.set(dept, f!);
       }
     }
-    for (const [dept, f] of owner) {
-      for (const key of Object.keys(seats)) if (key.startsWith(dept)) delete seats[key];
-      for (const [key, counts] of Object.entries(f.seats)) if (key.startsWith(dept)) seats[key] = counts;
+    // One pass over the keys (not one per department): this runs on every chunk, inside the Edge CPU budget.
+    for (const key of Object.keys(seats)) if (owner.has(key.slice(0, 4))) delete seats[key];
+    for (const f of new Set(owner.values())) {
+      for (const [key, counts] of Object.entries(f.seats)) if (owner.get(key.slice(0, 4)) === f) seats[key] = counts;
     }
     const present = files.filter((f): f is SeatsChunkFile => f !== undefined);
     // Honest freshness: the oldest part of the file (the previous file's time counts until every chunk has run).
@@ -434,6 +435,7 @@ export async function refreshSeatsChunk(
   const seats: SeatsFile["seats"] = {};
   for (const [key, counts] of Object.entries(state?.seats ?? {})) if (mineSet.has(key.slice(0, 4))) seats[key] = counts;
   const fetched = new Set((state?.depts ?? []).filter((d) => mineSet.has(d)));
+  const fresh = new Map<string, [string, [number, number, number, number]][]>();
   let stoppedAt: string | null = null;
 
   for (const dept of mine.filter((d) => cursor === undefined || d >= cursor)) {
@@ -455,14 +457,12 @@ export async function refreshSeatsChunk(
       report.failures.push({ key: dept, error: result.failed[0]?.message ?? "failed" });
       continue;
     }
-    for (const key of Object.keys(seats)) if (key.startsWith(dept)) delete seats[key];
-    for (const row of result.items) {
-      const [key, counts] = toRow(row);
-      seats[key] = counts;
-    }
+    fresh.set(dept, result.items.map(toRow));
     fetched.add(dept);
     report.ok++;
   }
+  for (const key of Object.keys(seats)) if (fresh.has(key.slice(0, 4))) delete seats[key];
+  for (const rows of fresh.values()) for (const [key, counts] of rows) seats[key] = counts;
 
   const file: SeatsChunkFile = { v: 1, term, chunk, generatedAt, depts: [...fetched].sort(), seats };
   if (stoppedAt) {
