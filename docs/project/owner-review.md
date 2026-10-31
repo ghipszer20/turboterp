@@ -21,6 +21,18 @@ Items for the owner to review or decide, listed in progress reports. Remove an i
      ```
   3. **Deploy** (optional, nothing urgent: build guardrail and cleanup): `cd C:\Users\24GHi\Code\SuperTerp`, `git pull`, `npx.cmd vercel deploy --prod --yes`. Check it says Directory `~\Code\SuperTerp`.
   4. **In 1-2 days:** Supabase → Usage → Log Ingestion per day should be about 10-15 MB a day (it was ~185 MB). Tell Claude if not; it can check through the Supabase connector.
+- **iOS app: the code is built; what's next needs you (2026-10-31).** Everything is on branch `feat/ios`, not merged into `feat/ui-rework` yet. In order:
+  1. **Create an Expo account (O3) and install Expo Go on your iPhone (O4)** (ios-plan.md section 6). Then tell Claude the account name.
+     - Claude links the project: `eas init` sets `extra.eas.projectId`, which Seat Alerts push needs.
+     - Claude then publishes a review link you open in Expo Go.
+     - Sign in with Apple and native push can't be tried in Expo Go; everything else can.
+  2. **Before `feat/ios` is merged into `feat/ui-rework` and deployed**, paste `supabase/migrations/0018_expo_push.sql` into the Supabase SQL Editor and run it.
+     - It was checked against the live data: the 3 existing devices pass.
+     - That deploy also bumps the privacy version, so you'll be asked to agree again.
+  3. **Fill in the App Store text** in `docs/project/app-store-listing.md`. Items marked CHECK:
+     - The copyright name: Apple wants the rights owner's name.
+     - The Crash Data row: drop it unless you set up Sentry for the app.
+  4. **Later, once the screens look right in Expo Go:** pay the Apple Developer fee (O2). Then do the dev build (O5/O6), the device checks (N1) and TestFlight (R2), all in ios-plan.md section 6.
 - **iOS app plan (2026-10-29): decide.** `docs/project/ios-plan.md`. (1) Answered 2026-10-30: Expo. (2) Bundle ID: confirmed `com.turboterp.app` (2026-10-30). (3) Apple enrollment ($99/yr) waits until about day 4 of the build (owner, 2026-10-30: pay last). Next: O3 Expo account, O4 install Expo Go, then "set up the sessions". (Answered 2026-10-30: no Donate in the app, US only, Security Advisor checked, no PlanetTerp email; rulings.md "iOS App Store decisions".)
 - **Security hardening (2026-10-30; `docs/project/security.md`).** Code is on branch `fix/security-hardening`: Next 16.4.3 (critical advisory), security headers and CSP, Seat Alerts device limit, separate "I got it" token key. **In this order:**
   1. Supabase → SQL Editor → run `supabase/migrations/0012_device_signup_limit.sql`.

@@ -484,3 +484,17 @@ These bullets were PROJECT_MEMORY section 14 until 2026-10-08, moved here verbat
 - Wave 1 merged: A2 (90.5k tokens), A1a (86.7k), S0 (107.7k). Wave 2 merged: A4s (125.8k), A1b (99.1k), S1 (98.8k; its screenshot script hung, handed to B1). Conflicts: only `packages/app-core/package.json` exports (two layouts; merged by key). Every merge: full root suite, typecheck, lint, build, Deno tests for both Edge Functions, and the Expo web export.
 - Builder notes worth keeping: PowerShell writes a UTF-8 BOM that breaks Turbopack's resolution of package.json exports; app-core needs an explicit exports entry per file (a `./*` wildcard breaks Turbopack dynamic imports); Git Bash rewrites `/campus`-style args into paths unless `MSYS_NO_PATHCONV=1`; `npm ci` with the Expo tree takes ~2 min.
 - Wave 3 merged: A3 (128k tokens), B1 (120k), A5 (180k). Screens wave 1 merged: B4a1 (116k), B6b (142k; "programs not importable" was from a pre-A5 import check, now fine), B2 (126k; Lead paused it for an hour to keep to 3 builders after over-dispatching). Lead fixes: `storage.web.ts` (expo-sqlite's web wasm doesn't resolve in the export), `EngineHost.web.tsx` (no WebView or 18 MB page on web), engine host mounted in the root layout, `.html` treated as empty in the import-graph check. Builders keep landing over the 100k target (116k–180k) because each screen ports several web files; accept for screens, keep briefs tight.
+- **Screens wave 2 merged into feat/ios** (tokens in brackets):
+  - B7a (141k): new `whatIf` engine job. An audit takes 111–145 ms per double-degree plan in headless Edge.
+  - B6a (114k).
+  - B4b1 (197k): schedules are generated on the device in chunks, capped at 200k layouts.
+  - B3a (122k), B4a2 (148k).
+  - B5 (149k): watches need push, the same as on the web.
+  - B7b (124k), B3b (149k), B8 (128k).
+  - B4b2 (125k): Add to calendar writes to Apple Calendar with write-only access. EventKit has no EXDATE, so holidays split each class into several series.
+  - R1 (79k).
+  - Polish (79k): the privacy manifest now matches the listing's label, photos are resized to 3000 px, plugins and the dev client added, and the icon committed.
+- **Lead decisions:**
+  - The PlanScreen button conflicts were resolved by keeping both sides.
+  - The device ID is declared "linked".
+- **Status:** all iOS work that can be built is done. feat/ios stays out of feat/ui-rework until migration 0018 is applied.
