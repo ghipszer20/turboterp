@@ -9,12 +9,12 @@ const ok = <T,>(value: T): EngineResult<T> => ({ ok: true, value });
 // Made-up lines in the Testudo shape (no real transcript).
 const SAMPLE = ["Historic Course Information is listed in the order:","Fall 2024","MAJOR: COMPUTER SCIENCE COLLEGE: COMP, MATH, & NAT SCI","CMSC131 OBJECT-ORIENTED PROG I A 4.00 4.00 16.00","ENGL101 ACADEMIC WRITING B+ 3.00 3.00 9.90 FSPW","Semester: Attempted 7.00; Earned 7.00; QPoints 25.90; GPA 3.700","UG Cumulative: 7.00; 7.00; 25.90; 3.700"].join("\n");
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 function fakeEngine(handlers: Record<string, (job: any) => EngineResult<any>>): FlowEngine & { calls: string[] } {
   const calls: string[] = [];
   return {
     calls,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     run: ((job: any) => {
       calls.push(job.type + (job.source ? `:${job.source}` : ""));
       return Promise.resolve(handlers[job.type]!(job));
@@ -89,20 +89,20 @@ describe("review and apply", () => {
     expect(review.parsed.courses.length).toBeGreaterThan(0);
     const checks = allChecked(review);
     expect(anyChecked(review, checks)).toBe(true);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const plan = { terms: [], programs: [], prior: { ap: [], ib: [], dual: [], choices: {} } } as any;
     const none = { ...checks, courses: checks.courses.map(() => false), gpa: false };
     expect(anyChecked(review, none)).toBe(false);
     const all = applyReview(plan, review, checks);
     const some = applyReview(plan, review, none);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const count = (p: any) => p.terms.reduce((n: number, t: any) => n + t.courses.length, 0);
     expect(count(all)).toBe(review.parsed.courses.length);
     expect(count(some)).toBe(0);
   });
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 const PLAN = { header: {}, terms: [] } as any;
 const file = { base64: "QUJD", mime: "application/pdf", fileName: "TurboTerp 4-year plan.pdf" };
 

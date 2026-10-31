@@ -20,6 +20,7 @@ import { useAnalysis } from "./analysis";
 import { advisorData, useCatalog } from "./data";
 import type { CatalogData } from "./data-core";
 import { buildPlanView, CATEGORY_COLORS, CATEGORY_LABELS, moveTargets, nextMainTerm, type CourseRow, type TermSection } from "./plan-view-model";
+import { ShareMenu } from "./ShareMenu";
 import { dispatchPlan, refreshPlan, savePlan, useAdvisorPlan } from "./store";
 
 export function PlanScreen() {
@@ -151,6 +152,10 @@ function Plan({ data }: { data: CatalogData }) {
       </Card>
       <View style={{ marginTop: spacing.sm }}>
         <Button variant="secondary" label="Edit setup" onPress={() => router.push("/advisor/setup")} />
+        <View style={{ marginTop: spacing.sm }}>
+          <Button variant="secondary" label="Import transcript" onPress={() => router.push("/advisor/transcript")} />
+        </View>
+        <ShareMenu plan={plan} analysis={analysis} data={data} priorCredits={prior.totalCredits} />
       </View>
 
       {programChecks.length > 0 ? (
