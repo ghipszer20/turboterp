@@ -31,7 +31,10 @@ export type RunDeps = {
   fetchSeats: (term: string, courseIds: string[]) => Promise<SeatRow[]>;
   /** schedule/<term>/seats, the whole-term file the 5-minute job keeps, or null. */
   seatsFile: (term: string) => Promise<SeatsFile | null>;
-  push: (sub: DeviceSub, payload: PushPayload) => Promise<PushResult>;
+  /** Web push to one device (iOS devices go through pushExpo instead). */
+  push: (sub: Extract<DeviceSub, { endpoint: string }>, payload: PushPayload) => Promise<PushResult>;
+  /** Expo push for iOS devices: results in the order of the messages, batched 100 per request by the implementation. */
+  pushExpo: (messages: { token: string; payload: PushPayload }[]) => Promise<PushResult[]>;
   /** Signed "I got it" token for a watch id (api.ts signWatchToken with CRON_SECRET). */
   signToken: (watchId: string) => string;
   sleep: (ms: number) => Promise<void>;
@@ -108,13 +111,25 @@ export async function runSeatAlerts(deps: RunDeps, now: Date): Promise<RunReport
     if (matches.length === 0) return;
     const subs = await deps.store.subscriptionsFor([...new Set(matches.map((m) => m.watch.deviceId))]);
     const alerted = new Set<string>();
+    const expo: { watchId: string; deviceId: string; token: string; payload: PushPayload }[] = [];
     for (const { watch, opening } of matches) {
       const payload: PushPayload = { ...alertText(opening), url: dropAddUrl(watch.term), watchId: watch.id, token: deps.signToken(watch.id) };
       for (const sub of subs.filter((s) => s.deviceId === watch.deviceId)) {
+        if ("expoToken" in sub) { expo.push({ watchId: watch.id, deviceId: sub.deviceId, token: sub.expoToken, payload }); continue; }
         const result = await deps.push(sub, payload);
         if (result === "ok") { report.alerts++; alerted.add(watch.id); }
         else if (result === "gone") { report.gone++; await deps.store.deleteDevice(sub.deviceId); }
       }
+    }
+    if (expo.length > 0) {
+      const results = await deps.pushExpo(expo.map((m) => ({ token: m.token, payload: m.payload })));
+      const deleted = new Set<string>();
+      expo.forEach((m, i) => {
+        const result = results[i] ?? "failed";
+        if (result === "ok") { report.alerts++; alerted.add(m.watchId); }
+        else if (result === "gone") { report.gone++; deleted.add(m.deviceId); }
+      });
+      for (const id of deleted) await deps.store.deleteDevice(id);
     }
     await deps.store.markAlerted([...alerted], now);
   };

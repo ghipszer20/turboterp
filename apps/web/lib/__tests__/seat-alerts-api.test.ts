@@ -20,16 +20,16 @@ const sha = (x: string) => createHash("sha256").update(x).digest("hex");
 const AUTH_A = `Device ${DEV_A}.${SEC_A}`;
 const watch = (p: Partial<Watch> = {}): Watch => ({ id: ID1, deviceId: DEV_A, term: TERM, courseId: "CMSC351", sectionId: "0201", lastAlertAt: null, doneAt: null, ...p });
 
-type Dev = { id: string; secretHash: string; endpoint: string; p256dh: string; auth: string };
+type Dev = { id: string; secretHash: string; endpoint?: string; p256dh?: string; auth?: string; expoToken?: string };
 
-function setup(over: { watches?: Watch[]; term?: string | null; lookup?: SeatApiDeps["lookup"]; states?: Map<string, never>; vapid?: boolean; push?: SeatApiDeps["push"]; devices?: Dev[] } = {}) {
+function setup(over: { watches?: Watch[]; term?: string | null; lookup?: SeatApiDeps["lookup"]; states?: Map<string, never>; vapid?: boolean; push?: SeatApiDeps["push"]; pushExpo?: SeatApiDeps["pushExpo"]; devices?: Dev[] } = {}) {
   const db = {
     watches: [...(over.watches ?? [])],
     devices: over.devices ?? [
       { id: DEV_A, secretHash: sha(SEC_A), endpoint: "https://web.push.apple.com/a", p256dh: "k", auth: "a" },
       { id: DEV_B, secretHash: sha(SEC_B), endpoint: "https://web.push.apple.com/b", p256dh: "k", auth: "a" },
     ] as Dev[],
-    created: [] as Watch[], done: [] as string[], deleted: [] as string[], pushed: [] as { endpoint: string; title: string; body: string; url: string }[], writes: 0,
+    created: [] as Watch[], done: [] as string[], deleted: [] as string[], pushed: [] as { endpoint: string; title: string; body: string; url: string }[], expoPushed: [] as string[], writes: 0,
   };
   const deps: SeatApiDeps = {
     term: async () => (over.term === undefined ? TERM : over.term),
@@ -41,13 +41,16 @@ function setup(over: { watches?: Watch[]; term?: string | null; lookup?: SeatApi
       markDone: async (id) => { db.done.push(id); },
       deleteWatch: async (id) => { db.deleted.push(id); },
       getStates: async () => (over.states ?? new Map()) as never,
-      createDevice: async ({ secretHash, sub }) => { db.writes++; const id = `cccccccc-cccc-4ccc-8ccc-${String(db.devices.length).padStart(12, "0")}`; db.devices.push({ id, secretHash, ...sub }); return id; },
+      createDevice: async ({ secretHash, sub, expoToken }) => { db.writes++; const id = `cccccccc-cccc-4ccc-8ccc-${String(db.devices.length).padStart(12, "0")}`; db.devices.push({ id, secretHash, ...sub, ...(expoToken ? { expoToken } : {}) }); return id; },
       getDevice: async (id) => { const d = db.devices.find((x) => x.id === id); return d ? { id: d.id, secretHash: d.secretHash } : null; },
       updateDeviceSub: async (id, sub) => { db.writes++; const d = db.devices.find((x) => x.id === id); if (d) Object.assign(d, sub); },
+      updateDeviceExpo: async (id, expoToken) => { db.writes++; const d = db.devices.find((x) => x.id === id); if (d) { d.expoToken = expoToken; d.endpoint = undefined; d.p256dh = undefined; d.auth = undefined; } },
+      deleteDeviceByExpoToken: async (t, except) => { db.writes++; const gone = db.devices.filter((d) => d.expoToken === t && d.id !== except).map((d) => d.id); db.devices = db.devices.filter((d) => !gone.includes(d.id)); db.watches = db.watches.filter((w) => !gone.includes(w.deviceId)); },
       deleteDevice: async (id) => { db.writes++; db.devices = db.devices.filter((d) => d.id !== id); db.watches = db.watches.filter((w) => w.deviceId !== id); },
       deleteDeviceByEndpoint: async (e, except) => { db.writes++; const gone = db.devices.filter((d) => d.endpoint === e && d.id !== except).map((d) => d.id); db.devices = db.devices.filter((d) => !gone.includes(d.id)); db.watches = db.watches.filter((w) => !gone.includes(w.deviceId)); },
     },
     push: over.push ?? (async (s, p) => { db.pushed.push({ endpoint: s.endpoint, ...p } as never); return "ok"; }),
+    pushExpo: over.pushExpo ?? (async (t) => { db.expoPushed.push(t); return "ok"; }),
     vapidConfigured: () => over.vapid ?? true,
     secret: SECRET,
     now: () => now,
@@ -241,6 +244,49 @@ describe("signed 'I got it' token", () => {
     const t = signWatchToken(ID1, SECRET, now);
     const r = await handleWatchDone(req("POST", undefined, null, `https://x/done?token=${encodeURIComponent(t)}`), ID1, { ...deps, secret: undefined });
     expect(r.status).toBe(401);
+  });
+});
+
+const TOK = "ExponentPushToken[abcdEFGH1234]";
+describe("device registration (iOS Expo token)", () => {
+  it("creates an ios device with no web columns, one Expo test push, no VAPID needed", async () => {
+    const { deps, db } = setup({ vapid: false });
+    const r = await handleDeviceRegister(req("POST", { platform: "ios", expoToken: TOK }, null), deps);
+    expect(r.status).toBe(201);
+    const b = await j(r);
+    expect(b.test).toBe("ok");
+    expect(db.expoPushed).toEqual([TOK]);
+    expect(db.pushed).toHaveLength(0);
+    const dev = db.devices.find((d) => b.token.startsWith(d.id))!;
+    expect(dev).toMatchObject({ expoToken: TOK });
+    expect(dev.endpoint).toBeUndefined();
+    expect((await handleWatchesGet(req("GET", undefined, `Device ${b.token}`), deps)).status).toBe(200);
+  });
+  it("rejects a bad token shape or unknown platform with 400", async () => {
+    const { deps, db } = setup();
+    for (const body of [{ platform: "ios" }, { platform: "ios", expoToken: "abc" }, { platform: "ios", expoToken: "https://exp.host/x" }, { platform: "android", expoToken: TOK }]) {
+      expect((await handleDeviceRegister(req("POST", body, null), deps)).status).toBe(400);
+    }
+    expect(db.writes).toBe(0);
+  });
+  it("same token on another device: that device is deleted; DeviceNotRegistered on the test deletes the new one", async () => {
+    const { deps, db } = setup({ devices: [{ id: DEV_A, secretHash: sha(SEC_A), expoToken: TOK }] });
+    const r = await handleDeviceRegister(req("POST", { platform: "ios", expoToken: TOK }, null), deps);
+    expect(r.status).toBe(201);
+    expect(db.devices.some((d) => d.id === DEV_A)).toBe(false);
+    const gone = setup({ pushExpo: async () => "gone" });
+    const r2 = await handleDeviceRegister(req("POST", { platform: "ios", expoToken: TOK }, null), gone.deps);
+    expect(gone.db.devices.some((d) => d.expoToken === TOK)).toBe(false);
+    expect((await j(r2)).test).toBe("failed");
+  });
+  it("a known device re-registering with a new token keeps its watches, sends no test, and is not rate limited", async () => {
+    const { deps, db } = setup({ watches: [watch()] });
+    const r = await handleDeviceRegister(req("POST", { platform: "ios", expoToken: TOK }), deps);
+    expect(r.status).toBe(200);
+    expect((await j(r)).token).toBe(`${DEV_A}.${SEC_A}`);
+    expect(db.devices.find((d) => d.id === DEV_A)).toMatchObject({ expoToken: TOK });
+    expect(db.watches).toHaveLength(1);
+    expect(db.expoPushed).toHaveLength(0);
   });
 });
 

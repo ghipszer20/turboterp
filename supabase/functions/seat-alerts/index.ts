@@ -2,6 +2,7 @@ import { SupabaseSnapshotStore } from "../../../packages/campus-data/src/snapsho
 import { fetchSectionsHtml, scanSeats } from "../../../packages/course-data/src/soc.ts";
 import type { SeatsFile } from "../../../packages/course-data/src/soc-refresh.ts";
 import { signWatchToken } from "../../../apps/web/lib/seat-alerts/api.ts";
+import { sendExpoBatch } from "../../../apps/web/lib/seat-alerts/expo.ts";
 import { seatAlertStore } from "../../../apps/web/lib/seat-alerts/store.ts";
 import { handleSeatAlerts } from "./handler.ts";
 import { loadAlertState } from "./load.ts";
@@ -25,6 +26,7 @@ Deno.serve((req) => {
       fetchSeats: async (term, ids) => scanSeats(await fetchSectionsHtml(term, ids)),
       seatsFile: async (term) => (await snaps.get<SeatsFile>(`schedule/${term}/seats`))?.data ?? null,
       push: sendPush,
+      pushExpo: (messages) => sendExpoBatch(messages),
       signToken: (watchId) => signWatchToken(watchId, Deno.env.get("CRON_SECRET")!, now),
       sleep: (ms) => new Promise((r) => setTimeout(r, ms)),
       clock: () => performance.now(),

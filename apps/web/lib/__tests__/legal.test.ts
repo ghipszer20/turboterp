@@ -57,7 +57,7 @@ describe("legal pages", () => {
     expect(t).toMatch(/newest change wins/i);
     expect(t).toMatch(/Delete account/);
     expect(text(TERMS)).toMatch(/Delete account/);
-    expect(PRIVACY_VERSION).toBe("2026-10-29");
+    expect(PRIVACY_VERSION).toBe("2026-10-31");
     expect(TERMS_VERSION).toBe("2026-10-29");
   });
 

@@ -66,6 +66,19 @@ describe("seatAlertStore", () => {
   });
 
 
+  it("loads iOS devices as expoToken subs, skipping rows with neither kind", async () => {
+    const { calls, store } = fake([[
+      { id: "d1", endpoint: null, p256dh: null, auth: null, expo_token: "ExponentPushToken[abcdefgh]" },
+      { id: "d2", endpoint: "https://push/2", p256dh: "k", auth: "a", expo_token: null },
+      { id: "d3", endpoint: null, p256dh: null, auth: null, expo_token: null },
+    ]]);
+    expect(await store.subscriptionsFor(["d1", "d2", "d3"])).toEqual([
+      { deviceId: "d1", expoToken: "ExponentPushToken[abcdefgh]" },
+      { deviceId: "d2", endpoint: "https://push/2", p256dh: "k", auth: "a" },
+    ]);
+    expect(calls[0]!.url).toContain("expo_token");
+  });
+
   it("throws on a failed request", async () => {
     const store = seatAlertStore(env, (async () => new Response("no", { status: 500 })) as unknown as typeof fetch);
     await expect(store.listActiveWatches("202701")).rejects.toThrow(/500/);

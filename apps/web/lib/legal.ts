@@ -2,7 +2,7 @@
 // (docs/project/legal.md). Bump the version whenever the meaning changes.
 
 export const TERMS_VERSION = "2026-10-29";
-export const PRIVACY_VERSION = "2026-10-29";
+export const PRIVACY_VERSION = "2026-10-31";
 
 /** A paragraph, or a list of bullet points. */
 export type LegalBlock = string | string[];
@@ -210,7 +210,7 @@ export const PRIVACY: LegalSection[] = [
       "When you are signed in, your plan and saved schedules are stored on our server (Supabase), tied to your account, so they follow you between devices. While you are signed in, the newest change wins: each edit is saved and replaces the older copy, on every device. If this browser already has a plan made before you signed in and your account has a different one, we ask which to keep.",
       "When you sign the Advisor agreement, we also keep a record of it: its version, the time, a random id for your browser, your account if you are signed in, and the name you typed. The name is stored encrypted so that only we can read it, and only if it is needed as a legal record.",
       "Signing out removes the synced copies from that browser. Your signed agreement stays on the device.",
-      "Seat Alerts need no account. For each device that turns on alerts we keep its push address (from Apple, Google, Mozilla or Microsoft), a scrambled copy of a random key stored in that browser, and the classes it watches. They are not linked to your account. Turning alerts off deletes them, and so does a push address that stops working.",
+      "Seat Alerts need no account. For each device that turns on alerts we keep its push address (from Apple, Google, Mozilla or Microsoft) or, in the iOS app, its push token (from Expo, which relays the notification to Apple), a scrambled copy of a random key stored in that browser or app, and the classes it watches. They are not linked to your account. Turning alerts off deletes them, and so does a push address or token that stops working.",
     ],
   },
   {

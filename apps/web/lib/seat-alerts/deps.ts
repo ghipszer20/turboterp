@@ -1,5 +1,6 @@
 import { openSnapshotStore } from "@turboterp/campus-data/snapshots";
 import { supabaseEnv, supabaseSendStore } from "../email/rate-limit";
+import { sendExpoPush } from "./expo";
 import { lookupInDeptFile, type SeatApiDeps } from "./api";
 import { sendPush, vapidConfigured } from "./push";
 import { seatAlertStore } from "./store";
@@ -14,6 +15,7 @@ export function seatApiDeps(): SeatApiDeps | null {
     lookup: async (term, courseId, sectionId) => lookupInDeptFile((await snaps.get<unknown>(`schedule/${term}/sections/${courseId.slice(0, 4)}`))?.data ?? null, courseId, sectionId),
     store: seatAlertStore(env),
     push: sendPush,
+    pushExpo: (token, payload) => sendExpoPush(token, payload),
     vapidConfigured: () => vapidConfigured(),
     secret: process.env.CRON_SECRET,
     limits: supabaseSendStore(env),

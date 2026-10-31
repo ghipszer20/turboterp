@@ -16,15 +16,15 @@ const watch = (n: number, courseId: string, deviceId = `d${n}`): Watch => ({ id:
 // 4 letters + 3 digits: i -> "AAAA100" style ids, unique for i < 456976.
 const cid = (i: number) => `${String.fromCharCode(65 + Math.floor(i / 17576) % 26)}${String.fromCharCode(65 + Math.floor(i / 676) % 26)}${String.fromCharCode(65 + Math.floor(i / 26) % 26)}${String.fromCharCode(65 + (i % 26))}101`;
 
-function harness(watches: Watch[], opts: { states?: SeatState[]; file?: SeatsFile | null; live?: (ids: string[]) => SeatRow[]; pushResult?: "ok" | "gone" | "failed" } = {}) {
+function harness(watches: Watch[], opts: { states?: SeatState[]; file?: SeatsFile | null; live?: (ids: string[]) => SeatRow[]; pushResult?: "ok" | "gone" | "failed"; expoResult?: (token: string) => "ok" | "gone" | "failed" } = {}) {
   const states = new Map((opts.states ?? []).map((s) => [`${s.courseId}-${s.sectionId}`, s]));
-  const log = { requests: [] as string[][], pushes: [] as { device: string; payload: PushPayload }[], alerted: [] as string[], deleted: [] as string[], sleeps: 0, saves: [] as number[], loads: 0 };
+  const log = { requests: [] as string[][], pushes: [] as { device: string; payload: PushPayload }[], alerted: [] as string[], deleted: [] as string[], sleeps: 0, saves: [] as number[], loads: 0, expo: [] as string[][], expoPayloads: [] as PushPayload[] };
   const deps: RunDeps = {
     load: () => { log.loads++; return Promise.resolve({ term: TERM, watches, states: new Map(states) }); },
     store: {
       saveStates: (_t, list) => { log.saves.push(list.length); for (const s of list) states.set(`${s.courseId}-${s.sectionId}`, s); return Promise.resolve(); },
       markAlerted: (ids) => { log.alerted.push(...ids); return Promise.resolve(); },
-      subscriptionsFor: (ids): Promise<DeviceSub[]> => Promise.resolve(ids.map((id) => ({ deviceId: id, endpoint: `https://push.example/${id}`, p256dh: "p", auth: "a" }))),
+      subscriptionsFor: (ids): Promise<DeviceSub[]> => Promise.resolve(ids.map((id) => id.startsWith("ios") ? { deviceId: id, expoToken: `ExponentPushToken[${id}]` } : { deviceId: id, endpoint: `https://push.example/${id}`, p256dh: "p", auth: "a" })),
       deleteDevice: (id) => { log.deleted.push(id); return Promise.resolve(); },
     },
     fetchSeats: (_t, ids) => {
@@ -34,6 +34,7 @@ function harness(watches: Watch[], opts: { states?: SeatState[]; file?: SeatsFil
     },
     seatsFile: () => Promise.resolve(opts.file ?? null),
     push: (sub, payload) => { log.pushes.push({ device: sub.deviceId, payload }); return Promise.resolve(opts.pushResult ?? "ok"); },
+    pushExpo: (msgs) => { log.expo.push(msgs.map((m) => m.token)); log.expoPayloads.push(...msgs.map((m) => m.payload)); return Promise.resolve(msgs.map((m) => opts.expoResult?.(m.token) ?? "ok")); },
     signToken: (id) => `tok-${id}`,
     sleep: () => { log.sleeps++; return Promise.resolve(); },
     clock: () => 0,
@@ -42,6 +43,39 @@ function harness(watches: Watch[], opts: { states?: SeatState[]; file?: SeatsFil
 }
 const state = (courseId: string, open: number): SeatState => ({ courseId, sectionId: "0101", open, waitlist: 0, holdfile: 0, checkedAt: "2026-10-04T11:57:00Z" });
 const seatsFile = (entries: Record<string, [number, number, number, number]>, generatedAt = "2026-10-04T11:58:00Z"): SeatsFile => ({ v: 1, term: TERM, generatedAt, seats: entries });
+
+Deno.test("iOS devices get one batched Expo push with the Drop/Add url in the payload; web devices still get web push", async () => {
+  const ws = [watch(1, "AAAA100", "ios1"), watch(2, "AAAA100", "ios2"), watch(3, "AAAA100", "web3")];
+  const h = harness(ws, { states: [state("AAAA100", 0)], live: (ids) => ids.map((id): SeatRow => [id, "0101", 30, 2, 0, 0]) });
+  const report = await runSeatAlerts(h.deps, NOW);
+  assertEquals(report.alerts, 3);
+  assertEquals(h.log.expo, [["ExponentPushToken[ios1]", "ExponentPushToken[ios2]"]]);
+  assertEquals(h.log.pushes.map((p) => p.device), ["web3"]);
+  assert(h.log.expoPayloads[0]!.url!.includes("dropAdd?termId=202701"));
+  assertEquals(h.log.expoPayloads[0]!.watchId, "w1");
+  assertEquals(h.log.alerted.sort(), ["w1", "w2", "w3"]);
+});
+
+Deno.test("an Expo DeviceNotRegistered deletes that device (once); failed Expo sends are not marked alerted", async () => {
+  const ws = [watch(1, "AAAA100", "ios1"), watch(2, "BBBB100", "ios1"), watch(3, "AAAA100", "ios2")];
+  const h = harness(ws, {
+    states: [state("AAAA100", 0), state("BBBB100", 0)],
+    live: (ids) => ids.map((id): SeatRow => [id, "0101", 30, 2, 0, 0]),
+    expoResult: (t) => (t.includes("ios1") ? "gone" : "failed"),
+  });
+  const report = await runSeatAlerts(h.deps, NOW);
+  assertEquals(h.log.deleted, ["ios1"]);
+  assertEquals(report.gone, 2);
+  assertEquals(report.alerts, 0);
+  assertEquals(h.log.alerted, []);
+});
+
+Deno.test("an opening nobody watches from iOS makes no Expo request", async () => {
+  const h = harness([watch(1, "AAAA100", "web1")], { states: [state("AAAA100", 0)], live: (ids) => ids.map((id): SeatRow => [id, "0101", 30, 2, 0, 0]) });
+  await runSeatAlerts(h.deps, NOW);
+  assertEquals(h.log.expo.length, 0);
+  assertEquals(h.log.pushes.length, 1);
+});
 
 Deno.test("courseOrder: most-watched first, ties alphabetical", () => {
   const ws = [watch(1, "ZZZZ100"), watch(2, "AAAA100"), watch(3, "MMMM100"), watch(4, "MMMM100"), watch(5, "ZZZZ100"), watch(6, "ZZZZ100")];
