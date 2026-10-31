@@ -1,0 +1,4 @@
+dist/
+dist-bridge/
+.expo/
+node_modules/

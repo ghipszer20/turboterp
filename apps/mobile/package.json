@@ -1,0 +1,38 @@
+{
+  "name": "@turboterp/mobile",
+  "version": "0.1.0",
+  "private": true,
+  "main": "expo-router/entry",
+  "license": "Apache-2.0",
+  "scripts": {
+    "start": "expo start",
+    "export:web": "expo export --platform web",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "lint": "node scripts/check-import-graph.mjs",
+    "build:bridge": "node scripts/build-bridge.mjs"
+  },
+  "dependencies": {
+    "@expo/metro-runtime": "~58.0.15",
+    "@turboterp/audit": "*",
+    "expo": "~58.0.21",
+    "expo-constants": "~58.0.14",
+    "expo-linking": "~58.0.15",
+    "expo-router": "~58.0.28",
+    "expo-status-bar": "~58.0.4",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-native": "^0.88.1",
+    "react-native-safe-area-context": "~5.10.1",
+    "react-native-screens": "~4.30.0",
+    "react-native-web": "^0.21.4",
+    "react-native-webview": "^14.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "esbuild": "^0.28.2",
+    "pdfjs-dist": "^6.4.299",
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.1"
+  }
+}

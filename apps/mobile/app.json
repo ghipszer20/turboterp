@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "TurboTerp",
+    "slug": "turboterp",
+    "version": "0.1.0",
+    "scheme": "turboterp",
+    "orientation": "portrait",
+    "web": { "output": "single", "bundler": "metro" },
+    "plugins": ["expo-router"]
+  }
+}
