@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { scrubEvent, scrubText } from "../sentry-scrub";
+import { scrubEvent, scrubText } from "./sentry-scrub";
 
 describe("scrubText", () => {
   it("removes email addresses", () => {

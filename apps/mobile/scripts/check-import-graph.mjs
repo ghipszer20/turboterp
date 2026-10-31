@@ -9,7 +9,19 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const ENTRIES = ["app/_layout.tsx", "app/index.tsx", "bridge/entry.ts"];
+const ENTRIES = [
+  "app/_layout.tsx",
+  "app/(tabs)/_layout.tsx",
+  "app/(tabs)/index.tsx",
+  "app/(tabs)/campus.tsx",
+  "app/(tabs)/schedule.tsx",
+  "app/(tabs)/seat-alerts.tsx",
+  "app/(tabs)/advisor.tsx",
+  "src/config.ts",
+  "src/sentry.ts",
+  "src/storage.ts",
+  "bridge/entry.ts",
+];
 const ALLOWED = ["/node_modules/highs/", "/node_modules/pdfjs-dist/"];
 const builtins = new Set(builtinModules.filter((m) => !m.startsWith("_")));
 const BANNED_PACKAGES = ["cheerio", "@napi-rs/canvas", "@napi-rs"];
@@ -35,7 +47,7 @@ export async function findViolations() {
       loader: { ".wasm": "empty", ".png": "empty", ".ttf": "empty" },
       // The app side imports react-native etc. through Metro, not esbuild: treat non-workspace packages as leaves,
       // except the ones we want to walk (highs, pdfjs-dist).
-      external: ["react", "react-native", "expo-*", "react-native-*", "react-dom"],
+      external: ["@sentry/*", "react", "react-native", "expo-*", "react-native-*", "react-dom"],
       plugins: [
         {
           name: "record-node-only",

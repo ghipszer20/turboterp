@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import { runSampleAudit } from "../src/sampleAudit";
+import { runSampleAudit } from "../../src/sampleAudit";
 
-export default function Home() {
+// Placeholder. Keeps the spike's audit check so the shared packages stay proven in Metro.
+export default function Advisor() {
   const [out, setOut] = useState("running audit...");
   useEffect(() => {
     runSampleAudit().then(
@@ -12,6 +13,7 @@ export default function Home() {
   }, []);
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text>Advisor</Text>
       <Text>{out}</Text>
     </View>
   );

@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/nextjs";
-import { scrubEvent } from "@/lib/sentry-scrub";
+import { scrubEvent } from "@turboterp/app-core/sentry-scrub";
 
 // No-op unless NEXT_PUBLIC_SENTRY_DSN is set. No replay, no tracing, no PII.
 export function initSentry() {

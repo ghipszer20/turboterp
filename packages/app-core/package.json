@@ -27,6 +27,7 @@
                     "./req-status":  "./src/req-status.ts",
                     "./requirements":  "./src/requirements.ts",
                     "./row-category":  "./src/row-category.ts",
+                    "./sentry-scrub":  "./src/sentry-scrub.ts",
                     "./search":  "./src/search.ts",
                     "./seed":  "./src/seed.ts",
                     "./storage":  "./src/storage.ts",
