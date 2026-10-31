@@ -1,9 +1,5 @@
-import { Text, View } from "react-native";
+import { PlaceholderScreen } from "../../src/ui";
 
-export default function SeatAlerts() {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Seat Alerts</Text>
-    </View>
-  );
+export default function Screen() {
+  return <PlaceholderScreen title="Seat Alerts" />;
 }
