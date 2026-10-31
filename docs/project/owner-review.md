@@ -5,6 +5,22 @@
 Items for the owner to review or decide, listed in progress reports. Remove an item once the owner answers (record the answer in `docs/project/rulings.md` or PROJECT_MEMORY.md section 17). Moved out of PROJECT_MEMORY.md on 2026-09-26.
 
 
+- **Finish the Supabase setup (2026-10-31, about 5 minutes). Seat counts stay nightly-only and Seat Alerts can't push until step 1 is done.**
+  1. **Set the four function secrets.** They were saved as the literal text `...` (the placeholders in the example command), so Supabase refuses the seats job (401). In PowerShell, from the SuperTerp folder, with the real values from Vercel → turboterp → Settings → Environment Variables:
+     ```
+     npx.cmd supabase secrets set CRON_SECRET=<value> VAPID_PUBLIC_KEY=<value> VAPID_PRIVATE_KEY=<value> VAPID_SUBJECT=<value>
+     ```
+     Then `npx.cmd supabase secrets list`: the four rows must show four **different** fingerprints. (Claude can't do this step: it isn't allowed to pull credentials onto disk.)
+  2. **Supabase → SQL Editor → paste and Run** (migrations 0012, 0013 and 0017 together; they were never applied, checked live 2026-10-31):
+     ```sql
+     alter table public.email_sends drop constraint if exists email_sends_kind_check;
+     alter table public.email_sends add constraint email_sends_kind_check check (kind in ('report', 'plan', 'consent', 'device'));
+     alter function public.user_documents_bump() set search_path = '';
+     alter function public.seat_watches_limit() set search_path = '';
+     drop table if exists public.seat_alert_cursor;
+     ```
+  3. **Deploy** (optional, nothing urgent: build guardrail and cleanup): `cd C:\Users\24GHi\Code\SuperTerp`, `git pull`, `npx.cmd vercel deploy --prod --yes`. Check it says Directory `~\Code\SuperTerp`.
+  4. **In 1-2 days:** Supabase → Usage → Log Ingestion per day should be about 10-15 MB a day (it was ~185 MB). Tell Claude if not; it can check through the Supabase connector.
 - **iOS app plan (2026-10-29): decide.** `docs/project/ios-plan.md`. (1) Answered 2026-10-30: Expo. (2) Bundle ID: confirmed `com.turboterp.app` (2026-10-30). (3) Apple enrollment ($99/yr) waits until about day 4 of the build (owner, 2026-10-30: pay last). Next: O3 Expo account, O4 install Expo Go, then "set up the sessions". (Answered 2026-10-30: no Donate in the app, US only, Security Advisor checked, no PlanetTerp email; rulings.md "iOS App Store decisions".)
 - **Security hardening (2026-10-30; `docs/project/security.md`).** Code is on branch `fix/security-hardening`: Next 16.4.3 (critical advisory), security headers and CSP, Seat Alerts device limit, separate "I got it" token key. **In this order:**
   1. Supabase → SQL Editor → run `supabase/migrations/0012_device_signup_limit.sql`.
@@ -16,7 +32,6 @@ Items for the owner to review or decide, listed in progress reports. Remove an i
   3. Supabase → Storage → `snapshots` bucket: confirm it isn't public and has no policies letting anon or signed-in users write.
   4. Turn on 2FA for GitHub, Vercel, Supabase, Brevo, Google Cloud and Porkbun (Porkbun controls the domain).
   5. GitHub repo → Settings → Advanced Security: turn on Dependabot alerts and secret scanning (neither uses Actions).
-- **Apply migration 0013 (2026-10-30, 1 minute).** Supabase → SQL Editor → paste `supabase/migrations/0013_function_search_path.sql` → Run. It clears the two "Function Search Path Mutable" warnings in the Security Advisor. No deploy needed, and nothing changes for users.
 
 - **Sign-in code: email template (2026-10-29).** Supabase → Authentication → Emails → Magic Link: add `<p>Or enter this code in TurboTerp: <strong>{{ .Token }}</strong></p>` under the link, save, then deploy. Lets email users sign in inside the Home Screen app.
 - **Monitoring setup (2026-10-29).** Built and merged (`feat/ui-rework`). (1) Vercel → turboterp → Analytics → Enable Web Analytics. (2) Create a free Sentry project (platform Next.js), then in Sentry Settings → Security & Privacy turn on "Prevent Storing of IP Addresses" and the data scrubber; put its DSN in Vercel Production as `NEXT_PUBLIC_SENTRY_DSN`; redeploy. Until the DSN is set, error reporting stays off. After setting it and deploying (with the 2026-10-30 CSP), trigger a test error and confirm it reaches Sentry.

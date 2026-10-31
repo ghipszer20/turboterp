@@ -26,3 +26,10 @@ Session 1 of `next-steps-plan.md` keeps this current. Nothing here rewrites the 
 ## Still to do
 - **Terms and privacy pages:** drafts of the clickwrap terms and the privacy page (legal.md). This is a UI change, so the owner approves it.
 - **"Not affiliated with the University of Maryland" on every page:** check it once the deployed layout exists.
+
+## At launch (scaling, from `scaling-plan.md`; added 2026-10-31)
+- **Delete the site lock:** remove `apps/web/proxy.ts`, `lib/access.ts`, `/coming-soon` and Vercel env `SITE_ACCESS_CODE`, so no request runs the proxy. Drop `/coming-soon` from `robots.ts` and `/api/access` from `PER_VISIT_ALLOWED` (`lib/per-visit-routes.ts`).
+- **Sign-in email volume:** Brevo free sends ~300 emails a day, shared with the app's own emails. Launch day can exceed it. Make Continue with Google and Apple the prominent options (no email), and raise the Brevo plan for launch week or add a second sender.
+- **Vercel Web Analytics:** it counts every page view against a monthly allowance. Past it, Pro bills, and the $5 Spend Management cap pauses the whole site. Check the Analytics usage line before launch; sample or turn it off if it would pass the allowance.
+- **Usage pages:** look at Vercel Usage and Supabase Usage (Log Ingestion especially) weekly through launch, then monthly. Vercel emails at 50/75/100% of the budget; Supabase Free sends nothing.
+- **Supabase Pro trigger:** when Log Ingestion passes ~0.8 GB in a month, or roughly 1,000+ students sign in on a typical day (`scaling-plan.md` 5b).
