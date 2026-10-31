@@ -4,6 +4,8 @@
 // fetch from the network: the highs WASM, pdfjs worker, tesseract worker/core/language data and
 // the export libraries are all inside this one bundle.
 import { runAnalysis } from "@turboterp/app-core/analysis";
+import { checkerPlan } from "@turboterp/app-core/checker";
+import { runWhatIf } from "@turboterp/app-core/what-if";
 import { buildPdf } from "@turboterp/app-core/export/pdf";
 import { buildXlsx } from "@turboterp/app-core/export/xlsx";
 import { setHighsLoader } from "@turboterp/audit";
@@ -38,6 +40,10 @@ async function run(job: Job): Promise<unknown> {
   switch (job.type) {
     case "audit":
       return runAnalysis({ plan: job.input.plan, catalog: new Map(job.input.catalog), priorCourses: job.input.priorCourses });
+    case "whatIf": {
+      const { plan, catalog, priorCourses, proposed } = job.input;
+      return runWhatIf(checkerPlan(plan, priorCourses), new Map(catalog), plan.programs, proposed, plan.startTerm, plan.gpa, plan.confirmedSlots);
+    }
     case "transcriptPdf":
       return extractPdfText(job.pdfBase64);
     case "transcriptOcr":
