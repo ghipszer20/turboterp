@@ -4,3 +4,6 @@ dist-bridge/
 node_modules/
 .ui-check/
 .env.local
+
+assets/engine/
+dist-bridge/

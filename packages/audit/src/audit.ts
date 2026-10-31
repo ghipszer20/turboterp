@@ -323,7 +323,19 @@ export type AuditResult = {
 };
 
 let solver: ReturnType<typeof loadHighs> | null = null;
-const getSolver = () => (solver ??= loadHighs());
+
+/**
+ * Loader for the HiGHS WASM module. The default is the `highs` package, which fetches its .wasm by
+ * URL. An embedder with no network (the iOS engine bridge) installs one that hands the bytes to
+ * Emscripten's `instantiateWasm` hook (this highs build ignores `wasmBinary`).
+ */
+export type HighsLoader = () => ReturnType<typeof loadHighs>;
+let highsLoader: HighsLoader = () => loadHighs();
+export function setHighsLoader(loader: HighsLoader): void {
+  highsLoader = loader;
+  solver = null;
+}
+const getSolver = () => (solver ??= highsLoader());
 
 const COURSE_ID = /^([A-Z]{4})(\d{3})[A-Z]?$/;
 

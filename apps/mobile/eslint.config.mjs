@@ -3,7 +3,7 @@ import tseslint from "typescript-eslint";
 import reactHooks from "eslint-plugin-react-hooks";
 
 export default defineConfig([
-  globalIgnores(["dist/**", "dist-bridge/**", ".expo/**", "assets/**", "bridge/highs-inline.ts", "ios/**", "android/**"]),
+  globalIgnores(["dist/**", "dist-bridge/**", ".expo/**", "assets/**", "ios/**", "android/**"]),
   ...tseslint.configs.recommended,
   reactHooks.configs.flat.recommended,
   { files: ["**/*.js", "**/*.cjs"], rules: { "@typescript-eslint/no-require-imports": "off" } },
