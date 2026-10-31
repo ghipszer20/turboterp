@@ -89,10 +89,7 @@ export function parseRooms(html: string): Room[] {
   return rooms;
 }
 
-/** A room's own LibCal booking screen, pre-filled to one date. */
-export function roomBookingUrl(roomId: number, isoDate: string): string {
-  return `${LIBCAL}/space/${roomId}?date=${isoDate}`;
-}
+export { roomBookingUrl } from "./room-url.ts";
 
 /** How many days past today the availability refresh asks for. */
 export const ROOM_LOOKAHEAD_DAYS = 14;

@@ -10,6 +10,9 @@
 
 import * as cheerio from "cheerio";
 import { fetchText, SourceError } from "./http.ts";
+import type { ClassKind, ClassPlace } from "./class-kinds.ts";
+export { classKind, classPlace } from "./class-kinds.ts";
+export type { ClassKind, ClassPlace };
 
 export const GROUP_FITNESS_URL = "https://recwell.umd.edu/programs-activities/fitness/group-fitness";
 const ACTIVETERP_PREFIX = "https://activeterp.umd.edu/";
@@ -27,8 +30,6 @@ export type FitnessClass = {
   signupUrl?: string;
 };
 
-export type ClassKind = "Mind-body" | "Cycling" | "Strength" | "Dance & cardio" | "Aqua" | "Other";
-export type ClassPlace = "Eppley" | "Ritchie" | "Regents" | "Other";
 
 const HEADERS = ["day", "class", "location", "instructor", "start time", "end time", "registration link"];
 
@@ -86,25 +87,4 @@ export function parseGroupFitness(html: string): FitnessClass[] {
 
 export async function fetchGroupFitness(): Promise<FitnessClass[]> {
   return parseGroupFitness(await fetchText("group-fitness", GROUP_FITNESS_URL));
-}
-
-// First match wins, so "Cycle Strength" is Cycling and "Paddleboard Yoga" is Mind-body.
-const KIND_KEYWORDS: [ClassKind, RegExp][] = [
-  ["Aqua", /\b(aqua|water|swim|pool)\b/i],
-  ["Cycling", /\b(ride|cycle|cycling|spin)\b/i],
-  ["Mind-body", /(pilates|barre|yoga|stretch|meditat|tai chi)/i],
-  ["Dance & cardio", /(zumba|dance|ubox|combat|hiit|cardio|kickbox|step)/i],
-  ["Strength", /(pump|core|strength|conditioning|tone|bootcamp|sculpt)/i],
-];
-
-export function classKind(name: string): ClassKind {
-  return KIND_KEYWORDS.find(([, re]) => re.test(name))?.[0] ?? "Other";
-}
-
-/** The building a studio is in ("ERC" is Eppley Recreation Center). */
-export function classPlace(location: string): ClassPlace {
-  if (/\b(erc|eppley)\b/i.test(location)) return "Eppley";
-  if (/ritchie/i.test(location)) return "Ritchie";
-  if (/regents/i.test(location)) return "Regents";
-  return "Other";
 }

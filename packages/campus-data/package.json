@@ -10,9 +10,14 @@
   "exports": {
     ".": "./src/index.ts",
     "./buildings": "./src/buildings.ts",
+    "./class-kinds": "./src/class-kinds.ts",
     "./dates": "./src/dates.ts",
     "./hours": "./src/hours.ts",
     "./http": "./src/http.ts",
+    "./libraries": "./src/libraries.ts",
+    "./recwell": "./src/recwell.ts",
+    "./recwell-reserve": "./src/recwell-reserve.ts",
+    "./room-url": "./src/room-url.ts",
     "./seat-windows": "./src/seat-windows.ts",
     "./snapshots": "./src/snapshots/index.ts",
     "./walk": "./src/walk.ts"
