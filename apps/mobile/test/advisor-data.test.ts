@@ -7,8 +7,8 @@ const catalogFile = encodeCatalogFile(new Map(), { term: "Fall 2026", generatedA
 const index = { v: 1, term: "Fall 2026", catalog: "catalog.json" };
 
 describe("advisor data loader", () => {
-  const make = (fetch: ReturnType<typeof vi.fn>) =>
-    createAdvisorData({ fetch, url: (p) => `https://api.test${p}`, headers: () => ({ "x-turboterp-access": "k" }) });
+  const make = (fetch: unknown) =>
+    createAdvisorData({ fetch: fetch as never, url: (p) => `https://api.test${p}`, headers: () => ({ "x-turboterp-access": "k" }) });
 
   it("loads from /data/advisor with the lock header and caches per session", async () => {
     const fetch = vi.fn(async (url: string) => (url.endsWith("index.json") ? ok(index) : ok(catalogFile)));

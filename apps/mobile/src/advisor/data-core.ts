@@ -2,8 +2,9 @@
 // the way the web does, and keeps it in memory for the session. Fetch is injected for tests.
 import { decodeCatalogFile } from "@turboterp/plan/catalog-file";
 import type { PlanCatalog } from "@turboterp/plan/catalog";
+import { decodeDepartment, type CourseGrades } from "@turboterp/ratings";
 
-type Index = { v: number; term: string; terms?: string[]; catalog: string };
+type Index = { v: number; term: string; terms?: string[]; catalog: string; grades?: string | null };
 
 export type CatalogData = {
   catalog: PlanCatalog;
@@ -42,7 +43,28 @@ export function createAdvisorData(deps: { fetch: FetchLike; url: (path: string) 
     }
   }
 
+  const gradeFiles = new Map<string, Promise<Record<string, CourseGrades>>>();
+  let gradesBase: Promise<string | null> | null = null;
+
   return {
+    /** Course-wide grades from PlanetTerp, or null when there is no data. Loaded one department at a time. */
+    async loadGrades(id: string): Promise<CourseGrades | null> {
+      gradesBase ??= getJson("index.json")
+        .then((i) => (i as Index | null)?.grades ?? null)
+        .catch(() => null);
+      const base = await gradesBase;
+      if (!base) return null;
+      const dept = id.replace(/\d.*$/, "");
+      if (!gradeFiles.has(dept)) {
+        gradeFiles.set(
+          dept,
+          getJson(`${base}${dept}.json`)
+            .then((j) => (j ? decodeDepartment(j as Parameters<typeof decodeDepartment>[0]) : {}))
+            .catch(() => ({})),
+        );
+      }
+      return (await gradeFiles.get(dept)!)[id] ?? null;
+    },
     /** Cached per session; only a successful load is kept, so Retry re-fetches after a failure. */
     loadCatalog(): Promise<CatalogResult> {
       cached ??= load().then((r) => {

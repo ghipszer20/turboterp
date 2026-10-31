@@ -1,5 +1,5 @@
-import { PlaceholderScreen } from "../../../src/ui";
+import { PlanScreen } from "../../../src/advisor/PlanScreen";
 
 export default function Screen() {
-  return <PlaceholderScreen title="4-year plan" />;
+  return <PlanScreen />;
 }
