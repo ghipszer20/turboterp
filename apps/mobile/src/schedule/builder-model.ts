@@ -1,8 +1,9 @@
 // View-model for the schedule builder: gallery sort choices, the Plan A/B/C rules, the save
 // guard for overlaps and the section panel rows. Storage and rules come from app-core
 // (`schedule/saved`, `schedule/conflicts`, `schedule/sections`), the same code the web uses.
-import type { Section } from "@turboterp/course-data/schedules";
+import type { Section, Weekday } from "@turboterp/course-data/schedules";
 import type { SortKey } from "@turboterp/course-data/sort";
+import { setWindow, type FilterState } from "@turboterp/app-core/schedule/filters";
 import { overlapNote, saveBlockedBy } from "@turboterp/app-core/schedule/conflicts";
 import { bestRating, meetingSummary, overlapsWith, sectionKey } from "@turboterp/app-core/schedule/sections";
 import { lastSavedPlan, PLAN_IDS, savePlan, type PlanId, type SavedSchedule, type SectionPicks } from "@turboterp/app-core/schedule/saved";
@@ -119,7 +120,26 @@ export function sectionRow(s: Section, ratings: Readonly<Record<string, number>>
   };
 }
 
-export const indexSections = (sections: Section[]) => new Map(sections.map((s) => [sectionKey(s), s]));
+// ---- Day filters (workday windows) ----
+
+/** Hours a workday window can use: 7am to 10pm (same as the web's pickers). */
+export const WINDOW_FIRST = 7 * 60;
+export const WINDOW_LAST = 22 * 60;
+
+/** Moves one end of a day's window by whole hours, keeping at least an hour inside it. */
+export function stepWindow(filters: FilterState, day: Weekday, edge: "from" | "to", hours: number): FilterState {
+  const rule = filters.days[day];
+  const from = rule && rule !== "off" ? rule.from : WINDOW_FIRST;
+  const to = rule && rule !== "off" ? rule.to : WINDOW_LAST;
+  if (edge === "from") {
+    const t = Math.min(Math.max(from + hours * 60, WINDOW_FIRST), WINDOW_LAST - 60);
+    return setWindow(filters, day, t, Math.max(to, t + 60));
+  }
+  const t = Math.min(Math.max(to + hours * 60, WINDOW_FIRST + 60), WINDOW_LAST);
+  return setWindow(filters, day, Math.min(from, t - 60), t);
+}
+
+export const indexSections =(sections: Section[]) => new Map(sections.map((s) => [sectionKey(s), s]));
 
 export function groupByCourse(sections: Section[]): Map<string, Section[]> {
   const m = new Map<string, Section[]>();

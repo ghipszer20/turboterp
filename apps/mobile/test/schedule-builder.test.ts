@@ -14,6 +14,7 @@ import {
   savedNote,
   sectionRow,
   sortRequest,
+  stepWindow,
   picksToSections,
 } from "../src/schedule/builder-model";
 import { createSavedStore } from "../src/schedule/savedStoreCore";
@@ -160,6 +161,17 @@ describe("section rows", () => {
     expect(row).toMatchObject({ id: "0101", instructors: "Prof", rating: 4.5, seats: "5 open", lowSeats: true, rooms: "IRB 1110" });
     expect(row.clash).toEqual(["MATH140"]);
     expect(sectionRow(sec("CMSC131", "0102", 780), {}, placed).clash).toEqual([]);
+  });
+});
+
+describe("day windows", () => {
+  it("steps either end by an hour and keeps an hour between them", () => {
+    const f0 = { days: {}, sort: "best" as const };
+    const a = stepWindow(f0, "M", "from", 2);
+    expect(a.days.M).toEqual({ from: 9 * 60, to: 22 * 60 });
+    const b = stepWindow(a, "M", "to", -20);
+    expect(b.days.M).toEqual({ from: 7 * 60, to: 8 * 60 });
+    expect(stepWindow(b, "M", "from", 5).days.M).toEqual({ from: 12 * 60, to: 13 * 60 });
   });
 });
 

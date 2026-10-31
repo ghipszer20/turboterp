@@ -3,7 +3,7 @@ import { FlatList, Pressable, TextInput, View } from "react-native";
 import { Link } from "expo-router";
 import { planTermName } from "@turboterp/app-core/schedule/plan-link";
 import { ratingTone, type RatingTone } from "@turboterp/app-core/schedule/sections";
-import { Badge, Card, EmptyState, ErrorState, OfflineState, Skeleton, StatusBadge, Text, spacing, radius, useTheme, type Status } from "../../../src/ui";
+import { Badge, Button, Card, EmptyState, ErrorState, OfflineState, Skeleton, StatusBadge, Text, spacing, radius, useTheme, type Status } from "../../../src/ui";
 import { SORT_CHOICES, sortRows, type CourseRow, type SortChoice } from "../../../src/schedule/results";
 import { useCourseIndex, useCourseResults, useDebounced, useTermCourses } from "../../../src/schedule/useScheduleSearch";
 
@@ -155,6 +155,9 @@ export default function ScheduleSearchScreen() {
             <Text variant="foot" tone="text2" numberOfLines={2}>
               {picked.map((id) => titleOf.get(id)).filter(Boolean).join(" · ")}
             </Text>
+            <Link href="/schedule/builder" asChild>
+              <Button label="Build my schedule" onPress={() => undefined} />
+            </Link>
           </View>
         </Card>
       ) : null}
