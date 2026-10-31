@@ -174,3 +174,12 @@ Plan: `docs/project/account-sync-plan.md`.
 ## Add to calendar: Apple only, one-time download (owner, 2026-10-30)
 - Supersedes the feed in "Schedule builder cleanup" (5): "Add to calendar" shows only on Apple devices (iPhone, iPad, Mac) and gives a one-time `.ics` made in the browser (Calendar's "Add All"). No `webcal://` feed and no Google Calendar link (owner: "the calendar feature is only useful on iPhones anyway"). Reason: subscribed feeds are re-downloaded by every calendar app on its own schedule, which costs server requests per student forever (`docs/project/scaling-plan.md` 4.5).
 - Accepted trade-off: a later UMD room or time change doesn't update the student's calendar; they delete the events and tap Add to calendar again.
+
+## Refresh intervals and seat freshness (owner, 2026-10-31)
+- Supabase log ingestion (Free: 1 GB/month) is the binding limit, measured from production logs: a Storage request costs ~4.4 KB of logs, a table request ~1 KB. Details in `docs/project/scaling-plan.md`.
+- Seat counts: every 5 min during registration windows (priority/early registration start + 14 days, and the schedule adjustment period), every 15 min otherwise.
+- Seat Alerts: every minute, and only while someone has a watch. At most 40 Testudo requests a minute, most-watched first.
+- Study rooms: every 30 min, 7:00 to 1:00 campus time. Dining menus: their own job, twice a day. Library hours, RecWell, buses and the academic calendar stay daily.
+- Hot data (seats, room availability) lives in a Postgres table, not Storage.
+- The schedule builder no longer shows "Seats updated X min ago" (owner: "no one needs to know how slow it is").
+- Account sync is left as is: it already checks the sign-in on the device and downloads the account copy only when its revision changed.
