@@ -9,16 +9,20 @@
     "export:web": "expo export --platform web",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "lint": "node scripts/check-import-graph.mjs",
+    "lint": "eslint . && node scripts/check-import-graph.mjs",
+    "icon": "node scripts/make-icon.mjs",
+    "web-check": "node scripts/web-check.mjs",
     "build:bridge": "node scripts/build-bridge.mjs"
   },
   "dependencies": {
     "@expo/metro-runtime": "~58.0.15",
+    "@sentry/react-native": "~8.28.0",
     "@turboterp/audit": "*",
     "expo": "~58.0.21",
     "expo-constants": "~58.0.14",
     "expo-linking": "~58.0.15",
     "expo-router": "~58.0.28",
+    "expo-sqlite": "~58.0.14",
     "expo-status-bar": "~58.0.4",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
@@ -31,8 +35,11 @@
   "devDependencies": {
     "@types/react": "^19.3.0",
     "esbuild": "^0.28.2",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "pdfjs-dist": "^6.4.299",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.72.1",
     "vitest": "^5.0.1"
   }
 }
