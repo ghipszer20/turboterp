@@ -15,3 +15,11 @@ export async function proxy(request: NextRequest) {
   if (decision === "deny") return NextResponse.json({ error: "TurboTerp is not open yet." }, { status: 401 });
   return NextResponse.redirect(new URL(COMING_SOON_PATH, request.url));
 }
+
+// Every matched request is a billed function call, so build assets, public files, icons and the
+// scheduled jobs skip the proxy (the gate allows all of them anyway). Delete this file at launch.
+export const config = {
+  matcher: [
+    "/((?!_next/static/|_next/image$|api/cron/|vendor/|sw\\.js$|favicon\\.ico$|icon\\.svg$|apple-icon$|manifest\\.webmanifest$|robots\\.txt$).*)",
+  ],
+};
