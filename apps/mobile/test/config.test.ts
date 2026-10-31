@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { apiHeaders, apiUrl, readConfig } from "../src/config";
+import { authConfigured, apiHeaders, apiUrl, readConfig } from "../src/config";
 
 describe("readConfig", () => {
   it("defaults to turboterp.com with no lock header and no Sentry", () => {
     const c = readConfig({});
-    expect(c).toEqual({ apiBaseUrl: "https://turboterp.com", accessToken: null, sentryDsn: null });
+    expect(c).toEqual({ apiBaseUrl: "https://turboterp.com", accessToken: null, sentryDsn: null, supabaseUrl: null, supabaseAnonKey: null });
+    expect(authConfigured(c)).toBe(false);
+    expect(authConfigured(readConfig({ EXPO_PUBLIC_SUPABASE_URL: "https://x.supabase.co", EXPO_PUBLIC_SUPABASE_ANON_KEY: "k" }))).toBe(true);
     expect(apiHeaders(c)).toEqual({});
   });
 

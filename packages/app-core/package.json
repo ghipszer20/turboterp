@@ -8,6 +8,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./age": "./src/age.ts",
+    "./auth/email": "./src/auth/email.ts",
     "./analysis": "./src/analysis.ts",
     "./api-v1/client": "./src/api-v1/client.ts",
     "./api-v1/envelope": "./src/api-v1/envelope.ts",
