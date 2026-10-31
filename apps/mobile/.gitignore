@@ -2,3 +2,5 @@ dist/
 dist-bridge/
 .expo/
 node_modules/
+.ui-check/
+.env.local

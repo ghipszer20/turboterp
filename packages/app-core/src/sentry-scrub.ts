@@ -6,7 +6,7 @@ interface ScrubbableEvent {
   message?: string;
   request?: { url?: string } | undefined;
   exception?: { values?: { value?: string }[] };
-  breadcrumbs?: { message?: string; data?: { [key: string]: any } }[];
+  breadcrumbs?: { message?: string; data?: { [key: string]: unknown } }[];
 }
 
 const EMAIL = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g;
