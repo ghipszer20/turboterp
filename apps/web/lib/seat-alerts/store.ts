@@ -125,18 +125,5 @@ export function seatAlertStore(env: SupabaseEnv, fetchFn: typeof fetch = fetch) 
     async deleteWatch(id: string): Promise<void> {
       await call(`seat_watches?id=eq.${enc(id)}`, { method: "DELETE", headers: { Prefer: "return=minimal" } });
     },
-
-    async getCursor():Promise<string | null> {
-      const r = await rows<{ next_course: string | null }>("seat_alert_cursor?id=eq.1&select=next_course");
-      return r[0]?.next_course ?? null;
-    },
-
-    async setCursor(next: string | null): Promise<void> {
-      await call("seat_alert_cursor?on_conflict=id", {
-        method: "POST",
-        headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
-        body: JSON.stringify({ id: 1, next_course: next, updated_at: new Date().toISOString() }),
-      });
-    },
   };
 }

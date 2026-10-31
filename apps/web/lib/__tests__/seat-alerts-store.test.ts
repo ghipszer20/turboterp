@@ -65,13 +65,6 @@ describe("seatAlertStore", () => {
     expect(calls[0]!.url).toContain("alert_devices?id=in.(d1)");
   });
 
-  it("reads and writes the cursor", async () => {
-    const { calls, store } = fake([[{ next_course: "CMSC400" }], []]);
-    expect(await store.getCursor()).toBe("CMSC400");
-    await store.setCursor(null);
-    expect(calls[1]!.url).toContain("on_conflict=id");
-    expect(JSON.parse(calls[1]!.init.body as string)).toMatchObject({ id: 1, next_course: null });
-  });
 
   it("throws on a failed request", async () => {
     const store = seatAlertStore(env, (async () => new Response("no", { status: 500 })) as unknown as typeof fetch);
