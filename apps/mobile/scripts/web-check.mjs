@@ -4,7 +4,7 @@
 //   node scripts/web-check.mjs /campus /schedule [--dark] [--skip-export]
 //
 // Paths default to "/". Screenshots go to ./.ui-check/. Other flags pass through to ui-check.
-import { spawnSync } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { createServer } from "node:http";
 import { dirname, extname, join, normalize, resolve } from "node:path";
@@ -35,6 +35,8 @@ const server = createServer((req, res) => {
 });
 await new Promise((ok) => server.listen(PORT, ok));
 const check = resolve(root, "../web/scripts/ui-check.mjs");
-const r = spawnSync("node", [check, `http://localhost:${PORT}`, ...(paths.length ? paths : ["/"]), ...flags], { cwd: root, stdio: "inherit" });
+// Must be async: spawnSync would block this process's event loop, so the server above could never answer.
+const child = spawn("node", [check, `http://localhost:${PORT}`, ...(paths.length ? paths : ["/"]), ...flags], { cwd: root, stdio: "inherit" });
+const code = await new Promise((ok) => child.on("exit", (c) => ok(c ?? 0)));
 server.close();
-process.exit(r.status ?? 0);
+process.exit(code);
