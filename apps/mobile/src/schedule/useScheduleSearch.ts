@@ -5,7 +5,9 @@ import { withCourses } from "@turboterp/app-core/schedule/saved";
 import { searchCourses } from "@turboterp/app-core/schedule/search";
 import type { SeatsOverlay } from "@turboterp/app-core/schedule/seats-overlay";
 import type { CourseIndex, DepartmentSections } from "@turboterp/course-data/schedule-files";
+import { dispatchPlan, useAdvisorPlan } from "../advisor/store";
 import { savedStore, useSaved } from "./savedStore";
+import { planSync, updatePlanAction, type PlanPrompt } from "./planSync";
 import { createScheduleLoader, ScheduleLoadError, type GradesByCourse } from "./loader";
 import { summarizeDepartment, toggleCourse, type CourseRow, type CourseSummary } from "./results";
 
@@ -50,17 +52,32 @@ export function useCourseIndex(): { state: IndexState; reload: () => void } {
     }, []) };
 }
 
-/** The term's saved schedule (shared format with the web); adding or removing writes it back at once. */
-export function useTermCourses(term: string | null): { courses: string[]; toggle: (id: string) => void } {
+/**
+ * The term's course list (saved format shared with the web). It follows the 4-year plan's term until the
+ * student's own list differs; the plan itself is only written by `updatePlan` after the student confirms.
+ */
+export function useTermCourses(term: string | null): {
+  courses: string[];
+  toggle: (id: string) => void;
+  /** Set when the list differs from the plan's term: what Update plan would change. */
+  prompt: PlanPrompt | null;
+  updatePlan: () => void;
+} {
   // One store shared with the builder, so plans saved there are never overwritten from here.
   const saved = useSaved(term);
+  const plan = useAdvisorPlan();
+  const sync = useMemo(() => planSync(plan, term, saved?.courses ?? null), [plan, term, saved]);
   const toggle = useCallback(
     (id: string) => {
-      if (term) savedStore.update(term, (cur) => withCourses(cur, toggleCourse(cur.courses ?? [], id)));
+      if (term) savedStore.update(term, (cur) => withCourses(cur, toggleCourse(sync.courses, id)));
     },
-    [term],
+    [term, sync.courses],
   );
-  return { courses: saved?.courses ?? [], toggle };
+  const prompt = sync.prompt;
+  const updatePlan = useCallback(() => {
+    if (prompt) dispatchPlan(updatePlanAction(prompt));
+  }, [prompt]);
+  return { courses: sync.courses, toggle, prompt, updatePlan };
 }
 
 type DeptData = { sections: DepartmentSections | null; grades: GradesByCourse | null };
