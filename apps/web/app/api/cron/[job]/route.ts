@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 import { connection } from "next/server";
 import { revalidateTag } from "next/cache";
 import { campusTagsForKeys } from "@/lib/campus-tags";
-import { buildSnapshots, openSnapshotStore, pruneSnapshots, refreshFast } from "@turboterp/campus-data/snapshots";
+import { buildSnapshots, openSnapshotStore, pruneSnapshots, refreshDining, refreshFast } from "@turboterp/campus-data/snapshots";
 import { liveRefreshDeps, refreshCourses, refreshSections } from "@turboterp/course-data/soc-refresh";
 import { authorizeCron, cronJob } from "@/lib/cron";
 import { runDailyDigest, supabaseDigestSource } from "@/lib/consent/digest";
@@ -43,7 +43,7 @@ async function run(request: NextRequest, context: { params: Promise<{ job: strin
         { headers: { "Cache-Control": "no-store" } },
       );
     }
-    const report = await (job === "daily" ? buildSnapshots : refreshFast)(store, now);
+    const report = await (job === "daily" ? buildSnapshots : job === "dining" ? refreshDining : refreshFast)(store, now);
     if (job === "daily") {
       await pruneSnapshots(store, now);
       await sendDailyDigest(now);

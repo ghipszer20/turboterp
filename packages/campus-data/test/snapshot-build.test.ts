@@ -15,6 +15,7 @@ import { applyAvailability, openWindows, parseRoomLocations, parseRooms, roomRan
 import {
   buildSnapshots,
   pruneSnapshots,
+  refreshDining,
   refreshFast,
   snapshotKeys,
   type CampusSources,
@@ -200,35 +201,20 @@ describe("refreshFast", () => {
     expect((await store.get("rooms/2026-09-25/6745-23066"))?.updatedAt).toBe(later.toISOString());
   });
 
-  it("re-checks menus only once they are 12 hours old", async () => {
+  it("does not touch dining menus at all", async () => {
     await buildSnapshots(store, NOW, fakeSources().sources);
-
-    const early = fakeSources();
-    await refreshFast(store, minutesAfter(12 * 60 - 5), early.sources);
-    expect(early.calls.diningMenu).toBe(0);
-    expect((await store.get("dining/2026-09-25/19"))?.updatedAt).toBe(NOW.toISOString());
-
-    const due = fakeSources();
-    await refreshFast(store, minutesAfter(12 * 60), due.sources);
-    expect(due.calls.diningMenu).toBe(3);
-    expect((await store.get("dining/2026-09-25/19"))?.updatedAt).toBe(minutesAfter(12 * 60).toISOString());
-  });
-
-  it("fetches a new day's menus as soon as the date rolls over", async () => {
-    await buildSnapshots(store, NOW, fakeSources().sources);
-    const nextDay = new Date("2026-09-26T04:05:00.000Z"); // 12:05am in College Park
     const { sources, calls } = fakeSources();
-    await refreshFast(store, nextDay, sources);
-    expect(calls.diningMenu).toBe(3);
-    expect((await store.get<DiningMenu>("dining/2026-09-26/19"))?.data.date).toBe("2026-09-26");
-    expect((await store.get("rooms/2026-09-26/6745-23066"))?.updatedAt).toBe(nextDay.toISOString());
+    await refreshFast(store, minutesAfter(12 * 60), sources);
+    expect(calls.diningMenu).toBe(0);
+    expect((await store.get("dining/2026-09-25/19"))?.updatedAt).toBe(NOW.toISOString());
   });
 
-  it("keeps the previous menu when a re-check fails", async () => {
+  it("makes no per-hall menu reads", async () => {
     await buildSnapshots(store, NOW, fakeSources().sources);
-    const report = await refreshFast(store, minutesAfter(12 * 60), fakeSources({ diningMenu: true }).sources);
-    expect(report.ok).toBe(false);
-    expect((await store.get("dining/2026-09-25/19"))?.updatedAt).toBe(NOW.toISOString());
+    const reads: string[] = [];
+    const spy = { get: async (k: string) => { reads.push(k); return store.get(k); }, put: store.put.bind(store), list: store.list.bind(store), delete: store.delete.bind(store) };
+    await refreshFast(spy as typeof store, minutesAfter(5), fakeSources().sources);
+    expect(reads.some((k) => k.startsWith("dining/"))).toBe(false);
   });
 
   it("reports an error instead of scraping the whole room catalog when none is stored", async () => {
@@ -239,6 +225,24 @@ describe("refreshFast", () => {
       ok: false,
       error: expect.stringMatching(/no room catalog snapshot/i),
     });
+  });
+});
+
+describe("refreshDining", () => {
+  it("fetches every hall's menu for today, with no due-check", async () => {
+    const { sources, calls } = fakeSources();
+    const report = await refreshDining(store, NOW, sources);
+    expect(report.ok).toBe(true);
+    expect(calls.diningMenu).toBe(3);
+    expect(calls.roomAvailability).toBe(0);
+    expect((await store.get<DiningMenu>("dining/2026-09-25/19"))?.data.date).toBe("2026-09-25");
+  });
+
+  it("keeps the previous menu when a fetch fails", async () => {
+    await buildSnapshots(store, NOW, fakeSources().sources);
+    const report = await refreshDining(store, minutesAfter(8 * 60), fakeSources({ diningMenu: true }).sources);
+    expect(report.ok).toBe(false);
+    expect((await store.get("dining/2026-09-25/19"))?.updatedAt).toBe(NOW.toISOString());
   });
 });
 
