@@ -36,6 +36,7 @@ import { courseColors } from "../../../src/schedule/courseColors";
 import { savedStore, useSaved } from "../../../src/schedule/savedStore";
 import { useBuilderData, useLayouts } from "../../../src/schedule/useBuilder";
 import { useCourseIndex } from "../../../src/schedule/useScheduleSearch";
+import { renderSeatBell } from "../../../src/alerts/SeatBell";
 
 type View_ = { kind: "gallery" } | { kind: "editor"; picks: Record<string, Section> } | { kind: "own" };
 const MINI_HEIGHT = 200;
@@ -350,6 +351,7 @@ export default function BuilderScreen() {
             grades={data.gradesFor(openCourse)}
             allSections={sectionsByCourse.get(openCourse) ?? []}
             placed={own ? placed.filter((s) => s.courseId !== openCourse) : undefined}
+            renderSeatBell={renderSeatBell}
             onPreview={(s) => setPreview(s && s.id !== current?.id ? s : null)}
             onCommit={(s) => commit(openCourse, s)}
             onClose={closePanel}

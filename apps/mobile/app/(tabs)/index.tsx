@@ -5,23 +5,24 @@ import { Card, ListRow, ScreenState, SectionHeader, Text, spacing, tap, useTheme
 import { dateLabel, diningTiles, heroModel, seatAlertsCard, upcomingDates, type HeroModel } from "../../src/today/model";
 import { useMinuteClock, useToday } from "../../src/today/useToday";
 import { useNextClass } from "../../src/today/useNextClass";
+import { useAlerts } from "../../src/alerts/store";
 
-// Seat Alerts watches live in the Seat Alerts tab's own store (a later task); until it exposes a
-// count the card stays hidden, exactly as on the web when nothing is being watched.
-const WATCHING = 0;
+// The count comes from the shared Seat Alerts store (src/alerts/store.ts).
 
 export default function Today() {
   const { c } = useTheme();
   const { status, data, refreshing, refresh } = useToday();
   const { clock, now } = useMinuteClock();
   const next = useNextClass(now);
+  const { phase, data: alertsData } = useAlerts();
+  const watching = phase === "ready" ? alertsData.watches.length : 0;
 
   const view = useMemo(() => {
     if (!data) return null;
     const dates = upcomingDates(data, clock);
     return { dining: diningTiles(data, clock), dates, hero: heroModel(next, dates[0] ?? null) };
   }, [data, clock, next]);
-  const alerts = seatAlertsCard(WATCHING);
+  const alerts = seatAlertsCard(watching);
 
   return (
     <ScrollView

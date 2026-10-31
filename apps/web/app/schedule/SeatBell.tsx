@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { bellMode, currentPushEnv, pushSupport } from "@/lib/seat-alerts/client";
 import type { WatchesState } from "@/lib/seat-alerts/use-watches";
-import { findWatch } from "@/lib/seat-alerts/view";
+import { findWatch } from "@turboterp/app-core/seat-alerts/view";
 import styles from "./seatbell.module.css";
 
 function Bell({ filled }: { filled: boolean }) {

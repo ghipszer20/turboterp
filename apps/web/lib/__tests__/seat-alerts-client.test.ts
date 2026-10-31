@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { alertsStatus, bellMode, onReturnToPage, pushSupport } from "../seat-alerts/client";
-import { endedNote, MAX_WATCHES, minutesSince, watchRowView, type WatchRow } from "../seat-alerts/view";
+import { endedNote, MAX_WATCHES, minutesSince, watchRowView, type WatchRow } from "@turboterp/app-core/seat-alerts/view";
 
 const base = { hasServiceWorker: true, hasPushManager: true, hasNotification: true, standalone: false, maxTouchPoints: 0 };
 const IPHONE = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) AppleWebKit/605.1.15 Version/17.4 Mobile/15E148 Safari/604.1";

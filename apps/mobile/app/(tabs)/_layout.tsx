@@ -1,5 +1,6 @@
 import { Tabs, Link } from "expo-router";
 import { Pressable, View, type ColorValue } from "react-native";
+import { useNotificationTaps } from "../../src/alerts/useNotificationTaps";
 import { Icon, Text, tap, useTheme, type IconName } from "../../src/ui";
 
 function Logo() {
@@ -54,6 +55,7 @@ const tabIcon = (name: IconName) =>
   };
 
 export default function TabsLayout() {
+  useNotificationTaps();
   const { c } = useTheme();
   return (
     <Tabs

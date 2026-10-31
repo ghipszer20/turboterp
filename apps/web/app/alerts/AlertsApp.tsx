@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { SkeletonCard } from "@/components/ui";
 import { currentPushEnv, pushSupport, type PushSupport } from "@/lib/seat-alerts/client";
 import { useWatches } from "@/lib/seat-alerts/use-watches";
-import { endedNote, setupSteps, watchRowView, type WatchRow } from "@/lib/seat-alerts/view";
+import { endedNote, setupSteps, watchRowView, type WatchRow } from "@turboterp/app-core/seat-alerts/view";
 import { AddClass } from "./AddClass";
 import { AddSquareIcon, ShareIcon, StatusCard } from "./StatusCard";
 import styles from "./alerts.module.css";

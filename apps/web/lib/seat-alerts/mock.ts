@@ -3,7 +3,7 @@
 // NEXT_PUBLIC_TURBOTERP_SEED=1, like lib/advisor/seed.ts.
 
 import { seedAllowed } from "@turboterp/app-core/seed";
-import type { WatchesResponse } from "./view";
+import type { WatchesResponse } from "@turboterp/app-core/seat-alerts/view";
 
 export function mockAllowed(search: string): boolean {
   const env = { NODE_ENV: process.env.NODE_ENV, NEXT_PUBLIC_TURBOTERP_SEED: process.env.NEXT_PUBLIC_TURBOTERP_SEED };

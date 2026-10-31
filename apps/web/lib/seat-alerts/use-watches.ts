@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { addWatch, finishWatch, listWatches, removeWatch, subscribe } from "./client";
 import { mockAllowed, mockWatches } from "./mock";
-import { MAX_WATCHES, type WatchesResponse, type WatchRow } from "./view";
+import { MAX_WATCHES, type WatchesResponse, type WatchRow } from "@turboterp/app-core/seat-alerts/view";
 
 const EMPTY: WatchesResponse = { term: "", watches: [], done: [], ended: 0 };
 

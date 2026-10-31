@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { searchCourses } from "@turboterp/app-core/schedule/search";
 import { meetingSummary } from "@turboterp/app-core/schedule/sections";
 import { useScheduleData } from "@/lib/schedule/use-schedule-data";
-import { findWatch, MAX_WATCHES } from "@/lib/seat-alerts/view";
+import { findWatch, MAX_WATCHES } from "@turboterp/app-core/seat-alerts/view";
 import type { WatchesState } from "@/lib/seat-alerts/use-watches";
 import styles from "./alerts.module.css";
 

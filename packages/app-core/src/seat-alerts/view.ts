@@ -1,6 +1,6 @@
 // View model for the Seat Alerts watch list. Pure; the API contract is in docs/project/seat-alerts-plan.md Task 2.
 
-import type { PushSupport } from "./client";
+export type PushSupport = "supported" | "ios-needs-home-screen" | "unsupported";
 
 export const MAX_WATCHES = 20;
 
