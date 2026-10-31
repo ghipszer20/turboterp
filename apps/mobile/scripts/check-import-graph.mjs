@@ -49,7 +49,7 @@ export async function findViolations() {
       platform: "browser",
       format: "esm",
       logLevel: "silent",
-      loader: { ".wasm": "empty", ".png": "empty", ".ttf": "empty" },
+      loader: { ".wasm": "empty", ".png": "empty", ".ttf": "empty", ".html": "empty" },
       // The app side imports react-native etc. through Metro, not esbuild: treat non-workspace packages as leaves,
       // except the ones we want to walk (highs, pdfjs-dist).
       external: ["highs-wasm", "tess-*", "@sentry/*", "react", "react-native", "expo-*", "react-native-*", "react-dom"],
