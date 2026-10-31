@@ -77,17 +77,17 @@ grant execute on function public.seat_alert_load() to service_role;
 -- ---- cron jobs -------------------------------------------------------------------------------------------------
 do $$
 declare
-  job text;
+  job_name text;
 begin
   -- 'turboterp-soc-seats' and 'turboterp-seat-alerts' used to call https://turboterp.com/api/cron/...;
   -- the -0..-3 names are from an earlier draft of this migration.
-  foreach job in array array[
+  foreach job_name in array array[
     'turboterp-soc-seats', 'turboterp-seat-alerts',
     'turboterp-soc-seats-0', 'turboterp-soc-seats-1', 'turboterp-soc-seats-2', 'turboterp-soc-seats-3',
     'turboterp-fast', 'turboterp-dining', 'turboterp-cron-cleanup'
   ] loop
-    if exists (select 1 from cron.job where jobname = job) then
-      perform cron.unschedule(job);
+    if exists (select 1 from cron.job j where j.jobname = job_name) then
+      perform cron.unschedule(job_name);
     end if;
   end loop;
 end
