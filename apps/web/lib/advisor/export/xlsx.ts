@@ -1,8 +1,8 @@
 // The 4-year plan as a formatted .xlsx (terms as columns, category colors) that opens in Google
 // Sheets. ExcelJS is lazy-loaded: it must never be imported at top level.
 
-import { academicYears } from "../terms";
-import { CATEGORY_COLORS, CATEGORY_LABELS, type Category, type PlanExport } from "./plan-export";
+import { academicYears } from "@turboterp/app-core/terms";
+import { CATEGORY_COLORS, CATEGORY_LABELS, type Category, type PlanExport } from "@turboterp/app-core/export/plan-export";
 
 const fillOf = (hex: string) => ({ type: "pattern" as const, pattern: "solid" as const, fgColor: { argb: `FF${hex}` } });
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { legendCategories, rowCategory } from "../advisor/row-category";
+import { legendCategories, rowCategory } from "@turboterp/app-core/row-category";
 
 const audit = (id: string, layer: string | undefined, assigned: string[]) => ({
   program: { id, name: id, ...(layer ? { layer } : {}) },

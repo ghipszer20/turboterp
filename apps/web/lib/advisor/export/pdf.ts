@@ -2,8 +2,8 @@
 // jsPDF and jspdf-autotable are lazy-loaded: never import them at top level. The rows come from
 // pdf-rows.ts (pure); this file only draws.
 
-import { FOOTER, type PlanExport } from "./plan-export";
-import { PDF_CATEGORY_COLORS, PDF_CATEGORY_LABELS, pdfRows, type PdfCategory, type PdfTerm } from "./pdf-rows";
+import { FOOTER, type PlanExport } from "@turboterp/app-core/export/plan-export";
+import { PDF_CATEGORY_COLORS, PDF_CATEGORY_LABELS, pdfRows, type PdfCategory, type PdfTerm } from "@turboterp/app-core/export/pdf-rows";
 
 const RED = "#BA0C2F";
 const HAIRLINE = "#e5e5ea";

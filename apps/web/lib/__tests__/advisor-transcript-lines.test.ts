@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { groupItemsIntoLines, looksLikeTextLayer } from "../advisor/transcript-lines";
+import { groupItemsIntoLines, looksLikeTextLayer } from "@turboterp/app-core/transcript-lines";
 
 // pdfjs text items: only `str` and `transform` (a 6-number matrix; transform[4]/[5] are x/y) matter
 // to the line-reconstruction helper.

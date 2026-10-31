@@ -3,13 +3,13 @@ import { apExamNames } from "@turboterp/credit";
 import type { Course } from "@turboterp/course-data";
 import { buildCatalog } from "@turboterp/plan/catalog";
 import { describe, expect, it } from "vitest";
-import { runAnalysis } from "../advisor/analysis";
-import { newPlan } from "../advisor/plan-state";
-import { computePriorCredit } from "../advisor/prior-credit";
-import { selectApLines } from "../advisor/transcript-ap-select";
-import { applyTranscriptImport } from "../advisor/transcript-apply";
-import { selectDualLines, selectIbLines } from "../advisor/transcript-ib-select";
-import { parseTranscriptText } from "../advisor/transcript-parse";
+import { runAnalysis } from "@turboterp/app-core/analysis";
+import { newPlan } from "@turboterp/app-core/plan-state";
+import { computePriorCredit } from "@turboterp/app-core/prior-credit";
+import { selectApLines } from "@turboterp/app-core/transcript-ap-select";
+import { applyTranscriptImport } from "@turboterp/app-core/transcript-apply";
+import { selectDualLines, selectIbLines } from "@turboterp/app-core/transcript-ib-select";
+import { parseTranscriptText } from "@turboterp/app-core/transcript-parse";
 
 // Entirely invented transcript text in Testudo's web-paste layout (trailing Equivalences columns),
 // for a made-up student. Never derived from any real transcript.

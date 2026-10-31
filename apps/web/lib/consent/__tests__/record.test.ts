@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { CONSENT_VERSION } from "../../advisor/consent";
+import { CONSENT_VERSION } from "@turboterp/app-core/consent";
 import type { SendStore } from "../../email/rate-limit";
 import { decryptName } from "../name-crypto";
 import { handleConsentRecord, nameHash, type ConsentDeps, type ConsentRow } from "../record";

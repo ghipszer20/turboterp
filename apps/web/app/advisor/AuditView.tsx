@@ -8,11 +8,11 @@
 
 import type { GatewayCourseStatus, GatewayOverallStatus, Requirement, RequirementResult } from "@turboterp/audit";
 import type { MilestoneTiming } from "@turboterp/tracks";
-import type { AdvisorPlan } from "@/lib/advisor/plan-state";
-import { blockedNotice } from "@/lib/advisor/programs";
-import { metText, REQ_STATUS_LABEL } from "@/lib/advisor/req-status";
-import { showsScienceGpa } from "@/lib/advisor/tracks";
-import { gatewayAttemptLimitNote } from "@/lib/advisor/what-if-display";
+import type { AdvisorPlan } from "@turboterp/app-core/plan-state";
+import { blockedNotice } from "@turboterp/app-core/programs";
+import { metText, REQ_STATUS_LABEL } from "@turboterp/app-core/req-status";
+import { showsScienceGpa } from "@turboterp/app-core/tracks";
+import { gatewayAttemptLimitNote } from "@turboterp/app-core/what-if-display";
 import type { AnalysisState, OpenCourse } from "./AdvisorApp";
 import { dispatchPlan } from "./store";
 import styles from "./advisor.module.css";

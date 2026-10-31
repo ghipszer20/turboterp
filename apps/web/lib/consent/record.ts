@@ -1,5 +1,5 @@
 import { createHmac } from "node:crypto";
-import { CONSENT_VERSION } from "../advisor/consent";
+import { CONSENT_VERSION } from "@turboterp/app-core/consent";
 import { checkAndRecord, hashKey, type SendStore, type SupabaseEnv } from "../email/rate-limit";
 import { encryptName } from "./name-crypto";
 

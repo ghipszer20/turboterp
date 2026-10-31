@@ -31,7 +31,7 @@ import { addedByFallback, buildCatalog, withCatalogFallback, withOfferings, with
 import { programCourseIds } from "@turboterp/audit";
 import { PROGRAMS } from "@turboterp/programs";
 import { encodeCatalogFile } from "@turboterp/plan/catalog-file";
-import { courseDetailFiles } from "../lib/advisor/course-details.ts";
+import { courseDetailFiles } from "@turboterp/app-core/course-details";
 
 const web = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const repo = resolve(web, "../..");

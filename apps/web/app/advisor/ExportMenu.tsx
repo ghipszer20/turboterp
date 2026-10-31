@@ -3,8 +3,8 @@
 import { useState } from "react";
 import type { AnalysisState } from "./AdvisorApp";
 import type { PlanCatalog } from "@turboterp/plan/catalog";
-import type { AdvisorPlan } from "@/lib/advisor/plan-state";
-import { PROGRAM_OPTIONS, programsLabel } from "@/lib/advisor/programs";
+import type { AdvisorPlan } from "@turboterp/app-core/plan-state";
+import { PROGRAM_OPTIONS, programsLabel } from "@turboterp/app-core/programs";
 import { formatKeyDates, termKeyDates } from "@/lib/calendar";
 import type { AcademicEvent } from "@turboterp/campus-data";
 import { getAuthClient } from "@/lib/auth/client";
@@ -37,7 +37,7 @@ export function ExportMenu({ plan, analysis, catalog, calendar = [], priorCredit
 
   async function makePlanExport() {
     if (!result || !catalog) throw new Error("not ready");
-    const { buildPlanExport } = await import("@/lib/advisor/export/plan-export");
+    const { buildPlanExport } = await import("@turboterp/app-core/export/plan-export");
     return buildPlanExport({
       plan,
       analysis: result,
@@ -58,7 +58,7 @@ export function ExportMenu({ plan, analysis, catalog, calendar = [], priorCredit
     try {
       const planExport = await makePlanExport();
       const { buildPdf } = await import("@/lib/advisor/export/pdf");
-      const { earnedCredits, planSummaryLines } = await import("@/lib/advisor/export/plan-summary");
+      const { earnedCredits, planSummaryLines } = await import("@turboterp/app-core/export/plan-summary");
       const doc = await buildPdf(planExport);
       const bytes = new Uint8Array(doc.output("arraybuffer") as ArrayBuffer);
       let bin = "";
@@ -98,7 +98,7 @@ export function ExportMenu({ plan, analysis, catalog, calendar = [], priorCredit
     setBusy(kind);
     setError(false);
     try {
-      const { exportFileName } = await import("@/lib/advisor/export/plan-export");
+      const { exportFileName } = await import("@turboterp/app-core/export/plan-export");
       const planExport = await makePlanExport();
       const name = exportFileName(kind, planExport.header.date);
       if (kind === "xlsx") {

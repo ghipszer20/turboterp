@@ -19,6 +19,7 @@
   "dependencies": {
     "@sentry/nextjs": "^11.10.0",
     "@supabase/supabase-js": "^2.117.2",
+    "@turboterp/app-core": "*",
     "@turboterp/audit": "*",
     "@turboterp/campus-data": "*",
     "@turboterp/course-data": "*",

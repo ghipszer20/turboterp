@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { newPlan, planReducer, type AdvisorPlan } from "../../advisor/plan-state";
+import { newPlan, planReducer, type AdvisorPlan } from "@turboterp/app-core/plan-state";
 import {
   applyQueryCourses,
   builderCourses,

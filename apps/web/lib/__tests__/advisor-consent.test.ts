@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { acceptConsent, CONSENT_VERSION, hasConsent, parseConsent } from "../advisor/consent";
+import { acceptConsent, CONSENT_VERSION, hasConsent, parseConsent } from "@turboterp/app-core/consent";
 
 const now = new Date("2026-09-25T22:10:00.000Z");
 

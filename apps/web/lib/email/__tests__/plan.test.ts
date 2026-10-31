@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { handlePlanEmail, validatePlanEmail, type PlanEmailDeps } from "../plan";
 import { hashKey, type SendStore } from "../rate-limit";
-import { FOOTER } from "../../advisor/export/plan-export";
+import { FOOTER } from "@turboterp/app-core/export/plan-export";
 
 const pdf = (extra = "") => Buffer.from("%PDF-1.4 hello" + extra).toString("base64");
 const req = (body: unknown, auth: string | null = "Bearer tok") =>

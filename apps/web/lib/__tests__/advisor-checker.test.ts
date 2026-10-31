@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { checkerPlan } from "../advisor/checker";
-import type { AdvisorPlan } from "../advisor/plan-state";
+import { checkerPlan } from "@turboterp/app-core/checker";
+import type { AdvisorPlan } from "@turboterp/app-core/plan-state";
 
 describe("checkerPlan", () => {
   it("keeps exam credit's genEdCredits (a lab-science lecture awarded with its lab)", () => {

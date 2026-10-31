@@ -6,14 +6,14 @@ import { buildCatalog } from "@turboterp/plan/catalog";
 import { checkPlan } from "@turboterp/plan/check";
 import { checkDegrees } from "@turboterp/plan/degrees";
 import { describe, expect, it } from "vitest";
-import { runAnalysis } from "../advisor/analysis";
-import { checkerPlan } from "../advisor/checker";
-import type { AdvisorPlan } from "../advisor/plan-state";
-import { computePriorCredit } from "../advisor/prior-credit";
-import { AUTOMATIC_PROGRAMS, studentDegrees } from "../advisor/programs";
-import { seedFromUrl } from "../advisor/seed";
-import { TEST_STUDENTS } from "../advisor/test-students";
-import { runWhatIf } from "../advisor/what-if";
+import { runAnalysis } from "@turboterp/app-core/analysis";
+import { checkerPlan } from "@turboterp/app-core/checker";
+import type { AdvisorPlan } from "@turboterp/app-core/plan-state";
+import { computePriorCredit } from "@turboterp/app-core/prior-credit";
+import { AUTOMATIC_PROGRAMS, studentDegrees } from "@turboterp/app-core/programs";
+import { seedFromUrl } from "@turboterp/app-core/seed";
+import { TEST_STUDENTS } from "@turboterp/app-core/test-students";
+import { runWhatIf } from "@turboterp/app-core/what-if";
 
 const COURSES = (
   JSON.parse(readFileSync(new URL("../../../../packages/plan/test/fixtures/courses-202701.json", import.meta.url), "utf8")) as {

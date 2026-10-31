@@ -2,9 +2,9 @@ import { readFileSync } from "node:fs";
 import type { Course } from "@turboterp/course-data";
 import { buildCatalog } from "@turboterp/plan/catalog";
 import { describe, expect, it } from "vitest";
-import { runAnalysis } from "../advisor/analysis";
-import { choiceAwardsOf, computePriorCredit } from "../advisor/prior-credit";
-import { newPlan, type AdvisorPlan } from "../advisor/plan-state";
+import { runAnalysis } from "@turboterp/app-core/analysis";
+import { choiceAwardsOf, computePriorCredit } from "@turboterp/app-core/prior-credit";
+import { newPlan, type AdvisorPlan } from "@turboterp/app-core/plan-state";
 
 const COURSES = (
   JSON.parse(readFileSync(new URL("../../../../packages/plan/test/fixtures/courses-202701.json", import.meta.url), "utf8")) as { courses: Course[] }

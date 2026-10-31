@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseTranscriptText } from "../advisor/transcript-parse";
+import { parseTranscriptText } from "@turboterp/app-core/transcript-parse";
 
 // Entirely invented transcript text, in Testudo's layout, for a made-up student. Never derived
 // from or resembling any real transcript.

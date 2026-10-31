@@ -8,13 +8,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { GatewayCourseStatus, GatewayOverallStatus, GatewayResult } from "@turboterp/audit";
-import { checkerPlan } from "@/lib/advisor/checker";
-import type { AdvisorPlan } from "@/lib/advisor/plan-state";
-import type { PriorCreditResult } from "@/lib/advisor/prior-credit";
-import { PROGRAM_OPTIONS, programsLabel, toggleProgram } from "@/lib/advisor/programs";
+import { checkerPlan } from "@turboterp/app-core/checker";
+import type { AdvisorPlan } from "@turboterp/app-core/plan-state";
+import type { PriorCreditResult } from "@turboterp/app-core/prior-credit";
+import { PROGRAM_OPTIONS, programsLabel, toggleProgram } from "@turboterp/app-core/programs";
 import { ProgramPicker } from "./ProgramPicker";
-import { addedProgramNotes, completedCreditTotals, gatewayAttemptLimitNote, gatewayRuleText } from "@/lib/advisor/what-if-display";
-import type { CourseWhatIf, WhatIfResult } from "@/lib/advisor/what-if";
+import { addedProgramNotes, completedCreditTotals, gatewayAttemptLimitNote, gatewayRuleText } from "@turboterp/app-core/what-if-display";
+import type { CourseWhatIf, WhatIfResult } from "@turboterp/app-core/what-if";
 import type { CatalogState } from "./data";
 import { dispatchPlan } from "./store";
 import styles from "./advisor.module.css";
@@ -114,7 +114,7 @@ function useCompare(
     const timer = setTimeout(async () => {
       setState((s) => ({ ...s, status: "running" }));
       try {
-        const { runWhatIf } = await import("@/lib/advisor/what-if");
+        const { runWhatIf } = await import("@turboterp/app-core/what-if");
         const planForCheck = checkerPlan(plan, prior.courses);
         const result = await runWhatIf(planForCheck, ready.catalog, plan.programs, proposed, plan.startTerm, plan.gpa, plan.confirmedSlots);
         if (id === run.current) setState({ status: "ready", result });

@@ -2,7 +2,7 @@
 // /schedule?mock=1 for the bells) skips sign-in and the API. Inert in production builds unless
 // NEXT_PUBLIC_TURBOTERP_SEED=1, like lib/advisor/seed.ts.
 
-import { seedAllowed } from "@/lib/advisor/seed";
+import { seedAllowed } from "@turboterp/app-core/seed";
 import type { WatchesResponse } from "./view";
 
 export function mockAllowed(search: string): boolean {

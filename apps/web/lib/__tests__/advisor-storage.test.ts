@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { newPlan, planReducer } from "../advisor/plan-state";
-import { parsePlan, serializePlan } from "../advisor/storage";
+import { newPlan, planReducer } from "@turboterp/app-core/plan-state";
+import { parsePlan, serializePlan } from "@turboterp/app-core/storage";
 
 const plan = () => {
   let p = newPlan({ programs: ["math-major-applied", "cmsc-major"], catalogYear: "2026-27", startTerm: "Fall 2026" });

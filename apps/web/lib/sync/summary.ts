@@ -1,5 +1,5 @@
 // A few plain lines describing one copy of a document, for the "replace the saved copy?" dialog.
-import { termFromMatriculationId } from "../advisor/terms";
+import { termFromMatriculationId } from "@turboterp/app-core/terms";
 import type { DocKind } from "./decide";
 
 const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;

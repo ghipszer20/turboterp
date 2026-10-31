@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { ParsedApLine } from "../advisor/transcript-parse";
-import { selectApLines } from "../advisor/transcript-ap-select";
+import type { ParsedApLine } from "@turboterp/app-core/transcript-parse";
+import { selectApLines } from "@turboterp/app-core/transcript-ap-select";
 
 const NAMES = ["Chemistry", "Biology", "Calculus AB", "Calculus BC", "Calculus BC AB Subscore"];
 

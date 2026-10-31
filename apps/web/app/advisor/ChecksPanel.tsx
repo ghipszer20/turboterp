@@ -10,7 +10,7 @@ import type { PlanIssue } from "@turboterp/plan/check";
 // it never pulls @turboterp/tracks' solver-backed runtime code into this bundle).
 import type { TrackIssue } from "@turboterp/tracks";
 import type { AnalysisState, OpenCourse } from "./AdvisorApp";
-import { planTips, SEVERITY, SEVERITY_ORDER, type IssueGroups, type Severity } from "@/lib/advisor/issues";
+import { planTips, SEVERITY, SEVERITY_ORDER, type IssueGroups, type Severity } from "@turboterp/app-core/issues";
 import styles from "./advisor.module.css";
 
 type Checked = { issues: PlanIssue[]; groups: IssueGroups } | null;

@@ -1,6 +1,6 @@
 // The documents as the sync engine sees them: raw text in, raw text out, validated with the
 // app's own parsers. `replace` does not count as a student edit, so it never triggers a re-save.
-import { parsePlan } from "../advisor/storage";
+import { parsePlan } from "@turboterp/app-core/storage";
 import { isValidSaved } from "../schedule/saved";
 import { savedStore } from "../schedule/saved-store";
 import { readPlanRaw, replacePlanFromRemote } from "../../app/advisor/store";

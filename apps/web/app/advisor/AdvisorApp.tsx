@@ -3,14 +3,14 @@
 import { checkPlan } from "@turboterp/plan/check";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Segmented } from "@/components/Segmented";
-import type { Analysis } from "@/lib/advisor/analysis";
-import { checkerPlan } from "@/lib/advisor/checker";
-import { hasConsent } from "@/lib/advisor/consent";
+import type { Analysis } from "@turboterp/app-core/analysis";
+import { checkerPlan } from "@turboterp/app-core/checker";
+import { hasConsent } from "@turboterp/app-core/consent";
 import { AccountLine } from "./SignInGate";
-import { groupIssues } from "@/lib/advisor/issues";
-import type { AdvisorPlan } from "@/lib/advisor/plan-state";
-import { computePriorCredit } from "@/lib/advisor/prior-credit";
-import { collegeOf, programsLabel } from "@/lib/advisor/programs";
+import { groupIssues } from "@turboterp/app-core/issues";
+import type { AdvisorPlan } from "@turboterp/app-core/plan-state";
+import { computePriorCredit } from "@turboterp/app-core/prior-credit";
+import { collegeOf, programsLabel } from "@turboterp/app-core/programs";
 import { AuditView } from "./AuditView";
 import { CourseSheet } from "./CourseSheet";
 import { useCatalog, type CatalogState } from "./data";
@@ -176,7 +176,7 @@ function useAnalysis(plan: AdvisorPlan, ready: Extract<CatalogState, { status: "
     const timer = setTimeout(async () => {
       setState((s) => ({ ...s, status: "running" }));
       try {
-        const { runAnalysis } = await import("@/lib/advisor/analysis");
+        const { runAnalysis } = await import("@turboterp/app-core/analysis");
         const result = await runAnalysis({ plan, catalog: ready.catalog, priorCourses });
         if (id === run.current) setState({ status: "ready", result });
       } catch {

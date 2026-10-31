@@ -1,4 +1,4 @@
-import { FOOTER } from "../advisor/export/plan-export";
+import { FOOTER } from "@turboterp/app-core/export/plan-export";
 import { checkAndRecord, hashKey, type SendStore, type SupabaseEnv } from "./rate-limit";
 import type { EmailMessage, SendResult } from "./send";
 

@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { checkerPlan } from "../advisor/checker";
-import { termEnded } from "../advisor/past-terms";
-import type { AdvisorPlan } from "../advisor/plan-state";
-import { displayStatus } from "../advisor/req-status";
+import { checkerPlan } from "@turboterp/app-core/checker";
+import { termEnded } from "@turboterp/app-core/past-terms";
+import type { AdvisorPlan } from "@turboterp/app-core/plan-state";
+import { displayStatus } from "@turboterp/app-core/req-status";
 
 const TODAY = new Date(2026, 9, 7); // 2026-10-07, mid Fall 2026
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { matchApExamName } from "../advisor/transcript-ap-match";
+import { matchApExamName } from "@turboterp/app-core/transcript-ap-match";
 
 const NAMES = ["Calculus AB", "Calculus BC", "Calculus BC AB Subscore", "Chemistry", "Biology", "Human Geography", "United States History", "English Language and Composition", "Physics C: Electricity and Magnetism", "Physics C: Mechanics"];
 

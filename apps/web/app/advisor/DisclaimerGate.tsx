@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { acceptConsent, CONSENT_CHECKBOX, CONSENT_POINTS, CONSENT_TITLE } from "@/lib/advisor/consent";
+import { acceptConsent, CONSENT_CHECKBOX, CONSENT_POINTS, CONSENT_TITLE } from "@turboterp/app-core/consent";
 import { saveConsent } from "./store";
 import styles from "./advisor.module.css";
 

@@ -1,7 +1,7 @@
 import { distributionFromCounts, type CourseGrades } from "@turboterp/ratings";
 import { describe, expect, it } from "vitest";
-import { planDifficulty, statsFromDistribution } from "../advisor/difficulty";
-import type { AdvisorPlan } from "../advisor/plan-state";
+import { planDifficulty, statsFromDistribution } from "@turboterp/app-core/difficulty";
+import type { AdvisorPlan } from "@turboterp/app-core/plan-state";
 
 const zero = { "A+": 0, A: 0, "A-": 0, "B+": 0, B: 0, "B-": 0, "C+": 0, C: 0, "C-": 0, "D+": 0, D: 0, "D-": 0, F: 0, W: 0, Other: 0 };
 const overall = (counts: Partial<typeof zero>) => distributionFromCounts({ ...zero, ...counts }, []);

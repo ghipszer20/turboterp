@@ -1,7 +1,7 @@
 import type { ProgramEntry } from "@turboterp/programs";
 import { describe, expect, it } from "vitest";
 import { findProgram } from "@turboterp/programs";
-import { kindTabs, optionState, pickerGroups } from "../advisor/program-picker";
+import { kindTabs, optionState, pickerGroups } from "@turboterp/app-core/program-picker";
 
 const entry = (id: string, name: string, kind: ProgramEntry["kind"], college: ProgramEntry["college"], track?: string): ProgramEntry => ({
   id,

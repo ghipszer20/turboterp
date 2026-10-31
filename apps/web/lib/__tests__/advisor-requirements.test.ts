@@ -3,9 +3,9 @@ import { cmscMajor } from "@turboterp/audit/programs/cmsc-major-2026-27.ts";
 import { genEd } from "@turboterp/audit/programs/gen-ed-2026-27.ts";
 import { mathMajorApplied } from "@turboterp/audit/programs/math-major-applied-2026-27.ts";
 import { describe, expect, it } from "vitest";
-import { emptyPrior, type PriorInputs } from "../advisor/plan-state";
-import { choiceAwardsOf, computePriorCredit } from "../advisor/prior-credit";
-import { describeGap, filterText, genEdName, prerequisiteText } from "../advisor/requirements";
+import { emptyPrior, type PriorInputs } from "@turboterp/app-core/plan-state";
+import { choiceAwardsOf, computePriorCredit } from "@turboterp/app-core/prior-credit";
+import { describeGap, filterText, genEdName, prerequisiteText } from "@turboterp/app-core/requirements";
 
 describe("describeGap: exam credit that offers a choice", () => {
   // The Gen Ed Diversity row: a `sets` row whose members are Gen Ed filters (2 DVUP, or 1 DVUP + 1 DVCC).
