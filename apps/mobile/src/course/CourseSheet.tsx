@@ -2,7 +2,7 @@
 // prerequisites as printed with tappable course codes, and the course-wide grade distribution. Reusable:
 // pass the course code (null closes it). Tapping a code inside swaps to that course; "Full course page"
 // opens the Schedule tab's course screen.
-import { useEffect, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { Modal, Pressable, ScrollView, View } from "react-native";
 import { useRouter } from "expo-router";
 import { Button, OfflineState, Skeleton, Text, radius, spacing, useTheme } from "../ui";
@@ -11,8 +11,10 @@ import { loadCourseBasics, useLoad } from "./useCourse";
 
 export function CourseSheet({ courseId, onClose, footer }: { courseId: string | null; onClose: () => void; footer?: ReactNode }) {
   const { c } = useTheme();
-  const [shown, setShown] = useState<string | null>(courseId);
-  useEffect(() => setShown(courseId), [courseId]);
+  // Tapping a code inside swaps the course; opening the sheet for a different code starts over.
+  const [swap, setSwap] = useState<{ from: string | null; id: string } | null>(null);
+  const shown = swap && swap.from === courseId ? swap.id : courseId;
+  const setShown = (id: string) => setSwap({ from: courseId, id });
   return (
     <Modal visible={courseId !== null} transparent animationType="slide" onRequestClose={onClose}>
       <Pressable style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.4)" }} onPress={onClose} accessibilityLabel="Close" />
