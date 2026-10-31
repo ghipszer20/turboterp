@@ -8,6 +8,21 @@ import { authorizeCron, cronJob } from "@/lib/cron";
 import { runDailyDigest, supabaseDigestSource } from "@/lib/consent/digest";
 import { supabaseEnv } from "@/lib/email/rate-limit";
 import { sendEmail } from "@/lib/email/send";
+import { syncSeatHotWindows } from "@/lib/seat-hot-windows";
+import type { AcademicEvent } from "@turboterp/campus-data";
+import type { SnapshotStore } from "@turboterp/campus-data/snapshots";
+
+/** Copies the calendar's registration and adjustment dates into seat_hot_windows (the seats job's schedule). Never fails the job. */
+async function syncHotWindows(store: SnapshotStore) {
+  const env = supabaseEnv();
+  if (!env) return;
+  try {
+    const events = (await store.get<AcademicEvent[]>("calendar/academic"))?.data ?? [];
+    if ((await syncSeatHotWindows(env, events)) === "failed") console.error("seat hot windows sync failed");
+  } catch (err) {
+    console.error("seat hot windows sync failed:", err);
+  }
+}
 
 /** The agreement-records email. Never fails the snapshot job; skipped when RECORDS_EMAIL or Supabase is unset. */
 async function sendDailyDigest(now: Date) {
@@ -46,6 +61,7 @@ async function run(request: NextRequest, context: { params: Promise<{ job: strin
     const report = await (job === "daily" ? buildSnapshots : job === "dining" ? refreshDining : refreshFast)(store, now);
     if (job === "daily") {
       await pruneSnapshots(store, now);
+      await syncHotWindows(store);
       await sendDailyDigest(now);
     }
     // Rebuild the cached pages whose data was just rewritten.
