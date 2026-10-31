@@ -67,13 +67,11 @@ export function useTermCourses(term: string | null): {
   const saved = useSaved(term);
   const plan = useAdvisorPlan();
   const sync = useMemo(() => planSync(plan, term, saved?.courses ?? null), [plan, term, saved]);
-  const base = useRef(sync.courses);
-  base.current = sync.courses;
   const toggle = useCallback(
     (id: string) => {
-      if (term) savedStore.update(term, (cur) => withCourses(cur, toggleCourse(base.current, id)));
+      if (term) savedStore.update(term, (cur) => withCourses(cur, toggleCourse(sync.courses, id)));
     },
-    [term],
+    [term, sync.courses],
   );
   const prompt = sync.prompt;
   const updatePlan = useCallback(() => {
