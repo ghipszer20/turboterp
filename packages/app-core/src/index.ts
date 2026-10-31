@@ -1,1 +1,1 @@
-﻿export * from "./key-value-store.ts";
+export * from "./key-value-store.ts";

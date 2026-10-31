@@ -5,7 +5,7 @@
 // transcript-lines.ts, which this only feeds; kept intentionally thin and not deeply unit-tested
 // per the brief -- pdfjs's own worker doesn't run under vitest's environment.
 
-import { groupItemsIntoLines, looksLikeTextLayer, type PdfTextItem } from "./transcript-lines";
+import { groupItemsIntoLines, looksLikeTextLayer, type PdfTextItem } from "@turboterp/app-core/transcript-lines";
 
 export type ExtractedPdf = { text: string; hasTextLayer: boolean; pageCount: number };
 

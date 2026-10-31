@@ -1,4 +1,4 @@
-﻿// The small synchronous key-value store the Advisor's persisted state goes through. The web app
+// The small synchronous key-value store the Advisor's persisted state goes through. The web app
 // passes a localStorage-backed one; the iOS app passes expo-sqlite/kv-store. Stored keys and
 // formats are unchanged. Implementations may throw (blocked storage); use the safe helpers below.
 export interface KeyValueStore {

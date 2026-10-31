@@ -1,4 +1,4 @@
-﻿import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { parseConsent, type ConsentRecord } from "./consent";
 import { syncConsent } from "./consent-send";
 
