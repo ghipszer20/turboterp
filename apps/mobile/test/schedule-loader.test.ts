@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { createScheduleLoader, ScheduleLoadError, type FetchLike } from "../src/schedule/loader";
+import { createScheduleLoader, type FetchLike } from "../src/schedule/loader";
 
 const ok = (body: unknown) => ({ ok: true, status: 200, json: async () => body });
 const status = (n: number) => ({ ok: n < 400, status: n, json: async () => ({}) });
@@ -28,15 +28,15 @@ describe("schedule loader", () => {
 
   it("reports offline for a network failure and http for a bad status, and retries after either", async () => {
     let n = 0;
-    const f: FetchLike = async () => {
+    const f: FetchLike = async (url) => {
       n++;
       if (n === 1) throw new TypeError("Network request failed");
       if (n === 2) return status(500);
-      return ok({ term: "202701" });
+      return url.endsWith("/current") ? ok({ term: "202701" }) : ok(indexFile);
     };
     const loader = createScheduleLoader(f, urlOf, {});
     await expect(loader.index()).rejects.toMatchObject({ kind: "offline" });
-    await expect(loader.index()).rejects.toBeInstanceOf(ScheduleLoadError);
-    await expect(loader.index()).rejects.toThrow(); // third call gets {term} then 4th (index) not mocked: falls to ok({term}) -> decode fails
+    await expect(loader.index()).rejects.toMatchObject({ kind: "http" });
+    expect((await loader.index())?.term).toBe("202701");
   });
 });
