@@ -13,6 +13,7 @@
     "./dates": "./src/dates.ts",
     "./hours": "./src/hours.ts",
     "./http": "./src/http.ts",
+    "./seat-windows": "./src/seat-windows.ts",
     "./snapshots": "./src/snapshots/index.ts",
     "./walk": "./src/walk.ts"
   },

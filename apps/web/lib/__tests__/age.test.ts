@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { dataAge, seatsAge } from "../age";
+import { dataAge } from "../age";
 
 const NOW = new Date("2026-09-25T13:00:00.000Z");
 const ago = (ms: number) => new Date(NOW.getTime() - ms).toISOString();
@@ -24,9 +24,3 @@ describe("dataAge", () => {
   });
 });
 
-describe("seatsAge", () => {
-  it("prefixes the data age with Seats", () => {
-    expect(seatsAge(ago(4 * 60_000), NOW)).toBe("Seats updated 4 min ago");
-    expect(seatsAge(ago(1_000), NOW)).toBe("Seats updated just now");
-  });
-});

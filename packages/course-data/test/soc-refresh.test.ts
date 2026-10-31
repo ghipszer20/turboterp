@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { beforeEach, describe, expect, it } from "vitest";
 import { FileSnapshotStore } from "@turboterp/campus-data/snapshots";
-import { refreshCourses, refreshSections, refreshSeats, seatRefreshIntervalMinutes, type RefreshDeps } from "../src/soc-refresh.ts";
+import { refreshCourses, refreshSections, refreshSeats, type RefreshDeps } from "../src/soc-refresh.ts";
 import { decodeCourseIndex, decodeDepartmentSections } from "../src/schedule-files.ts";
 import type { Course, SeatRow, Section } from "../src/soc.ts";
 

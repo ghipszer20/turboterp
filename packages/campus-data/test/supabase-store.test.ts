@@ -109,11 +109,11 @@ describe("SupabaseSnapshotStore", () => {
 
   it("lists keys under a prefix recursively, without .json", async () => {
     const { store } = make();
-    await store.put("rooms/2026-09-25/6745-23066", { updatedAt: "x", data: 1 });
-    await store.put("rooms/2026-09-26/6745-23066", { updatedAt: "x", data: 1 });
-    await store.put("dining/2026-09-25/19", { updatedAt: "x", data: 1 });
-    expect((await store.list("rooms")).sort()).toEqual(["rooms/2026-09-25/6745-23066", "rooms/2026-09-26/6745-23066"]);
-    expect(await store.list("dining")).toEqual(["dining/2026-09-25/19"]);
+    await store.put("dining/2026-09-25/a", { updatedAt: "x", data: 1 });
+    await store.put("dining/2026-09-26/a", { updatedAt: "x", data: 1 });
+    await store.put("libraries/x", { updatedAt: "x", data: 1 });
+    expect((await store.list("dining")).sort()).toEqual(["dining/2026-09-25/a", "dining/2026-09-26/a"]);
+    expect(await store.list("libraries")).toEqual(["libraries/x"]);
     expect(await store.list("nothing")).toEqual([]);
   });
 

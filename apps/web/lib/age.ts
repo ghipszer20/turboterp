@@ -1,7 +1,3 @@
-/** "Seats updated 4 min ago", for the schedule builder's section panel. */
-export function seatsAge(updatedAt: string, now: Date): string {
-  return `Seats ${dataAge(updatedAt, now)}`;
-}
 
 /** "updated 4 min ago": how old a snapshot is, for pages that mention freshness. */
 export function dataAge(updatedAt: string, now: Date): string {

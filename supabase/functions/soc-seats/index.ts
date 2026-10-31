@@ -7,7 +7,8 @@ Deno.serve((req) =>
   handleSeats(req, {
     cronSecret: Deno.env.get("CRON_SECRET"),
     store: () => new SupabaseSnapshotStore({ url: Deno.env.get("SUPABASE_URL")!, serviceKey: Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")! }),
-    // 100 s budget: past it a chunk stops, keeps a cursor and continues next run (the call limit is 150 s wall).
-    refresh: () => ({ ...liveRefreshDeps(), budgetMs: 100_000 }),
+    // 3 departments at a time, each worker pausing 300 ms per request. Past 120 s the run stops, keeps a cursor
+    // in the seats row and continues next time (the call limit is 150 s wall).
+    refresh: () => ({ ...liveRefreshDeps(), concurrency: 3, budgetMs: 120_000 }),
     now: () => new Date(),
   }));

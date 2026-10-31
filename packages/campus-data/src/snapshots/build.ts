@@ -76,8 +76,6 @@ export const snapshotKeys = {
 /** How many days of RecWell hours a snapshot keeps (the sheet covers a whole year). */
 export const RECWELL_DAYS = 14;
 export const STAMP_DAYS = 14;
-/** Menus are re-checked once their snapshot is this old (twice a day). */
-export const MENU_RECHECK_MS = 12 * 60 * 60_000;
 
 export type SourceStatus = { lastAttemptAt: string; lastSuccessAt: string | null; error: string | null };
 export type JobResult = { key: string; ok: boolean; error?: string };
@@ -182,26 +180,19 @@ export async function buildSnapshots(
   return report(results.flat());
 }
 
-/** The frequent job: room availability every run, menus once their snapshot is 30 minutes old. */
+/** The frequent job (every 30 min, daytime): room availability only. Menus have their own job, refreshDining. */
 export async function refreshFast(
   store: SnapshotStore,
   now: Date,
   sources: CampusSources = liveSources,
 ): Promise<JobReport> {
-  const today = campusDate(now);
   const catalog = (await store.get<RoomCatalog>(snapshotKeys.roomCatalog))?.data ?? null;
+  return report(await refreshRooms(store, now, sources, catalog));
+}
 
-  const dueHalls: number[] = [];
-  for (const hall of DINING_HALLS) {
-    const snap = await store.get(snapshotKeys.diningMenu(today, hall.id));
-    if (!snap || now.getTime() - Date.parse(snap.updatedAt) >= MENU_RECHECK_MS) dueHalls.push(hall.id);
-  }
-
-  const results = await Promise.all([
-    refreshRooms(store, now, sources, catalog),
-    refreshMenus(store, now, sources, dueHalls),
-  ]);
-  return report(results.flat());
+/** The dining job (twice a day): today's menu of every hall. No "is it due" reads: the schedule decides. */
+export async function refreshDining(store: SnapshotStore, now: Date, sources: CampusSources = liveSources): Promise<JobReport> {
+  return report(await refreshMenus(store, now, sources, DINING_HALLS.map((h) => h.id)));
 }
 
 /** The dated key prefixes pruneSnapshots looks under: `<prefix>/<date>/...`. */

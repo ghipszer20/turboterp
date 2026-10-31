@@ -1,4 +1,4 @@
-import { activeForTerm, alertText, batches, detectOpenings, matchWatches, type SeatCount, type Watch } from "../../../apps/web/lib/seat-alerts/logic.ts";
+import { alertText, batches, detectOpenings, matchWatches, seatKey, type SeatCount, type SeatState, type Watch } from "../../../apps/web/lib/seat-alerts/logic.ts";
 import type { PushPayload, PushResult } from "./push.ts";
 import type { DeviceSub, SeatAlertStore } from "../../../apps/web/lib/seat-alerts/store.ts";
 import type { SeatRow } from "../../../packages/course-data/src/soc.ts";
@@ -20,10 +20,13 @@ export const MAX_REQUESTS = 40;
 export const RUN_BUDGET_MS = 100_000; // the Edge call limit is 150 s wall
 export const BATCH_PAUSE_MS = 300;
 
+/** The current term (null when nobody watches anything), its active watches and their saved states keyed `COURSE-SECTION`. */
+export type AlertState = { term: string | null; watches: Watch[]; states: Map<string, SeatState> };
+
 export type RunDeps = {
-  /** The current Schedule of Classes term (snapshot `schedule/current`), or null. */
-  term: () => Promise<string | null>;
-  store: Pick<SeatAlertStore, "listActiveWatches" | "getStates" | "saveStates" | "markAlerted" | "subscriptionsFor" | "deleteDevice">;
+  /** Everything the run reads from the database, in ONE request (the seat_alert_load RPC). */
+  load: () => Promise<AlertState>;
+  store: Pick<SeatAlertStore, "saveStates" | "markAlerted" | "subscriptionsFor" | "deleteDevice">;
   /** Seat counts of one batch of courses straight from Testudo (scanSeats of the sections page). */
   fetchSeats: (term: string, courseIds: string[]) => Promise<SeatRow[]>;
   /** schedule/<term>/seats, the whole-term file the 5-minute job keeps, or null. */
@@ -72,9 +75,11 @@ function fromFile(file: SeatsFile, courses: Set<string>): SeatCount[] {
 
 export async function runSeatAlerts(deps: RunDeps, now: Date): Promise<RunReport> {
   const report: RunReport = { watches: 0, courses: 0, requests: 0, checkedLive: 0, fromSeatsFile: 0, openings: 0, alerts: 0, gone: 0, failedBatches: 0 };
-  const term = await deps.term();
+  const loaded = await deps.load();
+  const term = loaded.term;
   if (!term) return report;
-  const watches = activeForTerm(await deps.store.listActiveWatches(term), term);
+  const watches = loaded.watches;
+  const prev = loaded.states;
   report.watches = watches.length;
   if (watches.length === 0) return report;
 
@@ -84,14 +89,19 @@ export async function runSeatAlerts(deps: RunDeps, now: Date): Promise<RunReport
 
   /** Saved states vs these fresh counts: save, detect openings, push to the matching watches. */
   const handleBatch = async (courses: string[], fetched: SeatCount[], onlyNewerThan?: string) => {
-    const prev = await deps.store.getStates(term, courses);
     // Seats-file counts older than what a live check already saved would undo it; only act on a newer file.
     const fresh = onlyNewerThan === undefined ? fetched : fetched.filter((s) => {
-      const before = prev.get(`${s.courseId}-${s.sectionId}`);
+      const before = prev.get(seatKey(s.courseId, s.sectionId));
       return !before || before.checkedAt < onlyNewerThan;
     });
     const { save, openings } = detectOpenings(prev, fresh, now);
-    await deps.store.saveStates(term, save);
+    // Write only what changed: most runs change nothing, and then make no write request at all.
+    const changed = save.filter((s) => {
+      const before = prev.get(seatKey(s.courseId, s.sectionId));
+      return !before || before.open !== s.open || before.waitlist !== s.waitlist || before.holdfile !== s.holdfile;
+    });
+    if (changed.length > 0) await deps.store.saveStates(term, changed);
+    for (const s of changed) prev.set(seatKey(s.courseId, s.sectionId), s);
     report.openings += openings.length;
 
     const matches = matchWatches(openings, watches.filter((w) => courses.includes(w.courseId)), now);
