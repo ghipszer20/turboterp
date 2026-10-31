@@ -1,15 +1,15 @@
 // Hooks behind the Schedule tab's first screen: the course index, the department files for the
 // courses on screen, and the term's saved course list (same key and format as the web).
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { emptySaved, parseSaved, SAVED_KEY, serializeSaved, withCourses, type SavedSchedule } from "@turboterp/app-core/schedule/saved";
+import { withCourses } from "@turboterp/app-core/schedule/saved";
 import { searchCourses } from "@turboterp/app-core/schedule/search";
 import type { SeatsOverlay } from "@turboterp/app-core/schedule/seats-overlay";
 import type { CourseIndex, DepartmentSections } from "@turboterp/course-data/schedule-files";
-import { kvStore } from "../storage";
+import { savedStore, useSaved } from "./savedStore";
 import { createScheduleLoader, ScheduleLoadError, type GradesByCourse } from "./loader";
 import { summarizeDepartment, toggleCourse, type CourseRow, type CourseSummary } from "./results";
 
-const loader = createScheduleLoader((url, init) => fetch(url, init));
+export const loader = createScheduleLoader((url, init) => fetch(url, init));
 const MAX_DEPTS = 8;
 const MAX_RESULTS = 50;
 const DEBOUNCE_MS = 200;
@@ -52,32 +52,13 @@ export function useCourseIndex(): { state: IndexState; reload: () => void } {
 
 /** The term's saved schedule (shared format with the web); adding or removing writes it back at once. */
 export function useTermCourses(term: string | null): { courses: string[]; toggle: (id: string) => void } {
-  // The kv store is synchronous, so the saved list is read during render (once per term).
-  const loaded = useMemo(() => {
-    if (!term) return null;
-    let raw: string | null = null;
-    try {
-      raw = kvStore.get(SAVED_KEY);
-    } catch {
-      raw = null;
-    }
-    return parseSaved(raw, term);
-  }, [term]);
-  const [edited, setSaved] = useState<SavedSchedule | null>(null);
-  const saved = edited ?? loaded;
+  // One store shared with the builder, so plans saved there are never overwritten from here.
+  const saved = useSaved(term);
   const toggle = useCallback(
     (id: string) => {
-      const cur = saved ?? (term ? emptySaved(term) : null);
-      if (!cur) return;
-      const next = withCourses(cur, toggleCourse(cur.courses ?? [], id));
-      setSaved(next);
-      try {
-        kvStore.set(SAVED_KEY, serializeSaved(next));
-      } catch {
-        // The list still works for this session if the store is unavailable.
-      }
+      if (term) savedStore.update(term, (cur) => withCourses(cur, toggleCourse(cur.courses ?? [], id)));
     },
-    [term, saved],
+    [term],
   );
   return { courses: saved?.courses ?? [], toggle };
 }
