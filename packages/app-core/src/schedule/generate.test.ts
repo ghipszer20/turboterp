@@ -5,7 +5,7 @@ import { decodeLayout } from "./gallery";
 import { runGeneration } from "./generate";
 
 const { sections } = JSON.parse(
-  readFileSync(new URL("../../../../../packages/course-data/test/fixtures/soc-202701-sample.json", import.meta.url), "utf8"),
+  readFileSync(new URL("../../../course-data/test/fixtures/soc-202701-sample.json", import.meta.url), "utf8"),
 ) as { sections: Section[] };
 const byKey = new Map(sections.map((s) => [`${s.courseId}/${s.id}`, s]));
 const TRIO = ["CMSC351", "STAT400", "ENGL394"];
