@@ -43,7 +43,7 @@ Scripts in the session scratchpad (`measure/seats.ts`, `measure/scan.ts`, `measu
 
 ### 4.2 Where the jobs run
 - **Seats and Seat Alerts move to Supabase Edge Functions**, triggered by the existing pg_cron jobs. This isn't moving the problem: the job is first made ~18× cheaper (4.1), and Supabase meters Edge Functions by **invocations, not CPU-hours**.
-  - Seats split into 4 calls per run (~0.3 s CPU and ~35 s wall each, under the 2 s / 150 s caps): 4 × 8,640 = 34,560 calls a month.
+  - Seats are ONE call per run (~0.4 s CPU, ~100 s wall at 3 departments at a time, under the 2 s / 150 s caps), gated in SQL: every 5 min only in hot windows (registration and schedule adjustment), else every 15 min. **Supabase log ingestion (Free: 1 GB/month; ~4.4 KB per Storage request, ~1 KB per PostgREST request, ~3-4 KB per Edge call) is the binding limit**, so hot snapshots (seats row, rooms, current term) live in the `snapshot_hot` table and a run makes 3 store requests.
   - Seat Alerts every minute: 43,200 calls a month.
   - Total ~80k of 500k (16%), the same at any number of users.
 - **Why not stay on Vercel:** pessimistic seats at 5 min = 1.1 s × 8,640 = 2.6 CPU-hours, plus alerts ~1.2 and campus ~0.4 ≈ 4.2 of 4 CPU-hours. Doesn't fit. (Fallback if the Edge port fails: seats every 15 min on Vercel ≈ 0.9 CPU-hours, every 5 min only during registration and adjustment.)
@@ -87,7 +87,7 @@ Scripts in the session scratchpad (`measure/seats.ts`, `measure/scan.ts`, `measu
 Until then, an alert at 50% of each meter.
 
 ## 6. Tasks
-**Cron state (owner, 2026-10-30):** the owner unscheduled `turboterp-seat-alerts` (and `turboterp-soc-seats` if run; check with `select jobname, schedule from cron.job;`) so the old code can't burn CPU when Vercel unpauses. Seat counts and Seat Alerts are frozen until the new jobs deploy. **Rollout:** (1) deploy `feat/ui-rework` with Tasks 1, 3 and the calendar change; apply 0014 (nightly `soc-sections` on Vercel) and 0015 (campus refresh every 30 min). Seat counts then update nightly. (2) `feat/edge-jobs` (built 2026-10-30, awaiting owner deploy): seats every 5 min (4 chunk calls, `turboterp-soc-seats-0..3`) and Seat Alerts (`turboterp-seat-alerts`, every minute, 40-request cap) on Supabase Edge Functions. Owner steps are in `supabase/functions/README.md`; migration `0016_edge_jobs.sql` unschedules the old Vercel-pointing jobs and schedules the new ones. The Vercel cron route no longer serves `soc-seats` or `seat-alerts`; never re-add them there. Measured CPU per seats chunk is under 0.2 s (limit 2 s).
+**Cron state (owner, 2026-10-30):** the owner unscheduled `turboterp-seat-alerts` (and `turboterp-soc-seats` if run; check with `select jobname, schedule from cron.job;`) so the old code can't burn CPU when Vercel unpauses. Seat counts and Seat Alerts are frozen until the new jobs deploy. **Rollout:** (1) deploy `feat/ui-rework` with Tasks 1, 3 and the calendar change; apply 0014 (nightly `soc-sections` on Vercel) and 0015 (campus refresh every 30 min). Seat counts then update nightly. (2) `feat/edge-jobs` (built 2026-10-30, reworked 2026-10-31 for log ingestion, awaiting owner deploy): seats as ONE Edge call (`turboterp-soc-seats`, cron every 5 min, called only in a hot window or at minutes 0/15/30/45) and Seat Alerts (`turboterp-seat-alerts`, every minute, called only while a watch exists, one RPC, 40-request cap). Hot windows = from the first priority/early registration day until 14 days after the last, plus the schedule-adjustment period, written daily into `seat_hot_windows` by the Vercel daily job. Hot snapshots (seats row, rooms, room status, current term) live in the `snapshot_hot` table. Campus: `turboterp-fast` is rooms only every 30 min (7:00-01:00 New York), new `turboterp-dining` at 6:00 and 14:00 New York (Vercel job `dining`); `turboterp-cron-cleanup` trims `cron.job_run_details` to 7 days. The "Seats updated" line is removed from the schedule builder. Owner steps are in `supabase/functions/README.md`; migration `0016_edge_jobs.sql` unschedules the old Vercel-pointing jobs and schedules the new ones. The Vercel cron route no longer serves `soc-seats` or `seat-alerts`; never re-add them there. Measured CPU per seats run is about 0.4 s (limit 2 s), 3 store requests.
 
 0. **Measure (done 2026-10-30, main session; calibrated against the owner's Usage reading).**
 1. **Seats scanner + split files** (one builder, `feat/seats-scan`).
@@ -98,7 +98,7 @@ Until then, an alert at 50% of each meter.
    - No `loadRatings` on the seats path.
 2. **Edge Functions for seats and Seat Alerts** (one builder, `feat/edge-jobs`, after 1). Order:
    - Spike `web-push` in Deno first.
-   - Port the seats run in 4 chunks.
+   - Port the seats run as one call (concurrency 3), not chunks.
    - Port Seat Alerts with the per-minute request cap (4.3).
    - Repoint the pg_cron jobs (a migration for the owner to apply).
    - Remove `soc-seats` and `seat-alerts` from the Vercel cron route.
