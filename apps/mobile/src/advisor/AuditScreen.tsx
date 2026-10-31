@@ -10,6 +10,8 @@ import { showsScienceGpa } from "@turboterp/app-core/tracks";
 import { gatewayAttemptLimitNote } from "@turboterp/app-core/what-if-display";
 import { Badge, Card, StatusBadge, Text, useTheme } from "../ui";
 import { radius, spacing, type Status } from "../ui/theme";
+import { CourseCodeText } from "../course/components";
+import { CourseSheet } from "../course/CourseSheet";
 import { AdvisorGate, Building, EngineNote } from "./AdvisorGate";
 import { useAnalysisState } from "./analysis";
 import {
@@ -180,6 +182,17 @@ function RowShell({ name, tone, label, sub }: { name: string; tone: Status; labe
   );
 }
 
+/** Text whose course codes open the course sheet. */
+function CodeText({ text }: { text: string }) {
+  const [open, setOpen] = useState<string | null>(null);
+  return (
+    <>
+      <CourseCodeText text={text} tone="text2" onOpenCourse={setOpen} />
+      <CourseSheet courseId={open} onClose={() => setOpen(null)} />
+    </>
+  );
+}
+
 function ReqItem({ row }: { row: ReqRow }) {
   return (
     <RowShell
@@ -194,14 +207,12 @@ function ReqItem({ row }: { row: ReqRow }) {
             </Text>
           ))}
           {row.counted.length > 0 ? (
-            <Text variant="sub" tone="text2">{`Counted: ${row.counted.join(", ")}`}</Text>
+            <CodeText text={`Counted: ${row.counted.join(", ")}`} />
           ) : null}
           {row.gap ? (
-            <Text variant="sub" tone="text2">
-              {row.gap.text}
-              {row.gap.suggestions.length > 0 ? ` For example: ${row.gap.suggestions.join(", ")}.` : ""}
-              {row.gap.note ? ` ${row.gap.note}` : ""}
-            </Text>
+            <CodeText
+              text={`${row.gap.text}${row.gap.suggestions.length > 0 ? ` For example: ${row.gap.suggestions.join(", ")}.` : ""}${row.gap.note ? ` ${row.gap.note}` : ""}`}
+            />
           ) : null}
         </>
       }
