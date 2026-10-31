@@ -34,7 +34,7 @@ export function getAuthClient(): Promise<SupabaseClient> {
     });
     // Tie token refresh to the app being in the foreground.
     const sync = (state: string) => void (state === "active" ? c.auth.startAutoRefresh() : c.auth.stopAutoRefresh());
-    sync(AppState.currentState);
+    sync(AppState.currentState ?? "active");
     AppState.addEventListener("change", sync);
     return c;
   });

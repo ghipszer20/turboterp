@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { codeProblem, emailProblem, isEmail, normalizeCode, sendProblem, verifyProblem } from "./email";
+import { codeProblem, emailProblem, isEmail, normalizeCode, sendProblem, verifyProblem } from "../auth/email";
 
 describe("sign-in code helpers", () => {
   it("normalizeCode strips spaces and dashes", () => {
