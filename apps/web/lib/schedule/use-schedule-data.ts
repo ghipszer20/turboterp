@@ -144,15 +144,5 @@ export function useScheduleData(courseIds: string[], wantGrades = false) {
     [grades],
   );
 
-  /** When the department's seat counts were last refreshed, or null while loading / missing. */
-  const seatsUpdatedAt = useCallback(
-    (courseId: string): string | null => {
-      const d = depts[deptOf(courseId)];
-      if (!d || d === "missing") return null;
-      // Seat counts come from the seats file; fall back to the department file's nightly time when it is absent.
-      return seatsOverlay?.generatedAt ?? d.generatedAt;
-    },
-    [depts, seatsOverlay],
-  );
-  return { indexState, term, ...derived, loaded: derived.loaded && gradesLoaded, gpas, loadGrades, gradesFor, seatsUpdatedAt };
+  return { indexState, term, ...derived, loaded: derived.loaded && gradesLoaded, gpas, loadGrades, gradesFor };
 }
