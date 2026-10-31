@@ -7,6 +7,8 @@ Session 1 of `next-steps-plan.md` keeps this current. Nothing here rewrites the 
 - **Secret scan (2026-09-28):** tracked files and all history were scanned for API-key, AWS, GitHub-token and private-key patterns: nothing found. No `.env` file or transcript was ever committed. `.gitignore` covers `.env*` (except `.env.example`), `transcripts/` and `*transcript*.pdf`.
 - **GTFS license (2026-09-29; moot since Transport was removed 2026-10-29):** the "Interline GTFS License & Terms of Use" that Transitland links for `f-shuttleum~md~us` was deleted from GitHub (hence the 404), but its text is in that repository's history (commit `3db26c0` of `transitland/gtfs-archives-not-hosted-elsewhere`). It allows use, redistribution and derived works for "non-commercial, non-revenue purposes only limited to educational, scholarly, and governmental uses"; the data is "AS IS"; attribution is optional (legend: "Transit scheduling, geographic, and real-time data provided by permission of Interline."). TurboTerp fits (free, open source, no ads or paid tier, for students). Two notes for the owner: donations must stay cost-covering only, not revenue, and showing the optional legend on Transport is a cheap courtesy. The feed itself is now published by Actionfigure (`feed.actionfigure.ai`, data@actionfigure.ai); asking DOTS in the GTFS-RT email is still worthwhile.
 
+- **"Not affiliated with the University of Maryland" on every page (checked 2026-10-31):** the desktop sidebar (`components/Nav.tsx`) and the footer of every `Page` (`components/ui.tsx`) carry it, as do the Advisor and Coming soon pages; `/campus` and `/support` only redirect; Terms and Privacy state it in their text. The iOS app has it on About.
+
 ## Personal details to scrub before going public
 - **The owner's academic profile:**
   - PROJECT_MEMORY.md section 13 "Owner profile", and section 17 ("The owner is in Math Applied").
@@ -25,7 +27,6 @@ Session 1 of `next-steps-plan.md` keeps this current. Nothing here rewrites the 
 
 ## Still to do
 - **Terms and privacy pages:** drafts of the clickwrap terms and the privacy page (legal.md). This is a UI change, so the owner approves it.
-- **"Not affiliated with the University of Maryland" on every page:** check it once the deployed layout exists.
 
 ## At launch (scaling, from `scaling-plan.md`; added 2026-10-31)
 - **Delete the site lock:** remove `apps/web/proxy.ts`, `lib/access.ts`, `/coming-soon` and Vercel env `SITE_ACCESS_CODE`, so no request runs the proxy. Drop `/coming-soon` from `robots.ts` and `/api/access` from `PER_VISIT_ALLOWED` (`lib/per-visit-routes.ts`).
