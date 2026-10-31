@@ -183,3 +183,8 @@ Plan: `docs/project/account-sync-plan.md`.
 - Hot data (seats, room availability) lives in a Postgres table, not Storage.
 - The schedule builder no longer shows "Seats updated X min ago" (owner: "no one needs to know how slow it is").
 - Account sync is left as is: it already checks the sign-in on the device and downloads the account copy only when its revision changed.
+
+## iOS engine: WebView bridge (S0 spike, 2026-10-31; Lead decision under the owner's overtime go)
+- The degree audit (`highs` WASM) and transcript PDF reading run in the iOS app through a bundled WebView "engine bridge" (task A5), not natively on Hermes. Spike: `docs/project/ios-spike.md`. The bridge passed a real CS-major audit and pdfjs extraction in headless Edge; Hermes WebAssembly couldn't be tested on Windows (no Hermes VM with WASM), so native stays unverified.
+- Revisit after a device check: if Hermes runs `highs` in Expo Go or a dev build, the audit can move native later; the bridge stays for transcripts and exports.
+- The Capacitor fallback is not needed.
