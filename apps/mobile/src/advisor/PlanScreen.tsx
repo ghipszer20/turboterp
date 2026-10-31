@@ -68,6 +68,7 @@ function NoPlan() {
 type Sheet = { kind: "course"; term: string; id: string } | { kind: "move"; term: string; id: string } | { kind: "add"; term: string } | null;
 
 function Plan({ data }: { data: CatalogData }) {
+  const router = useRouter();
   const plan = useAdvisorPlan()!;
   const { c } = useTheme();
   const [sheet, setSheet] = useState<Sheet>(null);
@@ -146,6 +147,9 @@ function Plan({ data }: { data: CatalogData }) {
           </Text>
         )}
       </Card>
+      <View style={{ marginTop: spacing.sm }}>
+        <Button variant="secondary" label="Edit setup" onPress={() => router.push("/advisor/setup")} />
+      </View>
 
       {programChecks.length > 0 ? (
         <Card style={{ padding: spacing.lg, marginTop: spacing.md, gap: spacing.sm }}>
