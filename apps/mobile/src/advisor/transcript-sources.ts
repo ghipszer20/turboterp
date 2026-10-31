@@ -21,7 +21,22 @@ export async function pickPdf(): Promise<Picked> {
   }
 }
 
-const IMAGE_OPTIONS = { mediaTypes: ["images" as const], base64: true, quality: 0.7, exif: false };
+import { planResize } from "./transcript-resize";
+
+const IMAGE_OPTIONS = { mediaTypes: ["images" as const], base64: false, quality: 1, exif: false };
+
+type PickedAsset = { uri: string; width: number; height: number };
+
+// Resizes (when over the long-edge cap) and re-encodes as JPEG at 0.7, which also turns HEIC into JPEG.
+async function toJpegBase64(a: PickedAsset): Promise<string | null> {
+  const { ImageManipulator, SaveFormat } = await import("expo-image-manipulator");
+  const ctx = ImageManipulator.manipulate(a.uri);
+  const target = planResize(a.width, a.height);
+  if (target) ctx.resize(target);
+  const ref = await ctx.renderAsync();
+  const out = await ref.saveAsync({ format: SaveFormat.JPEG, compress: 0.7, base64: true });
+  return out.base64 ?? null;
+}
 
 export async function pickPhotos(): Promise<Picked> {
   let ImagePicker: typeof import("expo-image-picker");
@@ -32,7 +47,7 @@ export async function pickPhotos(): Promise<Picked> {
   }
   try {
     const r = await ImagePicker.launchImageLibraryAsync({ ...IMAGE_OPTIONS, allowsMultipleSelection: true, selectionLimit: 6 });
-    return fromImages(r);
+    return await fromImages(r);
   } catch {
     return { ok: false, message: "Couldn't open your photos. Try the paste box instead." };
   }
@@ -48,14 +63,18 @@ export async function takePhoto(): Promise<Picked> {
   try {
     const perm = await ImagePicker.requestCameraPermissionsAsync();
     if (!perm.granted) return { ok: false, message: "Camera access is off. You can turn it on in Settings, or choose a photo instead." };
-    return fromImages(await ImagePicker.launchCameraAsync(IMAGE_OPTIONS));
+    return await fromImages(await ImagePicker.launchCameraAsync(IMAGE_OPTIONS));
   } catch {
     return { ok: false, message: "Couldn't open the camera. Try choosing a photo instead." };
   }
 }
 
-function fromImages(r: { canceled: boolean; assets?: { base64?: string | null }[] | null }): Picked {
+async function fromImages(r: { canceled: boolean; assets?: PickedAsset[] | null }): Promise<Picked> {
   if (r.canceled || !r.assets?.length) return { ok: "cancelled" };
-  const base64s = r.assets.map((a) => a.base64).filter((b): b is string => typeof b === "string" && b.length > 0);
+  const base64s: string[] = [];
+  for (const a of r.assets) {
+    const b = await toJpegBase64(a);
+    if (b) base64s.push(b);
+  }
   return base64s.length ? { ok: true, base64s } : { ok: false, message: "Couldn't read that photo. Try another." };
 }

@@ -5,6 +5,8 @@ Drafted 2026-10-29 by the main session for the owner's request: "plan the transf
 ## 0. Review and go (2026-10-31)
 **Owner go, 2026-10-31:** "review the plan for converting this to the app code, then start on overtime mode." The owner gave this go in the main session, so the plan runs **in this one session as Lead, in overtime mode**, with at most 3 builders at once (PROJECT_MEMORY section 18), in dependency order, instead of 5 owner-opened sessions. Section 2's 5-session layout stays available if the owner wants more speed later.
 
+**Privacy label rule:** the App Store privacy label answers must match `ios.privacyManifests.NSPrivacyCollectedDataTypes` in `apps/mobile/app.json` exactly: email address (linked), name (linked), other user content (linked), device ID (not linked) and crash data (not linked), all for App Functionality and none used for tracking. Change both together.
+
 **Changes since the plan was written** (they override the rows below wherever they conflict):
 1. **Seat Alerts runs on Supabase now** (`scaling-plan.md`, 2026-10-31). The every-minute job is the Edge Function `supabase/functions/seat-alerts` (Deno), not the Vercel cron. It loads everything through the `seat_alert_load()` RPC (migration 0016). **A4s** therefore:
    - adds the Expo push path in `supabase/functions/seat-alerts`, with the same cooldown;
