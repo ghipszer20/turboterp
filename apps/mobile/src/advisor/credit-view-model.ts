@@ -52,7 +52,7 @@ export const addDual = (prior: PriorInputs, key: string, d: DualDraft): PriorInp
 
 /** An empty id returns the award to automatic: the pick is removed. */
 export function setChoice(prior: PriorInputs, source: string, id: string): PriorInputs {
-  const { [source]: _removed, ...rest } = prior.choices;
+  const rest = Object.fromEntries(Object.entries(prior.choices).filter(([k]) => k !== source));
   return { ...prior, choices: id ? { ...rest, [source]: id } : rest };
 }
 
