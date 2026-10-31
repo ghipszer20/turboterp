@@ -44,15 +44,32 @@ describe("seatAlertStore: student API", () => {
     const { calls, store } = fake([[{ id: "d1" }]]);
     expect(await store.createDevice({ secretHash: "h", sub: { endpoint: "https://p/1", p256dh: "k", auth: "a" } })).toBe("d1");
     expect(calls[0]!.url).toContain("/rest/v1/alert_devices");
-    expect(JSON.parse(calls[0]!.init.body as string)).toEqual({ secret_hash: "h", endpoint: "https://p/1", p256dh: "k", auth: "a" });
+    expect(JSON.parse(calls[0]!.init.body as string)).toEqual({ secret_hash: "h", platform: "web", endpoint: "https://p/1", p256dh: "k", auth: "a" });
+  });
+  it("createDevice with an Expo token inserts an ios row without web columns", async () => {
+    const { calls, store } = fake([[{ id: "d2" }]]);
+    expect(await store.createDevice({ secretHash: "h", expoToken: "ExponentPushToken[abcdefgh]" })).toBe("d2");
+    expect(JSON.parse(calls[0]!.init.body as string)).toEqual({ secret_hash: "h", platform: "ios", expo_token: "ExponentPushToken[abcdefgh]" });
+  });
+  it("updateDeviceExpo switches a device to ios and clears the web subscription; deleteDeviceByExpoToken spares an id", async () => {
+    const { calls, store } = fake([[], [], []]);
+    await store.updateDeviceExpo("d1", "ExponentPushToken[abcdefgh]");
+    expect(calls[0]!.url).toContain("alert_devices?id=eq.d1");
+    expect(JSON.parse(calls[0]!.init.body as string)).toEqual({ platform: "ios", expo_token: "ExponentPushToken[abcdefgh]", endpoint: null, p256dh: null, auth: null });
+    await store.deleteDeviceByExpoToken("ExponentPushToken[abcdefgh]");
+    await store.deleteDeviceByExpoToken("ExponentPushToken[abcdefgh]", "d1");
+    expect(calls[1]!.url).toContain("alert_devices?expo_token=eq.ExponentPushToken");
+    expect(calls[1]!.url).not.toContain("neq");
+    expect(calls[2]!.url).toContain("&id=neq.d1");
   });
   it("getDevice returns the hash or null", async () => {
     expect(await fake([[{ id: "d1", secret_hash: "h" }]]).store.getDevice("d1")).toEqual({ id: "d1", secretHash: "h" });
     expect(await fake([[]]).store.getDevice("d1")).toBeNull();
   });
-  it("updateDeviceSub patches the endpoint and keys", async () => {
+  it("updateDeviceSub patches the endpoint and keys and clears any Expo token", async () => {
     const { calls, store } = fake([[]]);
     await store.updateDeviceSub("d1", { endpoint: "https://p/2", p256dh: "k", auth: "a" });
+    expect(JSON.parse(calls[0]!.init.body as string)).toEqual({ platform: "web", endpoint: "https://p/2", p256dh: "k", auth: "a", expo_token: null });
     expect(calls[0]!.url).toContain("alert_devices?id=eq.d1");
     expect(calls[0]!.init.method).toBe("PATCH");
   });

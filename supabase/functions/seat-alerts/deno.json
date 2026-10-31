@@ -7,6 +7,7 @@
     "../../../apps/web/lib/seat-alerts/logic": "../../../apps/web/lib/seat-alerts/logic.ts",
     "../../../apps/web/lib/seat-alerts/store": "../../../apps/web/lib/seat-alerts/store.ts",
     "../../../apps/web/lib/seat-alerts/push": "./push.ts",
+    "../../../apps/web/lib/seat-alerts/expo": "../../../apps/web/lib/seat-alerts/expo.ts",
     "../../../apps/web/lib/email/rate-limit": "../../../apps/web/lib/email/rate-limit.ts"
   }
 }

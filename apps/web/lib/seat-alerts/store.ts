@@ -4,7 +4,9 @@ import { seatKey, type SeatState, type Watch } from "./logic";
 // Server-only. Supabase REST with the service role (tables: supabase/migrations/0009_seat_alerts.sql, 0010_seat_alert_devices.sql).
 
 export type PushSub = { endpoint: string; p256dh: string; auth: string };
-export type DeviceSub = PushSub & { deviceId: string };
+/** A device is either a web-push subscription or an iOS Expo token (migration 0018). */
+export type DeviceSub = (PushSub & { deviceId: string }) | { deviceId: string; expoToken: string };
+export type NewDeviceSub = { sub: PushSub; expoToken?: undefined } | { expoToken: string; sub?: undefined };
 
 export type SeatAlertStore = ReturnType<typeof seatAlertStore>;
 
@@ -64,15 +66,24 @@ export function seatAlertStore(env: SupabaseEnv, fetchFn: typeof fetch = fetch) 
 
     async subscriptionsFor(deviceIds: string[]): Promise<DeviceSub[]> {
       if (deviceIds.length === 0) return [];
-      const r = await rows<{ id: string; endpoint: string; p256dh: string; auth: string }>(`alert_devices?id=in.(${deviceIds.map(enc).join(",")})&select=id,endpoint,p256dh,auth`);
-      return r.map((x) => ({ deviceId: x.id, endpoint: x.endpoint, p256dh: x.p256dh, auth: x.auth }));
+      const r = await rows<{ id: string; endpoint: string | null; p256dh: string | null; auth: string | null; expo_token: string | null }>(`alert_devices?id=in.(${deviceIds.map(enc).join(",")})&select=id,endpoint,p256dh,auth,expo_token`);
+      const out: DeviceSub[] = [];
+      for (const x of r) {
+        if (x.expo_token) out.push({ deviceId: x.id, expoToken: x.expo_token });
+        else if (x.endpoint && x.p256dh && x.auth) out.push({ deviceId: x.id, endpoint: x.endpoint, p256dh: x.p256dh, auth: x.auth });
+      }
+      return out;
     },
 
-    async createDevice(d: { secretHash: string; sub: PushSub }): Promise<string> {
+    async createDevice(d: { secretHash: string } & NewDeviceSub): Promise<string> {
       const res = await call("alert_devices", {
         method: "POST",
         headers: { Prefer: "return=representation" },
-        body: JSON.stringify({ secret_hash: d.secretHash, endpoint: d.sub.endpoint, p256dh: d.sub.p256dh, auth: d.sub.auth }),
+        body: JSON.stringify(
+          d.sub
+            ? { secret_hash: d.secretHash, platform: "web", endpoint: d.sub.endpoint, p256dh: d.sub.p256dh, auth: d.sub.auth }
+            : { secret_hash: d.secretHash, platform: "ios", expo_token: d.expoToken },
+        ),
       });
       const body = (await res.json()) as { id?: string }[];
       if (!Array.isArray(body) || !body[0]?.id) throw new Error("seat-alerts: no row returned");
@@ -85,7 +96,16 @@ export function seatAlertStore(env: SupabaseEnv, fetchFn: typeof fetch = fetch) 
     },
 
     async updateDeviceSub(id: string, sub: PushSub): Promise<void> {
-      await call(`alert_devices?id=eq.${enc(id)}`, { method: "PATCH", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ endpoint: sub.endpoint, p256dh: sub.p256dh, auth: sub.auth }) });
+      await call(`alert_devices?id=eq.${enc(id)}`, { method: "PATCH", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ platform: "web", endpoint: sub.endpoint, p256dh: sub.p256dh, auth: sub.auth, expo_token: null }) });
+    },
+
+    /** A known device switching to (or refreshing) an iOS Expo token. */
+    async updateDeviceExpo(id: string, expoToken: string): Promise<void> {
+      await call(`alert_devices?id=eq.${enc(id)}`, { method: "PATCH", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ platform: "ios", expo_token: expoToken, endpoint: null, p256dh: null, auth: null }) });
+    },
+
+    async deleteDeviceByExpoToken(expoToken: string, exceptId?: string): Promise<void> {
+      await call(`alert_devices?expo_token=eq.${enc(expoToken)}${exceptId ? `&id=neq.${enc(exceptId)}` : ""}`, { method: "DELETE", headers: { Prefer: "return=minimal" } });
     },
 
     /** Deleting a device cascades to its watches. */

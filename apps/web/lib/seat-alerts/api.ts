@@ -1,6 +1,7 @@
 import { createHmac, hkdfSync, randomBytes, timingSafeEqual } from "node:crypto";
 import { checkAndRecord, hashKey, type SendStore } from "../email/rate-limit";
 import { MAX_WATCHES, seatKey, type Watch } from "./logic";
+import { isExpoToken } from "./expo";
 import type { PushPayload, PushResult } from "./push";
 import type { PushSub, SeatAlertStore } from "./store";
 
@@ -12,7 +13,7 @@ const DAY_MS = 86_400_000;
 
 export type SeatApiStore = Pick<
   SeatAlertStore,
-  "listWatches" | "getWatch" | "createWatch" | "markDone" | "deleteWatch" | "getStates" | "createDevice" | "getDevice" | "updateDeviceSub" | "deleteDevice" | "deleteDeviceByEndpoint"
+  "listWatches" | "getWatch" | "createWatch" | "markDone" | "deleteWatch" | "getStates" | "createDevice" | "getDevice" | "updateDeviceSub" | "updateDeviceExpo" | "deleteDevice" | "deleteDeviceByEndpoint" | "deleteDeviceByExpoToken"
 >;
 
 export type CatalogHit = { courseExists: boolean; /** Open seats in the term's snapshot, or null when the section isn't there / not asked. */ sectionOpen: number | null };
@@ -24,6 +25,8 @@ export type SeatApiDeps = {
   lookup: (term: string, courseId: string, sectionId: string | null) => Promise<CatalogHit>;
   store: SeatApiStore;
   push: (sub: PushSub, payload: PushPayload) => Promise<PushResult>;
+  /** iOS: one Expo push (lib/seat-alerts/expo.ts). */
+  pushExpo: (expoToken: string, payload: PushPayload) => Promise<PushResult>;
   vapidConfigured: () => boolean;
   /** CRON_SECRET, the HMAC key for "I got it" tokens. */
   secret: string | undefined;
@@ -217,18 +220,33 @@ export const TEST_ALERT: PushPayload = {
 
 export async function handleDeviceRegister(request: Request, deps: SeatApiDeps): Promise<Response> {
   const body = await readBody(request);
-  const keys = body?.keys as { p256dh?: unknown; auth?: unknown } | undefined;
-  if (typeof body?.endpoint !== "string" || !isKnownPushEndpoint(body.endpoint) || typeof keys?.p256dh !== "string" || !keys.p256dh || typeof keys.auth !== "string" || !keys.auth) {
-    return json({ error: "bad-request" }, 400);
+  // iOS app: { platform: "ios", expoToken: "ExponentPushToken[...]" }. Web: { endpoint, keys: { p256dh, auth } }.
+  const ios = body?.platform === "ios";
+  if (body?.platform !== undefined && body.platform !== "web" && !ios) return json({ error: "bad-request" }, 400);
+  let sub: PushSub | null = null;
+  let expoToken: string | null = null;
+  if (ios) {
+    if (!isExpoToken(body?.expoToken)) return json({ error: "bad-request" }, 400);
+    expoToken = body!.expoToken as string;
+  } else {
+    const keys = body?.keys as { p256dh?: unknown; auth?: unknown } | undefined;
+    if (typeof body?.endpoint !== "string" || !isKnownPushEndpoint(body.endpoint) || typeof keys?.p256dh !== "string" || !keys.p256dh || typeof keys.auth !== "string" || !keys.auth) {
+      return json({ error: "bad-request" }, 400);
+    }
+    if (!deps.vapidConfigured()) return json({ error: "not-configured" }, 503);
+    sub = { endpoint: body.endpoint, p256dh: keys.p256dh, auth: keys.auth };
   }
-  if (!deps.vapidConfigured()) return json({ error: "not-configured" }, 503);
-  const sub: PushSub = { endpoint: body.endpoint, p256dh: keys.p256dh, auth: keys.auth };
   return guarded(async () => {
     const existing = await authenticate(request, deps);
     if (!(existing instanceof Response)) {
-      // Known device whose push service rotated its endpoint: keep its watches, send no second test.
-      await deps.store.deleteDeviceByEndpoint(sub.endpoint, existing.deviceId);
-      await deps.store.updateDeviceSub(existing.deviceId, sub);
+      // Known device whose push service rotated its endpoint (or token): keep its watches, send no second test.
+      if (expoToken) {
+        await deps.store.deleteDeviceByExpoToken(expoToken, existing.deviceId);
+        await deps.store.updateDeviceExpo(existing.deviceId, expoToken);
+      } else {
+        await deps.store.deleteDeviceByEndpoint(sub!.endpoint, existing.deviceId);
+        await deps.store.updateDeviceSub(existing.deviceId, sub!);
+      }
       return json({ token: `${existing.deviceId}.${existing.secret}` }, 200);
     }
     if (existing.status === 503) return existing;
@@ -238,12 +256,13 @@ export async function handleDeviceRegister(request: Request, deps: SeatApiDeps):
       if ((await checkAndRecord(deps.limits, "device", hashKey(ip), deps.now())) === "limited") return json({ error: "rate-limited" }, 429);
     }
     // New device (or storage was cleared): a row that already has this endpoint is unreachable, so it goes with its watches.
-    await deps.store.deleteDeviceByEndpoint(sub.endpoint);
+    if (expoToken) await deps.store.deleteDeviceByExpoToken(expoToken);
+    else await deps.store.deleteDeviceByEndpoint(sub!.endpoint);
     const secret = randomBytes(32).toString("base64url");
-    const deviceId = await deps.store.createDevice({ secretHash: hashKey(secret), sub });
+    const deviceId = await deps.store.createDevice(expoToken ? { secretHash: hashKey(secret), expoToken } : { secretHash: hashKey(secret), sub: sub! });
     let test: "ok" | "failed" = "failed";
     try {
-      const r = await deps.push(sub, TEST_ALERT);
+      const r = expoToken ? await deps.pushExpo(expoToken, TEST_ALERT) : await deps.push(sub!, TEST_ALERT);
       if (r === "ok") test = "ok";
       else if (r === "gone") await deps.store.deleteDevice(deviceId);
     } catch { /* the device still exists; the test just failed */ }
