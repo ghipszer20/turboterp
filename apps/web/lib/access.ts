@@ -3,6 +3,7 @@
 // turn the gate on; leave it unset (local development, and at launch) and everyone gets in.
 
 export const ACCESS_COOKIE = "tt_access";
+export const ACCESS_HEADER = "x-turboterp-access";
 export const COMING_SOON_PATH = "/coming-soon";
 
 /** What the cookie holds: a hash of the code, so the code itself never sits in the browser. */
@@ -21,10 +22,10 @@ const DATA_PREFIXES = ["/api/", "/data/"];
 
 export type GateDecision = "allow" | "coming-soon" | "deny";
 
-/** `token`: the expected cookie value, or null when no access code is configured. */
-export function gateDecision(visit: { pathname: string; cookie: string | undefined; token: string | null }): GateDecision {
-  const { pathname, cookie, token } = visit;
-  if (token === null || cookie === token) return "allow";
+/** `header`: the x-turboterp-access value (the app sends the same hash as the cookie). `token`: the expected cookie value, or null when no access code is configured. */
+export function gateDecision(visit: { pathname: string; cookie: string | undefined; header?: string | null; token: string | null }): GateDecision {
+  const { pathname, cookie, header, token } = visit;
+  if (token === null || cookie === token || header === token) return "allow";
   if (OPEN_EXACT.has(pathname) || OPEN_PREFIXES.some((p) => pathname.startsWith(p))) return "allow";
   return DATA_PREFIXES.some((p) => pathname.startsWith(p)) ? "deny" : "coming-soon";
 }
