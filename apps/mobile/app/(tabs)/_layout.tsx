@@ -69,8 +69,8 @@ export default function TabsLayout() {
         tabBarStyle: { backgroundColor: c.surface, borderTopColor: c.separator },
       }}
     >
-      {/* Today is the home screen at "/", reached from the logo. It stays the first route (so "/" opens it) and its tab item is removed outright: tabBarButton null alone leaves an empty slot, display none takes the slot away. */}
-      <Tabs.Screen name="index" options={{ title: "Today", tabBarButton: () => null, tabBarItemStyle: { display: "none" } }} />
+      {/* Today is the home screen at "/" and the first tab, so every tab can get back to it (owner, 2026-10-31). */}
+      <Tabs.Screen name="index" options={{ title: "Today", tabBarIcon: tabIcon("today"), tabBarAccessibilityLabel: "Today" }} />
       <Tabs.Screen name="campus" options={{ title: "Campus", tabBarIcon: tabIcon("campus"), tabBarAccessibilityLabel: "Campus" }} />
       <Tabs.Screen name="schedule" options={{ title: "Schedule", tabBarIcon: tabIcon("schedule"), tabBarAccessibilityLabel: "Schedule" }} />
       <Tabs.Screen name="seat-alerts" options={{ title: "Seat Alerts", tabBarIcon: tabIcon("alerts"), tabBarAccessibilityLabel: "Seat Alerts" }} />

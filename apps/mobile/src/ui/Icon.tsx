@@ -3,6 +3,7 @@ import { SymbolView } from "expo-symbols";
 
 // SF Symbol name plus a plain fallback glyph for web, Android and surfaces without symbols.
 const ICONS = {
+  today: { sf: "sun.max", glyph: "☀" },
   campus: { sf: "building.2", glyph: "▣" },
   schedule: { sf: "calendar", glyph: "▦" },
   alerts: { sf: "bell", glyph: "♪" },
