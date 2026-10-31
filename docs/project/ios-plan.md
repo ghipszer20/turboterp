@@ -2,6 +2,33 @@
 
 Drafted 2026-10-29 by the main session for the owner's request: "plan the transfer of this project to iOS app form", with timelines, steps agents can run in parallel, and the owner's own steps in detail. **Status: stack approved (owner, 2026-10-30): Expo / React Native, built in the cloud.** **Pay Apple last (owner, 2026-10-30):** the app is built and reviewed for free in Expo Go, and the $99 Apple Developer fee is paid only when the app is ready for TestFlight (section 1, "Paying Apple only at the end"). Bundle ID **`com.turboterp.app` confirmed** (owner, 2026-10-30). Still waiting on the owner: the Expo account (O3), Expo Go (O4), then "set up the sessions". **Review-risk pass (2026-10-30):** section 8 lists everything that could get the app rejected, crash in real use or open a security hole. Its fixes are also written into the task rows below. Runs as 5 owner-coordinated sessions with up to 3 subagents each (owner, 2026-10-29; section 2). This moves iOS up from the roadmap's "Spring 2028" (roadmap.md).
 
+## 0. Review and go (2026-10-31)
+**Owner go, 2026-10-31:** "review the plan for converting this to the app code, then start on overtime mode." The owner gave this go in the main session, so the plan runs **in this one session as Lead, in overtime mode**, with at most 3 builders at once (PROJECT_MEMORY section 18), in dependency order, instead of 5 owner-opened sessions. Section 2's 5-session layout stays available if the owner wants more speed later.
+
+**Changes since the plan was written** (they override the rows below wherever they conflict):
+1. **Seat Alerts runs on Supabase now** (`scaling-plan.md`, 2026-10-31). The every-minute job is the Edge Function `supabase/functions/seat-alerts` (Deno), not the Vercel cron. It loads everything through the `seat_alert_load()` RPC (migration 0016). **A4s** therefore:
+   - adds the Expo push path in `supabase/functions/seat-alerts`, with the same cooldown;
+   - extends `seat_alert_load` (or a new migration) to return each device's platform and token;
+   - deletes `DeviceNotRegistered` tokens.
+
+   The per-IP device limit already exists (security hardening, migration 0012). Expo push sends are outbound HTTP, so they add no Supabase log volume.
+2. **The app's data API must be prebuilt, not per request.**
+   - **A2's `/api/v1/` routes** are GET route handlers that are prerendered and revalidated by tag, like `/api/campus/buildings` (`○` in the build). The postbuild guardrail (`apps/web/lib/per-visit-routes.ts`) fails the build otherwise.
+   - **Data that is really per request** (for example schedule files by path) reuses the existing CDN-cached `/api/schedule/[...path]`.
+   - **The app never reads Supabase Storage or `snapshot_hot` directly.** Only account sync and Seat Alerts device calls go to Supabase or Vercel per user (log budget, `scaling-plan.md` 5b).
+3. **The site lock would block the app.** While `SITE_ACCESS_CODE` is set, `proxy.ts` answers 401 to `/api/*` without the access cookie. **A2** makes the gate also accept an `x-turboterp-access` header carrying the same hash as the cookie (`accessToken` in `lib/access.ts`). The app sends it only when `EXPO_PUBLIC_TURBOTERP_ACCESS` is set in `apps/mobile/.env.local` (gitignored, never committed). It goes away with the lock at launch.
+4. **Calendar is Apple-only, one-time** (rulings.md, 2026-10-30). In the app, **B4b2** writes the term's events straight into Apple Calendar with `expo-calendar`. It uses write-only access (iOS 17+), with a purpose string. There's no Google option and no feed. The `.ics` builder stays in shared code for the web.
+5. **H1 is done:** security hardening is merged into `feat/ui-rework` (`abac0e53`). Left for the owner: migration 0012 (owner-review.md).
+6. **Timing:** Spring 2027 early registration ends Dec 10 and schedule adjustment runs Jan 27 – Feb 9. The App Store release needs the $99 Apple fee (O2), so the web launch is what serves this registration season. **The target for the app is TestFlight before Jan 27.**
+7. **Order in one session:**
+   - **Wave 1:** S0 spike, A1a extraction, A2 data API (no shared files except `package-lock.json`).
+   - **Wave 2:** S1, A1b, A4s.
+   - **Wave 3:** B1, A5, A3.
+   - **Then the screens:** B2/B3a/B3b, B4a1/B4a2, B6a/B6b, and so on.
+
+   Integration branch `feat/ios`, cut from `feat/ui-rework`. Only Lead merges `feat/ios` into `feat/ui-rework`, and only when the web suite is green.
+8. **Owner steps not confirmed yet:** O3 (Expo account) and O4 (Expo Go on the iPhone). Building doesn't need them. iPhone reviews and EAS Updates do. Until then, UI is checked with Expo web screenshots (`ui-check`).
+
 ## 1. Approach (recommended)
 
 **A native React Native app built with Expo (`apps/mobile`), sharing the TypeScript packages with the web app.**
