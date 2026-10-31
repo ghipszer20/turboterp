@@ -1,6 +1,6 @@
 # iOS app plan
 
-Drafted 2026-10-29 by the main session for the owner's request: "plan the transfer of this project to iOS app form", with timelines, steps agents can run in parallel, and the owner's own steps in detail. **Status: stack approved (owner, 2026-10-30): Expo / React Native, built in the cloud.** **Pay Apple last (owner, 2026-10-30):** the app is built and reviewed for free in Expo Go, and the $99 Apple Developer fee is paid only when the app is ready for TestFlight (section 1, "Paying Apple only at the end"). Still waiting on the owner: the bundle ID (O1 step 3), the Expo account (O3), then "set up the sessions". **Review-risk pass (2026-10-30):** section 8 lists everything that could get the app rejected, crash in real use or open a security hole. Its fixes are also written into the task rows below. Runs as 5 owner-coordinated sessions with up to 3 subagents each (owner, 2026-10-29; section 2). This moves iOS up from the roadmap's "Spring 2028" (roadmap.md).
+Drafted 2026-10-29 by the main session for the owner's request: "plan the transfer of this project to iOS app form", with timelines, steps agents can run in parallel, and the owner's own steps in detail. **Status: stack approved (owner, 2026-10-30): Expo / React Native, built in the cloud.** **Pay Apple last (owner, 2026-10-30):** the app is built and reviewed for free in Expo Go, and the $99 Apple Developer fee is paid only when the app is ready for TestFlight (section 1, "Paying Apple only at the end"). Bundle ID **`com.turboterp.app` confirmed** (owner, 2026-10-30). Still waiting on the owner: the Expo account (O3), Expo Go (O4), then "set up the sessions". **Review-risk pass (2026-10-30):** section 8 lists everything that could get the app rejected, crash in real use or open a security hole. Its fixes are also written into the task rows below. Runs as 5 owner-coordinated sessions with up to 3 subagents each (owner, 2026-10-29; section 2). This moves iOS up from the roadmap's "Spring 2028" (roadmap.md).
 
 ## 1. Approach (recommended)
 
@@ -174,7 +174,7 @@ Claude can't do these: they need the owner's identity, money, Apple 2FA or devic
 ### O1. Say yes to the plan (day 0, 5 minutes)
 1. Confirm **Expo, native app** (section 1), or ask for the Capacitor fallback.
 2. Say "set up the sessions" (section 5, step 1).
-3. Confirm the bundle ID **`com.turboterp.app`**. It can never change after the first upload.
+3. ~~Confirm the bundle ID~~ Done: **`com.turboterp.app`** (owner, 2026-10-30). It can never change after the first upload.
 
 ### O2. Enroll in the Apple Developer Program (about day 4, when the screens are approved; approval takes hours to a few days)
 1. On your iPhone, install **Apple Developer** from the App Store. Enrolling in the app is the fastest path for individuals.

@@ -5,7 +5,7 @@
 Items for the owner to review or decide, listed in progress reports. Remove an item once the owner answers (record the answer in `docs/project/rulings.md` or PROJECT_MEMORY.md section 17). Moved out of PROJECT_MEMORY.md on 2026-09-26.
 
 
-- **iOS app plan (2026-10-29): decide.** `docs/project/ios-plan.md`. (1) Answered 2026-10-30: Expo. (2) Bundle ID `com.turboterp.app` OK (permanent)? (3) Apple enrollment ($99/yr) waits until about day 4 of the build (owner, 2026-10-30: pay last). Next: O3 Expo account, O4 install Expo Go, then "set up the sessions". (Answered 2026-10-30: no Donate in the app, US only, Security Advisor checked, no PlanetTerp email; rulings.md "iOS App Store decisions".)
+- **iOS app plan (2026-10-29): decide.** `docs/project/ios-plan.md`. (1) Answered 2026-10-30: Expo. (2) Bundle ID: confirmed `com.turboterp.app` (2026-10-30). (3) Apple enrollment ($99/yr) waits until about day 4 of the build (owner, 2026-10-30: pay last). Next: O3 Expo account, O4 install Expo Go, then "set up the sessions". (Answered 2026-10-30: no Donate in the app, US only, Security Advisor checked, no PlanetTerp email; rulings.md "iOS App Store decisions".)
 - **Security hardening (2026-10-30; `docs/project/security.md`).** Code is on branch `fix/security-hardening`: Next 16.4.3 (critical advisory), security headers and CSP, Seat Alerts device limit, separate "I got it" token key. **In this order:**
   1. Supabase → SQL Editor → run `supabase/migrations/0012_device_signup_limit.sql`.
   2. Merge and deploy. If 0012 is skipped, the device limit just stays off; nothing breaks.

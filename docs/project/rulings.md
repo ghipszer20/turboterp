@@ -159,6 +159,7 @@ Plan: `docs/project/account-sync-plan.md`.
 
 ## iOS App Store decisions (owner, 2026-10-30)
 - **Stack: Expo / React Native** with EAS cloud builds, no Mac (owner: "i like it", after comparing Capacitor, native Swift, Flutter and Home Screen only). Capacitor stays the fallback only if the S0 spike shows the shared code can't run in the app.
+- **Bundle ID `com.turboterp.app`** (owner, 2026-10-30). Permanent after the first upload; widgets and other extensions nest under it (e.g. `com.turboterp.app.widgets`).
 - **Pay Apple last** (owner, 2026-10-30: "can't afford the $99 right now"). The app is built and reviewed for free in Expo Go (testing only; students use the Home Screen web app until release). The owner enrolls at about day 4–5, when screens are approved. The Donate page says "Donations only cover TurboTerp's running costs." and doesn't name the Apple fee (owner removed that line, 2026-10-30). Storage uses `expo-sqlite/kv-store`, not MMKV, so the app runs in Expo Go.
 - **No Donate in the iOS app.** The website keeps its Donate page. The app's About, store text and screenshots don't mention donations (ios-plan.md section 8, R-4).
 - **United States storefront only**, declared as a non-trader (no income from the app; ios-plan.md R-14).
