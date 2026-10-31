@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import type { DayHours } from "@turboterp/campus-data/hours";
-import { clockAt, pickDay } from "../campus-clock";
+import { clockAt, pickDay } from "@turboterp/app-core/campus-clock";
 import { campusTagForKey, campusTagsForKeys } from "../campus-tags";
-import { hoursStatus } from "../status";
+import { hoursStatus } from "@turboterp/app-core/status";
 
 // 9:00-17:00, as a cached page would hold it.
 const hours: DayHours = { kind: "ranges", label: "9am-5pm", ranges: [{ start: 9 * 60, end: 17 * 60 }] };

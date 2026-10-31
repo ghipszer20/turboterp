@@ -1,17 +1,18 @@
+import { localKv } from "../local-kv";
 // The one sync engine for this page, built from the app's real pieces. Client only.
 import { getAuthClient } from "../auth/client";
-import { DOC_KINDS, type DocKind } from "./decide";
+import { DOC_KINDS, type DocKind } from "@turboterp/app-core/sync/decide";
 import { createDocAdapters } from "./adapters";
-import { createSyncEngine } from "./engine";
+import { createSyncEngine } from "@turboterp/app-core/sync/engine";
 import { setLocalChangedListener } from "./hooks";
-import { createMetaStore, type MetaStore } from "./meta";
-import { createRemote } from "./remote";
-import { createSaveStatus } from "./status";
+import { createMetaStore, type MetaStore } from "@turboterp/app-core/sync/meta";
+import { createRemote } from "@turboterp/app-core/sync/remote";
+import { createSaveStatus } from "@turboterp/app-core/sync/status";
 
 export type Ask = { kind: DocKind; local: string | null; remote: string };
 
 function build() {
-  const baseMeta = createMetaStore();
+  const baseMeta = createMetaStore(localKv);
   const status = createSaveStatus(() => baseMeta.load().dirty ?? []);
   // Every meta write (dirty set changes, new revs) can change the status line.
   const meta: MetaStore = {

@@ -1,9 +1,9 @@
 "use client";
 
 import type { Weekday } from "@turboterp/course-data/schedules";
-import { DAY_SHORT, dayBlocks, hourLabel, pct, WEEKDAYS, type BlockInput, type TimeScale } from "@/lib/schedule/calendar";
-import { blockLabel, type BlockLabel } from "@/lib/schedule/block-items";
-import type { FilterState } from "@/lib/schedule/filters";
+import { DAY_SHORT, dayBlocks, hourLabel, pct, WEEKDAYS, type BlockInput, type TimeScale } from "@turboterp/app-core/schedule/calendar";
+import { blockLabel, type BlockLabel } from "@turboterp/app-core/schedule/block-items";
+import type { FilterState } from "@turboterp/app-core/schedule/filters";
 import styles from "./calendar.module.css";
 
 export type BlockData = BlockLabel;

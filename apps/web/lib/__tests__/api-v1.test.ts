@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import { fetchV1 } from "../api-v1/client";
-import { isV1Envelope, v1Envelope } from "../api-v1/envelope";
+import { fetchV1 } from "@turboterp/app-core/api-v1/client";
+import { isV1Envelope, v1Envelope } from "@turboterp/app-core/api-v1/envelope";
 import { v1Response } from "../api-v1/respond";
 
 const reply = (body: unknown, status = 200) => vi.fn(async (..._args: unknown[]) => new Response(JSON.stringify(body), { status }));

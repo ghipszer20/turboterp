@@ -6,7 +6,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { loadReviews, popoverPlacement, reviewsFileUrl, reviewsView, type PopoverPlacement, type ReviewsState } from "@/lib/schedule/instructor-reviews";
+import { loadReviews, popoverPlacement, reviewsFileUrl, reviewsView, type PopoverPlacement, type ReviewsState } from "@turboterp/app-core/schedule/instructor-reviews";
 import { RatingBadge } from "./RatingBadge";
 import styles from "./reviews.module.css";
 

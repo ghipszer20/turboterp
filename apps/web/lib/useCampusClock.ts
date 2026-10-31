@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { clockAt, type CampusClock } from "./campus-clock";
+import { clockAt, type CampusClock } from "@turboterp/app-core/campus-clock";
 
 /**
  * Campus date and minutes from the browser's clock, ticking every 30 seconds.

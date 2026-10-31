@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Card, Page, Section } from "@/components/ui";
 import { ABOUT, resolveAbout } from "@/lib/about";
-import { formatVersion, type LegalSection } from "@/lib/legal";
+import { formatVersion, type LegalSection } from "@turboterp/app-core/legal";
 import styles from "@/app/about/about.module.css";
 
 const DOCS = [

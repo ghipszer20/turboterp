@@ -1,5 +1,5 @@
 import { connection } from "next/server";
-import { scheduleDataKey } from "@/lib/schedule/data-keys";
+import { scheduleDataKey } from "@turboterp/app-core/schedule/data-keys";
 import { readScheduleFile } from "@/lib/schedule-data";
 
 // GET /api/schedule/current | /<term>/index | /<term>/sections/<DEPT> | /<term>/grades/<DEPT> | /<term>/reviews/<instructor-key>

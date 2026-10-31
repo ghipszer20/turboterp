@@ -5,7 +5,7 @@ import type { AnalysisState } from "./AdvisorApp";
 import type { PlanCatalog } from "@turboterp/plan/catalog";
 import type { AdvisorPlan } from "@turboterp/app-core/plan-state";
 import { PROGRAM_OPTIONS, programsLabel } from "@turboterp/app-core/programs";
-import { formatKeyDates, termKeyDates } from "@/lib/calendar";
+import { formatKeyDates, termKeyDates } from "@turboterp/app-core/calendar";
 import type { AcademicEvent } from "@turboterp/campus-data";
 import { getAuthClient } from "@/lib/auth/client";
 import { useSession } from "@/lib/auth/use-session";

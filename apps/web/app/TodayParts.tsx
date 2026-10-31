@@ -16,13 +16,13 @@ import {
 import { DiningIcon, GymIcon, LibraryIcon, RoomIcon, SearchIcon } from "@/components/icons";
 import { NextClassHero, type UpNext } from "@/app/NextClassHero";
 import { HeroRow, SkeletonCard, Tile, TileGrid } from "@/components/ui";
-import { pickDay } from "@/lib/campus-clock";
+import { pickDay } from "@turboterp/app-core/campus-clock";
 import type { DiningBundle } from "@/lib/campus-bundles";
-import { eventTitle, formatEventDate, nextEvent } from "@/lib/calendar";
-import { stampSummary } from "@/lib/stamp";
+import { eventTitle, formatEventDate, nextEvent } from "@turboterp/app-core/calendar";
+import { stampSummary } from "@turboterp/app-core/stamp";
 import { gymRowTitle, MAIN_GYMS } from "@/lib/gyms";
 import { compactLibraryName, MAIN_LIBRARIES } from "@/lib/libraries";
-import { currentMealName, hoursStatus, mealFoods } from "@/lib/status";
+import { currentMealName, hoursStatus, mealFoods } from "@turboterp/app-core/status";
 import { useCampusClock } from "@/lib/useCampusClock";
 
 function SkeletonGrid() {

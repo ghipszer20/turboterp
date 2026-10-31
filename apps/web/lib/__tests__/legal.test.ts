@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import { ACCESS_COOKIE } from "../access";
 import { CONSENT_STORAGE_KEY } from "@turboterp/app-core/consent";
 import { PLAN_STORAGE_KEY } from "@turboterp/app-core/storage";
-import { PRIVACY, PRIVACY_VERSION, STORAGE_KEYS, TERMS, TERMS_VERSION, formatVersion } from "../legal";
-import { SAVED_KEY } from "../schedule/saved";
+import { PRIVACY, PRIVACY_VERSION, STORAGE_KEYS, TERMS, TERMS_VERSION, formatVersion } from "@turboterp/app-core/legal";
+import { SAVED_KEY } from "@turboterp/app-core/schedule/saved";
 import { THEME_STORAGE_KEY } from "../theme";
 
 const text = (s: typeof TERMS) => s.map((x) => [x.heading, ...x.paragraphs.flat()].join("\n")).join("\n");

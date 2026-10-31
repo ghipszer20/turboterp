@@ -4,13 +4,14 @@
 // device), with a leave-by time when the previous class's building is known. With no class left
 // it shows the next academic date instead.
 
+import { localKv } from "../lib/local-kv";
 import { useEffect, useState } from "react";
 import { buildingByCode } from "@turboterp/campus-data/buildings";
 import { distanceMeters, walkMinutes } from "@turboterp/campus-data/walk";
 import type { Section } from "@turboterp/course-data/schedules";
 import { Hero } from "@/components/ui";
-import { nextClass } from "@/lib/next-class";
-import { loadPickedSections } from "@/lib/schedule/picked-sections";
+import { nextClass } from "@turboterp/app-core/next-class";
+import { loadPickedSections } from "@turboterp/app-core/schedule/picked-sections";
 import { useBuildings } from "@/lib/schedule/use-buildings";
 
 export type UpNext = { title: string; sub: string };
@@ -21,7 +22,7 @@ export function NextClassHero({ upNext }: { upNext: UpNext | null }) {
   const [now, setNow] = useState<Date | null>(null);
 
   useEffect(() => {
-    loadPickedSections()
+    loadPickedSections(localKv)
       .catch(() => null)
       .then((picked) => {
         setNow(new Date());

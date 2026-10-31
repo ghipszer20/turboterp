@@ -1,6 +1,6 @@
 import type { Section } from "@turboterp/course-data/schedules";
-import { courseColor } from "@/lib/schedule/colors";
-import { bestGpa, bestRating, instructorLabel } from "@/lib/schedule/sections";
+import { courseColor } from "@turboterp/app-core/schedule/colors";
+import { bestGpa, bestRating, instructorLabel } from "@turboterp/app-core/schedule/sections";
 import { InstructorName } from "./InstructorReviews";
 import { GpaBadge, RatingBadge } from "./RatingBadge";
 import cal from "./calendar.module.css";

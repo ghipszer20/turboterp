@@ -7,11 +7,11 @@ import { useSearchParams } from "next/navigation";
 import { DINING_HALLS, type StampVenue } from "@turboterp/campus-data";
 import { LiveStatus } from "@/components/LiveStatus";
 import { Card, Row, Section, SkeletonCard } from "@/components/ui";
-import { pickDay } from "@/lib/campus-clock";
+import { pickDay } from "@turboterp/app-core/campus-clock";
 import type { DiningBundle } from "@/lib/campus-bundles";
 import { diningSlice, hallFromQuery, mealFromQuery, mealsServed, parseDiningQuery } from "@/lib/dining";
-import { OTHER_STAMP_VENUES } from "@/lib/stamp";
-import { currentMealName, hoursLabel } from "@/lib/status";
+import { OTHER_STAMP_VENUES } from "@turboterp/app-core/stamp";
+import { currentMealName, hoursLabel } from "@turboterp/app-core/status";
 import { useCampusClock } from "@/lib/useCampusClock";
 import { DiningView } from "./DiningView";
 

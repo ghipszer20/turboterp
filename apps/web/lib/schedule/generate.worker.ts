@@ -1,7 +1,7 @@
 // Web Worker: layout generation off the main thread, so typing, scrolling and filter taps
 // never wait on it. The layout table's buffer is transferred, not copied.
 
-import { runGeneration, type GenerateRequest } from "./generate";
+import { runGeneration, type GenerateRequest } from "@turboterp/app-core/schedule/generate";
 
 type Scope = {
   onmessage: ((e: MessageEvent<{ id: number; req: GenerateRequest }>) => void) | null;

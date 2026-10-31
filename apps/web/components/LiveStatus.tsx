@@ -1,7 +1,7 @@
 "use client";
 
 import type { DayHours } from "@turboterp/campus-data/hours";
-import { hoursStatus } from "@/lib/status";
+import { hoursStatus } from "@turboterp/app-core/status";
 import { useCampusMinutes } from "@/lib/useCampusMinutes";
 import { StatusPill } from "./ui";
 

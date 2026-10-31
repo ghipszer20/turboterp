@@ -2,7 +2,7 @@
 
 import { DINING_HALLS } from "@turboterp/campus-data";
 import { SkeletonCard } from "@/components/ui";
-import { pickDay } from "@/lib/campus-clock";
+import { pickDay } from "@turboterp/app-core/campus-clock";
 import type { DiningBundle } from "@/lib/campus-bundles";
 import { mealsServed } from "@/lib/dining";
 import { useCampusClock } from "@/lib/useCampusClock";

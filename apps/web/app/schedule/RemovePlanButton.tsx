@@ -1,6 +1,6 @@
 "use client";
 
-import type { PlanId } from "@/lib/schedule/saved";
+import type { PlanId } from "@turboterp/app-core/schedule/saved";
 import styles from "./builder.module.css";
 
 /** The small "x" beside the last saved plan. Two taps: this click, then the confirm (owner, 2026-10-04). */

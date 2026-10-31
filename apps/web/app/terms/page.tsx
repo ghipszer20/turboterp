@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { LegalDoc } from "@/components/LegalDoc";
-import { TERMS, TERMS_VERSION } from "@/lib/legal";
+import { TERMS, TERMS_VERSION } from "@turboterp/app-core/legal";
 
 export const metadata: Metadata = { title: "Terms of Use" };
 

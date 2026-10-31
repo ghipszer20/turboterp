@@ -4,7 +4,7 @@
 // returns the latest answer; `pending` while the current request is still being worked on.
 
 import { useEffect, useRef, useState } from "react";
-import { runGeneration, type GenerateRequest, type GenerateResult } from "./generate";
+import { runGeneration, type GenerateRequest, type GenerateResult } from "@turboterp/app-core/schedule/generate";
 
 export type Answer = { req: GenerateRequest; result: GenerateResult };
 

@@ -2,7 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 import { getAppSync, type Ask } from "./app-sync";
-import type { SaveStatus } from "./status";
+import type { SaveStatus } from "@turboterp/app-core/sync/status";
 
 const NO_ASKS: readonly Ask[] = [];
 
