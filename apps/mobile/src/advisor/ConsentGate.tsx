@@ -28,7 +28,7 @@ function Agreement() {
   return (
     <Screen title={CONSENT_TITLE} subtitle="Advisor">
       <Text tone="text2" style={{ marginBottom: spacing.md }}>
-        TurboTerp can check a four-year plan against your requirements. Please read this and sign before you start.
+        Read and sign this before you start.
       </Text>
       <Card style={{ padding: spacing.lg, gap: spacing.md }}>
         {CONSENT_POINTS.map((p) => (
@@ -85,7 +85,7 @@ function Agreement() {
         <Button label="I agree" onPress={submit} />
       </View>
       <Text variant="sub" tone="text3" style={{ marginTop: spacing.md }}>
-        Saved on this device only. If the wording changes, you&apos;ll be asked to sign again.
+        Saved on this device. If the wording changes, you&apos;ll sign again.
       </Text>
     </Screen>
   );

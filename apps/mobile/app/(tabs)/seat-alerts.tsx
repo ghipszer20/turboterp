@@ -48,9 +48,6 @@ export default function SeatAlerts() {
     <Screen title="Seat Alerts">
       <Card style={{ padding: spacing.lg, marginBottom: spacing.md, gap: spacing.xs }}>
         <Text variant="headline">Get a notification when a seat opens</Text>
-        <Text variant="sub" tone="text2">
-          Watch a full class or section. TurboTerp checks Testudo every minute and notifies this phone the moment a seat opens, so you can grab it.
-        </Text>
       </Card>
 
       {a.phase === "loading" ? <Skeleton rows={3} /> : null}
@@ -86,7 +83,7 @@ export default function SeatAlerts() {
 
       {a.phase === "ready" ? (
         <>
-          <Text variant="foot" tone="text2" style={{ marginBottom: spacing.sm }}>Alerts are on for this phone.</Text>
+          <Text variant="foot" tone="text2" style={{ marginBottom: spacing.sm }}>Alerts are on</Text>
           <AddClass />
           <Text variant="headline" style={{ marginTop: spacing.xl, marginBottom: spacing.sm }}>Watching</Text>
           <Card style={{ paddingHorizontal: spacing.md }}>
@@ -94,7 +91,7 @@ export default function SeatAlerts() {
               watches.map((w) => <WatchItem key={w.id} w={w} now={now} onDone={() => void a.done(w.id)} onRemove={() => void a.remove(w.id)} />)
             ) : (
               <Text variant="sub" tone="text2" style={{ paddingVertical: spacing.md }}>
-                Nothing yet. Add a full class above and we'll tell you when a seat opens.
+                Nothing yet. Add a full class above.
               </Text>
             )}
           </Card>

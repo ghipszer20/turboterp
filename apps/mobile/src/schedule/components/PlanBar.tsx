@@ -88,7 +88,7 @@ export function PlanBar({ plan, chips, onPlan, canSave, blockedNote, note, onSav
       <Button label={note ?? `Save as Plan ${plan}`} onPress={onSave} disabled={!canSave} />
       {blockedNote ? (
         <Text variant="foot" tone="danger" accessibilityRole="alert">
-          Overlap: {blockedNote} Saving as a plan is blocked until it's fixed.
+          Overlap: {blockedNote} Fix it to save this plan.
         </Text>
       ) : null}
     </View>

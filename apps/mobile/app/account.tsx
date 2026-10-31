@@ -61,7 +61,7 @@ function SignIn() {
   return (
     <View style={styles.block}>
       <Text style={styles.heading}>Sign in to sync</Text>
-      <Text style={styles.note}>Optional. Everything in TurboTerp works without an account; signing in only keeps your plan and schedule in sync.</Text>
+      <Text style={styles.note}>Optional. Sign in to keep your plan and schedules on all your devices.</Text>
       {Apple ? (
         <Apple.AppleAuthenticationButton
           buttonType={Apple.AppleAuthenticationButtonType.SIGN_IN}

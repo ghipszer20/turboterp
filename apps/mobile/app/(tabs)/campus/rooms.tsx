@@ -135,8 +135,7 @@ export default function Rooms() {
         )}
       </ScreenState>
       <Text variant="caption" tone="text2">
-        Availability from UMD Libraries' booking system, refreshed every half hour{updated}. Tap a time to open that room on that
-        date on the Libraries' site, where you book with your UMD email. TurboTerp never books for you.
+        From UMD Libraries, refreshed every half hour{updated}. Tap a time to book it on the Libraries' site.
       </Text>
     </RefreshPage>
   );

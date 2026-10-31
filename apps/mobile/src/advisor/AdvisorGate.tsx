@@ -22,7 +22,7 @@ export function AdvisorGate({ title, children }: { title: string; children: (pla
   if (!plan)
     return (
       <Screen title={title}>
-        <EmptyState title="No plan yet" body="Set up your majors and start term, and TurboTerp builds a 4-year plan you can check." />
+        <EmptyState title="No plan yet" body="Add your majors and first term to get a 4-year plan." />
         <View style={{ marginTop: spacing.lg }}>
           <Button label="Set up my plan" onPress={() => router.push("/advisor/setup")} />
         </View>

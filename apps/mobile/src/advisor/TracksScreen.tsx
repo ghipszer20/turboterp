@@ -26,10 +26,10 @@ function Body({ plan }: { plan: AdvisorPlan }) {
   return (
     <View style={{ gap: spacing.md }}>
       <Text variant="sub" tone="text2">
-        Prerequisites for applying to a professional school, on top of any major. They are never a UMD graduation requirement.
+        What professional schools expect you to take. Not a UMD graduation requirement.
       </Text>
       {chosen.length === 0 ? (
-        <EmptyState title="No tracks chosen" body="Pick a pre-health or pre-law track in setup and TurboTerp lists its courses and milestones here." />
+        <EmptyState title="No tracks chosen" body="Pick a pre-health or pre-law track in setup to see its courses here." />
       ) : (
         <>
           <EngineNote state={state} retry={state.retry} what="track check" />

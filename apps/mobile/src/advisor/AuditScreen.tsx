@@ -96,7 +96,7 @@ function Result({ analysis, plan }: { analysis: Analysis; plan: AdvisorPlan }) {
             Tracks
           </Text>
           <Text variant="sub" tone="text2">
-            Prerequisites for applying to a professional school, on top of any major. They are never a UMD graduation requirement.
+            What professional schools expect you to take. Not a UMD graduation requirement.
           </Text>
           {tracks.map((t) => (
             <Card key={t.id} style={{ padding: spacing.lg, gap: spacing.sm }}>

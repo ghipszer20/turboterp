@@ -157,7 +157,7 @@ export default function Gym() {
         ))}
       </ScreenState>
       <Text variant="caption" tone="text2">
-        Hours from UMD RecWell. Closures can happen on short notice; check facility alerts at recwell.umd.edu/facility-alerts.
+        Hours from UMD RecWell. For last-minute closures, see recwell.umd.edu/facility-alerts.
       </Text>
     </RefreshPage>
   );

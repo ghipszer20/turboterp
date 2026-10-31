@@ -46,7 +46,7 @@ function Explore({ plan }: { plan: AdvisorPlan }) {
           Try a different major or minor
         </Text>
         <Text variant="sub" tone="text2">
-          {`Switch a major, add a major or minor, or drop one to see the effect on your plan before committing to it. Your real plan (${programsLabel(plan.programs)}) doesn't change until you press Apply.`}
+          Try other majors or minors against your plan. Nothing changes until you press Apply.
         </Text>
         <Picker selected={proposed} onToggle={(id) => setProposed((p) => toggleProgram(p, id))} />
         {undo ? (
@@ -75,7 +75,7 @@ function Explore({ plan }: { plan: AdvisorPlan }) {
       {!changed ? (
         <Card style={{ padding: spacing.lg }}>
           <Text variant="sub" tone="text2">
-            Pick a different major, add one, or drop one above to compare it with your current plan.
+            Change a program above to compare.
           </Text>
         </Card>
       ) : (
@@ -194,7 +194,7 @@ function Compare({ result: r, current, proposed }: { result: WhatIfResult; curre
           {`At your typical pace (${r.graduation.typicalLoad} credits a term), your estimated finish term${
             r.graduation.deltaTerms === 0
               ? ` stays ${r.graduation.currentFinishTerm}.`
-              : ` would move from ${r.graduation.currentFinishTerm} to ${r.graduation.proposedFinishTerm}, ${r.graduation.deltaTerms > 0 ? "later" : "earlier"}.`
+              : ` would move from ${r.graduation.currentFinishTerm} to ${r.graduation.proposedFinishTerm} (${r.graduation.deltaTerms > 0 ? "later" : "earlier"}).`
           }`}
         </Text>
       </Section>
@@ -202,7 +202,7 @@ function Compare({ result: r, current, proposed }: { result: WhatIfResult; curre
       {totals.counts + totals.elective + totals.unused > 0 ? (
         <Section title="Your existing credits">
           <Text variant="sub" tone="text2">
-            {`Of the credits you've already earned (completed courses and prior credit), under ${programsLabel(proposed)}: ${totals.counts} count toward a requirement, ${totals.elective} become electives, and ${totals.unused} go unused.`}
+            {`Under ${programsLabel(proposed)}, ${totals.counts} of your earned credits count toward a requirement, ${totals.elective} become electives and ${totals.unused} go unused.`}
           </Text>
         </Section>
       ) : null}
@@ -236,7 +236,7 @@ function Compare({ result: r, current, proposed }: { result: WhatIfResult; curre
       {r.orphaned.length > 0 ? (
         <Section title="Would count toward nothing">
           <Text variant="sub" tone="text2">
-            {`${listing(r.orphaned)} would no longer count toward any program or Gen Ed requirement. Keep ${r.orphaned.length === 1 ? "it" : "them"} as free electives or swap ${r.orphaned.length === 1 ? "it" : "them"} out.`}
+            {`${listing(r.orphaned)} would no longer count toward any requirement. Keep ${r.orphaned.length === 1 ? "it" : "them"} as electives or swap ${r.orphaned.length === 1 ? "it" : "them"} out.`}
           </Text>
         </Section>
       ) : null}

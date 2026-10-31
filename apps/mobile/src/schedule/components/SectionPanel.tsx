@@ -187,7 +187,7 @@ export function SectionPanel(p: SectionPanelProps) {
           </>
         ) : null}
         <Text variant="foot" tone="text3" style={{ padding: spacing.md }}>
-          Ratings and grades: PlanetTerp. Full sections can't be placed.
+          Ratings and grades from PlanetTerp. Full section? Tap the bell.
         </Text>
         {p.onRemove && p.current ? (
           <View style={{ paddingHorizontal: spacing.md }}>

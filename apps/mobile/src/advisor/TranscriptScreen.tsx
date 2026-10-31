@@ -51,7 +51,7 @@ export function TranscriptScreen() {
   if (!plan) {
     return (
       <Screen title="Import transcript">
-        <EmptyState title="Set up your plan first" body="Importing a transcript fills in your plan, so it needs one to start from." />
+        <EmptyState title="Set up your plan first" body="Set up a plan first. The transcript fills it in." />
         <View style={{ marginTop: spacing.lg }}>
           <Button label="Set up my plan" onPress={() => router.push("/advisor/setup")} />
         </View>
@@ -100,10 +100,10 @@ export function TranscriptScreen() {
       <Card style={{ padding: spacing.lg, gap: spacing.sm }}>
         <Text variant="headline">Why import?</Text>
         <Text variant="sub" tone="text2">
-          Optional. Your past courses and grades let TurboTerp personalize its feedback on your plan, such as how hard each semester is likely to feel for you, and fill in what you have already taken so your audit starts out accurate.
+          Your past courses and grades let TurboTerp personalize its feedback on your 4-year plan and class schedule - for example, how hard each upcoming semester is likely to feel for you - and they fill in what you've already taken, so your audit starts out accurate.
         </Text>
         <Text variant="sub" tone="text2">
-          Your transcript never leaves this phone unless you export it yourself. It is read on the device and is not uploaded anywhere.
+          Your transcript is read on this phone and never uploaded.
         </Text>
       </Card>
 
@@ -122,7 +122,7 @@ export function TranscriptScreen() {
       <Card style={{ padding: spacing.lg, marginTop: spacing.md, gap: spacing.sm }}>
         <Text variant="headline">Or paste from Testudo</Text>
         <Text variant="sub" tone="text2">
-          On Testudo's unofficial transcript page, select all, copy, and paste it here.
+          Copy Testudo's unofficial transcript page and paste it here.
         </Text>
         <PasteBox value={pasted} onChange={setPasted} />
         <Button label="Read pasted text" disabled={!pasted.trim()} onPress={() => void run({ kind: "paste", text: pasted })} />
@@ -200,7 +200,7 @@ function Review_({
   return (
     <Screen title="Review import">
       <Text variant="sub" tone="text2">
-        Check what looks right. Anything marked "Check this" was read from noisy text and repaired automatically, so it is worth a second look. Nothing is added to your plan until you confirm below.
+        Look over your courses. Anything marked "Check this" may have been read wrong. Nothing is added until you confirm.
       </Text>
       {isEmptyReview(review) ? (
         <Text variant="body" style={{ marginTop: spacing.md }}>
@@ -278,7 +278,7 @@ function Review_({
         <Card style={{ padding: spacing.lg, marginTop: spacing.md, gap: spacing.xs }}>
           <Text variant="headline">Not recognized</Text>
           <Text variant="sub" tone="text2">
-            Couldn't match these to UMD's AP or IB charts, or they carry no credit. Add them by hand in prior credit if they are real.
+            These aren't on UMD's AP or IB charts. Add them in prior credit if they count.
           </Text>
           {notRecognized.map((a, i) => (
             <Text key={i} variant="sub">

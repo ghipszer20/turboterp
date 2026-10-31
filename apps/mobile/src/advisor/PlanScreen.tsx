@@ -58,7 +58,7 @@ function NoPlan() {
   const router = useRouter();
   return (
     <Screen title="4-year plan">
-      <EmptyState title="No plan yet" body="Set up your majors and start term, and TurboTerp builds a 4-year plan you can edit." />
+      <EmptyState title="No plan yet" body="Add your majors and first term to get a 4-year plan." />
       <View style={{ marginTop: spacing.lg, gap: spacing.sm }}>
         <Button label="Set up my plan" onPress={() => router.push("/advisor/setup")} />
         {__DEV__ ? <Button variant="secondary" label="Load sample student (dev)" onPress={() => savePlan(TEST_STUDENTS[0]!.plan)} /> : null}
@@ -217,7 +217,7 @@ function Plan({ data }: { data: CatalogData }) {
         </View>
       ) : null}
       <Text variant="foot" tone="text3" style={{ marginTop: spacing.xl }}>
-        Unofficial. Not affiliated with the University of Maryland. Not academic advising: confirm your plan with your advisor and UMD&apos;s official degree audit.
+        Unofficial. Not affiliated with the University of Maryland. Not academic advising. Check your plan with your advisor.
       </Text>
 
       <Sheet visible={sheet?.kind === "course"} title={sheet?.kind === "course" ? sheet.id : ""} onClose={() => setSheet(null)}>

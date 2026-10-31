@@ -270,7 +270,7 @@ export default function BuilderScreen() {
   if (state.status === "offline") return frame(<OfflineState onRetry={reload} />);
   if (state.status === "error") return frame(<ErrorState title="Couldn't load courses" onRetry={reload} />);
   if (state.status === "missing") return frame(<EmptyState title="Course data isn't ready yet" body="This term's Schedule of Classes hasn't been prepared yet." />);
-  if (courses.length === 0) return frame(<EmptyState title="Add your courses" body="Go back and search for the classes you want, e.g. CMSC351, STAT400 and ENGL394." />);
+  if (courses.length === 0) return frame(<EmptyState title="Add your courses" body="Go back and search for your classes, like CMSC351 or ENGL394." />);
   if (data.failure && data.sections.length === 0) {
     return frame(data.failure === "offline" ? <OfflineState onRetry={data.retry} /> : <ErrorState title="Couldn't load sections" onRetry={data.retry} />);
   }
@@ -432,7 +432,7 @@ export default function BuilderScreen() {
           <Text variant="headline">No layouts fit your week</Text>
           {result.explanation ? <Text variant="sub">{result.explanation.message}</Text> : null}
           <Text variant="sub" tone="text2">
-            Relax a day below, or swap a course for another that meets the same requirement.
+            Free up a day below, or swap a course.
           </Text>
           {result.explanation
             ? relaxOptions(result.explanation).map((o) => <Button key={o.label} label={o.label} variant="secondary" onPress={() => setFilters(relaxConstraint(filters, o.constraint))} />)

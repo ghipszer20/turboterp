@@ -130,7 +130,7 @@ function ProgramsStep({ form, patch }: StepProps) {
 
   return (
     <View style={{ gap: spacing.md }}>
-      <Text tone="text2">Pick every major, minor or program you have or want. Tracks of one major replace each other.</Text>
+      <Text tone="text2">Pick every major, minor or program you have or want. A major can have one track.</Text>
       {chosen.length ? (
         <Card style={{ padding: spacing.sm }}>
           <SectionHeader title={`Chosen (${chosen.length})`} />
@@ -153,8 +153,8 @@ function ProgramsStep({ form, patch }: StepProps) {
           />
           <Text variant="sub" tone="text2">
             {degreeMode === "double-major"
-              ? "One degree with both majors: 120 credits, and courses may count toward both."
-              : "Two degrees: 150 credits, with at least 18 credits in each degree that don't count toward the other."}
+              ? "One degree, 120 credits. A course can count toward both majors."
+              : "Two degrees, 150 credits. Each degree needs 18 credits that don't count toward the other."}
           </Text>
         </Card>
       ) : null}
@@ -210,7 +210,7 @@ function TermStep({ form, patch, moves }: StepProps & { moves: boolean }) {
         <Text variant="headline">Catalog year</Text>
         <Chips<string> label="Catalog year" options={CATALOG_YEARS.map((y) => ({ value: y, label: y.replace("-", "–") }))} value={form.catalogYear} onChange={(v) => patch({ catalogYear: v })} />
         <Text variant="sub" tone="text2">
-          Usually the year you started or declared. Only 2026–27 is available so far.
+          Usually the year you started or declared. Only 2026–27 for now.
         </Text>
       </View>
       <View style={{ gap: spacing.sm }}>
@@ -226,7 +226,7 @@ function TermStep({ form, patch, moves }: StepProps & { moves: boolean }) {
       <View style={{ gap: spacing.sm }}>
         <Text variant="headline">College</Text>
         <Text variant="sub" tone="text2">
-          Your college sets how many credits you can take in a term before you need approval to go over.
+          Your college sets your credit limit per term.
         </Text>
         <Card>
           {COLLEGES.map((c) => (
@@ -251,7 +251,7 @@ function TracksStep({ form, patch, planTerms }: StepProps & { planTerms: string[
   return (
     <View style={{ gap: spacing.md }}>
       <Text tone="text2">
-        Optional. A track lists what a professional school expects to see, on top of any major, and is never a UMD graduation requirement.
+        Optional. What professional schools expect you to take. Not a UMD graduation requirement.
       </Text>
       <Card>
         {TRACKS.map((t) => (
