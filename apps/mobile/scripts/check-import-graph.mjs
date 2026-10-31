@@ -20,6 +20,7 @@ const ENTRIES = [
   "app/(tabs)/seat-alerts.tsx",
   "app/(tabs)/advisor/index.tsx",
   "app/(tabs)/advisor/plan.tsx",
+  "app/(tabs)/advisor/explore.tsx",
   "app/about.tsx",
   "app/account.tsx",
   "src/ui/index.ts",

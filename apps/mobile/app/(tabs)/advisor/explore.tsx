@@ -1,5 +1,5 @@
-import { PlaceholderScreen } from "../../../src/ui";
+import { ExploreScreen } from "../../../src/advisor/ExploreScreen";
 
 export default function Screen() {
-  return <PlaceholderScreen title="Explore" />;
+  return <ExploreScreen />;
 }

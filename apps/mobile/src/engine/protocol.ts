@@ -3,6 +3,7 @@
 // the UI can show a message instead of crashing. The page and the host both import this file, so
 // it must stay light: type-only imports of the shared packages, no runtime dependencies.
 import type { Analysis } from "@turboterp/app-core/analysis";
+import type { WhatIfResult } from "@turboterp/app-core/what-if";
 import type { PlanExport } from "@turboterp/app-core/export/plan-export";
 import type { AdvisorPlan } from "@turboterp/app-core/plan-state";
 import type { CreditCourse } from "@turboterp/credit";
@@ -11,8 +12,12 @@ import type { CatalogCourse } from "@turboterp/plan/catalog";
 /** A Map doesn't survive JSON, so the catalog travels as entries and the page rebuilds the Map. */
 export type AuditInput = { plan: AdvisorPlan; catalog: [string, CatalogCourse][]; priorCourses: CreditCourse[] };
 
+/** Explore: the saved plan compared with a proposed set of programs (ids from the program registry). */
+export type WhatIfInput = AuditInput & { proposed: string[] };
+
 export type Job =
   | { type: "audit"; input: AuditInput }
+  | { type: "whatIf"; input: WhatIfInput }
   | { type: "transcriptPdf"; pdfBase64: string }
   /** `source` "image": a photo (png/jpeg/webp); "pdf": a scanned PDF whose pages are rendered, then read. */
   | { type: "transcriptOcr"; source: "image" | "pdf"; dataBase64: string }
@@ -28,6 +33,7 @@ export type FileResult = { base64: string; mime: string; fileName: string };
 
 export type JobResults = {
   audit: Analysis;
+  whatIf: WhatIfResult;
   transcriptPdf: TranscriptPdfResult;
   transcriptOcr: TranscriptOcrResult;
   exportPdf: FileResult;
@@ -68,6 +74,7 @@ export const LIMITS = {
 /** Per-job timeouts (ms); the OCR budget covers a slow phone. */
 export const TIMEOUT_MS: Record<JobType, number> = {
   audit: 60_000,
+  whatIf: 60_000,
   transcriptPdf: 60_000,
   transcriptOcr: 240_000,
   exportPdf: 60_000,
@@ -86,6 +93,7 @@ export function checkJobSize(job: Job): { ok: false; error: EngineError } | null
         ? engineError("too-large", "That file is too large to read on this device.")
         : null;
     case "audit":
+    case "whatIf":
       return JSON.stringify(job.input).length > LIMITS.maxAuditJson ? engineError("too-large", "That plan is too large to audit.") : null;
     default:
       return null;

@@ -9,6 +9,7 @@ import { join, resolve } from "node:path";
 import type { PlanExport } from "@turboterp/app-core/export/plan-export";
 import { computePriorCredit } from "@turboterp/app-core/prior-credit";
 import { seedFromUrl } from "@turboterp/app-core/seed";
+import { TEST_STUDENTS } from "@turboterp/app-core/test-students";
 import { buildCatalog } from "@turboterp/plan/catalog";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
@@ -132,6 +133,30 @@ describe.skipIf(!existsSync(EDGE))("engine bridge in a browser context", () => {
     expect(reply.result.audits.length).toBeGreaterThan(0);
     expect(reply.result.degrees.mode).toBe("double-major");
   }, 180_000);
+
+  it("times audits and Explore for the largest real plans (double degree plus a minor)", async () => {
+    const courses = JSON.parse(readFileSync(join(root, "../../packages/plan/test/fixtures/courses-202701.json"), "utf8")).courses;
+    const catalog = buildCatalog(courses);
+    const base = TEST_STUDENTS.find((s) => s.id === "math-cs-double-degree")!.plan;
+    const plans = [
+      { label: "double degree", plan: base },
+      { label: "double degree + minor", plan: { ...base, programs: [...base.programs, "econ-minor"] } },
+    ];
+    let id = 100;
+    for (const { label, plan } of plans) {
+      const priorCourses = computePriorCredit(plan.prior, (c) => catalog.get(c)?.genEd ?? []).courses;
+      const input = { plan, catalog: [...catalog.entries()], priorCourses };
+      const t = performance.now();
+      const audit = await ask(id++, { type: "audit", input });
+      const auditMs = Math.round(performance.now() - t);
+      expect(audit.ok, JSON.stringify(audit.error)).toBe(true);
+      const t2 = performance.now();
+      const wi = await ask(id++, { type: "whatIf", input: { ...input, proposed: ["cmsc-major"] } });
+      console.log(label + ": audit " + auditMs + " ms (" + audit.result.audits.length + " programs, " + audit.result.auditRuns + " runs), explore " + Math.round(performance.now() - t2) + " ms");
+      expect(wi.ok, JSON.stringify(wi.error)).toBe(true);
+      expect(wi.result.graduation).toBeTruthy();
+    }
+  }, 300_000);
 
   it("extracts transcript PDF text with pdfjs", async () => {
     const reply = await ask(2, { type: "transcriptPdf", pdfBase64: makePdf("Hello TurboTerp transcript") });
