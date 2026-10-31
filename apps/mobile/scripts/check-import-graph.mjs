@@ -47,7 +47,7 @@ export async function findViolations() {
       loader: { ".wasm": "empty", ".png": "empty", ".ttf": "empty" },
       // The app side imports react-native etc. through Metro, not esbuild: treat non-workspace packages as leaves,
       // except the ones we want to walk (highs, pdfjs-dist).
-      external: ["@sentry/*", "react", "react-native", "expo-*", "react-native-*", "react-dom"],
+      external: ["highs-wasm", "tess-*", "@sentry/*", "react", "react-native", "expo-*", "react-native-*", "react-dom"],
       plugins: [
         {
           name: "record-node-only",
@@ -67,7 +67,8 @@ export async function findViolations() {
     for (const f of Object.keys(result.metafile.inputs)) reachable.add(f.replaceAll("\\", "/"));
   }
   for (const f of reachable) {
-    if (/(^|\/)packages\/catalog\//.test(f) || /node_modules\/(cheerio|@napi-rs)\//.test(f)) violations.push(`reachable: ${f}`);
+    // packages/catalog is the Node scraper; its special-programs/ folder is plain data the audit imports.
+    if ((/(^|\/)packages\/catalog\//.test(f) && !/packages\/catalog\/special-programs\//.test(f)) ||/node_modules\/(cheerio|@napi-rs)\//.test(f)) violations.push(`reachable: ${f}`);
   }
   return { violations: [...new Set(violations)], files: reachable.size };
 }

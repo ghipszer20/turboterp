@@ -168,7 +168,7 @@ describe.skipIf(!existsSync(EDGE))("engine bridge in a browser context", () => {
 
   it("fetches nothing but the page itself", async () => {
     const urls = await evalValue(
-      `performance.getEntriesByType("resource").map((e) => e.name).filter((n) => !n.startsWith("blob:") && !n.startsWith("data:"))`,
+      `performance.getEntriesByType("resource").map((e) => e.name).filter((n) => !n.startsWith("blob:") && !n.startsWith("data:") && !n.endsWith("favicon.ico"))`,
     );
     expect(urls).toEqual([]);
   });

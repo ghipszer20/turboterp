@@ -3,16 +3,20 @@
 // launch: iOS kills apps that hang at startup, and the 10 MB page is slow to parse). Everything
 // loads from the bundled asset: the page may not fetch from the network.
 import { Asset } from "expo-asset";
-import { useEffect, useRef, useState } from "react";
-import { InteractionManager, StyleSheet, View } from "react-native";
-import { WebView, type WebViewMessageEvent } from "react-native-webview";
+import { useEffect, useRef, useState, type ComponentType, type Ref } from "react";
+import { StyleSheet, View } from "react-native";
+import { WebView as RNWebView, type WebViewProps } from "react-native-webview";
 import { createEngineClient, type EngineClient } from "./client";
 
 // Built by `npm run build:bridge` (scripts/build-bridge.mjs); Metro serves .html as an asset.
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const ENGINE_PAGE: number = require("../../assets/engine/engine.html");
 
-let webView: WebView | null = null;
+type WebViewHandle = { postMessage(message: string): void; reload(): void };
+// Two copies of @types/react (web 19.2, Expo 19.3) make the library's JSX types unusable here, so type the component by hand.
+const WebView = RNWebView as unknown as ComponentType<WebViewProps & { ref?: Ref<WebViewHandle> }>;
+
+let webView: WebViewHandle | null = null;
 
 /** The one engine for the app. `engine.run(job)` works before the host mounts: jobs wait in the queue. */
 export const engine: EngineClient = createEngineClient({
@@ -25,12 +29,13 @@ const dirOf = (uri: string) => uri.slice(0, uri.lastIndexOf("/") + 1);
 export function EngineHost() {
   const [mounted, setMounted] = useState(false);
   const [uri, setUri] = useState<string | null>(null);
-  const ref = useRef<WebView | null>(null);
+  const ref = useRef<WebViewHandle>(null);
 
-  // Warm start: wait for the first screen's interactions and animations to finish.
+  // Warm start: never during launch.
   useEffect(() => {
-    const task = InteractionManager.runAfterInteractions(() => setMounted(true));
-    return () => task.cancel();
+    // An effect runs after the first commit; the extra delay lets the first screen paint and settle.
+    const timer = setTimeout(() => setMounted(true), 1500);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -49,23 +54,23 @@ export function EngineHost() {
     };
   }, [mounted]);
 
-  useEffect(() => () => void (webView = null), []);
+  useEffect(() => {
+    webView = ref.current;
+    return () => void (webView = null);
+  }, [uri]);
 
   if (!uri) return null;
   return (
     <View pointerEvents="none" style={styles.hidden}>
       <WebView
-        ref={(w) => {
-          ref.current = w;
-          webView = w;
-        }}
+        ref={ref}
         source={{ uri }}
         originWhitelist={["file://*"]}
         allowFileAccess
         allowingReadAccessToURL={dirOf(uri)}
         javaScriptEnabled
         cacheEnabled={false}
-        onMessage={(e: WebViewMessageEvent) => engine.handleMessage(e.nativeEvent.data)}
+        onMessage={(e) => engine.handleMessage(e.nativeEvent.data)}
         onContentProcessDidTerminate={() => engine.handleTerminated()}
         onRenderProcessGone={() => engine.handleTerminated()}
         onError={() => engine.handleTerminated()}

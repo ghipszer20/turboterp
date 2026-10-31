@@ -11,6 +11,7 @@ import * as worker from "pdfjs-dist/legacy/build/pdf.worker.mjs";
 
 (globalThis as unknown as { pdfjsWorker: unknown }).pdfjsWorker = worker;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PdfDoc = { numPages: number; getPage(n: number): Promise<any>; destroy(): Promise<void> };
 
 export async function openPdf(base64: string): Promise<PdfDoc> {
@@ -41,8 +42,8 @@ export async function extractPdfText(base64: string): Promise<TranscriptPdfResul
   }
 }
 
-/** Renders each page (up to the OCR page cap) to a canvas at 2x, one at a time, calling `use` before the next. */
-export async function renderPages<T>(base64: string, use: (canvas: HTMLCanvasElement) => Promise<T>): Promise<T[]> {
+/** Renders each page (up to the OCR page cap) to a canvas at 2x, one at a time, calling `onPage` before the next. */
+export async function renderPages<T>(base64: string, onPage: (canvas: HTMLCanvasElement) => Promise<T>): Promise<T[]> {
   const doc = await openPdf(base64);
   try {
     if (doc.numPages > LIMITS.maxOcrPages) throw new JobError("too-large", `That PDF has ${doc.numPages} pages; photo reading handles up to ${LIMITS.maxOcrPages}.`);
@@ -55,7 +56,7 @@ export async function renderPages<T>(base64: string, use: (canvas: HTMLCanvasEle
       canvas.width = viewport.width;
       canvas.height = viewport.height;
       await page.render({ canvasContext: canvas.getContext("2d")!, canvas, viewport }).promise;
-      out.push(await use(canvas));
+      out.push(await onPage(canvas));
       canvas.width = canvas.height = 0; // free the bitmap before the next page
     }
     return out;
