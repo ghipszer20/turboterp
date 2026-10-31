@@ -116,7 +116,7 @@
         {
           "writeOnlyAccess": true,
           "writeOnlyCalendarPermission": "TurboTerp adds your class schedule to Apple Calendar when you tap Add to calendar. It never reads your other events.",
-          "calendarPermission": false,
+          "calendarPermission": "TurboTerp adds your class schedule when you tap Add to calendar. It never reads your other events.",
           "remindersPermission": false
         }
       ],
