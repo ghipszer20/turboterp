@@ -5,10 +5,10 @@ import styles from "./donate.module.css";
 
 export const metadata: Metadata = { title: "Donate" };
 
-// The owner's own words (2026-10-07); change them only on the owner's say. Second line: owner OK'd a note on the Apple fee (2026-10-30).
+// The owner's own words (2026-10-07; second line kept by the owner 2026-10-30); change them only on the owner's say.
 const PARAGRAPHS = [
   "If you've found this resource useful, consider donating to support the project.",
-  "Donations only cover TurboTerp's running costs. First up: the $99 a year Apple charges to put TurboTerp on the App Store.",
+  "Donations only cover TurboTerp's running costs.",
 ];
 
 export default function DonatePage() {
