@@ -4,7 +4,9 @@ import { decodeCatalogFile } from "@turboterp/plan/catalog-file";
 import type { PlanCatalog } from "@turboterp/plan/catalog";
 import { decodeDepartment, type CourseGrades } from "@turboterp/ratings";
 
-type Index = { v: number; term: string; terms?: string[]; catalog: string; grades?: string | null };
+import { decodeCourseDetails, type CourseDetails } from "@turboterp/app-core/course-details";
+
+type Index = { v: number; term: string; terms?: string[]; catalog: string; details?: string; grades?: string | null };
 
 export type CatalogData = {
   catalog: PlanCatalog;
@@ -45,8 +47,24 @@ export function createAdvisorData(deps: { fetch: FetchLike; url: (path: string) 
 
   const gradeFiles = new Map<string, Promise<Record<string, CourseGrades>>>();
   let gradesBase: Promise<string | null> | null = null;
+  const detailFiles = new Map<string, Promise<Record<string, CourseDetails>>>();
 
   return {
+    /** A course's description and requirement text as printed, or null when there is none. One department file at a time. */
+    async loadDetails(id: string): Promise<CourseDetails | null> {
+      const index = (await getJson("index.json").catch(() => null)) as Index | null;
+      if (!index?.details) return null;
+      const dept = id.replace(/\d.*$/, "");
+      if (!detailFiles.has(dept)) {
+        detailFiles.set(
+          dept,
+          getJson(`${index.details}${dept}.json`)
+            .then((j) => (j ? decodeCourseDetails(j) : {}))
+            .catch(() => ({})),
+        );
+      }
+      return (await detailFiles.get(dept)!)[id] ?? null;
+    },
     /** Course-wide grades from PlanetTerp, or null when there is no data. Loaded one department at a time. */
     async loadGrades(id: string): Promise<CourseGrades | null> {
       gradesBase ??= getJson("index.json")

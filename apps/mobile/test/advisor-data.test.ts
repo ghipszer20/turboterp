@@ -31,6 +31,18 @@ describe("advisor data loader", () => {
     expect((await data.loadCatalog()).status).toBe("ready");
   });
 
+  it("loads a course's details from the department file, once per department", async () => {
+    const file = { v: 1, dept: "CMSC", term: "x", courses: { CMSC131: { d: "Intro.", p: "MATH110" } } };
+    const fetch = vi.fn(async (url: string) =>
+      url.endsWith("index.json") ? ok({ ...index, details: "details/" }) : url.endsWith("CMSC.json") ? ok(file) : { ok: false, json: async () => null },
+    );
+    const data = make(fetch);
+    expect(await data.loadDetails("CMSC131")).toMatchObject({ description: "Intro.", prerequisite: "MATH110", corequisite: null });
+    expect(await data.loadDetails("CMSC999")).toBeNull();
+    expect(fetch.mock.calls.filter((c) => String(c[0]).endsWith("CMSC.json"))).toHaveLength(1);
+    expect(await make(vi.fn(async () => ok(index))).loadDetails("CMSC131")).toBeNull();
+  });
+
   it("reports missing when the server has no data", async () => {
     const data = make(vi.fn(async () => ({ ok: false, json: async () => null })));
     expect((await data.loadCatalog()).status).toBe("missing");

@@ -15,6 +15,7 @@ import { searchCourses } from "@turboterp/app-core/search";
 import { TEST_STUDENTS } from "@turboterp/app-core/test-students";
 import { Button, Card, EmptyState, ErrorState, OfflineState, Screen, Skeleton, Text, tap, useTheme } from "../ui";
 import { radius, spacing } from "../ui/theme";
+import { CourseSheet } from "../course/CourseSheet";
 import { useAnalysis } from "./analysis";
 import { advisorData, useCatalog } from "./data";
 import type { CatalogData } from "./data-core";
@@ -72,6 +73,7 @@ function Plan({ data }: { data: CatalogData }) {
   const plan = useAdvisorPlan()!;
   const { c } = useTheme();
   const [sheet, setSheet] = useState<Sheet>(null);
+  const [detail, setDetail] = useState<string | null>(null);
   const genEdOf = useCallback((id: string) => data.catalog.get(id)?.genEd ?? [], [data]);
   const ownPrior = useMemo(() => computePriorCredit(plan.prior, genEdOf), [plan.prior, genEdOf]);
   const analysis = useAnalysis();
@@ -219,6 +221,13 @@ function Plan({ data }: { data: CatalogData }) {
                 {find(sheet.term, sheet.id)!.title}
               </Text>
             ) : null}
+            <SheetRow
+              label="Course details"
+              onPress={() => {
+                setDetail(sheet.id);
+                setSheet(null);
+              }}
+            />
             <SheetRow label="Move to another term" onPress={() => setSheet({ kind: "move", term: sheet.term, id: sheet.id })} />
             <SheetRow
               label="Remove from plan"
@@ -245,6 +254,7 @@ function Plan({ data }: { data: CatalogData }) {
             ))
           : null}
       </Sheet>
+      <CourseSheet courseId={detail} onClose={() => setDetail(null)} />
       {sheet?.kind === "add" ? <AddCourseSheet termName={sheet.term} data={data} onClose={() => setSheet(null)} /> : null}
     </Screen>
   );
