@@ -1,6 +1,7 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { SyncProvider } from "../src/auth/SyncProvider";
+import { EngineHost } from "../src/engine/EngineHost";
 import { initSentry } from "../src/sentry";
 import { ErrorBoundary } from "../src/ui";
 
@@ -17,6 +18,8 @@ export default function RootLayout() {
           <Stack.Screen name="account" options={{ headerShown: true, title: "Account", presentation: "modal" }} />
           <Stack.Screen name="about" options={{ headerShown: true, title: "About", presentation: "modal" }} />
         </Stack>
+        {/* Hidden WebView for the audit, transcripts and exports; mounts after the first screen renders. */}
+        <EngineHost />
       </SyncProvider>
     </ErrorBoundary>
   );

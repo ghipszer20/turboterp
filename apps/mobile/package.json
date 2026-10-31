@@ -12,15 +12,21 @@
     "lint": "eslint . && node scripts/check-import-graph.mjs",
     "icon": "node scripts/make-icon.mjs",
     "web-check": "node scripts/web-check.mjs",
-    "build:bridge": "node scripts/build-bridge.mjs"
+    "build:bridge": "node scripts/build-bridge.mjs",
+    "eas-build-post-install": "node scripts/build-bridge.mjs",
+    "prestart": "node scripts/build-bridge.mjs"
   },
   "dependencies": {
     "@expo/metro-runtime": "~58.0.15",
     "@sentry/react-native": "~8.28.0",
     "@supabase/supabase-js": "^2.118.0",
+    "@turboterp/app-core": "*",
     "@turboterp/audit": "*",
+    "@turboterp/credit": "*",
+    "@turboterp/plan": "*",
     "expo": "~58.0.21",
     "expo-apple-authentication": "~58.0.2",
+    "expo-asset": "~58.0.19",
     "expo-constants": "~58.0.14",
     "expo-crypto": "~58.0.7",
     "expo-haptics": "~58.0.7",
@@ -40,11 +46,17 @@
     "react-native-webview": "^14.0.1"
   },
   "devDependencies": {
+    "@tesseract.js-data/eng": "^1.0.0",
     "@types/react": "^19.3.0",
     "esbuild": "^0.28.2",
     "eslint": "^9.39.5",
     "eslint-plugin-react-hooks": "^7.1.1",
+    "exceljs": "^4.4.0",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.8",
     "pdfjs-dist": "^6.4.299",
+    "tesseract.js": "^7.0.0",
+    "tesseract.js-core": "^7.0.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.72.1",
     "vitest": "^5.0.1"

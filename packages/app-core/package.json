@@ -19,9 +19,11 @@
     "./consent-send": "./src/consent-send.ts",
     "./course-details": "./src/course-details.ts",
     "./difficulty": "./src/difficulty.ts",
+    "./export/pdf": "./src/export/pdf.ts",
     "./export/pdf-rows": "./src/export/pdf-rows.ts",
     "./export/plan-export": "./src/export/plan-export.ts",
     "./export/plan-summary": "./src/export/plan-summary.ts",
+    "./export/xlsx": "./src/export/xlsx.ts",
     "./grades": "./src/grades.ts",
     "./issues": "./src/issues.ts",
     "./key-value-store": "./src/key-value-store.ts",
@@ -97,7 +99,10 @@
     "@turboterp/plan": "*",
     "@turboterp/programs": "*",
     "@turboterp/ratings": "*",
-    "@turboterp/tracks": "*"
+    "@turboterp/tracks": "*",
+    "exceljs": "^4.4.0",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.8"
   },
   "devDependencies": {
     "@types/node": "^22.20.4",

@@ -57,7 +57,7 @@ export function ExportMenu({ plan, analysis, catalog, calendar = [], priorCredit
     setEmailState({ kind: "sending" });
     try {
       const planExport = await makePlanExport();
-      const { buildPdf } = await import("@/lib/advisor/export/pdf");
+      const { buildPdf } = await import("@turboterp/app-core/export/pdf");
       const { earnedCredits, planSummaryLines } = await import("@turboterp/app-core/export/plan-summary");
       const doc = await buildPdf(planExport);
       const bytes = new Uint8Array(doc.output("arraybuffer") as ArrayBuffer);
@@ -102,11 +102,11 @@ export function ExportMenu({ plan, analysis, catalog, calendar = [], priorCredit
       const planExport = await makePlanExport();
       const name = exportFileName(kind, planExport.header.date);
       if (kind === "xlsx") {
-        const { buildXlsx } = await import("@/lib/advisor/export/xlsx");
+        const { buildXlsx } = await import("@turboterp/app-core/export/xlsx");
         const bytes = await buildXlsx(planExport);
         download(new Blob([bytes], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }), name);
       } else {
-        const { buildPdf } = await import("@/lib/advisor/export/pdf");
+        const { buildPdf } = await import("@turboterp/app-core/export/pdf");
         const doc = await buildPdf(planExport);
         download(doc.output("blob"), name);
       }
