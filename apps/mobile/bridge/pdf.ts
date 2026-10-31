@@ -12,7 +12,7 @@ import * as worker from "pdfjs-dist/legacy/build/pdf.worker.mjs";
 (globalThis as unknown as { pdfjsWorker: unknown }).pdfjsWorker = worker;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type PdfDoc = { numPages: number; getPage(n: number): Promise<any>; destroy(): Promise<void> };
+type PdfDoc = { numPages: number; getPage(n: number): Promise<any>; destroy?(): Promise<void> };
 
 export async function openPdf(base64: string): Promise<PdfDoc> {
   let doc: PdfDoc;
@@ -38,7 +38,7 @@ export async function extractPdfText(base64: string): Promise<TranscriptPdfResul
     }
     return { text: lines.join("\n"), hasTextLayer, pageCount: doc.numPages };
   } finally {
-    void doc.destroy();
+    void doc.destroy?.();
   }
 }
 
@@ -61,6 +61,6 @@ export async function renderPages<T>(base64: string, onPage: (canvas: HTMLCanvas
     }
     return out;
   } finally {
-    void doc.destroy();
+    void doc.destroy?.();
   }
 }

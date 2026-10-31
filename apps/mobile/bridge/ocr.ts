@@ -13,11 +13,21 @@ import coreSource from "tess-core";
 // @ts-expect-error bundler alias, binary import
 import engData from "tess-eng";
 
+// tesseract.js (v7) can only take language data by fetching it, so the worker script gets a small
+// prefix that answers the eng.traineddata.gz request from a blob of the bundled bytes: the request
+// never leaves the page.
+function workerUrl(): string {
+  const eng = URL.createObjectURL(new Blob([engData as BlobPart]));
+  const prefix = `const __f = self.fetch.bind(self); self.fetch = (u, ...a) => (String(u).endsWith("eng.traineddata.gz") ? __f("${eng}") : Promise.reject(new Error("network disabled")));
+`;
+  return blobUrl(prefix + (workerSource as string));
+}
 const blobUrl = (source: string) => URL.createObjectURL(new Blob([source], { type: "text/javascript" }));
 
 async function recognizeAll(items: (() => Promise<HTMLCanvasElement | null>)[]): Promise<string[]> {
-  const worker = await createWorker([{ code: "eng", data: engData as Uint8Array }] as never, OEM.LSTM_ONLY, {
-    workerPath: blobUrl(workerSource as string),
+  const worker = await createWorker("eng", OEM.LSTM_ONLY, {
+    workerPath: workerUrl(),
+    langPath: "/bundled-lang",
     workerBlobURL: false,
     // tesseract.js treats a path ending in "js" as the exact core file; the fragment keeps the blob URL valid.
     corePath: `${blobUrl(coreSource as string)}#core.js`,
@@ -58,8 +68,9 @@ export async function ocrImage(base64: string): Promise<TranscriptOcrResult> {
 
 export async function ocrPdf(base64: string): Promise<TranscriptOcrResult> {
   // Render and read one page at a time so only one bitmap is alive.
-  const worker = await createWorker([{ code: "eng", data: engData as Uint8Array }] as never, OEM.LSTM_ONLY, {
-    workerPath: blobUrl(workerSource as string),
+  const worker = await createWorker("eng", OEM.LSTM_ONLY, {
+    workerPath: workerUrl(),
+    langPath: "/bundled-lang",
     workerBlobURL: false,
     corePath: `${blobUrl(coreSource as string)}#core.js`,
     cacheMethod: "none",
