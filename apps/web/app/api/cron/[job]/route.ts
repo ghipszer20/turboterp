@@ -3,13 +3,8 @@ import { connection } from "next/server";
 import { revalidateTag } from "next/cache";
 import { campusTagsForKeys } from "@/lib/campus-tags";
 import { buildSnapshots, openSnapshotStore, pruneSnapshots, refreshFast } from "@turboterp/campus-data/snapshots";
-import { liveRefreshDeps, refreshCourses, refreshSections, refreshSeats } from "@turboterp/course-data/soc-refresh";
-import { fetchSections } from "@turboterp/course-data";
+import { liveRefreshDeps, refreshCourses, refreshSections } from "@turboterp/course-data/soc-refresh";
 import { authorizeCron, cronJob } from "@/lib/cron";
-import { signWatchToken } from "@/lib/seat-alerts/api";
-import { sendPush, vapidConfigured } from "@/lib/seat-alerts/push";
-import { runSeatAlerts } from "@/lib/seat-alerts/run";
-import { seatAlertStore } from "@/lib/seat-alerts/store";
 import { runDailyDigest, supabaseDigestSource } from "@/lib/consent/digest";
 import { supabaseEnv } from "@/lib/email/rate-limit";
 import { sendEmail } from "@/lib/email/send";
@@ -40,25 +35,8 @@ async function run(request: NextRequest, context: { params: Promise<{ job: strin
   try {
     const store = openSnapshotStore();
     const now = new Date();
-    if (job === "seat-alerts") {
-      const env = supabaseEnv();
-      if (!env || !vapidConfigured()) return Response.json({ error: "not-configured" }, { status: 503, headers: { "Cache-Control": "no-store" } });
-      const report = await runSeatAlerts(
-        {
-          term: async () => (await store.get<{ term: string }>("schedule/current"))?.data.term ?? null,
-          store: seatAlertStore(env),
-          fetchSections,
-          push: sendPush,
-          signToken: (watchId) => signWatchToken(watchId, process.env.CRON_SECRET!, now),
-          sleep: (ms) => new Promise((r) => setTimeout(r, ms)),
-          clock: () => performance.now(),
-        },
-        now,
-      );
-      return Response.json({ ...report, ms: Math.round(performance.now() - started) }, { headers: { "Cache-Control": "no-store" } });
-    }
-    if (job === "soc-seats" || job === "soc-sections" || job === "soc-courses") {
-      const refresh = job === "soc-seats" ? refreshSeats : job === "soc-sections" ? refreshSections : refreshCourses;
+    if (job === "soc-sections" || job === "soc-courses") {
+      const refresh = job === "soc-sections" ? refreshSections : refreshCourses;
       const r = await refresh(store, liveRefreshDeps(), now);
       return Response.json(
         { ...r, ms: Math.round(performance.now() - started) },

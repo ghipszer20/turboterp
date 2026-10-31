@@ -23,10 +23,11 @@ describe("cronJob", () => {
   it("knows its jobs only", () => {
     expect(cronJob("fast")).toBe("fast");
     expect(cronJob("daily")).toBe("daily");
-    expect(cronJob("soc-seats")).toBe("soc-seats");
     expect(cronJob("soc-sections")).toBe("soc-sections");
     expect(cronJob("soc-courses")).toBe("soc-courses");
-    expect(cronJob("seat-alerts")).toBe("seat-alerts");
+    // These run on Supabase Edge Functions; the Vercel route must not serve them.
+    expect(cronJob("soc-seats")).toBeNull();
+    expect(cronJob("seat-alerts")).toBeNull();
     expect(cronJob("prune")).toBeNull();
     expect(cronJob("")).toBeNull();
     expect(cronJob("constructor")).toBeNull();
