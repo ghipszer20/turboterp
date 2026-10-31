@@ -16,16 +16,13 @@ const watch = (n: number, courseId: string, deviceId = `d${n}`): Watch => ({ id:
 // 4 letters + 3 digits: i -> "AAAA100" style ids, unique for i < 456976.
 const cid = (i: number) => `${String.fromCharCode(65 + Math.floor(i / 17576) % 26)}${String.fromCharCode(65 + Math.floor(i / 676) % 26)}${String.fromCharCode(65 + Math.floor(i / 26) % 26)}${String.fromCharCode(65 + (i % 26))}101`;
 
-type Harness = ReturnType<typeof harness>;
 function harness(watches: Watch[], opts: { states?: SeatState[]; file?: SeatsFile | null; live?: (ids: string[]) => SeatRow[]; pushResult?: "ok" | "gone" | "failed" } = {}) {
   const states = new Map((opts.states ?? []).map((s) => [`${s.courseId}-${s.sectionId}`, s]));
-  const log = { requests: [] as string[][], pushes: [] as { device: string; payload: PushPayload }[], alerted: [] as string[], deleted: [] as string[], sleeps: 0 };
+  const log = { requests: [] as string[][], pushes: [] as { device: string; payload: PushPayload }[], alerted: [] as string[], deleted: [] as string[], sleeps: 0, saves: [] as number[], loads: 0 };
   const deps: RunDeps = {
-    term: () => Promise.resolve(TERM),
+    load: () => { log.loads++; return Promise.resolve({ term: TERM, watches, states: new Map(states) }); },
     store: {
-      listActiveWatches: () => Promise.resolve(watches),
-      getStates: (_t, ids) => Promise.resolve(new Map([...states].filter(([, s]) => ids.includes(s.courseId)))),
-      saveStates: (_t, list) => { for (const s of list) states.set(`${s.courseId}-${s.sectionId}`, s); return Promise.resolve(); },
+      saveStates: (_t, list) => { log.saves.push(list.length); for (const s of list) states.set(`${s.courseId}-${s.sectionId}`, s); return Promise.resolve(); },
       markAlerted: (ids) => { log.alerted.push(...ids); return Promise.resolve(); },
       subscriptionsFor: (ids): Promise<DeviceSub[]> => Promise.resolve(ids.map((id) => ({ deviceId: id, endpoint: `https://push.example/${id}`, p256dh: "p", auth: "a" }))),
       deleteDevice: (id) => { log.deleted.push(id); return Promise.resolve(); },
@@ -135,6 +132,66 @@ Deno.test("sendPush maps 404 and 410 to gone, other errors to failed, 2xx to ok"
   assertEquals(await sendPush(sub, payload, () => Promise.reject({ statusCode: 410 })), "gone");
   assertEquals(await sendPush(sub, payload, () => Promise.reject({ statusCode: 404 })), "gone");
   assertEquals(await sendPush(sub, payload, () => Promise.reject({ statusCode: 500, body: "x" })), "failed");
+});
+
+Deno.test("a run where nothing changed makes exactly one database request (the load) and no write", async () => {
+  const ws = [watch(1, "CMSC131"), watch(2, "MATH140")];
+  const h = harness(ws, { states: [state("CMSC131", 0), state("MATH140", 0)] });
+  const report = await runSeatAlerts(h.deps, NOW);
+  assertEquals([h.log.loads, h.log.saves.length, report.openings, report.alerts], [1, 0, 0, 0]);
+});
+
+Deno.test("a changed count is written in one batched request; first sightings are written too", async () => {
+  const ws = [watch(1, "CMSC131"), watch(2, "MATH140")];
+  const h = harness(ws, { states: [state("CMSC131", 0)], live: (ids) => ids.map((id): SeatRow => [id, "0101", 30, id === "CMSC131" ? 3 : 0, 0, 0]) });
+  await runSeatAlerts(h.deps, NOW);
+  assertEquals(h.log.saves, [2]); // CMSC131 changed, MATH140 is new
+});
+
+Deno.test("nobody watching anything: loads once, fetches nothing", async () => {
+  const h = harness([]);
+  h.deps.load = () => Promise.resolve({ term: null, watches: [], states: new Map() });
+  const report = await runSeatAlerts(h.deps, NOW);
+  assertEquals([report.requests, h.log.requests.length], [0, 0]);
+});
+
+Deno.test("loadAlertState makes one RPC request and maps its rows", async () => {
+  const { loadAlertState } = await import("./load.ts");
+  const calls: { url: string; body: string }[] = [];
+  const fake = ((url: string, init: RequestInit) => {
+    calls.push({ url, body: String(init.body) });
+    return Promise.resolve(Response.json({
+      term: TERM,
+      watches: [{ id: "w1", device_id: "d1", term: TERM, course_id: "CMSC131", section_id: null, last_alert_at: null }],
+      states: [{ course_id: "CMSC131", section_id: "0101", open: 2, waitlist: 1, holdfile: 0, checked_at: "2026-10-04T11:00:00Z" }],
+    }));
+  }) as unknown as typeof fetch;
+  const s = await loadAlertState({ url: "https://p.supabase.co", serviceKey: "k" }, fake);
+  assertEquals(calls.length, 1);
+  assertEquals(calls[0]!.url, "https://p.supabase.co/rest/v1/rpc/seat_alert_load");
+  assertEquals(s.term, TERM);
+  assertEquals(s.watches[0], { id: "w1", deviceId: "d1", term: TERM, courseId: "CMSC131", sectionId: null, lastAlertAt: null, doneAt: null });
+  assertEquals(s.states.get("CMSC131-0101")!.open, 2);
+  const empty = await loadAlertState({ url: "https://p.supabase.co", serviceKey: "k" }, (() => Promise.resolve(Response.json({ term: null, watches: [], states: [] }))) as unknown as typeof fetch);
+  assertEquals([empty.term, empty.watches.length], [null, 0]);
+});
+
+Deno.test("handler prints nothing for a quiet run and one short line when an opening was found", async () => {
+  const h = harness([watch(1, "CMSC131")], { states: [state("CMSC131", 0)] });
+  const deps = { cronSecret: "s", vapidConfigured: () => true, runDeps: () => h.deps, now: () => NOW };
+  const logs: string[] = [];
+  const orig = console.log;
+  console.log = (...a) => logs.push(a.join(" "));
+  try {
+    await handleSeatAlerts(new Request("https://x.test", { method: "POST", headers: { "x-cron-secret": "s" } }), deps);
+    assertEquals(logs, []);
+    const h2 = harness([watch(1, "CMSC131")], { states: [state("CMSC131", 0)], live: (ids) => ids.map((id): SeatRow => [id, "0101", 30, 4, 0, 0]) });
+    await handleSeatAlerts(new Request("https://x.test", { method: "POST", headers: { "x-cron-secret": "s" } }), { ...deps, runDeps: () => h2.deps });
+    assertEquals(logs.length, 1);
+    assert(logs[0]!.length < 80);
+  } finally {
+    console.log = orig;
+  }
 });
 
 Deno.test("handler: needs the cron secret and VAPID keys; otherwise runs", async () => {

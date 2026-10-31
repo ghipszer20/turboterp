@@ -22,7 +22,10 @@ export async function handleSeatAlerts(req: Request, deps: AlertsHandlerDeps): P
   try {
     const report = await runSeatAlerts(deps.runDeps(now), now);
     const out = { ...report, ms: Math.round(performance.now() - started) };
-    console.log(JSON.stringify({ job: "seat-alerts", ...out }));
+    // Quiet logs (Supabase log ingestion is the binding limit): a run that found nothing prints nothing.
+    if (report.openings > 0 || report.alerts > 0 || report.gone > 0 || report.failedBatches > 0) {
+      console.log(`seat-alerts open=${report.openings} sent=${report.alerts} gone=${report.gone} failed=${report.failedBatches} req=${report.requests}`);
+    }
     return json(out);
   } catch (err) {
     console.error("seat-alerts failed:", err);
