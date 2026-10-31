@@ -58,6 +58,7 @@
     "./schedule/walks": "./src/schedule/walks.ts",
     "./search": "./src/search.ts",
     "./seed": "./src/seed.ts",
+    "./sentry-scrub": "./src/sentry-scrub.ts",
     "./stamp": "./src/stamp.ts",
     "./status": "./src/status.ts",
     "./storage": "./src/storage.ts",

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { scrubEvent, scrubText } from "../sentry-scrub";
+import { scrubEvent, scrubText } from "./sentry-scrub";
 
 describe("scrubText", () => {
   it("removes email addresses", () => {
@@ -23,8 +23,8 @@ describe("scrubEvent", () => {
     expect(out.user).toBeUndefined();
     expect(out.message).toBe("oops [email]");
     expect(out.request).toEqual({ url: "https://x.test/p" });
-    expect(out.exception?.values?.[0].value).toBe("bad [email]");
-    expect(out.breadcrumbs?.[0].message).toBe("nav https://x.test/q");
+    expect(out.exception?.values?.[0]?.value).toBe("bad [email]");
+    expect(out.breadcrumbs?.[0]?.message).toBe("nav https://x.test/q");
   });
 
   it("drops query strings from network and navigation breadcrumb URLs", () => {
@@ -35,7 +35,7 @@ describe("scrubEvent", () => {
         { category: "navigation", data: { from: "/a?e=a@b.co", to: "/b?code=1" } },
       ],
     });
-    expect(out.breadcrumbs?.[0].data).toEqual({ url: "https://x.test/auth/callback", method: "GET" });
-    expect(out.breadcrumbs?.[1].data).toEqual({ from: "/a", to: "/b" });
+    expect(out.breadcrumbs?.[0]?.data).toEqual({ url: "https://x.test/auth/callback", method: "GET" });
+    expect(out.breadcrumbs?.[1]?.data).toEqual({ from: "/a", to: "/b" });
   });
 });
