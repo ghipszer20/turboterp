@@ -6,6 +6,7 @@
     "postinstall": "node scripts/copy-tesseract-assets.mjs && node scripts/copy-pdfjs-worker.mjs",
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-per-visit.mts",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
