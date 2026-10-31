@@ -11,6 +11,7 @@ import { fileURLToPath } from "node:url";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const ENTRIES = [
   "app/_layout.tsx",
+  "app/account.tsx",
   "app/(tabs)/_layout.tsx",
   "app/(tabs)/index.tsx",
   "app/(tabs)/campus.tsx",

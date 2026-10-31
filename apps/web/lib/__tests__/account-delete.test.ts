@@ -48,6 +48,39 @@ describe("handleAccountDelete", () => {
   });
 });
 
+describe("Apple revoke on delete", () => {
+  const withCode = (auth: string, code: string) =>
+    new Request("http://x/api/account/delete", {
+      method: "POST",
+      headers: { authorization: auth },
+      body: JSON.stringify({ appleAuthorizationCode: code }),
+    });
+  it("revokes first, then deletes", async () => {
+    const order: string[] = [];
+    const d = deps({
+      revokeApple: vi.fn(async () => void order.push("revoke")),
+      deleteUser: vi.fn(async () => void order.push("delete")),
+    });
+    expect((await handleAccountDelete(withCode("Bearer good", "c1"), d)).status).toBe(200);
+    expect(d.revokeApple).toHaveBeenCalledWith("c1");
+    expect(order).toEqual(["revoke", "delete"]);
+  });
+  it("does not delete when Apple refuses", async () => {
+    const d = deps({
+      revokeApple: async () => {
+        throw new Error("no");
+      },
+    });
+    expect((await handleAccountDelete(withCode("Bearer good", "c1"), d)).status).toBe(502);
+    expect(d.deleteUser).not.toHaveBeenCalled();
+  });
+  it("skips revoke without a code", async () => {
+    const d = deps({ revokeApple: vi.fn(async () => {}) });
+    expect((await handleAccountDelete(req("Bearer good"), d)).status).toBe(200);
+    expect(d.revokeApple).not.toHaveBeenCalled();
+  });
+});
+
 describe("supabaseDeleteUser", () => {
   const env = { url: "https://p.supabase.co", serviceKey: "svc" };
   it("sends a service-role DELETE to the admin users endpoint", async () => {

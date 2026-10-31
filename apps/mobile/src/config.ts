@@ -5,6 +5,9 @@ export interface AppConfig {
   apiBaseUrl: string;
   accessToken: string | null;
   sentryDsn: string | null;
+  /** The same Supabase project as the web. Accounts are off when either is unset. */
+  supabaseUrl: string | null;
+  supabaseAnonKey: string | null;
 }
 
 function clean(v: string | undefined): string | null {
@@ -17,6 +20,8 @@ export function readConfig(env: Record<string, string | undefined>): AppConfig {
     apiBaseUrl: (clean(env.EXPO_PUBLIC_API_BASE_URL) ?? DEFAULT_API_BASE_URL).replace(/\/+$/, ""),
     accessToken: clean(env.EXPO_PUBLIC_TURBOTERP_ACCESS),
     sentryDsn: clean(env.EXPO_PUBLIC_SENTRY_DSN),
+    supabaseUrl: clean(env.EXPO_PUBLIC_SUPABASE_URL),
+    supabaseAnonKey: clean(env.EXPO_PUBLIC_SUPABASE_ANON_KEY),
   };
 }
 
@@ -25,7 +30,11 @@ export const config: AppConfig = readConfig({
   EXPO_PUBLIC_API_BASE_URL: process.env.EXPO_PUBLIC_API_BASE_URL,
   EXPO_PUBLIC_TURBOTERP_ACCESS: process.env.EXPO_PUBLIC_TURBOTERP_ACCESS,
   EXPO_PUBLIC_SENTRY_DSN: process.env.EXPO_PUBLIC_SENTRY_DSN,
+  EXPO_PUBLIC_SUPABASE_URL: process.env.EXPO_PUBLIC_SUPABASE_URL,
+  EXPO_PUBLIC_SUPABASE_ANON_KEY: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
 });
+
+export const authConfigured = (c: AppConfig = config): boolean => Boolean(c.supabaseUrl && c.supabaseAnonKey);
 
 /** Headers every API request carries. The site-lock header is added only when configured. */
 export function apiHeaders(c: AppConfig = config): Record<string, string> {

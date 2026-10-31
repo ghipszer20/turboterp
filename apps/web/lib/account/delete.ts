@@ -9,7 +9,18 @@ export type AccountDeleteDeps = {
   getUser: PlanEmailDeps["getUser"];
   /** Deletes the auth user; throws on failure. */
   deleteUser: (id: string) => Promise<void>;
+  /** Exchanges a Sign in with Apple authorization code and revokes it. Throws when Apple refuses. */
+  revokeApple?: (code: string) => Promise<unknown>;
 };
+
+async function appleCode(request: Request): Promise<string | null> {
+  try {
+    const body = (await request.json()) as { appleAuthorizationCode?: unknown };
+    return typeof body.appleAuthorizationCode === "string" && body.appleAuthorizationCode ? body.appleAuthorizationCode : null;
+  } catch {
+    return null; // the web sends no body
+  }
+}
 
 const json = (body: unknown, status: number) => Response.json(body, { status, headers: { "Cache-Control": "no-store" } });
 
@@ -23,6 +34,15 @@ export async function handleAccountDelete(request: Request, deps: AccountDeleteD
     return json({ error: "unavailable" }, 503);
   }
   if (!user) return json({ error: "unauthorized" }, 401);
+  // Only an Apple account's app sends a code (it asks for Sign in with Apple again first).
+  const code = await appleCode(request);
+  if (code && deps.revokeApple) {
+    try {
+      await deps.revokeApple(code);
+    } catch {
+      return json({ error: "apple-revoke-failed" }, 502); // nothing is deleted, so the student can retry
+    }
+  }
   try {
     await deps.deleteUser(user.id);
   } catch {

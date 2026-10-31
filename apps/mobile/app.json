@@ -10,6 +10,7 @@
     "ios": {
       "bundleIdentifier": "com.turboterp.app",
       "supportsTablet": false,
+      "usesAppleSignIn": true,
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSCameraUsageDescription": "TurboTerp uses the camera only when you choose to photograph your transcript, so the Advisor can read your courses. Photos stay on your phone.",
@@ -55,6 +56,9 @@
     "plugins": [
       "expo-router",
       "expo-sqlite",
+      "expo-secure-store",
+      "expo-web-browser",
+      "expo-apple-authentication",
       "@sentry/react-native/expo"
     ]
   }
