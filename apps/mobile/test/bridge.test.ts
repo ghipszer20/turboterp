@@ -105,7 +105,8 @@ describe.skipIf(!existsSync(EDGE))("engine bridge in a browser context", () => {
       pending.get(m.id)?.(m);
       pending.delete(m.id);
     };
-    await new Promise((r) => setTimeout(r, 1000));
+    // The 18 MB page can take a while to parse when the machine is busy; wait until it has loaded.
+    for (let i = 0; i < 120 && (await evalValue(`document.readyState === "complete" && document.title === "engine"`)) !== true; i++) await new Promise((r) => setTimeout(r, 500));
   }, 120_000);
 
   afterAll(() => {
