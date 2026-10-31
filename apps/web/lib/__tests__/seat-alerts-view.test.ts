@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { setupSteps } from "../seat-alerts/view";
+import { setupSteps } from "@turboterp/app-core/seat-alerts/view";
 
 describe("setupSteps", () => {
   it("tells an iPhone Safari tab only to add to the Home Screen", () => {

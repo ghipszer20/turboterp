@@ -58,6 +58,7 @@
       "expo-sqlite",
       "expo-secure-store",
       "expo-web-browser",
+      "expo-notifications",
       "expo-apple-authentication",
       "@sentry/react-native/expo"
     ]
