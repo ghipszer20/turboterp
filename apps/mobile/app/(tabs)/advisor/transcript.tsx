@@ -1,5 +1,5 @@
-import { PlaceholderScreen } from "../../../src/ui";
+import { TranscriptScreen } from "../../../src/advisor/TranscriptScreen";
 
 export default function Screen() {
-  return <PlaceholderScreen title="Transcript" />;
+  return <TranscriptScreen />;
 }
