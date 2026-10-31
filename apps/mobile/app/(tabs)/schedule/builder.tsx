@@ -1,7 +1,7 @@
 // The schedule builder: a gallery of generated schedules for the chosen courses, the week view of
 // one schedule (tap a block to change its section), "Build my own", and Plans A/B/C.
 import { memo, useEffect, useMemo, useRef, useState } from "react";
-import { FlatList, Pressable, ScrollView, useWindowDimensions, View } from "react-native";
+import { Alert, FlatList, Platform, Pressable, ScrollView, useWindowDimensions, View } from "react-native";
 import { useRouter } from "expo-router";
 import type { Section } from "@turboterp/course-data/schedules";
 import { sectionBlocks } from "@turboterp/app-core/schedule/block-items";
@@ -35,7 +35,9 @@ import {
 import { courseColors } from "../../../src/schedule/courseColors";
 import { savedStore, useSaved } from "../../../src/schedule/savedStore";
 import { useBuilderData, useLayouts } from "../../../src/schedule/useBuilder";
-import { useCourseIndex } from "../../../src/schedule/useScheduleSearch";
+import { useCourseIndex, useTermCourses } from "../../../src/schedule/useScheduleSearch";
+import { ADD_TO_CALENDAR_NOTE, appleEvents } from "../../../src/schedule/calendarExport";
+import { addToAppleCalendar, openSettings } from "../../../src/schedule/calendarNative";
 import { renderSeatBell } from "../../../src/alerts/SeatBell";
 
 type View_ = { kind: "gallery" } | { kind: "editor"; picks: Record<string, Section> } | { kind: "own" };
@@ -132,7 +134,9 @@ export default function BuilderScreen() {
   const index = state.status === "ready" ? state.index : null;
   const term = index?.term ?? null;
   const saved = useSaved(term);
-  const courses = useMemo(() => saved?.courses ?? [], [saved]);
+  const { courses, prompt: planPrompt, updatePlan } = useTermCourses(term);
+  const [dismissedPrompt, setDismissedPrompt] = useState<string | null>(null);
+  const [calendarMsg, setCalendarMsg] = useState<{ text: string; settings?: boolean } | null>(null);
   const filters = saved?.filters ?? DEFAULT_FILTERS;
   const [sort, setSort] = useState<GallerySort>("default");
   const data = useBuilderData(term, courses, sortNeedsGrades(sort));
@@ -164,6 +168,36 @@ export default function BuilderScreen() {
   const picksNow = view.kind === "editor" ? view.picks : view.kind === "own" ? ownPicks : {};
   const check = saveCheck(picksNow);
   const chips = saved ? planChips(saved, courses) : [];
+
+  const addToCalendar = async (placed: Section[]) => {
+    const events = appleEvents(term ?? "", placed);
+    if (!events.length) return setCalendarMsg({ text: "There are no timed classes to add yet." });
+    setCalendarMsg({ text: "Adding…" });
+    const r = await addToAppleCalendar(events);
+    if (r.status === "added") setCalendarMsg({ text: "Added to Apple Calendar. If UMD changes a room or time, delete these events and add them again." });
+    else if (r.status === "settings") setCalendarMsg({ text: "Calendar access is off for TurboTerp. Turn it on in Settings, then try again.", settings: true });
+    else if (r.status === "denied") setCalendarMsg({ text: "TurboTerp needs permission to add events. Tap Add to calendar to try again." });
+    else setCalendarMsg({ text: "Couldn't add the events. Try again." });
+  };
+  const confirmUpdatePlan = () => {
+    if (!planPrompt) return;
+    Alert.alert(`Update your ${planPrompt.termName} plan?`, planPrompt.text, [
+      { text: "Cancel", style: "cancel" },
+      { text: "Update plan", onPress: updatePlan },
+    ]);
+  };
+  const promptCard =
+    planPrompt && planPrompt.text !== dismissedPrompt ? (
+      <Card style={{ padding: spacing.md, gap: spacing.sm }}>
+        <Text variant="sub" accessibilityLiveRegion="polite">
+          {`Your 4-year plan has different courses for ${planPrompt.termName}. Update your plan? ${planPrompt.text}`}
+        </Text>
+        <View style={{ flexDirection: "row", gap: spacing.sm }}>
+          <Button label="Update plan" variant="secondary" onPress={confirmUpdatePlan} />
+          <Button label="Not now" variant="secondary" onPress={() => setDismissedPrompt(planPrompt.text)} />
+        </View>
+      </Card>
+    ) : null;
 
   const flash = (text: string) => {
     setNote(text);
@@ -303,10 +337,25 @@ export default function BuilderScreen() {
               </Text>
             </Pressable>
           )}
+          {promptCard}
           <PlanBar plan={plan} chips={chips} onPlan={openPlanOrSwitch} canSave={check.canSave} blockedNote={check.blockedNote} note={note} onSave={onSave} onRemove={onRemove} />
           <Card style={{ padding: spacing.sm }}>
             <WeekGrid size="large" scale={scale} items={items} height={Math.max(360, Math.min(560, scale.hours.length * 52))} outlined={openCourse} onBlockPress={(id) => { setPreview(null); setOpenCourse(id); }} />
           </Card>
+          {Platform.OS === "ios" && placed.length ? (
+            <View style={{ gap: spacing.xs }}>
+              <Button label="Add to calendar" variant="secondary" onPress={() => addToCalendar(placed)} />
+              <Text variant="foot" tone="text3">
+                {ADD_TO_CALENDAR_NOTE}
+              </Text>
+              {calendarMsg ? (
+                <Text variant="foot" tone="text2" accessibilityLiveRegion="polite">
+                  {calendarMsg.text}
+                </Text>
+              ) : null}
+              {calendarMsg?.settings ? <Button label="Open Settings" variant="secondary" onPress={() => openSettings()} /> : null}
+            </View>
+          ) : null}
           {offGrid.length ? (
             <Text variant="foot" tone="text2">
               Not on the grid: {offGrid.map((i) => `${i.data!.courseId} ${i.data!.sub ?? ""} (${i.meeting.start === null ? "time TBA" : i.meeting.days.join("")})`).join("; ")}
@@ -373,6 +422,7 @@ export default function BuilderScreen() {
       {title}
       {mode}
       {savedRow}
+      {promptCard}
       <FiltersPanel filters={filters} onChange={setFilters} sort={sort} onSort={setSort} />
       <Text variant="sub" tone="text2" accessibilityLiveRegion="polite">
         {!result || pending ? "Finding every layout…" : `${count.toLocaleString("en-US")} ${count === 1 ? "layout fits" : "layouts fit"} your week${shown?.result.truncated ? " (showing the first 200,000)" : ""}`}
